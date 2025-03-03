@@ -1,3 +1,6 @@
+#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_IAPPLICATION_CLASS_H
+#define YOUR_CPP_APP_TEMPLATE_PROJECT_IAPPLICATION_CLASS_H
+
 #include <memory>
 
 #include "src/app/ApplicationContext.h"
@@ -24,3 +27,5 @@ public:
 };
 
 } // namespace app
+
+#endif // YOUR_CPP_APP_TEMPLATE_PROJECT_IAPPLICATION_CLASS_H

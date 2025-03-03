@@ -4,4 +4,5 @@ target_sources(
   ${PROJECT_NAME}
   PRIVATE ApplicationContext.cpp
   PRIVATE Application.cpp
+  PRIVATE ApplicationFactory.cpp
 )

@@ -14,6 +14,13 @@ struct ApplicationContext
   char** &argv ;
 
   ApplicationContext(int& gargc, char** &gargv);
+
+  /**
+   * @brief Set up this flag to true so the ApplicationFactory will create
+   * a ApplicationHelpPrinter instance during the application execution.
+   * All other classes are ignoring this flag.
+   */
+  bool print_help_and_exit{false};
 };
 
 } // namespace app

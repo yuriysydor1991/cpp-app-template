@@ -5,4 +5,5 @@ target_sources(
   PRIVATE ApplicationContext.cpp
   PRIVATE Application.cpp
   PRIVATE ApplicationFactory.cpp
+  PRIVATE ApplicationHelpPrinter.cpp
 )

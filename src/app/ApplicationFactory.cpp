@@ -4,6 +4,7 @@
 #include "src/app/ApplicationContext.h"
 #include "src/app/IApplication.h"
 #include "src/app/Application.h"
+#include "src/app/ApplicationHelpPrinter.h"
 #include "src/app/ApplicationFactory.h"
 
 namespace app {
@@ -20,6 +21,14 @@ std::shared_ptr<IApplication> ApplicationFactory::create_default_application()
 
 std::shared_ptr<IApplication> ApplicationFactory::create_application([[maybe_unused]] std::shared_ptr<ApplicationContext> ctx)
 {
+  assert(ctx != nullptr);
+
+  if (ctx == nullptr) 
+  { return {}; }
+
+  if (ctx->print_help_and_exit)
+  { return std::make_shared<ApplicationHelpPrinter> () ; }
+
   return create_default_application () ;
 }
 

@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.22.1)
 
+#-D_FORTIFY_SOURCE=2
 add_compile_options(
   -Wall
   -Wextra
@@ -25,7 +26,6 @@ add_compile_options(
   -Wzero-as-null-pointer-constant
   -fanalyzer
   -fstack-protector-strong
-  -D_FORTIFY_SOURCE=2
   -fno-common
   -fstrict-overflow
   -fstack-clash-protection

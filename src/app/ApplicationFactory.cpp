@@ -29,9 +29,17 @@ int ApplicationFactory::run(int& gargc, char** &gargv)
 
   assert(ctx != nullptr);
 
+  if (ctx == nullptr) {
+    return INVALID;
+  }
+
   std::shared_ptr<IApplication> app = create_application (ctx) ;
 
   assert(app != nullptr);
+
+   if (app == nullptr) {
+    return INVALID;
+  }
 
   return app->run(ctx);
 }

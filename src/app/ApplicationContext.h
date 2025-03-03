@@ -1,6 +1,9 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATIONCONTEXT_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATIONCONTEXT_CLASS_H
 
+#include <vector>
+#include <string>
+
 namespace app {
 
 /**
@@ -21,6 +24,18 @@ struct ApplicationContext
    * All other classes are ignoring this flag.
    */
   bool print_help_and_exit{false};
+
+  /**
+   * @brief Errors description.
+   */
+  std::vector<std::string> errors;
+
+  /**
+   * @brief Pushes a new error description into the errors field;
+   * 
+   * @param errorDescription The application error description.
+   */
+  void push_error(const std::string& errorDescription);
 };
 
 } // namespace app

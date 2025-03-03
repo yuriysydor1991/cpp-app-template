@@ -5,6 +5,7 @@
 
 #include "src/app/ApplicationContext.h"
 #include "src/app/IApplication.h"
+#include "src/app/CommandLineParser.h"
 
 namespace app {
 
@@ -28,13 +29,34 @@ public:
    * @return Returns filled application context instance.
    */
   virtual std::shared_ptr<ApplicationContext> create_default_context (int& gargc, char** &gargv);
+
+  /**
+   * @brief Creates a command line parser instance to parse application context argv data.
+   * 
+   * @return Returns created parser instance.
+   */
+  virtual std::shared_ptr<CommandLineParser> create_default_arg_parser () ;
   
   /**
    * @brief Creates default instance for the application implementation.
    * 
    * @return Returns created default application.
    */
-  virtual std::shared_ptr<IApplication> create_default_application();
+  virtual std::shared_ptr<IApplication> create_default_application () ;
+
+  /**
+   * @brief Instantiates a default help message printer.
+   * 
+   * @return Instantiates a default help message printer and returns it.
+   */
+  virtual std::shared_ptr<IApplication> create_help_printer () ;
+
+  /**
+   * @brief Creates context and perform args parse operation
+   * 
+   * @return Returns filled and parsed application context
+   */
+  virtual std::shared_ptr<ApplicationContext> create_context (int& gargc, char** &gargv) ;
 
   /**
    * @brief Creates application in accordance with a given context data.
@@ -43,7 +65,7 @@ public:
    * 
    * @return Returns created application.
    */
-  virtual std::shared_ptr<IApplication> create_application([[maybe_unused]] std::shared_ptr<ApplicationContext> ctx);
+  virtual std::shared_ptr<IApplication> create_application (std::shared_ptr<ApplicationContext> ctx) ;
 
   /**
    * @brief Creates all necessary instances and calls the appropriate IApplication instance' run method.
@@ -54,7 +76,7 @@ public:
    * @return Returns application run status. Must return the zero value in case of success and 
    * a non zero value in case of any error.
    */
-  virtual int run(int& gargc, char** &gargv);
+  virtual int run (int& gargc, char** &gargv) ;
 
   /**
    * @brief A convenience method to call a run without the factory instance inside the main function.
@@ -64,7 +86,7 @@ public:
    * 
    * @return Returns application run status. See run method.
    */
-  static int execute(int& gargc, char** &gargv);
+  static int execute (int& gargc, char** &gargv) ;
 
 protected:
   static constexpr const int INVALID = 1;

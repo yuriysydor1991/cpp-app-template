@@ -24,6 +24,9 @@ public:
    * @param ctx A filled context to pass data to the app instance.
    */
   virtual int run(std::shared_ptr<ApplicationContext> ctx) = 0;
+
+protected:
+  static constexpr const int INVALID = 1 ;
 };
 
 } // namespace app

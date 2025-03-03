@@ -6,4 +6,5 @@ target_sources(
   PRIVATE Application.cpp
   PRIVATE ApplicationFactory.cpp
   PRIVATE ApplicationHelpPrinter.cpp
+  PRIVATE CommandLineParser.cpp
 )

@@ -1,11 +1,10 @@
 cmake_minimum_required(VERSION 3.22.1)
 
-#-D_FORTIFY_SOURCE=2
+#-D_FORTIFY_SOURCE=2 (needs OPT); -Werror (causes some stdlib errors)
 add_compile_options(
   -Wall
   -Wextra
   -Wpedantic
-  -Werror
   -Wshadow
   -Wnon-virtual-dtor
   -Wold-style-cast
@@ -25,10 +24,10 @@ add_compile_options(
   -Wmisleading-indentation
   -Wzero-as-null-pointer-constant
   -fanalyzer
-  -fstack-protector-strong
+  -fstack-protector-all
   -fno-common
   -fstrict-overflow
-  -fstack-clash-protection
+  -pie
   -Wl,-z,relro
   -Wl,-z,now
 )

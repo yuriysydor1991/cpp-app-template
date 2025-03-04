@@ -22,4 +22,6 @@ set(CMAKE_CXX_STANDARD 17)
 
 find_package(Git REQUIRED)
 
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+
 add_subdirectory(src)

@@ -10,4 +10,4 @@
  * in case of any value.
  */
 int main(int argc, char** argv)
-{ return app::ApplicationFactory::execute (argc, argv); }
+{ return app::ApplicationFactory::execute (argc, argv) ; }

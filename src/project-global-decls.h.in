@@ -1,0 +1,15 @@
+#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_GLOBAL_DECLS_H
+#define YOUR_CPP_APP_TEMPLATE_PROJECT_GLOBAL_DECLS_H
+
+#include <string>
+
+namespace project_decls {
+
+const std::string PROJECT_NAME = "${PROJECT_NAME}" ;
+const std::string PROJECT_BUILD_VERSION = "${PROJECT_VERSION}" ;
+const std::string PROJECT_BUILD_COMMIT = "${PROJECT_GIT_COMMIT}" ;
+const std::string PROJECT_CONFIGURE_DATE = "${PROJECT_CONFIGURE_DATE}" ;
+
+} // namespace project_decls
+
+#endif // YOUR_CPP_APP_TEMPLATE_PROJECT_GLOBAL_DECLS_H

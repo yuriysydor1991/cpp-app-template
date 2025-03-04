@@ -43,4 +43,16 @@ include_directories(
   ${CMAKE_BINARY_DIR}
 )
 
+find_package(Git REQUIRED)
+execute_process(
+        COMMAND "${GIT_EXECUTABLE}" rev-parse HEAD
+        OUTPUT_VARIABLE PROJECT_GIT_COMMIT
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+configure_file(
+  project-global-decls.h.in
+  ${CMAKE_BINARY_DIR}/project-global-decls.h
+)
+
 add_subdirectory(app)

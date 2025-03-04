@@ -29,7 +29,7 @@ sudo apt install -y git g++ cmake
 Optionally, install the Google Test Framework (GTest) in order to build and execute tests:
 
 ```
-sudo apt install -y libgtest-dev
+sudo apt install -y googletest libgtest-dev
 ```
 
 # Cloning the C++ template project

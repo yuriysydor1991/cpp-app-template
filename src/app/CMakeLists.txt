@@ -9,3 +9,5 @@ target_sources(
   PRIVATE CommandLineParser.cpp
   PRIVATE ApplicationVersionPrinter.cpp
 )
+
+add_subdirectory(tests)

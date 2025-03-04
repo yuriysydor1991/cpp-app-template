@@ -19,9 +19,21 @@ project(
 )
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+
+option(
+  ENABLE_UNIT_TESTS 
+  "Set to ON value if unit tests build and run should be available"
+  ON
+)
 
 find_package(Git REQUIRED)
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+if(ENABLE_UNIT_TESTS)
+  enable_testing()
+  include(template-project-make-GTest-available)
+endif()
 
 add_subdirectory(src)

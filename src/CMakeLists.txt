@@ -8,10 +8,11 @@ add_executable(
   main.cpp
 )
 
-include_directories(
-  ${CMAKE_SOURCE_DIR}
-  ${CMAKE_CURRENT_SOURCE_DIR}
-  ${CMAKE_BINARY_DIR}
+target_include_directories(
+  ${PROJECT_NAME}
+  PRIVATE ${CMAKE_SOURCE_DIR}
+  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
+  PRIVATE ${CMAKE_BINARY_DIR}
 )
 
 install(

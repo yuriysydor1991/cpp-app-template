@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- 522b6b3 Adding changelog
 - 5c75937 Refining the README.md file
 - f8df49b Introducing additional info into the root README.md file
 - a76890a Decomposing the compile options
@@ -27,6 +28,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - f770df2 Adding a basic main.cpp
 - 5876319 Adding the initial README.md
 - 3f53c17 Adding .gitignore
+
+# Releases
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 

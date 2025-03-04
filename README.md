@@ -24,14 +24,6 @@ In order to build minimum template project install the GCC C++ compiler with CMa
 sudo apt install -y git g++ cmake
 ```
 
-## Optional packages GNU/Linux based OS
-
-Optionally, install the Google Test Framework (GTest) in order to build and execute tests:
-
-```
-sudo apt install -y googletest libgtest-dev
-```
-
 # Cloning the C++ template project
 
 In order to fast-start implementing a new application clone this project into your local directory by executing next command in the terminal (GNU/Linux based):
@@ -44,7 +36,7 @@ After this command executes you should find a directory named `cpp-app-template`
 
 # Forking and replacing the origin
 
-In order to copy all the template project into your new clean repository (**clean repository with no** `README.md`, `.gitignore` or `LICENCE` files) clone it into your local directory and perform origin setup command from inside to project root:
+In order to copy all the template project into your new clean repository (**clean repository with no** `README.md`, `.gitignore`, `LICENCE` or any other files) clone it into your local directory and perform origin setup command from inside to project root:
 
 ```
 # REPLACE next URL with yours
@@ -103,6 +95,18 @@ That may be accomplished by implementing a custom `ApplicationFactory` descendan
 
 The project's `CMakeLists.txt` files are tracking of a current project git repository commit, project name, configure date and projects version that are forwarded into the projects's configure header file located at `src/app/project-global-decls.h.in`. The `project-global-decls.h.in` will be compiled into the build directory as `project-global-decls.h`. The `ApplicationVersionPrinter` class includes this project's configure file and uses the information provided to print appropriate version info. Usually, this code is executed by calling generated executable with a `-v` or `--version` command line flag. After the version is printed, the default implementation cause the application's `ApplicationVersionPrinter` instance to return zero value and cause the executable to stop it's execution.
 
+## Project tests
+
+Project already contains some simple test samples. Based on them you may implement full test of the introduced code. 
+
+See the [Project build](#project-build) subsection to enable unit testing with CMake.
+
+### Google Test
+
+Currently test samples are based on the GTest framework. GTest framework by itself becomes available by the `FetchContent_Declare`/`FetchContent_MakeAvailable` CMake-commands.
+
+Look for a `cmake/template-project-make-GTest-available.cmake` to see details or change GTest version etc.
+
 ## Extensions
 
 There will be introduced some Doxygen documentation auto generation with a `cppcheck` code analyzer in the future, etc.
@@ -123,7 +127,15 @@ Of course, project needs to be `git clone`-ed and it's root directory must be op
 mkdir -vp build && cd build && cmake ../ && cmake --build . --target all
 ```
 
-Which effectively will create a directory named `build` (it's already added to the `.gitignore` list), configure project using the CMake available in the system (see the [Requirements](#Requirements) section of this `README.md` file) and finally builds all the targets available in the project.
+Which effectively will create a directory named `build` (it's already added to the `.gitignore` list), configure project using the CMake available in the system (see the [Requirements](#requirements) section of this `README.md` file) and finally builds all the targets available in the project.
+
+## Enabling unit testing
+
+To enable project unit test availability (for building and running) reconfigure it with enabled `ENABLE_UNIT_TESTS` variable as follows (GNU/Linux based):
+
+```
+mkdir -vp build && cd build && cmake ../ -DENABLE_UNIT_TESTS=ON && cmake --build . --target all
+```
 
 # Run the executable
 

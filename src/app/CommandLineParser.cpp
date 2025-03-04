@@ -12,6 +12,8 @@ namespace app {
 namespace {
   const std::string HELPW {"--help"};
   const std::string HELP {"-h"};
+  const std::string VERSIONW {"--version"};
+  const std::string VERSION {"-v"};
 }
 
 bool CommandLineParser::parse_args(std::shared_ptr<ApplicationContext> ctx)
@@ -78,6 +80,8 @@ bool CommandLineParser::parse_arg(
   // add a new params parse over here
   if (param == HELPW || param == HELP)
   { ctx->print_help_and_exit = true; }
+  else if (param == VERSIONW || param == VERSION)
+  { ctx->print_version_and_exit = true; }
   else
   {
     ctx->print_help_and_exit = true;

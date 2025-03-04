@@ -52,6 +52,13 @@ public:
   virtual std::shared_ptr<IApplication> create_help_printer () ;
 
   /**
+   * @brief Instantiates a default version message printer.
+   * 
+   * @return Instantiates a default version message printer and returns it.
+   */
+  virtual std::shared_ptr<IApplication> create_version_printer () ;
+
+  /**
    * @brief Creates context and perform args parse operation
    * 
    * @return Returns filled and parsed application context

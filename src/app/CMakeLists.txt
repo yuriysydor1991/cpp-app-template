@@ -7,4 +7,5 @@ target_sources(
   PRIVATE ApplicationFactory.cpp
   PRIVATE ApplicationHelpPrinter.cpp
   PRIVATE CommandLineParser.cpp
+  PRIVATE ApplicationVersionPrinter.cpp
 )

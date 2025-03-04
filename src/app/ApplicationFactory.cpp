@@ -7,6 +7,7 @@
 #include "src/app/ApplicationHelpPrinter.h"
 #include "src/app/ApplicationFactory.h"
 #include "src/app/CommandLineParser.h"
+#include "src/app/ApplicationVersionPrinter.h"
 
 namespace app {
 
@@ -20,7 +21,7 @@ std::shared_ptr<CommandLineParser> ApplicationFactory::create_default_arg_parser
   return std::make_shared<CommandLineParser> () ;
 }
 
-std::shared_ptr<ApplicationContext> ApplicationFactory::create_context(int& gargc, char** &gargv)
+std::shared_ptr<ApplicationContext> ApplicationFactory::create_context (int& gargc, char** &gargv)
 {
   std::shared_ptr<ApplicationContext> ctx = create_default_context (gargc, gargv) ;
   std::shared_ptr<CommandLineParser> argParser = create_default_arg_parser () ;
@@ -39,7 +40,7 @@ std::shared_ptr<ApplicationContext> ApplicationFactory::create_context(int& garg
   return ctx ;
 }
 
-std::shared_ptr<IApplication> ApplicationFactory::create_default_application()
+std::shared_ptr<IApplication> ApplicationFactory::create_default_application ()
 {
   return std::make_shared<Application> () ;
 }
@@ -47,6 +48,11 @@ std::shared_ptr<IApplication> ApplicationFactory::create_default_application()
 std::shared_ptr<IApplication> ApplicationFactory::create_help_printer ()
 {
   return std::make_shared<ApplicationHelpPrinter> () ;
+}
+
+std::shared_ptr<IApplication> ApplicationFactory::create_version_printer ()
+{
+  return std::make_shared<ApplicationVersionPrinter> () ;
 }
 
 std::shared_ptr<IApplication> ApplicationFactory::create_application(std::shared_ptr<ApplicationContext> ctx)
@@ -58,6 +64,9 @@ std::shared_ptr<IApplication> ApplicationFactory::create_application(std::shared
 
   if (ctx->print_help_and_exit)
   { return create_help_printer () ; }
+
+  if (ctx->print_version_and_exit)
+  { return create_version_printer () ; }
 
   return create_default_application () ;
 }

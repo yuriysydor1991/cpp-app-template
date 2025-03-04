@@ -26,6 +26,12 @@ struct ApplicationContext
   bool print_help_and_exit{false};
 
   /**
+   * @brief Set up this flag value to a true in order to ApplicationFactory
+   * to create ApplicationVersionPrinter and execute it.
+   */
+  bool print_version_and_exit{false};
+
+  /**
    * @brief Errors description.
    */
   std::vector<std::string> errors;

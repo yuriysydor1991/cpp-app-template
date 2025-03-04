@@ -36,7 +36,7 @@ It's preferable to create other directories which would contain implemented comp
 
 ## Changing the project and executable name
 
-Change the name of the project in the project's root `CMakeLists.txt` file by introducing a new value for the the `PROJECT_NAME` variable. It is recommended to do so the executable will represent your new application name instead of templated default one - the `CppCppAppTemplate`.
+Change the name of the project in the project's root `CMakeLists.txt` file by introducing a new value for the the `PROJECT_NAME` variable. It is recommended to do so the executable will represent your new application name instead of templated default one - the `CppAppTemplate`.
 
 ## Introducing custom command line parameters
 
@@ -46,7 +46,7 @@ Add some additional custom fields into the `ApplicationContext` class in order t
 
 ## Implement your own IApplication descendants
 
-You may implement another custom `IApplication` descendant classes in order to support high level variety of the application behavior to not to mess original `Application` class with irrelevant `if`-s statements and mixing up code (remember about the SOLID's single responsibility principle?).
+You may implement another custom `IApplication` descendant classes in order to support high level variety of the application behavior to not to mess original `Application` class with irrelevant `if`-s statements and mixing up code (remember about the SOLID's single responsibility principle).
 
 You may accomplish `IApplication` subclassing by directly creating an `IApplication` subclass in a new file or extend existing `IApplication` descendant like `Application`, `ApplicationHelpPrinter` or a `ApplicationVersionPrinter`.
 

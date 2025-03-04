@@ -14,6 +14,11 @@ include_directories(
   ${CMAKE_BINARY_DIR}
 )
 
+install(
+  TARGETS ${PROJECT_NAME}
+  RUNTIME DESTINATION bin
+)
+
 execute_process(
         COMMAND "${GIT_EXECUTABLE}" rev-parse HEAD
         OUTPUT_VARIABLE PROJECT_GIT_COMMIT

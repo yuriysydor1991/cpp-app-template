@@ -12,7 +12,7 @@ message(STATUS "PROJECT_NAME: ${PROJECT_NAME}")
 
 project(
   ${PROJECT_NAME}
-  VERSION 0.1.0
+  VERSION 0.2.0
   DESCRIPTION "A C++ Template project for you!"
   HOMEPAGE_URL "http://www.kytok.org.ua/"
   LANGUAGES CXX

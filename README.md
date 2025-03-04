@@ -2,7 +2,7 @@
 
 # Goal of the template project
 
-Project is designed to increase the speed of the application creation process at the project startup by providing templated application structure. So developer may just straight jump into implementing a particular application with no or minimum project start structure set up.
+Project is designed to increase the speed of the application creation process at the project startup by providing templated application structure. So developer may just jump straight into implementing a particular application with no or minimum project start structure set up.
 
 **Just fork it and implement your application straight away!**
 

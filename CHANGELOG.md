@@ -33,4 +33,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
-[0.1.0](https://github.com/yuriysydor1991/cpp-app-template/tag/v0.1.0)
+[0.1.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/v0.1.0)

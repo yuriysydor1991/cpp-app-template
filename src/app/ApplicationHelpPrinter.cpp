@@ -6,13 +6,14 @@
 
 namespace app {
 
-int ApplicationHelpPrinter::run([[maybe_unused]] std::shared_ptr<ApplicationContext> ctx)
+int ApplicationHelpPrinter::run(std::shared_ptr<ApplicationContext> ctx)
 {
   assert(ctx != nullptr);
 
   if (ctx == nullptr)
   { return INVALID ; }
 
+  // Register and implement here command line parameters from the CommandLineParser class.
   std::cout << "Application help message here!" << std::endl;
 
   return 0 ;

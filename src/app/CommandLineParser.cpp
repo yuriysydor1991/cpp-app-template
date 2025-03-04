@@ -78,6 +78,7 @@ bool CommandLineParser::parse_arg(
   { return false ; }
 
   // add a new params parse over here
+  // Also register new command line parameters in the ApplicationhelpPrinter's help.
   if (param == HELPW || param == HELP)
   { ctx->print_help_and_exit = true; }
   else if (param == VERSIONW || param == VERSION)

@@ -20,4 +20,6 @@ project(
 
 set(CMAKE_CXX_STANDARD 17)
 
+find_package(Git REQUIRED)
+
 add_subdirectory(src)

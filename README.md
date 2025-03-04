@@ -40,12 +40,24 @@ In order to copy all the template project into your new clean repository (**clea
 
 ```
 # REPLACE next URL with yours
-git remote add origin https://github.com/yuriysydor1991/cpp-app-template.git
-
-git push --set-upstream origin main
+git remote set-url origin https://github.com/yuriysydor1991/cpp-app-template.git
 ```
 
 Replace the `https://github.com/yuriysydor1991/cpp-app-template.git` URL with one of your newly created project repository URL.
+
+To verify successful repository remote URL (where all the changes will be pushed) replacement execute next command:
+
+```
+git remote -v
+```
+
+Which should show your new project repository.
+
+Finally push your repository to a new location by executing next command:
+
+```
+git push
+```
 
 Forking may be performed in git Web interface panel.
 

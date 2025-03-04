@@ -21,7 +21,15 @@ This section contains list of required packages and/or tools that must be presen
 In order to build minimum template project install the GCC C++ compiler with CMake and Git.
 
 ```
-sudo apt install -y g++ cmake gtest git
+sudo apt install -y git g++ cmake
+```
+
+## Optional packages GNU/Linux based OS
+
+Optionally, install the Google Test Framework (GTest) in order to build and execute tests:
+
+```
+sudo apt install -y libgtest-dev
 ```
 
 # Cloning the C++ template project

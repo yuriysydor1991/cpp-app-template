@@ -107,7 +107,7 @@ Of course if your IDE supports CMake build system integration you may just press
 
 ## Command line build
 
-The project uses the CMake build system so a build command should be familiar with most of the C++ developers around the world!
+The project uses the CMake build system so a build command should be familiar to the most of the C++ developers around the world!
 
 Of course, project needs to be `git clone`-ed and it's root directory must be opened in the terminal or in your IDE first. After that you may execute next commands:
 
@@ -145,3 +145,29 @@ If executable compiles and is present in the build directory start it in the ter
 ```
 
 Once again, the `CppAppTemplate` is the **default** name of the project. Replace it with our own custom one if it was changed in the project's root `CMakeLists.txt` file (the `PROJECT_NAME` variable).
+
+# Installing executable
+
+## Default installation
+
+In order to install generated executable (as shown previous) file into your's system binary default folder execute next command in the command line (GNU/Linux based):
+
+```
+# installs generated binary under the /usr/local/bin/ for example
+
+sudo cmake --install .
+```
+
+Usually it's the `/usr/local/bin/` directory (on the Unix-like OS) which may be inaccessible from the `PATH` environment variable (e.g. can not be started as a regular command).
+
+## Custom installation path
+
+To install binary into the system globally available directory add the `--prefix` parameter to the command above as next:
+
+```
+# replace the /usr/bin path with our own if needed
+
+sudo cmake --install . --prefix "/usr/bin"
+```
+
+Examine the `PATH` environment variable to chose directory best suited for your current OS (execute `echo $PATH` in the terminal). Alternatively, any path may be specified.

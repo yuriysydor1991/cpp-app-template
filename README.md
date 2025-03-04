@@ -148,12 +148,15 @@ Once again, the `CppAppTemplate` is the **default** name of the project. Replace
 
 # Installing executable
 
+Execute available install commands from the project's build directory.
+
 ## Default installation
 
 In order to install generated executable (as shown previous) file into your's system binary default folder execute next command in the command line (GNU/Linux based):
 
 ```
 # installs generated binary under the /usr/local/bin/ for example
+# run from the project's build directory
 
 sudo cmake --install .
 ```
@@ -166,6 +169,7 @@ To install binary into the system globally available directory add the `--prefix
 
 ```
 # replace the /usr/bin path with our own if needed
+# run from the project's build directory
 
 sudo cmake --install . --prefix "/usr/bin"
 ```

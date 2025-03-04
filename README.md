@@ -124,6 +124,8 @@ The project uses the CMake build system so a build command should be familiar to
 Of course, project needs to be `git clone`-ed and it's root directory must be opened in the terminal or in your IDE first. After that you may execute next commands:
 
 ```
+# from the project root
+
 mkdir -vp build && cd build && cmake ../ && cmake --build . --target all
 ```
 
@@ -134,6 +136,8 @@ Which effectively will create a directory named `build` (it's already added to t
 To enable project unit test availability (for building and running) reconfigure it with enabled `ENABLE_UNIT_TESTS` variable as follows (GNU/Linux based):
 
 ```
+# from the project root
+
 mkdir -vp build && cd build && cmake ../ -DENABLE_UNIT_TESTS=ON && cmake --build . --target all
 ```
 

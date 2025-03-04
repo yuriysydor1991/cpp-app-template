@@ -26,7 +26,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 option(
   ENABLE_UNIT_TESTS 
   "Set to ON value if unit tests build and run should be available"
-  ON
+  OFF
 )
 
 find_package(Git REQUIRED)

@@ -39,7 +39,8 @@ bool CommandLineParser::parse_args(std::shared_ptr<ApplicationContext> ctx)
 bool CommandLineParser::check_4_data(
     std::shared_ptr<ApplicationContext> ctx,
     const std::string& param, 
-    const int& hasNext)
+    const int& hasNext,
+    const std::string& nextParam)
 {
   // Place here command line parameters that are requiring
   // some data after it.
@@ -50,7 +51,8 @@ bool CommandLineParser::check_4_data(
   if (ctx == nullptr)
   { return false ; }
 
-  const bool requiresData = std::find(requireNext.cbegin(), requireNext.cend(), param) != requireNext.cend();
+  const bool requiresData = std::find(
+    requireNext.cbegin(), requireNext.cend(), param) != requireNext.cend();
 
   if (requiresData && !hasNext) 
   {
@@ -58,7 +60,7 @@ bool CommandLineParser::check_4_data(
     return false ; 
   }
 
-  return true ;
+  return (hasNext && !nextParam.empty()) || true ;
 }
 
 bool CommandLineParser::parse_arg(
@@ -70,7 +72,7 @@ bool CommandLineParser::parse_arg(
 {
   assert(ctx != nullptr);
 
-  if (!check_4_data (ctx, param, hasNext))
+  if (!check_4_data (ctx, param, hasNext, nextParam))
   { return false ; }
 
   // add a new params parse over here

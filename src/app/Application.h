@@ -16,6 +16,14 @@ class Application:
 {
 public:
 
+  /**
+   * @brief Implemented default application. See IApplication interface.
+   * 
+   * @param ctx Application's run context with command line parameters etc.
+   * 
+   * @return Returns the application return status. A zero value on the success
+   * and other value otherwise.
+   */
   virtual int run(std::shared_ptr<ApplicationContext> ctx) override ;
 };
 

@@ -85,7 +85,7 @@ int ApplicationFactory::run(int& gargc, char** &gargv)
 
   assert(app != nullptr);
 
-   if (app == nullptr) {
+  if (app == nullptr) {
     return INVALID;
   }
 

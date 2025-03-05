@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "src/app/IApplication.h"
+#include "src/app/ApplicationContext.h"
 
 namespace app {
 

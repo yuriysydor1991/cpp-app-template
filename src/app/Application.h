@@ -16,6 +16,8 @@ class Application:
   public IApplication
 {
 public:
+  virtual ~Application() = default;
+  Application() = default;
 
   /**
    * @brief Implemented default application. See IApplication interface.

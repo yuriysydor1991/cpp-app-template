@@ -9,3 +9,4 @@ add_compile_options(-DNDEBUG=1)
 
 add_subdirectory(Application)
 add_subdirectory(ApplicationContext)
+add_subdirectory(ApplicationHelpPrinter)

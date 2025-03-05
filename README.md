@@ -103,7 +103,9 @@ See the [Project build](#project-build) subsection to enable unit testing with C
 
 ### Google Test
 
-Currently test samples are based on the GTest framework. GTest framework by itself becomes available by the `FetchContent_Declare`/`FetchContent_MakeAvailable` CMake-commands.
+Currently test samples are based on the GTest framework. GTest framework by itself becomes available by the `FetchContent_Declare`/`FetchContent_MakeAvailable` CMake-commands if no system GTest is available. 
+
+Of course, the project's CMakeLists.txt files are probing the GTest only if tests are enabled by `ENABLE_UNIT_TESTS` CMake variable. System GTest probe may be turned OFF by setting appropriate value to the `GTEST_TRY_SYSTEM_PROBE` CMake variable.
 
 Look for a `cmake/template-project-make-GTest-available.cmake` to see details or change GTest version etc.
 
@@ -140,6 +142,16 @@ To enable project unit test availability (for building and running) reconfigure 
 
 mkdir -vp build && cd build && cmake ../ -DENABLE_UNIT_TESTS=ON && cmake --build . --target all
 ```
+
+## Disabling system GTest probe 
+
+To disable the system available GTest framework assets usage set appropriate value to the `GTEST_TRY_SYSTEM_PROBE` CMake variable by executing command like (GNU/Linux based):
+
+```
+mkdir -vp build && cd build && cmake ../ -DENABLE_UNIT_TESTS=ON -DGTEST_TRY_SYSTEM_PROBE=OFF && cmake --build . --target all
+```
+
+During command execution project build system will try to make GTest available through the Internet only for current project with specified version in the `cmake/template-project-make-GTest-available.cmake` file.
 
 # Run the executable
 

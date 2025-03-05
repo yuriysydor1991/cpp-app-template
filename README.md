@@ -182,6 +182,22 @@ If executable compiles and is present in the build directory start it in the ter
 
 Once again, the `CppAppTemplate` is the **default** name of the project. Replace it with our own custom one if it was changed in the project's root `CMakeLists.txt` file (the `PROJECT_NAME` variable).
 
+## Tests run
+
+If enabled by the developer through the `ENABLE_UNIT_TESTS` variable and successfully build, the one may run all available test by the `ctest` command from a project build directory (GNU/Linux based):
+
+```
+# run from the project build directory
+
+ctest
+```
+
+Alternatively, run the `ctest` command from any location by specifying the test dir (GNU/Linux based):
+
+```
+ctest --tests-dir /path/to/the/project/build/directory
+```
+
 # Installing executable
 
 Execute available install commands from the project's build directory.

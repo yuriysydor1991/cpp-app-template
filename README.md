@@ -166,10 +166,10 @@ Of course, if your IDE supports CMake build system integration you may just pres
 To find executable in the project build directory execute the `find` command:
 
 ```
-find . -name 'CppCppAppTemplate'
+find . -name 'CppAppTemplate'
 ```
 
-The `CppCppAppTemplate` is a default executable name. Replace it with your custom one if you change the name of the project in the root `CMakeLists.txt` file (the `PROJECT_NAME` variable).
+The `CppAppTemplate` is a default executable name. Replace it with your custom one if you change the name of the project in the root `CMakeLists.txt` file (the `PROJECT_NAME` variable).
 
 ### Starting the generated executable
 

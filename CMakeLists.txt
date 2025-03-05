@@ -32,7 +32,7 @@ option(
 option(
   GTEST_TRY_SYSTEM_PROBE 
   "Set to ON value if current project CMake files should probe the system GTest"
-  OFF
+  ON
 )
 
 find_package(Git REQUIRED)

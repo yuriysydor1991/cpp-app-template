@@ -1,6 +1,9 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATIONCONTEXT_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATIONCONTEXT_CLASS_H
 
+#include <vector>
+#include <string>
+
 #include <gmock/gmock.h>
 
 namespace app {

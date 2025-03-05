@@ -7,9 +7,12 @@
 
 namespace app {
 
-int ApplicationVersionPrinter::run([[maybe_unused]] std::shared_ptr<ApplicationContext> ctx)
+int ApplicationVersionPrinter::run(std::shared_ptr<ApplicationContext> ctx)
 {
   assert(ctx != nullptr);
+
+  if (ctx == nullptr)
+  { return INVALID ; }
 
   std::cout 
     << project_decls::PROJECT_NAME

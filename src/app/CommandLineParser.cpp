@@ -58,6 +58,7 @@ bool CommandLineParser::check_4_data(
 
   if (requiresData && !hasNext) 
   {
+    ctx->print_version_and_exit = true;
     ctx->push_error("Parameter " + param + " requires the data next to it.");
     return false ; 
   }

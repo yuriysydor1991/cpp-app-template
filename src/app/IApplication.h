@@ -26,6 +26,7 @@ public:
   virtual int run(std::shared_ptr<ApplicationContext> ctx) = 0;
 
 protected:
+  /// @brief Commonly used return status in case of any app error.
   static constexpr const int INVALID = 1 ;
 };
 

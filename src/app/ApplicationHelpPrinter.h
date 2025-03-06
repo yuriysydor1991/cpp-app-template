@@ -15,7 +15,7 @@ class ApplicationHelpPrinter:
   public IApplication
 {
 public:
-  virtual ~ApplicationHelpPrinter() = default;
+  virtual ~ApplicationHelpPrinter() = default ;
   ApplicationHelpPrinter() = default ;
 
   /**

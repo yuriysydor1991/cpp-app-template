@@ -28,7 +28,7 @@ public:
    * 
    * @return Returns filled application context instance.
    */
-  virtual std::shared_ptr<ApplicationContext> create_default_context (int& gargc, char** &gargv);
+  virtual std::shared_ptr<ApplicationContext> create_default_context (int& gargc, char** &gargv) ;
 
   /**
    * @brief Creates a command line parser instance to parse application context argv data.

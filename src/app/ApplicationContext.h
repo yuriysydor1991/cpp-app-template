@@ -16,32 +16,32 @@ struct ApplicationContext
   int& argc ;
   char** &argv ;
 
-  ApplicationContext(int& gargc, char** &gargv);
+  ApplicationContext(int& gargc, char** &gargv) ;
 
   /**
    * @brief Set up this flag to true so the ApplicationFactory will create
    * a ApplicationHelpPrinter instance during the application execution.
    * All other classes are ignoring this flag.
    */
-  bool print_help_and_exit{false};
+  bool print_help_and_exit{false} ;
 
   /**
    * @brief Set up this flag value to a true in order to ApplicationFactory
    * to create ApplicationVersionPrinter and execute it.
    */
-  bool print_version_and_exit{false};
+  bool print_version_and_exit{false} ;
 
   /**
    * @brief Errors description.
    */
-  std::vector<std::string> errors;
+  std::vector<std::string> errors ;
 
   /**
    * @brief Pushes a new error description into the errors field;
    * 
    * @param errorDescription The application error description.
    */
-  void push_error(const std::string& errorDescription);
+  void push_error(const std::string& errorDescription) ;
 };
 
 } // namespace app

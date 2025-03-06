@@ -21,7 +21,7 @@ int ApplicationVersionPrinter::run(std::shared_ptr<ApplicationContext> ctx)
     << "configure date " << project_decls::PROJECT_CONFIGURE_DATE
     << std::endl
     << "git commit " << project_decls::PROJECT_BUILD_COMMIT
-    << std::endl;
+    << std::endl ;
 
   return 0 ; 
 }

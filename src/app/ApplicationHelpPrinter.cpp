@@ -26,7 +26,7 @@ int ApplicationHelpPrinter::run(std::shared_ptr<ApplicationContext> ctx)
     << "\t--help or -h - print current help message"
     << std::endl
     << "\t--version or -v - print application version, build git commit and configure date"
-    << std::endl;
+    << std::endl ;
 
   return 0 ;
 }

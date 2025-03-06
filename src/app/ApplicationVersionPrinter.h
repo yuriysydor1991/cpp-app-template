@@ -15,7 +15,7 @@ class ApplicationVersionPrinter:
   public IApplication
 {
 public:
-  virtual ~ApplicationVersionPrinter() = default;
+  virtual ~ApplicationVersionPrinter() = default ;
   ApplicationVersionPrinter() = default ;
 
   /**

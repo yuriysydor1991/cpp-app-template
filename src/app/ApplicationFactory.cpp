@@ -35,7 +35,7 @@ std::shared_ptr<ApplicationContext> ApplicationFactory::create_context (int& gar
   if (argParser == nullptr)
   { return {} ; }
 
-  argParser->parse_args(ctx);
+  argParser->parse_args (ctx) ;
 
   return ctx ;
 }
@@ -55,7 +55,7 @@ std::shared_ptr<IApplication> ApplicationFactory::create_version_printer ()
   return std::make_shared<ApplicationVersionPrinter> () ;
 }
 
-std::shared_ptr<IApplication> ApplicationFactory::create_application(std::shared_ptr<ApplicationContext> ctx)
+std::shared_ptr<IApplication> ApplicationFactory::create_application (std::shared_ptr<ApplicationContext> ctx)
 {
   assert(ctx != nullptr);
 
@@ -78,7 +78,7 @@ int ApplicationFactory::run(int& gargc, char** &gargv)
   assert(ctx != nullptr);
 
   if (ctx == nullptr) {
-    return IApplication::INVALID;
+    return IApplication::INVALID ;
   }
 
   std::shared_ptr<IApplication> app = create_application (ctx) ;
@@ -86,10 +86,10 @@ int ApplicationFactory::run(int& gargc, char** &gargv)
   assert(app != nullptr);
 
   if (app == nullptr) {
-    return IApplication::INVALID;
+    return IApplication::INVALID ;
   }
 
-  return app->run(ctx);
+  return app->run (ctx) ;
 }
 
 int ApplicationFactory::execute(int& gargc, char** &gargv)

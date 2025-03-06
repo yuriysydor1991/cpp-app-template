@@ -2,11 +2,11 @@
 
 namespace app {
 
-ApplicationContext::ApplicationContext(int& gargc, char** &gargv)
+ApplicationContext::ApplicationContext (int& gargc, char** &gargv)
   : argc{gargc}, argv{gargv}
 {}
 
-void ApplicationContext::push_error(const std::string& errorDescription)
+void ApplicationContext::push_error (const std::string& errorDescription)
 {
   errors.emplace_back (errorDescription) ;
 }

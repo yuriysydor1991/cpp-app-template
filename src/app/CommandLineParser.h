@@ -8,8 +8,8 @@
 namespace app {
 
 /**
- * @brief The default application implementation should be placed
- * into current class.
+ * @brief Class for a default implementation of the command line flags
+ * and data parsing from and into the given ApplicationContext instance.
  */
 class CommandLineParser
 {

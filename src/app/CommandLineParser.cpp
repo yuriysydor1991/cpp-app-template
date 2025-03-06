@@ -44,17 +44,12 @@ bool CommandLineParser::check_4_data(
     const int& hasNext,
     const std::string& nextParam)
 {
-  // Place here command line parameters that are requiring
-  // some data after it.
-  static const std::set<std::string> requireNext{};
-
   assert(ctx != nullptr);
 
   if (ctx == nullptr)
   { return false ; }
 
-  const bool requiresData = std::find(
-    requireNext.cbegin(), requireNext.cend(), param) != requireNext.cend();
+  const bool requiresData = requires_data (param);
 
   if (requiresData && !hasNext) 
   {
@@ -91,10 +86,27 @@ bool CommandLineParser::parse_arg(
     return false;
   }
 
-  if (hasNext)
+  if (hasNext && requires_data (param))
   { paramIndex ++ ; }
 
   return (hasNext && nextParam.empty()) || true ;
+}
+
+const std::set<std::string>& CommandLineParser::get_params_requiring_data()
+{
+  // Place here command line parameters that are requiring
+  // some data after it.
+  static const std::set<std::string> requireNext{};
+
+  return requireNext;
+}
+
+bool CommandLineParser::requires_data(const std::string& param)
+{
+  const auto& requireNext = get_params_requiring_data () ;
+
+  return std::find(requireNext.cbegin(), requireNext.cend(), param) 
+    != requireNext.cend();
 }
 
 } // namespace app

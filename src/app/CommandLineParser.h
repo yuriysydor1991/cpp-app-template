@@ -2,6 +2,7 @@
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_COMMANDLINEPARSER_CLASS_H
 
 #include <memory>
+#include <set>
 
 #include "src/app/ApplicationContext.h"
 
@@ -14,8 +15,8 @@ namespace app {
 class CommandLineParser
 {
 public:
-  virtual ~CommandLineParser() = default;
-  CommandLineParser() = default;
+  virtual ~CommandLineParser() = default ;
+  CommandLineParser() = default ;
 
   /**
    * @brief Parses given argc and argv fields of a given application context.
@@ -29,7 +30,6 @@ public:
   virtual bool parse_args(std::shared_ptr<ApplicationContext> ctx) ;
 
 protected:
-
   /**
    * @brief Parse single argument with optional data provided next to it.
    * 
@@ -71,6 +71,18 @@ protected:
     const int& hasNext,
     const std::string& nextParam
   );
+
+  /**
+   * @brief Method should return the set of command line parameters that are requiring 
+   * data given next to it.
+   */
+  virtual const std::set<std::string>& get_params_requiring_data() ;
+
+  /**
+   * @brief Should return a true value if given command line parameter name 
+   * should have a data next to it and false otherwise.
+   */
+  virtual bool requires_data(const std::string& param) ;
 };
 
 } // namespace app

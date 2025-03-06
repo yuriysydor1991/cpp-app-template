@@ -22,6 +22,9 @@ public:
    * @brief the main application routine to execute the implemented application.
    * 
    * @param ctx A filled context to pass data to the app instance.
+   * 
+   * @return Implementors should return a zero value in case of success and
+   * non-zero value in case of any error.
    */
   virtual int run(std::shared_ptr<ApplicationContext> ctx) = 0;
 

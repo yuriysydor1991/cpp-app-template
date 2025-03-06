@@ -10,6 +10,7 @@ add_executable(
 target_include_directories(
   UTEST_ApplicationHelpPrinter
   PRIVATE ${APP_MOCKS_ROOT}/ApplicationContext
+  PRIVATE ${APP_MOCKS_ROOT}/project-global-decls
   PRIVATE ${CMAKE_SOURCE_DIR}
 )
 

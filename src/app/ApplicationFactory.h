@@ -94,9 +94,6 @@ public:
    * @return Returns application run status. See run method.
    */
   static int execute (int& gargc, char** &gargv) ;
-
-protected:
-  static constexpr const int INVALID = 1;
 };
 
 } //namespace app

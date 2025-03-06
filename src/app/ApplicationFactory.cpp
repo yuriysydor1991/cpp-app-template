@@ -78,7 +78,7 @@ int ApplicationFactory::run(int& gargc, char** &gargv)
   assert(ctx != nullptr);
 
   if (ctx == nullptr) {
-    return INVALID;
+    return IApplication::INVALID;
   }
 
   std::shared_ptr<IApplication> app = create_application (ctx) ;
@@ -86,7 +86,7 @@ int ApplicationFactory::run(int& gargc, char** &gargv)
   assert(app != nullptr);
 
   if (app == nullptr) {
-    return INVALID;
+    return IApplication::INVALID;
   }
 
   return app->run(ctx);

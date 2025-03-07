@@ -153,6 +153,32 @@ mkdir -vp build && cd build && cmake ../ -DENABLE_UNIT_TESTS=ON -DGTEST_TRY_SYST
 
 During command execution project build system will try to make GTest available through the Internet only for current project with specified version in the `cmake/template-project-make-GTest-available.cmake` file.
 
+## Documentation build
+
+Currently it's possible to auto-generate the project documentation by the Doxygen tool from the available sources comments.
+
+To enable Doxygen documentation CMake-target during the project configure process call a command that sets the `ENABLE_DOC_DOXYGEN` CMake variable to the `ON` value (GNU/Linux based):
+
+```
+# inside the project root directory 
+
+mkdir -vp build && cd build && cmake ../ -DENABLE_DOC_DOXYGEN=ON
+```
+
+Which effectively will create a directory named `build` inside the project root directory, enters it by a `cd` command and configures project to enable Doxygen documentation build.
+
+Finally build the documentation by executing the command:
+
+```
+# inside the project build directory
+
+cmake --build . --target Doxygen-doc
+```
+
+Which in turn will generate the `doc/html` directory (already added to the `.gitignore` file) which will contain the HTML-type documentation. In order to open and examine generated documentation open the [doc/html/index.html](doc/html/index.html) file.
+
+The `doc/Doxyfile.in` file contains all available Doxygen configuration parameters which may be changed in order to change the documentation output.
+
 # Run the executable
 
 ## IDE run

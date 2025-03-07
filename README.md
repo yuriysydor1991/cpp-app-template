@@ -184,6 +184,8 @@ Once again, the `CppAppTemplate` is the **default** name of the project. Replace
 
 ## Tests run
 
+### Run tests by the ctest
+
 If enabled by the developer through the `ENABLE_UNIT_TESTS` variable and successfully build, the one may run all available test by the `ctest` command from a project build directory (GNU/Linux based):
 
 ```
@@ -196,6 +198,26 @@ Alternatively, run the `ctest` command from any location by specifying the test 
 
 ```
 ctest --tests-dir /path/to/the/project/build/directory
+```
+
+### Manual tests run
+
+Currently tests are separated in different files named with `UTEST_*` pattern for the unit tests.
+
+You may search for all compiled available tests by a next command:
+
+```
+# from the project root or a build directory
+
+find -type f -executable -name 'UTEST_*'
+```
+
+After that, choose particular test of interest and execute it manually if needed. For example, for the `ApplicationFactory` class pass it's UT relative file system path from a project's root directory into the command line and hit enter (GNU/Linux based):
+
+```
+# from the project root
+
+./build/src/app/tests/unit/ApplicationFactory/UTEST_ApplicationFactory
 ```
 
 # Installing executable

@@ -133,7 +133,9 @@ mkdir -vp build && cd build && cmake ../ && cmake --build . --target all
 
 Which effectively will create a directory named `build` (it's already added to the `.gitignore` list), configure project using the CMake available in the system (see the [Requirements](#requirements) section of this `README.md` file) and finally builds all the targets available in the project.
 
-## Enabling unit testing
+## Enabling testing
+
+### Enabling unit testing
 
 To enable project unit test availability (for building and running) reconfigure it with enabled `ENABLE_UNIT_TESTS` variable as follows (GNU/Linux based):
 
@@ -143,7 +145,7 @@ To enable project unit test availability (for building and running) reconfigure 
 mkdir -vp build && cd build && cmake ../ -DENABLE_UNIT_TESTS=ON && cmake --build . --target all
 ```
 
-## Disabling system GTest probe 
+### Disabling system GTest probe 
 
 To disable the system available GTest framework assets usage set appropriate value to the `GTEST_TRY_SYSTEM_PROBE` CMake variable by executing command like (GNU/Linux based):
 
@@ -175,7 +177,7 @@ Finally build the documentation by executing the command:
 cmake --build . --target Doxygen-doc
 ```
 
-Which in turn will generate the `doc/html` directory (already added to the `.gitignore` file) which will contain the HTML-type documentation. In order to open and examine generated documentation open the [doc/html/index.html](doc/html/index.html) file.
+Which in turn will generate the `doc/html` directory (already added to the `.gitignore` file) which will contain the HTML-type documentation. In order to open and examine generated documentation open the `doc/html/index.html` file.
 
 The `doc/Doxyfile.in` file contains all available Doxygen configuration parameters which may be changed in order to change the documentation output.
 

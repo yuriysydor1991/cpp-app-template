@@ -36,7 +36,7 @@ After this command executes you should find a directory named `cpp-app-template`
 
 # Forking and replacing the origin
 
-In order to copy all the template project into your new clean repository (**clean repository with no** `README.md`, `.gitignore`, `LICENCE` or any other files) clone the current cpp-app-template project into your local directory and perform origin replacement command from inside to project root:
+In order to copy all the template project into your new clean repository (**clean repository with no** `README.md`, `.gitignore`, `LICENCE` or any other files) clone the current cpp-app-template project into your local directory and perform origin replacement command from inside the project root directory:
 
 ```
 # REPLACE next URL with yours

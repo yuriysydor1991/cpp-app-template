@@ -38,6 +38,12 @@ option(
   ON
 )
 
+option(
+  ENABLE_DOC_DOXYGEN 
+  "Set to ON value if Doxygen documentation generation should be available"
+  OFF
+)
+
 string(TIMESTAMP PROJECT_CONFIGURE_DATE "%Y-%m-%d %H:%M:%S %Z")
 
 execute_process(
@@ -55,3 +61,4 @@ message(STATUS "PROJECT_NAME: ${PROJECT_NAME}")
 message(STATUS "PROJECT_BINARY_NAME: ${PROJECT_BINARY_NAME}")
 
 add_subdirectory(src)
+add_subdirectory(doc)

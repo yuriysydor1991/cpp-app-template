@@ -1,0 +1,23 @@
+cmake_minimum_required(VERSION 3.22.1)
+
+if(NOT ENABLE_DOC_DOXYGEN)
+  return()
+endif()
+
+find_package(Doxygen REQUIRED)
+
+set(DOXYGEN_IN Doxyfile.in)
+set(DOXYGEN_OUT ${CMAKE_BINARY_DIR}/Doxyfile)
+
+configure_file(
+  ${DOXYGEN_IN} 
+  ${DOXYGEN_OUT}
+)
+
+add_custom_target(
+  Doxygen-doc
+  COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  COMMENT "Generating project documentation with Doxygen"
+  VERBATIM
+)

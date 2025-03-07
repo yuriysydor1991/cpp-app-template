@@ -4,26 +4,20 @@ include(template-project-compile-options)
 add_compile_options(${EXTRA_COMPILE_OPTIONS})
 
 add_executable(
-  ${PROJECT_NAME}
+  ${PROJECT_BINARY_NAME}
   main.cpp
 )
 
 target_include_directories(
-  ${PROJECT_NAME}
+  ${PROJECT_BINARY_NAME}
   PRIVATE ${CMAKE_SOURCE_DIR}
   PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
   PRIVATE ${CMAKE_BINARY_DIR}
 )
 
 install(
-  TARGETS ${PROJECT_NAME}
+  TARGETS ${PROJECT_BINARY_NAME}
   RUNTIME DESTINATION bin
-)
-
-execute_process(
-  COMMAND "${GIT_EXECUTABLE}" rev-parse HEAD
-  OUTPUT_VARIABLE PROJECT_GIT_COMMIT
-  OUTPUT_STRIP_TRAILING_WHITESPACE
 )
 
 configure_file(

@@ -6,10 +6,6 @@ set(
   CACHE STRING "Project general name with an executable name"
 )
 
-string(TIMESTAMP PROJECT_CONFIGURE_DATE "%Y-%m-%d %H:%M:%S %Z")
-
-message(STATUS "PROJECT_NAME: ${PROJECT_NAME}")
-
 project(
   ${PROJECT_NAME}
   VERSION 0.3.0
@@ -18,10 +14,17 @@ project(
   LANGUAGES CXX
 )
 
+find_package(Git REQUIRED)
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+
+set(
+  PROJECT_BINARY_NAME ${PROJECT_NAME}
+  CACHE STRING "Project main binary name and target"
+)
 
 option(
   ENABLE_UNIT_TESTS 
@@ -35,11 +38,20 @@ option(
   ON
 )
 
-find_package(Git REQUIRED)
+string(TIMESTAMP PROJECT_CONFIGURE_DATE "%Y-%m-%d %H:%M:%S %Z")
+
+execute_process(
+  COMMAND "${GIT_EXECUTABLE}" rev-parse HEAD
+  OUTPUT_VARIABLE PROJECT_GIT_COMMIT
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+)
 
 if(ENABLE_UNIT_TESTS)
   enable_testing()
   include(template-project-make-GTest-available)
 endif()
+
+message(STATUS "PROJECT_NAME: ${PROJECT_NAME}")
+message(STATUS "PROJECT_BINARY_NAME: ${PROJECT_BINARY_NAME}")
 
 add_subdirectory(src)

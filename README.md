@@ -73,7 +73,7 @@ It's preferable to create other directories which would contain implemented comp
 
 ## Changing the project and executable name
 
-Change the name of the project in the project's root `CMakeLists.txt` file by introducing a new value for the the `PROJECT_NAME` variable. It is recommended to do so the executable will represent your new application name instead of templated default one - the `CppAppTemplate`.
+Change the name of the project in the project's root `CMakeLists.txt` file by introducing a new value for the the `PROJECT_NAME` and/or `PROJECT_BINARY_NAME` variable. It is recommended to do so the executable will represent your new application name instead of templated default one - the `CppAppTemplate`.
 
 ## Introducing custom command line parameters
 
@@ -169,7 +169,7 @@ To find executable in the project build directory execute the `find` command:
 find . -name 'CppAppTemplate'
 ```
 
-The `CppAppTemplate` is a default executable name. Replace it with your custom one if you change the name of the project in the root `CMakeLists.txt` file (the `PROJECT_NAME` variable).
+The `CppAppTemplate` is a default executable name. Replace it with your custom one if you change the name of the project in the root `CMakeLists.txt` file (the `PROJECT_NAME` and/or `PROJECT_BINARY_NAME` variable).
 
 ### Starting the generated executable
 
@@ -180,7 +180,7 @@ If executable compiles and is present in the build directory start it in the ter
 ./src/CppAppTemplate
 ```
 
-Once again, the `CppAppTemplate` is the **default** name of the project. Replace it with our own custom one if it was changed in the project's root `CMakeLists.txt` file (the `PROJECT_NAME` variable).
+Once again, the `CppAppTemplate` is the **default** name of the project. Replace it with our own custom one if it was changed in the project's root `CMakeLists.txt` file (the `PROJECT_NAME` and/or `PROJECT_BINARY_NAME` variable).
 
 ## Tests run
 

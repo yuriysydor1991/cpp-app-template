@@ -10,7 +10,7 @@
 namespace app {
 
 /**
- * @brief Application factory contains main routines to create configure and 
+ * @brief An ApplicationFactory contains main routines to create, configure and 
  * start the application in accordance of the given parameters.
  */
 class ApplicationFactory

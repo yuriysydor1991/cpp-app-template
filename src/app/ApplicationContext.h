@@ -8,14 +8,33 @@ namespace app {
 
 /**
  * @brief The class that holds necessary information for the application
- * to run properly. May hold parsed parameters, configuration values
- * and error messages with application status code.
+ * to run properly. 
+ * 
+ * May hold parsed parameters, configuration values and error messages
+ * with application status code. The command line parameters are parsed by
+ * the CommandLineParser class instance inside the ApplicationFactory class.
+ * The ApplicationHelpPrinter class instance is printing command line help
+ * for available command line parameters that may be stored in 
+ * the current class instance (if registered properly).
  */
 struct ApplicationContext
 {
+  /// @brief Command line arguments count passed by the OS through the main
+  /// executable function.
   int& argc ;
+
+  /// @brief The command line arguments array passed by the OS through
+  /// the main executable function.
   char** &argv ;
 
+  /**
+   * @brief An ApplicationContext constructor.
+   * 
+   * @param gargc Command line arguments count passed by the OS through the main
+   * executable function that will be referenced in the argc member field.
+   * @param gargv  The command line arguments array passed by the OS through
+   * the main executable function that will be referenced in the argv member field.
+   */
   ApplicationContext(int& gargc, char** &gargv) ;
 
   /**

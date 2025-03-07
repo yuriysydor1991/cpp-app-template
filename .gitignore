@@ -6,4 +6,6 @@ cmake-build-release/*
 Testing/*
 html/*
 latex/*
+doc/html/*
+doc/latex/*
 

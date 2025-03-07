@@ -8,6 +8,7 @@ find_package(Doxygen REQUIRED)
 
 set(DOXYGEN_IN Doxyfile.in)
 set(DOXYGEN_OUT ${CMAKE_BINARY_DIR}/Doxyfile)
+set(DOXYGEN_OUTPUT_DIR ${CMAKE_SOURCE_DIR}/doc)
 
 configure_file(
   ${DOXYGEN_IN} 

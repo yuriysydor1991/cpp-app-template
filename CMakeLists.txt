@@ -44,6 +44,11 @@ option(
   OFF
 )
 
+set(
+  DOXYGEN_OUTPUT_LANGUAGE "English"
+  CACHE STRING "Sets the Doxygen output language for the generated documentation (see doc/Doxyfile.in)"
+)
+
 string(TIMESTAMP PROJECT_CONFIGURE_DATE "%Y-%m-%d %H:%M:%S %Z")
 
 execute_process(

@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.22.1)
 
-#-D_FORTIFY_SOURCE=2 (needs OPT); -Werror (causes some stdlib errors)
+# -Werror sometimes fails with errors in the stdlib
+# -D_FORTIFY_SOURCE=2 (needs OPT); 
+# -fanalyzer causes prolonged build
 
 set(EXTRA_COMPILE_OPTIONS 
   -Wall
@@ -24,7 +26,6 @@ set(EXTRA_COMPILE_OPTIONS
   -Wuseless-cast
   -Wmisleading-indentation
   -Wzero-as-null-pointer-constant
-  -fanalyzer
   -fstack-protector-all
   -fno-common
   -fstrict-overflow

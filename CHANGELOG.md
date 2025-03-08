@@ -5,8 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [app0.3.0] - 2025-03-08
+
+- e673166 Removing Doxygen mention from the extensions and it's refine.
+- 21599fa Specifying optional packaged in the README.md file
+- d301440 Introducing the Doxygen doc install feature with custom html name.
+- a46f413 Adding README.md to the Doxygen documentation.
+- 5de5b7a Adding description for the app namespace
+- 1d60e08 Erasing %Z term for the PROJECT_CONFIGURE_DATE variable value format.
+- b9b05ba CMake batch replace to a minimum version downgrade.
+- 77d99d5 Making Doxygen output directory customizable
+- ff46570 Refining README.md
+- b5777ed Introducing the Doxygen subsection in the README.md
+- 8665554 Refining some classes comments.
+- f53a237 Refining Doxygen target
+- 500ccf0 Introducing the Doxygen documentation creation target.
+- 37ed418 Refining tests run section in the README.md
+- bfd7e38 Fixing README.md type
+- e0e7225 Fixing type in the CHANGELOG.md
+- dfbf4ac Moving ENABLE_UNIT_TEST check to toplevel app UTs
+- 21335bf Introducing a new PROJECT_BINARY_NAME CMake-var and CMake files little reorg
+- d1f5ead Incrementing version to a 0.3.0
+
 ## [app0.2.0] - 2025-03-07
 
+- 74a55dc Release app0.2.0
 - 150537c Fixing annoying -fanalyzer caused prolonged build
 - 84d7c95 Fixing flags skipping in the CommandLineParser
 - 57f0cef Causing to print help if missing command line parameter data.
@@ -71,5 +94,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[app0.3.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.3.0)
 [app0.2.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.2.0)
 [v0.1.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/v0.1.0)

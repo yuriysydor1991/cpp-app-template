@@ -5,6 +5,10 @@
 
 #include "src/app/ApplicationContext.h"
 
+/**
+ * @brief The namespace to contain all the entities for 
+ * the application general purpose classes.
+ */
 namespace app {
 
 /**

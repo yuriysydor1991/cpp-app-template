@@ -54,7 +54,7 @@ set(
   CACHE STRING "Sets the doxygen documentation output directory."
 )
 
-string(TIMESTAMP PROJECT_CONFIGURE_DATE "%Y-%m-%d %H:%M:%S %Z")
+string(TIMESTAMP PROJECT_CONFIGURE_DATE "%Y-%m-%d %H:%M:%S")
 
 execute_process(
   COMMAND "${GIT_EXECUTABLE}" rev-parse HEAD

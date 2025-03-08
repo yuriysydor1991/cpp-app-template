@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.22.1)
+cmake_minimum_required(VERSION 3.13)
 
 # Change the PROJECT_NAME var value to change executable name
 set(

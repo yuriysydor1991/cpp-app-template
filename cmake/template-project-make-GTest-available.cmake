@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.22.1)
+cmake_minimum_required(VERSION 3.13)
 
 set(TEMPLATE_APP_GTEST_GIT "https://github.com/google/googletest.git")
 set(TEMPLATE_APP_GTEST_GIT_TAG "v1.16.0")

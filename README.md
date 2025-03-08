@@ -131,7 +131,7 @@ Look for a `cmake/template-project-make-GTest-available.cmake` to see details or
 
 ## Extensions
 
-There will be introduced some Doxygen documentation auto generation with a `cppcheck` code analyzer in the future, etc.
+There will be introduced some other standard project features in the future.
 
 # Project build
 

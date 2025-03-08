@@ -24,6 +24,26 @@ In order to build minimum template project install the GCC C++ compiler with CMa
 sudo apt install -y git g++ cmake
 ```
 
+## Optional for the tests
+
+If necessary to build and execute available tests install GTest or ensure available Internet access in order to project make it available by itself (GNU/Linux based):
+
+```
+sudo apt install -y googletest
+```
+
+Examine the [Project tests](#project-tests) for more info.
+
+## Optional for the documentation
+
+If necessary to generate the Doxygen documentation from the sources comments install doc generation system also (GNU/Linux based):
+
+```
+sudo apt install -y doxygen graphviz
+```
+
+Examine the [Documentation build](#documentation-build) section on how to enable documentation enable/build/install.
+
 # Cloning the C++ template project
 
 In order to fast-start implementing a new application clone this project into your local directory by executing next command in the terminal (GNU/Linux based):

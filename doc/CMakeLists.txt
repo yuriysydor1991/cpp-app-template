@@ -21,3 +21,13 @@ add_custom_target(
   COMMENT "Generating project documentation with Doxygen"
   VERBATIM
 )
+
+if(DOXYGEN_DO_INSTALL)
+  message(STATUS "Doxygen html doc install enabled for the ${DOXYGEN_OUT_HTML} directory")
+
+  install(
+    DIRECTORY ${DOXYGEN_OUT_HTML}
+    DESTINATION share/docs
+    COMPONENT Documentation
+  )
+endif()

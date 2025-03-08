@@ -54,6 +54,22 @@ set(
   CACHE STRING "Sets the doxygen documentation output directory."
 )
 
+option(
+  DOXYGEN_DO_INSTALL
+  "Set to on if CMake should install the generated documentation during install command executed."
+  OFF 
+)
+
+set(
+  DOXYGEN_OUT_HTML_NAME ${PROJECT_BINARY_NAME}-html
+  CACHE STRING "The Doxygen output HTML directory name (for the Doxyfile)"
+)
+
+set(
+  DOXYGEN_OUT_HTML ${DOXYGEN_OUTPUT_DIR}/${DOXYGEN_OUT_HTML_NAME}
+  CACHE STRING "Sets the doxygen documentation output full directory path."
+)
+
 string(TIMESTAMP PROJECT_CONFIGURE_DATE "%Y-%m-%d %H:%M:%S")
 
 execute_process(

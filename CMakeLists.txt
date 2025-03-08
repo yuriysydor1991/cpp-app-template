@@ -49,6 +49,11 @@ set(
   CACHE STRING "Sets the Doxygen output language for the generated documentation (see doc/Doxyfile.in)"
 )
 
+set(
+  DOXYGEN_OUTPUT_DIR ${CMAKE_SOURCE_DIR}/doc
+  CACHE STRING "Sets the doxygen documentation output directory."
+)
+
 string(TIMESTAMP PROJECT_CONFIGURE_DATE "%Y-%m-%d %H:%M:%S %Z")
 
 execute_process(

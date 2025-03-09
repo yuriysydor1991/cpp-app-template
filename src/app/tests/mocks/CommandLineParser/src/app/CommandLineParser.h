@@ -1,29 +1,32 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_COMMANDLINEPARSER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_COMMANDLINEPARSER_CLASS_H
 
-#include <memory>
-#include <functional>
-
 #include <gmock/gmock.h>
+
+#include <functional>
+#include <memory>
 
 #include "src/app/ApplicationContext.h"
 
-namespace app {
+namespace app
+{
 
 class CommandLineParser
 {
-public:
+ public:
   virtual ~CommandLineParser() = default;
-  CommandLineParser() 
+  CommandLineParser()
   {
-    if (onMockCreate) { onMockCreate(*this); }
+    if (onMockCreate) {
+      onMockCreate(*this);
+    }
   }
 
   inline static std::function<void(CommandLineParser& instance)> onMockCreate;
 
-  MOCK_METHOD(bool, parse_args, (std::shared_ptr<ApplicationContext> ctx)) ;
+  MOCK_METHOD(bool, parse_args, (std::shared_ptr<ApplicationContext> ctx));
 };
 
-} // namespace app
+}  // namespace app
 
-#endif // YOUR_CPP_APP_TEMPLATE_PROJECT_COMMANDLINEPARSER_CLASS_H
+#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_COMMANDLINEPARSER_CLASS_H

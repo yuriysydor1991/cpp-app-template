@@ -1,23 +1,23 @@
-#include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include <gtest/gtest.h>
 
 #include "src/app/ApplicationContext.h"
 
 using namespace app;
 using namespace testing;
 
-class UTEST_ApplicationContext: public Test
+class UTEST_ApplicationContext : public Test
 {
-public:
+ public:
   inline static constexpr const int expectedRandomInt{123};
   inline static const std::string expectedError{"random error description"};
 
-  UTEST_ApplicationContext()
-    : appCtx{create_context(argc, argv)}
-  {}
+  UTEST_ApplicationContext() : appCtx{create_context(argc, argv)} {}
 
-  std::shared_ptr<ApplicationContext> create_context (int& gargc, char** &gargv)
-  { return std::make_shared<ApplicationContext>(gargc, gargv) ; }
+  std::shared_ptr<ApplicationContext> create_context(int& gargc, char**& gargv)
+  {
+    return std::make_shared<ApplicationContext>(gargc, gargv);
+  }
 
   int argc{0};
   char** argv{nullptr};
@@ -89,8 +89,7 @@ TEST_F(UTEST_ApplicationContext, pushing_multiple_errors)
 
   EXPECT_FALSE(appCtx->errors.empty());
 
-  for (const auto& error: appCtx->errors) 
-  {
+  for (const auto& error : appCtx->errors) {
     EXPECT_EQ(error, expectedError);
   }
 

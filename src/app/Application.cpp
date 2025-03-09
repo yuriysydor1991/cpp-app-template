@@ -1,23 +1,23 @@
-#include <memory>
-#include <iostream>
-#include <cassert>
-
 #include "src/app/Application.h"
 
-namespace app {
+#include <cassert>
+#include <iostream>
+#include <memory>
 
-int Application::run (std::shared_ptr<ApplicationContext> ctx)
+namespace app
+{
+
+int Application::run(std::shared_ptr<ApplicationContext> ctx)
 {
   assert(ctx != nullptr);
 
-  if (ctx == nullptr)
-  { return INVALID ; }
-  
-  std::cout 
-    << "Your application implementation goes here!" 
-    << std::endl ;
+  if (ctx == nullptr) {
+    return INVALID;
+  }
 
-  return 0 ;
+  std::cout << "Your application implementation goes here!" << std::endl;
+
+  return 0;
 }
 
-} // namespace app
+}  // namespace app

@@ -1,68 +1,70 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATIONCONTEXT_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATIONCONTEXT_CLASS_H
 
-#include <vector>
 #include <string>
+#include <vector>
 
-namespace app {
+namespace app
+{
 
 /**
  * @brief The class that holds necessary information for the application
- * to run properly. 
- * 
+ * to run properly.
+ *
  * May hold parsed parameters, configuration values and error messages
  * with application status code. The command line parameters are parsed by
  * the CommandLineParser class instance inside the ApplicationFactory class.
  * The ApplicationHelpPrinter class instance is printing command line help
- * for available command line parameters that may be stored in 
+ * for available command line parameters that may be stored in
  * the current class instance (if registered properly).
  */
 struct ApplicationContext
 {
   /// @brief Command line arguments count passed by the OS through the main
   /// executable function.
-  int& argc ;
+  int& argc;
 
   /// @brief The command line arguments array passed by the OS through
   /// the main executable function.
-  char** &argv ;
+  char**& argv;
 
   /**
    * @brief An ApplicationContext constructor.
-   * 
+   *
    * @param gargc Command line arguments count passed by the OS through the main
    * executable function that will be referenced in the argc member field.
    * @param gargv  The command line arguments array passed by the OS through
-   * the main executable function that will be referenced in the argv member field.
+   * the main executable function that will be referenced in the argv member
+   * field.
    */
-  ApplicationContext(int& gargc, char** &gargv) ;
+  ApplicationContext(int& gargc, char**& gargv);
 
   /**
    * @brief Set up this flag to true so the ApplicationFactory will create
    * a ApplicationHelpPrinter instance during the application execution.
    * All other classes are ignoring this flag.
    */
-  bool print_help_and_exit{false} ;
+  bool print_help_and_exit{false};
 
   /**
    * @brief Set up this flag value to a true in order to ApplicationFactory
    * to create ApplicationVersionPrinter and execute it.
    */
-  bool print_version_and_exit{false} ;
+  bool print_version_and_exit{false};
 
   /**
    * @brief Errors description.
    */
-  std::vector<std::string> errors ;
+  std::vector<std::string> errors;
 
   /**
    * @brief Pushes a new error description into the errors field;
-   * 
+   *
    * @param errorDescription The application error description.
    */
-  void push_error(const std::string& errorDescription) ;
+  void push_error(const std::string& errorDescription);
 };
 
-} // namespace app
+}  // namespace app
 
-#endif // YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATIONCONTEXT_CLASS_H
+#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATIONCONTEXT_CLASS_H

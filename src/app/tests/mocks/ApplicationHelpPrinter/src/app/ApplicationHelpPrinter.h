@@ -1,31 +1,33 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATIONHELPPRINTER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATIONHELPPRINTER_CLASS_H
 
-#include <memory>
-#include <functional>
-
 #include <gmock/gmock.h>
+
+#include <functional>
+#include <memory>
 
 #include "src/app/IApplication.h"
 
-namespace app {
-
-class ApplicationHelpPrinter:
-  public IApplication
+namespace app
 {
-public:
+
+class ApplicationHelpPrinter : public IApplication
+{
+ public:
   virtual ~ApplicationHelpPrinter() = default;
 
-  ApplicationHelpPrinter() 
+  ApplicationHelpPrinter()
   {
-    if (onMockCreate) { onMockCreate(*this); }
+    if (onMockCreate) {
+      onMockCreate(*this);
+    }
   }
 
   inline static std::function<void(ApplicationHelpPrinter&)> onMockCreate;
 
-  MOCK_METHOD(int, run, (std::shared_ptr<ApplicationContext> ctx), (override)) ;
+  MOCK_METHOD(int, run, (std::shared_ptr<ApplicationContext> ctx), (override));
 };
 
-} // namespace app
+}  // namespace app
 
-#endif // YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATIONHELPPRINTER_CLASS_H
+#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATIONHELPPRINTER_CLASS_H

@@ -1,30 +1,32 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATIONVERSIONPRINTER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATIONVERSIONPRINTER_CLASS_H
 
-#include <memory>
-
 #include <gmock/gmock.h>
+
+#include <memory>
 
 #include "src/app/IApplication.h"
 
-namespace app {
-
-class ApplicationVersionPrinter:
-  public IApplication
+namespace app
 {
-public:
+
+class ApplicationVersionPrinter : public IApplication
+{
+ public:
   virtual ~ApplicationVersionPrinter() = default;
-  
-  ApplicationVersionPrinter() 
+
+  ApplicationVersionPrinter()
   {
-    if (onMockCreate) { onMockCreate(*this); }
+    if (onMockCreate) {
+      onMockCreate(*this);
+    }
   }
 
   inline static std::function<void(ApplicationVersionPrinter&)> onMockCreate;
 
-  MOCK_METHOD(int, run, (std::shared_ptr<ApplicationContext> ctx), (override)) ;
+  MOCK_METHOD(int, run, (std::shared_ptr<ApplicationContext> ctx), (override));
 };
 
-} // namespace app
+}  // namespace app
 
-#endif // YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATIONVERSIONPRINTER_CLASS_H
+#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATIONVERSIONPRINTER_CLASS_H

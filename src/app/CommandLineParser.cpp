@@ -1,95 +1,97 @@
-#include <memory>
-#include <cassert>
-#include <string>
-#include <set>
-#include <algorithm>
-
-#include "src/app/ApplicationContext.h"
 #include "src/app/CommandLineParser.h"
 
-namespace app {
+#include <algorithm>
+#include <cassert>
+#include <memory>
+#include <set>
+#include <string>
 
-namespace {
-  const std::string HELPW {"--help"};
-  const std::string HELP {"-h"};
-  const std::string VERSIONW {"--version"};
-  const std::string VERSION {"-v"};
-}
+#include "src/app/ApplicationContext.h"
+
+namespace app
+{
+
+namespace
+{
+const std::string HELPW{"--help"};
+const std::string HELP{"-h"};
+const std::string VERSIONW{"--version"};
+const std::string VERSION{"-v"};
+}  // namespace
 
 bool CommandLineParser::parse_args(std::shared_ptr<ApplicationContext> ctx)
 {
   assert(ctx != nullptr);
 
-  if (ctx == nullptr)
-  { return false ; }
+  if (ctx == nullptr) {
+    return false;
+  }
 
-  for (int iter = 1; iter < ctx->argc; ++iter) 
-  {
+  for (int iter = 1; iter < ctx->argc; ++iter) {
     const int nextIter = iter + 1;
     const bool hasNext = nextIter < ctx->argc;
 
     const std::string param = ctx->argv[iter];
     const std::string nextParam = hasNext ? ctx->argv[nextIter] : std::string{};
 
-    if (!parse_arg(ctx, param, hasNext, nextParam, iter))
-    { return false ; }
+    if (!parse_arg(ctx, param, hasNext, nextParam, iter)) {
+      return false;
+    }
   }
 
-  return true ;
+  return true;
 }
 
-bool CommandLineParser::check_4_data(
-    std::shared_ptr<ApplicationContext> ctx,
-    const std::string& param, 
-    const int& hasNext,
-    const std::string& nextParam)
+bool CommandLineParser::check_4_data(std::shared_ptr<ApplicationContext> ctx,
+                                     const std::string& param,
+                                     const int& hasNext,
+                                     const std::string& nextParam)
 {
   assert(ctx != nullptr);
 
-  if (ctx == nullptr)
-  { return false ; }
+  if (ctx == nullptr) {
+    return false;
+  }
 
-  const bool requiresData = requires_data (param);
+  const bool requiresData = requires_data(param);
 
-  if (requiresData && !hasNext) 
-  {
+  if (requiresData && !hasNext) {
     ctx->print_version_and_exit = true;
     ctx->push_error("Parameter " + param + " requires the data next to it.");
-    return false ; 
+    return false;
   }
 
-  return (hasNext && !nextParam.empty()) || true ;
+  return (hasNext && !nextParam.empty()) || true;
 }
 
-bool CommandLineParser::parse_arg(
-  std::shared_ptr<ApplicationContext> ctx,
-  const std::string& param, 
-  const int& hasNext, 
-  const std::string& nextParam,
-  int& paramIndex)
+bool CommandLineParser::parse_arg(std::shared_ptr<ApplicationContext> ctx,
+                                  const std::string& param, const int& hasNext,
+                                  const std::string& nextParam, int& paramIndex)
 {
   assert(ctx != nullptr);
 
-  if (!check_4_data (ctx, param, hasNext, nextParam))
-  { return false ; }
+  if (!check_4_data(ctx, param, hasNext, nextParam)) {
+    return false;
+  }
 
   // add a new params parse over here
-  // Also register new command line parameters in the ApplicationhelpPrinter's help.
-  if (param == HELPW || param == HELP)
-  { ctx->print_help_and_exit = true; }
-  else if (param == VERSIONW || param == VERSION)
-  { ctx->print_version_and_exit = true; }
-  else
-  {
+  // Also register new command line parameters in the ApplicationhelpPrinter's
+  // help.
+  if (param == HELPW || param == HELP) {
+    ctx->print_help_and_exit = true;
+  } else if (param == VERSIONW || param == VERSION) {
+    ctx->print_version_and_exit = true;
+  } else {
     ctx->print_help_and_exit = true;
     ctx->push_error("Unknown parameter: " + param);
     return false;
   }
 
-  if (hasNext && requires_data (param))
-  { paramIndex ++ ; }
+  if (hasNext && requires_data(param)) {
+    paramIndex++;
+  }
 
-  return (hasNext && nextParam.empty()) || true ;
+  return (hasNext && nextParam.empty()) || true;
 }
 
 const std::set<std::string>& CommandLineParser::get_params_requiring_data()
@@ -103,10 +105,10 @@ const std::set<std::string>& CommandLineParser::get_params_requiring_data()
 
 bool CommandLineParser::requires_data(const std::string& param)
 {
-  const auto& requireNext = get_params_requiring_data () ;
+  const auto& requireNext = get_params_requiring_data();
 
-  return std::find(requireNext.cbegin(), requireNext.cend(), param) 
-    != requireNext.cend();
+  return std::find(requireNext.cbegin(), requireNext.cend(), param) !=
+         requireNext.cend();
 }
 
-} // namespace app
+}  // namespace app

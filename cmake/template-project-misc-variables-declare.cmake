@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.13)
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
-
 set(
   PROJECT_BINARY_NAME ${PROJECT_NAME}
   CACHE STRING "Project main binary name and target"

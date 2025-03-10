@@ -12,6 +12,43 @@ Alter current `README.md` file to match your implementation introduced into the 
 
 See more at the [kytok.org.ua](http://www.kytok.org.ua/)
 
+# Cloning the C++ template project
+
+In order to fast-start implementing a new application clone this project into your local directory by executing next command in the terminal (GNU/Linux based):
+
+```
+git clone https://github.com/yuriysydor1991/cpp-app-template.git
+```
+
+After this command executes you should find a directory named `cpp-app-template` inside your current one. So enter it by calling `cd cpp-app-template`.
+
+# Forking and replacing the origin
+
+In order to copy all the template project into your new clean repository (**clean repository with no** `README.md`, `.gitignore`, `LICENCE` or any other files) clone the current cpp-app-template project into your local directory and perform origin replacement command from inside the project root directory:
+
+```
+# REPLACE next URL with yours
+git remote set-url origin https://github.com/yuriysydor1991/cpp-app-template.git
+```
+
+Replace the `https://github.com/yuriysydor1991/cpp-app-template.git` URL with one of your newly created project repository URL.
+
+To verify successful repository remote URL (where all the changes will be pushed) replacement execute next command:
+
+```
+git remote -v
+```
+
+Which should show your new project repository.
+
+Finally push your repository to a new location by executing next command:
+
+```
+git push
+```
+
+Forking may be performed in git Web interface panel.
+
 # Requirements
 
 This section contains list of required packages and/or tools that must be present in the system in order to build templated project.
@@ -53,43 +90,6 @@ sudo apt install -y clang-format
 ```
 
 Examine configuring details in the [Enabling and performing code formatting target](#enabling-and-performing-code-formatting-target) subsection.
-
-# Cloning the C++ template project
-
-In order to fast-start implementing a new application clone this project into your local directory by executing next command in the terminal (GNU/Linux based):
-
-```
-git clone https://github.com/yuriysydor1991/cpp-app-template.git
-```
-
-After this command executes you should find a directory named `cpp-app-template` inside your current one. So enter it by calling `cd cpp-app-template`.
-
-# Forking and replacing the origin
-
-In order to copy all the template project into your new clean repository (**clean repository with no** `README.md`, `.gitignore`, `LICENCE` or any other files) clone the current cpp-app-template project into your local directory and perform origin replacement command from inside the project root directory:
-
-```
-# REPLACE next URL with yours
-git remote set-url origin https://github.com/yuriysydor1991/cpp-app-template.git
-```
-
-Replace the `https://github.com/yuriysydor1991/cpp-app-template.git` URL with one of your newly created project repository URL.
-
-To verify successful repository remote URL (where all the changes will be pushed) replacement execute next command:
-
-```
-git remote -v
-```
-
-Which should show your new project repository.
-
-Finally push your repository to a new location by executing next command:
-
-```
-git push
-```
-
-Forking may be performed in git Web interface panel.
 
 # Project structure
 

@@ -70,6 +70,12 @@ set(
   CACHE STRING "Sets the doxygen documentation output full directory path."
 )
 
+option(
+  ENABLE_CLANGFORMAT
+  "Set to ON if to enable the clang-format command execution."
+  ON
+)
+
 string(TIMESTAMP PROJECT_CONFIGURE_DATE "%Y-%m-%d %H:%M:%S")
 
 execute_process(
@@ -81,6 +87,10 @@ execute_process(
 if(ENABLE_UNIT_TESTS)
   enable_testing()
   include(template-project-make-GTest-available)
+endif()
+
+if(ENABLE_CLANGFORMAT)
+  include(template-project-clang-format-target)
 endif()
 
 message(STATUS "PROJECT_NAME: ${PROJECT_NAME}")

@@ -32,6 +32,10 @@ if(ENABLE_CLANGFORMAT)
   include(template-project-clang-format-target)
 endif()
 
+if(ENABLE_CPPCHECK)
+  include(template-project-cppcheck-target)
+endif()
+
 message(STATUS "PROJECT_NAME: ${PROJECT_NAME}")
 message(STATUS "PROJECT_BINARY_NAME: ${PROJECT_BINARY_NAME}")
 

@@ -51,8 +51,8 @@ set(
 
 option(
   ENABLE_CLANGFORMAT
-  "Set to ON if to enable the clang-format command execution."
-  ON
+  "Set to ON if to enable the clang-format command execution target."
+  OFF
 )
 
 string(TIMESTAMP PROJECT_CONFIGURE_DATE "%Y-%m-%d %H:%M:%S")

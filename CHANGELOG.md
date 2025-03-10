@@ -5,8 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [app0.4.0] - 2025-03-10
+
+- 6329ab2 Sections reorder
+- 40b7fdc Introducing clang-format doc into the root README.md
+- 6dc997d Setting default OFF value for the clang-format target
+- 4d9d227 Fixing absent cmake-modules search path from root
+- 38f0c43 Decomposing root CMakeLists.txt var declares into separate module.
+- ce9cd15 Adding the clang-format target
+- c3aea63 Applied clang-format code formatter
+- 6ec1125 Incrementing version to 0.4.0
+- c3511ae Introducing Google-based .clang-format file.
+
 ## [app0.3.0] - 2025-03-08
 
+- 7dacafc Release app0.3.0 2025-03-08
 - e673166 Removing Doxygen mention from the extensions and it's refine.
 - 21599fa Specifying optional packaged in the README.md file
 - d301440 Introducing the Doxygen doc install feature with custom html name.
@@ -94,6 +107,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[app0.4.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.4.0)
 [app0.3.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.3.0)
 [app0.2.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.2.0)
 [v0.1.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/v0.1.0)

@@ -44,6 +44,16 @@ sudo apt install -y doxygen graphviz
 
 Examine the [Documentation build](#documentation-build) section on how to enable documentation enable/build/install.
 
+## Optional for the code formatting
+
+To auto format code using available `clang-format` target the `clang-format` code formatter must be installed (GNU/Linux based):
+
+```
+sudo apt install -y clang-format
+```
+
+Examine configuring details in the [Enabling and performing code formatting target](#enabling-and-performing-code-formatting-target) subsection.
+
 # Cloning the C++ template project
 
 In order to fast-start implementing a new application clone this project into your local directory by executing next command in the terminal (GNU/Linux based):
@@ -212,6 +222,26 @@ cmake ../ -DENABLE_DOC_DOXYGEN=ON -DDOXYGEN_DO_INSTALL=ON
 ```
 
 The `DOXYGEN_OUT_HTML_NAME` CMake variable will configure the documentation html directory name (passed into the `Doxyfile`).
+
+## Enabling and performing code formatting target
+
+In order to make `clang-format` target available set the `ENABLE_CLANGFORMAT` variable value to `ON` during the project configuration stage (GNU/Linux based):
+
+```
+# inside the project root directory 
+
+mkdir -vp build && cd build && cmake ../ -DENABLE_CLANGFORMAT=ON
+```
+
+To perform the whole project code format in accordance with available `misc/.clang-format` code formatter configuration execute next building command:
+
+```
+# inside the project build directory
+
+cmake --build . --target Doxygen-doc
+```
+
+The `clang-format` target details may be examined and/or altered in the `cmake/template-project-clang-format-target.cmake` CMake submodule file.
 
 # Run the executable
 

@@ -22,19 +22,7 @@ find_package(Git REQUIRED)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 include(template-project-misc-variables-declare)
-
-if(ENABLE_UNIT_TESTS)
-  enable_testing()
-  include(template-project-make-GTest-available)
-endif()
-
-if(ENABLE_CLANGFORMAT)
-  include(template-project-clang-format-target)
-endif()
-
-if(ENABLE_CPPCHECK)
-  include(template-project-cppcheck-target)
-endif()
+include(template-project-feature-enabler)
 
 message(STATUS "PROJECT_NAME: ${PROJECT_NAME}")
 message(STATUS "PROJECT_BINARY_NAME: ${PROJECT_BINARY_NAME}")

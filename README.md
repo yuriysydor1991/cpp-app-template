@@ -91,6 +91,16 @@ sudo apt install -y clang-format
 
 Examine configuring details in the [Enabling and performing code formatting target](#enabling-and-performing-code-formatting-target) subsection.
 
+## Optional for the code analyzer (cppcheck)
+
+In order to perform a static code analysis with the `cppcheck` command install it with next command (GNU/linux based):
+
+```
+sudo apt install -y cppcheck
+```
+
+Examine the [Enabling the static code analyzer target with cppcheck](#enabling-the-static-code-analyzer-target-with-cppcheck) section on how to enable the `cppcheck` target.
+
 # Project structure
 
 ## Implement code straight away!
@@ -238,10 +248,28 @@ To perform the whole project code format in accordance with available `misc/.cla
 ```
 # inside the project build directory
 
-cmake --build . --target cppcheck
+cmake --build . --target clang-format
 ```
 
 The `clang-format` target details may be examined and/or altered in the `cmake/template-project-clang-format-target.cmake` CMake submodule file.
+
+## Enabling the static code analyzer target with cppcheck
+
+In order to make the cppcheck target available for the execution, configure project with enabled `ENABLE_CPPCHECK` variable:
+
+```
+# inside the project root directory 
+
+mkdir -vp build && cd build && cmake ../ -DENABLE_CPPCHECK=ON
+```
+
+And to perform the actual static code analysis by itself run the `cppcheck` target for the build:
+
+```
+# inside the project build directory
+
+cmake --build . --target cppcheck
+```
 
 # Run the executable
 

@@ -12,3 +12,7 @@ endif()
 if(ENABLE_CPPCHECK)
   include(template-project-cppcheck-target)
 endif()
+
+if(ENABLE_VALGRIND)
+  include(template-project-valgrind-target)
+endif()

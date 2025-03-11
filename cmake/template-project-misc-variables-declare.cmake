@@ -61,6 +61,12 @@ option(
   OFF
 )
 
+option(
+  ENABLE_VALGRIND
+  "Set to ON if to enable the valgrind memory check execution target."
+  OFF
+)
+
 string(TIMESTAMP PROJECT_CONFIGURE_DATE "%Y-%m-%d %H:%M:%S")
 
 execute_process(

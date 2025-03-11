@@ -238,7 +238,7 @@ To perform the whole project code format in accordance with available `misc/.cla
 ```
 # inside the project build directory
 
-cmake --build . --target Doxygen-doc
+cmake --build . --target cppcheck
 ```
 
 The `clang-format` target details may be examined and/or altered in the `cmake/template-project-clang-format-target.cmake` CMake submodule file.

@@ -101,6 +101,16 @@ sudo apt install -y cppcheck
 
 Examine the [Enabling the static code analyzer target with cppcheck](#enabling-the-static-code-analyzer-target-with-cppcheck) section on how to enable the `cppcheck` target.
 
+## Optional for the memory check with Valgrind
+
+In order to enable the dynamic application check with the `valgrind` command install it with the command:
+
+```
+sudo apt install -y valgrind
+```
+
+For more details on how to enable and run the memory check target examine the [Enabling the dynamic memory check target with valgrind](#enabling-the-dynamic-memory-check-target-with-valgrind) section.
+
 # Project structure
 
 ## Implement code straight away!
@@ -270,6 +280,26 @@ And to perform the actual static code analysis by itself run the `cppcheck` targ
 
 cmake --build . --target cppcheck
 ```
+
+## Enabling the dynamic memory check target with valgrind
+
+In order to make the `valgrind` target available for the execution, configure project with the enabled `ENABLE_VALGRIND` variable like:
+
+```
+# inside the project root directory 
+
+mkdir -vp build && cd build && cmake ../ -DENABLE_VALGRIND=ON
+```
+
+To perform the dynamic memory check on the application build run next command:
+
+```
+# inside the project build directory
+
+cmake --build . --target valgrind
+```
+
+**Warning! It will start application.** The dynamic memory check requires application to be started and go through the full cycle. Ensure that application execution will have a finite time.
 
 # Run the executable
 

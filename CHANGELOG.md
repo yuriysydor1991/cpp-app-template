@@ -5,8 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [app0.5.0] - 2025-03-12
+
+- edad5ce Specifying the cmake modules for the valgrind and cppcheck targets
+- cc7c0e7 Specifying particular test run with ctest
+- 2fe49df Introducing the Valgrind target doc for root README.md
+- ee75ed3 Introducing the cppcheck doc into root README.md
+- 2edc812 Fixing cppcheck target exec doc in the README.md
+- 2058fe2 Introducing the Valgrind memory check target
+- 37b2e48 Decomposing feature enabling if statements into separate file
+- 5f96b82 Integrating the cppcheck code checking tool.
+- c6aca03 Incrementing version to 0.5.0
+
 ## [app0.4.0] - 2025-03-10
 
+- b15973a Release app0.4.0 2025-03-10
 - 6329ab2 Sections reorder
 - 40b7fdc Introducing clang-format doc into the root README.md
 - 6dc997d Setting default OFF value for the clang-format target
@@ -107,6 +120,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[app0.5.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.5.0)
 [app0.4.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.4.0)
 [app0.3.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.3.0)
 [app0.2.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.2.0)

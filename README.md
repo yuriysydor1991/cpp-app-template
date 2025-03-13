@@ -125,7 +125,7 @@ It's preferable to create other directories which would contain implemented comp
 
 ## Changing the project and executable name
 
-Change the name of the project in the project's root `CMakeLists.txt` file by introducing a new value for the the `PROJECT_NAME` and/or `PROJECT_BINARY_NAME` variable. It is recommended to do so the executable will represent your new application name instead of templated default one - the `CppAppTemplate`.
+Change the name of the project in the project's root `CMakeLists.txt` file by introducing a new value for the the `PROJECT_NAME` and/or `PROJECT_BINARY_NAME` variable which is located at `cmake/template-project-misc-variables-declare.cmake`. It is recommended to do so the executable will represent your new application name instead of templated default one - the `CppAppTemplate`.
 
 ## Introducing custom command line parameters
 
@@ -382,7 +382,7 @@ After that, choose particular test of interest and execute it manually if needed
 ./build/src/app/tests/unit/ApplicationFactory/UTEST_ApplicationFactory
 ```
 
-# Installing executable
+# Installing
 
 Execute available install commands from the project's build directory.
 

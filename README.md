@@ -139,7 +139,7 @@ In order to introduce some additional command line parameters for the binary loo
 
 Add some additional custom fields into the `ApplicationContext` class in order to pass some custom command line flags and/or data to the `IApplication` interface abstract class descendants that will be created by the `ApplicationFactory` during command line arguments parse.
 
-Some or all `ApplicationContext` fields may be transferred into the `LibraryContext` instance during the `LibMain` default implementation call.
+Some or all `ApplicationContext` fields may be transferred into the `LibraryContext` instance by the `ApplicationContext2LibraryContext` converter class instance during the `LibMain` default implementation call. Examine the `Application` default application implementation.
 
 ## Implement your own IApplication descendants
 
@@ -390,7 +390,7 @@ After that, choose particular test of interest and execute it manually if needed
 ./build/src/app/tests/unit/ApplicationFactory/UTEST_ApplicationFactory
 ```
 
-# Installing executable
+# Installing
 
 Execute available install commands from the project's build directory.
 
@@ -400,6 +400,8 @@ In order to install generated executable (as shown previous) file into your's sy
 
 ```
 # installs generated binary under the /usr/local/bin/ for example
+# installs generated library under the /usr/local/lib/
+# and installs header include files under the /usr/local/include/CppAppTemplate
 # run from the project's build directory
 
 sudo cmake --install .

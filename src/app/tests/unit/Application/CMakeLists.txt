@@ -10,6 +10,8 @@ add_executable(
 target_include_directories(
   UTEST_Application
   PRIVATE ${APP_MOCKS_ROOT}/ApplicationContext
+  PRIVATE ${APP_MOCKS_ROOT}/LibraryContext
+  PRIVATE ${APP_MOCKS_ROOT}/LibraryFacade
   PRIVATE ${CMAKE_SOURCE_DIR}
 )
 

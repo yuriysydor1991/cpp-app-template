@@ -117,7 +117,11 @@ For more details on how to enable and run the memory check target examine the [E
 
 ## Implement code straight away!
 
-To proceed the application implementation right away look for the `Application` class' `Application.cpp` file which is designed to accept initial code of the application. Specifically, new code may be placed into the `int Application::run(std::shared_ptr<ApplicationContext> ctx)` method.
+To proceed the application implementation right away look for the `LibMain` class' `LibMain.cpp` file which is designed to accept initial code of the application. Specifically, new code may be placed into the `bool LibMain::libcall(std::shared_ptr<LibraryContext> ctx)` method. 
+
+Although, `Application` class instance which calls for the libcall method of the `LibMain` class is fully implemenated and doesn't require any changes, it may also receive some changes in order for application to work properly if necessary. See the `Application` class default implementation method `int Application::run(std::shared_ptr<ApplicationContext> ctx)` in order to review it's code and introduce some changes.
+
+The `LibMain` class will be compiled into destination target library in order to make it's implementation available for other external applications to reuse it.
 
 **But do not forget about the SOLID principles and code decomposing!**
 
@@ -127,11 +131,15 @@ It's preferable to create other directories which would contain implemented comp
 
 Change the name of the project in the project's root `CMakeLists.txt` file by introducing a new value for the the `PROJECT_NAME` and/or `PROJECT_BINARY_NAME` variable. It is recommended to do so the executable will represent your new application name instead of templated default one - the `CppAppTemplate`.
 
+To change the destination library name change the `PROJECT_LIBRARY_NAME` variable value. It's default value will take the `PROJECT_NAME` value and appends the `Lib` string into it. For example, if name of the project is not changed yet the library will have the `libCppAppTemplateLib` name.
+
 ## Introducing custom command line parameters
 
 In order to introduce some additional command line parameters for the binary look for the `CommandLineParser` class implementation. It contains command line parsing routines that are passed by `ApplicationFactory` class after the `main` function was called.
 
 Add some additional custom fields into the `ApplicationContext` class in order to pass some custom command line flags and/or data to the `IApplication` interface abstract class descendants that will be created by the `ApplicationFactory` during command line arguments parse.
+
+Some or all `ApplicationContext` fields may be transferred into the `LibraryContext` instance during the `LibMain` default implementation call.
 
 ## Implement your own IApplication descendants
 

@@ -25,7 +25,7 @@ class ILib
   ILib() = default;
 
   /**
-   * @brief An library interface method which every ILib descendant
+   * @brief The library interface method which every ILib descendant
    * must to implement in order to provide it's functionality.
    *
    * @param ctx A filled LibraryContext instance with appropriate data

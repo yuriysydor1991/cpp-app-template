@@ -5,8 +5,41 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [applib0.6.0] - 2025-03-13
+
+- d0a0eed Introducing explanatory comments for new LibraryContext class fields.
+- 34988bb Introducing ApplicationContext2LibraryContext UTs with moved general mocks
+- f83084b Removing forgotten debug #error
+- d978ec1 Specifying translation documents for the root README under the doc
+- c41e944 Specifying the source file for the PROJECT_BINARY_NAME CMake variable
+- 78e90c7 Some README.md refinements
+- 1f46f37 Refining SOLID comment for Implement code straight away
+- 89de1b3 Introducing the ApplicationContext2LibraryContext class with mocks and refined Application UTs
+- 492817a Introducing additional library related info into README.md
+- 6f48e44 Marking applib branch as current in the README.md
+- 522ccfc Introducing multibranch info into the root README.md
+- 3f11e47 Marking LibraryContext destructure as virtual to allow subclassing
+- 5a8b53b Renaming library facade namespace to templatelib0
+- 27bc62a Fixing wrong article.
+- 96e24aa Applying clang-format
+- 71c3c6d Refining UTEST_Application unit test to pass.
+- c223375 Introducing library mocks for the app component
+- 45cb5fb Refining library classes explanatory comments.
+- 2d2c974 Marking library facade cpp file as private.
+- 8cac51b Introducing library component facade and default implementation.
+- e19aef1 README.uk_UA.md links refinement
+- ec31437 The root README.md file translation to uk_UA workflow final
+- be2dd4d The root README.md file translation to uk_UA workflow (pre Installing executable)
+- 421f046 The root README.md file translation to uk_UA workflow (pre Run section)
+- 86ac202 The root README.md file translation to uk_UA workflow (pre clang-format)
+- a443a83 The root README.md file translation to uk_UA workflow (pre enabling testing)
+- 8da8536 The root README.md file translation to uk_UA workflow.
+- cadecf3 Introducing translated root README in uk_UA.
+- a5f282c Incrementing version to 0.6.0
+
 ## [app0.5.0] - 2025-03-12
 
+- c60779c Release app0.5.0 2025-03-12
 - edad5ce Specifying the cmake modules for the valgrind and cppcheck targets
 - cc7c0e7 Specifying particular test run with ctest
 - 2fe49df Introducing the Valgrind target doc for root README.md

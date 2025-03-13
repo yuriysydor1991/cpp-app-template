@@ -5,7 +5,7 @@
  * @brief The facade interface namespace for the library.
  * Designed to give access to the library functionality.
  */
-namespace templatelib
+namespace templatelib0
 {
 
 /**

@@ -3,7 +3,7 @@
 
 #include <gmock/gmock.h>
 
-namespace templatelib
+namespace templatelib0
 {
 
 class LibraryContext

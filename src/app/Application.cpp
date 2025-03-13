@@ -18,7 +18,7 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  std::shared_ptr<templatelib::LibraryFacade> libfacade = create_lib_instance();
+  std::shared_ptr<templatelib0::LibraryFacade> libfacade = create_lib_instance();
 
   assert(libfacade != nullptr);
 
@@ -27,7 +27,7 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  std::shared_ptr<templatelib::LibraryContext> libctx =
+  std::shared_ptr<templatelib0::LibraryContext> libctx =
       libfacade->create_library_context();
 
   assert(libctx != nullptr);
@@ -44,9 +44,9 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
   return 0;
 }
 
-std::shared_ptr<templatelib::LibraryFacade> Application::create_lib_instance()
+std::shared_ptr<templatelib0::LibraryFacade> Application::create_lib_instance()
 {
-  return std::make_shared<templatelib::LibraryFacade>();
+  return std::make_shared<templatelib0::LibraryFacade>();
 }
 
 }  // namespace app

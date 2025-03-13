@@ -6,7 +6,7 @@
 
 #include "src/lib/libmain/LibFactory.h"
 
-namespace templatelib
+namespace templatelib0
 {
 
 namespace

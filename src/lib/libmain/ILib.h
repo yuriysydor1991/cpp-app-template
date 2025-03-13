@@ -19,7 +19,7 @@ namespace lib0impl
 class ILib
 {
  public:
-  using LibraryContext = templatelib::LibraryContext;
+  using LibraryContext = templatelib0::LibraryContext;
 
   virtual ~ILib() = default;
   ILib() = default;

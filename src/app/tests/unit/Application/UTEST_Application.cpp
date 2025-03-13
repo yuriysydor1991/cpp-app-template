@@ -10,8 +10,8 @@ using namespace testing;
 class UTEST_Application : public Test
 {
  public:
-  using LibraryFacade = templatelib::LibraryFacade;
-  using LibraryContext = templatelib::LibraryContext;
+  using LibraryFacade = templatelib0::LibraryFacade;
+  using LibraryContext = templatelib0::LibraryContext;
 
   UTEST_Application()
       : app{std::make_shared<Application>()},

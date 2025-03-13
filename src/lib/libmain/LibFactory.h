@@ -17,7 +17,7 @@ namespace lib0impl
 class LibFactory
 {
  public:
-  using LibraryContext = templatelib::LibraryContext;
+  using LibraryContext = ILib::LibraryContext;
 
   virtual ~LibFactory() = default;
   LibFactory() = default;

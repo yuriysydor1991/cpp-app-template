@@ -5,7 +5,7 @@
 
 #include "LibraryContext.h"
 
-namespace templatelib
+namespace templatelib0
 {
 
 /**
@@ -43,6 +43,6 @@ class LibraryFacade
   virtual bool libcall(std::shared_ptr<LibraryContext> ctx);
 };
 
-}  // namespace templatelib
+}  // namespace templatelib0
 
 #endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_LIBRARYFACADE_CLASS_H

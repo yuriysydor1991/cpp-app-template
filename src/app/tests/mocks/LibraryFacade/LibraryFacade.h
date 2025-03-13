@@ -8,7 +8,7 @@
 
 #include "LibraryContext.h"
 
-namespace templatelib
+namespace templatelib0
 {
 
 class LibraryFacadeSynthBaseClass

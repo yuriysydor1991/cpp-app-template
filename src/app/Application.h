@@ -32,7 +32,7 @@ class Application : public IApplication
   virtual int run(std::shared_ptr<ApplicationContext> ctx) override;
 
  protected:
-  std::shared_ptr<templatelib::LibraryFacade> create_lib_instance();
+  std::shared_ptr<templatelib0::LibraryFacade> create_lib_instance();
 };
 
 }  // namespace app

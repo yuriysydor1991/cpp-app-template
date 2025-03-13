@@ -13,6 +13,7 @@ target_include_directories(
   PRIVATE ${CMAKE_SOURCE_DIR}
   PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
   PRIVATE ${CMAKE_BINARY_DIR}
+  RPIVATE $<TARGET_PROPERTY:${PROJECT_LIBRARY_NAME},INCLUDE_DIRECTORIES>
 )
 
 install(
@@ -26,3 +27,4 @@ configure_file(
 )
 
 add_subdirectory(app)
+add_subdirectory(lib)

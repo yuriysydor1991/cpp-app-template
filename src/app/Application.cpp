@@ -4,6 +4,9 @@
 #include <iostream>
 #include <memory>
 
+#include "LibraryContext.h"
+#include "LibraryFacade.h"
+
 namespace app
 {
 
@@ -15,9 +18,27 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  std::cout << "Your application implementation goes here!" << std::endl;
+  std::shared_ptr<templatelib::LibraryFacade> libfacade = create_lib_instance();
+
+  assert(libfacade != nullptr);
+
+  if (libfacade == nullptr) {
+    return INVALID;
+  }
+
+  std::shared_ptr<templatelib::LibraryContext> libctx =
+      libfacade->create_library_context();
+
+  if (!libfacade->libcall(libctx)) {
+    return INVALID;
+  }
 
   return 0;
+}
+
+std::shared_ptr<templatelib::LibraryFacade> Application::create_lib_instance()
+{
+  return std::make_shared<templatelib::LibraryFacade>();
 }
 
 }  // namespace app

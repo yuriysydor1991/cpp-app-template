@@ -10,4 +10,9 @@ target_sources(
   PRIVATE ApplicationVersionPrinter.cpp
 )
 
+target_link_libraries(
+  ${PROJECT_BINARY_NAME}
+  ${PROJECT_LIBRARY_NAME}
+)
+
 add_subdirectory(tests)

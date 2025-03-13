@@ -5,6 +5,11 @@ set(
   CACHE STRING "Project main binary name and target"
 )
 
+set(
+  PROJECT_LIBRARY_NAME "${PROJECT_NAME}Lib"
+  CACHE STRING "Project main library name and target"
+)
+
 option(
   ENABLE_UNIT_TESTS 
   "Set to ON value if unit tests build and run should be available"

@@ -3,6 +3,8 @@
 
 #include <memory>
 
+#include "LibraryContext.h"
+#include "LibraryFacade.h"
 #include "src/app/ApplicationContext.h"
 #include "src/app/IApplication.h"
 
@@ -28,6 +30,9 @@ class Application : public IApplication
    * and other value otherwise.
    */
   virtual int run(std::shared_ptr<ApplicationContext> ctx) override;
+
+ protected:
+  std::shared_ptr<templatelib::LibraryFacade> create_lib_instance();
 };
 
 }  // namespace app

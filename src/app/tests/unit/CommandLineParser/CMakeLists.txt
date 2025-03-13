@@ -4,12 +4,12 @@ add_executable(
   UTEST_CommandLineParser 
   UTEST_CommandLineParser.cpp
   ${CMAKE_SOURCE_DIR}/src/app/CommandLineParser.cpp
-  ${APP_MOCKS_ROOT}/ApplicationContext/src/app/ApplicationContext.cpp
+  ${GENERAL_MOCKS_ROOT}/ApplicationContext/src/app/ApplicationContext.cpp
 )
 
 target_include_directories(
   UTEST_CommandLineParser
-  PRIVATE ${APP_MOCKS_ROOT}/ApplicationContext
+  PRIVATE ${GENERAL_MOCKS_ROOT}/ApplicationContext
   PRIVATE ${CMAKE_SOURCE_DIR}
 )
 

@@ -4,3 +4,5 @@ target_sources(
   ${PROJECT_BINARY_NAME}
   PRIVATE ApplicationContext2LibraryContext.cpp
 )
+
+add_subdirectory(tests)

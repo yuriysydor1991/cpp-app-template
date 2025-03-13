@@ -1,10 +1,10 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATIONCONTEXT2LIBRARYCONTEXT_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATIONCONTEXT2LIBRARYCONTEXT_CLASS_H
 
-#include <memory>
-#include <functional>
-
 #include <gmock/gmock.h>
+
+#include <functional>
+#include <memory>
 
 #include "LibraryContext.h"
 #include "src/app/ApplicationContext.h"
@@ -22,7 +22,7 @@ class ApplicationContext2LibraryContextSynthParent
   ApplicationContext2LibraryContextSynthParent() = default;
 
   virtual bool convert(std::shared_ptr<ApplicationContext> appctx,
-                       std::shared_ptr<LibraryContext> libctx) =0;
+                       std::shared_ptr<LibraryContext> libctx) = 0;
 };
 
 class ApplicationContext2LibraryContext
@@ -34,13 +34,17 @@ class ApplicationContext2LibraryContext
   virtual ~ApplicationContext2LibraryContext() = default;
   ApplicationContext2LibraryContext()
   {
-    if (onMockCreate) { onMockCreate(*this); }
+    if (onMockCreate) {
+      onMockCreate(*this);
+    }
   }
 
-  inline static std::function<void(ApplicationContext2LibraryContext& instance)> onMockCreate;
+  inline static std::function<void(ApplicationContext2LibraryContext& instance)>
+      onMockCreate;
 
-  MOCK_METHOD(bool, convert, (std::shared_ptr<ApplicationContext> appctx,
-                       std::shared_ptr<LibraryContext> libctx));
+  MOCK_METHOD(bool, convert,
+              (std::shared_ptr<ApplicationContext> appctx,
+               std::shared_ptr<LibraryContext> libctx));
 };
 
 }  // namespace converters

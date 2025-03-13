@@ -11,7 +11,7 @@ namespace lib0impl
 
 /**
  * @brief The default template project library implementation class.
- * Class is designed to hold the main library implementation code. So, put 
+ * Class is designed to hold the main library implementation code. So, put
  * a new code inside of a current class' libcall method.
  */
 class LibMain : public ILib

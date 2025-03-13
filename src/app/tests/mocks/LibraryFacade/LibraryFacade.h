@@ -1,10 +1,10 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_LIBRARYFACADE_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_LIBRARYFACADE_CLASS_H
 
-#include <memory>
-#include <functional>
-
 #include <gmock/gmock.h>
+
+#include <functional>
+#include <memory>
 
 #include "LibraryContext.h"
 
@@ -21,12 +21,15 @@ class LibraryFacadeSynthBaseClass
   virtual bool libcall(std::shared_ptr<LibraryContext> ctx) = 0;
 };
 
-class LibraryFacade: public LibraryFacadeSynthBaseClass
+class LibraryFacade : public LibraryFacadeSynthBaseClass
 {
  public:
   virtual ~LibraryFacade() = default;
-  LibraryFacade() {
-    if (onMockCreate) { onMockCreate(*this); }
+  LibraryFacade()
+  {
+    if (onMockCreate) {
+      onMockCreate(*this);
+    }
   }
 
   inline static std::function<void(LibraryFacade& instance)> onMockCreate;

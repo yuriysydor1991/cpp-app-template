@@ -11,6 +11,10 @@ namespace templatelib
 /**
  * @brief The facade interface class of the library.
  * Designed to give access to the library functionality.
+ * The LibraryFacade class designed to not have changes 
+ * inside of it nor does not require extra code introduced.
+ * Watch the LibMain which is designed to receive 
+ * the main implementation of the library code.
  */
 class LibraryFacade
 {

@@ -10,7 +10,8 @@ Examine available branches to find your most applicable variant of the template:
 - `master` branch at [project root page](https://github.com/yuriysydor1991/cpp-app-template) (**current**) with just general application related classes to generate a single binary executable.
 - `applib` branch at [applib](https://github.com/yuriysydor1991/cpp-app-template/tree/applib) for the application binary with additional separate library binary and header files (available for the installation) in order to provide library's code reusability across multiple applications.
 
-Alter current `README.md` file to match your implementation introduced into the template project.
+Alter current `README.md` and a `CHANGELOG.md` files to match your implementation introduced into the template project. Examine the `doc` directory for possible translations of a current md document:
+- `uk_UA` at [doc/README.uk_UA.md](doc/README.uk_UA.md)
 
 See more at the [kytok.org.ua](http://www.kytok.org.ua/)
 

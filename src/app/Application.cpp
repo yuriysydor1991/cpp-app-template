@@ -23,11 +23,19 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
   assert(libfacade != nullptr);
 
   if (libfacade == nullptr) {
+    ctx->push_error("No library instance created");
     return INVALID;
   }
 
   std::shared_ptr<templatelib::LibraryContext> libctx =
       libfacade->create_library_context();
+
+  assert(libctx != nullptr);
+
+  if (libctx == nullptr) {
+    ctx->push_error("No library context instance was created");
+    return INVALID;
+  }
 
   if (!libfacade->libcall(libctx)) {
     return INVALID;

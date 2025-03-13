@@ -2,6 +2,7 @@
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_LIBRARYFACADE_CLASS_H
 
 #include <memory>
+#include <functional>
 
 #include <gmock/gmock.h>
 
@@ -24,7 +25,11 @@ class LibraryFacade: public LibraryFacadeSynthBaseClass
 {
  public:
   virtual ~LibraryFacade() = default;
-  LibraryFacade() = default;
+  LibraryFacade() {
+    if (onMockCreate) { onMockCreate(*this); }
+  }
+
+  inline static std::function<void(LibraryFacade& instance)> onMockCreate;
 
   MOCK_METHOD(std::shared_ptr<LibraryContext>, create_library_context, ());
   MOCK_METHOD(bool, libcall, (std::shared_ptr<LibraryContext> ctx));

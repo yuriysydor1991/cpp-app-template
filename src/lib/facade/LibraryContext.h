@@ -18,7 +18,7 @@ namespace templatelib0
 class LibraryContext
 {
  public:
-  ~LibraryContext() = default;
+  virtual ~LibraryContext() = default;
   LibraryContext() = default;
 
   // Introduce here the library required data fields.

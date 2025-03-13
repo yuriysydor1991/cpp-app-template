@@ -25,6 +25,6 @@ class LibraryContext
   // Add some fields to pass data from it's users.
 };
 
-}  // namespace templatelib
+}  // namespace templatelib0
 
 #endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_LIBRARYCONTEXT_CLASS_H

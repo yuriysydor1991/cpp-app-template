@@ -38,6 +38,6 @@ class LibraryFacade : public LibraryFacadeSynthBaseClass
   MOCK_METHOD(bool, libcall, (std::shared_ptr<LibraryContext> ctx));
 };
 
-}  // namespace templatelib
+}  // namespace templatelib0
 
 #endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_LIBRARYFACADE_CLASS_H

@@ -7,6 +7,7 @@
 #include "LibraryFacade.h"
 #include "src/app/ApplicationContext.h"
 #include "src/app/IApplication.h"
+#include "src/converters/ApplicationContext2LibraryContext.h"
 
 namespace app
 {
@@ -33,6 +34,12 @@ class Application : public IApplication
 
  protected:
   std::shared_ptr<templatelib0::LibraryFacade> create_lib_instance();
+  std::shared_ptr<converters::ApplicationContext2LibraryContext>
+  create_ctx_converter();
+  std::shared_ptr<templatelib0::LibraryContext>
+  create_and_convert_libctx(
+      std::shared_ptr<templatelib0::LibraryFacade> libfacade,
+      std::shared_ptr<ApplicationContext> ctx);
 };
 
 }  // namespace app

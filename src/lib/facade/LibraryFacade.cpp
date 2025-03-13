@@ -49,4 +49,4 @@ bool LibraryFacade::libcall(
   return libInstance->libcall(ctx);
 }
 
-}  // namespace templatelib
+}  // namespace templatelib0

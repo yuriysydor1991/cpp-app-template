@@ -6,3 +6,5 @@ target_sources(
     LibMain.cpp
     LibFactory.cpp
 )
+
+add_subdirectory(tests)

@@ -18,6 +18,8 @@ namespace templatelib0
  * extend library functionality.
  *
  * Currently contains only simple dummy method for the demonstration purposes.
+ *
+ * Current file is a target for the library header installation.
  */
 class ILib
 {

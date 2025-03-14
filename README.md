@@ -61,7 +61,14 @@ This section contains list of required packages and/or tools that must be presen
 In order to build minimum template project install the GCC C++ compiler with CMake and Git.
 
 ```
+# the default dev tools
 sudo apt install -y git g++ cmake
+
+# all the Qt6 required packages
+sudo apt install -y qt6-base-dev qt6-base-dev-tools \
+  qt6-declarative-dev qt6-tools-dev qt6-tools-dev-tools \
+  qml6-module-qtquick qml6-module-qtqml-workerscript \
+  qml6-module-qtquick-templates qml6-module-qtquick-window
 ```
 
 ## Optional for the tests

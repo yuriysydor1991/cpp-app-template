@@ -5,6 +5,11 @@ set(
   CACHE STRING "Project main binary name and target"
 )
 
+set(
+  QT6_OBJECT_NAME "${PROJECT_NAME}QT6Obj"
+  CACHE STRING "Project Qt6 object library name and target"
+)
+
 option(
   ENABLE_UNIT_TESTS 
   "Set to ON value if unit tests build and run should be available"

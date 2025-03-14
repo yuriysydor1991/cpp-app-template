@@ -19,6 +19,8 @@ namespace templatelib0
  * class instance to a LibraryContext instance through
  * the ApplicationContext2LibraryContext converter (conversion
  * is performed inside the default Application class implementation).
+ *
+ * Current file is a target for the library header installation.
  */
 class LibraryContext
 {

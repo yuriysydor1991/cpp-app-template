@@ -1,8 +1,8 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "src/lib/libmain/LibFactory.h"
 #include "LibraryFacade.h"
+#include "src/lib/libmain/LibFactory.h"
 
 using namespace templatelib0;
 using namespace testing;
@@ -10,12 +10,9 @@ using namespace testing;
 class UTEST_LibraryFacade : public Test
 {
  public:
-  
   using LibFactory = lib0impl::LibFactory;
 
-  UTEST_LibraryFacade()
-    : facade{std::make_shared<LibraryFacade>()}
-  {}
+  UTEST_LibraryFacade() : facade{std::make_shared<LibraryFacade>()} {}
 
   LibFactory* get_libfactory_mock()
   {

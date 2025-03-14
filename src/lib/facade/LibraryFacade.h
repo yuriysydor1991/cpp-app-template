@@ -16,6 +16,8 @@ namespace templatelib0
  * inside of it nor does not require extra code introduced.
  * Watch the LibMain which is designed to receive
  * the main implementation of the library code.
+ *
+ * Current file is a target for the library header installation.
  */
 class LibraryFacade
 {

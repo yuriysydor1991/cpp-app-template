@@ -5,8 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [applib0.7.0] - 2025-03-14
+
+- 473bb31 Refining typos in uk_UA README
+- ab45738 Refining all the READMEs
+- cfa03d8 Introducing the sample LibMain UTs
+- c019bd3 Refining lib UTs
+- 2230643 refining LibraryFacade tests
+- 5b23447 Introducing LibFactory UTs
+- f67a3ca Specifying the library targets and formatting the code.
+- 11f5b6d Introducing LibraryFacade UTs.
+- 95092ff Moving ILib to the facade folder.
+- d02674e Incrementing version to 0.7.0 and changing description
+
 ## [applib0.6.0] - 2025-03-13
 
+- 3b43b68 Release applib0.6.0 2025-03-13 21:54
+- 8635ccb Release applib0.6.0 2025-03-13
 - d0a0eed Introducing explanatory comments for new LibraryContext class fields.
 - 34988bb Introducing ApplicationContext2LibraryContext UTs with moved general mocks
 - f83084b Removing forgotten debug #error

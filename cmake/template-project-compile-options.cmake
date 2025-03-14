@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.13)
 
-# -Werror sometimes fails with errors in the stdlib
 # -D_FORTIFY_SOURCE=2 (needs OPT); 
-# -fanalyzer causes prolonged build
 
 set(EXTRA_COMPILE_OPTIONS 
   -Wall
@@ -33,3 +31,11 @@ set(EXTRA_COMPILE_OPTIONS
   -Wl,-z,relro
   -Wl,-z,now
 )
+
+if (COMPILE_WARNINGS_AS_ERRORS)
+  set(EXTRA_COMPILE_OPTIONS ${EXTRA_COMPILE_OPTIONS} -Werror)
+endif()
+
+if (ENABLE_COMPILER_CODE_ANALYZER)
+  set(EXTRA_COMPILE_OPTIONS ${EXTRA_COMPILE_OPTIONS} -fanalyzer)
+endif()

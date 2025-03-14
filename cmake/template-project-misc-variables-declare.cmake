@@ -67,6 +67,18 @@ option(
   OFF
 )
 
+option(
+  COMPILE_WARNINGS_AS_ERRORS
+  "Set to ON if to pass -Werror compile parameter to the GCC compiler."
+  OFF
+)
+
+option(
+  ENABLE_COMPILER_CODE_ANALYZER
+  "Set to ON if to pass -fanalyzer compile parameter to the GCC compiler. May dramatically increase the compile time."
+  OFF
+)
+
 string(TIMESTAMP PROJECT_CONFIGURE_DATE "%Y-%m-%d %H:%M:%S")
 
 execute_process(

@@ -50,6 +50,8 @@ class LibFactory
    */
   virtual std::shared_ptr<ILib> create_appropriate_lib(
       std::shared_ptr<LibraryContext> ctx);
+
+  static std::shared_ptr<LibFactory> create_factory();
 };
 
 }  // namespace lib0impl

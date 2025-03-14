@@ -26,4 +26,9 @@ std::shared_ptr<LibFactory::ILib> LibFactory::create_appropriate_lib(
   return create_default_lib();
 }
 
+std::shared_ptr<LibFactory> LibFactory::create_factory()
+{
+  return std::make_shared<LibFactory>();
+}
+
 }  // namespace lib0impl

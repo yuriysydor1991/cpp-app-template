@@ -14,7 +14,7 @@ namespace
 /// @brief The LibraryFacade class internal fields should be placed
 /// here to avoid installable LibraryFacade.h file to have visible
 /// library internals.
-auto libFactory = std::make_shared<lib0impl::LibFactory>();
+auto libFactory = lib0impl::LibFactory::create_factory();
 }  // namespace
 
 std::shared_ptr<LibraryContext> LibraryFacade::create_library_context()

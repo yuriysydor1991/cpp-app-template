@@ -1,6 +1,8 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_LIBRARYMAIN_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_LIBRARYMAIN_CLASS_H
 
+#error "ORIG: Libmain"
+
 #include <memory>
 
 #include "src/lib/facade/ILib.h"

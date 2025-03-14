@@ -29,6 +29,11 @@ set(
 )
 
 set(
+  DOXYGEN_MAIN_PAGE_MD "README.md"
+  CACHE STRING "Sets the Doxygen main README file to place into documentation the home page."
+)
+
+set(
   DOXYGEN_OUTPUT_DIR ${CMAKE_SOURCE_DIR}/doc
   CACHE STRING "Sets the doxygen documentation output directory."
 )

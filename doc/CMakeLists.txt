@@ -9,6 +9,10 @@ find_package(Doxygen REQUIRED)
 set(DOXYGEN_IN Doxyfile.in)
 set(DOXYGEN_OUT ${CMAKE_BINARY_DIR}/Doxyfile)
 
+if (DOXYGEN_OUTPUT_LANGUAGE STREQUAL "Ukrainian")
+  set(DOXYGEN_MAIN_PAGE_MD "doc/README.uk_UA.md")
+endif()
+
 configure_file(
   ${DOXYGEN_IN} 
   ${DOXYGEN_OUT}

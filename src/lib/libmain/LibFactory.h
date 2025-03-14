@@ -3,8 +3,8 @@
 
 #include <memory>
 
+#include "src/lib/facade/ILib.h"
 #include "src/lib/facade/LibraryContext.h"
-#include "src/lib/libmain/ILib.h"
 
 namespace lib0impl
 {
@@ -17,6 +17,7 @@ namespace lib0impl
 class LibFactory
 {
  public:
+  using ILib = templatelib0::ILib;
   using LibraryContext = ILib::LibraryContext;
 
   virtual ~LibFactory() = default;

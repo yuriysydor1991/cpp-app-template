@@ -4,3 +4,12 @@ target_sources(
   ${PROJECT_LIBRARY_NAME}
   PRIVATE LibraryFacade.cpp
 )
+
+install(
+  FILES 
+    LibraryFacade.h 
+    LibraryContext.h
+    ILib.h
+  DESTINATION include/${PROJECT_BINARY_NAME} 
+  COMPONENT Development
+)

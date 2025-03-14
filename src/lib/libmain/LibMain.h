@@ -3,8 +3,8 @@
 
 #include <memory>
 
+#include "src/lib/facade/ILib.h"
 #include "src/lib/facade/LibraryContext.h"
-#include "src/lib/libmain/ILib.h"
 
 namespace lib0impl
 {
@@ -14,7 +14,7 @@ namespace lib0impl
  * Class is designed to hold the main library implementation code. So, put
  * a new code inside of a current class' libcall method.
  */
-class LibMain : public ILib
+class LibMain : public templatelib0::ILib
 {
  public:
   virtual ~LibMain() = default;

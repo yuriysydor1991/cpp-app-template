@@ -9,12 +9,15 @@
  * @brief The implementation part of the application library.
  * Hides all the guts of particular implementation code.
  */
-namespace lib0impl
+namespace templatelib0
 {
 
 /**
  * @brief An abstract class to define an interface for the libraries
- * implementation variants.
+ * implementation variants. Introduce new methods and fields to
+ * extend library functionality.
+ *
+ * Currently contains only simple dummy method for the demonstration purposes.
  */
 class ILib
 {
@@ -37,6 +40,6 @@ class ILib
   virtual bool libcall(std::shared_ptr<LibraryContext> ctx) = 0;
 };
 
-}  // namespace lib0impl
+}  // namespace templatelib0
 
 #endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_ILIB_CLASS_H

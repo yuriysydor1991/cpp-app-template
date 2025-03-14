@@ -26,11 +26,5 @@ install(
     NAMELINK_COMPONENT Development
 )
 
-install(
-  FILES facade/LibraryFacade.h facade/LibraryContext.h
-  DESTINATION include/${PROJECT_BINARY_NAME} 
-  COMPONENT Development
-)
-
 add_subdirectory(facade)
 add_subdirectory(libmain)

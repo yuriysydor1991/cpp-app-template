@@ -28,8 +28,13 @@ std::shared_ptr<LibraryContext> LibraryFacade::create_library_context()
   return libFactory->create_default_context();
 }
 
-bool LibraryFacade::libcall(
-    [[maybe_unused]] std::shared_ptr<LibraryContext> ctx)
+std::shared_ptr<ILib> LibraryFacade::create_library(
+    std::shared_ptr<LibraryContext> ctx)
+{
+  return libFactory->create_appropriate_lib(ctx);
+}
+
+bool LibraryFacade::libcall(std::shared_ptr<LibraryContext> ctx)
 {
   assert(ctx != nullptr);
   assert(libFactory != nullptr);
@@ -38,7 +43,7 @@ bool LibraryFacade::libcall(
     return false;
   }
 
-  auto libInstance = libFactory->create_appropriate_lib(ctx);
+  auto libInstance = create_library(ctx);
 
   assert(libInstance != nullptr);
 

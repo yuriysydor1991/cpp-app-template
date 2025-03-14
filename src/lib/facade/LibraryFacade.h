@@ -3,6 +3,7 @@
 
 #include <memory>
 
+#include "ILib.h"
 #include "LibraryContext.h"
 
 namespace templatelib0
@@ -31,9 +32,21 @@ class LibraryFacade
   virtual std::shared_ptr<LibraryContext> create_library_context();
 
   /**
+   * @brief Creates and returns the appropriate ILib instance.
+   *
+   * @param ctx Filled LibraryContext to check for an appropriate ILib instance.
+   *
+   * @return Returns a new ILib descendant or a nullptr in case of any error.
+   */
+  virtual std::shared_ptr<ILib> create_library(
+      std::shared_ptr<LibraryContext> ctx);
+
+  /**
    * @brief An interface for the library functionality. Library may
    * behave differently in accordance with provided data in the ctx param.
    * Should be filled appropriately in order for the library function properly.
+   * Creates appropriate ILib instance calls it's libcall method.
+   * The ILib instance will be destructed afterwards.
    *
    * @param ctx A LibraryContext class instance filled with necessary data in
    * order for the library implementation to work properly.

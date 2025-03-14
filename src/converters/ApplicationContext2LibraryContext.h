@@ -34,7 +34,7 @@ class ApplicationContext2LibraryContext
    * used.
    *
    * @param appctx Application's run context with command line parameters etc.
-   * @param libctx The fille LibraryContext instance with transferred data for
+   * @param libctx The filled LibraryContext instance with transferred data for
    * the ILib instance to receive. Receiver of the data transfer.
    *
    * @return Returns a true value in case of successful data transfer and

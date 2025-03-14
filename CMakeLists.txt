@@ -8,7 +8,7 @@ set(
 
 project(
   ${PROJECT_NAME}
-  VERSION 0.7.0
+  VERSION 0.8.0
   DESCRIPTION "A C++ Template project with an executable and library for you!"
   HOMEPAGE_URL "http://www.kytok.org.ua/"
   LANGUAGES CXX

@@ -120,13 +120,13 @@ For more details on how to enable and run the memory check target examine the [E
 
 To proceed the application implementation right away look for the `LibMain` class' `LibMain.cpp` file which is designed to accept initial code of the application. Specifically, new code may be placed into the `bool LibMain::libcall(std::shared_ptr<LibraryContext> ctx)` method. 
 
-Although, `Application` class instance which calls for the libcall method of the `LibMain` class is fully implemenated and doesn't require any changes, it may also receive some changes in order for application to work properly if necessary. See the `Application` class default implementation method `int Application::run(std::shared_ptr<ApplicationContext> ctx)` in order to review it's code and introduce some changes.
+Although `Application` class instance which calls for the `libcall` method of the `LibMain` class is fully implemented and doesn't require any changes, it may also receive some changes in order for application to work properly if necessary. See the `Application` class default implementation method `int Application::run(std::shared_ptr<ApplicationContext> ctx)` in order to review it's code and introduce some changes.
 
 The `LibMain` class will be compiled into destination target library in order to make it's implementation available for other external applications to reuse it.
 
 **But do not forget about the SOLID principles and code decomposing!**
 
-It's preferable to create other directories which would contain implemented components of the application and include them into the `LibMain` class implementation, rather than put all the code inside the `LibMain` class itself.
+It's preferable to create other directories which would contain implemented components of the application and include them into the `LibMain` class implementation, rather than put all the code inside the `LibMain` class itself (thats may be ok for a trivial application).
 
 ## Changing the project and executable name
 
@@ -151,6 +151,10 @@ You may accomplish `IApplication` subclassing by directly creating an `IApplicat
 Register newly created custom `IApplication` descendant in the `ApplicationFactory`'s `create_application` method which is responsible to create appropriate application instance with accordance of a provided data through the command line parameters.
 
 That may be accomplished by implementing a custom `ApplicationFactory` descendant and overriding it's create methods like `create_application` and/or others (call appropriate static member in the `main` function of the `main.cpp` file).
+
+## Implement your own ILib descendants
+
+All above recommendations for the `IApplication` subclassing are applying to the `ILib` class which must contain the application main functionality and which will be shared as library amongst all parties of interest.
 
 ## Version tracking and other project parameters
 

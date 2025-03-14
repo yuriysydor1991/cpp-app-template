@@ -13,3 +13,5 @@ install(
   DESTINATION include/${PROJECT_BINARY_NAME} 
   COMPONENT Development
 )
+
+add_subdirectory(tests)

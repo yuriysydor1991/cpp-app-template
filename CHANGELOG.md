@@ -5,8 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [app0.6.0] - 2025-03-14
+
+- 1192ec5 Introducing branch info and README translations into uk_UA README
+- 14da387 Introducing Doxygen doc with translated README as main page facility
+- 074df94 Introducing COMPILE_WARNINGS_AS_ERRORS and ENABLE_COMPILER_CODE_ANALYZER CMake vars.
+- 88156b6 Specifying translation documents for the root README under the doc
+- 8b10176 Specifying the source file for the PROJECT_BINARY_NAME CMake variable
+- 3920a3a Introducing multibranch info into the root README.md
+- e19aef1 README.uk_UA.md links refinement
+- ec31437 The root README.md file translation to uk_UA workflow final
+- be2dd4d The root README.md file translation to uk_UA workflow (pre Installing executable)
+- 421f046 The root README.md file translation to uk_UA workflow (pre Run section)
+- 86ac202 The root README.md file translation to uk_UA workflow (pre clang-format)
+- a443a83 The root README.md file translation to uk_UA workflow (pre enabling testing)
+- 8da8536 The root README.md file translation to uk_UA workflow.
+- cadecf3 Introducing translated root README in uk_UA.
+- a5f282c Incrementing version to 0.6.0
+
 ## [app0.5.0] - 2025-03-12
 
+- c60779c Release app0.5.0 2025-03-12
 - edad5ce Specifying the cmake modules for the valgrind and cppcheck targets
 - cc7c0e7 Specifying particular test run with ctest
 - 2fe49df Introducing the Valgrind target doc for root README.md
@@ -120,6 +139,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[app0.6.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.6.0)
 [app0.5.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.5.0)
 [app0.4.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.4.0)
 [app0.3.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.3.0)

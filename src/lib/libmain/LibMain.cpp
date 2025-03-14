@@ -11,6 +11,10 @@ bool LibMain::libcall([[maybe_unused]] std::shared_ptr<LibraryContext> ctx)
 {
   assert(ctx != nullptr);
 
+  if (ctx == nullptr) {
+    return false;
+  }
+
   std::cout << "Your application's library implementation goes here!"
             << std::endl;
 

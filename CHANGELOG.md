@@ -5,8 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appQt60.7.0] - 2025-03-15
+
+- 789ffb9 Decomposing Qt6Initer class into separate virtual method.
+- 5d8f1f6 Refining READMEs
+- 41e363b Refining the Application UTs
+- 8565a19 Erasing redundant Qt headers
+- ff4a6d7 Replacing accidental Ukrainian word inserted to README.md
+- 26e3781 Refining Application UTs
+- 360716e Marking the correct current branch in the READMEs
+- 3738044 Introducing the appQt6 branch in READMEs
+- ad36932 Introducing the Qt6 window component
+- d044fe4 Incrementing version to 0.7.0
+
 ## [app0.6.0] - 2025-03-14
 
+- 9bd89d8 Release app0.6.0 2025-03-14
 - 1192ec5 Introducing branch info and README translations into uk_UA README
 - 14da387 Introducing Doxygen doc with translated README as main page facility
 - 074df94 Introducing COMPILE_WARNINGS_AS_ERRORS and ENABLE_COMPILER_CODE_ANALYZER CMake vars.
@@ -139,6 +153,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[appQt60.7.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appQt60.7.0)
 [app0.6.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.6.0)
 [app0.5.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.5.0)
 [app0.4.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.4.0)

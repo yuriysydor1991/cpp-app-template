@@ -126,11 +126,13 @@ For more details on how to enable and run the memory check target examine the [E
 
 ## Implement code straight away!
 
-To proceed the application implementation right away look for the `Application` class' `Application.cpp` file which is designed to accept initial code of the application. Specifically, new code may be placed into the `int Application::run(std::shared_ptr<ApplicationContext> ctx)` method.
+To proceed the application implementation right away look for the `main.qml` file which is designed to accept initial QML code of the application.
 
 **But do not forget about the SOLID principles and code decomposing!**
 
-It's preferable to create other directories which would contain implemented components of the application and include them into the `Application` class implementation, rather than put all the code inside the `Application` class itself.
+It's preferable to create other directories which would contain implemented QML-components of the application and include them into the `main.qml` file implementation, rather than put all the code inside the `main.qml` class itself (for the trivial applications in may be ok).
+
+Some Qt6 related code may be introduced into the `Qt6Initer` class for supporting the better Qt6 experience.
 
 ## Changing the project and executable name
 

@@ -2,10 +2,6 @@
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-#include <QQmlEngine>
-#include <QQmlFileSelector>
-#include <QQuickStyle>
-#include <QQuickView>
 #include <QString>
 
 #include "project-global-decls.h"

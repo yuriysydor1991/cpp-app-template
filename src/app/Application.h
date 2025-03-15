@@ -5,6 +5,7 @@
 
 #include "src/app/ApplicationContext.h"
 #include "src/app/IApplication.h"
+#include "src/qt6/Qt6Initer.h"
 
 namespace app
 {
@@ -28,6 +29,9 @@ class Application : public IApplication
    * and other value otherwise.
    */
   virtual int run(std::shared_ptr<ApplicationContext> ctx) override;
+
+protected:
+  virtual std::shared_ptr<templateQt6app::Qt6Initer> create_qt6_initer();
 };
 
 }  // namespace app

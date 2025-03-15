@@ -17,9 +17,14 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  auto qt6runner = std::make_shared<templateQt6app::Qt6Initer>();
+  std::shared_ptr<templateQt6app::Qt6Initer> qt6runner = create_qt6_initer();
 
   return qt6runner->run(ctx->argc, ctx->argv);
+}
+
+std::shared_ptr<templateQt6app::Qt6Initer> Application::create_qt6_initer()
+{
+  return std::make_shared<templateQt6app::Qt6Initer>();
 }
 
 }  // namespace app

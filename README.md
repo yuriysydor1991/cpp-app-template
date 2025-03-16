@@ -7,7 +7,6 @@ Project is designed to increase the speed of the library creation process at the
 **Just fork it and implement your library straight away!**
 
 Examine available branches to find your most applicable variant of the template:
-<<<<<<< HEAD
 - `master` branch at [project root page](https://github.com/yuriysydor1991/cpp-app-template) with just general application related classes to generate a single binary executable.
 - `applib` branch at [applib](https://github.com/yuriysydor1991/cpp-app-template/tree/applib) for the application binary with additional separate library binary and header files (available for the installation) in order to provide library's code reusability across multiple applications.
 - `lib` branch at [lib](https://github.com/yuriysydor1991/cpp-app-template/tree/lib) (**current**) for the library with the headers include files (and documentation) without target binary.

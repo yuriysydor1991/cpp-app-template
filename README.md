@@ -66,12 +66,6 @@ In order to build minimum template project install the GCC C++ compiler with CMa
 sudo apt install -y git g++ cmake
 ```
 
-All necessary development packages for the GTKmm-3.0:
-
-```
-sudo apt install -y libgtkmm-3.0-dev
-```
-
 ## Optional for the tests
 
 If necessary to build and execute available tests install GTest or ensure available Internet access in order to project make it available by itself (GNU/Linux based):

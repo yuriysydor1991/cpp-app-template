@@ -1,10 +1,10 @@
-**Your C++ Application template project**
+**Your C++ library template project**
 
 # Goal of the template project
 
-Project is designed to increase the speed of the application creation process at the project startup by providing templated application structure. So developer may just jump straight into implementing a particular application with no or minimum project start structure set up.
+Project is designed to increase the speed of the library creation process at the project startup by providing templated library structure. So developer may just jump straight into implementing a particular library with no or minimum project start structure set up.
 
-**Just fork it and implement your application straight away!**
+**Just fork it and implement your library straight away!**
 
 Examine available branches to find your most applicable variant of the template:
 - `master` branch at [project root page](https://github.com/yuriysydor1991/cpp-app-template) with just general application related classes to generate a single binary executable.
@@ -18,7 +18,7 @@ See more at the [kytok.org.ua](http://www.kytok.org.ua/)
 
 # Cloning the C++ template project
 
-In order to fast-start implementing a new application clone this project into your local directory by executing next command in the terminal (GNU/Linux based):
+In order to fast-start implementing a new library clone this project into your local directory by executing next command in the terminal (GNU/Linux based):
 
 ```
 git clone https://github.com/yuriysydor1991/cpp-app-template.git
@@ -105,61 +105,27 @@ sudo apt install -y cppcheck
 
 Examine the [Enabling the static code analyzer target with cppcheck](#enabling-the-static-code-analyzer-target-with-cppcheck) section on how to enable the `cppcheck` target.
 
-## Optional for the memory check with Valgrind
-
-In order to enable the dynamic application check with the `valgrind` command install it with the command:
-
-```
-sudo apt install -y valgrind
-```
-
-For more details on how to enable and run the memory check target examine the [Enabling the dynamic memory check target with valgrind](#enabling-the-dynamic-memory-check-target-with-valgrind) section.
-
 # Project structure
 
 ## Implement code straight away!
 
-To proceed the application implementation right away look for the `LibMain` class' `LibMain.cpp` file which is designed to accept initial code of the application. Specifically, new code may be placed into the `bool LibMain::libcall(std::shared_ptr<LibraryContext> ctx)` method. 
-
-Although `Application` class instance which calls for the `libcall` method of the `LibMain` class is fully implemented and doesn't require any changes, it may also receive some changes in order for application to work properly if necessary. See the `Application` class default implementation method `int Application::run(std::shared_ptr<ApplicationContext> ctx)` in order to review it's code and introduce some changes.
+To proceed the library implementation right away look for the `LibMain` class' `LibMain.cpp` file which is designed to accept initial code of the library. Specifically, new code may be placed into the `bool LibMain::libcall(std::shared_ptr<LibraryContext> ctx)` method. 
 
 The `LibMain` class will be compiled into destination target library in order to make it's implementation available for other external applications to reuse it.
 
 **But do not forget about the SOLID principles and code decomposing!**
 
-It's preferable to create other directories which would contain implemented components of the application and include them into the `LibMain` class implementation, rather than put all the code inside the `LibMain` class itself (thats may be ok for a trivial application).
+It's preferable to create other directories which would contain implemented components of the library and include them into the `LibMain` class implementation, rather than put all the code inside the `LibMain` class itself (thats may be ok for a trivial library).
 
 ## Changing the project and executable name
 
-Change the name of the project in the project's root `CMakeLists.txt` file by introducing a new value for the the `PROJECT_NAME` and/or `PROJECT_BINARY_NAME` variable which is located at `cmake/template-project-misc-variables-declare.cmake`. It is recommended to do so the executable will represent your new application name instead of templated default one - the `CppAppTemplate`.
+Change the name of the project in the project's root `CMakeLists.txt` file by introducing a new value for the the `PROJECT_NAME`. It is recommended to do so the executable will represent your new library name instead of templated default one - the `libCppAppTemplateLib` (the `lib` prefix is adding automatically).
 
-To change the destination library name change the `PROJECT_LIBRARY_NAME` variable value. It's default value will take the `PROJECT_NAME` value and appends the `Lib` string into it. For example, if name of the project is not changed yet the library will have the `libCppAppTemplateLib` name.
-
-## Introducing custom command line parameters
-
-In order to introduce some additional command line parameters for the binary look for the `CommandLineParser` class implementation. It contains command line parsing routines that are passed by `ApplicationFactory` class after the `main` function was called.
-
-Add some additional custom fields into the `ApplicationContext` class in order to pass some custom command line flags and/or data to the `IApplication` interface abstract class descendants that will be created by the `ApplicationFactory` during command line arguments parse.
-
-Some or all `ApplicationContext` fields may be transferred into the `LibraryContext` instance by the `ApplicationContext2LibraryContext` converter class instance during the `LibMain` default implementation call. Examine the `Application` default application implementation.
-
-## Implement your own IApplication descendants
-
-You may implement another custom `IApplication` descendant classes in order to support high level variety of the application behavior to not to mess original `Application` class with irrelevant `if`-s statements and mixing up code (remember about the SOLID's single responsibility principle).
-
-You may accomplish `IApplication` subclassing by directly creating an `IApplication` subclass in a new file or extend existing `IApplication` descendant like `Application`, `ApplicationHelpPrinter` or a `ApplicationVersionPrinter`.
-
-Register newly created custom `IApplication` descendant in the `ApplicationFactory`'s `create_application` method which is responsible to create appropriate application instance with accordance of a provided data through the command line parameters.
-
-That may be accomplished by implementing a custom `ApplicationFactory` descendant and overriding it's create methods like `create_application` and/or others (call appropriate static member in the `main` function of the `main.cpp` file).
-
-## Implement your own ILib descendants
-
-All above recommendations for the `IApplication` subclassing are applying to the `ILib` class which must contain the application main functionality and which will be shared as library amongst all parties of interest.
+To change the destination library name change the `PROJECT_LIBRARY_NAME` variable value located at the `cmake/template-project-misc-variables-declare.cmake` file. It's default value will take the `PROJECT_NAME` value and appends the `Lib` string into it. For example, if name of the project is not changed yet the library will have the `libCppAppTemplateLib` name.
 
 ## Version tracking and other project parameters
 
-The project's `CMakeLists.txt` files are tracking of a current project git repository commit, project name, configure date and projects version that are forwarded into the projects's configure header file located at `src/app/project-global-decls.h.in`. The `project-global-decls.h.in` will be compiled into the build directory as `project-global-decls.h`. The `ApplicationVersionPrinter` class includes this project's configure file and uses the information provided to print appropriate version info. Usually, this code is executed by calling generated executable with a `-v` or `--version` command line flag. After the version is printed, the default implementation cause the application's `ApplicationVersionPrinter` instance to return zero value and cause the executable to stop it's execution.
+The project's `CMakeLists.txt` files are tracking of a current project git repository commit, project name, configure date and projects version that are forwarded into the projects's configure header file located at `src/app/project-global-decls.h.in`. The `project-global-decls.h.in` will be compiled into the build directory as `project-global-decls.h`.
 
 ## Project tests
 
@@ -243,7 +209,7 @@ Finally build the documentation by executing the command:
 cmake --build . --target Doxygen-doc
 ```
 
-Which in turn will generate the `doc/CppAppTemplate-html` directory (already added to the `.gitignore` file) which will contain the HTML-type documentation. In order to open and examine generated documentation open the `doc/CppAppTemplate-html/index.html` file. The `CppAppTemplate-html` directory name will change if changed default executable name for the project by setting a new value for the `PROJECT_BINARY_NAME` variable in the root `CMakeLists.txt` or the `DOXYGEN_OUT_HTML_NAME` which in turn set the whole name for the directory.
+Which in turn will generate the `doc/CppAppTemplate-html` directory (already added to the `.gitignore` file) which will contain the HTML-type documentation. In order to open and examine generated documentation open the `doc/CppAppTemplate-html/index.html` file. The `CppAppTemplate-html` directory name will change if changed default executable name for the project by setting a new value for the `PROJECT_NAME` in the `CMakeLists.txt` file or `PROJECT_LIBRARY_NAME` variable in the `template-project-misc-variables-declare.cmake` file or the `DOXYGEN_OUT_HTML_NAME` variable which in turn set the whole name for the directory.
 
 The `doc/Doxyfile.in` file contains all available Doxygen configuration parameters which may be changed in order to change the documentation output.
 
@@ -299,56 +265,7 @@ cmake --build . --target cppcheck
 
 The `cppcheck` target details may be examined and/or altered in the `cmake/template-project-cppcheck-target.cmake` CMake submodule file.
 
-## Enabling the dynamic memory check target with valgrind
-
-In order to make the `valgrind` target available for the execution, configure project with the enabled `ENABLE_VALGRIND` variable like:
-
-```
-# inside the project root directory 
-
-mkdir -vp build && cd build && cmake ../ -DENABLE_VALGRIND=ON
-```
-
-To perform the dynamic memory check on the application build run next command:
-
-```
-# inside the project build directory
-
-cmake --build . --target valgrind
-```
-
-The `valgrind` target details may be examined and/or altered in the `cmake/template-project-valgrind-target.cmake` CMake submodule file.
-
-**Warning! It will start application.** The dynamic memory check requires application to be started and go through the full cycle. Ensure that application execution will have a finite time.
-
-# Run the executable
-
-## IDE run
-
-Of course, if your IDE supports CMake build system integration you may just press the `Build` and/or `Run` button somewhere in the IDE window with opened project and it's done! No need to perform a search and execute commands.
-
-## Command line run
-
-### Searching for the generated executable
-
-To find executable in the project build directory execute the `find` command:
-
-```
-find . -name 'CppAppTemplate'
-```
-
-The `CppAppTemplate` is a default executable name. Replace it with your custom one if you change the name of the project in the root `CMakeLists.txt` file (the `PROJECT_NAME` and/or `PROJECT_BINARY_NAME` variable).
-
-### Starting the generated executable
-
-If executable compiles and is present in the build directory start it in the terminal with path found from a previous subsection by a command:
-
-```
-# from the build dir
-./src/CppAppTemplate
-```
-
-Once again, the `CppAppTemplate` is the **default** name of the project. Replace it with our own custom one if it was changed in the project's root `CMakeLists.txt` file (the `PROJECT_NAME` and/or `PROJECT_BINARY_NAME` variable).
+# Run available executables
 
 ## Tests run
 
@@ -368,12 +285,12 @@ Alternatively, run the `ctest` command from any location by specifying the test 
 ctest --tests-dir /path/to/the/project/build/directory
 ```
 
-In order to run particular test execute the `ctest` command with test's name after the `-R` command line flag. For example, for the `UTEST_ApplicationFactory` test it'll look something like this:
+In order to run particular test execute the `ctest` command with test's name after the `-R` command line flag. For example, for the `UTEST_LibraryFacade` test it'll look something like this:
 
 ```
 # from the project build directory 
 
-ctest -R UTEST_ApplicationFactory
+ctest -R UTEST_LibraryFacade
 ```
 
 ### Manual tests run
@@ -388,12 +305,12 @@ You may search for all compiled available tests by a next command:
 find -type f -executable -name 'UTEST_*'
 ```
 
-After that, choose particular test of interest and execute it manually if needed. For example, for the `ApplicationFactory` class pass it's UT relative file system path from a project's root directory into the command line and hit enter (GNU/Linux based):
+After that, choose particular test of interest and execute it manually if needed. For example, for the `LibraryFacade` class pass it's UT relative file system path from a project's root directory into the command line and hit enter (GNU/Linux based):
 
 ```
 # from the project root
 
-./build/src/app/tests/unit/ApplicationFactory/UTEST_ApplicationFactory
+./build/src/lib/facade/tests/unit/LibraryFacade/UTEST_LibraryFacade
 ```
 
 # Installing
@@ -405,15 +322,14 @@ Execute available install commands from the project's build directory.
 In order to install generated executable (as shown previous) file into your's system binary default folder execute next command in the command line (GNU/Linux based):
 
 ```
-# installs generated binary under the /usr/local/bin/ for example
-# installs generated library under the /usr/local/lib/
-# and installs header include files under the /usr/local/include/CppAppTemplate
+# installs generated library under the /usr/local/lib/ for example
+# and installs header include files under the /usr/local/include/libCppAppTemplateLib
 # run from the project's build directory
 
 sudo cmake --install .
 ```
 
-Usually it's the `/usr/local/bin/` directory (on the Unix-like OS) which may be inaccessible from the `PATH` environment variable (e.g. can not be started as a regular command).
+Usually it's the `/usr/local/lib` directory for the library (on the Unix-like OS) which may be inaccessible from the `PATH` environment variable (e.g. can not be started as a regular command).
 
 ## Custom installation path
 
@@ -423,7 +339,7 @@ To install binary into the system globally available directory add the `--prefix
 # replace the /usr/bin path with our own if needed
 # run from the project's build directory
 
-sudo cmake --install . --prefix "/usr/bin"
+sudo cmake --install . --prefix "/usr"
 ```
 
 Examine the `PATH` environment variable to chose directory best suited for your current OS (execute `echo $PATH` in the terminal). Alternatively, any path may be specified.

@@ -2,20 +2,20 @@
 
 #include <cassert>
 
-#include "src/gtkmm/gtkmm_includes.h"
-#include "random-logo.h"
 #include "GtkmmWindow_glade.h"
+#include "random-logo.h"
+#include "src/gtkmm/gtkmm_includes.h"
 
 namespace templateGtkmm
 {
 
 int GtkmmIniter::run(int& argc, char**& argv)
 {
-  auto app =
-      Gtk::Application::create(argc, argv, "ua.org.kytok.template.gtkmm3.glade");
+  auto app = Gtk::Application::create(argc, argv,
+                                      "ua.org.kytok.template.gtkmm3.glade");
 
   prepare_widgets();
-  
+
   assert(window != nullptr);
   assert(image != nullptr);
 
@@ -73,7 +73,8 @@ void GtkmmIniter::prepare_random_logo()
 
 const Glib::ustring& GtkmmIniter::get_glade_xml_data()
 {
-  static Glib::ustring ui_string(reinterpret_cast<const char*>(resources::gladexml::window_xml_data));
+  static Glib::ustring ui_string(
+      reinterpret_cast<const char*>(resources::gladexml::window_xml_data));
 
   return ui_string;
 }

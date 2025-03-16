@@ -15,11 +15,6 @@ namespace templatelib0
  * Introduce some necessary fields for the particular newly
  * introduced code.
  *
- * Newly fields my be transferred from the ApplicationContext
- * class instance to a LibraryContext instance through
- * the ApplicationContext2LibraryContext converter (conversion
- * is performed inside the default Application class implementation).
- *
  * Current file is a target for the library header installation.
  */
 class LibraryContext
@@ -30,7 +25,6 @@ class LibraryContext
 
   // Introduce here the library required data fields.
   // Add some fields to pass data from it's users.
-  // Register new fields inside the ApplicationContext2LibraryContext class.
 };
 
 }  // namespace templatelib0

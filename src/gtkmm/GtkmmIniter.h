@@ -21,7 +21,7 @@ class GtkmmIniter
   virtual int run(int& argc, char**& argv);
 
  protected:
-  const Glib::ustring& get_glade_xml_data();
+  Glib::ustring get_glade_xml_data();
   void prepare_widgets();
 
  private:

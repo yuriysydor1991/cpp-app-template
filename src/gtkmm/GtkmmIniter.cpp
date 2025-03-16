@@ -32,7 +32,7 @@ int GtkmmIniter::run(int& argc, char**& argv)
 
 void GtkmmIniter::prepare_widgets()
 {
-  auto& ui_string = get_glade_xml_data();
+  auto ui_string = get_glade_xml_data();
 
   builder = Gtk::Builder::create_from_string(ui_string);
 
@@ -71,12 +71,10 @@ void GtkmmIniter::prepare_random_logo()
   image->set(loader->get_pixbuf());
 }
 
-const Glib::ustring& GtkmmIniter::get_glade_xml_data()
+Glib::ustring GtkmmIniter::get_glade_xml_data()
 {
-  static Glib::ustring ui_string(
+  return Glib::ustring(
       reinterpret_cast<const char*>(resources::gladexml::window_xml_data));
-
-  return ui_string;
 }
 
 }  // namespace templateGtkmm

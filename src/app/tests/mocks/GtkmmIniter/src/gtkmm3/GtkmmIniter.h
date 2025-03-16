@@ -6,7 +6,7 @@
 #include <functional>
 #include <memory>
 
-namespace templateGtkmm
+namespace templateGtkmm3
 {
 
 class GtkmmIniter
@@ -25,6 +25,6 @@ class GtkmmIniter
   MOCK_METHOD(int, run, (int& argc, char**& argv));
 };
 
-}  // namespace templateGtkmm
+}  // namespace templateGtkmm3
 
 #endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMMINITER_CLASS_H

@@ -3,7 +3,7 @@
 
 #include <stddef.h>
 
-namespace templateGtkmm::resources::images {
+namespace templateGtkmm3::resources::images {
 
 constexpr const size_t random_logo_data_size {${RANDOM_LOGO_DATA_SIZE}} ;
 constexpr const unsigned char random_logo_data[] {

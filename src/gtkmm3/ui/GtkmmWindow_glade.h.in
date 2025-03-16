@@ -3,7 +3,7 @@
 
 #include <stddef.h>
 
-namespace templateGtkmm::resources::gladexml {
+namespace templateGtkmm3::resources::gladexml {
 
 constexpr const size_t window_xml_data_size {${MAINWINDOW_GLADE_DATA_SIZE}} ;
 constexpr const unsigned char window_xml_data[] {

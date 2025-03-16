@@ -1,12 +1,12 @@
-#include "src/gtkmm/GtkmmIniter.h"
+#include "src/gtkmm3/GtkmmIniter.h"
 
 #include <cassert>
 
 #include "GtkmmWindow_glade.h"
 #include "random-logo.h"
-#include "src/gtkmm/gtkmm_includes.h"
+#include "src/gtkmm3/gtkmm_includes.h"
 
-namespace templateGtkmm
+namespace templateGtkmm3
 {
 
 int GtkmmIniter::run(int& argc, char**& argv)
@@ -77,4 +77,4 @@ Glib::ustring GtkmmIniter::get_glade_xml_data()
       reinterpret_cast<const char*>(resources::gladexml::window_xml_data));
 }
 
-}  // namespace templateGtkmm
+}  // namespace templateGtkmm3

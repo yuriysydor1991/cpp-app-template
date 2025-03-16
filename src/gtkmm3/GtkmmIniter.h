@@ -3,9 +3,9 @@
 
 #include <memory>
 
-#include "src/gtkmm/gtkmm_includes.h"
+#include "src/gtkmm3/gtkmm_includes.h"
 
-namespace templateGtkmm
+namespace templateGtkmm3
 {
 
 /**
@@ -32,6 +32,6 @@ class GtkmmIniter
   Gtk::Image* image{nullptr};
 };
 
-}  // namespace templateGtkmm
+}  // namespace templateGtkmm3
 
 #endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMMINITER_CLASS_H

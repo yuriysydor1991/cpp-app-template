@@ -422,10 +422,10 @@ Usually it's the `/usr/local/bin/` directory (on the Unix-like OS) which may be 
 To install binary into the system globally available directory add the `--prefix` parameter to the command above as next:
 
 ```
-# replace the /usr/bin path with our own if needed
+# replace the /usr path with our own if needed
 # run from the project's build directory
 
-sudo cmake --install . --prefix "/usr/bin"
+sudo cmake --install . --prefix "/usr"
 ```
 
 Examine the `PATH` environment variable to chose directory best suited for your current OS (execute `echo $PATH` in the terminal). Alternatively, any path may be specified.

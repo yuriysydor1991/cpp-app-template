@@ -9,6 +9,7 @@ Project is designed to increase the speed of the application creation process at
 Examine available branches to find your most applicable variant of the template:
 - `master` branch at [project root page](https://github.com/yuriysydor1991/cpp-app-template) with just general application related classes to generate a single binary executable.
 - `applib` branch at [applib](https://github.com/yuriysydor1991/cpp-app-template/tree/applib) for the application binary with additional separate library binary and header files (available for the installation) in order to provide library's code reusability across multiple applications.
+- `lib` branch at [lib](https://github.com/yuriysydor1991/cpp-app-template/tree/lib) for the library with the headers include files (and documentation) without target binary.
 - `appQt6` branch at [appQt6](https://github.com/yuriysydor1991/cpp-app-template/tree/appQt6) (**current**) for the application general classes with additional defined structure for the Qt6 QML window application development.
 
 Alter current `README.md` and a `CHANGELOG.md` files to match your implementation introduced into the template project. Examine the `doc` directory for possible translations of a current md document:

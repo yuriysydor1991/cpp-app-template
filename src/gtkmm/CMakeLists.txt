@@ -7,7 +7,6 @@ pkg_check_modules(GTKMM gtkmm-3.0 REQUIRED)
 add_library(
   ${GTKMM_OBJECT_NAME} OBJECT
   GtkmmIniter.cpp
-  GtkmmWindow.cpp
 )
 
 target_include_directories(

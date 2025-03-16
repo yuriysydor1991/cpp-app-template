@@ -3,6 +3,8 @@
 
 #include <memory>
 
+#include "src/gtkmm/gtkmm_includes.h"
+
 namespace templateGtkmm
 {
 
@@ -17,6 +19,17 @@ class GtkmmIniter
   GtkmmIniter() = default;
 
   virtual int run(int& argc, char**& argv);
+
+ protected:
+  const Glib::ustring& get_glade_xml_data();
+  void prepare_widgets();
+
+ private:
+  void prepare_random_logo();
+
+  Glib::RefPtr<Gtk::Builder> builder;
+  Gtk::Window* window{nullptr};
+  Gtk::Image* image{nullptr};
 };
 
 }  // namespace templateGtkmm

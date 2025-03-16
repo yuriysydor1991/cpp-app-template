@@ -1,8 +1,10 @@
 #include "src/gtkmm/GtkmmIniter.h"
 
-#include "project-global-decls.h"
-#include "src/gtkmm/GtkmmWindow.h"
+#include <cassert>
+
 #include "src/gtkmm/gtkmm_includes.h"
+#include "random-logo.h"
+#include "GtkmmWindow_glade.h"
 
 namespace templateGtkmm
 {
@@ -10,11 +12,70 @@ namespace templateGtkmm
 int GtkmmIniter::run(int& argc, char**& argv)
 {
   auto app =
-      Gtk::Application::create(argc, argv, "ua.org.kytok.template.gtkmm3");
+      Gtk::Application::create(argc, argv, "ua.org.kytok.template.gtkmm3.glade");
 
-  GtkmmWindow window;
+  prepare_widgets();
+  
+  assert(window != nullptr);
+  assert(image != nullptr);
 
-  return app->run(window);
+  if (window == nullptr || image == nullptr) {
+    throw std::runtime_error("Unable to find some of the main widgets");
+  }
+
+  prepare_random_logo();
+
+  window->show_all_children();
+
+  return app->run(*window);
+}
+
+void GtkmmIniter::prepare_widgets()
+{
+  auto& ui_string = get_glade_xml_data();
+
+  builder = Gtk::Builder::create_from_string(ui_string);
+
+  if (!builder) {
+    throw std::runtime_error("Failed to create the builder");
+  }
+
+  builder->get_widget("main_window", window);
+
+  if (window == nullptr) {
+    throw std::runtime_error("Failed to get the main window");
+  }
+
+  builder->get_widget("random_image", image);
+
+  if (image == nullptr) {
+    throw std::runtime_error("Failed to get an image");
+  }
+}
+
+void GtkmmIniter::prepare_random_logo()
+{
+  assert(image != nullptr);
+
+  if (image == nullptr) {
+    return;
+  }
+
+  // Create Pixbuf from memory
+  Glib::RefPtr<Gdk::PixbufLoader> loader = Gdk::PixbufLoader::create();
+
+  loader->write(resources::images::random_logo_data,
+                resources::images::random_logo_data_size);
+  loader->close();
+
+  image->set(loader->get_pixbuf());
+}
+
+const Glib::ustring& GtkmmIniter::get_glade_xml_data()
+{
+  static Glib::ustring ui_string(reinterpret_cast<const char*>(resources::gladexml::window_xml_data));
+
+  return ui_string;
 }
 
 }  // namespace templateGtkmm

@@ -1,11 +1,6 @@
 cmake_minimum_required(VERSION 3.13)
 
 set(
-  PROJECT_BINARY_NAME ${PROJECT_NAME}
-  CACHE STRING "Project main binary name and target"
-)
-
-set(
   PROJECT_LIBRARY_NAME "${PROJECT_NAME}Lib"
   CACHE STRING "Project main library name and target"
 )
@@ -50,7 +45,7 @@ option(
 )
 
 set(
-  DOXYGEN_OUT_HTML_NAME ${PROJECT_BINARY_NAME}-html
+  DOXYGEN_OUT_HTML_NAME ${PROJECT_LIBRARY_NAME}-html
   CACHE STRING "The Doxygen output HTML directory name (for the Doxyfile)"
 )
 
@@ -68,12 +63,6 @@ option(
 option(
   ENABLE_CPPCHECK
   "Set to ON if to enable the cppcheck execution target."
-  OFF
-)
-
-option(
-  ENABLE_VALGRIND
-  "Set to ON if to enable the valgrind memory check execution target."
   OFF
 )
 

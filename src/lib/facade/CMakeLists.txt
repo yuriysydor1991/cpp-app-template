@@ -10,7 +10,7 @@ install(
     LibraryFacade.h 
     LibraryContext.h
     ILib.h
-  DESTINATION include/${PROJECT_BINARY_NAME} 
+  DESTINATION include/${PROJECT_LIBRARY_NAME} 
   COMPONENT Development
 )
 

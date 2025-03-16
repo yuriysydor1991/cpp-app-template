@@ -4,16 +4,17 @@
 #include <string>
 
 /// @brief Global declaration for the project by CMake variables
-namespace project_decls {
+namespace project_decls
+{
 
-/// @brief Global project' binary name
-const std::string PROJECT_NAME = "${PROJECT_BINARY_NAME}" ;
-/// @brief Global project' build version
-const std::string PROJECT_BUILD_VERSION = "${PROJECT_VERSION}" ;
-/// @brief Global project' configure git commit hash
-const std::string PROJECT_BUILD_COMMIT = "${PROJECT_GIT_COMMIT}" ;
-/// @brief Global project' CMake configure date
-const std::string PROJECT_CONFIGURE_DATE = "${PROJECT_CONFIGURE_DATE}" ;
+  /// @brief Global project' binary name
+  const std::string PROJECT_NAME = "${PROJECT_LIBRARY_NAME}";
+  /// @brief Global project' build version
+  const std::string PROJECT_BUILD_VERSION = "${PROJECT_VERSION}";
+  /// @brief Global project' configure git commit hash
+  const std::string PROJECT_BUILD_COMMIT = "${PROJECT_GIT_COMMIT}";
+  /// @brief Global project' CMake configure date
+  const std::string PROJECT_CONFIGURE_DATE = "${PROJECT_CONFIGURE_DATE}";
 
 } // namespace project_decls
 

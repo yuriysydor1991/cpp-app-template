@@ -127,11 +127,13 @@ For more details on how to enable and run the memory check target examine the [E
 
 ## Implement code straight away!
 
-To proceed the application implementation right away look for the `Application` class' `Application.cpp` file which is designed to accept initial code of the application. Specifically, new code may be placed into the `int Application::run(std::shared_ptr<ApplicationContext> ctx)` method.
+To proceed the application implementation right away look for the `GtkmmWindow` class' `GtkmmWindow.cpp` and/or `GtkmmWindow.h` files which is designed to accept initial code of the application's window.
 
 **But do not forget about the SOLID principles and code decomposing!**
 
-It's preferable to create other directories which would contain implemented components of the application and include them into the `Application` class implementation, rather than put all the code inside the `Application` class itself.
+It's preferable to create other directories which would contain implemented components of the application and include them into the `GtkmmWindow` class implementation, rather than put all the code inside the `GtkmmWindow` class itself.
+
+Additional code may be introduced into the `Application` class implementation or by creation `IApplication` class descendant in order to provide binary level variety. 
 
 ## Changing the project and executable name
 
@@ -142,6 +144,8 @@ Change the name of the project in the project's root `CMakeLists.txt` file by in
 In order to introduce some additional command line parameters for the binary look for the `CommandLineParser` class implementation. It contains command line parsing routines that are passed by `ApplicationFactory` class after the `main` function was called.
 
 Add some additional custom fields into the `ApplicationContext` class in order to pass some custom command line flags and/or data to the `IApplication` interface abstract class descendants that will be created by the `ApplicationFactory` during command line arguments parse.
+
+The GTKmm library also supports some of the command line parameters which are passed to the GTKmm application by default.
 
 ## Implement your own IApplication descendants
 

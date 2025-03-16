@@ -5,8 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [lib0.8.0] - 2025-03-16
+
+- 7081e52 Erasing merging symbols.
+- db6d05c Erasing app infrastructure classes mention in the LibraryContext
+- 98d8785 Introducing the lib branch info into the READMEs
+- 6207e8f Refining the READMEs to represent library only template project
+- dad1ed9 Erasing all the application binary infrastructure.
+- 7e8d539 Introducing the appQt6 branch in READMEs
+- a6d72dc Introducing Doxygen doc with translated README as main page facility
+- 73e5d0d Introducing COMPILE_WARNINGS_AS_ERRORS and ENABLE_COMPILER_CODE_ANALYZER CMake vars.
+- d4c6dc1 Incrementing version to 0.8.0
+- ead330e Inserting forgotten release link in the CHANGELOG
+
 ## [applib0.7.0] - 2025-03-14
 
+- f5b1d13 Release applib0.7.0 2025-03-17
 - 473bb31 Refining typos in uk_UA README
 - ab45738 Refining all the READMEs
 - cfa03d8 Introducing the sample LibMain UTs

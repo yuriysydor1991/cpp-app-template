@@ -18,13 +18,13 @@ class GtkmmWindow : public Gtk::Window
   virtual ~GtkmmWindow() = default;
   GtkmmWindow();
 
-protected:
+ protected:
   virtual const std::string& get_default_title();
 
-private:
+ private:
   void prepare_header_label();
   void prepare_random_logo();
-  
+
   Gtk::VBox box;
 
   Gtk::Label headerText;

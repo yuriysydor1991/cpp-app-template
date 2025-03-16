@@ -1,8 +1,8 @@
 #include "src/gtkmm/GtkmmIniter.h"
 
+#include "project-global-decls.h"
 #include "src/gtkmm/GtkmmWindow.h"
 #include "src/gtkmm/gtkmm_includes.h"
-#include "project-global-decls.h"
 
 namespace templateGtkmm
 {

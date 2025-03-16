@@ -7,10 +7,9 @@
 #pragma warning(push, 0)  // MSVC
 
 #include <gtkmm.h>
-
-#include <gtkmm/label.h>
 #include <gtkmm/hvbox.h>
 #include <gtkmm/image.h>
+#include <gtkmm/label.h>
 
 #pragma warning(pop)
 #pragma GCC diagnostic pop

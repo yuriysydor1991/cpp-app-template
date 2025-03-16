@@ -22,14 +22,11 @@ class GtkmmWindow : public Gtk::Window
   virtual const std::string& get_default_title();
 
  private:
-  void prepare_header_label();
   void prepare_random_logo();
 
-  Gtk::VBox box;
-
-  Gtk::Label headerText;
-  Gtk::Label explanationText;
-  Gtk::Image image;
+  Glib::RefPtr<Gtk::Builder> builder;
+  Gtk::Box* box{nullptr};
+  Gtk::Image* image{nullptr};
 };
 
 }  // namespace templateGtkmm

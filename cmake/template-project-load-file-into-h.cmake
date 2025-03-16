@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.13)
 
+# optional 3d parameter if to insert terminating zero byte
 function(load_file_data FILENAME OUTPUT_C_SIZE OUTPUT_C_DATA)
   set(RANDOM_LOGO_FILEPATH ${FILENAME})
 
@@ -10,6 +11,10 @@ function(load_file_data FILENAME OUTPUT_C_SIZE OUTPUT_C_DATA)
     REGEX REPLACE "([0-9a-f][0-9a-f])" "0x\\1, "  
     RANDOM_LOGO_DATA_SINGLELINE ${RANDOM_LOGO_DATA_HEX}
   )
+
+  if(ARGC GREATER 3)
+    set(RANDOM_LOGO_DATA_SINGLELINE "${RANDOM_LOGO_DATA_SINGLELINE} 0x0")
+  endif()
 
   string(
     REGEX REPLACE

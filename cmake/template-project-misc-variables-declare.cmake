@@ -5,11 +5,6 @@ set(
   CACHE STRING "Project main binary name and target"
 )
 
-set(
-  GTKMM_OBJECT_NAME "${PROJECT_NAME}GTKmmObj"
-  CACHE STRING "Project main binary name and target"
-)
-
 option(
   ENABLE_UNIT_TESTS 
   "Set to ON value if unit tests build and run should be available"

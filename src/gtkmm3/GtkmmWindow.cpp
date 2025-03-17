@@ -1,4 +1,4 @@
-#include "src/gtkmm/GtkmmWindow.h"
+#include "src/gtkmm3/GtkmmWindow.h"
 
 #include <cassert>
 #include <iostream>

@@ -5,7 +5,7 @@
 
 #include "src/app/ApplicationContext.h"
 #include "src/app/IApplication.h"
-#include "src/gtkmm/GtkmmIniter.h"
+#include "src/gtkmm3/GtkmmIniter.h"
 
 namespace app
 {

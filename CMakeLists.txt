@@ -11,7 +11,7 @@ project(
   VERSION 0.7.0
   DESCRIPTION "A C++ Template project for you!"
   HOMEPAGE_URL "http://www.kytok.org.ua/"
-  LANGUAGES CXX
+  LANGUAGES CXX C
 )
 
 set(CMAKE_CXX_STANDARD 17)

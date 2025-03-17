@@ -3,7 +3,7 @@
 
 #include <memory>
 
-#include "src/gtkmm/gtkmm_includes.h"
+#include "src/gtkmm3/gtkmm_includes.h"
 
 namespace templateGtkmm
 {

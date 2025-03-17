@@ -4,7 +4,7 @@
 #include <iostream>
 #include <memory>
 
-#include "src/gtkmm/GtkmmIniter.h"
+#include "src/gtkmm3/GtkmmIniter.h"
 
 namespace app
 {

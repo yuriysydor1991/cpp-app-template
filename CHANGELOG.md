@@ -5,8 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [applib0.8.0] - 2025-03-17
+
+- d8149e0 Introducing MSVC extra compile options for warnings
+- ffaeb75 Adding MSVC settings file to the .gitignore
+- 543a7fa Avoiding the compilation warnings at the UTEST_CommandLineParser
+- 94c12a5 Introducing MS Windows tools install description into READMEs
+- 8ca7ba4 Adding the out directory for MSVC into .gitignore
+- 35e34fd Specifying the appGtkmm3Glade branch in the READMEs
+- 55c4a42 Introducing the appGtkmm3 branch info into the READMEs
+- 4062f58 Replacing the /usr/bin prefix parameter with right /usr in installation section
+- eb1a749 Introducing the lib branch info into the READMEs
+- 7e8d539 Introducing the appQt6 branch in READMEs
+- a6d72dc Introducing Doxygen doc with translated README as main page facility
+- 73e5d0d Introducing COMPILE_WARNINGS_AS_ERRORS and ENABLE_COMPILER_CODE_ANALYZER CMake vars.
+- d4c6dc1 Incrementing version to 0.8.0
+- ead330e Inserting forgoten realease link in the CHANGELOG
+
 ## [applib0.7.0] - 2025-03-14
 
+- f5b1d13 Release applib0.7.0 2025-03-17
 - 473bb31 Refining typos in uk_UA README
 - ab45738 Refining all the READMEs
 - cfa03d8 Introducing the sample LibMain UTs
@@ -168,6 +186,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[applib0.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/applib0.8.0)
 [applib0.7.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/applib0.7.0)
 [applib0.6.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/applib0.6.0)
 [app0.5.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.5.0)

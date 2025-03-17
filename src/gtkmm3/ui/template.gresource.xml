@@ -2,6 +2,6 @@
 <gresources>
     <gresource prefix="/ua/org/kytok/template/gtkmm3/glade">
         <file>resources/images/kytok.org.ua-logo.png</file>
-        <file>GtkmmWindow.glade</file>
+        <file>UI.glade</file>
     </gresource>
 </gresources>

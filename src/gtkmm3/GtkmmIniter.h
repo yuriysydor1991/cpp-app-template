@@ -25,7 +25,7 @@ class GtkmmIniter
 
  private:
   inline static constexpr const char* const UI_res_path =
-      "/ua/org/kytok/template/gtkmm3/glade/GtkmmWindow.glade";
+      "/ua/org/kytok/template/gtkmm3/glade/UI.glade";
   inline static constexpr const char* const logo_res_path =
       "/ua/org/kytok/template/gtkmm3/glade/resources/images/"
       "kytok.org.ua-logo.png";

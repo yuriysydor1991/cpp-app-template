@@ -2,10 +2,6 @@
 
 #include <cassert>
 
-#include "GtkmmWindow_glade.h"
-#include "random-logo.h"
-#include "src/gtkmm3/gtkmm_includes.h"
-
 namespace templateGtkmm3
 {
 
@@ -32,9 +28,7 @@ int GtkmmIniter::run(int& argc, char**& argv)
 
 void GtkmmIniter::prepare_widgets()
 {
-  auto ui_string = get_glade_xml_data();
-
-  builder = Gtk::Builder::create_from_string(ui_string);
+  builder = Gtk::Builder::create_from_resource(UI_res_path);
 
   if (!builder) {
     throw std::runtime_error("Failed to create the builder");
@@ -61,20 +55,7 @@ void GtkmmIniter::prepare_random_logo()
     return;
   }
 
-  // Create Pixbuf from memory
-  Glib::RefPtr<Gdk::PixbufLoader> loader = Gdk::PixbufLoader::create();
-
-  loader->write(resources::images::random_logo_data,
-                resources::images::random_logo_data_size);
-  loader->close();
-
-  image->set(loader->get_pixbuf());
-}
-
-Glib::ustring GtkmmIniter::get_glade_xml_data()
-{
-  return Glib::ustring(
-      reinterpret_cast<const char*>(resources::gladexml::window_xml_data));
+  image->set_from_resource(logo_res_path);
 }
 
 }  // namespace templateGtkmm3

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+    <gresource prefix="/ua/org/kytok/template/gtkmm3">
+        <file>resources/images/kytok.org.ua-logo.png</file>
+        <file>GtkmmWindow.glade</file>
+    </gresource>
+</gresources>

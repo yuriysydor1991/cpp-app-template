@@ -1,17 +1,37 @@
 cmake_minimum_required(VERSION 3.13)
 
-include(template-project-load-file-into-h)
+find_program(GRSC_EXEC glib-compile-resources)
 
-load_file_data(
-  ${CMAKE_CURRENT_SOURCE_DIR}/GtkmmWindow.glade
-  MAINWINDOW_GLADE_DATA_SIZE 
-  MAINWINDOW_GLADE_DATA
-  true
+set(RESOURCE_XML "${CMAKE_CURRENT_SOURCE_DIR}/template.gresource.xml")
+set(RESOURCE_C "${CMAKE_BINARY_DIR}/template-resources.c")
+
+add_custom_command(
+  OUTPUT ${RESOURCE_C}
+  COMMAND ${GRSC_EXEC}
+          --target=${RESOURCE_C}
+          --generate-source
+          ${RESOURCE_XML}
+  DEPENDS ${RESOURCE_XML}
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+  COMMENT "Generating GResource source for ${PROJECT_NAME} (cleaned compile options WITH NO -Wall -Wextra)"
 )
 
-configure_file(
-  GtkmmWindow_glade.h.in
-  ${CMAKE_BINARY_DIR}/GtkmmWindow_glade.h
+add_library(
+  gresourcelib OBJECT
+  ${RESOURCE_C}
 )
 
-add_subdirectory(resources)
+set_target_properties(gresourcelib PROPERTIES COMPILE_OPTIONS "")
+
+target_include_directories(
+  gresourcelib
+  PRIVATE 
+    ${GTKMM_INCLUDE_DIRS}
+    ${CMAKE_SOURCE_DIR}
+    ${CMAKE_BINARY_DIR}
+)
+
+target_link_libraries(
+  ${PROJECT_BINARY_NAME}
+  gresourcelib
+)

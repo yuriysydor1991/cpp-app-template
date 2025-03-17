@@ -4,9 +4,6 @@ find_package(PkgConfig)
 
 pkg_check_modules(GTKMM gtkmm-3.0 REQUIRED)
 
-message(STATUS "GTK INCLUDES: ${GTKMM_INCLUDE_DIRS}")
-message(STATUS "GTK LIBS: ${GTKMM_LIBRARIES}")
-
 add_library(
   ${GTKMM_OBJECT_NAME} OBJECT
   GtkmmIniter.cpp

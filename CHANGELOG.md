@@ -5,8 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [app0.7.0] - 2025-03-17
+
+- 4f45e8d Introducing MS Windows tools install description into READMEs
+- 7d7defd Avoiding the compilation warnings at the UTEST_CommandLineParser
+- 39d9486 Adding MSVC settings file to the .gitignore
+- b04d376 Introducing MSVC extra compile options for warnings
+- 5f18f5a Adding the out directory for MSVC into .gitignore
+- b7e960b Specifying the appGtkmm3Glade branch in the READMEs
+- ef33819 Introducing the appGtkmm3 branch info into the READMEs
+- 68a1efa Revert "Introducing the GTKmm-3.0 window infrastructure."
+- 6adae7b Revert "Adding gtkmm-3.0 to required packages in READMEs"
+- e19f268 Adding gtkmm-3.0 to required packages in READMEs
+- eedd7ac Introducing the GTKmm-3.0 window infrastructure.
+- 1da93db Replacing the /usr/bin prefix parameter with right /usr in installation section
+- adc02d6 Introducing the lib branch info into the READMEs
+- 6230596 Introducing the appQt6 branch in READMEs
+- d044fe4 Incrementing version to 0.7.0
+
 ## [app0.6.0] - 2025-03-14
 
+- 9bd89d8 Release app0.6.0 2025-03-14
 - 1192ec5 Introducing branch info and README translations into uk_UA README
 - 14da387 Introducing Doxygen doc with translated README as main page facility
 - 074df94 Introducing COMPILE_WARNINGS_AS_ERRORS and ENABLE_COMPILER_CODE_ANALYZER CMake vars.
@@ -139,6 +158,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[app0.7.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.7.0)
 [app0.6.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.6.0)
 [app0.5.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.5.0)
 [app0.4.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.4.0)

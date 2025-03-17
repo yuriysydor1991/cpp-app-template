@@ -5,8 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appGtkmm3Glade0.8.0] - 2025-03-17
+
+- 44abe1d Refining READMEs to introduce Glade UI explanations
+- adb3bf5 Changing the glade file to UI.glade so it's representing ALL the GUI
+- 0ee80c9 appending the Glade suffix to resources paths
+- ab19d8c Applying clang-format
+- 40c81c7 Erasing CMake resource compilation in favor glib-compile-resources compilation
+- 093021b introducing the Glade app into the READMEs.
+- df21556 Specifying the appGtkmm3Glade branch in the READMEs
+- 7d1a162 Moving a src/gtkmm to the src/gtkmm3 directory with contents
+- 752eb7b Erasing const reference for the get_glade_xml_data method
+- d20dabf Applying clang-format
+- 78f39c1 Changing the project descriptionin the root CMakeLists.txt.
+- ef58e59 Incrementing version to 0.8.0
+- bad8a5d Erasing GtkmmWindow class to prefer one from the .glade file
+- 6fd97a3 Wrapping main window box with an actual Window widget for glade file
+- 2b493f8 Introducing Glade-files load infrastructure to build UI with XML.
+- eb7c98a Erasing annoying traces for the GTKmm CMake vars
+- 5d5d338 Introducing the load_file_data procedure to C++ header file data transfers
+- 12ebc3b Introducing MainWindow glade file for UI.
+
 ## [appGtkmm30.7.0] - 2025-03-16
 
+- 0b67e70 Release appGtkmm30.7.0 2025-03-16
 - 512bbd0 Refining the READMEs for the GTKmm
 - c3bb27c Margin the appGtkmm3 branch as current in the READMEs
 - 79d22dc Introducing the appGtkmm3 branch info into the READMEs
@@ -154,6 +176,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[appGtkmm3Glade0.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appGtkmm3Glade0.8.0)
 [appGtkmm30.7.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appGtkmm30.7.0)
 [app0.6.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.6.0)
 [app0.5.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.5.0)

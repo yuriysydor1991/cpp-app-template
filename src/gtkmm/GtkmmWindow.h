@@ -19,11 +19,17 @@ class GtkmmWindow : public Gtk::Window
   GtkmmWindow();
 
  protected:
-  virtual const std::string& get_default_title();
+  const std::string& get_default_title();
 
  private:
   void prepare_header_label();
   void prepare_random_logo();
+  void prepare_global_resource();
+
+  inline static constexpr const char* const logo_res_path =
+      "/ua/org/kytok/template/gtkmm3/resources/images/kytok.org.ua-logo.png";
+
+  Glib::RefPtr<Gio::Resource> resources{nullptr};
 
   Gtk::VBox box;
 

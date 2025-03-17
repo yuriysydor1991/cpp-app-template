@@ -6,6 +6,8 @@
 #pragma GCC diagnostic ignored "-Wall -Wextra -Werror -Wunknown-pragmas"
 #pragma warning(push, 0)  // MSVC
 
+#include <gio/gio.h>
+#include <giomm/resource.h>
 #include <gtkmm.h>
 #include <gtkmm/hvbox.h>
 #include <gtkmm/image.h>

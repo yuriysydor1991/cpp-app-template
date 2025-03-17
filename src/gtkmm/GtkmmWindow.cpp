@@ -1,7 +1,10 @@
 #include "src/gtkmm/GtkmmWindow.h"
 
+#include <cassert>
+#include <iostream>
+#include <stdexcept>
+
 #include "project-global-decls.h"
-#include "random-logo.h"
 
 namespace templateGtkmm
 {
@@ -35,8 +38,10 @@ void GtkmmWindow::prepare_header_label()
 {
   // Set font size using Pango attributes
   auto attr_list = Pango::AttrList();
+
   auto fontScale =
       Pango::Attribute::create_attr_size(20 * PANGO_SCALE);  // 20px font size
+
   attr_list.insert(fontScale);
 
   headerText.set_attributes(attr_list);
@@ -44,14 +49,7 @@ void GtkmmWindow::prepare_header_label()
 
 void GtkmmWindow::prepare_random_logo()
 {
-  // Create Pixbuf from memory
-  Glib::RefPtr<Gdk::PixbufLoader> loader = Gdk::PixbufLoader::create();
-
-  loader->write(resoruces::images::random_logo_data,
-                resoruces::images::random_logo_data_size);
-  loader->close();
-
-  image.set(loader->get_pixbuf());
+  image.set_from_resource(logo_res_path);
 }
 
 const std::string& GtkmmWindow::get_default_title()

@@ -25,9 +25,10 @@ class GtkmmIniter
 
  private:
   inline static constexpr const char* const UI_res_path =
-      "/ua/org/kytok/template/gtkmm3/GtkmmWindow.glade";
+      "/ua/org/kytok/template/gtkmm3/glade/GtkmmWindow.glade";
   inline static constexpr const char* const logo_res_path =
-      "/ua/org/kytok/template/gtkmm3/resources/images/kytok.org.ua-logo.png";
+      "/ua/org/kytok/template/gtkmm3/glade/resources/images/"
+      "kytok.org.ua-logo.png";
 
   void prepare_random_logo();
 

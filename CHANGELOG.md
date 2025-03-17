@@ -5,8 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appGtkmm30.8.0] - 2025-03-17
+
+- d347ffb Incrementing version to 0.8.0
+- 9403985 Mentioning the glib-compile-resources resource file in the READMEs
+- 347d86f Moving a src/gtkmm to the src/gtkmm3
+- cbfbb5d Introducing GResource compilation with glib-compile-resources and resource lib target
+- 15da6a1 Removing annoying GTKmm vars traces
+- 14426ff Specifying the appGtkmm3Glade branch in the READMEs
+
 ## [appGtkmm30.7.0] - 2025-03-16
 
+- 0b67e70 Release appGtkmm30.7.0 2025-03-16
 - 512bbd0 Refining the READMEs for the GTKmm
 - c3bb27c Margin the appGtkmm3 branch as current in the READMEs
 - 79d22dc Introducing the appGtkmm3 branch info into the READMEs
@@ -154,6 +164,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[appGtkmm30.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appGtkmm30.8.0)
 [appGtkmm30.7.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appGtkmm30.7.0)
 [app0.6.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.6.0)
 [app0.5.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.5.0)

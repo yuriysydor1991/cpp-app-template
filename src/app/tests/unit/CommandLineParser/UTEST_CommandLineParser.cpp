@@ -20,6 +20,21 @@ class UTEST_CommandLineParser : public Test
     return std::make_shared<ApplicationContext>(gargc, gargv);
   }
 
+  void two_args(const char* const secondParam)
+  {
+    static std::string binaryName{"binaryName"};
+    static std::string secondArg;
+
+    static char* customArgv[] = {binaryName.data(), secondArg.data()};
+
+    secondArg = secondParam;
+
+    customArgv[1] = secondArg.data();
+
+    argc = 2;
+    argv = customArgv;
+  }
+
   int argc{0};
   char** argv{nullptr};
 
@@ -39,10 +54,7 @@ TEST_F(UTEST_CommandLineParser, empty_context)
 
 TEST_F(UTEST_CommandLineParser, help_short)
 {
-  char* customArgv[] = {"binaryName", "-h"};
-
-  argc = 2;
-  argv = customArgv;
+  two_args("-h");
 
   EXPECT_CALL(*appctx, push_error(_)).Times(0);
 
@@ -55,10 +67,7 @@ TEST_F(UTEST_CommandLineParser, help_short)
 
 TEST_F(UTEST_CommandLineParser, help_long)
 {
-  char* customArgv[] = {"binaryName", "--help"};
-
-  argc = 2;
-  argv = customArgv;
+  two_args("--help");
 
   EXPECT_CALL(*appctx, push_error(_)).Times(0);
 
@@ -71,10 +80,7 @@ TEST_F(UTEST_CommandLineParser, help_long)
 
 TEST_F(UTEST_CommandLineParser, version_short)
 {
-  char* customArgv[] = {"binaryName", "-v"};
-
-  argc = 2;
-  argv = customArgv;
+  two_args("-v");
 
   EXPECT_CALL(*appctx, push_error(_)).Times(0);
 
@@ -87,10 +93,7 @@ TEST_F(UTEST_CommandLineParser, version_short)
 
 TEST_F(UTEST_CommandLineParser, version_long)
 {
-  char* customArgv[] = {"binaryName", "--version"};
-
-  argc = 2;
-  argv = customArgv;
+  two_args("--version");
 
   EXPECT_CALL(*appctx, push_error(_)).Times(0);
 
@@ -103,14 +106,12 @@ TEST_F(UTEST_CommandLineParser, version_long)
 
 TEST_F(UTEST_CommandLineParser, unknown_flag)
 {
-  static constexpr char* unknownFlag = "--unknown";
+  static constexpr const char* const unknownFlag = "--unknown";
+  static std::string unknownFlagStr{unknownFlag};
   static const std::string expectedError =
-      std::string{"Unknown parameter: "} + unknownFlag;
+      std::string{"Unknown parameter: "} + unknownFlagStr;
 
-  char* customArgv[] = {"binaryName", unknownFlag};
-
-  argc = 2;
-  argv = customArgv;
+  two_args(unknownFlag);
 
   EXPECT_CALL(*appctx, push_error(expectedError)).Times(1);
 

@@ -24,7 +24,8 @@ class GtkmmIniter
   void prepare_widgets();
 
  private:
-  inline static constexpr const char* const UI_res_path = "/ua/org/kytok/template/gtkmm3/GtkmmWindow.glade" ;
+  inline static constexpr const char* const UI_res_path =
+      "/ua/org/kytok/template/gtkmm3/GtkmmWindow.glade";
   inline static constexpr const char* const logo_res_path =
       "/ua/org/kytok/template/gtkmm3/resources/images/kytok.org.ua-logo.png";
 

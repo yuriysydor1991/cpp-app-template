@@ -10,3 +10,4 @@ doc/html/*
 doc/latex/*
 doc/*-html/*
 out/*
+CMakeSettings.json

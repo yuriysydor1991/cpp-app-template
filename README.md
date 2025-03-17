@@ -134,7 +134,11 @@ To proceed the application implementation right away look for the `GtkmmWindow` 
 
 It's preferable to create other directories which would contain implemented components of the application and include them into the `GtkmmWindow` class implementation, rather than put all the code inside the `GtkmmWindow` class itself.
 
-Additional code may be introduced into the `Application` class implementation or by creation `IApplication` class descendant in order to provide binary level variety. 
+Additional code may be introduced into the `Application` class implementation or by creation `IApplication` class descendant in order to provide binary level variety.
+
+## Resource embedding
+
+To avoid any install and run dependencies any file registered as a resource are embedding into the binary. Resource embedding is performed through the `src/gtkmm3/ui/template.gresource.xml` GResource file resources of which are compiled into the C-resource by a `glib-compile-resources` command. Register new and remove old resources in the `src/gtkmm3/ui/template.gresource.xml` file in order to make them available in the binary executable. The examples of the resource obtaining and usage in the C++ code side may be examined in the default implementation of the `GtkmmWindow` class.
 
 ## Changing the project and executable name
 

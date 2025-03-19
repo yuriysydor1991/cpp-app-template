@@ -73,7 +73,7 @@ sudo apt install -y git g++ cmake
 Для встановлення FreeGlut бібліотеки необхідно виконати наступну команду:
 
 ```
-sudo apt install -y freeglut3-dev
+sudo apt install -y freeglut3 freeglut3-dev mesa-common-dev libglew-dev libglm-dev
 ```
 
 ## Обов'язкові інструменти для ОС на базі MS Windows

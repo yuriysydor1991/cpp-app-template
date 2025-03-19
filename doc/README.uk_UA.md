@@ -14,6 +14,7 @@
 - гілка `appGtkmm3` розміщена за адресою [appGtkmm3](https://github.com/yuriysydor1991/cpp-app-template/tree/appGtkmm3) яка містить загальні класи для генерації бінарного виконуваного файлу разом з структурою заданою для розробки віконної програми на базі GTKmm-3.0 s C++.
 - гілка `appGtkmm3Glade` розміщена за адресою [appGtkmm3Glade](https://github.com/yuriysydor1991/cpp-app-template/tree/appGtkmm3Glade) яка містить загальні класи для генерації бінарного виконуваного файлу разом з структурою заданою для розробки віконної програми на базі C++ з GTKmm-3.0 і [Glade](https://en.wikipedia.org/wiki/Glade_Interface_Designer) - програми для створення візульних інтерфейсів.
 - гілка `appFreeGlut` розміщена за адресою [appFreeGlut](https://github.com/yuriysydor1991/cpp-app-template/tree/appFreeGlut) (**поточна**) яка містить загальні класи для генераці одинарного бінарного виконуваного файлу разом з початковою інфраструктурою для розробки у OpenGL 3D разом з FreeGlut.
+- гілка `appSDL2` розміщена за адресою [appSDL2](https://github.com/yuriysydor1991/cpp-app-template/tree/appSDL2) яка містить загальні класи для генераці одинарного бінарного виконуваного файлу разом з початковою інфраструктурою для розробки у OpenGL 3D разом з [SDL2](https://en.wikipedia.org/wiki/Simple_DirectMedia_Layer) і набагато більше!
 
 Редагуй поточний файл `README.md` і `CHANGELOG.md` щоб документація відповідала впровадженому коду. Для перекладів даного файлу `README.md`:
 - `uk_UA` за відносною адресою doc/README.uk_UA.md

@@ -4,6 +4,8 @@
 #include <iostream>
 #include <memory>
 
+#include "src/SDL2/SDL2Initer.h"
+
 namespace app
 {
 
@@ -15,9 +17,9 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  std::cout << "Your application implementation goes here!" << std::endl;
+  templateSDL2::SDL2Initer opengl;
 
-  return 0;
+  return opengl.run(ctx);
 }
 
 }  // namespace app

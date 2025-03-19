@@ -1,6 +1,7 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATIONCONTEXT_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATIONCONTEXT_CLASS_H
 
+#include <atomic>
 #include <string>
 #include <vector>
 
@@ -63,6 +64,13 @@ struct ApplicationContext
    * @param errorDescription The application error description.
    */
   void push_error(const std::string& errorDescription);
+
+  void stop(const bool nStop);
+  bool stop();
+
+ private:
+  /// @brief Mark to true if to stop the SDL2 event loop
+  std::atomic_bool toStop;
 };
 
 }  // namespace app

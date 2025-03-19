@@ -69,12 +69,6 @@ In order to build minimum template project install the GCC C++ compiler with CMa
 sudo apt install -y git g++ cmake
 ```
 
-The FreeGlut library may be installed with help of a next command:
-
-```
-sudo apt install -y freeglut3-dev libopengl-dev
-```
-
 ## Required tools for the MS Windows based OS
 
 In order to build project binaries download the install tool for the developer tools from the MSVC download page [https://visualstudio.microsoft.com/downloads/](https://visualstudio.microsoft.com/downloads/) and search and enable for the Native C++ application development section.

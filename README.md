@@ -144,7 +144,7 @@ To proceed the application implementation right away look for the `FreeGlutInite
 
 It's preferable to create other directories which would contain implemented components of the application and include them into the `FreeGlutIniter` class implementation, rather than put all the code inside the `FreeGlutIniter` class itself.
 
-Additional code may be introduced into the Application class implementation or by creation IApplication class descendant in order to provide binary level variety.
+Additional code may be introduced into the `Application` class implementation or by creation `IApplication` class descendant in order to provide binary level variety.
 
 ## Changing the project and executable name
 

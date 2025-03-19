@@ -13,9 +13,10 @@
 - гілка `appQt6` розміщена за адресою [appQt6](https://github.com/yuriysydor1991/cpp-app-template/tree/appQt6) (**поточна**) яка містить загальні класи для генерації бінарного виконуваного файлу разом з структурою заданою для розробки віконної програми на базі Qt6 разом з QML.
 - гілка `appGtkmm3` розміщена за адресою [appGtkmm3](https://github.com/yuriysydor1991/cpp-app-template/tree/appGtkmm3) яка містить загальні класи для генерації бінарного виконуваного файлу разом з структурою заданою для розробки віконної програми на базі GTKmm-3.0 з C++.
 - гілка `appGtkmm3Glade` розміщена за адресою [appGtkmm3Glade](https://github.com/yuriysydor1991/cpp-app-template/tree/appGtkmm3Glade) яка містить загальні класи для генерації бінарного виконуваного файлу разом з структурою заданою для розробки віконної програми на базі C++ з GTKmm-3.0 і [Glade](https://en.wikipedia.org/wiki/Glade_Interface_Designer) - програми для створення візульних інтерфейсів.
+- гілка `appFreeGlut` розміщена за адресою [appFreeGlut](https://github.com/yuriysydor1991/cpp-app-template/tree/appFreeGlut) яка містить загальні класи для генераці одинарного бінарного виконуваного файлу разом з початковою інфраструктурою для розробки у OpenGL 3D разом з FreeGlut.
 
 Редагуй поточний файл `README.md` і `CHANGELOG.md` щоб документація відповідала впровадженому коду. Для перекладів даного файлу `README.md`:
-- `uk_UA` за відносною адресою [doc/README.uk_UA.md](doc/README.uk_UA.md)
+- `uk_UA` за відносною адресою doc/README.uk_UA.md
 
 Більше за посиланням [kytok.org.ua](http://www.kytok.org.ua/)
 
@@ -68,6 +69,21 @@ git push
 ```
 sudo apt install -y git g++ cmake
 ```
+
+Для встановлення FreeGlut бібліотеки необхідно виконати наступну команду:
+
+```
+sudo apt install -y freeglut3-dev
+```
+
+## Обов'язкові інструменти для ОС на базі MS Windows
+
+Для того щоб мати можливість розробляти і будувати проект необхідно завантажити MSVC інсталятор з сторінки [https://visualstudio.microsoft.com/downloads/](https://visualstudio.microsoft.com/downloads/) і увімкнути встановлення інструменти для нативної розробки для C++.
+
+Окремо інсталятор на кожен необхідний проект можна завантажити з окремих джерел (**можлива необхідність пошуку і встановлення інших пакунків**):
+- Система вірсіювання Git за адресою [https://git-scm.com/downloads/win](https://git-scm.com/downloads/win)
+- Система побудови CMake за адресою [https://cmake.org/download/](https://cmake.org/download/)
+- Пакунки Windows 10 SDK за адресою [https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/](https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/)
 
 ## Необов'язкові пакети для тестів
 

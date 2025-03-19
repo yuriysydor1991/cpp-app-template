@@ -13,9 +13,10 @@
 - гілка `appQt6` розміщена за адресою [appQt6](https://github.com/yuriysydor1991/cpp-app-template/tree/appQt6) яка містить загальні класи для генерації бінарного виконуваного файлу разом з структурою заданою для розробки віконної програми на базі Qt6 разом з QML.
 - гілка `appGtkmm3` розміщена за адресою [appGtkmm3](https://github.com/yuriysydor1991/cpp-app-template/tree/appGtkmm3) яка містить загальні класи для генерації бінарного виконуваного файлу разом з структурою заданою для розробки віконної програми на базі GTKmm-3.0 s C++.
 - гілка `appGtkmm3Glade` розміщена за адресою [appGtkmm3Glade](https://github.com/yuriysydor1991/cpp-app-template/tree/appGtkmm3Glade) яка містить загальні класи для генерації бінарного виконуваного файлу разом з структурою заданою для розробки віконної програми на базі C++ з GTKmm-3.0 і [Glade](https://en.wikipedia.org/wiki/Glade_Interface_Designer) - програми для створення візульних інтерфейсів.
+- гілка `appFreeGlut` розміщена за адресою [appFreeGlut](https://github.com/yuriysydor1991/cpp-app-template/tree/appFreeGlut) яка містить загальні класи для генераці одинарного бінарного виконуваного файлу разом з початковою інфраструктурою для розробки у OpenGL 3D разом з FreeGlut.
 
 Редагуй поточний файл `README.md` і `CHANGELOG.md` щоб документація відповідала впровадженому коду. Для перекладів даного файлу `README.md`:
-- `uk_UA` за відносною адресою [doc/README.uk_UA.md](doc/README.uk_UA.md)
+- `uk_UA` за відносною адресою doc/README.uk_UA.md
 
 Більше за посиланням [kytok.org.ua](http://www.kytok.org.ua/)
 
@@ -67,6 +68,12 @@ git push
 
 ```
 sudo apt install -y git g++ cmake
+```
+
+Для встановлення FreeGlut бібліотеки необхідно виконати наступну команду:
+
+```
+sudo apt install -y freeglut3-dev
 ```
 
 ## Обов'язкові інструменти для ОС на базі MS Windows

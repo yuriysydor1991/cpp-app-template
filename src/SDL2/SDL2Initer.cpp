@@ -14,14 +14,14 @@ namespace templateSDL2
 
 SDL2Initer::~SDL2Initer()
 {
-  if (window != nullptr) {
-    SDL_DestroyWindow(window);
-    window = nullptr;
-  }
-
   if (glContext != nullptr) {
     SDL_GL_DeleteContext(glContext);
     glContext = nullptr;
+  }
+  
+  if (window != nullptr) {
+    SDL_DestroyWindow(window);
+    window = nullptr;
   }
 
   SDL_Quit();

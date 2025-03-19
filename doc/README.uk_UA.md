@@ -70,12 +70,6 @@ git push
 sudo apt install -y git g++ cmake
 ```
 
-Для встановлення FreeGlut бібліотеки необхідно виконати наступну команду:
-
-```
-sudo apt install -y freeglut3-dev
-```
-
 ## Обов'язкові інструменти для ОС на базі MS Windows
 
 Для того щоб мати можливість розробляти і будувати проект необхідно завантажити MSVC інсталятор з сторінки [https://visualstudio.microsoft.com/downloads/](https://visualstudio.microsoft.com/downloads/) і увімкнути встановлення інструменти для нативної розробки для C++.

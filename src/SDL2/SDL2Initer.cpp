@@ -43,7 +43,8 @@ void SDL2Initer::parse_event(SDL_Event& event)
   }
 
   if (event.type == SDL_QUIT) {
-    mAppCtx->stop(true);
+    handleQuit(event);
+    return;
   }
 
   // put other event types parse here
@@ -66,6 +67,13 @@ int SDL2Initer::run(std::shared_ptr<app::ApplicationContext> ctx)
   event_loop();
 
   return 0;
+}
+
+void SDL2Initer::handleQuit([[maybe_unused]] SDL_Event& event)
+{
+  assert(mAppCtx != nullptr);
+
+  mAppCtx->stop(true);
 }
 
 void SDL2Initer::event_loop()

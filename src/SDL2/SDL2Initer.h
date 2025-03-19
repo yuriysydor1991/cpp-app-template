@@ -43,6 +43,8 @@ class SDL2Initer
   virtual void parse_event(SDL_Event& event);
   virtual void event_loop();
 
+  virtual void handleQuit(SDL_Event& event);
+
   inline static constexpr const int GL_CONTEXT_MAJOR_VERSION = 3;
   inline static constexpr const int GL_CONTEXT_MINOR_VERSION = 3;
   inline static constexpr const int default_window_width = 800;

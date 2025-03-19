@@ -13,6 +13,7 @@ Examine available branches to find your most applicable variant of the template:
 - `appQt6` branch at [appQt6](https://github.com/yuriysydor1991/cpp-app-template/tree/appQt6) for the application general classes with additional defined structure for the Qt6 QML window application development.
 - `appGtkmm3` branch at [appGtkmm3](https://github.com/yuriysydor1991/cpp-app-template/tree/appGtkmm3) (**current**) for the application general classes with additional defined structure for the Gtkmm-3.0 with C++ window application development.
 - `appGtkmm3Glade` branch at [appGtkmm3Glade](https://github.com/yuriysydor1991/cpp-app-template/tree/appGtkmm3Glade) for the application general classes with additional defined structure for the C++ application development with Gtkmm-3.0 and [Glade](https://en.wikipedia.org/wiki/Glade_Interface_Designer) application with XML UI creation.
+- `appFreeGlut` branch at [appFreeGlut](https://github.com/yuriysydor1991/cpp-app-template/tree/appFreeGlut) with just general application related classes to generate a single binary executable with a FreeGlut library for the OpenGL 3D development.
 
 Alter current `README.md` and a `CHANGELOG.md` files to match your implementation introduced into the template project. Examine the `doc` directory for possible translations of a current md document:
 - `uk_UA` at [doc/README.uk_UA.md](doc/README.uk_UA.md)

@@ -126,7 +126,15 @@ In order to perform a static code analysis with the `cppcheck` command install i
 sudo apt install -y cppcheck
 ```
 
-Examine the [Enabling the static code analyzer target with cppcheck](#enabling-the-static-code-analyzer-target-with-cppcheck) section on how to enable the `cppcheck` target.
+## Optional for the code analyzer with clang-tidy
+
+In order to perform a static code analysis with the `clang-tidy` command install it with next command (GNU/linux based):
+
+```
+sudo apt install -y clang-tidy
+```
+
+Examine the [Enabling the static code analyzer with clang-tidy](#enabling-the-static-code-analyzer-with-clang-tidy) section on how to enable the `cppcheck` target.
 
 ## Optional for the memory check with Valgrind
 
@@ -309,6 +317,29 @@ cmake --build . --target cppcheck
 ```
 
 The `cppcheck` target details may be examined and/or altered in the `cmake/template-project-cppcheck-target.cmake` CMake submodule file.
+
+## Enabling the static code analyzer with clang-tidy
+
+In order to enable the static code check for the each translation unit or each `*.cpp` file in the project with a `clang-tidy` application enable it during the project configuration stage by setting the `ENABLE_CLANG_TIDY` variable value to `ON` in the configuration command:
+
+```
+# inside the project root directory
+
+mkdir -vp build && cd build && cmake ../ -DENABLE_CLANG_TIDY=ON
+```
+
+And to perform the actual static code analysis by itself build any target of interest and the `clang-tidy` command will perform check on each of the compilation target:
+
+```
+# inside the project build directory
+
+cmake --build . --target all
+```
+
+For more information about the `clang-tidy` examine the `cmake/template-project-clang-tidy-target.cmake`, `misc/.clang-tidy` files
+and the `clang-tidy` application documentation of a used version.
+
+**Warning!** The `clang-tidy` static code analysis may dramatically increase the code compilation time.
 
 ## Enabling the dynamic memory check target with valgrind
 

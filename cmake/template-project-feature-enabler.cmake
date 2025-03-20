@@ -16,3 +16,7 @@ endif()
 if(ENABLE_VALGRIND)
   include(template-project-valgrind-target)
 endif()
+
+if(ENABLE_CLANG_TIDY)
+  include(template-project-clang-tidy-target)
+endif()

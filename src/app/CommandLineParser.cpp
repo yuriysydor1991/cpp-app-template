@@ -42,10 +42,9 @@ bool CommandLineParser::parse_args(std::shared_ptr<ApplicationContext> ctx)
   return true;
 }
 
-bool CommandLineParser::check_4_data(std::shared_ptr<ApplicationContext> ctx,
-                                     const std::string& param,
-                                     const int& hasNext,
-                                     const std::string& nextParam)
+bool CommandLineParser::check_4_data(
+    std::shared_ptr<ApplicationContext> ctx, const std::string& param,
+    const bool hasNext, [[maybe_unused]] const std::string& nextParam)
 {
   assert(ctx != nullptr);
 
@@ -61,12 +60,13 @@ bool CommandLineParser::check_4_data(std::shared_ptr<ApplicationContext> ctx,
     return false;
   }
 
-  return (hasNext && !nextParam.empty()) || true;
+  return true;
 }
 
 bool CommandLineParser::parse_arg(std::shared_ptr<ApplicationContext> ctx,
-                                  const std::string& param, const int& hasNext,
-                                  const std::string& nextParam, int& paramIndex)
+                                  const std::string& param, const bool hasNext,
+                                  [[maybe_unused]] const std::string& nextParam,
+                                  int& paramIndex)
 {
   assert(ctx != nullptr);
 
@@ -91,7 +91,7 @@ bool CommandLineParser::parse_arg(std::shared_ptr<ApplicationContext> ctx,
     paramIndex++;
   }
 
-  return (hasNext && nextParam.empty()) || true;
+  return true;
 }
 
 const std::set<std::string>& CommandLineParser::get_params_requiring_data()

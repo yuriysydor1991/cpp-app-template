@@ -47,7 +47,7 @@ class CommandLineParser
    * @return Returns true on the success and false in case of any error.
    */
   virtual bool parse_arg(std::shared_ptr<ApplicationContext> ctx,
-                         const std::string& param, const int& hasNext,
+                         const std::string& param, const bool hasNext,
                          const std::string& nextParam, int& paramIndex);
 
   /**
@@ -65,7 +65,7 @@ class CommandLineParser
    * next to it. And a false values otherwise.
    */
   virtual bool check_4_data(std::shared_ptr<ApplicationContext> ctx,
-                            const std::string& param, const int& hasNext,
+                            const std::string& param, const bool hasNext,
                             const std::string& nextParam);
 
   /**

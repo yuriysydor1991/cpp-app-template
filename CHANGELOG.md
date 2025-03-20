@@ -5,8 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [app0.8.0] - 2025-03-20
+
+- c2d08e9 Replacing int flag with a bool for the CommandLineParser
+- 5adff97 Erasing the /analyze from the default MSVC compile options
+- 3a70693 Introducing the DEB package gen info in the READMEs
+- a408273 Introducing the cpack configuration for the deb package generation
+- e9d052e Introducing the LICENSE file with free of use license and notice
+- f42d640 Fixing typo in the README
+- 3f3d38e Introducing the clang-tidy info into the READMEs
+- dfc52ec Introducing clang-tidy
+- 3bb98fb Introducing the appSDL2 branch into the READMEs
+- 29532bc Erasing redundant libraries installation info
+- 41450f5 Introducing the FreeGlut/OpenGL appFreeGlut branch info into READMEs
+- 6cdefed Incrementing version to 0.8.0
+
 ## [app0.7.0] - 2025-03-17
 
+- b2ae262 Release app0.7.0 2025-03-17
 - 4f45e8d Introducing MS Windows tools install description into READMEs
 - 7d7defd Avoiding the compilation warnings at the UTEST_CommandLineParser
 - 39d9486 Adding MSVC settings file to the .gitignore

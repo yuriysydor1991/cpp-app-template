@@ -311,7 +311,7 @@ The `cppcheck` target details may be examined and/or altered in the `cmake/templ
 
 ## Enabling the static code analyzer with clang-tidy
 
-In order to enable the static code check for the each translation unit or each `*.cpp` file in the project with a `clang-tidy` application enable it during the project configuration stage by setting the `ENABLE_CLANG_TIDY` by setting it's value to `ON` in the configuration command:
+In order to enable the static code check for the each translation unit or each `*.cpp` file in the project with a `clang-tidy` application enable it during the project configuration stage by setting the `ENABLE_CLANG_TIDY` variable value to `ON` in the configuration command:
 
 ```
 # inside the project root directory

@@ -75,8 +75,8 @@ void FreeGlutIniter::reshape(int w, int h)
 
   glLoadIdentity();
 
-  glOrtho(-static_cast<float>(w) / 2.f, static_cast<float>(w) / 2.f,
-          -static_cast<float>(h) / 2.f, static_cast<float>(h) / 2.f, -1.0,
+  glOrtho(-static_cast<double>(w) / 2.0, static_cast<double>(w) / 2.0,
+          -static_cast<double>(h) / 2.0, static_cast<double>(h) / 2.0, -1.0,
           100.0);
 
   glMatrixMode(GL_MODELVIEW);

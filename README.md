@@ -354,6 +354,36 @@ The `valgrind` target details may be examined and/or altered in the `cmake/templ
 
 **Warning! It will start application.** The dynamic memory check requires application to be started and go through the full cycle. Ensure that application execution will have a finite time.
 
+## Enabling DEB package generation with cpack
+
+In order to be able to generate the `deb` package file configure project to support the `cpack` command feature with a `ENABLE_DEB` variable enabled:
+
+```
+# inside the project root directory 
+
+mkdir -vp build && cd build && cmake ../ -DENABLE_DEB=ON
+```
+
+Next, build all available targets required for the `deb` package
+
+```
+# inside the project build directory
+
+cmake --build . --target all
+```
+
+Finally, execute the `cpack` command inside the template project build directory:
+
+```
+# inside the project build directory
+
+cpack
+```
+
+The package file should be generated inside the project build root directory. For example, if project name was't change and it's version is 0.8.0 so the package name may look like `CppAppTemplate-0.8.0-Linux.deb`.
+
+In order to examine details of the `deb` package configuration visit the `cmake/template-project-deb-enabler.cmake` file.
+
 # Run the executable
 
 ## IDE run

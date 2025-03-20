@@ -89,6 +89,12 @@ option(
   OFF
 )
 
+option(
+  ENABLE_CLANG_TIDY
+  "Set to ON if enable the clang-tidy code check target."
+  OFF
+)
+
 string(TIMESTAMP PROJECT_CONFIGURE_DATE "%Y-%m-%d %H:%M:%S")
 
 execute_process(

@@ -20,3 +20,7 @@ endif()
 if(ENABLE_CLANG_TIDY)
   include(template-project-clang-tidy-target)
 endif()
+
+if(ENABLE_DEB)
+  include(template-project-deb-enabler)
+endif()

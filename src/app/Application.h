@@ -30,7 +30,7 @@ class Application : public IApplication
    */
   virtual int run(std::shared_ptr<ApplicationContext> ctx) override;
 
-protected:
+ protected:
   virtual std::shared_ptr<templateQt6app::Qt6Initer> create_qt6_initer();
 };
 

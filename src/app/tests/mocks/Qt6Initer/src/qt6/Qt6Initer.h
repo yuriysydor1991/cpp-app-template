@@ -1,9 +1,9 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_QT6INITER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_QT6INITER_CLASS_H
 
-#include <memory>
-
 #include <gmock/gmock.h>
+
+#include <memory>
 
 namespace templateQt6app
 {
@@ -14,7 +14,9 @@ class Qt6Initer
   virtual ~Qt6Initer() = default;
   Qt6Initer()
   {
-    if (onMockCreate) { onMockCreate(*this); }
+    if (onMockCreate) {
+      onMockCreate(*this);
+    }
   }
 
   inline static std::function<void(Qt6Initer& instance)> onMockCreate;

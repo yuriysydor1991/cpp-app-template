@@ -155,7 +155,8 @@ sudo apt install -y flatpak flatpak-builder
 You'll also need the one of it's target SDK which may be installed by a command that may look like this:
 
 ```
-flatpak install runtime/org.freedesktop.Sdk/x86_64/20.08
+flatpak install runtime/org.kde.Sdk/x86_64/6.8
+flatpak install runtime/org.kde.Platform/x86_64/6.8
 ```
 
 Replace the `runtime/org.freedesktop.Sdk/x86_64/20.08` with your preferred SDK. Consult the flatpak documentation on how to list all available options.

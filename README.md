@@ -144,6 +144,24 @@ sudo apt install -y valgrind
 
 For more details on how to enable and run the memory check target examine the [Enabling the dynamic memory check target with valgrind](#enabling-the-dynamic-memory-check-target-with-valgrind) section.
 
+## Optional for the flatpak package
+
+In order to generate the project flatpak package install the `flatpak-builder` command:
+
+```
+sudo apt install -y flatpak flatpak-builder
+```
+
+You'll also need the one of it's target SDK which may be installed by a command that may look like this:
+
+```
+flatpak install runtime/org.freedesktop.Sdk/x86_64/20.08
+```
+
+Replace the `runtime/org.freedesktop.Sdk/x86_64/20.08` with your preferred SDK. Consult the flatpak documentation on how to list all available options.
+
+Look for the details at the [Enabling the flatpak package generation support](#enabling-the-flatpak-package-generation-support).
+
 # Project structure
 
 ## Implement code straight away!
@@ -392,6 +410,39 @@ cpack
 The package file should be generated inside the project build root directory. For example, if project name was't change and it's version is 0.8.0 so the package name may look like `CppAppTemplate-0.8.0-Linux.deb`.
 
 In order to examine details of the `deb` package configuration visit the `cmake/template-project-deb-enabler.cmake` file.
+
+## Enabling the flatpak package generation support
+
+In order to enable the flatpak generation of the redistribution package on the template project configure it with enabled option `ENABLE_FLATPAK` (GNU/Linux and alike):
+
+```
+# inside the project root directory 
+
+mkdir -vp build && cd build && cmake ../ -DENABLE_FLATPAK=ON
+```
+
+Which in order will enable the `flatpak` target.
+
+And finally to generate the flatpak package run the `flatpak` target for the build:
+
+```
+# inside the project build directory
+
+cmake --build . --target flatpak
+```
+
+In case of the success target build, there will be created the flatpak file under the root build directory named, for example, the `CppAppTemplate-0.9.0.flatpak`. In order to examine and/or change the flatpak generation target parameters visit the `cmake/template-project-flatpak-target.cmake` or `misc/flatpak.conf.json.in` files.
+
+Refer to the flatpak documentation on how to install and run applications distributed from a flatpaks files. For the current template project's defaults the install and run command may look like this:
+
+```
+# to install (version may change)
+# inside the project build directory
+flatpak install --user CppAppTemplate-0.9.0.flatpak
+
+# to run the application
+flatpak run ua.org.kytok.template.CppAppTemplate
+```
 
 # Run the executable
 

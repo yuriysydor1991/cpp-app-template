@@ -101,6 +101,12 @@ option(
   OFF
 )
 
+option(
+  ENABLE_FLATPAK
+  "Set to ON to enable the flatpak package creation from the project build artifacts"
+  OFF
+)
+
 string(TIMESTAMP PROJECT_CONFIGURE_DATE "%Y-%m-%d %H:%M:%S")
 
 execute_process(

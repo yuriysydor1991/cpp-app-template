@@ -1,8 +1,8 @@
 {
   "id": "${FLATPAK_PROJECT_URL}",
-  "runtime": "org.freedesktop.Platform",
-  "runtime-version": "24.08",
-  "sdk": "org.freedesktop.Sdk",
+  "runtime": "org.kde.Platform",
+  "runtime-version": "6.8",
+  "sdk": "org.kde.Sdk",
   "command": "${PROJECT_BINARY_NAME}",
   "modules": [
     {

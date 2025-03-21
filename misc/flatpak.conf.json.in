@@ -1,0 +1,20 @@
+{
+  "id": "${FLATPAK_PROJECT_URL}",
+  "runtime": "org.freedesktop.Platform",
+  "runtime-version": "24.08",
+  "sdk": "org.freedesktop.Sdk",
+  "command": "${PROJECT_BINARY_NAME}",
+  "modules": [
+    {
+      "name": "${PROJECT_NAME}",
+      "buildsystem": "cmake",
+      "config-opts": ["-DCMAKE_BUILD_TYPE=Release"],
+      "sources": [
+        {
+          "type": "dir",
+          "path": "${CMAKE_SOURCE_DIR}"
+        }
+      ]
+    }
+  ]
+}

@@ -6,8 +6,10 @@ Project is designed to increase the speed of the library creation process at the
 
 **Just fork it and implement your library straight away!**
 
+Examine available branches to find your most applicable variant of the template:
+
 - `main` branch at [project root page](https://github.com/yuriysydor1991/cpp-app-template) just the clear `main` function no additional app infrastructure classes and all available CMake integrations.
-- `app` branch at [applib](https://github.com/yuriysydor1991/cpp-app-template/tree/app) with just general application related classes to generate a single binary executable.
+- `app` branch at [app](https://github.com/yuriysydor1991/cpp-app-template/tree/app) with just general application related classes to generate a single binary executable.
 - `applib` branch at [applib](https://github.com/yuriysydor1991/cpp-app-template/tree/applib) for the application binary with additional separate library binary and header files (available for the installation) in order to provide library's code reusability across multiple applications.
 - `lib` branch at [lib](https://github.com/yuriysydor1991/cpp-app-template/tree/lib) (**current**) for the library with the headers include files (and documentation) without target binary.
 - `appQt6` branch at [appQt6](https://github.com/yuriysydor1991/cpp-app-template/tree/appQt6) for the application general classes with additional defined structure for the Qt6 QML window application development.

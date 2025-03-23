@@ -24,5 +24,3 @@ configure_file(
   project-global-decls.h.in
   ${CMAKE_BINARY_DIR}/project-global-decls.h
 )
-
-add_subdirectory(app)

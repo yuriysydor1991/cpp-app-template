@@ -1,5 +1,3 @@
-#include "src/app/ApplicationFactory.h"
-
 /**
  * @brief The application main routine, obviously.
  *
@@ -9,7 +7,8 @@
  * @return Returns a zero value in case of success and other value
  * in case of any error.
  */
-int main(int argc, char** argv)
+int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 {
-  return app::ApplicationFactory::execute(argc, argv);
+  // insert your application implementation here.
+  return 0;
 }

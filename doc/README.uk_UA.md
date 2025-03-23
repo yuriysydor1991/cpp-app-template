@@ -157,7 +157,8 @@ sudo apt install -y flatpak flatpak-builder
 Також знадобиться один з цільових SDK який може бути встановленим за допомогою команди подібної на наступну:
 
 ```
-flatpak install runtime/org.freedesktop.Sdk/x86_64/20.08
+flatpak install runtime/org.gnome.Platform/x86_64/48 \
+                runtime/org.gnome.Sdk/x86_64/48
 ```
 
 Необіхдно замінити `runtime/org.freedesktop.Sdk/x86_64/20.08` власним варіантом обраного SDK. У документації до flatpak можна визначити як переглянути усі доступні варіанти.

@@ -1,10 +1,75 @@
 {
   "id": "${FLATPAK_PROJECT_URL}",
-  "runtime": "org.freedesktop.Platform",
-  "runtime-version": "24.08",
-  "sdk": "org.freedesktop.Sdk",
+  "runtime": "org.gnome.Platform",
+  "runtime-version": "48",
+  "sdk": "org.gnome.Sdk",
   "command": "${PROJECT_BINARY_NAME}",
   "modules": [
+    {
+      "name": "mm-common",
+      "buildsystem": "autotools",
+      "config-opts": [
+        "--enable-network", 
+        "--disable-documentation", 
+        "--disable-static",
+        "--enable-shared",
+        "--without-gmodule"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://gitlab.gnome.org/GNOME/mm-common.git",
+          "tag": "1.0.6"
+        }
+      ],
+      "build-options": {
+        "build-args": [ "--share=network" ]
+      }
+    },
+    {
+      "name": "libsigc++",
+      "buildsystem": "meson",
+      "config-opts": ["-Dbuild-documentation=false"],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/libsigcplusplus/libsigcplusplus.git",
+          "tag": "3.6.0"
+        }
+      ],
+      "dependencies": [
+        {
+          "name": "boost",
+          "type": "module",
+          "buildsystem": "meson",
+          "config-opts": ["-Dbuild-documentation=false"]
+        }
+      ]
+    },
+    {
+      "name": "cairomm",
+      "buildsystem": "meson",
+      "config-opts": ["-Dbuild-documentation=false"],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://gitlab.freedesktop.org/cairo/cairomm.git",
+          "tag": "1.18.0"
+        }
+      ]
+    },
+    {
+      "name": "gtkmm",
+      "buildsystem": "meson",
+      "config-opts": ["-Dbuild-documentation=false"],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/GNOME/gtkmm.git",
+          "tag": "3.24.8"
+        }
+      ]
+    },
     {
       "name": "${PROJECT_NAME}",
       "buildsystem": "cmake",

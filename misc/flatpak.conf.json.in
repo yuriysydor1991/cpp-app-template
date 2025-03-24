@@ -6,7 +6,7 @@
   "command": "${PROJECT_BINARY_NAME}",
   "modules": [
     {
-      "name": "mm-common",
+      "name": "graphviz",
       "buildsystem": "autotools",
       "config-opts": [
         "--enable-network", 
@@ -17,58 +17,25 @@
       ],
       "sources": [
         {
-          "type": "git",
-          "url": "https://gitlab.gnome.org/GNOME/mm-common.git",
-          "tag": "1.0.6"
-        }
-      ],
-      "build-options": {
-        "build-args": [ "--share=network" ]
-      }
-    },
-    {
-      "name": "libsigc++",
-      "buildsystem": "meson",
-      "config-opts": ["-Dbuild-documentation=false"],
-      "sources": [
-        {
-          "type": "git",
-          "url": "https://github.com/libsigcplusplus/libsigcplusplus.git",
-          "tag": "3.6.0"
-        }
-      ],
-      "dependencies": [
-        {
-          "name": "boost",
-          "type": "module",
-          "buildsystem": "meson",
-          "config-opts": ["-Dbuild-documentation=false"]
-        }
-      ]
-    },
-    {
-      "name": "cairomm",
-      "buildsystem": "meson",
-      "config-opts": ["-Dbuild-documentation=false"],
-      "sources": [
-        {
-          "type": "git",
-          "url": "https://gitlab.freedesktop.org/cairo/cairomm.git",
-          "tag": "1.18.0"
+          "type": "archive",
+          "url": "https://gitlab.com/api/v4/projects/4207231/packages/generic/graphviz-releases/10.0.1/graphviz-10.0.1.tar.gz",
+          "sha256": "72e1a575e9c382c4fd2267837962bc4582b3d9ad746e338cd8024bdeca124f32"
         }
       ]
     },
     {
       "name": "gtkmm",
       "buildsystem": "meson",
-      "config-opts": ["-Dbuild-documentation=false"],
       "sources": [
         {
           "type": "git",
           "url": "https://github.com/GNOME/gtkmm.git",
           "tag": "3.24.8"
         }
-      ]
+      ],
+      "build-options": {
+        "build-args": [ "--share=network" ]
+      }
     },
     {
       "name": "${PROJECT_NAME}",

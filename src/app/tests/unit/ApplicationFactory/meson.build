@@ -20,4 +20,8 @@ UTEST_ApplicationFactory = executable(
   cpp_args: ['-DNDEBUG=1']
 )
 
-test('gtest', UTEST_ApplicationFactory)
+test(
+  'gtest', 
+  UTEST_ApplicationFactory,
+  suite: 'UTEST_ApplicationFactory'
+)

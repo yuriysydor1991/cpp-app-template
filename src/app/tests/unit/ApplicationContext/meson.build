@@ -13,4 +13,8 @@ UTEST_ApplicationContext = executable(
   cpp_args: ['-DNDEBUG=1']
 )
 
-test('gtest', UTEST_ApplicationContext)
+test(
+  'gtest', 
+  UTEST_ApplicationContext,
+  suite: 'UTEST_ApplicationContext'
+)

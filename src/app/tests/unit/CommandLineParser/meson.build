@@ -15,4 +15,8 @@ UTEST_CommandLineParser = executable(
   cpp_args: ['-DNDEBUG=1']
 )
 
-test('gtest', UTEST_CommandLineParser)
+test(
+  'gtest', 
+  UTEST_CommandLineParser,
+  suite: 'UTEST_CommandLineParser'
+)

@@ -15,4 +15,8 @@ UTEST_ApplicationVersionPrinter = executable(
   cpp_args: ['-DNDEBUG=1']
 )
 
-test('gtest', UTEST_ApplicationVersionPrinter)
+test(
+  'gtest', 
+  UTEST_ApplicationVersionPrinter,
+  suite: 'UTEST_ApplicationVersionPrinter'
+)

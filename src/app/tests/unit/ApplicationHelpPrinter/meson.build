@@ -15,4 +15,8 @@ UTEST_ApplicationHelpPrinter = executable(
   cpp_args: ['-DNDEBUG=1']
 )
 
-test('gtest', UTEST_ApplicationHelpPrinter)
+test(
+  'gtest', 
+  UTEST_ApplicationHelpPrinter,
+  suite: 'UTEST_ApplicationHelpPrinter'
+)

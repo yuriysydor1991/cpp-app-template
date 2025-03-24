@@ -12,3 +12,7 @@ project(
 
 subdir('meson')
 subdir('src')
+
+if get_option('ENABLE_DOC_DOXYGEN')
+  subdir('doc')
+endif

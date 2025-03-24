@@ -1,0 +1,6 @@
+option(
+  'ENABLE_DOC_DOXYGEN', 
+  type: 'boolean', 
+  value: false, 
+  description: 'Enable the documentation build with the Doxygen'
+)

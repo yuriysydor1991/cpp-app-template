@@ -6,6 +6,28 @@
   "command": "${PROJECT_BINARY_NAME}",
   "modules": [
     {
+      "name": "glu",
+      "buildsystem": "meson",
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://mesa.freedesktop.org/archive/glu/glu-9.0.2.tar.xz",
+          "sha256": "6e7280ff585c6a1d9dfcdf2fca489251634b3377bfc33c29e4002466a38d02d4"
+        }
+      ]
+    },
+    {
+      "name": "freeglut",
+      "buildsystem": "cmake",
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://downloads.sourceforge.net/project/freeglut/freeglut/3.4.0/freeglut-3.4.0.tar.gz",
+          "sha256": "3c0bcb915d9b180a97edaebd011b7a1de54583a838644dcd42bb0ea0c6f3eaec"
+        }
+      ]
+    },
+    {
       "name": "${PROJECT_NAME}",
       "buildsystem": "cmake",
       "config-opts": ["-DCMAKE_BUILD_TYPE=Release"],

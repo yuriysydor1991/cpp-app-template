@@ -4,3 +4,10 @@ option(
   value: false, 
   description: 'Enable the documentation build with the Doxygen'
 )
+
+option(
+  'DOXYGEN_DO_INSTALL', 
+  type: 'boolean', 
+  value: false, 
+  description: 'Enable the generated documentation installation'
+)

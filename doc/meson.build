@@ -26,11 +26,14 @@ doxygen_target = custom_target(
     'doxygen', 
     join_paths(meson.current_build_dir(), 'Doxyfile')
   ],
+  build_by_default: true
 )
 
-install_subdir(
-  doc_conf_data.get('DOXYGEN_OUT_HTML_NAME'), 
-  install_dir: join_paths(
-    get_option('prefix'), 'share', 'doc'
+if get_option('DOXYGEN_DO_INSTALL')
+  install_subdir(
+    doc_conf_data.get('DOXYGEN_OUT_HTML_NAME'), 
+    install_dir: join_paths(
+      get_option('prefix'), 'share', 'doc'
+    )
   )
-)
+endif

@@ -66,10 +66,10 @@ git push
 
 ## Обов'язкові інструменти для ОС на базі GNU/Лінукс
 
-Для того щоб виконати побудову проекту-шаблону необхідно встановити компілятор GCC C++ разом з системою побудови проекту CMake і системою версіювання Git:
+Для того щоб виконати побудову проекту-шаблону необхідно встановити компілятор GCC C++ разом з системою побудови проекту Meson і системою версіювання Git:
 
 ```
-sudo apt install -y git g++ cmake
+sudo apt install -y git g++ meson
 ```
 
 ## Обов'язкові інструменти для ОС на базі MS Windows
@@ -78,7 +78,7 @@ sudo apt install -y git g++ cmake
 
 Окремо інсталятор на кожен необхідний проект можна завантажити з окремих джерел (**можлива необхідність пошуку і встановлення інших пакунків**):
 - Система вірсіювання Git за адресою [https://git-scm.com/downloads/win](https://git-scm.com/downloads/win)
-- Система побудови CMake за адресою [https://cmake.org/download/](https://cmake.org/download/)
+- Система побудови Meson за адресою [https://github.com/mesonbuild/meson/releases](https://github.com/mesonbuild/meson/releases)
 - Пакунки Windows 10 SDK за адресою [https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/](https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/)
 
 ## Необов'язкові пакети для тестів

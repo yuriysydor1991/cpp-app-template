@@ -65,10 +65,10 @@ This section contains list of required packages and/or tools that must be presen
 
 ## Required tools for the GNU/Linux based OS
 
-In order to build minimum template project install the GCC C++ compiler with CMake and Git.
+In order to build minimum template project install the GCC C++ compiler with Meson and Git.
 
 ```
-sudo apt install -y git g++ cmake
+sudo apt install -y git g++ meson
 ```
 
 ## Required tools for the MS Windows based OS
@@ -77,7 +77,7 @@ In order to build project binaries download the install tool for the developer t
 
 Separately each project may be downloaded and installed from different sources (**may require additional tools download and install**): 
 - The Git versioning system at [https://git-scm.com/downloads/win](https://git-scm.com/downloads/win)
-- The CMake build system at [https://cmake.org/download/](https://cmake.org/download/)
+- The Meson build system at [https://github.com/mesonbuild/meson/releases](https://github.com/mesonbuild/meson/releases)
 - The Windows 10 SDK at [https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/](https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/)
 
 ## Optional for the tests

@@ -16,6 +16,7 @@ Examine available branches to find your most applicable variant of the template:
 - `appGtkmm3Glade` branch at [appGtkmm3Glade](https://github.com/yuriysydor1991/cpp-app-template/tree/appGtkmm3Glade) for the application general classes with additional defined structure for the C++ application development with Gtkmm-3.0 and [Glade](https://en.wikipedia.org/wiki/Glade_Interface_Designer) application with XML UI creation.
 - `appFreeGlut` branch at [appFreeGlut](https://github.com/yuriysydor1991/cpp-app-template/tree/appFreeGlut) with just general application related classes to generate a single binary executable with a FreeGlut library for the OpenGL 3D development.
 - `appSDL2` branch at [appSDL2](https://github.com/yuriysydor1991/cpp-app-template/tree/appSDL2) with just general application related classes to generate a single binary executable with a [SDL2](https://en.wikipedia.org/wiki/Simple_DirectMedia_Layer) library for the OpenGL 3D development and more!
+- `appMeson` branch at [appMeson](https://github.com/yuriysydor1991/cpp-app-template/tree/appMeson) with just general application related classes to generate a single binary executable with the [Meson](https://mesonbuild.com/) build system.
 
 Alter current `README.md` and a `CHANGELOG.md` files to match your implementation introduced into the template project. Examine the `doc` directory for possible translations of a current md document:
 - `uk_UA` at [doc/README.uk_UA.md](doc/README.uk_UA.md)

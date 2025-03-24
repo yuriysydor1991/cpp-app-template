@@ -10,3 +10,7 @@ applib = static_library(
   ],
   include_directories: configuration_inc
 )
+
+if get_option('ENABLE_UNIT_TESTS')
+  subdir('tests')
+endif

@@ -11,3 +11,10 @@ option(
   value: false, 
   description: 'Enable the generated documentation installation'
 )
+
+option(
+  'ENABLE_UNIT_TESTS', 
+  type: 'boolean', 
+  value: false, 
+  description: 'Enable the unit tests'
+)

@@ -240,7 +240,7 @@ meson setup build && meson compile -C build
 ```
 # у кореневій директорії проекту
 
-mkdir -vp build && cd build && cmake ../ -DENABLE_UNIT_TESTS=ON && cmake --build . --target all
+meson setup build -DENABLE_UNIT_TESTS=true && meson compile -C build
 ```
 
 ### Запобігання використання GTest з ОС

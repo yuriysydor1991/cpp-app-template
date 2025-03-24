@@ -237,7 +237,7 @@ To enable project unit test availability (for building and running) reconfigure 
 ```
 # from the project root
 
-mkdir -vp build && cd build && cmake ../ -DENABLE_UNIT_TESTS=ON && cmake --build . --target all
+meson setup build -DENABLE_UNIT_TESTS=true && meson compile -C build
 ```
 
 ### Disabling system GTest probe 

@@ -223,10 +223,10 @@ Of course, project needs to be `git clone`-ed and it's root directory must be op
 ```
 # from the project root
 
-mkdir -vp build && cd build && cmake ../ && cmake --build . --target all
+meson setup build && meson compile -C build
 ```
 
-Which effectively will create a directory named `build` (it's already added to the `.gitignore` list), configure project using the CMake available in the system (see the [Requirements](#requirements) section of this `README.md` file) and finally builds all the targets available in the project.
+Which effectively will create a directory named `build` (it's already added to the `.gitignore` list), configure project using the Meson available in the system (see the [Requirements](#requirements) section of this `README.md` file) and finally builds all the targets available in the project.
 
 ## Enabling testing
 
@@ -259,17 +259,17 @@ To enable Doxygen documentation CMake-target during the project configure proces
 ```
 # inside the project root directory 
 
-mkdir -vp build && cd build && cmake ../ -DENABLE_DOC_DOXYGEN=ON
+meson setup build -DENABLE_DOC_DOXYGEN=true
 ```
 
-Which effectively will create a directory named `build` inside the project root directory, enters it by a `cd` command and configures project to enable Doxygen documentation build.
+Which effectively will create a directory named `build` inside the project root directory and configures project to enable Doxygen documentation build.
 
 Finally build the documentation by executing the command:
 
 ```
-# inside the project build directory
+# inside the project root directory
 
-cmake --build . --target Doxygen-doc
+meson compile -C build
 ```
 
 Which in turn will generate the `doc/CppAppTemplate-html` directory (already added to the `.gitignore` file) which will contain the HTML-type documentation. In order to open and examine generated documentation open the `doc/CppAppTemplate-html/index.html` file. The `CppAppTemplate-html` directory name will change if changed default executable name for the project by setting a new value for the `PROJECT_BINARY_NAME` variable in the root `CMakeLists.txt` or the `DOXYGEN_OUT_HTML_NAME` which in turn set the whole name for the directory.
@@ -281,9 +281,9 @@ The `doc/Doxyfile.in` file contains all available Doxygen configuration paramete
 It's possible to enable support for the document installation by setting up the `ENABLE_DOC_DOXYGEN` and `DOXYGEN_DO_INSTALL` variables to `ON` value during the project configure stage.
 
 ```
-# inside the project build directory
+# inside the project root directory
 
-cmake ../ -DENABLE_DOC_DOXYGEN=ON -DDOXYGEN_DO_INSTALL=ON
+meson setup build -DENABLE_DOC_DOXYGEN=true -DDOXYGEN_DO_INSTALL=true
 ```
 
 The `DOXYGEN_OUT_HTML_NAME` CMake variable will configure the documentation html directory name (passed into the `Doxyfile`).
@@ -440,7 +440,7 @@ flatpak run ua.org.kytok.template.CppAppTemplate
 
 ## IDE run
 
-Of course, if your IDE supports CMake build system integration you may just press the `Build` and/or `Run` button somewhere in the IDE window with opened project and it's done! No need to perform a search and execute commands.
+Of course, if your IDE supports Meson build system integration you may just press the `Build` and/or `Run` button somewhere in the IDE window with opened project and it's done! No need to perform a search and execute commands.
 
 ## Command line run
 
@@ -467,28 +467,28 @@ Once again, the `CppAppTemplate` is the **default** name of the project. Replace
 
 ## Tests run
 
-### Run tests by the ctest
+### Run tests by the meson
 
-If enabled by the developer through the `ENABLE_UNIT_TESTS` variable and successfully build, the one may run all available test by the `ctest` command from a project build directory (GNU/Linux based):
+If enabled by the developer through the `ENABLE_UNIT_TESTS` variable and successfully build, the one may run all available test by the `meson test` command from a project build directory (GNU/Linux based):
 
 ```
 # run from the project build directory
 
-ctest
+meson test
 ```
 
-Alternatively, run the `ctest` command from any location by specifying the test dir (GNU/Linux based):
+Alternatively, run the `meson test` command from any location by specifying the test dir (GNU/Linux based):
 
 ```
-ctest --tests-dir /path/to/the/project/build/directory
+meson test -C build
 ```
 
-In order to run particular test execute the `ctest` command with test's name after the `-R` command line flag. For example, for the `UTEST_ApplicationFactory` test it'll look something like this:
+In order to run particular test execute the `meson test` command with test's name after the `-R` command line flag. For example, for the `UTEST_ApplicationFactory` test it'll look something like this:
 
 ```
-# from the project build directory 
+# from the project root directory 
 
-ctest -R UTEST_ApplicationFactory
+meson test -C build --suite UTEST_ApplicationFactory
 ```
 
 ### Manual tests run
@@ -521,9 +521,9 @@ In order to install generated executable (as shown previous) file into your's sy
 
 ```
 # installs generated binary under the /usr/local/bin/ for example
-# run from the project's build directory
+# run from the project's root directory
 
-sudo cmake --install .
+sudo meson install -C build
 ```
 
 Usually it's the `/usr/local/bin/` directory (on the Unix-like OS) which may be inaccessible from the `PATH` environment variable (e.g. can not be started as a regular command).
@@ -534,9 +534,9 @@ To install binary into the system globally available directory add the `--prefix
 
 ```
 # replace the /usr path with our own if needed
-# run from the project's build directory
+# run from the project's root directory
 
-sudo cmake --install . --prefix "/usr"
+sudo meson install -C build --destdir "/usr"
 ```
 
 Examine the `PATH` environment variable to chose directory best suited for your current OS (execute `echo $PATH` in the terminal). Alternatively, any path may be specified.
@@ -546,9 +546,9 @@ Examine the `PATH` environment variable to chose directory best suited for your 
 If project was configured to support the documentation install by the command which looks like next:
 
 ```
-# inside the project build directory
+# inside the project root directory
 
-cmake ../ -DENABLE_DOC_DOXYGEN=ON -DDOXYGEN_DO_INSTALL=ON
+meson setup build -DENABLE_DOC_DOXYGEN=true -DDOXYGEN_DO_INSTALL=true
 ```
 
 The installation command (for example, described in the [Default installation](#default-installation) section) will install the generated HTML documentation files into appropriate directories.

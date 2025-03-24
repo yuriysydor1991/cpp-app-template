@@ -20,9 +20,7 @@ configure_file(
 
 executable(
   meson.project_name(), 
-  [
-    'main.cpp'
-  ],
+  ['main.cpp'],
   include_directories: configuration_inc,
   link_whole: applib
 )

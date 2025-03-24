@@ -1,3 +1,5 @@
+configuration_inc = include_directories('../')
+
 if host_machine.system() == 'windows'
   timestamp = run_command('powershell', '-Command', 'Get-Date -Format "yyyy-MM-dd HH:mm:ss"').stdout().strip()
 else

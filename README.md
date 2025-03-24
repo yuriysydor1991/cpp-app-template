@@ -4,7 +4,7 @@
 
 Project is designed to increase the speed of the application creation process at the project startup by providing templated application structure. So developer may just jump straight into implementing a particular application with no or minimum project start structure set up.
 
-**Just fork it and implement your application straight away!**
+**Just fork it and implement application straight away!**
 
 Examine available branches to find your most applicable variant of the template:
 - `main` branch at [project root page](https://github.com/yuriysydor1991/cpp-app-template) (**current**) just the clear `main` function no additional app infrastructure classes and all available CMake integrations.
@@ -161,31 +161,15 @@ Look for the details at the [Enabling the flatpak package generation support](#e
 
 ## Implement code straight away!
 
-To proceed the application implementation right away look for the `Application` class' `Application.cpp` file which is designed to accept initial code of the application. Specifically, new code may be placed into the `int Application::run(std::shared_ptr<ApplicationContext> ctx)` method.
+To proceed the application implementation right away look for the `main.cpp` file which is designed to accept initial code of the application. Specifically, new code may be placed into the `int main(int argc, char** argv)` free function.
 
 **But do not forget about the SOLID principles and code decomposing!**
 
-It's preferable to create other directories which would contain implemented components of the application and include them into the `Application` class implementation, rather than put all the code inside the `Application` class itself.
+It's preferable to create other directories which would contain implemented components of the application and include them into the `main.cpp` file implementation, rather than put all the code inside the `main` function itself.
 
 ## Changing the project and executable name
 
 Change the name of the project in the project's root `CMakeLists.txt` file by introducing a new value for the the `PROJECT_NAME` and/or `PROJECT_BINARY_NAME` variable which is located at `cmake/template-project-misc-variables-declare.cmake`. It is recommended to do so the executable will represent your new application name instead of templated default one - the `CppAppTemplate`.
-
-## Introducing custom command line parameters
-
-In order to introduce some additional command line parameters for the binary look for the `CommandLineParser` class implementation. It contains command line parsing routines that are passed by `ApplicationFactory` class after the `main` function was called.
-
-Add some additional custom fields into the `ApplicationContext` class in order to pass some custom command line flags and/or data to the `IApplication` interface abstract class descendants that will be created by the `ApplicationFactory` during command line arguments parse.
-
-## Implement your own IApplication descendants
-
-You may implement another custom `IApplication` descendant classes in order to support high level variety of the application behavior to not to mess original `Application` class with irrelevant `if`-s statements and mixing up code (remember about the SOLID's single responsibility principle).
-
-You may accomplish `IApplication` subclassing by directly creating an `IApplication` subclass in a new file or extend existing `IApplication` descendant like `Application`, `ApplicationHelpPrinter` or a `ApplicationVersionPrinter`.
-
-Register newly created custom `IApplication` descendant in the `ApplicationFactory`'s `create_application` method which is responsible to create appropriate application instance with accordance of a provided data through the command line parameters.
-
-That may be accomplished by implementing a custom `ApplicationFactory` descendant and overriding it's create methods like `create_application` and/or others (call appropriate static member in the `main` function of the `main.cpp` file).
 
 ## Version tracking and other project parameters
 
@@ -482,34 +466,6 @@ Alternatively, run the `ctest` command from any location by specifying the test 
 
 ```
 ctest --tests-dir /path/to/the/project/build/directory
-```
-
-In order to run particular test execute the `ctest` command with test's name after the `-R` command line flag. For example, for the `UTEST_ApplicationFactory` test it'll look something like this:
-
-```
-# from the project build directory 
-
-ctest -R UTEST_ApplicationFactory
-```
-
-### Manual tests run
-
-Currently tests are separated in different files named with `UTEST_*` pattern for the unit tests.
-
-You may search for all compiled available tests by a next command:
-
-```
-# from the project root or a build directory
-
-find -type f -executable -name 'UTEST_*'
-```
-
-After that, choose particular test of interest and execute it manually if needed. For example, for the `ApplicationFactory` class pass it's UT relative file system path from a project's root directory into the command line and hit enter (GNU/Linux based):
-
-```
-# from the project root
-
-./build/src/app/tests/unit/ApplicationFactory/UTEST_ApplicationFactory
 ```
 
 # Installing

@@ -22,5 +22,7 @@ executable(
   meson.project_name(), 
   ['main.cpp'],
   include_directories: configuration_inc,
-  link_whole: applib
+  link_whole: applib,
+  install: true,
+  install_dir: 'bin'
 )

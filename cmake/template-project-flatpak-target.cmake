@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.13)
 find_program(FLATPAKB_EXEC flatpak-builder REQUIRED)
 find_program(FLATPAK_EXEC flatpak REQUIRED)
 
-set(FLATPAK_PROJECT_URL ua.org.kytok.template.${PROJECT_BINARY_NAME})
+set(FLATPAK_PROJECT_URL ua.org.kytok.template.Qt6.${PROJECT_BINARY_NAME})
 set(FLATPAK_REPO ${PROJECT_BINARY_NAME}-repo)
 set(FLATPAK_DST_NAME ${PROJECT_BINARY_NAME}-${CMAKE_PROJECT_VERSION}.flatpak)
 set(flatpakConfDst ${CMAKE_BINARY_DIR}/flatpak.conf.json)

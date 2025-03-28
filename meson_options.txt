@@ -18,3 +18,10 @@ option(
   value: false, 
   description: 'Enable the unit tests'
 )
+
+option(
+  'ENABLE_CLANGFORMAT',
+  type: 'boolean',
+  value: false,
+  description: 'Enables the code format with a clang-format.'
+)

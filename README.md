@@ -294,12 +294,12 @@ The `DOXYGEN_OUT_HTML_NAME` CMake variable will configure the documentation html
 
 ## Enabling and performing code formatting target
 
-In order to make `clang-format` target available set the `ENABLE_CLANGFORMAT` variable value to `ON` during the project configuration stage (GNU/Linux based):
+In order to make `clang-format` target available set the `ENABLE_CLANGFORMAT` variable value to `true` during the project configuration stage (GNU/Linux based):
 
 ```
 # inside the project root directory 
 
-mkdir -vp build && cd build && cmake ../ -DENABLE_CLANGFORMAT=ON
+meson setup build -DENABLE_CLANGFORMAT=true
 ```
 
 To perform the whole project code format in accordance with available `misc/.clang-format` code formatter configuration execute next building command:
@@ -307,10 +307,10 @@ To perform the whole project code format in accordance with available `misc/.cla
 ```
 # inside the project build directory
 
-cmake --build . --target clang-format
+meson compile -C build clang-format
 ```
 
-The `clang-format` target details may be examined and/or altered in the `cmake/template-project-clang-format-target.cmake` CMake submodule file.
+The `clang-format` target details may be examined and/or altered in the `meson/template-project-clang-format-target/meson.build` Meson submodule file.
 
 ## Enabling the static code analyzer target with cppcheck
 

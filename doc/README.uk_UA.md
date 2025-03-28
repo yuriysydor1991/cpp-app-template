@@ -304,7 +304,7 @@ meson setup build -DENABLE_DOC_DOXYGEN=true -DDOXYGEN_DO_INSTALL=true
 ```
 # всередині кореня проекту-шаблону
 
-mkdir -vp build && cd build && cmake ../ -DENABLE_CLANGFORMAT=ON
+meson setup build -DENABLE_CLANGFORMAT=true
 ```
 
 Для того щоб виконати форматування коду усього проекту-шаблону у відповідності до стандартів вказаних у файлі `misc/.clang-format` необхідно виконати наступну команду:
@@ -312,10 +312,10 @@ mkdir -vp build && cd build && cmake ../ -DENABLE_CLANGFORMAT=ON
 ```
 # всередині директорії побудови проекту-шаблона
 
-cmake --build . --target clang-format
+meson compile -C build clang-format
 ```
 
-Деталі цілі `clang-format` можна перегляну у файлі `cmake/template-project-clang-format-target.cmake` субмодуля системи CMake.
+Деталі цілі `clang-format` можна перегляну у файлі `meson/template-project-clang-format-target/meson.build` субмодуля системи Meson.
 
 ## Вмикання підтримки цілі статичного аналізатора коду cppcheck
 

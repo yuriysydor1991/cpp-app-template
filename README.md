@@ -24,6 +24,8 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
 
 See more at the [kytok.org.ua](http://www.kytok.org.ua/)
 
+Donate at [http://kytok.org.ua/page/pozertvy](http://kytok.org.ua/page/pozertvy)
+
 # Cloning the C++ template project
 
 In order to fast-start implementing a new application clone this project into your local directory by executing next command in the terminal (GNU/Linux based):

@@ -19,7 +19,7 @@ message(STATUS "cppcheck: ${CPPCHECK_EXEC}")
 add_custom_target (
   cppcheck
   COMMAND ${CPPCHECK_EXEC} --language=c++ --std=c++${CMAKE_CXX_STANDARD} 
-    --inconclusive --enable=all -v 
+    --error-exitcode=1 --inconclusive --enable=all -v 
     -I${CMAKE_SOURCE_DIR} -I${CMAKE_BINARY_DIR} ${ALLSOURCES}
   WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
   COMMENT "Executes cppcheck command for all project sources. Just outputs all findings into stdout."

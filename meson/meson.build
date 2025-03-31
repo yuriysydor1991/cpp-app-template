@@ -1,6 +1,5 @@
 find_program('git', required: true)
 
-
 subdir('template-project-all-source-files')
 subdir('template-project-misc-variables-declare')
 subdir('template-project-configure-file')

@@ -4,6 +4,7 @@ cppcheck_cmd = [
   'cppcheck',
   '--language=c++',
   '--std=c++17',
+  '--error-exitcode=1',
   '--inconclusive',
   '--enable=all',
   '-v',

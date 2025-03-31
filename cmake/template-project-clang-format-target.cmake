@@ -15,14 +15,6 @@ if (NOT CLANG_FORMAT_EXEC)
   return()
 endif()
 
-file(
-  GLOB_RECURSE 
-  ALLSOURCES 
-  LIST_DIRECTORIES false 
-  RELATIVE "${CMAKE_SOURCE_DIR}"
-  "src/*.h" "src/*.cpp"
-)
-
 add_custom_target (
   clang-format
   COMMAND ${CLANG_FORMAT_EXEC} -style=file:'./misc/.clang-format' --verbose -i ${ALLSOURCES}

@@ -1,2 +1,2 @@
 nullPointer:assert.cpp
-nullPointerRedundantCheck
+constParameter

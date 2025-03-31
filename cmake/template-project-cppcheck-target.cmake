@@ -18,7 +18,7 @@ message(STATUS "cppcheck: ${CPPCHECK_EXEC}")
 
 add_custom_target (
   cppcheck
-  COMMAND ${CPPCHECK_EXEC} --language=c++ --std=c++${CMAKE_CXX_STANDARD} 
+  COMMAND ${CPPCHECK_EXEC} --language=c++ --std=c++${CMAKE_CXX_STANDARD}
     --error-exitcode=1 --inconclusive --enable=all -v 
     --suppressions-list=${CMAKE_SOURCE_DIR}/misc/.cppcheck-suppress
     -I${CMAKE_SOURCE_DIR} -I${CMAKE_BINARY_DIR} ${ALLSOURCES}

@@ -316,23 +316,23 @@ The `clang-format` target details may be examined and/or altered in the `meson/t
 
 ## Enabling the static code analyzer target with cppcheck
 
-In order to make the cppcheck target available for the execution, configure project with enabled `ENABLE_CPPCHECK` variable:
+In order to make the cppcheck target available for the execution, configure project with enabled `ENABLE_CPPCHECK` option:
 
 ```
 # inside the project root directory 
 
-mkdir -vp build && cd build && cmake ../ -DENABLE_CPPCHECK=ON
+meson setup builddir -DENABLE_CPPCHECK=true
 ```
 
 And to perform the actual static code analysis by itself run the `cppcheck` target for the build:
 
 ```
-# inside the project build directory
+# inside the project root directory
 
-cmake --build . --target cppcheck
+meson compile -C builddir cppcheck
 ```
 
-The `cppcheck` target details may be examined and/or altered in the `cmake/template-project-cppcheck-target.cmake` CMake submodule file.
+The `cppcheck` target details may be examined and/or altered in the `meson/template-project-cppcheck-target/meson.build` Meson submodule file.
 
 ## Enabling the static code analyzer with clang-tidy
 

@@ -326,18 +326,18 @@ meson compile -C build clang-format
 ```
 # всередині кореневої директорії проекту-шаблону
 
-mkdir -vp build && cd build && cmake ../ -DENABLE_CPPCHECK=ON
+meson setup builddir -DENABLE_CPPCHECK=true
 ```
 
 І для безпосереднього виконання статичного аналізу коду необхідно викликати ціль `cppcheck` для побудови:
 
 ```
-# всередині директорії побудови проекту-шаблону
+# всередині кореневої директорії проекту-шаблону
 
-cmake --build . --target cppcheck
+meson compile -C builddir cppcheck
 ```
 
-Деталі цілі `cppcheck` можна перегляну і/або змінити у файлі `cmake/template-project-cppcheck-target.cmake` системи збірки CMake.
+Деталі цілі `cppcheck` можна перегляну і/або змінити у файлі `meson/template-project-cppcheck-target/meson.build` системи збірки Meson.
 
 ## Вмикання підтримки статичного аналізатора коду clang-tidy
 

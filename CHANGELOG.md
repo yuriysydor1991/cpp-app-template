@@ -5,8 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [main0.9.0] - 2025-03-31
+
+- 3d7f096 Introducing the error exit code for a cppcheck target
+- b3441c5 Refining the cppcheck target
+- f0be94a Decomposing ALLSORUCES variable into template-project-misc-variables-declare.cmake
+- f732fb3 Introducing the donation notice into the READMEs
+- 0520380 the main branch info refine
+- 7c505e3 Refining the READMEs to represent single main.cpp file
+- a7d1c9b Introducing the appMeson branch info into the READMEs
+- 7880f6f Fixing applib on the app branch on the READMEs
+- a3cf6c2 Erasing the app branch code
+- b1e99d8 Introducing the app branch and refine the master branch
+- c8de777 Introducing the flatpak sections into the READMEs
+- 69ffe40 Introducing the flatpak package creation from the template source.
+- 4b00b9f Inserting the release tag link
+- 8bd91be Incrementing version to 0.9.0
+
 ## [app0.8.0] - 2025-03-20
 
+- dfff631 Release app0.8.0 2025-03-20
 - c2d08e9 Replacing int flag with a bool for the CommandLineParser
 - 5adff97 Erasing the /analyze from the default MSVC compile options
 - 3a70693 Introducing the DEB package gen info in the READMEs
@@ -174,6 +192,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[main0.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/main0.9.0)
 [app0.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.8.0)
 [app0.7.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.7.0)
 [app0.6.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.6.0)

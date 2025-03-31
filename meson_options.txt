@@ -25,3 +25,10 @@ option(
   value: false,
   description: 'Enables the code format with a clang-format.'
 )
+
+option(
+  'ENABLE_CPPCHECK',
+  type: 'boolean',
+  value: false,
+  description: 'Set to ON if to enable the cppcheck execution target.'
+)

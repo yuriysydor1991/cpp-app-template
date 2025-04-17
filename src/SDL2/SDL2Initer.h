@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "src/app/ApplicationContext.h"
+#include "src/SDL2/Painter/Painter.h"
 
 namespace templateSDL2
 {
@@ -18,7 +19,7 @@ class SDL2Initer
 {
  public:
   virtual ~SDL2Initer();
-  SDL2Initer() = default;
+  SDL2Initer();
 
   /**
    * @brief Init and run the SDL2 event loop.
@@ -38,7 +39,6 @@ class SDL2Initer
   virtual SDL_Window* create_window();
   virtual bool set_opengl_attributes();
   virtual SDL_GLContext create_context();
-  virtual void draw_3D_scene();
   virtual void eventer();
   virtual void parse_event(SDL_Event& event);
   virtual void event_loop();
@@ -53,6 +53,8 @@ class SDL2Initer
   std::shared_ptr<app::ApplicationContext> mAppCtx;
   SDL_Window* window{nullptr};
   SDL_GLContext glContext{nullptr};
+
+  std::shared_ptr<painter::Painter> painter3d;
 };
 
 }  // namespace templateSDL2

@@ -12,6 +12,10 @@
 namespace templateSDL2
 {
 
+SDL2Initer::SDL2Initer()
+  : painter3d{std::make_shared<painter::Painter>()}
+{}
+
 SDL2Initer::~SDL2Initer()
 {
   if (glContext != nullptr) {
@@ -25,13 +29,6 @@ SDL2Initer::~SDL2Initer()
   }
 
   SDL_Quit();
-}
-
-void SDL2Initer::draw_3D_scene()
-{
-  glClear(GL_COLOR_BUFFER_BIT);
-
-  // put the OpenGL draw scene over here
 }
 
 void SDL2Initer::parse_event(SDL_Event& event)
@@ -78,10 +75,21 @@ void SDL2Initer::handleQuit([[maybe_unused]] SDL_Event& event)
 
 void SDL2Initer::event_loop()
 {
+  assert(mAppCtx != nullptr);
+  assert(painter3d != nullptr);
+
+  if (mAppCtx == nullptr) {
+    return ;
+  }
+
+  if (painter3d == nullptr) {
+    return ;
+  }
+
   while (!mAppCtx->stop()) {
     eventer();
 
-    draw_3D_scene();
+    painter3d->paint(mAppCtx);
 
     SDL_GL_SwapWindow(window);
   }

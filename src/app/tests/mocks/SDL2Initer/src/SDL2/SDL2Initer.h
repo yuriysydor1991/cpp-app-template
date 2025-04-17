@@ -3,11 +3,10 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
-
-#include <memory>
-#include <functional>
-
 #include <gmock/gmock.h>
+
+#include <functional>
+#include <memory>
 
 #include "src/app/ApplicationContext.h"
 
@@ -18,9 +17,11 @@ class SDL2Initer
 {
  public:
   virtual ~SDL2Initer() = default;
-  SDL2Initer() 
+  SDL2Initer()
   {
-    if (onMockCreate) { onMockCreate(*this); }
+    if (onMockCreate) {
+      onMockCreate(*this);
+    }
   }
 
   inline static std::function<void(SDL2Initer& instance)> onMockCreate;

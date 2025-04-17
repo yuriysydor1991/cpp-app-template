@@ -1,15 +1,16 @@
 #include "Painter.h"
 
-#include <cassert>
-#include <memory>
-
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
+
+#include <cassert>
+#include <memory>
 
 namespace templateSDL2::painter
 {
 
-bool Painter::paint([[maybe_unused]] std::shared_ptr<app::ApplicationContext> ctx)
+bool Painter::paint(
+    [[maybe_unused]] std::shared_ptr<app::ApplicationContext> ctx)
 {
   glClear(GL_COLOR_BUFFER_BIT);
 

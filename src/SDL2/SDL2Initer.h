@@ -6,8 +6,8 @@
 
 #include <memory>
 
-#include "src/app/ApplicationContext.h"
 #include "src/SDL2/Painter/Painter.h"
+#include "src/app/ApplicationContext.h"
 
 namespace templateSDL2
 {

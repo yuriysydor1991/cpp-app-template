@@ -12,9 +12,7 @@
 namespace templateSDL2
 {
 
-SDL2Initer::SDL2Initer()
-  : painter3d{std::make_shared<painter::Painter>()}
-{}
+SDL2Initer::SDL2Initer() : painter3d{std::make_shared<painter::Painter>()} {}
 
 SDL2Initer::~SDL2Initer()
 {
@@ -22,7 +20,7 @@ SDL2Initer::~SDL2Initer()
     SDL_GL_DeleteContext(glContext);
     glContext = nullptr;
   }
-  
+
   if (window != nullptr) {
     SDL_DestroyWindow(window);
     window = nullptr;
@@ -79,11 +77,11 @@ void SDL2Initer::event_loop()
   assert(painter3d != nullptr);
 
   if (mAppCtx == nullptr) {
-    return ;
+    return;
   }
 
   if (painter3d == nullptr) {
-    return ;
+    return;
   }
 
   while (!mAppCtx->stop()) {

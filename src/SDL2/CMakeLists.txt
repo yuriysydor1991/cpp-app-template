@@ -8,6 +8,7 @@ add_library(
   SDL2Initer.cpp
   SDL2Context.cpp
   SDL2ContextBuilder.cpp
+  OpenGLIniter.cpp
 )
 
 target_include_directories(

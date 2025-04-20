@@ -15,7 +15,8 @@ namespace templateSDL2
 SDL2Initer::SDL2Initer()
     : ctxBuilder{std::make_shared<SDL2ContextBuilder>()},
       events{std::make_shared<events::EventsController>()},
-      painter3d{std::make_shared<painter::Painter>()}
+      painter3d{std::make_shared<painter::Painter>()},
+      oglIniter{std::make_shared<OpenGLIniter>()}
 {
 }
 
@@ -36,7 +37,13 @@ int SDL2Initer::run(std::shared_ptr<app::ApplicationContext> ctx)
 
   sdl2Context = ctxBuilder->build_context(ctx);
 
-  if (!init_opengl()) {
+  assert(sdl2Context != nullptr);
+
+  if (sdl2Context == nullptr) {
+    return app::IApplication::INVALID;
+  }
+
+  if (!oglIniter->init_opengl(sdl2Context)) {
     return app::IApplication::INVALID;
   }
 
@@ -74,29 +81,6 @@ void SDL2Initer::event_loop()
 
     SDL_GL_SwapWindow(sdl2Context->window);
   }
-}
-
-bool SDL2Initer::init_opengl()
-{
-  if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-    throw_sdl2("SDL could not initialize!");
-    return false;
-  }
-
-  if (!set_opengl_attributes()) {
-    return false;
-  }
-
-  return true;
-}
-
-bool SDL2Initer::set_opengl_attributes()
-{
-  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, GL_CONTEXT_MAJOR_VERSION);
-  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, GL_CONTEXT_MINOR_VERSION);
-  SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-
-  return true;
 }
 
 void SDL2Initer::throw_sdl2(const std::string& errDesc)

@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "src/SDL2/Eventer/EventsController.h"
+#include "src/SDL2/OpenGLIniter.h"
 #include "src/SDL2/Painter/Painter.h"
 #include "src/SDL2/SDL2Context.h"
 #include "src/SDL2/SDL2ContextBuilder.h"
@@ -33,18 +34,14 @@ class SDL2Initer
 
  protected:
   virtual void throw_sdl2(const std::string& errDesc);
-  virtual bool init_opengl();
-  virtual bool set_opengl_attributes();
   virtual void event_loop();
-
-  inline static constexpr const int GL_CONTEXT_MAJOR_VERSION = 3;
-  inline static constexpr const int GL_CONTEXT_MINOR_VERSION = 3;
 
   std::shared_ptr<SDL2ContextBuilder> ctxBuilder;
   std::shared_ptr<SDL2Context> sdl2Context;
 
   std::shared_ptr<events::EventsController> events;
   std::shared_ptr<painter::Painter> painter3d;
+  std::shared_ptr<OpenGLIniter> oglIniter;
 };
 
 }  // namespace templateSDL2

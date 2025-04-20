@@ -10,7 +10,7 @@ namespace templateSDL2::painter
 {
 
 bool Painter::paint(
-    [[maybe_unused]] std::shared_ptr<app::ApplicationContext> ctx)
+    [[maybe_unused]] std::shared_ptr<SDL2Context> ctx)
 {
   glClear(GL_COLOR_BUFFER_BIT);
 

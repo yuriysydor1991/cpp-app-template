@@ -16,33 +16,9 @@ SDL2Initer::SDL2Initer() : painter3d{std::make_shared<painter::Painter>()} {}
 
 SDL2Initer::~SDL2Initer()
 {
-  if (glContext != nullptr) {
-    SDL_GL_DeleteContext(glContext);
-    glContext = nullptr;
-  }
-
-  if (window != nullptr) {
-    SDL_DestroyWindow(window);
-    window = nullptr;
-  }
+  sdl2Context.reset();
 
   SDL_Quit();
-}
-
-void SDL2Initer::parse_event(SDL_Event& event)
-{
-  assert(mAppCtx != nullptr);
-
-  if (mAppCtx == nullptr) {
-    return;
-  }
-
-  if (event.type == SDL_QUIT) {
-    handleQuit(event);
-    return;
-  }
-
-  // put other event types parse here
 }
 
 int SDL2Initer::run(std::shared_ptr<app::ApplicationContext> ctx)
@@ -53,7 +29,8 @@ int SDL2Initer::run(std::shared_ptr<app::ApplicationContext> ctx)
     return app::IApplication::INVALID;
   }
 
-  mAppCtx = ctx;
+  sdl2Context = std::make_shared<SDL2Context>(ctx);
+  events = std::make_shared<events::EventsController>();
 
   if (!init_opengl()) {
     return app::IApplication::INVALID;
@@ -64,46 +41,41 @@ int SDL2Initer::run(std::shared_ptr<app::ApplicationContext> ctx)
   return 0;
 }
 
-void SDL2Initer::handleQuit([[maybe_unused]] SDL_Event& event)
-{
-  assert(mAppCtx != nullptr);
-
-  mAppCtx->stop(true);
-}
-
 void SDL2Initer::event_loop()
 {
-  assert(mAppCtx != nullptr);
+  assert(sdl2Context != nullptr);
+  assert(sdl2Context->appCtx != nullptr);
+  assert(events != nullptr);
   assert(painter3d != nullptr);
 
-  if (mAppCtx == nullptr) {
+  if (sdl2Context == nullptr) {
+    throw_sdl2("No SDL2Context given");
     return;
   }
 
   if (painter3d == nullptr) {
+    throw_sdl2("No scene painter given");
     return;
   }
 
-  while (!mAppCtx->stop()) {
-    eventer();
-
-    painter3d->paint(mAppCtx);
-
-    SDL_GL_SwapWindow(window);
+  if (events == nullptr) {
+    throw_sdl2("No event handler given");
+    return;
   }
-}
 
-void SDL2Initer::eventer()
-{
-  SDL_Event event;
+  while (!sdl2Context->appCtx->stop()) {
+    events->handle(sdl2Context);
 
-  while (SDL_PollEvent(&event)) {
-    parse_event(event);
+    painter3d->paint(sdl2Context);
+
+    SDL_GL_SwapWindow(sdl2Context->window);
   }
 }
 
 bool SDL2Initer::init_opengl()
 {
+  assert(sdl2Context != nullptr);
+
   if (SDL_Init(SDL_INIT_VIDEO) < 0) {
     throw_sdl2("SDL could not initialize!");
     return false;
@@ -113,16 +85,16 @@ bool SDL2Initer::init_opengl()
     return false;
   }
 
-  window = create_window();
+  sdl2Context->window = create_window();
 
-  if (window == nullptr) {
+  if (sdl2Context->window == nullptr) {
     throw_sdl2("Window could not be created!");
     return false;
   }
 
-  glContext = create_context();
+  sdl2Context->glContext = create_context();
 
-  if (glContext == nullptr) {
+  if (sdl2Context->glContext == nullptr) {
     throw_sdl2("OpenGL context could not be created!");
     return false;
   }
@@ -141,13 +113,14 @@ bool SDL2Initer::set_opengl_attributes()
 
 SDL_GLContext SDL2Initer::create_context()
 {
-  assert(window != nullptr);
+  assert(sdl2Context->window != nullptr);
 
-  if (window == nullptr) {
+  if (sdl2Context->window == nullptr) {
+    throw_sdl2("No window available to create context");
     return nullptr;
   }
 
-  return SDL_GL_CreateContext(window);
+  return SDL_GL_CreateContext(sdl2Context->window);
 }
 
 SDL_Window* SDL2Initer::create_window()

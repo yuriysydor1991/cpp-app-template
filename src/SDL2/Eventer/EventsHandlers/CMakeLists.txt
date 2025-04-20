@@ -4,13 +4,13 @@ find_package(SDL2 REQUIRED)
 find_package(OpenGL REQUIRED)
 
 add_library(
-  TemplateSDL2Obj OBJECT
-  SDL2Initer.cpp
-  SDL2Context.cpp
+  TemplateSDL2EventsHandlersObj OBJECT
+  EventQuitHandler.cpp
+  EventsHandlersFactory.cpp
 )
 
 target_include_directories(
-  TemplateSDL2Obj 
+  TemplateSDL2EventsHandlersObj 
   PRIVATE 
     ${SDL2_INCLUDE_DIRS}
     ${CMAKE_SOURCE_DIR}
@@ -18,7 +18,7 @@ target_include_directories(
 )
 
 target_link_libraries(
-  TemplateSDL2Obj 
+  TemplateSDL2EventsHandlersObj 
   PRIVATE 
   ${SDL2_LIBRARIES}
   ${OPENGL_LIBRARIES}
@@ -26,8 +26,5 @@ target_link_libraries(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  TemplateSDL2Obj
+  TemplateSDL2EventsHandlersObj
 )
-
-add_subdirectory(Painter)
-add_subdirectory(Eventer)

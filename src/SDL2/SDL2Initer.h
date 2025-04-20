@@ -1,13 +1,12 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_SDL2INITER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_SDL2INITER_CLASS_H
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_opengl.h>
-
 #include <memory>
 
 #include "src/SDL2/Painter/Painter.h"
 #include "src/app/ApplicationContext.h"
+#include "src/SDL2/SDL2Context.h"
+#include "src/SDL2/Eventer/EventsController.h"
 
 namespace templateSDL2
 {
@@ -39,21 +38,16 @@ class SDL2Initer
   virtual SDL_Window* create_window();
   virtual bool set_opengl_attributes();
   virtual SDL_GLContext create_context();
-  virtual void eventer();
-  virtual void parse_event(SDL_Event& event);
   virtual void event_loop();
-
-  virtual void handleQuit(SDL_Event& event);
 
   inline static constexpr const int GL_CONTEXT_MAJOR_VERSION = 3;
   inline static constexpr const int GL_CONTEXT_MINOR_VERSION = 3;
   inline static constexpr const int default_window_width = 800;
   inline static constexpr const int default_window_height = 600;
 
-  std::shared_ptr<app::ApplicationContext> mAppCtx;
-  SDL_Window* window{nullptr};
-  SDL_GLContext glContext{nullptr};
+  std::shared_ptr<SDL2Context> sdl2Context;
 
+  std::shared_ptr<events::EventsController> events;
   std::shared_ptr<painter::Painter> painter3d;
 };
 

@@ -3,7 +3,7 @@
 
 #include <memory>
 
-#include "src/app/ApplicationContext.h"
+#include "src/SDL2/SDL2Context.h"
 
 namespace templateSDL2::painter
 {
@@ -20,11 +20,11 @@ class Painter
   /**
    * @brief paint Single draw the 3D scene.
    *
-   * @param ctx The Application run context with the parameters etc.
+   * @param ctx The SDL2 run context with the parameters etc.
    *
    * @return Returns true on the success and false otherwise.
    */
-  virtual bool paint(std::shared_ptr<app::ApplicationContext> ctx);
+  virtual bool paint(std::shared_ptr<SDL2Context> ctx);
 };
 
 }  // namespace templateSDL2::painter

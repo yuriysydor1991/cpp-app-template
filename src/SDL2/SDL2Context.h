@@ -1,10 +1,10 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_SDL2CONTEXT_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_SDL2CONTEXT_CLASS_H
 
-#include <memory>
-
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
+
+#include <memory>
 
 #include "src/app/ApplicationContext.h"
 
@@ -22,6 +22,6 @@ struct SDL2Context
   SDL_GLContext glContext{nullptr};
 };
 
-}  // namespace app
+}  // namespace templateSDL2
 
 #endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_SDL2CONTEXT_CLASS_H

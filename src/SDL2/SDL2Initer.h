@@ -3,10 +3,10 @@
 
 #include <memory>
 
-#include "src/SDL2/Painter/Painter.h"
-#include "src/app/ApplicationContext.h"
-#include "src/SDL2/SDL2Context.h"
 #include "src/SDL2/Eventer/EventsController.h"
+#include "src/SDL2/Painter/Painter.h"
+#include "src/SDL2/SDL2Context.h"
+#include "src/app/ApplicationContext.h"
 
 namespace templateSDL2
 {

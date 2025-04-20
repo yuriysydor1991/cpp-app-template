@@ -1,14 +1,15 @@
-#include <memory>
-#include <cassert>
+#include "src/SDL2/Eventer/EventsHandlers/EventQuitHandler.h"
 
 #include <SDL2/SDL.h>
 
-#include "src/SDL2/Eventer/EventsHandlers/EventQuitHandler.h"
+#include <cassert>
+#include <memory>
 
 namespace templateSDL2::events::eventsHandlers
 {
 
-bool EventQuitHandler::handle([[maybe_unused]] SDL_Event& event, std::shared_ptr<SDL2Context> sdl2Context)
+bool EventQuitHandler::handle([[maybe_unused]] SDL_Event& event,
+                              std::shared_ptr<SDL2Context> sdl2Context)
 {
   assert(sdl2Context != nullptr);
   assert(sdl2Context->appCtx != nullptr);
@@ -23,4 +24,4 @@ bool EventQuitHandler::handle([[maybe_unused]] SDL_Event& event, std::shared_ptr
   return true;
 }
 
-} // namespace templateSDL2::events::eventsHandlers
+}  // namespace templateSDL2::events::eventsHandlers

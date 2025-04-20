@@ -1,9 +1,9 @@
-#include <memory>
+#include "src/SDL2/SDL2Context.h"
+
 #include <cassert>
+#include <memory>
 
 #include "src/app/ApplicationContext.h"
-
-#include "src/SDL2/SDL2Context.h"
 
 namespace templateSDL2
 {
@@ -22,9 +22,9 @@ SDL2Context::~SDL2Context()
 }
 
 SDL2Context::SDL2Context(std::shared_ptr<app::ApplicationContext> ctx)
-: appCtx{ctx}
+    : appCtx{ctx}
 {
   assert(appCtx != nullptr);
 }
 
-}  // namespace app
+}  // namespace templateSDL2

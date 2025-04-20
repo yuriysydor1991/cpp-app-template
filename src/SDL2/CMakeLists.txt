@@ -7,6 +7,7 @@ add_library(
   TemplateSDL2Obj OBJECT
   SDL2Initer.cpp
   SDL2Context.cpp
+  SDL2ContextBuilder.cpp
 )
 
 target_include_directories(

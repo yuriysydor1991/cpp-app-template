@@ -6,6 +6,7 @@
 #include "src/SDL2/Eventer/EventsController.h"
 #include "src/SDL2/Painter/Painter.h"
 #include "src/SDL2/SDL2Context.h"
+#include "src/SDL2/SDL2ContextBuilder.h"
 #include "src/app/ApplicationContext.h"
 
 namespace templateSDL2
@@ -33,18 +34,13 @@ class SDL2Initer
  protected:
   virtual void throw_sdl2(const std::string& errDesc);
   virtual bool init_opengl();
-  virtual SDL_WindowFlags get_create_window_flags();
-  virtual const std::string& get_window_title();
-  virtual SDL_Window* create_window();
   virtual bool set_opengl_attributes();
-  virtual SDL_GLContext create_context();
   virtual void event_loop();
 
   inline static constexpr const int GL_CONTEXT_MAJOR_VERSION = 3;
   inline static constexpr const int GL_CONTEXT_MINOR_VERSION = 3;
-  inline static constexpr const int default_window_width = 800;
-  inline static constexpr const int default_window_height = 600;
 
+  std::shared_ptr<SDL2ContextBuilder> ctxBuilder;
   std::shared_ptr<SDL2Context> sdl2Context;
 
   std::shared_ptr<events::EventsController> events;

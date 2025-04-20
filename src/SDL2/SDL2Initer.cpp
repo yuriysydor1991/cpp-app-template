@@ -18,6 +18,9 @@ SDL2Initer::SDL2Initer()
       painter3d{std::make_shared<painter::Painter>()},
       oglIniter{std::make_shared<OpenGLIniter>()}
 {
+  if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+    throw_sdl2("Fail to init the SDL2");
+  }
 }
 
 SDL2Initer::~SDL2Initer()

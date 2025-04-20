@@ -13,10 +13,6 @@ namespace templateSDL2
 bool OpenGLIniter::init_opengl(
     [[maybe_unused]] std::shared_ptr<SDL2Context> sd2Context)
 {
-  if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-    return false;
-  }
-
   if (!set_opengl_attributes()) {
     return false;
   }

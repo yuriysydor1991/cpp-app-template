@@ -4,6 +4,8 @@
 #include <iostream>
 #include <memory>
 
+#include "src/wt4/Wt4Server.h"
+
 namespace app
 {
 
@@ -15,9 +17,7 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  std::cout << "Your application implementation goes here!" << std::endl;
-
-  return 0;
+  return wt4server::Wt4Server::run(ctx);
 }
 
 }  // namespace app

@@ -82,9 +82,8 @@ bool CommandLineParser::parse_arg(std::shared_ptr<ApplicationContext> ctx,
   } else if (param == VERSIONW || param == VERSION) {
     ctx->print_version_and_exit = true;
   } else {
-    ctx->print_help_and_exit = true;
-    ctx->push_error("Unknown parameter: " + param);
-    return false;
+    // leave the unknown parameters for the Wt4 framework
+    return true;
   }
 
   if (hasNext && requires_data(param)) {

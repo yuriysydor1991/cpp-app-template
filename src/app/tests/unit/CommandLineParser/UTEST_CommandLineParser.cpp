@@ -106,18 +106,17 @@ TEST_F(UTEST_CommandLineParser, version_long)
 
 TEST_F(UTEST_CommandLineParser, unknown_flag)
 {
-  static constexpr const char* const unknownFlag = "--unknown";
+  static constexpr const char* const unknownFlag = "--docroot";
   static std::string unknownFlagStr{unknownFlag};
-  static const std::string expectedError =
-      std::string{"Unknown parameter: "} + unknownFlagStr;
 
   two_args(unknownFlag);
 
-  EXPECT_CALL(*appctx, push_error(expectedError)).Times(1);
+  // the parser must pass unknown parameters to the Wt framework
+  EXPECT_CALL(*appctx, push_error(_)).Times(0);
 
-  EXPECT_FALSE(parser->parse_args(appctx));
+  EXPECT_TRUE(parser->parse_args(appctx));
 
-  EXPECT_TRUE(appctx->print_help_and_exit);
+  EXPECT_FALSE(appctx->print_help_and_exit);
   EXPECT_FALSE(appctx->print_version_and_exit);
   EXPECT_TRUE(appctx->errors.empty());
 }

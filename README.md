@@ -81,6 +81,40 @@ Separately each project may be downloaded and installed from different sources (
 - The CMake build system at [https://cmake.org/download/](https://cmake.org/download/)
 - The Windows 10 SDK at [https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/](https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/)
 
+## Required Wt packages
+
+In order to make the [Wt C++ framework](https://www.webtoolkit.eu/wt) available to develop application it's preferable to refer to the official framework page located at [https://www.webtoolkit.eu/wt/download](https://www.webtoolkit.eu/wt/download).
+
+Refer to the [Wt C++ framework](https://www.webtoolkit.eu/wt) documentation for a list of it's required packages and tools.
+
+Other possible methods described in next subsections.
+
+### Cloning and building from sources
+
+In order to build the [Wt C++ framework](https://www.webtoolkit.eu/wt) from the sources located at it's GitHub repository located at [https://github.com/emweb/wt](https://github.com/emweb/wt) clone it into the local directory using next command:
+
+```
+git clone https://github.com/emweb/wt.git
+```
+
+### Installing via the command line
+
+Official page describes how to install the [Wt C++ framework](https://www.webtoolkit.eu/wt) using command line:
+
+```
+# may not work
+
+sudo apt-get install witty witty-dev witty-doc witty-dbg witty-examples
+```
+
+**Although, not all OS distributions are supporting the Wt packages in their repositories.**
+
+### Packages required to build the Wt
+
+The [Wt C++ framework](https://www.webtoolkit.eu/wt) supports the set of features that may require additional packages to install into the target OS installation in order to build final binary libraries and project' application executable.
+
+For example, if the [PostgreSQL](https://en.wikipedia.org/wiki/PostgreSQL) is planned to be used through the [Wt's](https://www.webtoolkit.eu/wt) DBO it is required to install required [PostgreSQL's](https://en.wikipedia.org/wiki/PostgreSQL) server and dev libraries.
+
 ## Optional for the tests
 
 If necessary to build and execute available tests install GTest or ensure available Internet access in order to project make it available by itself (GNU/Linux based):

@@ -494,9 +494,18 @@ The `CppAppTemplate` is a default executable name. Replace it with your custom o
 If executable compiles and is present in the build directory start it in the terminal with path found from a previous subsection by a command:
 
 ```
-# from the build dir
-./src/CppAppTemplate
+# inside the build root directory
+
+./src/CppAppTemplate --docroot ".;/resources" --http-listen 127.0.0.1:8000 --accesslog CppAppTemplate-http-access.log
 ```
+
+Which effectively will start the [Wt](https://www.webtoolkit.eu/wt) web application http server with implemented project code web-site running on it for port `8000` on `loopback` network interface.
+
+Replace the `127.0.0.1` with a general `0.0.0.0` address in order to make application listen for request outside the local machine.
+
+The `resources` folder should be copied from the used [Wt](https://www.webtoolkit.eu/wt) source code to the application run directory in order to [Wt](https://www.webtoolkit.eu/wt) display properly. Not included into the current template project to reduce it's `git` repository size. Refer for the [Wt C++ framework](https://www.webtoolkit.eu/wt) documentation on how to obtain the `resources` directory.
+
+Refer to the [Wt C++ framework](https://www.webtoolkit.eu/wt) documentation for the available Wt executable command line parameters. 
 
 Once again, the `CppAppTemplate` is the **default** name of the project. Replace it with our own custom one if it was changed in the project's root `CMakeLists.txt` file (the `PROJECT_NAME` and/or `PROJECT_BINARY_NAME` variable).
 

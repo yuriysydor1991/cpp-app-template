@@ -7,6 +7,7 @@
 
 #include "src/app/ApplicationContext.h"
 #include "src/app/IApplication.h"
+#include "src/wt4/Wt4Context.h"
 
 /**
  * @brief The Wt4 implementation namespace for the template project.
@@ -21,7 +22,7 @@ class Wt4Server : public Wt::WApplication
 {
  public:
   virtual ~Wt4Server() = default;
-  Wt4Server(const Wt::WEnvironment& env);
+  Wt4Server(const Wt::WEnvironment& env, std::shared_ptr<Wt4Context> nwt4ctx);
 
   /**
    * @brief Starts the Wt4 application http service.
@@ -32,6 +33,13 @@ class Wt4Server : public Wt::WApplication
    * and other value otherwise.
    */
   static int run(std::shared_ptr<app::ApplicationContext> ctx);
+
+protected:
+
+  static std::unique_ptr<Wt4Server> build_server(const Wt::WEnvironment& env, std::shared_ptr<app::ApplicationContext> ctx);
+  static std::shared_ptr<Wt4Context> create_context(std::shared_ptr<app::ApplicationContext> ctx);
+
+  std::shared_ptr<Wt4Context> wt4ctx;
 };
 
 }  // namespace wt4server

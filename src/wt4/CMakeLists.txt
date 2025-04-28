@@ -5,6 +5,7 @@ find_package(Wt REQUIRED COMPONENTS Wt WtHTTP)
 add_library(
   TemplateWt4Obj OBJECT
   Wt4Server.cpp
+  Wt4Context.cpp
 )
 
 target_include_directories(

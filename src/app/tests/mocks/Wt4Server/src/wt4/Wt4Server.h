@@ -1,9 +1,9 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_WT4SERVER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_WT4SERVER_CLASS_H
 
-#include <memory>
-
 #include <gmock/gmock.h>
+
+#include <memory>
 
 #include "src/app/ApplicationContext.h"
 #include "src/app/IApplication.h"
@@ -17,10 +17,11 @@ class Wt4Server
   virtual ~Wt4Server() = default;
   Wt4Server() = default;
 
-  using runMockType = testing::MockFunction<int(std::shared_ptr<app::ApplicationContext>)>;
+  using runMockType =
+      testing::MockFunction<int(std::shared_ptr<app::ApplicationContext>)>;
 
   inline static runMockType run_mock = runMockType{};
-  
+
   inline static int run(std::shared_ptr<app::ApplicationContext> ctx)
   {
     auto run_mock_std = run_mock.AsStdFunction();

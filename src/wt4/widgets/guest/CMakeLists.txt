@@ -3,13 +3,12 @@ cmake_minimum_required(VERSION 3.13)
 find_package(Wt REQUIRED COMPONENTS Wt WtHTTP)
 
 add_library(
-  TemplateWt4Obj OBJECT
-  Wt4Server.cpp
-  Wt4Context.cpp
+  TemplateWt4GuestWidgetsObj OBJECT
+  Root.cpp
 )
 
 target_include_directories(
-  TemplateWt4Obj 
+  TemplateWt4GuestWidgetsObj 
   PRIVATE
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
@@ -18,8 +17,6 @@ target_include_directories(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  TemplateWt4Obj
+  TemplateWt4GuestWidgetsObj
   wt wthttp
 )
-
-add_subdirectory(widgets)

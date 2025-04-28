@@ -8,6 +8,7 @@
 #include "src/app/ApplicationContext.h"
 #include "src/app/IApplication.h"
 #include "src/wt4/Wt4Context.h"
+#include "src/wt4/widgets/WidgetsFactory.h"
 
 /**
  * @brief The Wt4 implementation namespace for the template project.
@@ -34,12 +35,15 @@ class Wt4Server : public Wt::WApplication
    */
   static int run(std::shared_ptr<app::ApplicationContext> ctx);
 
-protected:
-
-  static std::unique_ptr<Wt4Server> build_server(const Wt::WEnvironment& env, std::shared_ptr<app::ApplicationContext> ctx);
-  static std::shared_ptr<Wt4Context> create_context(std::shared_ptr<app::ApplicationContext> ctx);
+ protected:
+  static std::unique_ptr<Wt4Server> build_server(
+      const Wt::WEnvironment& env,
+      std::shared_ptr<app::ApplicationContext> ctx);
+  static std::shared_ptr<Wt4Context> create_context(
+      std::shared_ptr<app::ApplicationContext> ctx);
 
   std::shared_ptr<Wt4Context> wt4ctx;
+  std::unique_ptr<widgets::WidgetsFactory> wfactory;
 };
 
 }  // namespace wt4server

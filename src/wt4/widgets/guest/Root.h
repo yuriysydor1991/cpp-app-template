@@ -8,14 +8,11 @@
 #include "src/wt4/Wt4Context.h"
 #include "src/wt4/widgets/ICustomWidget.h"
 
-/**
- * @brief The template project custom widgets namespace.
- */
 namespace wt4server::widgets::guest
 {
 
 /**
- * @brief The Wt instance initer and runner class.
+ * @brief The project root widget for the guests.
  */
 class Root : public Wt::WContainerWidget, public ICustomWidget
 {

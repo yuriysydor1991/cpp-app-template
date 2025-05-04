@@ -98,6 +98,8 @@ In order to build the [Wt C++ framework](https://www.webtoolkit.eu/wt) from the 
 git clone https://github.com/emweb/wt.git
 ```
 
+Next, follow the building and installing instructions from the [Wt C++ framework](https://www.webtoolkit.eu/wt) README.md or INSTALL files.
+
 ### Installing via the command line
 
 Official page describes how to install the [Wt C++ framework](https://www.webtoolkit.eu/wt) using command line:

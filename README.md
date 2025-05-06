@@ -18,6 +18,7 @@ Examine available branches to find your most applicable variant of the template:
 - `appSDL2` branch at [appSDL2](https://github.com/yuriysydor1991/cpp-app-template/tree/appSDL2) with just general application related classes to generate a single binary executable with a [SDL2](https://en.wikipedia.org/wiki/Simple_DirectMedia_Layer) library for the OpenGL 3D development and more!
 - `appMeson` branch at [appMeson](https://github.com/yuriysydor1991/cpp-app-template/tree/appMeson) with just general application related classes to generate a single binary executable with the [Meson](https://mesonbuild.com/) build system.
 - `appWt4` branch at [appWt4](https://github.com/yuriysydor1991/cpp-app-template/tree/appWt4) the template infrastructure to fast start Web application developing based on the [Wt C++](https://www.webtoolkit.eu/wt) full stack framework.
+- `appPgSQLxx` branch at [appPgSQLxx](https://github.com/yuriysydor1991/cpp-app-template/tree/appPgSQLxx) the template infrastructure to fast start application development with the [PostgreSQL DBMS](https://en.wikipedia.org/wiki/PostgreSQL) usage.
 
 Alter current `README.md` and a `CHANGELOG.md` files to match your implementation introduced into the template project. Examine the `doc` directory for possible translations of a current md document:
 - `uk_UA` at [doc/README.uk_UA.md](doc/README.uk_UA.md)

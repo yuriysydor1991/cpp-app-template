@@ -4,8 +4,12 @@
 #include <string>
 #include <vector>
 
+#include "src/app/IDBConnection.h"
+
 namespace app
 {
+
+class IDBConnection;
 
 /**
  * @brief The class that holds necessary information for the application
@@ -63,6 +67,31 @@ struct ApplicationContext
    * @param errorDescription The application error description.
    */
   void push_error(const std::string& errorDescription);
+
+  /// @brief PostgreSQL database name
+  std::string pg_dbname;
+
+  /// @brief PostgreSQL user name
+  std::string pg_user;
+
+  /// @brief PostgreSQL user password
+  std::string pg_password;
+
+  /// @brief PostgreSQL hostname
+  std::string pg_host;
+
+  /// @brief PostgreSQL port
+  std::string pg_port;
+
+  static const std::string default_pg_name;
+  /// @brief Remember to change this publicly visible credentials!!!
+  static const std::string default_pg_user;
+  /// @brief Remember to change this publicly visible credentials!!!
+  static const std::string default_pg_password;
+
+  /// @brief The PostgreSQL connection interface object. Connected in default
+  /// Application class implementation.
+  std::shared_ptr<IDBConnection> pg_connection;
 };
 
 }  // namespace app

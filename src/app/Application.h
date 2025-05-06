@@ -3,6 +3,7 @@
 
 #include <memory>
 
+#include "src/PgSQLxx/PgSQL.h"
 #include "src/app/ApplicationContext.h"
 #include "src/app/IApplication.h"
 
@@ -28,6 +29,12 @@ class Application : public IApplication
    * and other value otherwise.
    */
   virtual int run(std::shared_ptr<ApplicationContext> ctx) override;
+
+ protected:
+  virtual std::shared_ptr<pgsqli::PgSQL> create_pg_conn();
+  virtual bool connect();
+
+  std::shared_ptr<ApplicationContext> actx;
 };
 
 }  // namespace app

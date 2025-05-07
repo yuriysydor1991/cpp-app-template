@@ -28,15 +28,13 @@ bool PgSQL::connect(std::shared_ptr<app::ApplicationContext> nctx)
 
 std::shared_ptr<pqxx::connection> PgSQL::create_connection()
 {
-  try
-  {
+  try {
     return std::make_shared<pqxx::connection>(make_conn_string());
   }
-  catch(const std::exception& e)
-  {
+  catch (const std::exception& e) {
     std::cerr << e.what() << std::endl;
   }
-  
+
   return {};
 }
 

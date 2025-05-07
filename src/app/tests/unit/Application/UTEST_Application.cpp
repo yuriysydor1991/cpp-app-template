@@ -34,20 +34,18 @@ TEST_F(UTEST_Application, no_context_error) { EXPECT_NE(app->run({}), 0); }
 
 TEST_F(UTEST_Application, normal_exit)
 {
-  static const std::string random_date {"2025-05-07"};
+  static const std::string random_date{"2025-05-07"};
 
   MockFunction<void(PgSQL&)> pgsqlEnsurer;
 
   EXPECT_CALL(pgsqlEnsurer, Call(_))
-  .Times(1)
-  .WillOnce(Invoke([&](PgSQL& instance){
-    EXPECT_CALL(instance, connect(appCtx))
       .Times(1)
-      .WillOnce(Return(true));
-    EXPECT_CALL(instance, get_current_date)
-      .Times(1)
-      .WillOnce(Return(random_date));
-  }));
+      .WillOnce(Invoke([&](PgSQL& instance) {
+        EXPECT_CALL(instance, connect(appCtx)).Times(1).WillOnce(Return(true));
+        EXPECT_CALL(instance, get_current_date)
+            .Times(1)
+            .WillOnce(Return(random_date));
+      }));
 
   PgSQL::onMockCreate = pgsqlEnsurer.AsStdFunction();
 

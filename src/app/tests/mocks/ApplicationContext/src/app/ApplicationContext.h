@@ -6,6 +6,8 @@
 #include <string>
 #include <vector>
 
+#include "src/app/IDBConnection.h"
+
 namespace app
 {
 
@@ -20,6 +22,8 @@ class ApplicationContext
   bool print_help_and_exit{false};
   bool print_version_and_exit{false};
   std::vector<std::string> errors;
+
+  std::shared_ptr<IDBConnection> pg_connection;
 
   MOCK_METHOD(void, push_error, (const std::string& errorDescription));
 };

@@ -20,10 +20,29 @@ bool PgSQL::connect(std::shared_ptr<app::ApplicationContext> nctx)
 
   actx = nctx;
 
-  qmaker = std::make_shared<sql::QueryMaker>(actx);
-  pgsqlc = std::make_shared<pqxx::connection>(make_conn_string());
+  qmaker = create_query_maker();
+  pgsqlc = create_connection();
 
   return pgsqlc != nullptr && pgsqlc->is_open();
+}
+
+std::shared_ptr<pqxx::connection> PgSQL::create_connection()
+{
+  try
+  {
+    return std::make_shared<pqxx::connection>(make_conn_string());
+  }
+  catch(const std::exception& e)
+  {
+    std::cerr << e.what() << std::endl;
+  }
+  
+  return {};
+}
+
+std::shared_ptr<sql::QueryMaker> PgSQL::create_query_maker()
+{
+  return std::make_shared<sql::QueryMaker>(actx);
 }
 
 std::string PgSQL::make_conn_string()
@@ -73,10 +92,6 @@ pqxx::result PgSQL::execute_query(const std::string& query)
     pqxx::result r = tx.exec(query);
 
     tx.commit();
-
-    if (r.empty()) {
-      return {};
-    }
 
     return r;
   }

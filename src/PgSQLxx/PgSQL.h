@@ -57,6 +57,9 @@ class PgSQL : public app::IDBConnection
 
   virtual pqxx::result execute_query(const std::string& query);
 
+  virtual std::shared_ptr<pqxx::connection> create_connection();
+  virtual std::shared_ptr<sql::QueryMaker> create_query_maker();
+
  private:
   std::shared_ptr<app::ApplicationContext> actx;
 

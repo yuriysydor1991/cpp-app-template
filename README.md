@@ -6,7 +6,7 @@ Project is designed to increase the speed of the library creation process at the
 
 **Just fork it and implement your library straight away!**
 
-Examine available branches to find your most applicable variant of the template:
+Examine available branches to find your most applicable variant of the template or combine multiple branches by merging them to assemble the best suited template structure for your needs:
 
 - `main` branch at [project root page](https://github.com/yuriysydor1991/cpp-app-template) just the clear `main` function no additional app infrastructure classes and all available CMake integrations.
 - `app` branch at [app](https://github.com/yuriysydor1991/cpp-app-template/tree/app) with just general application related classes to generate a single binary executable.

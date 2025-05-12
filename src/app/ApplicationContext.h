@@ -1,6 +1,7 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATIONCONTEXT_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATIONCONTEXT_CLASS_H
 
+#include <atomic>
 #include <string>
 #include <vector>
 
@@ -63,6 +64,20 @@ struct ApplicationContext
    * @param errorDescription The application error description.
    */
   void push_error(const std::string& errorDescription);
+
+  /// @brief For security listen for a loopback only by default.
+  inline static constexpr const char* const default_http_address = "127.0.0.1";
+  inline static constexpr const unsigned short default_http_port = 8080;
+
+  std::string http_address;
+  unsigned short http_port;
+
+  bool stop();
+  void stop(bool nstop);
+
+ private:
+  /// @brief True if the application must to stop execution.
+  std::atomic_bool astop;
 };
 
 }  // namespace app

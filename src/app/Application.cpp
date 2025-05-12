@@ -4,6 +4,8 @@
 #include <iostream>
 #include <memory>
 
+#include "src/beasthttp/HttpController.h"
+
 namespace app
 {
 
@@ -15,7 +17,11 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  std::cout << "Your application implementation goes here!" << std::endl;
+  auto http = std::make_shared<beasthttp::HttpController>();
+
+  if (!http->serve(ctx)) {
+    return INVALID;
+  }
 
   return 0;
 }

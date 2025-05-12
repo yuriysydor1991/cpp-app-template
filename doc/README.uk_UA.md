@@ -20,6 +20,7 @@
 - гілка `appMeson` розміщена за адресою [appMeson](https://github.com/yuriysydor1991/cpp-app-template/tree/appMeson) яка містить загальні інфраструктурні класи програми для генераці одинарного бінарного виконуваного файлу разом з системою побудови [Meson](https://mesonbuild.com/).
 - гілка `appWt4` розміщена за адресою [appWt4](https://github.com/yuriysydor1991/cpp-app-template/tree/appWt4) (**поточна**) шаблон з інфраструктурою для швидкого старту реалізації Web-програми на основі [Wt C++](https://www.webtoolkit.eu/wt) фулстек фреймворку.
 - гілка `appPgSQLxx` розміщена за адресою [appPgSQLxx](https://github.com/yuriysydor1991/cpp-app-template/tree/appPgSQLxx) котра містить інфраструктуру для швидкого старту розробки застосунку з використанням СУБД [PostgreSQL](https://en.wikipedia.org/wiki/PostgreSQL)
+- гілка `appBoostBeast` розміщена за адресою [appBoostBeast](https://github.com/yuriysydor1991/cpp-app-template/tree/appBoostBeast) котра містить інфраструктуру для швидкого старту розробки Web-програми з використанням швидкого HTTP сервера [Beast](https://www.boost.org/libs/beast) від Boost.
 
 Редагуй поточний файл `README.md` і `CHANGELOG.md` щоб документація відповідала впровадженому коду. Для перекладів даного файлу `README.md`:
 - `uk_UA` за відносною адресою doc/README.uk_UA.md

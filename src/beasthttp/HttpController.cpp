@@ -68,7 +68,7 @@ void HttpController::handle_session(std::shared_ptr<tcp::socket> socket)
 
     response.set(http::field::server, "Template Project Beast Server");
     response.set(http::field::content_type, "text/html");
-    response.keep_alive(request.keep_alive());
+    response.keep_alive(false);
 
     response.body() =
         "<html><body><h1>Hello from C++ template project "

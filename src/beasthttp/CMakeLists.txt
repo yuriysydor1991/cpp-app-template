@@ -21,3 +21,5 @@ target_link_libraries(
   Boost::system
   Boost::thread
 )
+
+add_subdirectory(rhandlers)

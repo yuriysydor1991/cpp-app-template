@@ -1,20 +1,15 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_HTTPCONTROLLER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_HTTPCONTROLLER_CLASS_H
 
-#include <boost/asio/ip/tcp.hpp>
-#include <boost/beast/core.hpp>
-#include <boost/beast/http.hpp>
-#include <boost/beast/version.hpp>
 #include <memory>
 
 #include "src/app/ApplicationContext.h"
 #include "src/beasthttp/HttpContext.h"
+#include "src/beasthttp/beast-includes.h"
+#include "src/beasthttp/rhandlers/HandlersFactory.h"
 
 namespace beasthttp
 {
-
-using tcp = boost::asio::ip::tcp;
-namespace http = boost::beast::http;
 
 /**
  * @brief The controller class of the BoostBeast http server.
@@ -40,6 +35,7 @@ class HttpController
   virtual void handle_session(std::shared_ptr<tcp::socket> socket);
 
   std::unique_ptr<HttpContext> mcontext;
+  std::shared_ptr<rhandlers::HandlersFactory> rhFactory;
 };
 
 }  // namespace beasthttp

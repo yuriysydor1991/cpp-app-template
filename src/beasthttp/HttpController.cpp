@@ -8,6 +8,8 @@
 #include <memory>
 #include <thread>
 
+#include "src/beasthttp/rhandlers/HTTPSessionContext.h"
+
 namespace beasthttp
 {
 
@@ -20,6 +22,7 @@ bool HttpController::serve(std::shared_ptr<app::ApplicationContext> actx)
   }
 
   mcontext = create_context(actx);
+  rhFactory = std::make_shared<rhandlers::HandlersFactory>();
 
   try {
     const auto address =
@@ -57,33 +60,25 @@ std::unique_ptr<HttpContext> HttpController::create_context(
 
 void HttpController::handle_session(std::shared_ptr<tcp::socket> socket)
 {
-  try {
-    boost::beast::flat_buffer buffer;
+  assert(socket != nullptr);
+  assert(rhFactory != nullptr);
+  assert(mcontext != nullptr);
 
-    http::request<http::string_body> request;
-    http::read(*socket, buffer, request);
-
-    http::response<http::string_body> response{http::status::ok,
-                                               request.version()};
-
-    response.set(http::field::server, "Template Project Beast Server");
-    response.set(http::field::content_type, "text/html");
-    response.keep_alive(false);
-
-    response.body() =
-        "<html><body><h1>Hello from C++ template project "
-        "Boost.Beast!</h1></body></html>";
-
-    response.prepare_payload();
-
-    http::write(*socket, response);
-
-    boost::beast::error_code ec;
-    socket->shutdown(tcp::socket::shutdown_send, ec);
+  if (socket == nullptr) {
+    return;
   }
-  catch (const std::exception& e) {
-    std::cerr << "Session error: " << e.what() << std::endl;
+
+  auto sctx = std::make_shared<rhandlers::HTTPSessionContext>(socket);
+
+  auto handler = rhFactory->create_appropriate_handler(sctx);
+
+  assert(handler != nullptr);
+
+  if (handler == nullptr) {
+    return;
   }
+
+  handler->handle_session(sctx);
 }
 
 }  // namespace beasthttp

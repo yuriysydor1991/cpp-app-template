@@ -58,6 +58,12 @@ std::unique_ptr<HttpContext> HttpController::create_context(
   return std::make_unique<HttpContext>(actx);
 }
 
+std::shared_ptr<rhandlers::HTTPSessionContext>
+HttpController::create_http_session_context(std::shared_ptr<tcp::socket> socket)
+{
+  return std::make_shared<rhandlers::HTTPSessionContext>(socket);
+}
+
 void HttpController::handle_session(std::shared_ptr<tcp::socket> socket)
 {
   assert(socket != nullptr);
@@ -68,7 +74,7 @@ void HttpController::handle_session(std::shared_ptr<tcp::socket> socket)
     return;
   }
 
-  auto sctx = std::make_shared<rhandlers::HTTPSessionContext>(socket);
+  auto sctx = create_http_session_context(socket);
 
   auto handler = rhFactory->create_appropriate_handler(sctx);
 

@@ -31,6 +31,8 @@ class HttpController
  protected:
   virtual std::unique_ptr<HttpContext> create_context(
       std::shared_ptr<app::ApplicationContext> actx);
+  virtual std::shared_ptr<rhandlers::HTTPSessionContext>
+  create_http_session_context(std::shared_ptr<tcp::socket> socket);
 
   virtual void handle_session(std::shared_ptr<tcp::socket> socket);
 

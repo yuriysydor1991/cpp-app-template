@@ -29,9 +29,9 @@ bool DefaultHandler::handle_session(std::shared_ptr<HTTPSessionContext> sctx)
         "<html><body><h1>Hello from C++ template project "
         "Boost.Beast!</h1></body></html>";
 
-    sctx->response.prepare_payload();
-
-    http::write(*sctx->socket, sctx->response);
+    if (!write_response(sctx)) {
+      return false;
+    }
 
     boost::beast::error_code ec;
     sctx->socket->shutdown(tcp::socket::shutdown_send, ec);
@@ -49,6 +49,14 @@ std::shared_ptr<ResponseBuilder> DefaultHandler::create_response_builder(
   return std::make_shared<ResponseBuilder>();
 }
 
+std::shared_ptr<ResponseWriter> DefaultHandler::create_response_writer(
+    std::shared_ptr<HTTPSessionContext> sctx)
+{
+  assert(sctx != nullptr);
+
+  return std::make_shared<ResponseWriter>();
+}
+
 bool DefaultHandler::build_response(std::shared_ptr<HTTPSessionContext> sctx)
 {
   assert(sctx != nullptr);
@@ -58,6 +66,15 @@ bool DefaultHandler::build_response(std::shared_ptr<HTTPSessionContext> sctx)
   assert(rbuilder != nullptr);
 
   return rbuilder->build_response(sctx);
+}
+
+bool DefaultHandler::write_response(std::shared_ptr<HTTPSessionContext> sctx)
+{
+  assert(sctx != nullptr);
+
+  auto writer = create_response_writer(sctx);
+
+  return writer->write_response(sctx);
 }
 
 }  // namespace beasthttp::rhandlers

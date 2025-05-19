@@ -6,6 +6,7 @@
 #include "src/beasthttp/rhandlers/HTTPSessionContext.h"
 #include "src/beasthttp/rhandlers/IRequestHandler.h"
 #include "src/beasthttp/rhandlers/ResponseBuilder.h"
+#include "src/beasthttp/rhandlers/ResponseWriter.h"
 
 namespace beasthttp::rhandlers
 {
@@ -27,6 +28,9 @@ class DefaultHandler : public IRequestHandler
   virtual std::shared_ptr<ResponseBuilder> create_response_builder(
       std::shared_ptr<HTTPSessionContext> sctx);
   virtual bool build_response(std::shared_ptr<HTTPSessionContext> sctx);
+  virtual std::shared_ptr<ResponseWriter> create_response_writer(
+      std::shared_ptr<HTTPSessionContext> sctx);
+  virtual bool write_response(std::shared_ptr<HTTPSessionContext> sctx);
 };
 
 }  // namespace beasthttp::rhandlers

@@ -18,6 +18,8 @@ class HTTPSessionContext
 
   boost::beast::flat_buffer buffer;
   http::request<http::string_body> request;
+
+  http::response<http::string_body> response;
 };
 
 }  // namespace beasthttp::rhandlers

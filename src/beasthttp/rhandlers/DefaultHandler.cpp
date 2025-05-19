@@ -21,6 +21,10 @@ bool DefaultHandler::handle_session(std::shared_ptr<HTTPSessionContext> sctx)
   }
 
   try {
+    if (!read_single_request(sctx)) {
+      return false;
+    }
+
     if (!build_response(sctx)) {
       return false;
     }
@@ -38,6 +42,22 @@ bool DefaultHandler::handle_session(std::shared_ptr<HTTPSessionContext> sctx)
   }
 
   return true;
+}
+
+std::shared_ptr<rhandlers::RequestReader> DefaultHandler::create_request_reader(
+    [[maybe_unused]] std::shared_ptr<rhandlers::HTTPSessionContext> sctx)
+{
+  return std::make_shared<rhandlers::RequestReader>();
+}
+
+bool DefaultHandler::read_single_request(
+    std::shared_ptr<rhandlers::HTTPSessionContext> sctx)
+{
+  assert(sctx != nullptr);
+
+  auto rreader = create_request_reader(sctx);
+
+  return rreader->read_request(sctx);
 }
 
 std::shared_ptr<ResponseBuilder> DefaultHandler::create_response_builder(

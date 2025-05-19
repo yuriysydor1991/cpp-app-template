@@ -13,6 +13,10 @@ bool ResponseWriter::write_response(std::shared_ptr<HTTPSessionContext> sctx)
   assert(sctx != nullptr);
   assert(sctx->socket != nullptr);
 
+  if (sctx == nullptr || sctx->socket == nullptr) {
+    return false;
+  }
+
   sctx->response.prepare_payload();
 
   return http::write(*sctx->socket, sctx->response) > 0U;

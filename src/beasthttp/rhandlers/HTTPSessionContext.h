@@ -15,6 +15,9 @@ class HTTPSessionContext
   HTTPSessionContext(std::shared_ptr<tcp::socket> nsocket);
 
   std::shared_ptr<tcp::socket> socket;
+
+  boost::beast::flat_buffer buffer;
+  http::request<http::string_body> request;
 };
 
 }  // namespace beasthttp::rhandlers

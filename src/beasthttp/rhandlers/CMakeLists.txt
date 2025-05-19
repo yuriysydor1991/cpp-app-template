@@ -5,6 +5,7 @@ add_library(
   DefaultHandler.cpp
   HandlersFactory.cpp
   HTTPSessionContext.cpp
+  RequestReader.cpp
 )
 
 target_include_directories(

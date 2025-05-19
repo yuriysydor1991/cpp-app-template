@@ -14,19 +14,15 @@ namespace beasthttp::rhandlers
 bool DefaultHandler::handle_session(std::shared_ptr<HTTPSessionContext> sctx)
 {
   assert(sctx != nullptr);
+  assert(sctx->socket != nullptr);
 
   if (sctx == nullptr) {
     return false;
   }
 
   try {
-    boost::beast::flat_buffer buffer;
-
-    http::request<http::string_body> request;
-    http::read(*sctx->socket, buffer, request);
-
     http::response<http::string_body> response{http::status::ok,
-                                               request.version()};
+                                               sctx->request.version()};
 
     response.set(http::field::server, "Template Project Beast Server");
     response.set(http::field::content_type, "text/html");

@@ -6,7 +6,9 @@
 #include "src/app/ApplicationContext.h"
 #include "src/beasthttp/HttpContext.h"
 #include "src/beasthttp/beast-includes.h"
+#include "src/beasthttp/rhandlers/HTTPSessionContext.h"
 #include "src/beasthttp/rhandlers/HandlersFactory.h"
+#include "src/beasthttp/rhandlers/RequestReader.h"
 
 namespace beasthttp
 {
@@ -33,7 +35,11 @@ class HttpController
       std::shared_ptr<app::ApplicationContext> actx);
   virtual std::shared_ptr<rhandlers::HTTPSessionContext>
   create_http_session_context(std::shared_ptr<tcp::socket> socket);
+  virtual std::shared_ptr<rhandlers::RequestReader> create_request_reader(
+      std::shared_ptr<rhandlers::HTTPSessionContext> sctx);
 
+  virtual bool read_single_request(
+      std::shared_ptr<rhandlers::HTTPSessionContext> sctx);
   virtual void handle_session(std::shared_ptr<tcp::socket> socket);
 
   std::unique_ptr<HttpContext> mcontext;

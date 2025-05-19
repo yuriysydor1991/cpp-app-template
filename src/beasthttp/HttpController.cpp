@@ -8,8 +8,6 @@
 #include <memory>
 #include <thread>
 
-#include "src/beasthttp/rhandlers/HTTPSessionContext.h"
-
 namespace beasthttp
 {
 
@@ -64,6 +62,22 @@ HttpController::create_http_session_context(std::shared_ptr<tcp::socket> socket)
   return std::make_shared<rhandlers::HTTPSessionContext>(socket);
 }
 
+std::shared_ptr<rhandlers::RequestReader> HttpController::create_request_reader(
+    [[maybe_unused]] std::shared_ptr<rhandlers::HTTPSessionContext> sctx)
+{
+  return std::make_shared<rhandlers::RequestReader>();
+}
+
+bool HttpController::read_single_request(
+    std::shared_ptr<rhandlers::HTTPSessionContext> sctx)
+{
+  assert(sctx != nullptr);
+
+  auto rreader = create_request_reader(sctx);
+
+  return rreader->read_request(sctx);
+}
+
 void HttpController::handle_session(std::shared_ptr<tcp::socket> socket)
 {
   assert(socket != nullptr);
@@ -75,6 +89,10 @@ void HttpController::handle_session(std::shared_ptr<tcp::socket> socket)
   }
 
   auto sctx = create_http_session_context(socket);
+
+  if (!read_single_request(sctx)) {
+    return;
+  }
 
   auto handler = rhFactory->create_appropriate_handler(sctx);
 

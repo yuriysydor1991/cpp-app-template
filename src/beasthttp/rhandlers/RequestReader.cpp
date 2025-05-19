@@ -1,6 +1,7 @@
 #include "src/beasthttp/rhandlers/RequestReader.h"
 
 #include <cassert>
+#include <iostream>
 #include <memory>
 
 namespace beasthttp::rhandlers
@@ -19,7 +20,16 @@ bool RequestReader::read_request(std::shared_ptr<HTTPSessionContext> sctx)
     return false;
   }
 
-  return http::read(*sctx->socket, sctx->buffer, sctx->request) > 0U;
+  bool readRes{false};
+
+  try {
+    readRes = http::read(*sctx->socket, sctx->buffer, sctx->request) > 0U;
+  }
+  catch (const std::exception& e) {
+    std::cerr << "Session error: " << e.what() << std::endl;
+  }
+
+  return readRes;
 }
 
 }  // namespace beasthttp::rhandlers

@@ -32,9 +32,6 @@ bool DefaultHandler::handle_session(std::shared_ptr<HTTPSessionContext> sctx)
     if (!write_response(sctx)) {
       return false;
     }
-
-    boost::beast::error_code ec;
-    sctx->socket->shutdown(tcp::socket::shutdown_send, ec);
   }
   catch (const std::exception& e) {
     std::cerr << "Session error: " << e.what() << std::endl;

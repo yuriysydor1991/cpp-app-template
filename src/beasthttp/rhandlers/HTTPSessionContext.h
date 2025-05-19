@@ -11,7 +11,7 @@ namespace beasthttp::rhandlers
 class HTTPSessionContext
 {
  public:
-  virtual ~HTTPSessionContext() = default;
+  virtual ~HTTPSessionContext();
   HTTPSessionContext(std::shared_ptr<tcp::socket> nsocket);
 
   std::shared_ptr<tcp::socket> socket;
@@ -20,6 +20,8 @@ class HTTPSessionContext
   http::request<http::string_body> request;
 
   http::response<http::string_body> response;
+
+  boost::beast::error_code ec;
 };
 
 }  // namespace beasthttp::rhandlers

@@ -7,6 +7,13 @@
 namespace beasthttp::rhandlers
 {
 
+HTTPSessionContext::~HTTPSessionContext()
+{
+  if (socket != nullptr) {
+    socket->shutdown(tcp::socket::shutdown_send, ec);
+  }
+}
+
 HTTPSessionContext::HTTPSessionContext(std::shared_ptr<tcp::socket> nsocket)
     : socket{nsocket}
 {

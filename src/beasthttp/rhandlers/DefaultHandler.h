@@ -3,6 +3,7 @@
 
 #include <memory>
 
+#include "src/beasthttp/pages/IPageBuilder.h"
 #include "src/beasthttp/rhandlers/HTTPSessionContext.h"
 #include "src/beasthttp/rhandlers/IRequestHandler.h"
 #include "src/beasthttp/rhandlers/RequestReader.h"
@@ -37,6 +38,9 @@ class DefaultHandler : public IRequestHandler
   virtual std::shared_ptr<ResponseWriter> create_response_writer(
       std::shared_ptr<HTTPSessionContext> sctx);
   virtual bool write_response(std::shared_ptr<HTTPSessionContext> sctx);
+  virtual std::shared_ptr<pages::IPageBuilder> create_request_response_builder(
+      std::shared_ptr<HTTPSessionContext> sctx);
+  virtual bool build_request_response(std::shared_ptr<HTTPSessionContext> sctx);
 };
 
 }  // namespace beasthttp::rhandlers

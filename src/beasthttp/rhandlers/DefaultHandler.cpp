@@ -5,6 +5,7 @@
 #include <memory>
 
 #include "src/beasthttp/beast-includes.h"
+#include "src/beasthttp/pages/PageBuilder.h"
 #include "src/beasthttp/rhandlers/HTTPSessionContext.h"
 #include "src/beasthttp/rhandlers/IRequestHandler.h"
 
@@ -29,9 +30,9 @@ bool DefaultHandler::handle_session(std::shared_ptr<HTTPSessionContext> sctx)
       return false;
     }
 
-    sctx->response.body() =
-        "<html><body><h1>Hello from C++ template project "
-        "Boost.Beast!</h1></body></html>";
+    if (!build_request_response(sctx)) {
+      return false;
+    }
 
     if (!write_response(sctx)) {
       return false;
@@ -42,6 +43,33 @@ bool DefaultHandler::handle_session(std::shared_ptr<HTTPSessionContext> sctx)
   }
 
   return true;
+}
+
+std::shared_ptr<pages::IPageBuilder>
+DefaultHandler::create_request_response_builder(
+    std::shared_ptr<HTTPSessionContext> sctx)
+{
+  assert(sctx != nullptr);
+
+  if (sctx == nullptr) {
+    return {};
+  }
+
+  return std::make_shared<pages::PageBuilder>();
+}
+
+bool DefaultHandler::build_request_response(
+    std::shared_ptr<HTTPSessionContext> sctx)
+{
+  assert(sctx != nullptr);
+
+  if (sctx == nullptr) {
+    return false;
+  }
+
+  auto responseBuilder = create_request_response_builder(sctx);
+
+  return responseBuilder->build_request_page(sctx);
 }
 
 std::shared_ptr<rhandlers::RequestReader> DefaultHandler::create_request_reader(

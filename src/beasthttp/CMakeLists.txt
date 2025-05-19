@@ -23,3 +23,4 @@ target_link_libraries(
 )
 
 add_subdirectory(rhandlers)
+add_subdirectory(pages)

@@ -21,6 +21,7 @@ Examine available branches to find your most applicable variant of the template 
 - `appWt4` branch at [appWt4](https://github.com/yuriysydor1991/cpp-app-template/tree/appWt4) (**current**) the template infrastructure to fast start Web application developing based on the [Wt C++](https://www.webtoolkit.eu/wt) full stack framework.
 - `appPgSQLxx` branch at [appPgSQLxx](https://github.com/yuriysydor1991/cpp-app-template/tree/appPgSQLxx) the template infrastructure to fast start application development with the [PostgreSQL DBMS](https://en.wikipedia.org/wiki/PostgreSQL) usage.
 - `appBoostBeast` branch at [appBoostBeast](https://github.com/yuriysydor1991/cpp-app-template/tree/appBoostBeast) the template infrastructure for the Web application fast start development with the [Boost Beast](https://www.boost.org/libs/beast) HTTP server.
+- `appMySQLCppConn` branch at [appMySQLCppConn](https://github.com/yuriysydor1991/cpp-app-template/tree/appMySQLCppConn) the template infrastructure to fast start application development with the [MySQL DBMS](https://en.wikipedia.org/wiki/MySQL) usage.
 
 Alter current `README.md` and a `CHANGELOG.md` files to match your implementation introduced into the template project. Examine the `doc` directory for possible translations of a current md document:
 - `uk_UA` at [doc/README.uk_UA.md](doc/README.uk_UA.md)

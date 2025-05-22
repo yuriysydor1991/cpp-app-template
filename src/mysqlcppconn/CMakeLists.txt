@@ -24,3 +24,5 @@ target_link_libraries(
   TemplateMySQLCppConnObj
   ${MySQL_LIBRARIES}
 )
+
+add_subdirectory(helpers)

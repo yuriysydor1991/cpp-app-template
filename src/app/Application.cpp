@@ -41,7 +41,7 @@ bool Application::connect()
 
   assert(actx->mysqlconn != nullptr);
 
-  return actx->mysqlconn != nullptr;
+  return actx->mysqlconn != nullptr && actx->mysqlconn->connect(actx);
 }
 
 std::shared_ptr<mysqli::MySQLController> Application::create_db_controller()

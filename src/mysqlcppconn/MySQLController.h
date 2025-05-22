@@ -1,6 +1,9 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_MYSQLCONTROLLER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_MYSQLCONTROLLER_CLASS_H
 
+#include <mysql_connection.h>
+#include <mysql_driver.h>
+
 #include <memory>
 
 #include "src/app/ApplicationContext.h"
@@ -21,7 +24,7 @@ class MySQLController : public app::IDBConnection
 {
  public:
   virtual ~MySQLController() = default;
-  MySQLController() = default;
+  MySQLController();
 
   /**
    * @brief Tries to connect to the specified database server.
@@ -50,6 +53,11 @@ class MySQLController : public app::IDBConnection
    * in case of any error.
    */
   virtual std::string get_current_date() override;
+
+ protected:
+  sql::mysql::MySQL_Driver& driver;
+
+  std::unique_ptr<sql::Connection> conn;
 };
 
 }  // namespace mysqli

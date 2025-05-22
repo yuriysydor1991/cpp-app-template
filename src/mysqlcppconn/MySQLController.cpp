@@ -3,16 +3,19 @@
 #include <cppconn/exception.h>
 #include <cppconn/resultset.h>
 #include <cppconn/statement.h>
-#include <mysql_connection.h>
-#include <mysql_driver.h>
 
 #include <cassert>
 #include <memory>
 
 #include "src/app/ApplicationContext.h"
-
+#include "src/mysqlcppconn/helpers/MySQLConnStrMaker.h"
 namespace mysqli
 {
+
+MySQLController::MySQLController()
+    : driver{*sql::mysql::get_mysql_driver_instance()}
+{
+}
 
 bool MySQLController::connect(std::shared_ptr<app::ApplicationContext> nctx)
 {
@@ -22,11 +25,48 @@ bool MySQLController::connect(std::shared_ptr<app::ApplicationContext> nctx)
     return false;
   }
 
-  return false;
+  try {
+    auto connmaker = std::make_shared<helpers::MySQLConnStrMaker>();
+
+    auto* cptr = driver.connect(connmaker->make_conn_string(nctx),
+                                nctx->mysql_user, nctx->mysql_password);
+
+    assert(cptr != nullptr);
+
+    if (cptr == nullptr) {
+      return false;
+    }
+
+    conn = std::unique_ptr<sql::Connection>(cptr);
+
+    if (!nctx->mysql_dbname.empty()) {
+      conn->setSchema(nctx->mysql_dbname);
+    }
+  }
+  catch (sql::SQLException& e) {
+    std::cerr << "Error: " << e.what() << std::endl;
+    return false;
+  }
+
+  return conn != nullptr;
 }
 
 bool MySQLController::connected() { return false; }
 
-std::string MySQLController::get_current_date() { return {}; }
+std::string MySQLController::get_current_date()
+{
+  try {
+    std::unique_ptr<sql::Statement> stmt(conn->createStatement());
+    std::unique_ptr<sql::ResultSet> res(
+        stmt->executeQuery("SELECT CURDATE();"));
+
+    return res->getString(1);
+  }
+  catch (sql::SQLException& e) {
+    std::cerr << "Error: " << e.what() << std::endl;
+  }
+
+  return {};
+}
 
 }  // namespace mysqli

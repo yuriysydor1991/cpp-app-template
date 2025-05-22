@@ -89,6 +89,9 @@ struct ApplicationContext
   /// @brief Remember to change this publicly visible credentials!!!
   static const std::string default_mysql_password;
 
+  static const std::string default_mysql_host;
+  static const std::string default_mysql_port;
+
   /// @brief The MySQL connection interface object. Connected in default
   /// Application class implementation.
   std::shared_ptr<IDBConnection> mysqlconn;

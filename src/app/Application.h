@@ -5,6 +5,7 @@
 
 #include "src/app/ApplicationContext.h"
 #include "src/app/IApplication.h"
+#include "src/mysqlcppconn/MySQLController.h"
 
 namespace app
 {
@@ -28,6 +29,13 @@ class Application : public IApplication
    * and other value otherwise.
    */
   virtual int run(std::shared_ptr<ApplicationContext> ctx) override;
+
+ protected:
+  virtual bool connect();
+
+  virtual std::shared_ptr<mysqli::MySQLController> create_db_controller();
+
+  std::shared_ptr<ApplicationContext> actx;
 };
 
 }  // namespace app

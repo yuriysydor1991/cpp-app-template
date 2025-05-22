@@ -68,30 +68,30 @@ struct ApplicationContext
    */
   void push_error(const std::string& errorDescription);
 
-  /// @brief PostgreSQL database name
-  std::string pg_dbname;
+  /// @brief MySQL database name
+  std::string mysql_dbname;
 
-  /// @brief PostgreSQL user name
-  std::string pg_user;
+  /// @brief MySQL user name
+  std::string mysql_user;
 
-  /// @brief PostgreSQL user password
-  std::string pg_password;
+  /// @brief MySQL user password
+  std::string mysql_password;
 
-  /// @brief PostgreSQL hostname
-  std::string pg_host;
+  /// @brief MySQL hostname
+  std::string mysql_host;
 
-  /// @brief PostgreSQL port
-  std::string pg_port;
+  /// @brief MySQL port
+  std::string mysql_port;
 
-  static const std::string default_pg_name;
+  static const std::string default_mysql_name;
   /// @brief Remember to change this publicly visible credentials!!!
-  static const std::string default_pg_user;
+  static const std::string default_mysql_user;
   /// @brief Remember to change this publicly visible credentials!!!
-  static const std::string default_pg_password;
+  static const std::string default_mysql_password;
 
-  /// @brief The PostgreSQL connection interface object. Connected in default
+  /// @brief The MySQL connection interface object. Connected in default
   /// Application class implementation.
-  std::shared_ptr<IDBConnection> pg_connection;
+  std::shared_ptr<IDBConnection> mysqlconn;
 };
 
 }  // namespace app

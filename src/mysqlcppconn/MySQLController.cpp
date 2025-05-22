@@ -8,6 +8,7 @@
 
 #include "src/app/ApplicationContext.h"
 #include "src/mysqlcppconn/helpers/MySQLConnStrMaker.h"
+
 namespace mysqli
 {
 
@@ -25,6 +26,8 @@ bool MySQLController::connect(std::shared_ptr<app::ApplicationContext> nctx)
   }
 
   try {
+    qmaker = std::make_unique<sqlmaker::QueryMaker>(nctx);
+
     auto connmaker = std::make_shared<helpers::MySQLConnStrMaker>();
 
     auto* cptr = driver.connect(connmaker->make_conn_string(nctx),
@@ -78,9 +81,21 @@ std::unique_ptr<sql::ResultSet> MySQLController::execute_query(
 
 std::string MySQLController::get_current_date()
 {
-  auto res = execute_query("SELECT CURDATE();");
+  assert(qmaker != nullptr);
 
-  return res->getString(1);
+  if (qmaker == nullptr) {
+    return {};
+  }
+
+  auto res = execute_query(qmaker->make_date_query());
+
+  assert(res != nullptr);
+
+  if (res != nullptr) {
+    return {};
+  }
+
+  return res->getString(1).asStdString();
 }
 
 }  // namespace mysqli

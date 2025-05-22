@@ -9,6 +9,7 @@
 
 #include "src/app/ApplicationContext.h"
 #include "src/app/IDBConnection.h"
+#include "src/mysqlcppconn/sql/QueryMaker.h"
 
 /**
  * @brief Interface for the MySQL connection abstraction layer for the
@@ -62,6 +63,7 @@ class MySQLController : public app::IDBConnection
   sql::mysql::MySQL_Driver& driver;
 
   std::unique_ptr<sql::Connection> conn;
+  std::unique_ptr<sqlmaker::QueryMaker> qmaker;
 };
 
 }  // namespace mysqli

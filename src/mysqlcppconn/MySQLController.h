@@ -1,6 +1,7 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_MYSQLCONTROLLER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_MYSQLCONTROLLER_CLASS_H
 
+#include <cppconn/resultset.h>
 #include <mysql_connection.h>
 #include <mysql_driver.h>
 
@@ -55,6 +56,9 @@ class MySQLController : public app::IDBConnection
   virtual std::string get_current_date() override;
 
  protected:
+  virtual std::unique_ptr<sql::ResultSet> execute_query(
+      const std::string& query);
+
   sql::mysql::MySQL_Driver& driver;
 
   std::unique_ptr<sql::Connection> conn;

@@ -1,7 +1,6 @@
 #include "src/mysqlcppconn/MySQLController.h"
 
 #include <cppconn/exception.h>
-#include <cppconn/resultset.h>
 #include <cppconn/statement.h>
 
 #include <cassert>
@@ -45,28 +44,43 @@ bool MySQLController::connect(std::shared_ptr<app::ApplicationContext> nctx)
   }
   catch (sql::SQLException& e) {
     std::cerr << "Error: " << e.what() << std::endl;
-    return false;
   }
 
-  return conn != nullptr;
+  return connected();
 }
 
-bool MySQLController::connected() { return false; }
-
-std::string MySQLController::get_current_date()
+bool MySQLController::connected()
 {
+  return conn != nullptr && !conn->isClosed();
+}
+
+std::unique_ptr<sql::ResultSet> MySQLController::execute_query(
+    const std::string& query)
+{
+  assert(connected());
+
+  if (!connected()) {
+    return {};
+  }
+
   try {
     std::unique_ptr<sql::Statement> stmt(conn->createStatement());
-    std::unique_ptr<sql::ResultSet> res(
-        stmt->executeQuery("SELECT CURDATE();"));
+    std::unique_ptr<sql::ResultSet> res(stmt->executeQuery(query));
 
-    return res->getString(1);
+    return res;
   }
   catch (sql::SQLException& e) {
     std::cerr << "Error: " << e.what() << std::endl;
   }
 
   return {};
+}
+
+std::string MySQLController::get_current_date()
+{
+  auto res = execute_query("SELECT CURDATE();");
+
+  return res->getString(1);
 }
 
 }  // namespace mysqli

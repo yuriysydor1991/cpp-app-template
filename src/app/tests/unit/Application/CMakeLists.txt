@@ -10,6 +10,7 @@ add_executable(
 target_include_directories(
   UTEST_Application
   PRIVATE ${APP_MOCKS_ROOT}/ApplicationContext
+  PRIVATE ${APP_MOCKS_ROOT}/HttpController
   PRIVATE ${CMAKE_SOURCE_DIR}
 )
 

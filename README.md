@@ -88,6 +88,14 @@ Separately each project may be downloaded and installed from different sources (
 - The CMake build system at [https://cmake.org/download/](https://cmake.org/download/)
 - The Windows 10 SDK at [https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/](https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/)
 
+## Required package for Boost.Beast
+
+To make the Boost.Beast HTTP builtin-server available in destination OS installation and for the implemented application install the Boost libs by executing the command (GNU/Linux based OS):
+
+```
+sudo apt install -y libboost-all-dev
+```
+
 ## Optional for the tests
 
 If necessary to build and execute available tests install GTest or ensure available Internet access in order to project make it available by itself (GNU/Linux based):

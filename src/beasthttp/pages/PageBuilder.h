@@ -17,6 +17,35 @@ class PageBuilder : public IPageBuilder
 
   virtual bool build_request_page(
       std::shared_ptr<rhandlers::HTTPSessionContext> sctx) override;
+
+ protected:
+  virtual bool build_page_header(
+      std::shared_ptr<rhandlers::HTTPSessionContext> sctx);
+  virtual bool prepend_page_headers(
+      std::shared_ptr<rhandlers::HTTPSessionContext> sctx);
+
+  virtual bool build_page_body(
+      std::shared_ptr<rhandlers::HTTPSessionContext> sctx);
+  virtual bool build_page_footer(
+      std::shared_ptr<rhandlers::HTTPSessionContext> sctx);
+
+  virtual std::string get_page_lang(
+      std::shared_ptr<rhandlers::HTTPSessionContext> sctx);
+
+  virtual const std::string& get_page_theme_color(
+      std::shared_ptr<rhandlers::HTTPSessionContext> sctx);
+
+  virtual std::string build_page_title(
+      std::shared_ptr<rhandlers::HTTPSessionContext> sctx);
+
+  virtual std::string build_page_keywords(
+      std::shared_ptr<rhandlers::HTTPSessionContext> sctx);
+
+  virtual std::string build_page_description(
+      std::shared_ptr<rhandlers::HTTPSessionContext> sctx);
+
+  virtual bool build_default_page(
+      std::shared_ptr<rhandlers::HTTPSessionContext> sctx);
 };
 
 }  // namespace beasthttp::pages

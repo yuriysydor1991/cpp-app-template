@@ -3,6 +3,7 @@
 
 #include <gmock/gmock.h>
 
+#include <functional>
 #include <memory>
 
 namespace beasthttp
@@ -12,7 +13,14 @@ class HttpController
 {
  public:
   virtual ~HttpController() = default;
-  HttpController() = default;
+  HttpController()
+  {
+    if (onMockCreate != nullptr) {
+      onMockCreate(*this);
+    }
+  }
+
+  inline static std::function<void(HttpController&)> onMockCreate;
 
   MOCK_METHOD(bool, serve, (std::shared_ptr<app::ApplicationContext> actx));
 };

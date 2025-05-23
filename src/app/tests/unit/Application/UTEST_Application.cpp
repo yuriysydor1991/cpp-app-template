@@ -2,9 +2,11 @@
 #include <gtest/gtest.h>
 
 #include "src/app/Application.h"
+#include "src/beasthttp/HttpController.h"
 
 using namespace app;
 using namespace testing;
+using namespace beasthttp;
 
 class UTEST_Application : public Test
 {
@@ -14,6 +16,8 @@ class UTEST_Application : public Test
         appCtx{std::make_shared<ApplicationContext>(argc, argv)}
   {
   }
+
+  ~UTEST_Application() { HttpController::onMockCreate = nullptr; }
 
   int argc{0};
   char** argv{nullptr};
@@ -26,9 +30,41 @@ TEST_F(UTEST_Application, no_context_error) { EXPECT_NE(app->run({}), 0); }
 
 TEST_F(UTEST_Application, normal_exit)
 {
+  MockFunction<void(HttpController&)> controllerEnsurer;
+
+  EXPECT_CALL(controllerEnsurer, Call(_))
+      .Times(1)
+      .WillOnce(Invoke([=](HttpController& instance) {
+        EXPECT_CALL(instance, serve(appCtx)).Times(1).WillOnce(Return(true));
+      }));
+
+  HttpController::onMockCreate = controllerEnsurer.AsStdFunction();
+
   EXPECT_CALL(*appCtx, push_error(_)).Times(0);
 
   EXPECT_EQ(app->run(appCtx), 0);
+
+  EXPECT_TRUE(appCtx->errors.empty());
+
+  EXPECT_FALSE(appCtx->print_help_and_exit);
+  EXPECT_FALSE(appCtx->print_version_and_exit);
+}
+
+TEST_F(UTEST_Application, failure_exit)
+{
+  MockFunction<void(HttpController&)> controllerEnsurer;
+
+  EXPECT_CALL(controllerEnsurer, Call(_))
+      .Times(1)
+      .WillOnce(Invoke([=](HttpController& instance) {
+        EXPECT_CALL(instance, serve(appCtx)).Times(1).WillOnce(Return(false));
+      }));
+
+  HttpController::onMockCreate = controllerEnsurer.AsStdFunction();
+
+  EXPECT_CALL(*appCtx, push_error(_)).Times(0);
+
+  EXPECT_NE(app->run(appCtx), 0);
 
   EXPECT_TRUE(appCtx->errors.empty());
 

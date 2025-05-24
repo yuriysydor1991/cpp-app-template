@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.13)
 
-# doesn't work
-# find_package(MySQL REQUIRED COMPONENTS ConnectorCpp)
-
 set(MySQL_INCLUDE_DIRS "/usr/include/cppconn")
 set(MySQL_LIBRARIES "mysqlcppconn")
+
+# doesn't work
+find_package(MySQL COMPONENTS ConnectorCpp)
 
 add_library(
   TemplateMySQLCppConnObj OBJECT

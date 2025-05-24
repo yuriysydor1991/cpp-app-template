@@ -6,6 +6,46 @@
   "command": "${PROJECT_BINARY_NAME}",
   "modules": [
     {
+      "name": "mariadb-connector-c",
+      "buildsystem": "cmake",
+      "config-opts": [
+        "-DCMAKE_INSTALL_PREFIX=/app",
+        "-DWITH_SSL=system"
+      ],
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://downloads.mariadb.com/Connectors/c/connector-c-3.3.4/mariadb-connector-c-3.3.4-src.tar.gz",
+          "sha256": "486e5fdf976a8e7fadf583ae912128655e013ac575fa79b2d1af0fb8827a78ed"
+        }
+      ]
+    },
+    {
+      "name": "mysql-connector-cpp",
+      "buildsystem": "cmake",
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/mysql/mysql-connector-cpp.git",
+          "tag": "8.0.33",
+          "commit": "c3abf648349e1f01c7ec001517af49320855c7d4"
+        }
+      ],
+      "config-opts": [
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_INSTALL_PREFIX=/app",
+        "-DBUILD_STATIC_LIBS=OFF",
+        "-DBUILD_EXAMPLES=OFF",
+        "-DWITH_JDBC=ON",
+        "-DMYSQL_INCLUDE_DIR=/app/include/mariadb",
+        "-DMYSQL_LIB_DIR=/app/lib/mariadb"
+      ],
+      "cleanup": [
+        "/bin",
+        "/share"
+      ]
+    },
+    {
       "name": "${PROJECT_NAME}",
       "buildsystem": "cmake",
       "config-opts": ["-DCMAKE_BUILD_TYPE=Release"],

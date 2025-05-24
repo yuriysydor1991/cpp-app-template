@@ -6,6 +6,8 @@
 #include <string>
 #include <vector>
 
+#include "src/app/IDBConnection.h"
+
 namespace app
 {
 
@@ -22,6 +24,21 @@ struct ApplicationContext
   std::vector<std::string> errors;
 
   MOCK_METHOD(void, push_error, (const std::string& errorDescription));
+
+  std::string mysql_dbname;
+  std::string mysql_user;
+  std::string mysql_password;
+  std::string mysql_host;
+  std::string mysql_port;
+
+  static const std::string default_mysql_name;
+  static const std::string default_mysql_user;
+  static const std::string default_mysql_password;
+
+  static const std::string default_mysql_host;
+  static const std::string default_mysql_port;
+
+  std::shared_ptr<IDBConnection> mysqlconn;
 };
 
 }  // namespace app

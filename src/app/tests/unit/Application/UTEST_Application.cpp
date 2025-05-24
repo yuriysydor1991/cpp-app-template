@@ -5,6 +5,7 @@
 
 using namespace app;
 using namespace testing;
+using namespace mysqli;
 
 class UTEST_Application : public Test
 {
@@ -14,6 +15,8 @@ class UTEST_Application : public Test
         appCtx{std::make_shared<ApplicationContext>(argc, argv)}
   {
   }
+
+  ~UTEST_Application() { MySQLController::onMockCreate = nullptr; }
 
   int argc{0};
   char** argv{nullptr};
@@ -26,9 +29,45 @@ TEST_F(UTEST_Application, no_context_error) { EXPECT_NE(app->run({}), 0); }
 
 TEST_F(UTEST_Application, normal_exit)
 {
+  MockFunction<void(MySQLController&)> controllerEnsurer;
+
+  EXPECT_CALL(controllerEnsurer, Call(_))
+      .Times(1)
+      .WillOnce(Invoke([](MySQLController& instance) {
+        EXPECT_CALL(instance, connect(_)).Times(1).WillOnce(Return(true));
+        EXPECT_CALL(instance, get_current_date)
+            .Times(1)
+            .WillOnce(Return(std::string{"2025-05-24"}));
+      }));
+
+  MySQLController::onMockCreate = controllerEnsurer.AsStdFunction();
+
   EXPECT_CALL(*appCtx, push_error(_)).Times(0);
 
   EXPECT_EQ(app->run(appCtx), 0);
+
+  EXPECT_TRUE(appCtx->errors.empty());
+
+  EXPECT_FALSE(appCtx->print_help_and_exit);
+  EXPECT_FALSE(appCtx->print_version_and_exit);
+}
+
+TEST_F(UTEST_Application, cant_connect_failure)
+{
+  MockFunction<void(MySQLController&)> controllerEnsurer;
+
+  EXPECT_CALL(controllerEnsurer, Call(_))
+      .Times(1)
+      .WillOnce(Invoke([](MySQLController& instance) {
+        EXPECT_CALL(instance, connect(_)).Times(1).WillOnce(Return(false));
+        EXPECT_CALL(instance, get_current_date).Times(0);
+      }));
+
+  MySQLController::onMockCreate = controllerEnsurer.AsStdFunction();
+
+  EXPECT_CALL(*appCtx, push_error(_)).Times(0);
+
+  EXPECT_NE(app->run(appCtx), 0);
 
   EXPECT_TRUE(appCtx->errors.empty());
 

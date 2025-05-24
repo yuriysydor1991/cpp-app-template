@@ -38,6 +38,12 @@ In order to fast-start implementing a new library clone this project into your l
 git clone https://github.com/yuriysydor1991/cpp-app-template.git
 ```
 
+or 
+
+```
+git clone https://gitlab.com/yuriysydor1991/cpp-app-template.git
+```
+
 After this command executes you should find a directory named `cpp-app-template` inside your current one. So enter it by calling `cd cpp-app-template`.
 
 # Forking and replacing the origin

@@ -460,7 +460,7 @@ cmake --build . --target flatpak
 flatpak install --user CppAppTemplate-0.9.0.flatpak
 
 # для запуску встановленої програми
-flatpak run ua.org.kytok.template.CppAppTemplate
+flatpak run ua.org.kytok.template.boost.beast.CppAppTemplate
 ```
 
 # Запуск головного виконуваного файлу

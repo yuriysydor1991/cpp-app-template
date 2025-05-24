@@ -60,7 +60,7 @@ bool MySQLController::connected()
 std::unique_ptr<sql::ResultSet> MySQLController::execute_query(
     const std::string& query)
 {
-  assert(connected());
+  assert(conn != nullptr && !conn->isClosed());
 
   if (!connected()) {
     return {};

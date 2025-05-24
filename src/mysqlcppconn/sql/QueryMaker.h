@@ -16,7 +16,7 @@ class QueryMaker
 {
  public:
   virtual ~QueryMaker() = default;
-  QueryMaker(std::shared_ptr<app::ApplicationContext> nctx);
+  explicit QueryMaker(std::shared_ptr<app::ApplicationContext> nctx);
 
   /**
    * @brief Returns the build date query for MySQL.

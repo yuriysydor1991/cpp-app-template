@@ -11,7 +11,7 @@
 namespace app
 {
 
-class ApplicationContext
+struct ApplicationContext
 {
  public:
   int& argc;

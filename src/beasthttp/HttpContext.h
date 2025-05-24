@@ -15,7 +15,7 @@ class HttpContext
 {
  public:
   virtual ~HttpContext() = default;
-  HttpContext(std::shared_ptr<app::ApplicationContext> nactx);
+  explicit HttpContext(std::shared_ptr<app::ApplicationContext> nactx);
 
   /**
    * @brief Returns the application context stop method return value.
@@ -29,14 +29,14 @@ class HttpContext
    * @return Returns the specified HTTP address for the HTTP server
    * start up.
    */
-  const std::string& http_address();
+  const std::string& http_address() const;
 
   /**
    * @brief Returns the port that will be used to start the HTTP server.
    *
    * @return Returns HTTP server desired port number.
    */
-  const unsigned short& http_port();
+  const unsigned short& http_port() const;
 
  protected:
   std::shared_ptr<app::ApplicationContext> actx;

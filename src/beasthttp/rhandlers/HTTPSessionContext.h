@@ -16,7 +16,7 @@ class HTTPSessionContext
 {
  public:
   virtual ~HTTPSessionContext();
-  HTTPSessionContext(std::shared_ptr<tcp::socket> nsocket);
+  explicit HTTPSessionContext(std::shared_ptr<tcp::socket> nsocket);
 
   /// @brief The accepted socket through witch all the requests and responses
   /// will be passed

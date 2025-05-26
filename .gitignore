@@ -11,3 +11,4 @@ doc/latex/*
 doc/*-html/*
 out/*
 CMakeSettings.json
+misc/flatpak.conf.json.in.backup*

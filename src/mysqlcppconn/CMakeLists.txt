@@ -1,15 +1,14 @@
 cmake_minimum_required(VERSION 3.13)
 
-set(MySQL_INCLUDE_DIRS "/usr/include/cppconn")
-set(MySQL_LIBRARIES "mysqlcppconn")
-
-# doesn't work
-find_package(MySQL COMPONENTS ConnectorCpp)
+include(template-project-MySQLCppConn)
 
 add_library(
   TemplateMySQLCppConnObj OBJECT
   MySQLController.cpp
 )
+
+message(STATUS "MySQL_INCLUDE_DIRS: ${MySQL_INCLUDE_DIRS}")
+message(STATUS "MySQL_LIBRARIES: ${MySQL_LIBRARIES}")
 
 target_include_directories(
   TemplateMySQLCppConnObj 

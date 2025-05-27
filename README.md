@@ -22,6 +22,7 @@ Examine available branches to find your most applicable variant of the template 
 - `appPgSQLxx` branch at [appPgSQLxx](https://github.com/yuriysydor1991/cpp-app-template/tree/appPgSQLxx) the template infrastructure to fast start application development with the [PostgreSQL DBMS](https://en.wikipedia.org/wiki/PostgreSQL) usage.
 - `appBoostBeast` branch at [appBoostBeast](https://github.com/yuriysydor1991/cpp-app-template/tree/appBoostBeast) the template infrastructure for the Web application fast start development with the [Boost Beast](https://www.boost.org/libs/beast) HTTP server.
 - `appMySQLCppConn` branch at [appMySQLCppConn](https://github.com/yuriysydor1991/cpp-app-template/tree/appMySQLCppConn) the template infrastructure to fast start application development with the [MySQL DBMS](https://en.wikipedia.org/wiki/MySQL) usage.
+- `appSQLiteCpp3` branch at [appSQLiteCpp3](https://github.com/yuriysydor1991/cpp-app-template/tree/appSQLiteCpp3) the template infrastructure to fast start application development with the [SQLite DBMS](https://en.wikipedia.org/wiki/SQLite) and [SQLiteCpp C++ bind](https://github.com/SRombauts/SQLiteCpp) usage.
 
 Alter current `README.md` and a `CHANGELOG.md` files to match your implementation introduced into the template project. Examine the `doc` directory for possible translations of a current md document:
 - `uk_UA` at [doc/README.uk_UA.md](doc/README.uk_UA.md)

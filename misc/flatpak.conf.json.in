@@ -6,9 +6,70 @@
   "command": "${PROJECT_BINARY_NAME}",
   "modules": [
     {
+      "name": "tcl",
+      "buildsystem": "simple",
+      "builddir": true,
+      "make-args": ["libtclstub8.6.a"],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/tcltk/tcl.git",
+          "tag": "core-8-6-16",
+          "commit": "874e4fe4264a40c00c4db5115afba9600f9f368d"
+        }
+      ],
+      "build-commands": [
+        "cd unix && ./configure --enable-threads --enable-static --prefix=/app && make -j$(nproc)",
+        "install -Dm644 unix/libtclstub8.6.a /app/lib/libtclstub8.6.a",
+        "install -Dm644 generic/tcl.h /app/include/tcl.h",
+        "install -Dm644 generic/tclDecls.h /app/include/tclDecls.h",
+        "install -Dm644 generic/tclPlatDecls.h /app/include/tclPlatDecls.h"
+      ]
+    },
+    {
+      "name": "libpq",
+      "buildsystem": "meson",
+      "config-opts": [
+        "-Ddocs=disabled",
+        "-Ddocs_pdf=disabled",
+        "-Dssl=auto",
+        "-Dlibdir=lib"
+      ],
+      "builddir": true,
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/postgres/postgres.git",
+          "tag": "REL_17_5",
+          "commit": "5e2f3df49d4298c6097789364a5a53be172f6e85"
+        }
+      ]
+    },
+    {
+      "name": "libpqxx",
+      "buildsystem": "cmake",
+      "config-opts": [
+        "-DCMAKE_INSTALL_PREFIX=/app",
+        "-DBUILD_SHARED_LIBS=ON",
+        "-DSKIP_BUILD_TEST=ON",
+        "-DCMAKE_INSTALL_LIBDIR=lib"
+      ], 
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/jtv/libpqxx.git",
+          "tag": "7.10.1",
+          "commit": "9bfaf9cb5a73ac23f9b7a9dfd7ef069a6e2124fb"
+        }
+      ]
+    },
+    {
       "name": "${PROJECT_NAME}",
       "buildsystem": "cmake",
-      "config-opts": ["-DCMAKE_BUILD_TYPE=Release"],
+      "config-opts": [
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_PREFIX_PATH=/app"
+      ],
       "sources": [
         {
           "type": "dir",
@@ -16,5 +77,9 @@
         }
       ]
     }
+  ],
+  "finish-args": [
+    "--env=LD_LIBRARY_PATH=/app/lib:/app/lib64",
+    "--share=network"
   ]
 }

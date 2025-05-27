@@ -4,8 +4,12 @@
 #include <string>
 #include <vector>
 
+#include "src/app/IDBConnection.h"
+
 namespace app
 {
+
+class IDBConnection;
 
 /**
  * @brief The class that holds necessary information for the application
@@ -63,6 +67,34 @@ struct ApplicationContext
    * @param errorDescription The application error description.
    */
   void push_error(const std::string& errorDescription);
+
+  /// @brief MySQL database name
+  std::string mysql_dbname;
+
+  /// @brief MySQL user name
+  std::string mysql_user;
+
+  /// @brief MySQL user password
+  std::string mysql_password;
+
+  /// @brief MySQL hostname
+  std::string mysql_host;
+
+  /// @brief MySQL port
+  std::string mysql_port;
+
+  static const std::string default_mysql_name;
+  /// @brief Remember to change this publicly visible credentials!!!
+  static const std::string default_mysql_user;
+  /// @brief Remember to change this publicly visible credentials!!!
+  static const std::string default_mysql_password;
+
+  static const std::string default_mysql_host;
+  static const std::string default_mysql_port;
+
+  /// @brief The MySQL connection interface object. Connected in default
+  /// Application class implementation.
+  std::shared_ptr<IDBConnection> mysqlconn;
 };
 
 }  // namespace app

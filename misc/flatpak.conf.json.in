@@ -8,11 +8,11 @@
     {
       "name": "boost",
       "buildsystem": "simple",
-       "sources": [
+      "sources": [
         {
           "type": "archive",
-          "url": "https://archives.boost.io/release/1.77.0/source/boost_1_77_0.tar.bz2",
-          "sha256": "fc9f85fc030e233142908241af7a846e60630aa7388de9a5fafb1f3a26840854"
+          "url": "https://archives.boost.io/release/1.88.0/source/boost_1_88_0.tar.bz2",
+          "sha256": "46d9d2c06637b219270877c9e16155cbd015b6dc84349af064c088e9b5b12f7b"
         }
       ],
       "build-commands": [
@@ -32,7 +32,8 @@
         }
       ],
       "config-opts": [
-        "--disable-gssapi"
+        "--disable-gssapi",
+        "--prefix=/app"
       ],
       "cleanup": [
         "/bin",
@@ -46,7 +47,7 @@
       "buildsystem": "cmake-ninja",
       "builddir": true,
       "sources": [
-        {
+         {
           "type": "git",
           "url": "https://github.com/mysql/mysql-server.git",
           "branch": "mysql-9.3.0",
@@ -58,17 +59,12 @@
       ],
       "cmake": true,
       "config-opts": [
-        "-DDOWNLOAD_BOOST=0",
-        "-DWITH_BOOST=system",
         "-DWITH_UNIT_TESTS=OFF",
-        "-DWITH_SERVER=OFF",
-        "-DWITH_EMBEDDED_SERVER=OFF",
         "-DWITHOUT_SERVER=ON",
-        "-DWITHOUT_DOCS=ON",
-        "-DWITHOUT_MAN=ON",
         "-DWITH_SSL=system",
         "-DWITH_ZLIB=system",
-        "-DWITH_LIBWRAP=OFF"
+        "-DWITH_LIBWRAP=OFF",
+        "-DCMAKE_INSTALL_PREFIX=/app"
       ],
       "cleanup": [
         "/bin",
@@ -85,8 +81,8 @@
         {
           "type": "git",
           "url": "https://github.com/mysql/mysql-connector-cpp.git",
-          "tag": "8.0.33",
-          "commit": "c3abf648349e1f01c7ec001517af49320855c7d4"
+          "tag": "9.3.0",
+          "commit": "9aa75cf2f6337a1f69e87be7ded9402f5b6b87c9"
         }
       ],
       "config-opts": [
@@ -106,6 +102,7 @@
       "buildsystem": "cmake",
       "config-opts": [
         "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_INSTALL_PREFIX=/app",
         "-DMySQL_INCLUDE_DIRS=/app/include/jdbc",
         "-DMySQL_LIBRARIES=/app/lib64/libmysqlcppconn.so"
       ],
@@ -116,5 +113,9 @@
         }
       ]
     }
+  ],
+  "finish-args": [
+    "--env=LD_LIBRARY_PATH=/app/lib:/app/lib64",
+    "--share=network"
   ]
 }

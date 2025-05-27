@@ -15,9 +15,24 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  std::cout << "Your application implementation goes here!" << std::endl;
+  ctx->dbconn = create_db_controller(ctx);
+
+  if (!ctx->dbconn->connect(ctx)) {
+    return INVALID;
+  }
+
+  std::cout << "SQLite3Cpp date: " << ctx->dbconn->get_current_date()
+            << std::endl;
 
   return 0;
+}
+
+std::shared_ptr<sqlite3i::SQLiteController> Application::create_db_controller(
+    std::shared_ptr<ApplicationContext> ctx)
+{
+  assert(ctx != nullptr);
+
+  return std::make_shared<sqlite3i::SQLiteController>();
 }
 
 }  // namespace app

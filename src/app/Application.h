@@ -5,6 +5,7 @@
 
 #include "src/app/ApplicationContext.h"
 #include "src/app/IApplication.h"
+#include "src/sqlite3cpp/SQLiteController.h"
 
 namespace app
 {
@@ -28,6 +29,10 @@ class Application : public IApplication
    * and other value otherwise.
    */
   virtual int run(std::shared_ptr<ApplicationContext> ctx) override;
+
+ protected:
+  std::shared_ptr<sqlite3i::SQLiteController> create_db_controller(
+      std::shared_ptr<ApplicationContext> ctx);
 };
 
 }  // namespace app

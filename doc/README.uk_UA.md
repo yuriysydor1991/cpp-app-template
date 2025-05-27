@@ -9,7 +9,7 @@
 Переглянь доступні гілки у репозиторії проекту-шаблону і використай найбільш підходящий варіант або комбінуй декілька гілок їх з'єднанням щоб створити найкращу структуру шаблону для вдоволення потреб:
 
 - гілка `main` розміщена за адресою [головна сторінка проеку](https://github.com/yuriysydor1991/cpp-app-template) один файл з функцією `main` і з усіма можливими інтеграціями для генерації одного бінарного виконуваного файлу.
-- гілка `app` розміщена за адресою [app](https://github.com/yuriysydor1991/cpp-app-template/tree/app) (**поточна**) яка містить загальні інфраструктурні класи програми для генераці одинарного бінарного виконуваного файлу.
+- гілка `app` розміщена за адресою [app](https://github.com/yuriysydor1991/cpp-app-template/tree/app) яка містить загальні інфраструктурні класи програми для генераці одинарного бінарного виконуваного файлу.
 - гілка `applib` розміщена за адресою [applib](https://github.com/yuriysydor1991/cpp-app-template/tree/applib) яка складається з класів банарного виконуваного файлу з додатковими інфраструктурними класами для генерації підключаємої бібліотеки і заголовкових файлів (доступні для встановлення), що призначені для поширення коду бібліотеки для повторного перевикористання іншими бінарнами файлами.
 - гілка `lib` розміщена ща адресою [lib](https://github.com/yuriysydor1991/cpp-app-template/tree/lib) і яка призначена для предоставляння початкової інфраструктури для реалізації бібліотеки разом з заголовковими підключаємими файлами і документацією за необхідності.
 - гілка `appQt6` розміщена за адресою [appQt6](https://github.com/yuriysydor1991/cpp-app-template/tree/appQt6) яка містить загальні класи для генерації бінарного виконуваного файлу разом з структурою заданою для розробки віконної програми на базі Qt6 разом з QML.
@@ -22,7 +22,7 @@
 - гілка `appPgSQLxx` розміщена за адресою [appPgSQLxx](https://github.com/yuriysydor1991/cpp-app-template/tree/appPgSQLxx) котра містить інфраструктуру для швидкого старту розробки застосунку з використанням СУБД [PostgreSQL](https://en.wikipedia.org/wiki/PostgreSQL)
 - гілка `appBoostBeast` розміщена за адресою [appBoostBeast](https://github.com/yuriysydor1991/cpp-app-template/tree/appBoostBeast) котра містить інфраструктуру для швидкого старту розробки Web-програми з використанням швидкого HTTP сервера [Beast](https://www.boost.org/libs/beast) від Boost.
 - гілка `appMySQLCppConn` розміщена за адресою [appMySQLCppConn](https://github.com/yuriysydor1991/cpp-app-template/tree/appMySQLCppConn) котра містить інфраструктуру для швидкого старту розробки застосунку з використанням СУБД [MySQL](https://uk.wikipedia.org/wiki/MySQL)
-- гілка `appSQLiteCpp3` розміщена за адресою [appSQLiteCpp3](https://github.com/yuriysydor1991/cpp-app-template/tree/appSQLiteCpp3) котра містить інфраструктуру для швидкого старту розробки застосунку з використанням СУБД [SQLite](https://en.wikipedia.org/wiki/SQLite) через бібліотеку [SQLiteCpp](https://github.com/SRombauts/SQLiteCpp)
+- гілка `appSQLiteCpp3` розміщена за адресою [appSQLiteCpp3](https://github.com/yuriysydor1991/cpp-app-template/tree/appSQLiteCpp3) (**поточна**) котра містить інфраструктуру для швидкого старту розробки застосунку з використанням СУБД [SQLite](https://en.wikipedia.org/wiki/SQLite) через бібліотеку [SQLiteCpp](https://github.com/SRombauts/SQLiteCpp)
 
 Редагуй поточний файл `README.md` і `CHANGELOG.md` щоб документація відповідала впровадженому коду. Для перекладів даного файлу `README.md`:
 - `uk_UA` за відносною адресою doc/README.uk_UA.md

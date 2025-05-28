@@ -1,4 +1,5 @@
 #include "src/gtkmm3/GtkmmIniter.h"
+#include "project-global-decls.h"
 
 #include <cassert>
 
@@ -7,8 +8,8 @@ namespace templateGtkmm3
 
 int GtkmmIniter::run(int& argc, char**& argv)
 {
-  auto app = Gtk::Application::create(argc, argv,
-                                      "ua.org.kytok.template.gtkmm3.glade");
+  auto app =
+      Gtk::Application::create(argc, argv, project_decls::PROJECT_FLATPAK_URL);
 
   prepare_widgets();
 

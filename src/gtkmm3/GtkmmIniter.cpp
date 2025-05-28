@@ -10,7 +10,7 @@ namespace templateGtkmm
 int GtkmmIniter::run(int& argc, char**& argv)
 {
   auto app =
-      Gtk::Application::create(argc, argv, "ua.org.kytok.template.gtkmm3");
+      Gtk::Application::create(argc, argv, project_decls::PROJECT_FLATPAK_URL);
 
   GtkmmWindow window;
 

@@ -32,6 +32,7 @@ add_custom_target (
     --error-exitcode=1 --inconclusive --enable=all -v
     # Enables the // cppcheck-suppress <id> source comments.
     --inline-suppr
+    --suppressions-list=${CMAKE_SOURCE_DIR}/misc/.cppcheck-suppress
     -I${CMAKE_SOURCE_DIR} -I${CMAKE_BINARY_DIR} ${ALLSOURCES}
   WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
   COMMENT "Executes cppcheck command for all project sources. Just outputs all findings into stdout."

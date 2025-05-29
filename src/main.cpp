@@ -1,5 +1,7 @@
 #include <iostream>
 
+#include "project-global-decls.h"
+
 /**
  * @brief The application main routine, obviously.
  *
@@ -11,7 +13,7 @@
  */
 int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 {
-  std::cout << "Your application implementation goes here!" << std::endl;
-  
+  std::cout << "Your " << project_decls::PROJECT_NAME << " implementation goes here!" << std::endl;
+
   return 0;
 }

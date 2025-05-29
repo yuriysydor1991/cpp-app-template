@@ -11,7 +11,7 @@ namespace wt4server
 struct Wt4Context
 {
   virtual ~Wt4Context() = default;
-  Wt4Context(std::shared_ptr<app::ApplicationContext> nAppCtx);
+  explicit Wt4Context(std::shared_ptr<app::ApplicationContext> nAppCtx);
 
   std::shared_ptr<app::ApplicationContext> appctx;
 };

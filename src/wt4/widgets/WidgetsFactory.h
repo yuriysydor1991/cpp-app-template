@@ -17,7 +17,7 @@ class WidgetsFactory
 {
  public:
   virtual ~WidgetsFactory() = default;
-  WidgetsFactory(std::shared_ptr<Wt4Context> nwt4ctx);
+  explicit WidgetsFactory(std::shared_ptr<Wt4Context> nwt4ctx);
 
   virtual std::unique_ptr<guest::Root> create_guest_root();
 

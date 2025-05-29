@@ -7,7 +7,7 @@
   "modules": [
     {
       "name": "${PROJECT_NAME}",
-      "buildsystem": "cmake",
+      "buildsystem": "meson",
       "config-opts": ["-DCMAKE_BUILD_TYPE=Release"],
       "sources": [
         {

@@ -10,6 +10,16 @@ set(
   CACHE STRING "Project main library name and target"
 )
 
+set(
+  PROJECT_MAINTAINER "Your Name"
+  CACHE STRING "Project maintainer name (used for the DEB package)"
+)
+
+set(
+  PROJECT_MAINTAINER_EMAIL "yourname@your.email.org"
+  CACHE STRING "Project maintainer email (used for the DEB package)"
+)
+
 option(
   ENABLE_UNIT_TESTS 
   "Set to ON value if unit tests build and run should be available"

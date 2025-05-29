@@ -1,3 +1,5 @@
+#include <iostream>
+
 /**
  * @brief The application main routine, obviously.
  *
@@ -9,6 +11,7 @@
  */
 int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 {
-  // insert your application implementation here.
+  std::cout << "Your application implementation goes here!" << std::endl;
+  
   return 0;
 }

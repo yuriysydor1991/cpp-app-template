@@ -9,6 +9,7 @@ add_executable(
 target_include_directories(
   UTEST_ApplicationContext
   PRIVATE ${CMAKE_SOURCE_DIR}
+  PRIVATE ${APP_MOCKS_ROOT}/project-global-decls
 )
 
 target_link_libraries(

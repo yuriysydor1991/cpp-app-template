@@ -31,5 +31,8 @@
         }
       ]
     }
+  ],
+  "finish-args": [
+    "--share=network"
   ]
 }

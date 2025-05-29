@@ -33,7 +33,7 @@ class SDL2Initer
   virtual int run(std::shared_ptr<app::ApplicationContext> ctx);
 
  protected:
-  virtual void throw_sdl2(const std::string& errDesc);
+  static void throw_sdl2(const std::string& errDesc);
   virtual void event_loop();
 
   std::shared_ptr<SDL2ContextBuilder> ctxBuilder;

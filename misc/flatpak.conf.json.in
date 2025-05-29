@@ -6,6 +6,22 @@
   "command": "${PROJECT_BINARY_NAME}",
   "modules": [
     {
+      "name": "SRombauts-SQLiteCpp",
+      "buildsystem": "cmake",
+      "builddir": true,
+      "sources": [
+        {
+          "type": "git",
+          "url": "${TEMPLATE_APP_SQLITECPP_GIT}",
+          "tag": "${TEMPLATE_APP_SQLITECPP_GIT_TAG}"
+        }
+      ],
+      "config-opts": [
+        "-DSQLITECPP_INTERNAL_SQLITE=OFF",
+        "-DSQLITECPP_RUN_CPPLINT=OFF"
+      ]
+    },
+    {
       "name": "${PROJECT_NAME}",
       "buildsystem": "cmake",
       "config-opts": ["-DCMAKE_BUILD_TYPE=Release"],

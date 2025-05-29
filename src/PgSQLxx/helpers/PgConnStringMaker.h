@@ -22,7 +22,7 @@ class PgConnStringMaker
       std::shared_ptr<app::ApplicationContext> actx);
 
  private:
-  void append(const std::string& field, const std::string& value,
+  static void append(const std::string& field, const std::string& value,
               std::string& dst);
 };
 

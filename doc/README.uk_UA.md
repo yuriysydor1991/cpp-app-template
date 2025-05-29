@@ -489,7 +489,7 @@ cmake --build . --target flatpak
 flatpak install --user CppAppTemplate-0.9.0.flatpak
 
 # для запуску встановленої програми
-flatpak run ua.org.kytok.template.CppAppTemplate
+flatpak run ua.org.kytok.template.wt4.CppAppTemplate --docroot "/app/share/Wt/resources" --http-listen 127.0.0.1:8000 --accesslog CppAppTemplate-http-access.log
 ```
 
 # Запуск головного виконуваного файлу

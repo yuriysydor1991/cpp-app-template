@@ -6,6 +6,55 @@
   "command": "${PROJECT_BINARY_NAME}",
   "modules": [
     {
+      "name": "boost",
+      "buildsystem": "simple",
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://archives.boost.io/release/1.77.0/source/boost_1_77_0.tar.bz2",
+          "sha256": "fc9f85fc030e233142908241af7a846e60630aa7388de9a5fafb1f3a26840854"
+        }
+      ],
+      "build-commands": [
+        "./bootstrap.sh",
+        "./b2 --prefix=/app -j$(nproc) threading=multi --with-system --with-thread --with-chrono --with-date_time --with-program_options --with-filesystem install"
+      ]
+    },
+    {
+      "name": "witty",
+      "buildsystem": "cmake",
+      "config-opts": [
+        "-DCMAKE_INSTALL_PREFIX=/app",
+        "-DBOOST_ROOT=/app",
+        "-DENABLE_LIBWTDBO=OFF",
+        "-DENABLE_OPENGL=OFF",
+        "-DENABLE_FIREBIRD=OFF",
+        "-DENABLE_POSTGRES=OFF",
+        "-DENABLE_SQLITE=OFF",
+        "-DENABLE_MYSQL=OFF",
+        "-DENABLE_MSSQLSERVER=OFF",
+        "-DINSTALL_DOCUMENTATION=OFF",
+        "-DBUILD_EXAMPLES=OFF",
+        "-DENABLE_QT4=OFF",
+        "-DENABLE_QT5=OFF",
+        "-DENABLE_QT6=OFF",
+        "-DENABLE_LIBWTTEST=OFF",
+        "-DENABLE_PANGO=OFF",
+        "-DENABLE_HARU=OFF",
+        "-DCONNECTOR_FCGI=OFF",
+        "-DBUILD_TESTS=OFF",
+        "-DCONNECTOR_ISAPI=OFF"
+      ], 
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/emweb/wt.git",
+          "tag": "4.11.4",
+          "commit": "c158c796dd10f44fdd0fce60b9a2f4215927347a"
+        }
+      ]
+    },
+    {
       "name": "${PROJECT_NAME}",
       "buildsystem": "cmake",
       "config-opts": ["-DCMAKE_BUILD_TYPE=Release"],
@@ -16,5 +65,13 @@
         }
       ]
     }
+  ],
+  "finish-args": [
+    "--share=network"
+  ],
+  "extra-args": [
+    "--docroot /app/share/Wt/resources",
+    "--http-listen 127.0.0.1:8000",
+    "--accesslog ${PROJECT_BINARY_NAME}-http-access.log"
   ]
 }

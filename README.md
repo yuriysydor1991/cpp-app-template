@@ -484,7 +484,7 @@ Refer to the flatpak documentation on how to install and run applications distri
 flatpak install --user CppAppTemplate-0.9.0.flatpak
 
 # to run the application
-flatpak run ua.org.kytok.template.CppAppTemplate
+flatpak run ua.org.kytok.template.wt4.CppAppTemplate --docroot "/app/share/Wt/resources" --http-listen 127.0.0.1:8000 --accesslog CppAppTemplate-http-access.log
 ```
 
 # Run the executable

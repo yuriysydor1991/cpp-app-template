@@ -95,6 +95,20 @@ Separately each project may be downloaded and installed from different sources (
 - The CMake build system at [https://cmake.org/download/](https://cmake.org/download/)
 - The Windows 10 SDK at [https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/](https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/)
 
+## Required package for PostgreSQL connection
+
+To be able to compile the template project with the PostgreSQL C++ bind library make it available by installing it with next command (GNU/Linux based OS):
+
+```
+sudo apt install -y libpqxx-dev
+```
+
+In order to install the [PostgreSQL](https://en.wikipedia.org/wiki/PostgreSQL) DBMS by itself the next command may be used (GNU/Linux based OS):
+
+```
+sudo apt install -y postgresql
+```
+
 ## Optional for the tests
 
 If necessary to build and execute available tests install GTest or ensure available Internet access in order to project make it available by itself (GNU/Linux based):

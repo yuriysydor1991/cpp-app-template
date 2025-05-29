@@ -96,6 +96,20 @@ sudo apt install -y git g++ cmake
 - Система побудови CMake за адресою [https://cmake.org/download/](https://cmake.org/download/)
 - Пакунки Windows 10 SDK за адресою [https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/](https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/)
 
+## Обов'язкові пакунки для підключення до PostgreSQL
+
+Для того щоб мати можливість скомпілювати проект і підключатись до СКБД [PostgreSQL](https://en.wikipedia.org/wiki/PostgreSQL) необхідно встановити відповідний пакунок наступною командою (ОС на базі GNU/Linux):
+
+```
+sudo apt install -y libpqxx-dev
+```
+
+Для встановлення самої СКБД [PostgreSQL](https://en.wikipedia.org/wiki/PostgreSQL) можна використати наступну команду (ОС на базі GNU/Linux):
+
+```
+sudo apt install -y postgresql
+```
+
 ## Необов'язкові пакети для тестів
 
 Якщо необхідно побудувати і виконати доступні тести необхідно встановити GTest або забезпечити доступ до мережі Інтернет у випадку самостійного встановлення скриптами системи збірки CMake проекту-шаблону. Для встановлення необхідно виконати команду:

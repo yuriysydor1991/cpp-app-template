@@ -1,7 +1,8 @@
 #include "src/gtkmm3/GtkmmIniter.h"
-#include "project-global-decls.h"
 
 #include <cassert>
+
+#include "project-global-decls.h"
 
 namespace templateGtkmm3
 {

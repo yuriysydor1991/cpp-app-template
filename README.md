@@ -187,7 +187,7 @@ Look for the details at the [Enabling the flatpak package generation support](#e
 
 ## Implement code straight away!
 
-To proceed the application implementation right away look for the `GtkmmIniter` class' `GtkmmIniter.cpp` and/or `GtkmmIniter.h` files which is designed to accept initial code of the application's window. The UI may be designed in the `src/gtkmm3/ui/UI.glade`.
+To proceed the application implementation right away look for the `GtkmmIniter` class' `GtkmmIniter.cpp` and/or `GtkmmIniter.h` files which is designed to accept initial code of the application's window. The UI may be designed in the `src/gtkmm3/ui/GtkmmWindow.ui`.
 
 **But do not forget about the SOLID principles and code decomposing!**
 
@@ -197,11 +197,11 @@ Additional code may be introduced into the `Application` class implementation or
 
 ## UI implementation
 
-The project's templated `src/gtkmm3/ui/UI.glade` file contains the general application's UI default implementation. Open it with the [Glade](https://en.wikipedia.org/wiki/Glade_Interface_Designer) application in order to replace the default UI implementation with the new one of interest.
+The project's templated `src/gtkmm3/ui/GtkmmWindow.ui` file contains the general application's UI default implementation. Open it with the [Glade](https://en.wikipedia.org/wiki/Glade_Interface_Designer) application in order to replace the default UI implementation with the new one of interest.
 
 ## Resource embedding
 
-To avoid any install and run dependencies the `src/gtkmm3/ui/UI.glade` UI file and any other registered resource are embedding into the binary. Resource embedding is performed through the `src/gtkmm3/ui/template.gresource.xml` GResource file resources of which are compiled into the C-resource by a `glib-compile-resources` command. Register new and remove old resources in the `src/gtkmm3/ui/template.gresource.xml` file in order to make them available in the binary executable. The examples of the resource obtaining and usage in the C++ code side may be examined in the default implementation of the `GtkmmIniter` class.
+To avoid any install and run dependencies the `src/gtkmm3/ui/GtkmmWindow.ui` UI file and any other registered resource are embedding into the binary. Resource embedding is performed through the `src/gtkmm3/ui/template.gresource.xml` GResource file resources of which are compiled into the C-resource by a `glib-compile-resources` command. Register new and remove old resources in the `src/gtkmm3/ui/template.gresource.xml` file in order to make them available in the binary executable. The examples of the resource obtaining and usage in the C++ code side may be examined in the default implementation of the `GtkmmIniter` class.
 
 ## Changing the project and executable name
 

@@ -28,7 +28,7 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
 }
 
 std::shared_ptr<sqlite3i::SQLiteController> Application::create_db_controller(
-    std::shared_ptr<ApplicationContext> ctx)
+    [[maybe_unused]] std::shared_ptr<ApplicationContext> ctx)
 {
   assert(ctx != nullptr);
 

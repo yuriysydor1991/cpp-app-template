@@ -6,6 +6,8 @@
 #include <string>
 #include <vector>
 
+#include "src/app/IDBConnection.h"
+
 namespace app
 {
 
@@ -22,6 +24,12 @@ struct ApplicationContext
   std::vector<std::string> errors;
 
   MOCK_METHOD(void, push_error, (const std::string& errorDescription));
+
+  std::string db_dbname;
+
+  static const std::string default_db_name;
+
+  std::shared_ptr<IDBConnection> dbconn;
 };
 
 }  // namespace app

@@ -23,7 +23,7 @@ class PgConnStringMaker
 
  private:
   static void append(const std::string& field, const std::string& value,
-              std::string& dst);
+                     std::string& dst);
 };
 
 }  // namespace pgsqli::helpers

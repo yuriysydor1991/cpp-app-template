@@ -8,7 +8,7 @@ message(STATUS "Trying to probe the system SQLite")
 find_package(SQLiteCpp QUIET)
 find_package(Threads QUIET)
     
-if(SQLite_FOUND)
+if(SQLiteCpp_FOUND)
   return()
 endif()
 

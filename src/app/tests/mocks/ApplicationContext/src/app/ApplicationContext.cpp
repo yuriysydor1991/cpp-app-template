@@ -1,5 +1,7 @@
 #include "ApplicationContext.h"
 
+#include <iostream>
+
 namespace app
 {
 

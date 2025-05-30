@@ -3,6 +3,7 @@
 
 #include <gmock/gmock.h>
 
+#include <functional>
 #include <memory>
 
 #include "src/app/ApplicationContext.h"
@@ -16,17 +17,18 @@ class Wt4Server
  public:
   virtual ~Wt4Server() = default;
   Wt4Server() = default;
-
   using runMockType =
-      testing::MockFunction<int(std::shared_ptr<app::ApplicationContext>)>;
+      std::function<int(std::shared_ptr<app::ApplicationContext>)>;
 
-  inline static runMockType run_mock = runMockType{};
+  inline static runMockType run_mock;
 
   inline static int run(std::shared_ptr<app::ApplicationContext> ctx)
   {
-    auto run_mock_std = run_mock.AsStdFunction();
+    if (run_mock != nullptr) {
+      return run_mock(ctx);
+    }
 
-    return run_mock_std(ctx);
+    return 1;
   }
 };
 

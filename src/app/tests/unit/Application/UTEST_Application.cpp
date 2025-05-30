@@ -26,14 +26,22 @@ class UTEST_Application : public Test
 
 TEST_F(UTEST_Application, no_context_error)
 {
-  EXPECT_CALL(Wt4Server::run_mock, Call(appCtx)).Times(0);
+  MockFunction<int(std::shared_ptr<app::ApplicationContext>)> staticEnsurer;
+
+  EXPECT_CALL(staticEnsurer, Call(appCtx)).Times(0);
+
+  Wt4Server::run_mock = staticEnsurer.AsStdFunction();
 
   EXPECT_NE(app->run({}), 0);
 }
 
 TEST_F(UTEST_Application, normal_exit)
 {
-  EXPECT_CALL(Wt4Server::run_mock, Call(appCtx)).Times(1).WillOnce(Return(0));
+  MockFunction<int(std::shared_ptr<app::ApplicationContext>)> staticEnsurer;
+
+  EXPECT_CALL(staticEnsurer, Call(appCtx)).Times(1).WillOnce(Return(0));
+
+  Wt4Server::run_mock = staticEnsurer.AsStdFunction();
 
   EXPECT_CALL(*appCtx, push_error(_)).Times(0);
 
@@ -47,7 +55,11 @@ TEST_F(UTEST_Application, normal_exit)
 
 TEST_F(UTEST_Application, error_exit)
 {
-  EXPECT_CALL(Wt4Server::run_mock, Call(appCtx)).Times(1).WillOnce(Return(1));
+  MockFunction<int(std::shared_ptr<app::ApplicationContext>)> staticEnsurer;
+
+  EXPECT_CALL(staticEnsurer, Call(appCtx)).Times(1).WillOnce(Return(1));
+
+  Wt4Server::run_mock = staticEnsurer.AsStdFunction();
 
   EXPECT_CALL(*appCtx, push_error(_)).Times(0);
 

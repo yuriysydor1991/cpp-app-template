@@ -96,6 +96,14 @@ sudo apt install -y git g++ cmake
 - Система побудови CMake за адресою [https://cmake.org/download/](https://cmake.org/download/)
 - Пакунки Windows 10 SDK за адресою [https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/](https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/)
 
+## Обов'язкові пакети для підлкючення до MongoDB
+
+Для того щоб зробити доступним підключення до СКБД MongoDB для компіляції проекту-шаблона необхідно встановити відповідну бібліотеку підключення наступною командою (ОС на базі GNU/Linux):
+
+```
+sudo apt install -y libmongoclient-dev libbson-dev
+```
+
 ## Необов'язкові пакети для тестів
 
 Якщо необхідно побудувати і виконати доступні тести необхідно встановити GTest або забезпечити доступ до мережі Інтернет у випадку самостійного встановлення скриптами системи збірки CMake проекту-шаблону. Для встановлення необхідно виконати команду:

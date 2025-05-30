@@ -95,6 +95,14 @@ Separately each project may be downloaded and installed from different sources (
 - The CMake build system at [https://cmake.org/download/](https://cmake.org/download/)
 - The Windows 10 SDK at [https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/](https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/)
 
+## Required packages for the MongoDB connection
+
+In order to make the MongoDB connection library available for the template project compilation install it with a next command (GNU/Linux based OS):
+
+```
+sudo apt install -y libmongoclient-dev libbson-dev
+```
+
 ## Optional for the tests
 
 If necessary to build and execute available tests install GTest or ensure available Internet access in order to project make it available by itself (GNU/Linux based):

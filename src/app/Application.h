@@ -5,6 +5,7 @@
 
 #include "src/app/ApplicationContext.h"
 #include "src/app/IApplication.h"
+#include "src/mongodbcxx/MongoDBController.h"
 
 namespace app
 {
@@ -28,6 +29,10 @@ class Application : public IApplication
    * and other value otherwise.
    */
   virtual int run(std::shared_ptr<ApplicationContext> ctx) override;
+
+ private:
+  virtual std::shared_ptr<mongodbcxxi::MongoDBController>
+  create_db_controller();
 };
 
 }  // namespace app

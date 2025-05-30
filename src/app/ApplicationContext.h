@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+#include "src/app/IDBConnection.h"
+
 namespace app
 {
 
@@ -63,6 +65,14 @@ struct ApplicationContext
    * @param errorDescription The application error description.
    */
   void push_error(const std::string& errorDescription);
+
+  std::string db_name;
+  std::string db_username;
+  std::string db_password;
+  std::string db_host;
+  std::string db_port;
+
+  std::shared_ptr<IDBConnection> db_connection;
 };
 
 }  // namespace app

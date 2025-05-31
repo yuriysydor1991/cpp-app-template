@@ -5,6 +5,7 @@
 #include <memory>
 
 #include "project-global-decls.h"
+#include "src/log/log.h"
 
 namespace app
 {
@@ -14,6 +15,7 @@ int ApplicationHelpPrinter::run(std::shared_ptr<ApplicationContext> ctx)
   assert(ctx != nullptr);
 
   if (ctx == nullptr) {
+    LOGE("No valid application context provided");
     return INVALID;
   }
 

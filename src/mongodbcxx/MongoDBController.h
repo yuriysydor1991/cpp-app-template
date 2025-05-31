@@ -4,7 +4,6 @@
 #include <memory>
 
 #include "src/app/ApplicationContext.h"
-#include "src/app/IApplication.h"
 #include "src/app/IDBConnection.h"
 #include "src/mongodbcxx/helpers/QueryMaker.h"
 #include "src/mongodbcxx/mongocxx-includes.h"

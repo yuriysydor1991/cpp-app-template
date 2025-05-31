@@ -29,7 +29,7 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  std::cout << "The MongoDB current date:" << mongoDBDate << std::endl;
+  std::cout << "The MongoDB current date: " << mongoDBDate << std::endl;
 
   return 0;
 }

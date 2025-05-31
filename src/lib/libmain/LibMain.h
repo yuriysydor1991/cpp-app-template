@@ -18,7 +18,7 @@ class LibMain : public templatelib0::ILib
 {
  public:
   virtual ~LibMain() = default;
-  LibMain() = default;
+  LibMain();
 
   /**
    * @brief The implemented library interface method derived from an ILib

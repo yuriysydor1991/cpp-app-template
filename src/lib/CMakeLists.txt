@@ -8,6 +8,7 @@ add_library(
 target_include_directories(
   ${PROJECT_LIBRARY_NAME}
   PRIVATE ${CMAKE_SOURCE_DIR}
+  PRIVATE ${CMAKE_BINARY_DIR}
   INTERFACE facade
 )
 

@@ -11,3 +11,4 @@ configure_file(
 set(GENERAL_MOCKS_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/tests/mocks")
 
 add_subdirectory(lib)
+add_subdirectory(log)

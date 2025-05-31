@@ -9,7 +9,9 @@ add_executable(
 target_include_directories(
   UTEST_LibMain
   PRIVATE ${GENERAL_MOCKS_ROOT}/LibraryContext
+  PRIVATE ${GENERAL_MOCKS_ROOT}/log
   PRIVATE ${CMAKE_SOURCE_DIR}
+  PRIVATE ${CMAKE_BINARY_DIR}
   PRIVATE ${CMAKE_SOURCE_DIR}/src/lib/facade
 )
 

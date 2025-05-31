@@ -8,6 +8,7 @@
 
 #include "src/app/ApplicationContext.h"
 #include "src/app/IDBConnection.h"
+#include "src/log/log.h"
 
 namespace sqlite3i
 {
@@ -17,6 +18,7 @@ bool SQLiteController::connect(std::shared_ptr<app::ApplicationContext> nctx)
   assert(nctx != nullptr);
 
   if (nctx == nullptr) {
+    LOGE("No valid application context pointer provided");
     return false;
   }
 
@@ -29,7 +31,7 @@ bool SQLiteController::connect(std::shared_ptr<app::ApplicationContext> nctx)
         nctx->db_dbname, SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
   }
   catch (const std::exception& e) {
-    std::cerr << "SQLite exception: " << e.what() << '\n';
+    LOGE("SQLite exception: " << e.what());
     return false;
   }
 
@@ -63,7 +65,13 @@ std::shared_ptr<SQLite::Statement> SQLiteController::execute_select_query(
   assert(db != nullptr);
   assert(!query.empty());
 
-  if (!connected() || query.empty()) {
+  if (!connected()) {
+    LOGE("No connection available");
+    return {};
+  }
+
+  if (query.empty()) {
+    LOGE("Empty query string provided");
     return {};
   }
 
@@ -75,8 +83,7 @@ std::shared_ptr<SQLite::Statement> SQLiteController::execute_select_query(
     squery->executeStep();
   }
   catch (const std::exception& e) {
-    std::cerr << "SQLite exception: " << e.what() << std::endl;
-    return squery;
+    LOGE("SQLite exception: " << e.what());
   }
 
   return squery;

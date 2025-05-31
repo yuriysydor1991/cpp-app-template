@@ -4,6 +4,8 @@
 #include <iostream>
 #include <memory>
 
+#include "src/log/log.h"
+
 namespace app
 {
 
@@ -12,17 +14,18 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
   assert(ctx != nullptr);
 
   if (ctx == nullptr) {
+    LOGE("No valid context pointer provided");
     return INVALID;
   }
 
   ctx->dbconn = create_db_controller(ctx);
 
   if (!ctx->dbconn->connect(ctx)) {
+    LOGE("Fail to connect to the SQLite database");
     return INVALID;
   }
 
-  std::cout << "SQLite3Cpp date: " << ctx->dbconn->get_current_date()
-            << std::endl;
+  LOGI("SQLite3Cpp date: " << ctx->dbconn->get_current_date());
 
   return 0;
 }

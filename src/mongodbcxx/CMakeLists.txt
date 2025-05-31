@@ -1,18 +1,11 @@
 cmake_minimum_required(VERSION 3.13)
 
-find_package(mongocxx REQUIRED)
-find_package(bsoncxx REQUIRED)
+include(template-project-mongocxx-available-maker)
 
 add_library(
   TemplateMongoDBCppConnObj OBJECT
   MongoDBController.cpp
 )
-
-get_target_property(MONGOCXX_INCLUDE_DIRS mongo::mongocxx_shared INTERFACE_INCLUDE_DIRECTORIES)
-get_target_property(BSONCXX_INCLUDE_DIRS mongo::bsoncxx_shared INTERFACE_INCLUDE_DIRECTORIES)
-
-message(STATUS "mongocxx include dirs: ${MONGOCXX_INCLUDE_DIRS}")
-message(STATUS "bsoncxx include dirs: ${BSONCXX_INCLUDE_DIRS}")
 
 target_include_directories(
   TemplateMongoDBCppConnObj 

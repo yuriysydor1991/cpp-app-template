@@ -6,6 +6,42 @@
   "command": "${PROJECT_BINARY_NAME}",
   "modules": [
     {
+      "name": "mongoc-driver",
+      "buildsystem": "cmake",
+      "sources": [
+        {
+          "type": "git",
+          "url": "git@github.com:mongodb/mongo-c-driver.git",
+          "commit": "1b0e008d3aab07431827433c783f92680cb0cffe"
+        }
+      ],
+      "config-opts": [
+        "-DENABLE_TESTS=OFF",
+        "-DENABLE_EXAMPLES=OFF",
+        "-DCMAKE_INSTALL_LIBDIR=lib"
+      ]
+    },
+    {
+      "name": "mongocxx",
+      "buildsystem": "cmake",
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/mongodb/mongo-cxx-driver.git",
+          "tag": "r4.1.0",
+          "commit": "c6be26ddfbffca4e606b59c30be1a76391eed5c4"
+        }
+      ],
+      "builddir": true,
+      "config-opts": [
+        "-DCMAKE_INSTALL_LIBDIR=lib",
+        "-DBUILD_SHARED_LIBS=ON",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_PREFIX_PATH=/app",
+        "-DENABLE_TESTS=OFF"
+      ]
+    },
+    {
       "name": "${PROJECT_NAME}",
       "buildsystem": "cmake",
       "config-opts": ["-DCMAKE_BUILD_TYPE=Release"],
@@ -16,5 +52,8 @@
         }
       ]
     }
+  ],
+  "finish-args": [
+    "--share=network"
   ]
 }

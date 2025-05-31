@@ -457,7 +457,7 @@ Refer to the flatpak documentation on how to install and run applications distri
 flatpak install --user CppAppTemplate-0.9.0.flatpak
 
 # to run the application
-flatpak run ua.org.kytok.template.CppAppTemplate
+flatpak run ua.org.kytok.template.mongodbcpp4.CppAppTemplate
 ```
 
 # Run the executable

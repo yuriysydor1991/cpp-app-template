@@ -6,6 +6,7 @@
 
 #include "project-global-decls.h"
 #include "src/app/IApplication.h"
+#include "src/log/log.h"
 
 namespace templateQt6app
 {
@@ -21,6 +22,7 @@ int Qt6Initer::run(int& argc, char**& argv)
   engine.load(QUrl(main_qml_path));
 
   if (engine.rootObjects().isEmpty()) {
+    LOGE("Fail to initialize the Qt6 QML engine");
     return app::IApplication::INVALID;
   }
 

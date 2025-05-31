@@ -9,6 +9,7 @@
 #include "src/app/ApplicationVersionPrinter.h"
 #include "src/app/CommandLineParser.h"
 #include "src/app/IApplication.h"
+#include "src/log/log.h"
 
 namespace app
 {
@@ -36,10 +37,12 @@ std::shared_ptr<ApplicationContext> ApplicationFactory::create_context(
   assert(argParser != nullptr);
 
   if (ctx == nullptr) {
+    LOGE("Fail to create the application context");
     return {};
   }
 
   if (argParser == nullptr) {
+    LOGE("Fail to create the argument parser");
     return {};
   }
 
@@ -69,16 +72,21 @@ std::shared_ptr<IApplication> ApplicationFactory::create_application(
   assert(ctx != nullptr);
 
   if (ctx == nullptr) {
+    LOGE("No valid application context provided");
     return {};
   }
 
   if (ctx->print_help_and_exit) {
+    LOGT("Creating help printer application");
     return create_help_printer();
   }
 
   if (ctx->print_version_and_exit) {
+    LOGT("Creating version printer application");
     return create_version_printer();
   }
+
+  LOGT("Creating the default application object");
 
   return create_default_application();
 }
@@ -90,6 +98,7 @@ int ApplicationFactory::run(int& gargc, char**& gargv)
   assert(ctx != nullptr);
 
   if (ctx == nullptr) {
+    LOGE("No valid application context object provided");
     return IApplication::INVALID;
   }
 
@@ -98,6 +107,7 @@ int ApplicationFactory::run(int& gargc, char**& gargv)
   assert(app != nullptr);
 
   if (app == nullptr) {
+    LOGE("Fail to create the application object");
     return IApplication::INVALID;
   }
 
@@ -106,6 +116,10 @@ int ApplicationFactory::run(int& gargc, char**& gargv)
 
 int ApplicationFactory::execute(int& gargc, char**& gargv)
 {
+  LOG_INIT_DEFAULTS();
+
+  LOGT("Starting the application");
+
   std::shared_ptr<ApplicationFactory> factory =
       std::make_shared<ApplicationFactory>();
 

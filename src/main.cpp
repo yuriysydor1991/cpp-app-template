@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "project-global-decls.h"
+#include "src/log/log.h"
 
 /**
  * @brief The application main routine, obviously.
@@ -13,8 +14,9 @@
  */
 int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 {
-  std::cout << "Your " << project_decls::PROJECT_NAME
-            << " implementation goes here!" << std::endl;
+  LOG_INIT_DEFAULTS();
+
+  LOGI("Your " << project_decls::PROJECT_NAME << " implementation goes here!");
 
   return 0;
 }

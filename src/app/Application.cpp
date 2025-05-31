@@ -5,6 +5,7 @@
 #include <memory>
 
 #include "src/gtkmm3/GtkmmIniter.h"
+#include "src/log/log.h"
 
 namespace app
 {
@@ -14,13 +15,19 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
   assert(ctx != nullptr);
 
   if (ctx == nullptr) {
+    LOGE("No valid context pointer provided");
     return INVALID;
   }
 
   std::shared_ptr<templateGtkmm3::GtkmmIniter> gtkmmIniter =
       create_gtkmm_initer();
 
-  return gtkmmIniter->run(ctx->argc, ctx->argv);
+  if (gtkmmIniter->run(ctx->argc, ctx->argv) != 0) {
+    LOGE("The gtkmm controller returned invalid status");
+    return INVALID;
+  }
+
+  return 0;
 }
 
 std::shared_ptr<templateGtkmm3::GtkmmIniter> Application::create_gtkmm_initer()

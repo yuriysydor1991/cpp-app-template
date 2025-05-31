@@ -29,5 +29,6 @@ configure_file(
 set(GENERAL_MOCKS_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/tests/mocks")
 
 add_subdirectory(app)
+add_subdirectory(log)
 add_subdirectory(converters)
 add_subdirectory(lib)

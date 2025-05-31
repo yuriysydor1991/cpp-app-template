@@ -11,6 +11,7 @@ target_include_directories(
   UTEST_ApplicationVersionPrinter
   PRIVATE ${GENERAL_MOCKS_ROOT}/ApplicationContext
   PRIVATE ${APP_MOCKS_ROOT}/project-global-decls
+  PRIVATE ${GENERAL_MOCKS_ROOT}/log
   PRIVATE ${CMAKE_SOURCE_DIR}
 )
 

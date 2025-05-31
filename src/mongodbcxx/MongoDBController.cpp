@@ -8,6 +8,7 @@
 
 #include "src/app/ApplicationContext.h"
 #include "src/app/IApplication.h"
+#include "src/log/log.h"
 #include "src/mongodbcxx/converters/MongoDBDate2String.h"
 #include "src/mongodbcxx/helpers/MongoDBConnStringMaker.h"
 
@@ -25,6 +26,7 @@ bool MongoDBController::connect(std::shared_ptr<app::ApplicationContext> nctx)
   assert(nctx != nullptr);
 
   if (nctx == nullptr) {
+    LOGE("No valid application context provided");
     return false;
   }
 
@@ -43,7 +45,7 @@ bool MongoDBController::connect(std::shared_ptr<app::ApplicationContext> nctx)
     dbconnection = dbclient["admin"];
   }
   catch (const std::exception& e) {
-    std::cerr << "Error during query execution: " << e.what() << std::endl;
+    LOGE("Error during query execution: " << e.what());
     return false;
   }
 
@@ -70,7 +72,7 @@ std::shared_ptr<MongoDBController::DBJsonRes> MongoDBController::execute_query(
         dbconnection.run_command(std::move(queryDoc)));
   }
   catch (const std::exception& e) {
-    std::cerr << "Error during query execution: " << e.what() << std::endl;
+    LOGE("Error during query execution: " << e.what());
   }
 
   return result;

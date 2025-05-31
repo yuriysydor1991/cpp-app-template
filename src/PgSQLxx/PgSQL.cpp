@@ -1,11 +1,11 @@
 #include "src/PgSQLxx/PgSQL.h"
 
 #include <cassert>
-#include <iostream>
 #include <memory>
 
 #include "src/PgSQLxx/helpers/PgConnStringMaker.h"
 #include "src/app/IApplication.h"
+#include "src/log/log.h"
 
 namespace pgsqli
 {
@@ -15,6 +15,7 @@ bool PgSQL::connect(std::shared_ptr<app::ApplicationContext> nctx)
   assert(nctx != nullptr);
 
   if (nctx == nullptr) {
+    LOGE("No valid application context provided")
     return false;
   }
 
@@ -32,7 +33,7 @@ std::shared_ptr<pqxx::connection> PgSQL::create_connection()
     return std::make_shared<pqxx::connection>(make_conn_string());
   }
   catch (const std::exception& e) {
-    std::cerr << e.what() << std::endl;
+    LOGE("failure while creating the db connection: " << e.what());
   }
 
   return {};
@@ -63,6 +64,7 @@ std::string PgSQL::get_current_date()
   assert(qmaker != nullptr);
 
   if (!connected()) {
+    LOGE("Not connected");
     return {};
   }
 
@@ -71,6 +73,7 @@ std::string PgSQL::get_current_date()
   auto pgres = execute_query(dquery);
 
   if (pgres.empty()) {
+    LOGE("Empty result obtained");
     return {};
   }
 
@@ -94,7 +97,8 @@ pqxx::result PgSQL::execute_query(const std::string& query)
     return r;
   }
   catch (std::exception const& e) {
-    std::cerr << e.what() << std::endl;
+    LOGE("Failure during the query execution: " << e.what()
+                                                << "; query: " << query);
   }
 
   return {};

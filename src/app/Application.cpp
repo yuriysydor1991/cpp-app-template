@@ -1,9 +1,9 @@
 #include "src/app/Application.h"
 
 #include <cassert>
-#include <iostream>
 #include <memory>
 
+#include "src/log/log.h"
 #include "src/mysqlcppconn/MySQLController.h"
 
 namespace app
@@ -14,17 +14,18 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
   assert(ctx != nullptr);
 
   if (ctx == nullptr) {
+    LOGE("No valid context pointer provided");
     return INVALID;
   }
 
   actx = ctx;
 
   if (!connect()) {
+    LOGE("Fail to connect to the MySQL server");
     return INVALID;
   }
 
-  std::cout << "MySQL' current date: " << actx->mysqlconn->get_current_date()
-            << std::endl;
+  LOGI("MySQL' current date: " << actx->mysqlconn->get_current_date());
 
   return 0;
 }
@@ -34,6 +35,7 @@ bool Application::connect()
   assert(actx != nullptr);
 
   if (actx == nullptr) {
+    LOGE("No valid application context");
     return false;
   }
 

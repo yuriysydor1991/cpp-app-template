@@ -23,6 +23,7 @@
 - гілка `appBoostBeast` розміщена за адресою [appBoostBeast](https://github.com/yuriysydor1991/cpp-app-template/tree/appBoostBeast) котра містить інфраструктуру для швидкого старту розробки Web-програми з використанням швидкого HTTP сервера [Beast](https://www.boost.org/libs/beast) від Boost.
 - гілка `appMySQLCppConn` розміщена за адресою [appMySQLCppConn](https://github.com/yuriysydor1991/cpp-app-template/tree/appMySQLCppConn) котра містить інфраструктуру для швидкого старту розробки застосунку з використанням СУБД [MySQL](https://uk.wikipedia.org/wiki/MySQL)
 - гілка `appSQLiteCpp3` розміщена за адресою [appSQLiteCpp3](https://github.com/yuriysydor1991/cpp-app-template/tree/appSQLiteCpp3) (**поточна**) котра містить інфраструктуру для швидкого старту розробки застосунку з використанням СУБД [SQLite](https://en.wikipedia.org/wiki/SQLite) через бібліотеку [SQLiteCpp](https://github.com/SRombauts/SQLiteCpp)
+- гілка `appMongoDBCpp4` розміщена за адресою [appMongoDBCpp4](https://github.com/yuriysydor1991/cpp-app-template/tree/appMySQLCppConn) котра містить інфраструктуру для швидкого старту розробки застосунку з використанням NoSQL СУБД [MongoDB](https://en.wikipedia.org/wiki/MongoDB)
 
 Редагуй поточний файл `README.md` і `CHANGELOG.md` щоб документація відповідала впровадженому коду. Для перекладів даного файлу `README.md`:
 - `uk_UA` за відносною адресою doc/README.uk_UA.md

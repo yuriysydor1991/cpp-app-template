@@ -8,6 +8,7 @@
 
 #include "project-global-decls.h"
 #include "src/app/IApplication.h"
+#include "src/log/log.h"
 
 namespace templateSDL2
 {
@@ -35,6 +36,7 @@ int SDL2Initer::run(std::shared_ptr<app::ApplicationContext> ctx)
   assert(ctx != nullptr);
 
   if (ctx == nullptr) {
+    LOGE("No valid application context provied");
     return app::IApplication::INVALID;
   }
 
@@ -43,10 +45,12 @@ int SDL2Initer::run(std::shared_ptr<app::ApplicationContext> ctx)
   assert(sdl2Context != nullptr);
 
   if (sdl2Context == nullptr) {
+    LOGE("Fail to create the SDL2 context");
     return app::IApplication::INVALID;
   }
 
   if (!oglIniter->init_opengl(sdl2Context)) {
+    LOGE("Fail to initiate the OpenGL");
     return app::IApplication::INVALID;
   }
 
@@ -88,6 +92,8 @@ void SDL2Initer::event_loop()
 
 void SDL2Initer::throw_sdl2(const std::string& errDesc)
 {
+  LOGE(errDesc << std::string{" SDL_Error: "} << SDL_GetError());
+
   throw std::runtime_error(errDesc + std::string{" SDL_Error: "} +
                            SDL_GetError());
 }

@@ -6,6 +6,7 @@
 #include <memory>
 
 #include "src/SDL2/SDL2Context.h"
+#include "src/log/log.h"
 
 namespace templateSDL2
 {
@@ -14,6 +15,7 @@ bool OpenGLIniter::init_opengl(
     [[maybe_unused]] std::shared_ptr<SDL2Context> sd2Context)
 {
   if (!set_opengl_attributes()) {
+    LOGE("Failure to set the OpenGL attributes");
     return false;
   }
 

@@ -9,6 +9,7 @@
 #include "project-global-decls.h"
 #include "src/SDL2/SDL2Context.h"
 #include "src/app/ApplicationContext.h"
+#include "src/log/log.h"
 
 namespace templateSDL2
 {
@@ -21,12 +22,14 @@ std::shared_ptr<SDL2Context> SDL2ContextBuilder::build_context(
   sdl2ctx->window = create_window(sdl2ctx);
 
   if (sdl2ctx->window == nullptr) {
+    LOGE("No window object pointer provided");
     return {};
   }
 
   sdl2ctx->glContext = create_context(sdl2ctx);
 
   if (sdl2ctx->glContext == nullptr) {
+    LOGE("No OpenGL context object pointer provided");
     return {};
   }
 
@@ -45,6 +48,7 @@ SDL_GLContext SDL2ContextBuilder::create_context(
   assert(sdl2ctx->window != nullptr);
 
   if (sdl2ctx->window == nullptr) {
+    LOGE("No window object pointer provided");
     return nullptr;
   }
 

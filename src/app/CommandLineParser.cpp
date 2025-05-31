@@ -7,6 +7,7 @@
 #include <string>
 
 #include "src/app/ApplicationContext.h"
+#include "src/log/log.h"
 
 namespace app
 {
@@ -24,6 +25,7 @@ bool CommandLineParser::parse_args(std::shared_ptr<ApplicationContext> ctx)
   assert(ctx != nullptr);
 
   if (ctx == nullptr) {
+    LOGE("No valid application context provided");
     return false;
   }
 
@@ -35,6 +37,7 @@ bool CommandLineParser::parse_args(std::shared_ptr<ApplicationContext> ctx)
     const std::string nextParam = hasNext ? ctx->argv[nextIter] : std::string{};
 
     if (!parse_arg(ctx, param, hasNext, nextParam, iter)) {
+      LOGE("Failure to parse arg: " << param);
       return false;
     }
   }
@@ -49,6 +52,7 @@ bool CommandLineParser::check_4_data(
   assert(ctx != nullptr);
 
   if (ctx == nullptr) {
+    LOGE("No valid application context provided");
     return false;
   }
 
@@ -57,6 +61,7 @@ bool CommandLineParser::check_4_data(
   if (requiresData && !hasNext) {
     ctx->print_version_and_exit = true;
     ctx->push_error("Parameter " + param + " requires the data next to it.");
+    LOGE("Parameter " << param << " requires the data next to it.");
     return false;
   }
 
@@ -71,6 +76,7 @@ bool CommandLineParser::parse_arg(std::shared_ptr<ApplicationContext> ctx,
   assert(ctx != nullptr);
 
   if (!check_4_data(ctx, param, hasNext, nextParam)) {
+    LOGE("Failure with param data");
     return false;
   }
 
@@ -83,6 +89,7 @@ bool CommandLineParser::parse_arg(std::shared_ptr<ApplicationContext> ctx,
     ctx->print_version_and_exit = true;
   } else {
     // leave the unknown parameters for the Wt4 framework
+    LOGD("Unknown parameter: " << param << " forwarding it further");
     return true;
   }
 

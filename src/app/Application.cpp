@@ -4,6 +4,7 @@
 #include <iostream>
 #include <memory>
 
+#include "project-global-decls.h"
 #include "src/log/log.h"
 
 namespace app
@@ -18,7 +19,8 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  LOGI("Your application implementation goes here!");
+  LOGI("Your " << project_decls::PROJECT_NAME
+               << " application implementation goes here!");
 
   return 0;
 }

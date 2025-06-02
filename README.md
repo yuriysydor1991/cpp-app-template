@@ -96,6 +96,14 @@ Separately each project may be downloaded and installed from different sources (
 - The CMake build system at [https://cmake.org/download/](https://cmake.org/download/)
 - The Windows 10 SDK at [https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/](https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/)
 
+## Required package for the log4cpp
+
+In order to make [log4cpp](https://log4cpp.sourceforge.net/) development packages available for templated project compilation install it with next command (GNU/Linux based OS):
+
+```
+sudo apt install -y pkg-config liblog4cpp5-dev
+```
+
 ## Optional for the tests
 
 If necessary to build and execute available tests install GTest or ensure available Internet access in order to project make it available by itself (GNU/Linux based):

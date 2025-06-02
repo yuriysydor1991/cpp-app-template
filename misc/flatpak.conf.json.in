@@ -6,6 +6,19 @@
   "command": "${PROJECT_BINARY_NAME}",
   "modules": [
     {
+      "name": "log4cpp",
+      "buildsystem": "autotools",
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://git.code.sf.net/p/log4cpp/codegit",
+          "tag": "REL_1.1.5rc1_Aug_23_2024,",
+          "commit": "2d617ba9bdf1d994a3f0b4c3af70c17d04fed29a"
+        }
+      ],
+      "cleanup": ["/bin", "/sbin", "/share/man", "/share/doc"]
+    },
+    {
       "name": "${PROJECT_NAME}",
       "buildsystem": "cmake",
       "config-opts": ["-DCMAKE_BUILD_TYPE=Release"],

@@ -17,7 +17,7 @@
       ],
       "build-commands": [
         "./bootstrap.sh",
-        "./b2 --prefix=/app --with-system --with-thread --with-chrono --with-date_time install"
+        "./b2 --prefix=/app -j$(nproc) threading=multi --with-system --with-thread --with-chrono --with-date_time install"
       ]
     },
     {

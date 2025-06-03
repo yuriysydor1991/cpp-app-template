@@ -429,7 +429,7 @@ In order to enable the flatpak generation of the redistribution package on the t
 ```
 # inside the project root directory 
 
-mkdir -vp build && cd build && cmake ../ -DENABLE_FLATPAK=ON
+meson setup build -DENABLE_FLATPAK=true
 ```
 
 Which in order will enable the `flatpak` target.
@@ -437,12 +437,12 @@ Which in order will enable the `flatpak` target.
 And finally to generate the flatpak package run the `flatpak` target for the build:
 
 ```
-# inside the project build directory
+# inside the project root directory
 
-cmake --build . --target flatpak
+meson compile -C build flatpak
 ```
 
-In case of the success target build, there will be created the flatpak file under the root build directory named, for example, the `CppAppTemplate-0.9.0.flatpak`. In order to examine and/or change the flatpak generation target parameters visit the `cmake/template-project-flatpak-target.cmake` or `misc/flatpak.conf.json.in` files.
+In case of the success target build, there will be created the flatpak file under the root build directory named, for example, the `CppAppTemplate-0.9.0.flatpak`. In order to examine and/or change the flatpak generation target parameters visit the `meson/template-project-flatpak-target/meson.build` or `misc/flatpak.conf.json.meson.in` files.
 
 Refer to the flatpak documentation on how to install and run applications distributed from a flatpaks files. For the current template project's defaults the install and run command may look like this:
 

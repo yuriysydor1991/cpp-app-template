@@ -22,7 +22,7 @@ configure_file(
 
 flatpak_cmd = [
   'flatpak-builder', '--repo=' + FLATPAK_REPO, 
-    join_paths(meson.current_build_dir(), meson.project_name() + '-flatpak-build'), 
+    FLATPAK_BUILD, 
     join_paths(meson.current_build_dir(), flatpakConfDst),
   '&&',
   'flatpak', 'build-bundle', 

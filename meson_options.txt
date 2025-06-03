@@ -32,3 +32,10 @@ option(
   value: false,
   description: 'Set to ON if to enable the cppcheck execution target.'
 )
+
+option(
+  'ENABLE_FLATPAK',
+  type: 'boolean',
+  value: false,
+  description: 'Enables the flatpak package creation target from the current project'
+)

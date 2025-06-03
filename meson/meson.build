@@ -11,3 +11,7 @@ endif
 if get_option('ENABLE_CLANGFORMAT')
   subdir('template-project-clang-format-target')
 endif
+
+if get_option('ENABLE_FLATPAK')
+  subdir('template-project-flatpak-target')
+endif

@@ -15,6 +15,7 @@ UTEST_ApplicationFactory = executable(
     MOCK_ApplicationVersionPrinter,
     MOCK_CommandLineParser,
     MOCK_project_global_decls,
+    MOCK_log,
     configuration_inc
   ],
   cpp_args: ['-DNDEBUG=1']

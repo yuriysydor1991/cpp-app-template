@@ -10,6 +10,7 @@ UTEST_Application = executable(
   dependencies: gtest_deps,
   include_directories: [
     MOCK_ApplicationContext,
+    MOCK_log,
     configuration_inc
   ],
   cpp_args: ['-DNDEBUG=1']

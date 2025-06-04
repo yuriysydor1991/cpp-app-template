@@ -120,6 +120,8 @@ option(
 
 string(TIMESTAMP PROJECT_CONFIGURE_DATE "%Y-%m-%d %H:%M:%S")
 
+set(PROJECT_HTTP_LISTEN_ADDRESS "127.0.0.1" CACHE STRING "The default HTTP-server listen address")
+
 execute_process(
   COMMAND "${GIT_EXECUTABLE}" rev-parse HEAD
   OUTPUT_VARIABLE PROJECT_GIT_COMMIT

@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 
+#include "project-global-decls.h"
+
 namespace app
 {
 
@@ -66,7 +68,7 @@ struct ApplicationContext
   void push_error(const std::string& errorDescription);
 
   /// @brief For security listen for a loopback only by default.
-  inline static constexpr const char* const default_http_address = "127.0.0.1";
+  inline static const std::string& default_http_address = project_decls::PROJECT_HTTP_LISTEN_ADDRESS;
   inline static constexpr const unsigned short default_http_port = 8080;
 
   std::string http_address;

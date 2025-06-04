@@ -6,7 +6,7 @@ set(
       --build-context project=${CMAKE_SOURCE_DIR} 
       --build-arg CACHEBUST="${PROJECT_CONFIGURE_DATE}" 
       -t ${DOCKER_SINGLE_RUN_NAME} . &&
-    DOCKER_HOST=${DOCKER_HOST_STR} ${DOCKER_EXEC} run --rm ${DOCKER_SINGLE_RUN_NAME}
+    DOCKER_HOST=${DOCKER_HOST_STR} ${DOCKER_EXEC} run --rm -p 127.0.0.1:8080:8080 ${DOCKER_SINGLE_RUN_NAME}
 )
 
 message(STATUS "docker single run command: ${DOCKER_SINGLERUN_CMD}")

@@ -68,7 +68,8 @@ struct ApplicationContext
   void push_error(const std::string& errorDescription);
 
   /// @brief For security listen for a loopback only by default.
-  inline static const std::string& default_http_address = project_decls::PROJECT_HTTP_LISTEN_ADDRESS;
+  inline static const std::string& default_http_address =
+      project_decls::PROJECT_HTTP_LISTEN_ADDRESS;
   inline static constexpr const unsigned short default_http_port = 8080;
 
   std::string http_address;

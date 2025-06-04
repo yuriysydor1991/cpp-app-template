@@ -1,4 +1,4 @@
-**Your C++ Application template project**
+**Your neat C++ application template project**
 
 # Goal of the template project
 

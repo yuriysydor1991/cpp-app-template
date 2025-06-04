@@ -24,8 +24,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 include(template-project-misc-variables-declare)
 include(template-project-feature-enabler)
 
-message(STATUS "PROJECT_NAME: ${PROJECT_NAME}")
-message(STATUS "PROJECT_BINARY_NAME: ${PROJECT_BINARY_NAME}")
-
 add_subdirectory(src)
 add_subdirectory(doc)
+
+include(template-project-feature-enabler-post)

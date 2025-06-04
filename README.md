@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 **Your C++ library template project**
+=======
+**Your neat C++ application template project**
+>>>>>>> 4466527 (Adding project neatness to the READMEs)
 
 # Goal of the template project
 

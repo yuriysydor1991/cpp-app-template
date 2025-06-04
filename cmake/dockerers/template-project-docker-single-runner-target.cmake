@@ -10,7 +10,18 @@ set(
 
 set(
   DOCKER_SINGLE_RUN_CMD
-    DOCKER_HOST=${DOCKER_HOST_STR} ${DOCKER_EXEC} run --rm ${DOCKER_SINGLE_RUN_NAME}
+    xhost +local:docker &&
+    DOCKER_HOST=${DOCKER_HOST_STR} 
+    ${DOCKER_EXEC} run --rm -t
+    --security-opt apparmor=unconfined
+    --ipc=host
+    -e DISPLAY=$$DISPLAY
+    -v /tmp/.X11-unix:/tmp/.X11-unix:ro
+    -e DBUS_SESSION_BUS_ADDRESS=$DBUS_SESSION_BUS_ADDRESS
+    -v $(XDG_RUNTIME_DIR)/bus:$(XDG_RUNTIME_DIR)/bus
+    -v $(XDG_RUNTIME_DIR)/at-spi/bus_0:$(XDG_RUNTIME_DIR)/at-spi/bus_0
+    ${DOCKER_SINGLE_RUN_NAME} &&
+    xhost -local:docker
 )
 
 message(STATUS "docker single build command: ${DOCKER_SINGLE_BUILD_CMD}")

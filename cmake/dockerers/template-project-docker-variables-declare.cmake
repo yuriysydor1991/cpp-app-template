@@ -39,6 +39,8 @@ set(
   "The Dockerfile destination name"
 )
 
+find_program(ECHO_EXEC echo REQUIRED)
+
 message(STATUS "Docker executable: ${DOCKER_EXEC}")
 message(STATUS "Dockerfile configure source full path: ${DOCKERFILE_SRC}")
 message(STATUS "Dockerfile destination name: ${DOCKERFILE_DST}")

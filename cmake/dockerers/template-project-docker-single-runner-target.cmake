@@ -10,7 +10,7 @@ set(
 
 set(
   DOCKER_SINGLE_RUN_CMD
-    DOCKER_HOST=${DOCKER_HOST_STR} ${DOCKER_EXEC} run --rm ${DOCKER_SINGLE_RUN_NAME}
+    DOCKER_HOST=${DOCKER_HOST_STR} ${DOCKER_EXEC} run --rm --network=host ${DOCKER_SINGLE_RUN_NAME}
 )
 
 message(STATUS "docker single build command: ${DOCKER_SINGLE_BUILD_CMD}")

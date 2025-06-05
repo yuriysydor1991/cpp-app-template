@@ -1,9 +1,29 @@
 FROM ubuntu:22.04
 
 RUN apt update
-RUN apt install -y libstdc++6 build-essential git cmake g++
+RUN apt install -y libstdc++6 build-essential git cmake g++ pkg-config libssl-dev python3
 
 ARG BUILDDIR=/src/${PROJECT_BINARY_NAME}-build-docker-singlerun
+
+WORKDIR /src
+
+RUN git clone --single-branch --progress --branch master --depth 1  https://github.com/mongodb/mongo-c-driver.git mongo-c-driver
+WORKDIR /src/mongo-c-driver
+
+RUN cmake -B /src/mongo-c-driver/build -S /src/mongo-c-driver -DENABLE_TESTS=OFF -DENABLE_EXAMPLES=OFF -DCMAKE_INSTALL_LIBDIR=lib
+RUN cmake --build /src/mongo-c-driver/build -j$(nproc) --target all
+RUN cmake --install /src/mongo-c-driver/build --prefix /usr
+
+
+WORKDIR /src/
+RUN git clone --progress https://github.com/mongodb/mongo-cxx-driver.git mongo-cxx-driver
+WORKDIR /src/mongo-cxx-driver
+
+RUN cmake -B /src/mongo-cxx-driver/build -S /src/mongo-cxx-driver -DCMAKE_INSTALL_LIBDIR=lib \
+  -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE=Release -DENABLE_TESTS=OFF -DCMAKE_INSTALL_PREFIX=/usr
+RUN cmake --build /src/mongo-cxx-driver/build -j$(nproc) --target all
+RUN cmake --install /src/mongo-cxx-driver/build
+
 
 RUN --mount=from=project,target=/src/${PROJECT_BINARY_NAME} \ 
  cd /src/${PROJECT_BINARY_NAME} && \
@@ -11,5 +31,6 @@ RUN --mount=from=project,target=/src/${PROJECT_BINARY_NAME} \
  cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Release &&  \
  cmake --build $BUILDDIR -j$(nproc) --target ${PROJECT_BINARY_NAME} && \
  cmake --install $BUILDDIR --prefix /usr
+
 
 CMD ["${PROJECT_BINARY_NAME}"]

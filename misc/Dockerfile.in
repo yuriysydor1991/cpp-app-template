@@ -8,7 +8,7 @@ ARG BUILDDIR=/src/${PROJECT_BINARY_NAME}-build-docker-singlerun
 RUN --mount=from=project,target=/src/${PROJECT_BINARY_NAME} \ 
  cd /src/${PROJECT_BINARY_NAME} && \
  mkdir -vp $BUILDDIR && \
- cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Release -DPROJECT_HTTP_LISTEN_ADDRESS="0.0.0.0" && \
+ cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Release -DPROJECT_HTTP_LISTEN_ADDRESS="0.0.0.0" -DPROJECT_HTTP_LISTEN_PORT=${PROJECT_HTTP_LISTEN_PORT} && \
  cmake --build $BUILDDIR -j$(nproc) --target ${PROJECT_BINARY_NAME} && \
  cmake --install $BUILDDIR --prefix /usr
 

@@ -12,6 +12,7 @@ const std::string PROJECT_BUILD_COMMIT =
     "848bea167db708811563e941cefb6b7787879599";
 const std::string PROJECT_CONFIGURE_DATE = "2025-03-05 12:39:11 EET";
 const std::string PROJECT_HTTP_LISTEN_ADDRESS = "127.0.0.1";
+constexpr const unsigned short PROJECT_HTTP_LISTEN_PORT = 8080;
 
 }  // namespace project_decls
 

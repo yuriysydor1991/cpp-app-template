@@ -6,7 +6,7 @@ RUN apt install -y libboost-all-dev
 
 WORKDIR /src
 
-RUN git clone --single-branch --progress --branch 4.11.4 https://github.com/emweb/wt.git wt
+RUN git clone --single-branch --progress --branch 4.11.4 --depth 1 https://github.com/emweb/wt.git wt
 WORKDIR /src/wt
 RUN cmake -B /src/wt/build -S /src/wt  -DENABLE_LIBWTDBO=OFF -DENABLE_OPENGL=OFF \
   -DENABLE_FIREBIRD=OFF -DENABLE_POSTGRES=OFF -DENABLE_SQLITE=OFF \
@@ -26,4 +26,4 @@ RUN --mount=from=project,target=/src/${PROJECT_BINARY_NAME} \
  cmake --build $BUILDDIR -j$(nproc) --target ${PROJECT_BINARY_NAME} && \
  cmake --install $BUILDDIR --prefix /usr
 
-CMD ["${PROJECT_BINARY_NAME}"]
+CMD ["${PROJECT_BINARY_NAME}", "--docroot", "/usr/local/share/Wt/resources", "--http-listen", "0.0.0.0:${WT4_DOCKER_PORT}", "--accesslog", "/var/log/${PROJECT_BINARY_NAME}-${CMAKE_PROJECT_VERSION}-http-access.log"]

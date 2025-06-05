@@ -2,6 +2,17 @@ FROM ubuntu:22.04
 
 RUN apt update
 RUN apt install -y libstdc++6 build-essential git cmake g++
+RUN apt install -y qt6-base-dev qt6-base-dev-tools \
+  qt6-declarative-dev qt6-tools-dev qt6-tools-dev-tools \
+  qml6-module-qtquick qml6-module-qtqml-workerscript \
+  qml6-module-qtquick-templates qml6-module-qtquick-window \
+  qtquickcontrols2-5-dev libqt6gui6 qml-module-qtquick2 \
+  qml-module-qtquick-controls2 qml-module-qtquick-dialogs \
+  qml-module-qtquick-layouts qml-module-qtquick-shapes \
+  libqt6quick6 libqt6quickcontrols2-6 libqt6opengl6-dev \
+  libqt6openglwidgets6
+RUN apt install -y libopengl-dev libgl-dev
+RUN apt install -y qml6-module-qtquick-controls
 
 ARG BUILDDIR=/src/${PROJECT_BINARY_NAME}-build-docker-singlerun
 

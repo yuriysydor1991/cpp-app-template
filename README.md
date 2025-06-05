@@ -196,7 +196,7 @@ ExecStart=/usr/bin/dockerd -H fd:// -H tcp://127.0.0.1:2375
 ExecReload=/bin/kill -s HUP $MAINPID
 ```
 
-Save and close the configuration file. No reload the systemctl and the Docker by itself:
+Save and close the configuration file. Now reload the systemctl and the Docker by itself:
 
 ```
 sudo systemctl daemon-reload
@@ -212,7 +212,7 @@ DOCKER_HOST="tcp://127.0.0.1:2375" docker run hello-world
 You may add the `export DOCKER_HOST="tcp://127.0.0.1:2375"` to your `.bashrc` file to avoid the `DOCKER_HOST` environment variable inclusion into every docker command run by executing the command:
 
 ```
-echo 'export DOCKER_HOST="tcp://127.0.0.1:2375"' >> .bashrc
+echo 'export DOCKER_HOST="tcp://127.0.0.1:2375"' >> ~/.bashrc
 ```
 
 Details at the section [Enabling the Docker container build and run](#enabling-the-docker-container-build-and-run)

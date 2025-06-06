@@ -218,6 +218,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[main0.10.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/main0.10.0)
 [main0.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/main0.9.0)
 [app0.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.8.0)
 [app0.7.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.7.0)

@@ -5,8 +5,67 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appMeson0.9.0] - 2025-06-06
+
+- d7e1b19 Introducing the Docker optional packages into the READMEs
+- 95f90b3 introducing the suppression list for the cppcheck false positives
+- 79bc9bb Implementing docker container build and start target in the Meson
+- c15ad1c Transferring the Dockerfile
+- f8cda8d Adding project neatness to the READMEs
+- 94205e5 Refining the flatpak setup and build info in the READMEs
+- f2e3e4b avoided redundant path computing
+- 101c8f7 Introducing the flatpak target for the Meson
+- 8af17ed Refining UTs with new mock for introduced log subsystem
+- a11cef4 Introducing the appLog4Cpp5 branch info into the READMEs
+- 5386eae Implementing the logging macros and a simple logger to perform log messaging
+- 7d09cd8 Introducing the appMongoDBCpp4 branch info into the READMEs
+- 595a5f2 Specifying the Meson build system in the flatpak json conf
+- a82c5a2 Introducing the appSQLiteCpp3 branch info into the READMEs
+- c17ca9b Refining the ApplicationContext mock
+- b134ae6 Introducing the gitlab mirror into the READMEs
+- 20dee48 Introducing the appMySQLCppConn branch info into the READMEs
+- fcb6a4c Introducing the appBoostBeast branch info into the READMEs
+- bccbea8 Explicitly specifying the combining of the template branches
+- b733c7c introducing the appPgSQLxx branch into the READMEs
+- 518e7d8 Introducing a new appWt4 branch info into the READMEs
+- e83065e Introducing the error exit code for a cppcheck target
+- bde939d Refining the cppcheck target description in the READMEs
+- 9c2de4e Style refining of meson/meson.build
+- 82b4fb1 Introducing the cppcheck target
+- 0edf8be Decomposing the projects source configure into separate meson file
+- d59e8d4 Decomposing the sources variable into separate meson file
+- 6e479f4 Introducing the builddir to the .gitignore
+- c7d425c Replacing English current in the uk_UA README
+- 740c8e4 Introducing the donation notice into the READMEs
+- 6582494 Refining the clang-format target info in the READMEs
+- db5f6c0 Reintroducing the clang-format target for all available sources
+- 2d0ea01 Introducing the appMeson branch info into the READMEs
+- 2532aec Refining tests enabling sections in the READMEs
+- dc4f5f4 Introducing suits for the test declarations in meson files
+- 11cd8b2 Introducing meson configuration for the CommandLineParser UTs
+- 4d3e183 Introducing meson configuration for the ApplicationVersionPrinter UT
+- d30293a Introducing meson configuration for the ApplicationHelpPrinter UT
+- b0f3bb4 Introducing meson configuration for the ApplicationFactory UT
+- 0d8e0ce Introducing meson configuration for the ApplicationContext UT
+- c5a9728 Introducing first unit test for the Application class
+- 75b3294 Converting some commands to meson in READMEs
+- d85e62d Adjusting the Doxygen-doc target
+- bd0753f Adjusting Doxygen-doc target and making main executable installable
+- c0b4d12 Adding the Doxygen target with some meson decomposition
+- 9f97db6 Refining install commands for the READMEs
+- a6cea5d Increasing the warning level
+- e5371da Introducing the basic meson file for the main.cpp
+- c7c55ee Erasing all the CMakeLists.txt files
+- 97a6442 Refining READMEs
+- 05af0e5 Refining branches info
+- c8de777 Introducing the flatpak sections into the READMEs
+- 69ffe40 Introducing the flatpak package creation from the template source.
+- 4b00b9f Inserting the release tag link
+- 8bd91be Incrementing version to 0.8.0
+
 ## [app0.8.0] - 2025-03-20
 
+- dfff631 Release app0.8.0 2025-03-20
 - c2d08e9 Replacing int flag with a bool for the CommandLineParser
 - 5adff97 Erasing the /analyze from the default MSVC compile options
 - 3a70693 Introducing the DEB package gen info in the READMEs
@@ -174,6 +233,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[appMeson0.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appMeson0.9.0)
 [app0.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.8.0)
 [app0.7.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.7.0)
 [app0.6.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.6.0)

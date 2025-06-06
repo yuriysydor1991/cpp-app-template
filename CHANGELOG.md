@@ -5,8 +5,54 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appWt40.9.0] - 2025-06-06
+
+- 8271f16 Refining Docker target for the Wt4
+- 66a3272 Refined issues in the Docker READMEs doc
+- 5993812 Refining the Docker target for the Wt4
+- d54be01 Separating the Docker single container build and run targets
+- 8fc10dc Introducing the Docker single run container target.
+- 52ef5b3 Adding project neatness to the READMEs
+- 529f346 Introducing the appLog4Cpp5 branch info into the READMEs
+- 8728ba0 Implementing the logging macros and a simple logger to perform log messaging
+- 2140476 Introducing the appMongoDBCpp4 branch info into the READMEs
+- 50aef35 Refining the Application class UTs
+- 3dde6aa Fixing cppcheck code warnings
+- 307014a Refining the flatpak target with documentation
+- 39e8e41 Making the flatpak source json conf file configurable during cmake conf stage
+- ab94425 Refining the deb cmake info for cpack
+- a134a1e Introducing the appSQLiteCpp3 branch info into the READMEs
+- 089439d Refining the ApplicationContext mock
+- 1bc37cd Introducing the gitlab mirror into the READMEs
+- bf11c39 Introducing the appMySQLCppConn branch info into the READMEs
+- c4a1dd3 Introducing the donation notice into the READMEs
+- d465b52 Introducing the appBoostBeast branch info into the READMEs
+- f6500c9 Explicitly specifying the combining of the template branches
+- adf10ba introducing the appPgSQLxx branch into the READMEs
+- 98163e6 Refining the README.uk_UA.md and README.md files
+- bb57ad6 Refining comments
+- df48fc3 Decomposing the site widgets into a separate hierarchy
+- f55d575 Introducing the Wt4Context class and it's integration into Wt4Server
+- f4aab78 Marking appWt4 as current branch in the READMEs
+- 5d3e265 Introducing a new appWt4 branch info into the READMEs
+- 914268b Refining the UTs to support newly added Wt4Server and behavior
+- 91b8268 Refining the root README.md project structure sub section
+- 599ab91 Refining the root README.md run executable subsection
+- c8f90d9 Introducing the Wt framework requirements into the root README.md
+- cdac959 Implementing the Wt4 starter initial infrastructure
+- ae60d2a Introducing the error exit code for a cppcheck target
+- 38256c1 Refining the cppcheck target
+- 9bf6620 Introducing the appMeson branch info into the READMEs
+- 97a6442 Refining READMEs
+- 05af0e5 Refining branches info
+- c8de777 Introducing the flatpak sections into the READMEs
+- 69ffe40 Introducing the flatpak package creation from the template source.
+- 4b00b9f Inserting the release tag link
+- 8bd91be Incrementing version to 0.8.0
+
 ## [app0.8.0] - 2025-03-20
 
+- dfff631 Release app0.8.0 2025-03-20
 - c2d08e9 Replacing int flag with a bool for the CommandLineParser
 - 5adff97 Erasing the /analyze from the default MSVC compile options
 - 3a70693 Introducing the DEB package gen info in the READMEs
@@ -174,6 +220,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[appWt40.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appWt40.9.0)
 [app0.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.8.0)
 [app0.7.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.7.0)
 [app0.6.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.6.0)

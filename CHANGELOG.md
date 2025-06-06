@@ -5,8 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [main0.10.0] - 2025-06-06
+
+- 27ebb79 Refined issues in the Docker READMEs doc
+- 9b01974 Separating the Docker single container build and run targets
+- cc85abf Erasing UTs build and ctest call inside the Dockerfile
+- 7f78451 Introducing the Docker single run container target.
+- 4466527 Adding project neatness to the READMEs
+- 061869f Introducing the appLog4Cpp5 branch info into the READMEs
+- bcc9e4f Implementing the logging macros and a simple logger to perform log messaging
+- be5178c Introducing the appMongoDBCpp4 branch info into the READMEs
+- 024453c Code formatting applied
+- 9d19ef2 Making the flatpak source json conf file configurable during cmake conf stage
+- 2e50a87 Refining the deb cmake info for cpack
+- e25158c Including and reusing the project-global-decls.h for demonstration
+- 3992ba3 Erasing redundant suppression that causes cppcheck to fail
+- 2055c45 Replacing the inviting comment with printable message on main.
+- d61425b Introducing the appSQLiteCpp3 branch info into the READMEs
+- e07d63b Introducing the gitlab mirror into the READMEs
+- bb779b1 Introducing misc/.cppcheck-suppress file to list cppcheck suppressions of the false positives
+- c182171 Introducing the appMySQLCppConn branch info into the READMEs
+- ce81652 Introducing the appBoostBeast branch info into the READMEs
+- 09bf4c6 Explicitly specifying the combining of the template branches
+- 85ef7c7 introducing the appPgSQLxx branch into the READMEs
+- 4c8cacd Introducing a new appWt4 branch info into the READMEs
+
 ## [main0.9.0] - 2025-03-31
 
+- bb3bf64 Release 0.9.0 2025-03-31
 - 3d7f096 Introducing the error exit code for a cppcheck target
 - b3441c5 Refining the cppcheck target
 - f0be94a Decomposing ALLSORUCES variable into template-project-misc-variables-declare.cmake

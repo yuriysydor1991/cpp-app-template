@@ -5,8 +5,59 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appGtkmm3Glade0.9.0] - 2025-06-06
+
+- 66631ea Introducing misc/.cppcheck-suppress file to list cppcheck suppressions of the false positives
+- c95cf9e Refined issues in the Docker READMEs doc
+- be42016 Refining the Docker container target
+- c60c433 Separating the Docker single container build and run targets
+- 790813d Introducing the Docker single run container target.
+- 4c55828 Adding project neatness to the READMEs
+- bd3e867 Introducing the appLog4Cpp5 branch info into the READMEs
+- 86e590b Implementing the logging macros and a simple logger to perform log messaging
+- f3b05f1 Introducing the appMongoDBCpp4 branch info into the READMEs
+- 6a44469 applying code formatting
+- 7d6fa94 Making the flatpak source json conf file configurable during cmake conf stage
+- d7b0f5a specifying the pkg-config tool as requirement for dev into hte READMEs
+- 93735db Inserting the libgtkmm-3.0-dev into deb dependencies
+- 7e0bfaf Refining the deb cmake info for cpack
+- 6c6e88a Specifying org.gnome platfrom and sdk in the READMEs
+- 510efad Replacing org.freedesktop platform and sdk to org.gnome in the flatpak json conf
+- e649585 Renaming the UI.glade xml file to GtkmmWindow.ui
+- e83d879 Fixing flatpak dbus connection issues
+- ae6db12 Refining the flatpak target with json
+- 87f4adb Introducing the appSQLiteCpp3 branch info into the READMEs
+- d366f44 Refining the ApplicationContext mock
+- 4afb98e Introducing the gitlab mirror into the READMEs
+- 4f71ce3 Introducing the appMySQLCppConn branch info into the READMEs
+- 0ae68ff Introducing the appBoostBeast branch info into the READMEs
+- 397f089 Explicitly specifying the combining of the template branches
+- 42e2ce1 introducing the appPgSQLxx branch into the READMEs
+- de3a378 Introducing a new appWt4 branch info into the READMEs
+- e4f5450 Introducing the error exit code for a cppcheck target
+- 483221d Refinining the cppcheck target
+- 8b31d9a Introducing the donation notice into the READMEs
+- 8209f3b Introducing the appMeson branch info into the READMEs
+- afab2bb Refining the branch info
+- 8378895 Introducing the flatpak sections into the READMEs
+- bf3b112 Introducing the flatpak package creation from the template source.
+- d4ce2f0 Erasing the /analyze from the default MSVC compile options
+- f751d51 Introducing the DEB package gen info in the READMEs
+- e80b7fd Introducing the cpack configuration for the deb package generation
+- d55cbc9 Introducing the LICENSE file with free of use license and notice
+- 66a9e11 Introducing the appSDL2 branch into the READMEs
+- 54639a2 Introducing clang-tidy
+- f350d0a Introducing the FreeGlut/OpenGL appFreeGlut branch info into READMEs
+- b64ce0f Introducing MSVC extra compile options for warnings
+- e01f888 Adding MSVC settings file to the .gitignore
+- f4500bd Avoiding the compilation warnings at the UTEST_CommandLineParser
+- 81c6867 Introducing MS Windows tools install description into READMEs
+- e541642 Adding the out directory for MSVC into .gitignore
+- 0d20c0d Incrementing version to 0.9.0
+
 ## [appGtkmm3Glade0.8.0] - 2025-03-17
 
+- 2518b7c Release appGtkmm3Glade0.8.0 2025-03-17
 - 44abe1d Refining READMEs to introduce Glade UI explanations
 - adb3bf5 Changing the glade file to UI.glade so it's representing ALL the GUI
 - 0ee80c9 appending the Glade suffix to resources paths
@@ -176,6 +227,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[appGtkmm3Glade0.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appGtkmm3Glade0.9.0)
 [appGtkmm3Glade0.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appGtkmm3Glade0.8.0)
 [appGtkmm30.7.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appGtkmm30.7.0)
 [app0.6.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.6.0)

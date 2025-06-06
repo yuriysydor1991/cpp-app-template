@@ -2,7 +2,7 @@ project(
   'CppAppTemplate',
   'cpp',
   license: 'Free to use',
-  version: '0.9.0',
+  version: '0.10.0',
   meson_version: '>= 0.61.2',
   default_options: [
     'cpp_std=c++17',

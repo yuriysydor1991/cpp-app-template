@@ -39,3 +39,10 @@ option(
   value: false,
   description: 'Enables the flatpak package creation target from the current project'
 )
+
+option(
+  'ENABLE_DOCKER',
+  type: 'boolean',
+  value: false,
+  description: 'Enables the docker container single build and run target in the current project'
+)

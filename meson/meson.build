@@ -15,3 +15,7 @@ endif
 if get_option('ENABLE_FLATPAK')
   subdir('template-project-flatpak-target')
 endif
+
+if get_option('ENABLE_DOCKER')
+  subdir('template-project-dockerers')
+endif

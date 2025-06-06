@@ -7,6 +7,7 @@ cppcheck_cmd = [
   '--error-exitcode=1',
   '--inconclusive',
   '--enable=all',
+  '--suppressions-list=' + join_paths(meson.project_source_root(), 'misc', '.cppcheck-suppress'),
   '-v',
   '-I' + project_include_root,
   '-I' + meson.global_build_root(),

@@ -5,8 +5,50 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appFreeGlut0.8.0] - 2025-06-06
+
+- ab67529 Refined issues in the Docker READMEs doc
+- 39f441f Adjusting the Docker target for freeglut packages
+- 00c1899 Separating the Docker single container build and run targets
+- 64a9d3e Introducing the Docker single run container target.
+- be42965 Adding project neatness to the READMEs
+- 8c2e404 Introducing the appLog4Cpp5 branch info into the READMEs
+- cc0b14f Implementing the logging macros and a simple logger to perform log messaging
+- 49ef8ff Introducing the appMongoDBCpp4 branch info into the READMEs
+- 8a10fb3 Making the flatpak source json conf file configurable during cmake conf stage
+- e80bc3c Refining the deb cmake info for cpack
+- ef22c45 Introducing the appSQLiteCpp3 branch info into the READMEs
+- 8546e7d Refining the ApplicationContext mock
+- b7bbb10 Introducing the gitlab mirror into the READMEs
+- 82bd40a Introducing the appMySQLCppConn branch info into the READMEs
+- b9c736c Introducing the appBoostBeast branch info into the READMEs
+- 2d42e5c Explicitly specifying the combining of the template branches
+- e826ec0 introducing the appPgSQLxx branch into the READMEs
+- 1e7e5b0 Introducing a new appWt4 branch info into the READMEs
+- b9b1c08 Introducing the error exit code for a cppcheck target
+- 60b5c7c Refinining the cppcheck target
+- d65a3f2 Introducing the donation notice into the READMEs
+- fff391e Changing the flatpak application URL
+- 321e65b Refining the flatpak target
+- 08c4c68 Introducing the flatpak sections into the READMEs
+- eb80b84 Introducing the flatpak package creation from the template source.
+- a0f0f1b Introducing the appMeson branch info into the READMEs
+- 1f6413d Refining top branch info in READMEs
+- 159a816 Erasing the /analyze from the default MSVC compile options
+- 4f00514 Introducing MSVC extra compile options for warnings
+- c360fa2 Introducing the DEB package gen info in the READMEs
+- 0ed06ab Introducing the cpack configuration for the deb package generation
+- 0f30cfe Introducing the LICENSE file with free of use license and notice
+- 472299f Introducing the appSDL2 branch into the READMEs
+- 18693fd Fixing implicit double convertion for clang-tidy
+- 5ed240f Introducing clang-tidy
+- 520b6f7 Avoiding the compilation warnings at the UTEST_CommandLineParser
+- a2c8e29 Fixing missing packages in the requirements READMEs
+- 6954e53 Incrementing version to 0.8.0
+
 ## [appFreeGlut0.7.0] - 2025-03-19
 
+- afe8dc9 Release appFreeGlut0.7.0 2025-03-19
 - 0496dc9 Adding markup for introduced info.
 - 7c2acd8 Introducing the FreeGlutIniter class into the READMEs
 - 01c3e36 Refining Application UTs
@@ -157,6 +199,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[appFreeGlut0.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appFreeGlut0.8.0)
 [appFreeGlut0.7.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appFreeGlut0.7.0)
 [app0.6.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.6.0)
 [app0.5.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.5.0)

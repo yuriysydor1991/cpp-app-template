@@ -5,6 +5,56 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appGtkmm30.9.0] - 2025-06-06
+
+- 3cf8cc7 Introducing misc/.cppcheck-suppress file to list cppcheck suppressions of the false positives
+- 89e5b3a Refined issues in the Docker READMEs doc
+- d30f685 Refining the Docker container target
+- 958d3db Separating the Docker single container build and run targets
+- 35f8741 Introducing the Docker single run container target.
+- ba688e6 Adding project neatness to the READMEs
+- 5b928e4 Introducing the appLog4Cpp5 branch info into the READMEs
+- 414602b Implementing the logging macros and a simple logger to perform log messaging
+- 5ecbac0 Introducing the appMongoDBCpp4 branch info into the READMEs
+- ee66f27 Making the flatpak source json conf file configurable during cmake conf stage
+- 6ffbbfa specifying the pkg-config tool as requirement for dev into hte READMEs
+- 6274792 Inserting the libgtkmm-3.0-dev into deb dependencies
+- 9c6fb84 Refining the deb cmake info for cpack
+- e2adbed Refining the flatpak description in the READMEs
+- f961e7d Fixing flatpak dbus connection issues
+- 37a3bee Refining the flatpak target with json
+- a8c60da Introducing the appSQLiteCpp3 branch info into the READMEs
+- 508c4c1 Refining the ApplicationContext mock
+- 8863765 Introducing the gitlab mirror into the READMEs
+- 46ba4a1 Introducing the appMySQLCppConn branch info into the READMEs
+- 8f4cda7 Introducing the appBoostBeast branch info into the READMEs
+- f627e1b Explicitly specifying the combining of the template branches
+- 5692eef introducing the appPgSQLxx branch into the READMEs
+- c0a8a86 Introducing a new appWt4 branch info into the READMEs
+- 7e3e099 Introducing the error exit code for a cppcheck target
+- ee7a835 Refinining the cppcheck target
+- 2af8ce5 Introducing the donation notice into the READMEs
+- e23ddc8 Refining flatpak target
+- dd90f39 Introducing the appMeson branch info into the READMEs
+- c489f97 Refining the branch info
+- f9156fb Flatpack adjust workflow
+- a9c7d1c Introducing the flatpak sections into the READMEs
+- eac4b5e Introducing the flatpak package creation from the template source.
+- 8178e8a Erasing the /analyze from the default MSVC compile options
+- 9cc1c83 Introducing the DEB package gen info in the READMEs
+- 40d14f3 Introducing the cpack configuration for the deb package generation
+- 5523a97 Introducing the LICENSE file with free of use license and notice
+- 16cdb99 Introducing the appSDL2 branch into the READMEs
+- ea5a3dd Introducing clang-tidy
+- 4343ab0 Introducing the FreeGlut/OpenGL appFreeGlut branch info into READMEs
+- 218a414 Introducing MSVC extra compile options for warnings
+- 741acaf Adding MSVC settings file to the .gitignore
+- 0f0714b Avoiding the compilation warnings at the UTEST_CommandLineParser
+- 67cd1b3 Introducing MS Windows tools install description into READMEs
+- ca0b1fc Adding the out directory for MSVC into .gitignore
+- 3132d72 Incrementing version to 0.9.0
+- 92f77a5 Release appGtkmm30.8.0 2025-03-17
+
 ## [appGtkmm30.8.0] - 2025-03-17
 
 - d347ffb Incrementing version to 0.8.0
@@ -164,6 +214,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[appGtkmm30.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appGtkmm30.9.0)
 [appGtkmm30.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appGtkmm30.8.0)
 [appGtkmm30.7.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appGtkmm30.7.0)
 [app0.6.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.6.0)

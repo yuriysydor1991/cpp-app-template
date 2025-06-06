@@ -5,8 +5,47 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [lib0.9.0] - 2025-06-06
+
+- cf3b980 Adding project neatness to the READMEs
+- f1ed4bb Introducing the appLog4Cpp5 branch info into the READMEs
+- 16de7ad Implementing the logging macros and a simple logger to perform log messaging
+- 141ad3e Introducing the appMongoDBCpp4 branch info into the READMEs
+- 29bbeb5 Refining the deb cmake info for cpack
+- d5cf23c Introducing the appSQLiteCpp3 branch info into the READMEs
+- 3396ed4 Introducing the gitlab mirror into the READMEs
+- 3da8265 Introducing the appMySQLCppConn branch info into the READMEs
+- 968858a Introducing the appBoostBeast branch info into the READMEs
+- 5fa9629 Explicitly specifying the combining of the template branches
+- 46c5190 introducing the appPgSQLxx branch into the READMEs
+- 57311dc Introducing a new appWt4 branch info into the READMEs
+- dd85971 Introducing the error exit code for a cppcheck target
+- 0b7856e Refining the cppcheck target
+- a564f86 Introducing the donation notice into the READMEs
+- 90b206a Introducing the appMeson branch info into the READMEs
+- 9af4522 Refining branches info
+- c75b2a2 Introducing the app branch and refine the master branch
+- 7ce5298 Revert "Introducing the flatpak package creation from the template source."
+- d029b40 Revert "Introducing the flatpak sections into the READMEs"
+- 6b76d82 Introducing the flatpak sections into the READMEs
+- 763969f Introducing the flatpak package creation from the template source.
+- 847fe28 Erasing the /analyze from the default MSVC compile options
+- 875bc01 Introducing MSVC extra compile options for warnings
+- 689fcd7 Introducing the DEB package gen info in the READMEs
+- 21a6522 Introducing the cpack configuration for the deb package generation
+- 14dbc41 Introducing the LICENSE file with free of use license and notice
+- b0de6da Introducing the appSDL2 branch into the READMEs
+- 233c0b2 Introducing clang-tidy
+- 52f1336 Erasing redundant libraries installation info
+- 70f8f1e Introducing the FreeGlut/OpenGL appFreeGlut branch info into READMEs
+- 5d3aae8 Introducing MS Windows tools install description into READMEs
+- 69e59f7 Adding the out directory for MSVC into .gitignore
+- e069e8e Specifying the appGtkmm3Glade branch in the READMEs
+- 038f0e5 Introducing the appGtkmm3 branch info into the READMEs
+
 ## [lib0.8.0] - 2025-03-16
 
+- b6dd57f Release lib0.8.0 2025-03-16
 - 7081e52 Erasing merging symbols.
 - db6d05c Erasing app infrastructure classes mention in the LibraryContext
 - 98d8785 Introducing the lib branch info into the READMEs
@@ -182,6 +221,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[lib0.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/lib0.9.0)
+[lib0.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/lib0.8.0)
 [applib0.7.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/applib0.7.0)
 [applib0.6.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/applib0.6.0)
 [app0.5.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.5.0)

@@ -5,8 +5,40 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [app0.9.0] - 2025-03-20
+
+- cb89b27 Erasing redundant suppression that causes cppcheck to fail
+- ea1edbd Separating the Docker single container build and run targets
+- b861a6a Erasing UTs build and ctest call inside the Dockerfile
+- edc8eae Introducing the Docker single run container target.
+- 0579df0 Adding project neatness to the READMEs
+- 269534d Introducing the appLog4Cpp5 branch info into the READMEs
+- d61ded5 Implementing the logging macros and a simple logger to perform log messaging
+- 2877c54 Introducing the appMongoDBCpp4 branch info into the READMEs
+- 5552fb9 Making the flatpak source json conf file configurable during cmake conf stage
+- aee1900 Refining the deb cmake info for cpack
+- f4d0708 Introducing the appSQLiteCpp3 branch info into the READMEs
+- 5bd9fbf Refining the ApplicationContext mock
+- d4d25cb Introducing the gitlab mirror into the READMEs
+- 27154f8 Introducing the appMySQLCppConn branch info into the READMEs
+- 05dd8ff Introducing the donation notice into the READMEs
+- 8e577ce Introducing the appBoostBeast branch info into the READMEs
+- 7ec125a Explicitly specifying the combining of the template branches
+- c793831 introducing the appPgSQLxx branch into the READMEs
+- 59a3f26 Introducing a new appWt4 branch info into the READMEs
+- ae60d2a Introducing the error exit code for a cppcheck target
+- 38256c1 Refinining the cppcheck target
+- 9bf6620 Introducing the appMeson branch info into the READMEs
+- 97a6442 Refining READMEs
+- 05af0e5 Refining branches info
+- c8de777 Introducing the flatpak sections into the READMEs
+- 69ffe40 Introducing the flatpak package creation from the template source.
+- 4b00b9f Inserting the release tag link
+- 8bd91be Incrementing version to 0.8.0
+
 ## [app0.8.0] - 2025-03-20
 
+- dfff631 Release app0.8.0 2025-03-20
 - c2d08e9 Replacing int flag with a bool for the CommandLineParser
 - 5adff97 Erasing the /analyze from the default MSVC compile options
 - 3a70693 Introducing the DEB package gen info in the READMEs

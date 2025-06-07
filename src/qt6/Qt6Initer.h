@@ -26,9 +26,6 @@ class Qt6Initer
    * Zero at success and non-zero value otherwise.
    */
   virtual int run(std::shared_ptr<app::ApplicationContext> actx);
-
- protected:
-  inline static const char* const main_qml_path = "qrc:/ui/qml/main.qml";
 };
 
 }  // namespace Qt6i

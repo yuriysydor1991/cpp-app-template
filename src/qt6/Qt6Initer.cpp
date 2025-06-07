@@ -7,12 +7,15 @@
 #include "project-global-decls.h"
 #include "src/app/IApplication.h"
 #include "src/log/log.h"
+#include "src/qt6/QMLRes.h"
 
 namespace Qt6i
 {
 
 int Qt6Initer::run(std::shared_ptr<app::ApplicationContext> actx)
 {
+  using QMLRes = qmlpaths::QMLRes;
+
   assert(actx != nullptr);
 
   if (actx == nullptr) {
@@ -26,7 +29,7 @@ int Qt6Initer::run(std::shared_ptr<app::ApplicationContext> actx)
   QGuiApplication app(actx->argc, actx->argv);
   QQmlApplicationEngine engine;
 
-  engine.load(QUrl(main_qml_path));
+  engine.load(QMLRes::get_url_main());
 
   if (engine.rootObjects().isEmpty()) {
     LOGE("Fail to initialize the Qt6 QML engine");

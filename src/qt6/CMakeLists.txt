@@ -14,6 +14,7 @@ qt_add_library(
   MANUAL_FINALIZATION
   Qt6Initer.cpp
   resources.qrc
+  QMLRes.cpp
 )
 
 target_include_directories(
@@ -22,6 +23,7 @@ target_include_directories(
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}
+  PUBLIC Qt6::Core
 )
 
 target_link_libraries(

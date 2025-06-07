@@ -11,12 +11,19 @@
 namespace templateQt6app
 {
 
-int Qt6Initer::run(int& argc, char**& argv)
+int Qt6Initer::run(std::shared_ptr<app::ApplicationContext> actx)
 {
+  assert(actx != nullptr);
+
+  if (actx == nullptr) {
+    LOGE("No valid application context pointer provided");
+    return app::IApplication::INVALID;
+  }
+
   QCoreApplication::setOrganizationName(
       QString::fromStdString(project_decls::PROJECT_NAME));
 
-  QGuiApplication app(argc, argv);
+  QGuiApplication app(actx->argc, actx->argv);
   QQmlApplicationEngine engine;
 
   engine.load(QUrl(main_qml_path));

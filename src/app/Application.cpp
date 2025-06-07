@@ -23,7 +23,7 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
 
   assert(qt6runner != nullptr);
 
-  if (qt6runner->run(ctx->argc, ctx->argv) != 0) {
+  if (qt6runner->run(ctx) != 0) {
     LOGE("Qt6 controller returned invalid status");
     return INVALID;
   }

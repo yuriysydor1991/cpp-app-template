@@ -1,6 +1,10 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_QT6INITER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_QT6INITER_CLASS_H
 
+#include <memory>
+
+#include "src/app/ApplicationContext.h"
+
 namespace templateQt6app
 {
 
@@ -16,13 +20,12 @@ class Qt6Initer
   /**
    * @brief Starts the Qt6 available application.
    *
-   * @param argc The arguments count passed by the OS.
-   * @param argv The arguments array passed by the OS.
+   * @param actx The application context with all the necessary info.
    *
    * @return Should return the application return status.
    * Zero at success and non-zero value otherwise.
    */
-  virtual int run(int& argc, char**& argv);
+  virtual int run(std::shared_ptr<app::ApplicationContext> actx);
 
  protected:
   inline static const char* const main_qml_path = "qrc:/ui/qml/main.qml";

@@ -35,9 +35,7 @@ TEST_F(UTEST_Application, normal_exit)
   EXPECT_CALL(qt6Ensurer, Call(_))
       .Times(1)
       .WillOnce(Invoke([&](Qt6Initer& instance) {
-        EXPECT_CALL(instance, run(appCtx->argc, appCtx->argv))
-            .Times(1)
-            .WillOnce(Return(0));
+        EXPECT_CALL(instance, run(appCtx)).Times(1).WillOnce(Return(0));
       }));
 
   Qt6Initer::onMockCreate = qt6Ensurer.AsStdFunction();

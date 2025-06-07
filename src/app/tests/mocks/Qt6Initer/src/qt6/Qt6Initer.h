@@ -5,6 +5,8 @@
 
 #include <memory>
 
+#include "src/app/ApplicationContext.h"
+
 namespace templateQt6app
 {
 
@@ -21,10 +23,7 @@ class Qt6Initer
 
   inline static std::function<void(Qt6Initer& instance)> onMockCreate;
 
-  MOCK_METHOD(int, run, (int& argc, char**& argv));
-
- protected:
-  inline static const char* const main_qml_path = "qrc:/ui/qml/main.qml";
+  MOCK_METHOD(int, run, (std::shared_ptr<app::ApplicationContext>));
 };
 
 }  // namespace templateQt6app

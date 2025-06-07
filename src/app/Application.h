@@ -31,7 +31,7 @@ class Application : public IApplication
   virtual int run(std::shared_ptr<ApplicationContext> ctx) override;
 
  protected:
-  virtual std::shared_ptr<templateQt6app::Qt6Initer> create_qt6_initer();
+  virtual std::shared_ptr<Qt6i::Qt6Initer> create_qt6_initer();
 };
 
 }  // namespace app

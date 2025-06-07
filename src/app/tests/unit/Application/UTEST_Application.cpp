@@ -5,7 +5,7 @@
 #include "src/qt6/Qt6Initer.h"
 
 using namespace app;
-using namespace templateQt6app;
+using namespace Qt6i;
 using namespace testing;
 
 class UTEST_Application : public Test

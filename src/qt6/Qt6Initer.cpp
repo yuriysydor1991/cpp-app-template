@@ -8,7 +8,7 @@
 #include "src/app/IApplication.h"
 #include "src/log/log.h"
 
-namespace templateQt6app
+namespace Qt6i
 {
 
 int Qt6Initer::run(std::shared_ptr<app::ApplicationContext> actx)
@@ -36,4 +36,4 @@ int Qt6Initer::run(std::shared_ptr<app::ApplicationContext> actx)
   return app.exec();
 }
 
-}  // namespace templateQt6app
+}  // namespace Qt6i

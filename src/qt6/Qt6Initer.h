@@ -5,7 +5,7 @@
 
 #include "src/app/ApplicationContext.h"
 
-namespace templateQt6app
+namespace Qt6i
 {
 
 /**
@@ -31,6 +31,6 @@ class Qt6Initer
   inline static const char* const main_qml_path = "qrc:/ui/qml/main.qml";
 };
 
-}  // namespace templateQt6app
+}  // namespace Qt6i
 
 #endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_QT6INITER_CLASS_H

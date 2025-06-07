@@ -19,7 +19,7 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  std::shared_ptr<templateQt6app::Qt6Initer> qt6runner = create_qt6_initer();
+  std::shared_ptr<Qt6i::Qt6Initer> qt6runner = create_qt6_initer();
 
   assert(qt6runner != nullptr);
 
@@ -31,9 +31,9 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
   return 0;
 }
 
-std::shared_ptr<templateQt6app::Qt6Initer> Application::create_qt6_initer()
+std::shared_ptr<Qt6i::Qt6Initer> Application::create_qt6_initer()
 {
-  return std::make_shared<templateQt6app::Qt6Initer>();
+  return std::make_shared<Qt6i::Qt6Initer>();
 }
 
 }  // namespace app

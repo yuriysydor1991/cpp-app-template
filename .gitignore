@@ -12,3 +12,4 @@ doc/latex/*
 doc/*-html/*
 out/*
 CMakeSettings.json
+*.log

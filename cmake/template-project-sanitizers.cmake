@@ -5,11 +5,9 @@ if (ENABLE_SANITIZERS AND ENABLE_SANITIZERS_THREADS)
 endif()
 
 if (ENABLE_SANITIZERS)
-  message(STATUS "######### INcliging regular sanitizers")
   include(template-project-sanitizers-regular)
 endif()
 
 if (ENABLE_SANITIZERS_THREADS)
-  message(STATUS "######### INcliging THREADS sanitizers")
   include(template-project-sanitizers-threads)
 endif()

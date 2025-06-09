@@ -28,3 +28,7 @@ endif()
 if(ENABLE_FLATPAK)
   include(template-project-flatpak-target)
 endif()
+
+if (ENABLE_SANITIZERS OR ENABLE_SANITIZERS_THREADS)
+  include(template-project-sanitizers)
+endif()

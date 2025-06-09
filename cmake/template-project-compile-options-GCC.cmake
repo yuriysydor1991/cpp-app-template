@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 3.13)
 
 # -D_FORTIFY_SOURCE=2 (needs OPT); 
 
-set(EXTRA_COMPILE_OPTIONS 
+set(EXTRA_COMPILE_OPTIONS
+  ${EXTRA_COMPILE_OPTIONS}
   -Wall
   -Wextra
   -Wpedantic

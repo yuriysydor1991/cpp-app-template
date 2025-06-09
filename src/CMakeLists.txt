@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.13)
 
 include(template-project-compile-options)
 add_compile_options(${EXTRA_COMPILE_OPTIONS})
+add_link_options(${EXTRA_LINK_OPTIONS})
 
 add_executable(
   ${PROJECT_BINARY_NAME}

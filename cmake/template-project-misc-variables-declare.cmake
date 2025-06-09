@@ -118,6 +118,18 @@ option(
   OFF
 )
 
+option(
+  ENABLE_SANITIZERS
+  "Set to ON to enable the sanitizers compile options"
+  OFF
+)
+
+option(
+  ENABLE_SANITIZERS_THREADS
+  "Set to ON to enable the sanitizers for the threads compile options"
+  OFF
+)
+
 string(TIMESTAMP PROJECT_CONFIGURE_DATE "%Y-%m-%d %H:%M:%S")
 
 execute_process(

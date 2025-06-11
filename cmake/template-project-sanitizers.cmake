@@ -1,11 +1,9 @@
 cmake_minimum_required(VERSION 3.13)
 
-if (ENABLE_SANITIZERS AND ENABLE_SANITIZERS_THREADS)
-  message(FATAL_ERROR "Can't combine thread and regular sanitizers")
-endif()
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/sanitizers")
 
 if (ENABLE_SANITIZERS)
-  include(template-project-sanitizers-regular)
+  include(template-project-sanitizers-leak-and-address)
 endif()
 
 if (ENABLE_SANITIZERS_THREADS)

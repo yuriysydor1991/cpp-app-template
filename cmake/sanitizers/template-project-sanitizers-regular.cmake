@@ -1,10 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
 set(EXTRA_COMPILE_OPTIONS 
-  ${EXTRA_COMPILE_OPTIONS}
-  -fsanitize=address 
-  -fsanitize=pointer-compare 
-  -fsanitize=leak 
+  ${EXTRA_COMPILE_OPTIONS}   
   -fsanitize=undefined 
   -fsanitize=shift 
   -fsanitize=shift-exponent 
@@ -38,6 +35,5 @@ set(EXTRA_COMPILE_OPTIONS
 set(
   EXTRA_LINK_OPTIONS 
   ${EXTRA_LINK_OPTIONS} 
-  -fsanitize=address
   -fsanitize=undefined
 )

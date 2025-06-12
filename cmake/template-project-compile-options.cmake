@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/compile-options")
+
 # CMAKE_C_COMPILER_ID STREQUAL "Clang"
 if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   include(template-project-compile-options-MSVC)

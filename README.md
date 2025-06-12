@@ -25,6 +25,7 @@ Examine available branches to find your most applicable variant of the template 
 - `appSQLiteCpp3` branch at [appSQLiteCpp3](https://github.com/yuriysydor1991/cpp-app-template/tree/appSQLiteCpp3) the template infrastructure to fast start application development with the [SQLite DBMS](https://en.wikipedia.org/wiki/SQLite) and [SQLiteCpp C++ bind](https://github.com/SRombauts/SQLiteCpp) usage.
 - `appMongoDBCpp4` branch at [appMongoDBCpp4](https://github.com/yuriysydor1991/cpp-app-template/tree/appMongoDBCpp4) the template infrastructure to fast start application development with the [MongoDB NoSQL DBMS](https://en.wikipedia.org/wiki/MongoDB) usage.
 - `appLog4Cpp5` branch at [appLog4Cpp5](https://github.com/yuriysydor1991/cpp-app-template/tree/appLog4Cpp5) (**current**) the template infrastructure to fast start the application development with the [log4cpp](https://log4cpp.sourceforge.net/) extended logging library.
+- `appBoostLog` branch at [appBoostLog](https://github.com/yuriysydor1991/cpp-app-template/tree/appBoostLog) the template infrastructure to fast start the application development with the [Boost.Log](https://www.boost.org/doc/libs/latest/libs/log/doc/html/index.html) extended logging library.
 
 Alter current `README.md` and a `CHANGELOG.md` files to match your implementation introduced into the template project. Examine the `doc` directory for possible translations of a current md document:
 - `uk_UA` at [doc/README.uk_UA.md](doc/README.uk_UA.md)

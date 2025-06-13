@@ -42,14 +42,16 @@ class BoostLogController
   virtual ~BoostLogController() = default;
   BoostLogController() = default;
 
-  static void init(
-      const std::string& filepath = default_log_name,
-      const logging::trivial::severity_level& nlvl = logging::trivial::info,
-      const bool toPrintValue = true);
+  static void init(const std::string& filepath = default_log_name,
+                   const unsigned int& nlvl = MAX_LOG_LEVEL,
+                   const bool toPrintValue = true);
 
   static src::severity_logger<logging::trivial::severity_level>& get_lg();
 
   static std::string get_filename(const std::string& filepath);
+
+  static logging::trivial::severity_level get_boost_lvl(
+      const unsigned int& prjlvl);
 
  private:
   static void init_stdout();

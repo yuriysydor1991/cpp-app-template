@@ -1,5 +1,6 @@
 #include "src/log/boost-log/BoostLogController.h"
 
+#include <array>
 #include <filesystem>
 #include <iostream>
 
@@ -7,11 +8,10 @@ namespace boost_log
 {
 
 void BoostLogController::init(const std::string& filepath,
-                              const logging::trivial::severity_level& nlvl,
-                              const bool toPrintValue)
+                              const unsigned int& nlvl, const bool toPrintValue)
 {
   lfilepath = filepath;
-  lvl = nlvl;
+  lvl = get_boost_lvl(nlvl);
   toPrintMsgs = toPrintValue;
 
   init_stdout();
@@ -61,6 +61,24 @@ std::string BoostLogController::get_filename(const std::string& filepath)
   std::filesystem::path fullPath{filepath};
 
   return fullPath.filename().string();
+}
+
+logging::trivial::severity_level BoostLogController::get_boost_lvl(
+    const unsigned int& prjlvl)
+{
+  static const unsigned int max_sev = 5U;
+
+  static const std::array<logging::trivial::severity_level, max_sev> boost_sevs{
+      logging::trivial::error, logging::trivial::warning,
+      logging::trivial::info,  logging::trivial::debug,
+      logging::trivial::trace,
+  };
+
+  if (prjlvl >= max_sev) {
+    return boost_sevs.back();
+  }
+
+  return boost_sevs[prjlvl];
 }
 
 }  // namespace boost_log

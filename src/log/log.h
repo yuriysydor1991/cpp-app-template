@@ -12,16 +12,21 @@
 #define LOG_INIT_DEFAULTS() boost_log::BoostLogController::init();
 
 /**
+ * @brief The internal logger macro to define the general logging code body.
+ */
+#define LOG_BODY(sev, msg)                                            \
+  BOOST_LOG_SEV(boost_log::BoostLogController::get_lg(),              \
+                boost_log::logging::trivial::sev)                     \
+      << boost_log::BoostLogController::get_filename(__FILE__) << ":" \
+      << __LINE__ << " : " << msg
+
+/**
  * @brief Perform the error logging.
  *
  * @param msg The logging message which may use the << operator
  * and each of the log elements MUST be converted into the std::string.
  */
-#define LOGE(msg)                                                     \
-  BOOST_LOG_SEV(boost_log::BoostLogController::get_lg(),              \
-                boost_log::logging::trivial::error)                   \
-      << boost_log::BoostLogController::get_filename(__FILE__) << ":" \
-      << __LINE__ << " : " << msg
+#define LOGE(msg) LOG_BODY(error, msg)
 
 /**
  * @brief Perform the info logging.
@@ -29,11 +34,7 @@
  * @param msg The logging message which may use the << operator
  * and each of the log elements MUST be converted into the std::string.
  */
-#define LOGI(msg)                                                     \
-  BOOST_LOG_SEV(boost_log::BoostLogController::get_lg(),              \
-                boost_log::logging::trivial::info)                    \
-      << boost_log::BoostLogController::get_filename(__FILE__) << ":" \
-      << __LINE__ << " : " << msg
+#define LOGI(msg) LOG_BODY(info, msg)
 
 /**
  * @brief Perform the warning logging.
@@ -41,11 +42,7 @@
  * @param msg The logging message which may use the << operator
  * and each of the log elements MUST be converted into the std::string.
  */
-#define LOGW(msg)                                                     \
-  BOOST_LOG_SEV(boost_log::BoostLogController::get_lg(),              \
-                boost_log::logging::trivial::warning)                 \
-      << boost_log::BoostLogController::get_filename(__FILE__) << ":" \
-      << __LINE__ << " : " << msg
+#define LOGW(msg) LOG_BODY(warning, msg)
 
 /**
  * @brief Perform the debug logging.
@@ -53,11 +50,7 @@
  * @param msg The logging message which may use the << operator
  * and each of the log elements MUST be converted into the std::string.
  */
-#define LOGD(msg)                                                     \
-  BOOST_LOG_SEV(boost_log::BoostLogController::get_lg(),              \
-                boost_log::logging::trivial::debug)                   \
-      << boost_log::BoostLogController::get_filename(__FILE__) << ":" \
-      << __LINE__ << " : " << msg
+#define LOGD(msg) LOG_BODY(debug, msg)
 
 /**
  * @brief Perform the trace logging.
@@ -65,10 +58,6 @@
  * @param msg The logging message which may use the << operator
  * and each of the log elements MUST be converted into the std::string.
  */
-#define LOGT(msg)                                                     \
-  BOOST_LOG_SEV(boost_log::BoostLogController::get_lg(),              \
-                boost_log::logging::trivial::trace)                   \
-      << boost_log::BoostLogController::get_filename(__FILE__) << ":" \
-      << __LINE__ << " : " << msg
+#define LOGT(msg) LOG_BODY(trace, msg)
 
 #endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_LOGGER_SUBSYSTEM_DECLARATIONS_H

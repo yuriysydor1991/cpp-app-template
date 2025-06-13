@@ -7,6 +7,7 @@
 #include <string>
 
 #include "project-global-decls.h"
+#include "src/log/severity-macro-consts.h"
 
 /**
  * @brief The simple logger quick implementation encapsulation namespace.
@@ -21,11 +22,11 @@ namespace simple_logger
 class SimpleLogger
 {
  public:
-  inline static constexpr const unsigned short LVL_ERROR = 1U;
-  inline static constexpr const unsigned short LVL_WARNING = 2U;
-  inline static constexpr const unsigned short LVL_INFO = 3U;
-  inline static constexpr const unsigned short LVL_DEBUG = 4U;
-  inline static constexpr const unsigned short LVL_TRACE = 5U;
+  inline static constexpr const unsigned short LVL_ERROR = MACRO_LVL_ERROR;
+  inline static constexpr const unsigned short LVL_WARNING = MACRO_LVL_WARNING;
+  inline static constexpr const unsigned short LVL_INFO = MACRO_LVL_INFO;
+  inline static constexpr const unsigned short LVL_DEBUG = MACRO_LVL_DEBUG;
+  inline static constexpr const unsigned short LVL_TRACE = MACRO_LVL_TRACE;
 
   inline static constexpr const char* const defaultLogDateFormat =
       "%Y-%m-%d %H:%M:%S";
@@ -115,14 +116,14 @@ class SimpleLogger
    * stdout stream. See the SimpleLogger::print for more details.
    */
   static void init(const std::string& filepath = default_log_name,
-                   const unsigned short& nlvl = LVL_INFO,
+                   const unsigned short& nlvl = MAX_LOG_LEVEL,
                    const bool toPrintValue = true);
 
  private:
   inline static std::atomic_bool toPrintMsgs{true};
   inline static std::fstream alogfile;
   inline static std::mutex alogfile_m;
-  inline static unsigned short lvl{LVL_INFO};
+  inline static unsigned short lvl{MAX_LOG_LEVEL};
 };
 
 }  // namespace simple_logger

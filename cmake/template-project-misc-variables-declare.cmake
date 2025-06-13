@@ -135,6 +135,12 @@ option(
   OFF
 )
 
+set(
+  MAX_LOG_LEVEL "3"
+  CACHE STRING 
+  "Sets the maximum severity of the compiled log messages. Error=0. Trace=5. By default Info=3"
+)
+
 string(TIMESTAMP PROJECT_CONFIGURE_DATE "%Y-%m-%d %H:%M:%S")
 
 execute_process(

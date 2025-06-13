@@ -5,8 +5,7 @@
 #include <string>
 
 #include "project-global-decls.h"
-#include "src/app/ApplicationContext.h"
-#include "src/app/IApplication.h"
+#include "src/log/severity-macro-consts.h"
 
 /**
  * @brief The namespace to encapsulate the log4cpp v5 init and log
@@ -22,8 +21,7 @@ namespace log4cpp5i
 class Log4Cpp5Init
 {
  public:
-  inline static const log4cpp::Priority::PriorityLevel default_priority =
-      log4cpp::Priority::NOTICE;
+  inline static const unsigned short default_priority = MAX_LOG_LEVEL;
   inline static const std::string default_log_name =
       project_decls::PROJECT_NAME + "-" + project_decls::PROJECT_BUILD_VERSION +
       ".log";
@@ -43,10 +41,9 @@ class Log4Cpp5Init
    * @param toPrintValue If the true boolean value passed - all the log message
    * will be printed into the stdout also.
    */
-  explicit Log4Cpp5Init(
-      const std::string& filepath = default_log_name,
-      const log4cpp::Priority::PriorityLevel& nlvl = default_priority,
-      const bool toPrintValue = true);
+  explicit Log4Cpp5Init(const std::string& filepath = default_log_name,
+                        const unsigned short& nlvl = default_priority,
+                        const bool toPrintValue = true);
 
   static std::string get_filename_only(const char* const filePath);
 
@@ -70,6 +67,9 @@ class Log4Cpp5Init
    * @brief The graceful log4cpp deiniter.
    */
   static void deinit();
+
+  static log4cpp::Priority::PriorityLevel get_log4cpp_priority(
+      const unsigned short& prjsev);
 
  private:
   bool print{false};

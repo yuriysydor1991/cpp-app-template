@@ -1,5 +1,6 @@
 #include "src/log/log4cpp5-init/Log4Cpp5Init.h"
 
+#include <array>
 #include <filesystem>
 #include <iostream>
 #include <log4cpp/Category.hh>
@@ -13,9 +14,10 @@ namespace log4cpp5i
 Log4Cpp5Init::~Log4Cpp5Init() { deinit(); }
 
 Log4Cpp5Init::Log4Cpp5Init(const std::string& filepath,
-                           const log4cpp::Priority::PriorityLevel& nlvl,
-                           const bool toPrintValue)
-    : print{toPrintValue}, log_name{filepath}, log_lvl{nlvl}
+                           const unsigned short& nlvl, const bool toPrintValue)
+    : print{toPrintValue},
+      log_name{filepath},
+      log_lvl{get_log4cpp_priority(nlvl)}
 {
   init();
 }
@@ -68,5 +70,22 @@ std::string Log4Cpp5Init::get_filename_only(const char* const filePath)
 }
 
 void Log4Cpp5Init::deinit() { log4cpp::Category::shutdown(); }
+
+log4cpp::Priority::PriorityLevel Log4Cpp5Init::get_log4cpp_priority(
+    const unsigned short& prjsev)
+{
+  static const unsigned short max_prio = 5U;
+
+  static const std::array<log4cpp::Priority::PriorityLevel, max_prio>
+      log4cpp_prio{log4cpp::Priority::ERROR, log4cpp::Priority::WARN,
+                   log4cpp::Priority::NOTICE, log4cpp::Priority::INFO,
+                   log4cpp::Priority::DEBUG};
+
+  if (prjsev >= max_prio) {
+    return log4cpp_prio.back();
+  }
+
+  return log4cpp_prio[prjsev];
+}
 
 }  // namespace log4cpp5i

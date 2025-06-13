@@ -9,5 +9,11 @@ else()
   include(template-project-compile-options-GCC)
 endif()
 
+set(
+  EXTRA_COMPILE_OPTIONS 
+  ${EXTRA_COMPILE_OPTIONS} 
+  -DMAX_LOG_LEVEL=${MAX_LOG_LEVEL}
+)
+
 message(STATUS "COMPILER ID: ${CMAKE_CXX_COMPILER_ID}")
 message(STATUS "COMPILE OPTIONS: ${EXTRA_COMPILE_OPTIONS}")

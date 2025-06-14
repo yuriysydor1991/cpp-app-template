@@ -32,10 +32,13 @@ void BoostLogController::init_stdout()
   logging::add_console_log(
       std::cout,
       keywords::format =
-          (expr::stream << expr::format_date_time<boost::posix_time::ptime>(
-                               "TimeStamp", defaultLogDateFormat)
-                        << " " << logging::trivial::severity << " "
-                        << expr::smessage));
+          (expr::stream
+           << expr::format_date_time<boost::posix_time::ptime>(
+                  "TimeStamp", defaultLogDateFormat)
+           << " " << logging::trivial::severity << " "
+           << expr::attr<boost::log::attributes::current_thread_id::value_type>(
+                  "ThreadID")
+           << " " << expr::smessage));
 }
 
 void BoostLogController::init_file()
@@ -44,10 +47,13 @@ void BoostLogController::init_file()
       keywords::file_name = default_log_name,
       keywords::open_mode = std::ios_base::app,
       keywords::format =
-          (expr::stream << expr::format_date_time<boost::posix_time::ptime>(
-                               "TimeStamp", defaultLogDateFormat)
-                        << " " << logging::trivial::severity << " "
-                        << expr::smessage));
+          (expr::stream
+           << expr::format_date_time<boost::posix_time::ptime>(
+                  "TimeStamp", defaultLogDateFormat)
+           << " " << logging::trivial::severity << " "
+           << expr::attr<boost::log::attributes::current_thread_id::value_type>(
+                  "ThreadID")
+           << " " << expr::smessage));
 }
 
 src::severity_logger<logging::trivial::severity_level>&

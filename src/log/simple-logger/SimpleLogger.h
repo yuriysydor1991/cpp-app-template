@@ -114,6 +114,7 @@ class SimpleLogger
  private:
   /**
    * @brief Method to define current log message timestamp.
+   * Not a thread safe.
    *
    * @param oss The stringstream which will accept the current time
    * stamp for the log message.

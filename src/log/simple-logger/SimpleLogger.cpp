@@ -20,6 +20,8 @@ void SimpleLogger::log(const unsigned short& loglvl, const std::string& msg)
     return;
   }
 
+  std::lock_guard<std::mutex> alogfile_m_guard{alogfile_m};
+
   std::ostringstream finalLog;
 
   insert_current_timestamp(finalLog);
@@ -27,8 +29,6 @@ void SimpleLogger::log(const unsigned short& loglvl, const std::string& msg)
   finalLog << " " << lvl_repr(loglvl) << " " << msg << std::endl;
 
   const std::string finalLogStr = finalLog.str();
-
-  std::lock_guard<std::mutex> alogfile_m_guard{alogfile_m};
 
   if (alogfile.is_open()) {
     alogfile << finalLogStr;

@@ -1,7 +1,5 @@
 #include "src/log/simple-logger/SimpleLogger.h"
 
-#include <time.h>
-
 #include <array>
 #include <chrono>
 #include <exception>
@@ -95,9 +93,7 @@ inline void SimpleLogger::insert_current_timestamp(std::ostringstream& oss)
   const auto now = system_clock::now();
 
   const time_t now_time_t = system_clock::to_time_t(now);
-  std::tm timeHolder;
-
-  localtime_r(&now_time_t, &timeHolder);
+  std::tm timeHolder = *std::localtime(&now_time_t);
 
   const auto timeSinceEpoch = now.time_since_epoch();
 

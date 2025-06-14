@@ -550,7 +550,7 @@ In order to enable the sanitizers to check application at the runtime, configure
 cmake -S . -B build -DENABLE_SANITIZERS=ON
 ```
 
-For a general purpose sanitizers. See the `cmake/template-project-sanitizers-regular.cmake` to examine available list of the sanitizers.
+For a general purpose sanitizers. See the `cmake/template-project-sanitizers.cmake` to examine available list of the sanitizers.
 
 Alternatively, enable the threads sanitizers with the command:
 

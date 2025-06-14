@@ -26,10 +26,12 @@ void SimpleLogger::log(const unsigned short& loglvl, const std::string& msg)
 
   finalLog << " " << lvl_repr(loglvl) << " " << msg << std::endl;
 
+  const std::string finalLogStr = finalLog.str();
+
   std::lock_guard<std::mutex> alogfile_m_guard{alogfile_m};
 
   if (alogfile.is_open()) {
-    alogfile << finalLog.str();
+    alogfile << finalLogStr;
   }
 
   if (!toPrintMsgs.load()) {
@@ -37,9 +39,9 @@ void SimpleLogger::log(const unsigned short& loglvl, const std::string& msg)
   }
 
   if (loglvl <= LVL_WARNING) {
-    std::cerr << finalLog.str();
+    std::cerr << finalLogStr;
   } else {
-    std::cout << finalLog.str();
+    std::cout << finalLogStr;
   }
 }
 

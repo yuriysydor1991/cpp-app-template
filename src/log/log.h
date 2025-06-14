@@ -2,6 +2,7 @@
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_LOGGER_SUBSYSTEM_DECLARATIONS_H
 
 #include <log4cpp/Category.hh>
+#include <thread>
 
 #include "src/log/log4cpp5-init/Log4Cpp5Init.h"
 #include "src/log/severity-macro-consts.h"
@@ -29,13 +30,11 @@
 /**
  * @brief The internal logger macro to define the general logging code body.
  */
-#define LOG_BODY(LOGLVL, msg)                                    \
-  {                                                              \
-    std::stringstream logMessageContainer;                       \
-    logMessageContainer << msg;                                  \
-    simple_logger::SimpleLogger::log(LOGLVL, __FILE__, __LINE__, \
-                                     logMessageContainer.str()); \
-  }
+#define LOG_BODY(streamName, msg)                                    \
+  log4cpp::Category::getRoot().streamName()                          \
+      << std::this_thread::get_id() << " "                           \
+      << log4cpp5i::Log4Cpp5Init::get_filename_only(__FILE__) << ":" \
+      << __LINE__ << " - " << msg
 #endif  // LOG_BODY
 
 #ifndef LOGE
@@ -45,10 +44,7 @@
  * @param msg The logging message which may use the << operator
  * and each of the log elements MUST be converted into the std::string.
  */
-#define LOGE(msg)                                                    \
-  log4cpp::Category::getRoot().errorStream()                         \
-      << log4cpp5i::Log4Cpp5Init::get_filename_only(__FILE__) << ":" \
-      << __LINE__ << " - " << msg
+#define LOGE(msg) LOG_BODY(errorStream, msg)
 #endif  // LOGE
 
 #ifndef LOGI
@@ -59,10 +55,7 @@
  * @param msg The logging message which may use the << operator
  * and each of the log elements MUST be converted into the std::string.
  */
-#define LOGI(msg)                                                    \
-  log4cpp::Category::getRoot().noticeStream()                        \
-      << log4cpp5i::Log4Cpp5Init::get_filename_only(__FILE__) << ":" \
-      << __LINE__ << " - " << msg
+#define LOGI(msg) LOG_BODY(noticeStream, msg)
 #else
 #define LOGI(msg)
 #endif  // MAX_LOG_LEVEL
@@ -76,10 +69,7 @@
  * @param msg The logging message which may use the << operator
  * and each of the log elements MUST be converted into the std::string.
  */
-#define LOGW(msg)                                                    \
-  log4cpp::Category::getRoot().warnStream()                          \
-      << log4cpp5i::Log4Cpp5Init::get_filename_only(__FILE__) << ":" \
-      << __LINE__ << " - " << msg
+#define LOGW(msg) LOG_BODY(warnStream, msg)
 #else
 #define LOGW(msg)
 #endif  // MAX_LOG_LEVEL
@@ -93,10 +83,7 @@
  * @param msg The logging message which may use the << operator
  * and each of the log elements MUST be converted into the std::string.
  */
-#define LOGD(msg)                                                    \
-  log4cpp::Category::getRoot().debugStream()                         \
-      << log4cpp5i::Log4Cpp5Init::get_filename_only(__FILE__) << ":" \
-      << __LINE__ << " - " << msg
+#define LOGD(msg) LOG_BODY(debugStream, msg)
 #else
 #define LOGD(msg)
 #endif  // MAX_LOG_LEVEL
@@ -110,10 +97,7 @@
  * @param msg The logging message which may use the << operator
  * and each of the log elements MUST be converted into the std::string.
  */
-#define LOGT(msg)                                                    \
-  log4cpp::Category::getRoot().infoStream()                          \
-      << log4cpp5i::Log4Cpp5Init::get_filename_only(__FILE__) << ":" \
-      << __LINE__ << " - " << msg
+#define LOGT(msg) LOG_BODY(infoStream, msg)
 #else
 #define LOGT(msg)
 #endif  // MAX_LOG_LEVEL

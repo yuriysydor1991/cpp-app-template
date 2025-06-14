@@ -10,6 +10,7 @@
 #include <iostream>
 #include <mutex>
 #include <string>
+#include <thread>
 
 namespace simple_logger
 {
@@ -26,7 +27,8 @@ void SimpleLogger::log(const unsigned short& loglvl, const std::string& msg)
 
   insert_current_timestamp(finalLog);
 
-  finalLog << " " << lvl_repr(loglvl) << " " << msg << std::endl;
+  finalLog << " " << lvl_repr(loglvl) << " " << std::this_thread::get_id()
+           << " " << msg << std::endl;
 
   const std::string finalLogStr = finalLog.str();
 

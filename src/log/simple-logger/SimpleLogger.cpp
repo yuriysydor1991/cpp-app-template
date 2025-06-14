@@ -1,5 +1,7 @@
 #include "src/log/simple-logger/SimpleLogger.h"
 
+#include <time.h>
+
 #include <array>
 #include <chrono>
 #include <exception>
@@ -18,12 +20,11 @@ void SimpleLogger::log(const unsigned short& loglvl, const std::string& msg)
     return;
   }
 
-  const std::string ctimestamp = current_timestamp();
-  const std::string& lvlrepr = lvl_repr(loglvl);
-
   std::ostringstream finalLog;
 
-  finalLog << ctimestamp << " " << lvlrepr << " " << msg << std::endl;
+  insert_current_timestamp(finalLog);
+
+  finalLog << " " << lvl_repr(loglvl) << " " << msg << std::endl;
 
   std::lock_guard<std::mutex> alogfile_m_guard{alogfile_m};
 
@@ -80,29 +81,29 @@ void SimpleLogger::init(const std::string& filepath, const unsigned short& nlvl,
   print(toPrintValue);
 }
 
-std::string SimpleLogger::current_timestamp()
+inline void SimpleLogger::insert_current_timestamp(std::ostringstream& oss)
 {
-  static constexpr const char nanosecFiller = '0';
-  static constexpr const unsigned int nanosecWidth = 9U;
+  static constexpr const char microsecFiller = '0';
+  static constexpr const unsigned int microsecWidth = 6U;
 
   using namespace std::chrono;
 
-  auto now = system_clock::now();
-  auto now_ns = time_point_cast<nanoseconds>(now);
+  const auto now = system_clock::now();
 
-  auto now_time_t = system_clock::to_time_t(now);
-  std::tm timeHolder = *std::localtime(&now_time_t);
+  const time_t now_time_t = system_clock::to_time_t(now);
+  std::tm timeHolder;
 
-  auto duration_since_epoch = now_ns.time_since_epoch();
-  auto nanosec = duration_cast<nanoseconds>(duration_since_epoch) % seconds(1);
+  localtime_r(&now_time_t, &timeHolder);
 
-  std::ostringstream oss;
+  const auto timeSinceEpoch = now.time_since_epoch();
+
+  auto seconds = duration_cast<std::chrono::seconds>(timeSinceEpoch);
+  auto microseconds =
+      duration_cast<std::chrono::microseconds>(timeSinceEpoch - seconds);
 
   oss << std::put_time(&timeHolder, defaultLogDateFormat);
-  oss << '.' << std::setfill(nanosecFiller) << std::setw(nanosecWidth)
-      << nanosec.count();
-
-  return oss.str();
+  oss << '.' << std::setfill(microsecFiller) << std::setw(microsecWidth)
+      << microseconds.count();
 }
 
 const std::string& SimpleLogger::lvl_repr(const unsigned short& glvl)

@@ -88,15 +88,6 @@ class SimpleLogger
   static void level(const unsigned short& nlvl);
 
   /**
-   * @brief Method to define current log message timestamp.
-   *
-   * @return Returns the computed timestamp in form of a std::string with
-   * format by default defined in the constant
-   * SimpleLogger::defaultLogDateFormat.
-   */
-  static std::string current_timestamp();
-
-  /**
    * @brief Searches for the string representation of the given log level.
    *
    * @param glvl The numerical log level for it's representation to search.
@@ -121,6 +112,14 @@ class SimpleLogger
                    const bool toPrintValue = true);
 
  private:
+  /**
+   * @brief Method to define current log message timestamp.
+   *
+   * @param oss The stringstream which will accept the current time
+   * stamp for the log message.
+   */
+  static void insert_current_timestamp(std::ostringstream& oss);
+
   inline static std::atomic_bool toPrintMsgs{true};
   inline static std::fstream alogfile;
   inline static std::mutex alogfile_m;

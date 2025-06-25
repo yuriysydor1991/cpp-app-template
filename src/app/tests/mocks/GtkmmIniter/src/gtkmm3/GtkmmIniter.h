@@ -8,7 +8,7 @@
 
 #include "src/app/ApplicationContext.h"
 
-namespace templateGtkmm3
+namespace Gtkmm3i
 {
 
 class GtkmmIniter
@@ -27,6 +27,6 @@ class GtkmmIniter
   MOCK_METHOD(int, run, (std::shared_ptr<app::ApplicationContext>));
 };
 
-}  // namespace templateGtkmm3
+}  // namespace Gtkmm3i
 
 #endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMMINITER_CLASS_H

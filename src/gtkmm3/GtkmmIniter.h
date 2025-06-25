@@ -6,7 +6,7 @@
 #include "src/app/ApplicationContext.h"
 #include "src/gtkmm3/gtkmm_includes.h"
 
-namespace templateGtkmm3
+namespace Gtkmm3i
 {
 
 /**
@@ -40,6 +40,6 @@ class GtkmmIniter
   std::shared_ptr<app::ApplicationContext> actx;
 };
 
-}  // namespace templateGtkmm3
+}  // namespace Gtkmm3i
 
 #endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMMINITER_CLASS_H

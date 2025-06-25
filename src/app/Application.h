@@ -31,7 +31,7 @@ class Application : public IApplication
   virtual int run(std::shared_ptr<ApplicationContext> ctx) override;
 
  protected:
-  virtual std::shared_ptr<templateGtkmm3::GtkmmIniter> create_gtkmm_initer();
+  virtual std::shared_ptr<Gtkmm3i::GtkmmIniter> create_gtkmm_initer();
 };
 
 }  // namespace app

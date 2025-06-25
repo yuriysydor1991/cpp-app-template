@@ -5,7 +5,7 @@
 #include "project-global-decls.h"
 #include "src/gtkmm3/gtkmm_includes.h"
 
-namespace templateGtkmm3
+namespace Gtkmm3i
 {
 
 int GtkmmIniter::run(std::shared_ptr<app::ApplicationContext> nactx)
@@ -65,4 +65,4 @@ void GtkmmIniter::prepare_random_logo()
   image->set_from_resource(logo_res_path);
 }
 
-}  // namespace templateGtkmm3
+}  // namespace Gtkmm3i

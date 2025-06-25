@@ -22,7 +22,7 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
   std::shared_ptr<templateGtkmm::GtkmmIniter> gtkmmIniter =
       create_gtkmm_initer();
 
-  if (gtkmmIniter->run(ctx->argc, ctx->argv) != 0) {
+  if (gtkmmIniter->run(ctx) != 0) {
     LOGE("The gtkmm controller returned invalid execution status");
     return INVALID;
   }

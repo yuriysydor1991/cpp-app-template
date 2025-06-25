@@ -3,6 +3,8 @@
 
 #include <memory>
 
+#include "src/app/ApplicationContext.h"
+
 namespace templateGtkmm
 {
 
@@ -16,7 +18,10 @@ class GtkmmIniter
   virtual ~GtkmmIniter() = default;
   GtkmmIniter() = default;
 
-  virtual int run(int& argc, char**& argv);
+  virtual int run(std::shared_ptr<app::ApplicationContext> nactx);
+
+ private:
+  std::shared_ptr<app::ApplicationContext> actx;
 };
 
 }  // namespace templateGtkmm

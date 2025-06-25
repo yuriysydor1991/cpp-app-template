@@ -22,8 +22,8 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
   std::shared_ptr<templateGtkmm3::GtkmmIniter> gtkmmIniter =
       create_gtkmm_initer();
 
-  if (gtkmmIniter->run(ctx->argc, ctx->argv) != 0) {
-    LOGE("The gtkmm controller returned invalid status");
+  if (gtkmmIniter->run(ctx) != 0) {
+    LOGE("The gtkmm controller returned invalid execution status");
     return INVALID;
   }
 

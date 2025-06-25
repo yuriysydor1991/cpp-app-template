@@ -3,6 +3,7 @@
 
 #include <memory>
 
+#include "src/app/ApplicationContext.h"
 #include "src/gtkmm3/gtkmm_includes.h"
 
 namespace templateGtkmm3
@@ -18,7 +19,7 @@ class GtkmmIniter
   virtual ~GtkmmIniter() = default;
   GtkmmIniter() = default;
 
-  virtual int run(int& argc, char**& argv);
+  virtual int run(std::shared_ptr<app::ApplicationContext> nactx);
 
  protected:
   void prepare_widgets();
@@ -35,6 +36,8 @@ class GtkmmIniter
   Glib::RefPtr<Gtk::Builder> builder;
   Gtk::Window* window{nullptr};
   Gtk::Image* image{nullptr};
+
+  std::shared_ptr<app::ApplicationContext> actx;
 };
 
 }  // namespace templateGtkmm3

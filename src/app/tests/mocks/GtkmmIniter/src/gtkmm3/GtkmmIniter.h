@@ -6,6 +6,8 @@
 #include <functional>
 #include <memory>
 
+#include "src/app/ApplicationContext.h"
+
 namespace templateGtkmm3
 {
 
@@ -22,7 +24,7 @@ class GtkmmIniter
 
   inline static std::function<void(GtkmmIniter&)> onMockCreate;
 
-  MOCK_METHOD(int, run, (int& argc, char**& argv));
+  MOCK_METHOD(int, run, (std::shared_ptr<app::ApplicationContext>));
 };
 
 }  // namespace templateGtkmm3

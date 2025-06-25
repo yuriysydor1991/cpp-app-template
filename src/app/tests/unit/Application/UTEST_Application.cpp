@@ -35,9 +35,7 @@ TEST_F(UTEST_Application, normal_exit)
   EXPECT_CALL(initerEnsurer, Call(_))
       .Times(1)
       .WillOnce(Invoke([&](GtkmmIniter& instance) {
-        EXPECT_CALL(instance, run(appCtx->argc, appCtx->argv))
-            .Times(1)
-            .WillOnce(Return(0));
+        EXPECT_CALL(instance, run(appCtx)).Times(1).WillOnce(Return(0));
       }));
 
   GtkmmIniter::onMockCreate = initerEnsurer.AsStdFunction();
@@ -59,9 +57,7 @@ TEST_F(UTEST_Application, invalid_exit_status)
   EXPECT_CALL(initerEnsurer, Call(_))
       .Times(1)
       .WillOnce(Invoke([&](GtkmmIniter& instance) {
-        EXPECT_CALL(instance, run(appCtx->argc, appCtx->argv))
-            .Times(1)
-            .WillOnce(Return(1));
+        EXPECT_CALL(instance, run(appCtx)).Times(1).WillOnce(Return(1));
       }));
 
   GtkmmIniter::onMockCreate = initerEnsurer.AsStdFunction();

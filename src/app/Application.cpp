@@ -19,8 +19,7 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  std::shared_ptr<templateGtkmm::GtkmmIniter> gtkmmIniter =
-      create_gtkmm_initer();
+  std::shared_ptr<Gtkmm3i::GtkmmIniter> gtkmmIniter = create_gtkmm_initer();
 
   if (gtkmmIniter->run(ctx) != 0) {
     LOGE("The gtkmm controller returned invalid execution status");
@@ -30,9 +29,9 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
   return 0;
 }
 
-std::shared_ptr<templateGtkmm::GtkmmIniter> Application::create_gtkmm_initer()
+std::shared_ptr<Gtkmm3i::GtkmmIniter> Application::create_gtkmm_initer()
 {
-  return std::make_shared<templateGtkmm::GtkmmIniter>();
+  return std::make_shared<Gtkmm3i::GtkmmIniter>();
 }
 
 }  // namespace app

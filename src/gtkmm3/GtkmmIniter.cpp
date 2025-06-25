@@ -6,7 +6,7 @@
 #include "src/gtkmm3/GtkmmWindow.h"
 #include "src/gtkmm3/gtkmm_includes.h"
 
-namespace templateGtkmm
+namespace Gtkmm3i
 {
 
 int GtkmmIniter::run(std::shared_ptr<app::ApplicationContext> nactx)
@@ -23,4 +23,4 @@ int GtkmmIniter::run(std::shared_ptr<app::ApplicationContext> nactx)
   return app->run(window);
 }
 
-}  // namespace templateGtkmm
+}  // namespace Gtkmm3i

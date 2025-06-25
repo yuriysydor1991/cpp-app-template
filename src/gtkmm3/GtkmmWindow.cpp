@@ -6,7 +6,7 @@
 
 #include "project-global-decls.h"
 
-namespace templateGtkmm
+namespace Gtkmm3i
 {
 
 GtkmmWindow::GtkmmWindow()
@@ -61,4 +61,4 @@ const std::string& GtkmmWindow::get_default_title()
   return default_title;
 }
 
-}  // namespace templateGtkmm
+}  // namespace Gtkmm3i

@@ -5,7 +5,7 @@
 #include "src/gtkmm3/GtkmmIniter.h"
 
 using namespace app;
-using namespace templateGtkmm;
+using namespace Gtkmm3i;
 using namespace testing;
 
 class UTEST_Application : public Test

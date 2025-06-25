@@ -5,7 +5,7 @@
 
 #include "src/gtkmm3/gtkmm_includes.h"
 
-namespace templateGtkmm
+namespace Gtkmm3i
 {
 
 /**
@@ -38,6 +38,6 @@ class GtkmmWindow : public Gtk::Window
   Gtk::Image image;
 };
 
-}  // namespace templateGtkmm
+}  // namespace Gtkmm3i
 
 #endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMMWINDOW_CLASS_H

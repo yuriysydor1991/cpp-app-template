@@ -5,6 +5,10 @@
 
 #include "src/gtkmm3/gtkmm_includes.h"
 
+#ifndef GTKMM_APP_RESOURCES_PREFIX
+#define GTKMM_APP_RESOURCES_PREFIX "/ua/org/kytok/template/gtkmm3"
+#endif  // GTKMM_APP_RESOURCES_PREFIX
+
 namespace Gtkmm3i
 {
 
@@ -25,9 +29,13 @@ class GtkmmWindow : public Gtk::Window
   void prepare_header_label();
   void prepare_random_logo();
   void prepare_global_resource();
+  void prepare_widgets();
+  void prepare_css();
 
   inline static constexpr const char* const logo_res_path =
-      "/ua/org/kytok/template/gtkmm3/resources/images/kytok.org.ua-logo.png";
+      GTKMM_APP_RESOURCES_PREFIX "/resources/images/kytok.org.ua-logo.png";
+  inline static constexpr const char* const main_css_res_path =
+      GTKMM_APP_RESOURCES_PREFIX "/resources/css/main-window.css";
 
   Glib::RefPtr<Gio::Resource> resources{nullptr};
 

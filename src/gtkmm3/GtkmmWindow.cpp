@@ -20,8 +20,7 @@ GtkmmWindow::GtkmmWindow()
   set_size_request(400, 300);
   set_default_size(500, 400);
 
-  prepare_header_label();
-  prepare_random_logo();
+  prepare_widgets();
 
   box.set_homogeneous(false);
 
@@ -32,6 +31,26 @@ GtkmmWindow::GtkmmWindow()
   add(box);
 
   show_all_children();
+}
+
+void GtkmmWindow::prepare_widgets()
+{
+  prepare_header_label();
+  prepare_random_logo();
+  prepare_css();
+}
+
+void GtkmmWindow::prepare_css()
+{
+  auto css = Gtk::CssProvider::create();
+
+  assert(css);
+
+  css->load_from_resource(main_css_res_path);
+
+  auto screen = Gdk::Display::get_default()->get_default_screen();
+  Gtk::StyleContext::add_provider_for_screen(
+      screen, css, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 }
 
 void GtkmmWindow::prepare_header_label()

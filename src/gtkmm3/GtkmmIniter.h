@@ -9,6 +9,10 @@
 namespace Gtkmm3i
 {
 
+#ifndef GTKMM_APP_RESOURCES_PREFIX
+#define GTKMM_APP_RESOURCES_PREFIX "/ua/org/kytok/template/gtkmm3/glade"
+#endif  // GTKMM_APP_RESOURCES_PREFIXs
+
 /**
  * @brief The root GTKmm window class to show
  * templated GUI window.
@@ -23,13 +27,19 @@ class GtkmmIniter
 
  protected:
   void prepare_widgets();
+  static void load_css();
 
  private:
   inline static constexpr const char* const UI_res_path =
-      "/ua/org/kytok/template/gtkmm3/glade/GtkmmWindow.ui";
+      GTKMM_APP_RESOURCES_PREFIX "/GtkmmWindow.ui";
   inline static constexpr const char* const logo_res_path =
-      "/ua/org/kytok/template/gtkmm3/glade/resources/images/"
+      GTKMM_APP_RESOURCES_PREFIX
+      "/resources/images/"
       "kytok.org.ua-logo.png";
+  inline static constexpr const char* const main_css_res_path =
+      GTKMM_APP_RESOURCES_PREFIX
+      "/resources/css/"
+      "main-window.css";
 
   void prepare_random_logo();
 

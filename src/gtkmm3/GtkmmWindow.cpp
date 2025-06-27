@@ -55,15 +55,7 @@ void GtkmmWindow::prepare_css()
 
 void GtkmmWindow::prepare_header_label()
 {
-  // Set font size using Pango attributes
-  auto attr_list = Pango::AttrList();
-
-  auto fontScale =
-      Pango::Attribute::create_attr_size(20 * PANGO_SCALE);  // 20px font size
-
-  attr_list.insert(fontScale);
-
-  headerText.set_attributes(attr_list);
+  headerText.get_style_context()->add_class(header_label_class);
 }
 
 void GtkmmWindow::prepare_random_logo()

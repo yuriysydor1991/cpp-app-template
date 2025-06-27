@@ -36,6 +36,7 @@ class GtkmmWindow : public Gtk::Window
       GTKMM_APP_RESOURCES_PREFIX "/resources/images/kytok.org.ua-logo.png";
   inline static constexpr const char* const main_css_res_path =
       GTKMM_APP_RESOURCES_PREFIX "/resources/css/main-window.css";
+  inline static constexpr const char* const header_label_class = "header-label";
 
   Glib::RefPtr<Gio::Resource> resources{nullptr};
 

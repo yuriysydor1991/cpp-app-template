@@ -136,6 +136,12 @@ set(
   "Sets the maximum severity of the compiled log messages. Error=0. Trace=5. By default Info=3"
 )
 
+option(
+  ENABLE_NLOHMANN_JSON
+  "Set to ON to enable the nlohmann json library (by using system wide available or through Internet)"
+  OFF
+)
+
 string(TIMESTAMP PROJECT_CONFIGURE_DATE "%Y-%m-%d %H:%M:%S")
 
 set(PROJECT_HTTP_LISTEN_ADDRESS "127.0.0.1" CACHE STRING "The default HTTP-server listen address")

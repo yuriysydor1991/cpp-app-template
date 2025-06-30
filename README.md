@@ -288,7 +288,7 @@ Currently test samples are based on the GTest framework. GTest framework by itse
 
 Of course, the project's CMakeLists.txt files are probing the GTest only if tests are enabled by `ENABLE_UNIT_TESTS` CMake variable. System GTest probe may be turned OFF by setting appropriate value to the `GTEST_TRY_SYSTEM_PROBE` CMake variable.
 
-Look for a `cmake/template-project-make-GTest-available.cmake` to see details or change GTest version etc.
+Look for a `cmake/template-project-GTest-enabler.cmake` to see details or change GTest version etc.
 
 ## Extensions
 
@@ -334,7 +334,7 @@ To disable the system available GTest framework assets usage set appropriate val
 mkdir -vp build && cd build && cmake ../ -DENABLE_UNIT_TESTS=ON -DGTEST_TRY_SYSTEM_PROBE=OFF && cmake --build . --target all
 ```
 
-During command execution project build system will try to make GTest available through the Internet only for current project with specified version in the `cmake/template-project-make-GTest-available.cmake` file.
+During command execution project build system will try to make GTest available through the Internet only for current project with specified version in the `cmake/template-project-GTest-enabler.cmake` file.
 
 ## Documentation build
 

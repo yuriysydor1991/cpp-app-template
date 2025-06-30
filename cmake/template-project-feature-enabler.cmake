@@ -24,3 +24,7 @@ endif()
 if(ENABLE_DEB)
   include(template-project-deb-enabler)
 endif()
+
+if (ENABLE_NLOHMANN_JSON)
+  include(template-project-nlohman-json-enabler)
+endif()

@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.13)
 
 if(ENABLE_UNIT_TESTS)
   enable_testing()
-  include(template-project-make-GTest-available)
+  include(template-project-GTest-enabler)
 endif()
 
 if(ENABLE_CLANGFORMAT)

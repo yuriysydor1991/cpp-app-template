@@ -303,7 +303,7 @@ echo 'export DOCKER_HOST="tcp://127.0.0.1:2375"' >> ~/.bashrc
 
 Звісно, скрипти `CMakeLists.txt` визначають чи у ОС побудови проекту присутній фреймворк тестування GTest тільки якщо самі тести проекту-шаблону увімкнені прапорцем `ENABLE_UNIT_TESTS`. Використання фреймворку тестування GTest присутнього у системі можна вимкнути встановленням відповідного значення для CMake-змінної `GTEST_TRY_SYSTEM_PROBE`.
 
-Детальніше у файлі відповідальному за встановлення джерела GTest за шляхом `cmake/template-project-make-GTest-available.cmake` де також можна змінити версію фреймворку тестування тощо.
+Детальніше у файлі відповідальному за встановлення джерела GTest за шляхом `cmake/template-project-GTest-enabler.cmake` де також можна змінити версію фреймворку тестування тощо.
 
 ## Розширення
 
@@ -351,7 +351,7 @@ mkdir -vp build && cd build && cmake ../ -DENABLE_UNIT_TESTS=ON && cmake --build
 mkdir -vp build && cd build && cmake ../ -DENABLE_UNIT_TESTS=ON -DGTEST_TRY_SYSTEM_PROBE=OFF && cmake --build . --target all
 ```
 
-Під час виконання команди система побудови проекту спробує встановити GTest тільки у межах поточного проекту через мережу Інтернет з версією вказаною у файлі `cmake/template-project-make-GTest-available.cmake`.
+Під час виконання команди система побудови проекту спробує встановити GTest тільки у межах поточного проекту через мережу Інтернет з версією вказаною у файлі `cmake/template-project-GTest-enabler.cmake`.
 
 ## Побудова документації
 

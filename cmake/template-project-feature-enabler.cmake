@@ -32,3 +32,7 @@ endif()
 if (ENABLE_SANITIZERS OR ENABLE_SANITIZERS_THREADS)
   include(template-project-sanitizers)
 endif()
+
+if (ENABLE_NLOHMANN_JSON)
+  include(template-project-nlohman-json-enabler)
+endif()

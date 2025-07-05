@@ -4,6 +4,10 @@
 
 Project is designed to increase the speed of the application creation process at the project startup by providing templated application structure. So developer may just jump straight into implementing a particular application with no or minimum project start structure set up.
 
+Helps you go beyond raw code — build a complete, ready-to-ship **software product** fast!
+
+Enables rapid creation of a complete **software product** — not just raw code or a simple program.
+
 **Just fork it and implement your application straight away!**
 
 Examine available branches to find your most applicable variant of the template or combine multiple branches by merging them to assemble the best suited template structure for your needs:

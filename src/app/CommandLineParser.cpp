@@ -7,18 +7,11 @@
 #include <string>
 
 #include "src/app/ApplicationContext.h"
+#include "src/app/CMDParamNames.h"
 #include "src/log/log.h"
 
 namespace app
 {
-
-namespace
-{
-const std::string HELPW{"--help"};
-const std::string HELP{"-h"};
-const std::string VERSIONW{"--version"};
-const std::string VERSION{"-v"};
-}  // namespace
 
 bool CommandLineParser::parse_args(std::shared_ptr<ApplicationContext> ctx)
 {
@@ -83,9 +76,10 @@ bool CommandLineParser::parse_arg(std::shared_ptr<ApplicationContext> ctx,
   // add a new params parse over here
   // Also register new command line parameters in the ApplicationhelpPrinter's
   // help.
-  if (param == HELPW || param == HELP) {
+  if (param == CMDParamNames::HELPW || param == CMDParamNames::HELP) {
     ctx->print_help_and_exit = true;
-  } else if (param == VERSIONW || param == VERSION) {
+  } else if (param == CMDParamNames::VERSIONW ||
+             param == CMDParamNames::VERSION) {
     ctx->print_version_and_exit = true;
   } else {
     ctx->print_help_and_exit = true;

@@ -5,6 +5,8 @@
 #include <memory>
 
 #include "project-global-decls.h"
+#include "src/app/CMDParamNames.h"
+#include "src/log/log.h"
 
 namespace app
 {
@@ -29,8 +31,11 @@ int ApplicationHelpPrinter::run(std::shared_ptr<ApplicationContext> ctx)
             << std::endl
             << std::endl
             << "Where OPTIONS may be next:" << std::endl
-            << "\t--help or -h - print current help message" << std::endl
-            << "\t--version or -v - print application version, build git "
+            << "\t" << CMDParamNames::HELPW << " or " << CMDParamNames::HELP
+            << " - print current help message" << std::endl
+            << "\t" << CMDParamNames::VERSIONW << " or "
+            << CMDParamNames::VERSION
+            << " - print application version, build git "
                "commit and configure date"
             << std::endl;
 

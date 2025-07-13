@@ -81,6 +81,11 @@ bool CommandLineParser::parse_arg(std::shared_ptr<ApplicationContext> ctx,
   } else if (param == CMDParamNames::VERSIONW ||
              param == CMDParamNames::VERSION) {
     ctx->print_version_and_exit = true;
+  } else if (param == CMDParamNames::LOGPATHW ||
+             param == CMDParamNames::LOGPATH) {
+    // skipping already parsed cmd params
+    paramIndex++;
+    return true;
   } else {
     ctx->print_help_and_exit = true;
     ctx->push_error("Unknown parameter: " + param);
@@ -99,7 +104,8 @@ const std::set<std::string>& CommandLineParser::get_params_requiring_data()
 {
   // Place here command line parameters that are requiring
   // some data after it.
-  static const std::set<std::string> requireNext{};
+  static const std::set<std::string> requireNext{CMDParamNames::LOGPATHW,
+                                                 CMDParamNames::LOGPATH};
 
   return requireNext;
 }
@@ -110,6 +116,21 @@ bool CommandLineParser::requires_data(const std::string& param)
 
   return std::find(requireNext.cbegin(), requireNext.cend(), param) !=
          requireNext.cend();
+}
+
+std::string CommandLineParser::get_custom_logfile(int& gargc, char**& gargv)
+{
+  std::string logf;
+
+  for (int iter = 1; iter < gargc; ++iter) {
+    if ((gargv[iter] == CMDParamNames::LOGPATHW ||
+         gargv[iter] == CMDParamNames::LOGPATH) &&
+        (iter + 1) < gargc) {
+      logf = gargv[iter + 1];
+    }
+  }
+
+  return logf;
 }
 
 }  // namespace app

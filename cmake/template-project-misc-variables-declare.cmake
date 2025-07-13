@@ -131,7 +131,7 @@ option(
 )
 
 set(
-  MAX_LOG_LEVEL "2"
+  MAX_LOG_LEVEL "3"
   CACHE STRING 
   "Sets the maximum severity of the compiled log messages. Error=0. Trace=5. By default Info=3"
 )
@@ -140,6 +140,12 @@ option(
   ENABLE_NLOHMANN_JSON
   "Set to ON to enable the nlohmann json library (by using system wide available or through Internet)"
   OFF
+)
+
+set(
+  DEFAULT_LOG_FILE_PATH ""
+  CACHE STRING 
+  "Sets the default log file path"
 )
 
 string(TIMESTAMP PROJECT_CONFIGURE_DATE "%Y-%m-%d %H:%M:%S")

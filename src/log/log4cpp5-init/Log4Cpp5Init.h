@@ -41,9 +41,10 @@ class Log4Cpp5Init
    * @param toPrintValue If the true boolean value passed - all the log message
    * will be printed into the stdout also.
    */
-  explicit Log4Cpp5Init(const std::string& filepath = default_log_name,
-                        const unsigned short& nlvl = default_priority,
-                        const bool toPrintValue = true);
+  explicit Log4Cpp5Init(
+      const std::string& filepath = get_default_full_log_path(),
+      const unsigned short& nlvl = default_priority,
+      const bool toPrintValue = true);
 
   static std::string get_filename_only(const char* const filePath);
 
@@ -72,6 +73,10 @@ class Log4Cpp5Init
       const unsigned short& prjsev);
 
  private:
+  static std::string get_full_log_path(const std::string& logname);
+
+  static std::string get_default_full_log_path();
+
   bool print{false};
   std::string log_name;
   log4cpp::Priority::PriorityLevel log_lvl;

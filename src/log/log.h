@@ -19,6 +19,13 @@
   }
 #endif  // LOG_INIT
 
+#ifndef LOG_INIT_PATH
+#define LOG_INIT_PATH(filepath)                                \
+  {                                                            \
+    static log4cpp5i::Log4Cpp5Init log4cpp5initer{(filepath)}; \
+  }
+#endif  // LOG_INIT_PATH
+
 #ifndef LOG_INIT_DEFAULTS
 #define LOG_INIT_DEFAULTS()                        \
   {                                                \

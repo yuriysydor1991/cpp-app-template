@@ -88,4 +88,20 @@ log4cpp::Priority::PriorityLevel Log4Cpp5Init::get_log4cpp_priority(
   return log4cpp_prio[prjsev];
 }
 
+std::string Log4Cpp5Init::get_full_log_path(const std::string& logname)
+{
+  namespace fs = std::filesystem;
+
+  static const fs::path default_log_path = DEFAULT_LOG_FILE_PATH;
+
+  const fs::path logpath = default_log_path / logname;
+
+  return logpath.string();
+}
+
+std::string Log4Cpp5Init::get_default_full_log_path()
+{
+  return get_full_log_path(default_log_name);
+}
+
 }  // namespace log4cpp5i

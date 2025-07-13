@@ -12,7 +12,7 @@
         {
           "type": "git",
           "url": "https://git.code.sf.net/p/log4cpp/codegit",
-          "tag": "REL_1.1.5rc1_Aug_23_2024,",
+          "tag": "REL_1.1.5rc1_Aug_23_2024",
           "commit": "2d617ba9bdf1d994a3f0b4c3af70c17d04fed29a"
         }
       ],

@@ -107,7 +107,7 @@ class SimpleLogger
    * @param toPrintValue Defines if simple logger should print messages to the
    * stdout stream. See the SimpleLogger::print for more details.
    */
-  static void init(const std::string& filepath = default_log_name,
+  static void init(const std::string& filepath = get_default_full_log_path(),
                    const unsigned short& nlvl = MAX_LOG_LEVEL,
                    const bool toPrintValue = true);
 
@@ -120,6 +120,9 @@ class SimpleLogger
    * stamp for the log message.
    */
   static void insert_current_timestamp(std::ostringstream& oss);
+
+  static std::string get_full_log_path(const std::string& logname);
+  static std::string get_default_full_log_path();
 
   inline static std::atomic_bool toPrintMsgs{true};
   inline static std::fstream alogfile;

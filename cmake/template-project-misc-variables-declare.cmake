@@ -142,6 +142,12 @@ option(
   OFF
 )
 
+set(
+  DEFAULT_LOG_FILE_PATH ""
+  CACHE STRING 
+  "Sets the default log file path"
+)
+
 string(TIMESTAMP PROJECT_CONFIGURE_DATE "%Y-%m-%d %H:%M:%S")
 
 execute_process(

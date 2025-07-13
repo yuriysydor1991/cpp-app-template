@@ -41,7 +41,7 @@ class CommandLineParser
    *
    * @return Returns the custom log file path if any.
    */
-  static std::string get_custom_logfile(int& gargc, char**& gargv);
+  static std::string get_custom_logfile(const int& gargc, char** const& gargv);
 
  protected:
   /**

@@ -7,6 +7,7 @@
 #include "src/app/ApplicationContext.h"
 #include "src/app/ApplicationHelpPrinter.h"
 #include "src/app/ApplicationVersionPrinter.h"
+#include "src/app/CMDParamNames.h"
 #include "src/app/CommandLineParser.h"
 #include "src/app/IApplication.h"
 #include "src/log/log.h"
@@ -91,6 +92,15 @@ std::shared_ptr<IApplication> ApplicationFactory::create_application(
 
 int ApplicationFactory::run(int& gargc, char**& gargv)
 {
+  const std::string custom_log =
+      CommandLineParser::get_custom_logfile(gargc, gargv);
+
+  if (custom_log.empty()) {
+    LOG_INIT_DEFAULTS();
+  } else {
+    LOG_INIT_PATH(custom_log);
+  }
+
   std::shared_ptr<ApplicationContext> ctx = create_context(gargc, gargv);
 
   assert(ctx != nullptr);
@@ -108,6 +118,8 @@ int ApplicationFactory::run(int& gargc, char**& gargv)
     LOGE("Fail to create application instance");
     return IApplication::INVALID;
   }
+
+  LOGD("Starting the application");
 
   return app->run(ctx);
 }

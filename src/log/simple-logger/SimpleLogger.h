@@ -8,6 +8,10 @@
 
 #include "project-global-decls.h"
 
+#ifndef DEFAULT_LOG_FILE_PATH
+#define DEFAULT_LOG_FILE_PATH ""
+#endif  // DEFAULT_LOG_FILE_PATH
+
 /**
  * @brief The simple logger quick implementation encapsulation namespace.
  */

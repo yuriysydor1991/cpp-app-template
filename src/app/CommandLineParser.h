@@ -30,6 +30,19 @@ class CommandLineParser
    */
   virtual bool parse_args(std::shared_ptr<ApplicationContext> ctx);
 
+  /**
+   * @brief Method that searches through the cmd params for
+   * a custom log file path if any. Intended to be used at
+   * the ApplicationFactory app starter methods which
+   * are initing the log subsystem.
+   *
+   * @param gargc Count of a given command line parameters.
+   * @param gargv An array of a given command line parameters.
+   *
+   * @return Returns the custom log file path if any.
+   */
+  static std::string get_custom_logfile(int& gargc, char**& gargv);
+
  protected:
   /**
    * @brief Parse single argument with optional data provided next to it.

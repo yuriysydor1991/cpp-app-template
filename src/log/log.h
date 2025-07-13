@@ -15,6 +15,10 @@
   simple_logger::SimpleLogger::init(filepath, logLvl, printMessages);
 #endif  // LOG_INIT
 
+#ifndef LOG_INIT_PATH
+#define LOG_INIT_PATH(filepath) simple_logger::SimpleLogger::init(filepath);
+#endif  // LOG_INIT_PATH
+
 #ifndef LOG_INIT_DEFAULTS
 #define LOG_INIT_DEFAULTS() simple_logger::SimpleLogger::init();
 #endif  // LOG_INIT_DEFAULTS

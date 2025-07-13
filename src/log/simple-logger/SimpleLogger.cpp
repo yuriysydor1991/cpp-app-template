@@ -121,4 +121,20 @@ const std::string& SimpleLogger::lvl_repr(const unsigned short& glvl)
   return reprs[glvl];
 }
 
+std::string SimpleLogger::get_full_log_path(const std::string& logname)
+{
+  namespace fs = std::filesystem;
+
+  static const fs::path default_log_path = DEFAULT_LOG_FILE_PATH;
+
+  const fs::path logpath = default_log_path / logname;
+
+  return logpath.string();
+}
+
+std::string SimpleLogger::get_default_full_log_path()
+{
+  return get_full_log_path(default_log_name);
+}
+
 }  // namespace simple_logger

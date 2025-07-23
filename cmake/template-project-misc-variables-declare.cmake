@@ -148,6 +148,12 @@ set(
   "Sets the default log file path"
 )
 
+option(
+  ENABLE_LIBCURL
+  "Set to ON to enable the libcurl (by using system wide available or through the Internet)"
+  OFF
+)
+
 string(TIMESTAMP PROJECT_CONFIGURE_DATE "%Y-%m-%d %H:%M:%S")
 
 set(PROJECT_HTTP_LISTEN_ADDRESS "127.0.0.1" CACHE STRING "The default HTTP-server listen address")

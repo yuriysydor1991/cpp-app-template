@@ -37,7 +37,7 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
 
 See more at the [kytok.org.ua](http://www.kytok.org.ua/)
 
-Donate at [http://kytok.org.ua/page/pozertvy](http://kytok.org.ua/page/pozertvy)
+💵 Donate at [http://kytok.org.ua/page/pozertvy](http://kytok.org.ua/page/pozertvy)
 
 # Cloning the C++ template project
 

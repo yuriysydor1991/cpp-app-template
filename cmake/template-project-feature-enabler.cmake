@@ -38,3 +38,7 @@ endif()
 if (ENABLE_NLOHMANN_JSON)
   include(template-project-nlohman-json-enabler)
 endif()
+
+if (ENABLE_LIBCURL)
+  include(template-project-libcurl-enabler)
+endif()

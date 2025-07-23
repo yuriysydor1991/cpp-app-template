@@ -13,7 +13,7 @@ Enables rapid creation of a complete **software product** — not just raw code 
 Examine available branches to find your most applicable variant of the template or combine multiple branches by merging them to assemble the best suited template structure for your needs:
 
 - `main` branch at [project root page](https://github.com/yuriysydor1991/cpp-app-template) just the clear `main` function no additional app infrastructure classes and all available CMake integrations.
-- `app` branch at [app](https://github.com/yuriysydor1991/cpp-app-template/tree/app) (**current**) with just general application related classes to generate a single binary executable.
+- `app` branch at [app](https://github.com/yuriysydor1991/cpp-app-template/tree/app) with just general application related classes to generate a single binary executable.
 - `applib` branch at [applib](https://github.com/yuriysydor1991/cpp-app-template/tree/applib) for the application binary with additional separate library binary and header files (available for the installation) in order to provide library's code reusability across multiple applications.
 - `lib` branch at [lib](https://github.com/yuriysydor1991/cpp-app-template/tree/lib) for the library with the headers include files (and documentation) without target binary.
 - `appQt6` branch at [appQt6](https://github.com/yuriysydor1991/cpp-app-template/tree/appQt6) for the application general classes with additional defined structure for the Qt6 QML window application development.
@@ -30,7 +30,7 @@ Examine available branches to find your most applicable variant of the template 
 - `appMongoDBCpp4` branch at [appMongoDBCpp4](https://github.com/yuriysydor1991/cpp-app-template/tree/appMongoDBCpp4) the template infrastructure to fast start application development with the [MongoDB NoSQL DBMS](https://en.wikipedia.org/wiki/MongoDB) usage.
 - `appLog4Cpp5` branch at [appLog4Cpp5](https://github.com/yuriysydor1991/cpp-app-template/tree/appLog4Cpp5) the template infrastructure to fast start the application development with the [log4cpp](https://log4cpp.sourceforge.net/) extended logging library.
 - `appBoostLog` branch at [appBoostLog](https://github.com/yuriysydor1991/cpp-app-template/tree/appBoostLog) the template infrastructure to fast start the application development with the [Boost.Log](https://www.boost.org/doc/libs/latest/libs/log/doc/html/index.html) extended logging library.
-- `appCURL` branch at [appCURL](https://github.com/yuriysydor1991/cpp-app-template/tree/appCURL) the template infrastructure to fast start the application development with the [CURL](https://en.wikipedia.org/wiki/CURL) multi protocol client library (including the HTTP) to download data from the network.
+- `appCURL` branch at [appCURL](https://github.com/yuriysydor1991/cpp-app-template/tree/appCURL) (**current**) the template infrastructure to fast start the application development with the [CURL](https://en.wikipedia.org/wiki/CURL) multi protocol client library (including the HTTP) to download data from the network.
 
 Alter current `README.md` and a `CHANGELOG.md` files to match your implementation introduced into the template project. Examine the `doc` directory for possible translations of a current md document:
 - `uk_UA` at [doc/README.uk_UA.md](doc/README.uk_UA.md)

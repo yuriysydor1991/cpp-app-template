@@ -29,6 +29,7 @@
 - гілка `appMongoDBCpp4` розміщена за адресою [appMongoDBCpp4](https://github.com/yuriysydor1991/cpp-app-template/tree/appMySQLCppConn) котра містить інфраструктуру для швидкого старту розробки застосунку з використанням NoSQL СУБД [MongoDB](https://en.wikipedia.org/wiki/MongoDB)
 - гілка `appLog4Cpp5` розміщена за адресою [appLog4Cpp5](https://github.com/yuriysydor1991/cpp-app-template/tree/appLog4Cpp5) котра містить інфраструктуру для швидкого старту розробки застосунку з використанням багатофункціональної бібліотеки логування повідомлень [log4cpp](https://log4cpp.sourceforge.net/)
 - гілка `appBoostLog` розміщена за адресою [appBoostLog](https://github.com/yuriysydor1991/cpp-app-template/tree/appBoostLog) котра містить інфраструктуру для швидкого старту розробки застосунку з використанням бібліотеки логування повідомлень [Boost.Log](https://www.boost.org/doc/libs/latest/libs/log/doc/html/index.html)
+- гілка `appCURL` розміщена за адресою [appCURL](https://github.com/yuriysydor1991/cpp-app-template/tree/appCURL) котра містить інфраструктуру для швидкого старту розробки застосунку з використанням бібліотеки-клієнта [CURL](https://en.wikipedia.org/wiki/CURL) для завантажень даних з мережі і яка підтримує багато протоколів (включаючи HTTP).
 
 Редагуй поточний файл `README.md` і `CHANGELOG.md` щоб документація відповідала впровадженому коду. Для перекладів даного файлу `README.md`:
 - `uk_UA` за відносною адресою doc/README.uk_UA.md

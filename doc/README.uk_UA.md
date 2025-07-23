@@ -37,7 +37,7 @@
 
 Більше за посиланням [kytok.org.ua](http://www.kytok.org.ua/)
 
-Підтримай проект за посиланням [http://kytok.org.ua/page/pozertvy](http://kytok.org.ua/page/pozertvy)
+💵 Підтримай проект за посиланням [http://kytok.org.ua/page/pozertvy](http://kytok.org.ua/page/pozertvy)
 
 # Клонування С++ проекту-шаблону
 

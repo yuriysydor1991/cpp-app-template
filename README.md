@@ -362,6 +362,16 @@ The package file should be generated inside the project build root directory. Fo
 
 In order to examine details of the `deb` package configuration visit the `cmake/template-project-deb-enabler.cmake` file.
 
+## Enabling the libcurl
+
+In order to enable [libcurl](https://uk.wikipedia.org/wiki/CURL) for the project by using the installed system one or by fetching it by the available connection set an `ON` value to the `ENABLE_LIBCURL` CMake variable.
+
+```
+# Inside the source root directory
+
+cmake -S . -B build -DENABLE_LIBCURL=ON
+```
+
 # Run available executables
 
 ## Tests run

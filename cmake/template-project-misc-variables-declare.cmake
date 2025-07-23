@@ -153,6 +153,12 @@ set(
   "Sets the default log file path"
 )
 
+option(
+  ENABLE_LIBCURL
+  "Set to ON to enable the libcurl (by using system wide available or through the Internet)"
+  OFF
+)
+
 string(TIMESTAMP PROJECT_CONFIGURE_DATE "%Y-%m-%d %H:%M:%S")
 
 execute_process(

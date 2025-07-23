@@ -28,3 +28,4 @@ configure_file(
 
 add_subdirectory(app)
 add_subdirectory(log)
+add_subdirectory(CURL)

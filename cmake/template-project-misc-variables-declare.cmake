@@ -151,7 +151,7 @@ set(
 option(
   ENABLE_LIBCURL
   "Set to ON to enable the libcurl (by using system wide available or through the Internet)"
-  OFF
+  ON
 )
 
 string(TIMESTAMP PROJECT_CONFIGURE_DATE "%Y-%m-%d %H:%M:%S")

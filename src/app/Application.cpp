@@ -23,6 +23,8 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
 
   auto curl = curli::CURLController::create();
 
+  assert(curl != nullptr);
+
   auto data = curl->download(project_decls::PROJECT_HOME_URL);
 
   LOGI("Downloaded " << project_decls::PROJECT_HOME_URL

@@ -12,6 +12,7 @@ target_include_directories(
   PRIVATE ${APP_MOCKS_ROOT}/ApplicationContext
   PRIVATE ${APP_MOCKS_ROOT}/project-global-decls
   PRIVATE ${APP_MOCKS_ROOT}/log
+  PRIVATE ${APP_MOCKS_ROOT}/CURLController
   PRIVATE ${CMAKE_SOURCE_DIR}
 )
 

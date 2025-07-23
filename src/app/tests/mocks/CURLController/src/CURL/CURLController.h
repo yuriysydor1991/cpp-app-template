@@ -1,21 +1,15 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_CURLCONTROLLER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_CURLCONTROLLER_CLASS_H
 
-#include <curl/curl.h>
+#include <gmock/gmock.h>
 
 #include <memory>
 #include <string>
 #include <vector>
 
-/**
- * @brief The libcurl adaptor subsystem namespace.
- */
 namespace curli
 {
 
-/**
- * @brief The libcurl downloader class.
- */
 class CURLController
 {
  public:
@@ -25,14 +19,14 @@ class CURLController
   virtual ~CURLController() = default;
   CURLController() = default;
 
-  virtual download_buffer& download(const std::string& url);
+  MOCK_METHOD(download_buffer, download, (const std::string& url));
 
-  virtual download_buffer& get();
+  MOCK_METHOD(download_buffer, get, ());
 
-  static CURLControllerPtr create();
-
- private:
-  download_buffer cbuff;
+  inline static CURLControllerPtr create()
+  {
+    return std::make_shared<CURLController>();
+  }
 };
 
 using CURLControllerPtr = CURLController::CURLControllerPtr;

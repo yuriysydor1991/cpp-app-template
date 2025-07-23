@@ -17,6 +17,9 @@ namespace
 
 size_t wcallback(void* contents, size_t size, size_t nmemb, void* userp)
 {
+  assert(contents != nullptr);
+  assert(userp != nullptr);
+
   const auto givenSize = size * nmemb;
 
   CURLController* controller = static_cast<CURLController*>(userp);
@@ -30,24 +33,22 @@ size_t wcallback(void* contents, size_t size, size_t nmemb, void* userp)
 
   char* rawb = static_cast<char*>(contents);
 
-  controller->append(rawb, givenSize);
+  auto buff = controller->get();
+
+  buff.insert(buff.end(), rawb, rawb + givenSize);
 
   return givenSize;
 }
 
 }  // namespace
 
-bool CURLController::append(char* data, const size_t& dataSize)
-{
-  cbuff.insert(cbuff.end(), data, data + dataSize);
-
-  return true;
-}
+CURLController::download_buffer& CURLController::get() { return cbuff; }
 
 CURLController::download_buffer& CURLController::download(
     const std::string& url)
 {
-  static constexpr const size_t DEFAULT_BUFF_RESERVE = 1024U;
+  static constexpr const download_buffer::size_type DEFAULT_BUFF_RESERVE =
+      1024U;
 
   cbuff.clear();
 

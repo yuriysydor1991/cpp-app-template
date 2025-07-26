@@ -34,8 +34,12 @@ class CURLController
   static CURLControllerPtr create();
 
  private:
-  static constexpr const download_buffer::size_type DEFAULT_BUFF_RESERVE =
-      10240U;
+  inline static constexpr const download_buffer::size_type
+      DEFAULT_BUFF_RESERVE = 10240U;
+  inline static unsigned long long DEFAULT_TIMEOUT = 30L;
+  inline static unsigned long long DEFAULT_CONNECTTIMEOUT = 10L;
+  inline static unsigned long long DEFAULT_LOWSPEEDSECS = 10L;
+  inline static unsigned long long DEFAULT_LOWSPEEDLIMIT = 1L;
 
   download_buffer cbuff;
   CURL* curl{nullptr};

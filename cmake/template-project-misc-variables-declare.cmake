@@ -148,6 +148,12 @@ option(
   OFF
 )
 
+option(
+  ENABLE_GPROF
+  "Set to ON to enable the gprof application profiler analysis"
+  OFF
+)
+
 set(
   DEFAULT_LOG_FILE_PATH ""
   CACHE STRING 

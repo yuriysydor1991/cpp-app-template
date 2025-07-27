@@ -13,3 +13,5 @@ doc/*-html/*
 out/*
 CMakeSettings.json
 *.log
+gmon.out
+analysis.txt

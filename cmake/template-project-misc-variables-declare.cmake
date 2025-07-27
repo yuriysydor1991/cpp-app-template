@@ -148,6 +148,12 @@ option(
   OFF
 )
 
+option(
+  ENABLE_GPROF
+  "Set to ON to enable the gprof application profiler analysis"
+  OFF
+)
+
 string(TIMESTAMP PROJECT_CONFIGURE_DATE "%Y-%m-%d %H:%M:%S")
 
 execute_process(

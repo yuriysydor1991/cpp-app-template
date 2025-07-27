@@ -556,7 +556,7 @@ In order to enable [libcurl](https://uk.wikipedia.org/wiki/CURL) for the project
 cmake -S . -B build -DENABLE_LIBCURL=ON
 ```
 
-## Enabling gprof profiler analisis
+## Enabling gprof profiler analysis
 
 In order to perform the application profiler analysis with help of the `gprof` application enable it's support by setting the `ON` value for the `ENABLE_GPROF` CMake variable:
 

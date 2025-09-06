@@ -14,76 +14,51 @@ class UTEST_LibraryFacade : public Test
  public:
   using LibFactory = lib0impl::LibFactory;
 
-  UTEST_LibraryFacade() : facade{std::make_shared<LibraryFacade>()}
-  {
-    get_libfactory_mock_wrapper()->recreate_real();
-  }
-
-  ~UTEST_LibraryFacade() { get_libfactory_mock_wrapper()->real.reset(); }
-
-  LibFactory* get_libfactory_mock_wrapper()
-  {
-    EXPECT_FALSE(LibFactory::available_instances.empty());
-
-    if (LibFactory::available_instances.empty()) {
-      static LibFactory static_instance;
-
-      return &static_instance;
-    }
-
-    return *(LibFactory::available_instances.begin());
-  }
-
-  std::shared_ptr<LibraryFacade> facade;
+  UTEST_LibraryFacade() = default;
+  ~UTEST_LibraryFacade() = default;
 };
 
-TEST_F(UTEST_LibraryFacade, libcall_no_context_failure)
+TEST_F(UTEST_LibraryFacade, create_default_lib_success)
 {
-  LibFactory& libfactory = *get_libfactory_mock_wrapper();
+  MockFunction<void(LibFactory&)> mockEnsurer;
 
-  EXPECT_CALL(libfactory.get_real(), create_appropriate_lib(_)).Times(0);
-  EXPECT_CALL(libfactory.get_real(), create_default_context()).Times(0);
+  EXPECT_CALL(mockEnsurer, Call)
+      .Times(1)
+      .WillOnce(Invoke([](LibFactory& instance) {
+        EXPECT_CALL(instance, create_appropriate_lib(_)).Times(1);
+      }));
 
-  EXPECT_FALSE(facade->libcall({}));
+  LibFactory::onMockCreate = mockEnsurer.AsStdFunction();
+
+  auto res = LibraryFacade::create_library({});
+}
+
+TEST_F(UTEST_LibraryFacade, create_default_lib_direct_success)
+{
+  MockFunction<void(LibFactory&)> mockEnsurer;
+
+  EXPECT_CALL(mockEnsurer, Call)
+      .Times(1)
+      .WillOnce(Invoke([](LibFactory& instance) {
+        EXPECT_CALL(instance, create_default_lib()).Times(1);
+      }));
+
+  LibFactory::onMockCreate = mockEnsurer.AsStdFunction();
+
+  auto res = LibraryFacade::create_default_lib();
 }
 
 TEST_F(UTEST_LibraryFacade, create_library_context_success)
 {
-  LibFactory& libfactory = *get_libfactory_mock_wrapper();
+  MockFunction<void(LibFactory&)> mockEnsurer;
 
-  EXPECT_CALL(libfactory.get_real(), create_appropriate_lib(_)).Times(0);
-  EXPECT_CALL(libfactory.get_real(), create_default_context())
+  EXPECT_CALL(mockEnsurer, Call)
       .Times(1)
-      .WillOnce(Return(std::make_shared<LibraryContext>()));
+      .WillOnce(Invoke([](LibFactory& instance) {
+        EXPECT_CALL(instance, create_default_context()).Times(1);
+      }));
 
-  EXPECT_NE(facade->create_library_context(), nullptr);
-}
+  LibFactory::onMockCreate = mockEnsurer.AsStdFunction();
 
-TEST_F(UTEST_LibraryFacade, create_library_success)
-{
-  LibFactory& libfactory = *get_libfactory_mock_wrapper();
-
-  EXPECT_CALL(libfactory.get_real(), create_appropriate_lib(_))
-      .Times(1)
-      .WillOnce(Return(std::make_shared<LibMain>()));
-  EXPECT_CALL(libfactory.get_real(), create_default_context()).Times(0);
-
-  EXPECT_NE(facade->create_library(std::make_shared<LibraryContext>()),
-            nullptr);
-}
-
-TEST_F(UTEST_LibraryFacade, libcall_success)
-{
-  LibFactory& libfactory = *get_libfactory_mock_wrapper();
-
-  auto libctx = std::make_shared<LibraryContext>();
-  auto libinstance = std::make_shared<LibMain>();
-
-  EXPECT_CALL(libfactory.get_real(), create_appropriate_lib(libctx))
-      .Times(1)
-      .WillOnce(Return(libinstance));
-  EXPECT_CALL(libfactory.get_real(), create_default_context()).Times(0);
-  EXPECT_CALL(*libinstance, libcall(libctx)).Times(1).WillOnce(Return(true));
-
-  EXPECT_TRUE(facade->libcall(libctx));
+  auto res = LibraryFacade::create_library_context();
 }

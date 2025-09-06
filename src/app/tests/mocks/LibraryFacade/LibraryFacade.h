@@ -6,36 +6,38 @@
 #include <functional>
 #include <memory>
 
+#include "ILib.h"
 #include "LibraryContext.h"
 
 namespace templatelib0
 {
 
-class LibraryFacadeSynthBaseClass
+class LibraryFacade
 {
  public:
-  virtual ~LibraryFacadeSynthBaseClass() = default;
-  LibraryFacadeSynthBaseClass() = default;
+  using LibraryContextPtr = templatelib0::LibraryContextPtr;
 
-  virtual std::shared_ptr<LibraryContext> create_library_context() = 0;
-  virtual bool libcall(std::shared_ptr<LibraryContext> ctx) = 0;
-};
-
-class LibraryFacade : public LibraryFacadeSynthBaseClass
-{
- public:
   virtual ~LibraryFacade() = default;
-  LibraryFacade()
+  LibraryFacade() = default;
+
+  inline static testing::MockFunction<ILibPtr(LibraryContextPtr ctx)>
+      create_library_mock;
+  inline static testing::MockFunction<LibraryContextPtr()>
+      create_library_context_mock;
+  inline static testing::MockFunction<ILibPtr()> create_default_lib_mock;
+
+  inline static ILibPtr create_library(LibraryContextPtr ctx)
   {
-    if (onMockCreate) {
-      onMockCreate(*this);
-    }
+    return create_library_mock.AsStdFunction()(ctx);
   }
-
-  inline static std::function<void(LibraryFacade& instance)> onMockCreate;
-
-  MOCK_METHOD(std::shared_ptr<LibraryContext>, create_library_context, ());
-  MOCK_METHOD(bool, libcall, (std::shared_ptr<LibraryContext> ctx));
+  inline static LibraryContextPtr create_library_context()
+  {
+    return create_library_context_mock.AsStdFunction()();
+  }
+  inline static ILibPtr create_default_lib()
+  {
+    return create_default_lib_mock.AsStdFunction()();
+  }
 };
 
 }  // namespace templatelib0

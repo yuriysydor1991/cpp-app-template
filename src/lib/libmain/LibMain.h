@@ -3,8 +3,8 @@
 
 #include <memory>
 
-#include "src/lib/facade/ILib.h"
-#include "src/lib/facade/LibraryContext.h"
+#include "ILib.h"
+#include "LibraryContext.h"
 
 namespace lib0impl
 {
@@ -17,8 +17,11 @@ namespace lib0impl
 class LibMain : public templatelib0::ILib
 {
  public:
+  using LibMainPtr = std::shared_ptr<LibMain>;
+  using LibraryContextPtr = templatelib0::LibraryContextPtr;
+
   virtual ~LibMain() = default;
-  LibMain() = default;
+  LibMain();
 
   /**
    * @brief The implemented library interface method derived from an ILib
@@ -29,8 +32,12 @@ class LibMain : public templatelib0::ILib
    *
    * @return Returns a true value on the success and false in case of any error.
    */
-  virtual bool libcall(std::shared_ptr<LibraryContext> ctx) override;
+  virtual bool libcall(LibraryContextPtr ctx) override;
+
+  static LibMainPtr create();
 };
+
+using LibMainPtr = LibMain::LibMainPtr;
 
 }  // namespace lib0impl
 

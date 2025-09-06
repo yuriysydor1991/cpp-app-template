@@ -33,11 +33,11 @@ class Application : public IApplication
   virtual int run(std::shared_ptr<ApplicationContext> ctx) override;
 
  protected:
-  std::shared_ptr<templatelib0::LibraryFacade> create_lib_instance();
-  std::shared_ptr<converters::ApplicationContext2LibraryContext>
-  create_ctx_converter();
-  std::shared_ptr<templatelib0::LibraryContext> create_and_convert_libctx(
-      std::shared_ptr<templatelib0::LibraryFacade> libfacade,
+  using LibraryContextPtr = templatelib0::LibraryContextPtr;
+  using DefaultCtxConPtr = converters::DefaultCtxConPtr;
+
+  DefaultCtxConPtr create_ctx_converter();
+  LibraryContextPtr create_and_convert_libctx(
       std::shared_ptr<ApplicationContext> ctx);
 };
 

@@ -8,8 +8,8 @@
 #include <memory>
 #include <set>
 
-#include "src/lib/facade/ILib.h"
-#include "src/lib/facade/LibraryContext.h"
+#include "ILib.h"
+#include "LibraryContext.h"
 
 namespace lib0impl
 {
@@ -17,88 +17,45 @@ namespace lib0impl
 class LibFactorySynthParent
 {
  public:
-  using ILib = templatelib0::ILib;
-  using LibraryContext = ILib::LibraryContext;
+  using ILibPtr = templatelib0::ILibPtr;
+  using LibraryContextPtr = templatelib0::LibraryContextPtr;
+  using LibraryContext = templatelib0::LibraryContext;
 
   virtual ~LibFactorySynthParent() = default;
   LibFactorySynthParent() = default;
 
-  virtual std::shared_ptr<ILib> create_default_lib() = 0;
-  virtual std::shared_ptr<LibraryContext> create_default_context() = 0;
-  virtual std::shared_ptr<ILib> create_appropriate_lib(
-      std::shared_ptr<LibraryContext> ctx) = 0;
-};
-
-class LibFactoryRealMock : public LibFactorySynthParent
-{
- public:
-  virtual ~LibFactoryRealMock() = default;
-
-  LibFactoryRealMock() = default;
-
-  MOCK_METHOD(std::shared_ptr<ILib>, create_default_lib, (), (override));
-  MOCK_METHOD(std::shared_ptr<LibraryContext>, create_default_context, (),
-              (override));
-  MOCK_METHOD(std::shared_ptr<ILib>, create_appropriate_lib,
-              (std::shared_ptr<LibraryContext> ctx), (override));
-
-  inline static std::shared_ptr<LibFactoryRealMock> create_factory()
-  {
-    return std::make_shared<LibFactoryRealMock>();
-  }
+  virtual ILibPtr create_default_lib() = 0;
+  virtual LibraryContextPtr create_default_context() = 0;
+  virtual ILibPtr create_appropriate_lib(LibraryContextPtr ctx) = 0;
 };
 
 class LibFactory : public LibFactorySynthParent
 {
  public:
-  virtual ~LibFactory() { available_instances.erase(this); }
+  using LibFactoryPtr = std::shared_ptr<LibFactory>;
 
+  virtual ~LibFactory() = default;
   LibFactory()
   {
-    recreate_real();
-    available_instances.insert(this);
+    if (onMockCreate) {
+      onMockCreate(*this);
+    }
   }
 
-  inline static std::set<LibFactory*> available_instances;
+  inline static std::function<void(LibFactory& instance)> onMockCreate;
 
-  virtual std::shared_ptr<ILib> create_default_lib() override
-  {
-    EXPECT_NE(real, nullptr);
+  MOCK_METHOD(ILibPtr, create_default_lib, (), (override));
+  MOCK_METHOD(LibraryContextPtr, create_default_context, (), (override));
+  MOCK_METHOD(ILibPtr, create_appropriate_lib, (LibraryContextPtr ctx),
+              (override));
 
-    return real->create_default_lib();
-  }
-
-  virtual std::shared_ptr<LibraryContext> create_default_context() override
-  {
-    EXPECT_NE(real, nullptr);
-
-    return real->create_default_context();
-  }
-
-  virtual std::shared_ptr<ILib> create_appropriate_lib(
-      std::shared_ptr<LibraryContext> ctx) override
-  {
-    EXPECT_NE(real, nullptr);
-
-    return real->create_appropriate_lib(ctx);
-  }
-
-  inline static std::shared_ptr<LibFactory> create_factory()
+  inline static LibFactoryPtr create_factory()
   {
     return std::make_shared<LibFactory>();
   }
-
-  inline void recreate_real() { real = std::make_shared<LibFactoryRealMock>(); }
-
-  std::shared_ptr<LibFactoryRealMock> real;
-
-  inline LibFactoryRealMock& get_real()
-  {
-    EXPECT_NE(real, nullptr);
-
-    return *real;
-  }
 };
+
+using LibFactoryPtr = LibFactory::LibFactoryPtr;
 
 }  // namespace lib0impl
 

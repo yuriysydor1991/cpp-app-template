@@ -13,7 +13,7 @@ target_include_directories(
   PRIVATE ${GENERAL_MOCKS_ROOT}/log
   PRIVATE ${FACADE_MOCK_DIR}/LibFactory
   PRIVATE ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR}
-  PRIVATE ${CMAKE_SOURCE_DIR}/src/lib/facade
+  PRIVATE ${CMAKE_SOURCE_DIR}/src/lib/facade/public
 )
 
 target_link_libraries(

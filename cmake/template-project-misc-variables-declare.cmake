@@ -6,7 +6,7 @@ set(
 )
 
 set(
-  PROJECT_LIBRARY_NAME "${PROJECT_NAME}Lib"
+  PROJECT_LIBRARY_NAME "${PROJECT_NAME}-${CMAKE_PROJECT_VERSION_MAJOR}"
   CACHE STRING "Project main library name and target"
 )
 

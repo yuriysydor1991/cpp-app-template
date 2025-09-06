@@ -28,6 +28,7 @@ class ApplicationContext2LibraryContextSynthParent
 class ApplicationContext2LibraryContext
 {
  public:
+  using DefaultCtxConPtr = std::shared_ptr<ApplicationContext2LibraryContext>;
   using LibraryContext = templatelib0::LibraryContext;
   using ApplicationContext = app::ApplicationContext;
 
@@ -46,6 +47,8 @@ class ApplicationContext2LibraryContext
               (std::shared_ptr<ApplicationContext> appctx,
                std::shared_ptr<LibraryContext> libctx));
 };
+
+using DefaultCtxConPtr = ApplicationContext2LibraryContext::DefaultCtxConPtr;
 
 }  // namespace converters
 

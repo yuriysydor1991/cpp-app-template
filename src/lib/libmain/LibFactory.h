@@ -3,8 +3,8 @@
 
 #include <memory>
 
-#include "src/lib/facade/ILib.h"
-#include "src/lib/facade/LibraryContext.h"
+#include "ILib.h"
+#include "LibraryContext.h"
 
 namespace lib0impl
 {
@@ -17,8 +17,10 @@ namespace lib0impl
 class LibFactory
 {
  public:
-  using ILib = templatelib0::ILib;
-  using LibraryContext = ILib::LibraryContext;
+  using LibFactoryPtr = std::shared_ptr<LibFactory>;
+  using ILibPtr = templatelib0::ILibPtr;
+  using LibraryContextPtr = templatelib0::LibraryContextPtr;
+  using LibraryContext = templatelib0::LibraryContext;
 
   virtual ~LibFactory() = default;
   LibFactory() = default;
@@ -30,7 +32,7 @@ class LibFactory
    * @return Returns the default library implementation. Currently returns
    * the LibMain class instance.
    */
-  virtual std::shared_ptr<ILib> create_default_lib();
+  virtual ILibPtr create_default_lib();
 
   /**
    * @brief Creates the default context to use in libraries implementation
@@ -38,7 +40,7 @@ class LibFactory
    *
    * @return Returns empty library context instance.
    */
-  virtual std::shared_ptr<LibraryContext> create_default_context();
+  virtual LibraryContextPtr create_default_context();
 
   /**
    * @brief Creates appropriate library implementation instance
@@ -48,11 +50,12 @@ class LibFactory
    * or a nullptr in case of any error. Currently returns the LibMain class
    * instance only.
    */
-  virtual std::shared_ptr<ILib> create_appropriate_lib(
-      std::shared_ptr<LibraryContext> ctx);
+  virtual ILibPtr create_appropriate_lib(LibraryContextPtr ctx);
 
-  static std::shared_ptr<LibFactory> create_factory();
+  static LibFactoryPtr create_factory();
 };
+
+using LibFactoryPtr = LibFactory::LibFactoryPtr;
 
 }  // namespace lib0impl
 

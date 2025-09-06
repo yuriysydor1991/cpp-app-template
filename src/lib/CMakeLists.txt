@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
 add_library(
   ${PROJECT_LIBRARY_NAME}
   SHARED
@@ -7,8 +9,11 @@ add_library(
 
 target_include_directories(
   ${PROJECT_LIBRARY_NAME}
-  PRIVATE ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR}
-  INTERFACE facade
+  PRIVATE ${CMAKE_SOURCE_DIR}
+  PRIVATE ${CMAKE_BINARY_DIR}
+  PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/facade/public>
+    $<INSTALL_INTERFACE:include/${PROJECT_LIBRARY_NAME}>
 )
 
 set_target_properties(
@@ -28,3 +33,6 @@ install(
 
 add_subdirectory(facade)
 add_subdirectory(libmain)
+
+include(lib-cmake-module-gen)
+

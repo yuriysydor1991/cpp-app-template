@@ -21,18 +21,7 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  std::shared_ptr<templatelib0::LibraryFacade> libfacade =
-      create_lib_instance();
-
-  assert(libfacade != nullptr);
-
-  if (libfacade == nullptr) {
-    LOGE("No library instance created");
-    ctx->push_error("No library instance created");
-    return INVALID;
-  }
-
-  auto libctx = create_and_convert_libctx(libfacade, ctx);
+  auto libctx = create_and_convert_libctx(ctx);
 
   assert(libctx != nullptr);
 
@@ -41,7 +30,9 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  if (!libfacade->libcall(libctx)) {
+  auto libi = templatelib0::LibraryFacade::create_library(libctx);
+
+  if (!libi->libcall(libctx)) {
     LOGE("Invalid library execution status");
     ctx->push_error("Invalid library execution status");
     return INVALID;
@@ -50,13 +41,11 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
   return 0;
 }
 
-std::shared_ptr<templatelib0::LibraryContext>
-Application::create_and_convert_libctx(
-    std::shared_ptr<templatelib0::LibraryFacade> libfacade,
+Application::LibraryContextPtr Application::create_and_convert_libctx(
     std::shared_ptr<ApplicationContext> ctx)
 {
-  std::shared_ptr<templatelib0::LibraryContext> libctx =
-      libfacade->create_library_context();
+  LibraryContextPtr libctx =
+      templatelib0::LibraryFacade::create_library_context();
 
   assert(libctx != nullptr);
 
@@ -85,13 +74,7 @@ Application::create_and_convert_libctx(
   return libctx;
 }
 
-std::shared_ptr<templatelib0::LibraryFacade> Application::create_lib_instance()
-{
-  return std::make_shared<templatelib0::LibraryFacade>();
-}
-
-std::shared_ptr<converters::ApplicationContext2LibraryContext>
-Application::create_ctx_converter()
+Application::DefaultCtxConPtr Application::create_ctx_converter()
 {
   return std::make_shared<converters::ApplicationContext2LibraryContext>();
 }

@@ -10,8 +10,7 @@ namespace converters
 {
 
 bool ApplicationContext2LibraryContext::convert(
-    std::shared_ptr<ApplicationContext> appctx,
-    std::shared_ptr<LibraryContext> libctx)
+    std::shared_ptr<ApplicationContext> appctx, LibraryContextPtr libctx)
 {
   assert(appctx != nullptr);
   assert(libctx != nullptr);

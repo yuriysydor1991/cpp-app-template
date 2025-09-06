@@ -3,7 +3,7 @@
 
 #include <memory>
 
-#include "src/lib/facade/LibraryContext.h"
+#include "LibraryContext.h"
 
 /**
  * @brief The implementation part of the application library.
@@ -24,7 +24,7 @@ namespace templatelib0
 class ILib
 {
  public:
-  using LibraryContext = templatelib0::LibraryContext;
+  using ILibPtr = std::shared_ptr<ILib>;
 
   virtual ~ILib() = default;
   ILib() = default;
@@ -39,8 +39,10 @@ class ILib
    * @return Should return a true value on the success and false
    * in case of any error.
    */
-  virtual bool libcall(std::shared_ptr<LibraryContext> ctx) = 0;
+  virtual bool libcall(LibraryContextPtr ctx) = 0;
 };
+
+using ILibPtr = ILib::ILibPtr;
 
 }  // namespace templatelib0
 

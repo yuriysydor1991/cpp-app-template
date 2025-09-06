@@ -20,7 +20,9 @@ namespace converters
 class ApplicationContext2LibraryContext
 {
  public:
-  using LibraryContext = templatelib0::LibraryContext;
+  using DefaultCtxConPtr = std::shared_ptr<ApplicationContext2LibraryContext>;
+
+  using LibraryContextPtr = templatelib0::LibraryContextPtr;
   using ApplicationContext = app::ApplicationContext;
 
   virtual ~ApplicationContext2LibraryContext() = default;
@@ -41,8 +43,10 @@ class ApplicationContext2LibraryContext
    * a false boolean value in case of any error.
    */
   virtual bool convert(std::shared_ptr<ApplicationContext> appctx,
-                       std::shared_ptr<LibraryContext> libctx);
+                       LibraryContextPtr libctx);
 };
+
+using DefaultCtxConPtr = ApplicationContext2LibraryContext::DefaultCtxConPtr;
 
 }  // namespace converters
 

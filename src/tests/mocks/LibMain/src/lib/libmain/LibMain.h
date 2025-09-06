@@ -5,8 +5,8 @@
 
 #include <memory>
 
-#include "src/lib/facade/ILib.h"
-#include "src/lib/facade/LibraryContext.h"
+#include "ILib.h"
+#include "LibraryContext.h"
 
 namespace lib0impl
 {
@@ -14,11 +14,18 @@ namespace lib0impl
 class LibMain : public templatelib0::ILib
 {
  public:
+  using LibMainPtr = std::shared_ptr<LibMain>;
+  using LibraryContextPtr = templatelib0::LibraryContextPtr;
+
   virtual ~LibMain() = default;
   LibMain() = default;
 
-  MOCK_METHOD(bool, libcall, (std::shared_ptr<LibraryContext> ctx), (override));
+  MOCK_METHOD(bool, libcall, (LibraryContextPtr ctx), (override));
+
+  inline static LibMainPtr create() { return std::make_shared<LibMain>(); }
 };
+
+using LibMainPtr = LibMain::LibMainPtr;
 
 }  // namespace lib0impl
 

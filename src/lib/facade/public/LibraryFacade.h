@@ -31,7 +31,15 @@ class LibraryFacade
    *
    * @return Returns empty library context instance of the LibraryContext class.
    */
-  virtual std::shared_ptr<LibraryContext> create_library_context();
+  static LibraryContextPtr create_library_context();
+
+  /**
+   * @brief Creates the default library implementation.
+   *
+   * @return Returns the default library implementation. Currently returns
+   * the LibMain class instance.
+   */
+  static ILibPtr create_default_lib();
 
   /**
    * @brief Creates and returns the appropriate ILib instance.
@@ -40,22 +48,7 @@ class LibraryFacade
    *
    * @return Returns a new ILib descendant or a nullptr in case of any error.
    */
-  virtual std::shared_ptr<ILib> create_library(
-      std::shared_ptr<LibraryContext> ctx);
-
-  /**
-   * @brief An interface for the library functionality. Library may
-   * behave differently in accordance with provided data in the ctx param.
-   * Should be filled appropriately in order for the library function properly.
-   * Creates appropriate ILib instance calls it's libcall method.
-   * The ILib instance will be destructed afterwards.
-   *
-   * @param ctx A LibraryContext class instance filled with necessary data in
-   * order for the library implementation to work properly.
-   *
-   * @return Returns a true value on the success and false in case of any error.
-   */
-  virtual bool libcall(std::shared_ptr<LibraryContext> ctx);
+  static ILibPtr create_library(LibraryContextPtr ctx);
 };
 
 }  // namespace templatelib0

@@ -5,13 +5,6 @@ target_sources(
   PRIVATE LibraryFacade.cpp
 )
 
-install(
-  FILES 
-    LibraryFacade.h 
-    LibraryContext.h
-    ILib.h
-  DESTINATION include/${PROJECT_LIBRARY_NAME} 
-  COMPONENT Development
-)
+install(DIRECTORY public/ DESTINATION include/${PROJECT_LIBRARY_NAME})
 
 add_subdirectory(tests)

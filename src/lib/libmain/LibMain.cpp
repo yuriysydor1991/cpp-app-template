@@ -18,7 +18,7 @@ LibMain::LibMain()
   }
 }
 
-bool LibMain::libcall([[maybe_unused]] std::shared_ptr<LibraryContext> ctx)
+bool LibMain::libcall([[maybe_unused]] LibraryContextPtr ctx)
 {
   assert(ctx != nullptr);
 
@@ -31,5 +31,7 @@ bool LibMain::libcall([[maybe_unused]] std::shared_ptr<LibraryContext> ctx)
 
   return true;
 }
+
+LibMainPtr LibMain::create() { return std::make_shared<LibMain>(); }
 
 }  // namespace lib0impl

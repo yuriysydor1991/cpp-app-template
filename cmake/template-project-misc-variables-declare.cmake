@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
 set(
-  PROJECT_LIBRARY_NAME "${PROJECT_NAME}Lib"
+  PROJECT_LIBRARY_NAME "${PROJECT_NAME}-${CMAKE_PROJECT_VERSION_MAJOR}"
   CACHE STRING "Project main library name and target"
 )
 

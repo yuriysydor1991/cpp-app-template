@@ -5,8 +5,41 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [main0.11.0] - 2025-09-08
+
+- ff7a28a Fixing typo in the README.md
+- 5851c08 Introducing the valgrind callgrind profiler target for the project
+- 0a57308 Introducing the gprof profiling target
+- 37e942c Adding money emoji to donation notice in the READMEs
+- 1bbabb5 Introducing the appCURL branch info into the READMEs
+- f0adc15 Erasing redundant iostream include in the main.cpp
+- ea880b0 Introducing the DEFAULT_LOG_FILE_PATH cmake var and cpp macro to specify default dst log file location
+- fa33d33 Introducing the enabling libcurl section into the READMEs
+- 898b248 Introducing the libcurl cmake enabler script
+- cb582a7 Moving the DEFAULT_LOG_FILE_PATH macro declaration into severity-macro-consts.h
+- a4a984f Introducing some marketing sentences in the README's goal section
+- 3913f28 Introducing the cmake/enablers subdirectory to locate the 3rd-party dependencies
+- b44ec67 Renaming emplate-project-make-GTest-available - template-project-GTest-enabler
+- ca466f6 Introducing the NLohmann JSON library enabler cmake module
+- a0590d6 Fixing the sanitizers cmake file in the READMEs
+- 2631a54 Avoiding unnecessary badly portable localtime_r usage
+- 626884a Introducing the thread id into simple logger
+- fb5d64e Avoiding backward time in the simple logs
+- 42933e1 Avoiding final log multiple str fetches
+- 1f456f4 Refining the log current timestamp method, increasing thread safety
+- 5da6342 Introducing the CMake configurable log severity messages compilation switch
+- 36e0d25 Introducing the appBoostLog branch info into the READMEs
+- 7d504d9 Hiding the compile options cmake files under separate directory
+- c5341ac Enhancing sanitizers combinations and new cmake dir for ones
+- 3ae7d93 Introducing the sanitizers enabling info into the READMEs
+- cb841dc Removing redundant cmake traces messages
+- 866d012 Introducing the GCC compiler sanitizers
+- 045cc31 Inserting release main0.10.0 to releases lists in CHANGELOG.md
+- 2296397 Incrementing version to 0.10.0
+
 ## [main0.10.0] - 2025-06-06
 
+- 976e79f Release 0.10.0 2025-06-06
 - 27ebb79 Refined issues in the Docker READMEs doc
 - 9b01974 Separating the Docker single container build and run targets
 - cc85abf Erasing UTs build and ctest call inside the Dockerfile
@@ -218,6 +251,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[main0.11.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/main0.11.0)
 [main0.10.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/main0.10.0)
 [main0.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/main0.9.0)
 [app0.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.8.0)

@@ -5,8 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [lib0.10.0] - 2025-09-08
+
+- ea177d5 Including the main Config.cmake file into installation candidates
+- 2c3ba48 Library infrastructure reorg. Introducing basic installable CMake module.
+- 3d8dc47 Adding money emoji to donation notice in the READMEs
+- d4cff25 Introducing the appCURL branch info into the READMEs
+- 3b7532b Introducing the enabling libcurl section into the READMEs
+- ff3563b Introducing the libcurl cmake enabler script
+- 28c0524 Moving the DEFAULT_LOG_FILE_PATH macro declaration into severity-macro-consts.h
+- f71398f Applied clang-format
+- 1e8e770 Introducing the DEFAULT_LOG_FILE_PATH cmake var and cpp macro to specify default dst log file location
+- 49ddb64 Introducing some marketing sentences in the README's goal section
+- bf79464 Introducing the cmake/enablers subdirectory to locate the 3rd-party dependencies
+- 3190db6 Renaming emplate-project-make-GTest-available - template-project-GTest-enabler
+- c18581a Introducing the NLohmann JSON library enabler cmake module
+- 29f0505 Avoiding unnecessary badly portable localtime_r usage
+- 6ec8b3c Introducing the thread id into simple logger
+- 4043abe Avoiding backward time in the simple logs
+- b72fc91 Avoiding final log multiple str fetches
+- ba132bb Refining the log current timestamp method, increasing thread safety
+- 171ea6d Introducing the CMake configurable log severity messages compilation switch
+- 4d3757f Hiding the compile options cmake files under separate directory
+- ada1be2 Incrementing version to 0.10.0
+
 ## [lib0.9.0] - 2025-06-06
 
+- 6e185e4 Incrementing version to 0.9.0
+- 45f0e36 Release lib0.9.0 2025-06-06
 - cf3b980 Adding project neatness to the READMEs
 - f1ed4bb Introducing the appLog4Cpp5 branch info into the READMEs
 - 16de7ad Implementing the logging macros and a simple logger to perform log messaging
@@ -221,6 +247,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[lib0.10.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/lib0.10.0)
 [lib0.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/lib0.9.0)
 [lib0.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/lib0.8.0)
 [applib0.7.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/applib0.7.0)

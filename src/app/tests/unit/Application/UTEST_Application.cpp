@@ -20,6 +20,7 @@ class UTEST_Application : public Test
       : app{std::make_shared<Application>()},
         appCtx{std::make_shared<ApplicationContext>(argc, argv)}
   {
+    templatelib0::LibraryFacade::resetMocks();
   }
 
   ~UTEST_Application()

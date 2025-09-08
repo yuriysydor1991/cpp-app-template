@@ -14,6 +14,7 @@ target_include_directories(
   PRIVATE ${GENERAL_MOCKS_ROOT}/LibraryContext
   PRIVATE ${APP_MOCKS_ROOT}/LibraryFacade
   PRIVATE ${APP_MOCKS_ROOT}/project-global-decls
+  PRIVATE ${APP_MOCKS_ROOT}/LibMain
   PRIVATE ${GENERAL_MOCKS_ROOT}/log
   PRIVATE ${CMAKE_SOURCE_DIR}
   PRIVATE ${CMAKE_SOURCE_DIR}/src/lib/facade/public

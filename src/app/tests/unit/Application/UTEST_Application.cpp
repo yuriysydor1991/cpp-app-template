@@ -3,6 +3,7 @@
 
 #include "LibraryFacade.h"
 #include "src/app/Application.h"
+#include "src/lib/libmain/LibMain.h"
 
 using namespace app;
 using namespace testing;
@@ -23,6 +24,7 @@ class UTEST_Application : public Test
 
   ~UTEST_Application()
   {
+    templatelib0::LibraryFacade::resetMocks();
     ApplicationContext2LibraryContext::onMockCreate = nullptr;
   }
 
@@ -35,16 +37,22 @@ class UTEST_Application : public Test
 
 TEST_F(UTEST_Application, no_context_error) { EXPECT_NE(app->run({}), 0); }
 
-/// @todo: Refine tests!
 TEST_F(UTEST_Application, normal_exit)
 {
   MockFunction<void(ApplicationContext2LibraryContext&)> converterEnsurer;
 
   auto ctxInstance = std::make_shared<LibraryContext>();
+  auto libmain = std::make_shared<lib0impl::LibMain>();
 
-  EXPECT_CALL(templatelib0::LibraryFacade::create_library_context_mock, Call())
+  EXPECT_CALL(*templatelib0::LibraryFacade::create_library_context_mock, Call())
       .Times(1)
       .WillOnce(Return(ctxInstance));
+
+  EXPECT_CALL(*templatelib0::LibraryFacade::create_library_mock, Call(_))
+      .Times(1)
+      .WillOnce(Return(libmain));
+
+  EXPECT_CALL(*libmain, libcall(_)).Times(1).WillOnce(Return(true));
 
   EXPECT_CALL(converterEnsurer, Call(_))
       .Times(1)
@@ -69,7 +77,7 @@ TEST_F(UTEST_Application, failure_exit_no_lib_context)
 {
   MockFunction<void(ApplicationContext2LibraryContext&)> converterEnsurer;
 
-  EXPECT_CALL(templatelib0::LibraryFacade::create_library_context_mock, Call())
+  EXPECT_CALL(*templatelib0::LibraryFacade::create_library_context_mock, Call())
       .Times(1)
       .WillOnce(Return(nullptr));
 
@@ -95,7 +103,7 @@ TEST_F(UTEST_Application, failure_exit_invalid_context_conversion_result)
 
   auto ctxInstance = std::make_shared<LibraryContext>();
 
-  EXPECT_CALL(templatelib0::LibraryFacade::create_library_context_mock, Call())
+  EXPECT_CALL(*templatelib0::LibraryFacade::create_library_context_mock, Call())
       .Times(1)
       .WillOnce(Return(ctxInstance));
 
@@ -125,10 +133,17 @@ TEST_F(UTEST_Application, failure_exit_invalid_lib_result)
   MockFunction<void(ApplicationContext2LibraryContext&)> converterEnsurer;
 
   auto ctxInstance = std::make_shared<LibraryContext>();
+  auto libmain = std::make_shared<lib0impl::LibMain>();
 
-  EXPECT_CALL(templatelib0::LibraryFacade::create_library_context_mock, Call())
+  EXPECT_CALL(*templatelib0::LibraryFacade::create_library_context_mock, Call())
       .Times(1)
       .WillOnce(Return(ctxInstance));
+
+  EXPECT_CALL(*templatelib0::LibraryFacade::create_library_mock, Call(_))
+      .Times(1)
+      .WillOnce(Return(libmain));
+
+  EXPECT_CALL(*libmain, libcall(_)).Times(1).WillOnce(Return(false));
 
   EXPECT_CALL(converterEnsurer, Call(_))
       .Times(1)

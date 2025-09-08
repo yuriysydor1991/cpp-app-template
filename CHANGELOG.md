@@ -5,8 +5,46 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appQt60.9.0] - 2025-09-08
+
+- 141985f Fixing typo in the README.md
+- f5bc559 Introducing the valgrind callgrind profiler target for the project
+- 2bdd9c3 Introducing the gprof profiling target
+- 3a06007 Adding money emoji to donation notice in the READMEs
+- 3093ccf Introducing the appCURL branch info into the READMEs
+- a59f05b Introducing the enabling libcurl section into the READMEs
+- 78b5195 Introducing the libcurl cmake enabler script
+- 9da8ae1 Moving the DEFAULT_LOG_FILE_PATH macro declaration into severity-macro-consts.h
+- 1632298 Refining unit tests to match the new log code
+- 2c3856a Introducing a custom log file cmd param for the executable
+- efcc4e0 Introducing the DEFAULT_LOG_FILE_PATH cmake var and cpp macro to specify default dst log file location
+- 5ea75c0 Introducing the CMDParamNames class to encapsulate CMD params names
+- 79da049 Introducing some marketing sentences in the README's goal section
+- 2c41781 Introducing the cmake/enablers subdirectory to locate the 3rd-party dependencies
+- a8545c9 Renaming emplate-project-make-GTest-available - template-project-GTest-enabler
+- b15babc Introducing the NLohmann JSON library enabler cmake module
+- d58f0f9 Fixing the sanitizers cmake file in the READMEs
+- 1103143 Avoiding unnecessary badly portable localtime_r usage
+- 0610361 Introducing the thread id into simple logger
+- baa46e2 Avoiding backward time in the simple logs
+- 6f03357 Avoiding final log multiple str fetches
+- b0e30c2 Refining the log current timestamp method, increasing thread safety
+- 5313892 Introducing the CMake configurable log severity messages compilation switch
+- fe1abb6 Introducing the appBoostLog branch info into the READMEs
+- 712551b Hiding the compile options cmake files under separate directory
+- 6d10760 Enhancing sanitizers combinations and new cmake dir for ones
+- ed87682 Introducing the sanitizers enabling info into the READMEs
+- 62187d9 Removing redundant cmake traces messages
+- a7c0386 Introducing the GCC compiler sanitizers
+- 123cdb6 Decomposing the reqources paths into specialized class
+- a276e1b Renaming the templateQt6app namespace into the more short Qt6i
+- 44e5964 introducing the Application's instance failure exit UT
+- 1c3672b Pasing the whole application context instance to the Qt6 controller Qt6Initer
+- c19319d Incrementing version to 0.9.0
+
 ## [appQt60.8.0] - 2025-06-06
 
+- d9aeeb7 Release appQt60.8.0 2025-06-06
 - e671fb9 Refined issues in the Docker READMEs doc
 - 376a0d4 Refining the Docker target for the Qt6
 - 985e78c Separating the Docker single container build and run targets
@@ -204,6 +242,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[appQt60.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appQt60.9.0)
 [appQt60.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appQt60.8.0)
 [appQt60.7.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appQt60.7.0)
 [app0.6.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.6.0)

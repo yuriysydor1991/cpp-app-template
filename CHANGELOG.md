@@ -5,6 +5,43 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [applib0.10.0] - 2025-09-08
+
+- 6290c4e Repairing segflt on the App's UTs
+- 8eb03ba Refining Application's UTs
+- 1c4a74e Including the main Config.cmake file into installation candidates
+- 8758a28 Library infrastructure reorg. Introducing basic installable CMake module.
+- cae6ce6 Fixing typo in the README.md
+- 9be1e05 Introducing the valgrind callgrind profiler target for the project
+- 363dd55 Introducing the gprof profiling target
+- 2ede6fa Adding money emoji to donation notice in the READMEs
+- 29b35a6 Introducing the appCURL branch info into the READMEs
+- b5a186d Introducing the enabling libcurl section into the READMEs
+- 72c984e Introducing the libcurl cmake enabler script
+- 09a78df Moving the DEFAULT_LOG_FILE_PATH macro declaration into severity-macro-consts.h
+- 37d345c Refining unit tests to match the new log code
+- 3d7add8 Introducing a custom log file cmd param for the executable
+- d470e5c Introducing the DEFAULT_LOG_FILE_PATH cmake var and cpp macro to specify default dst log file location
+- 5a38cf0 Introducing the CMDParamNames class to encapsulate CMD params names
+- b454c72 Introducing some marketing sentences in the README's goal section
+- aa05140 Introducing the cmake/enablers subdirectory to locate the 3rd-party dependencies
+- ceb5b6e Renaming emplate-project-make-GTest-available - template-project-GTest-enabler
+- e4227d0 Introducing the NLohmann JSON library enabler cmake module
+- fc07827 Fixing the sanitizers cmake file in the READMEs
+- 88ddbf2 Avoiding unnecessary badly portable localtime_r usage
+- 5ca30e4 Introducing the thread id into simple logger
+- 1afa9bb Avoiding backward time in the simple logs
+- edf6d90 Avoiding final log multiple str fetches
+- 33b6962 Refining the log current timestamp method, increasing thread safety
+- 9e8999d Introducing the CMake configurable log severity messages compilation switch
+- 038e9c9 Introducing the appBoostLog branch info into the READMEs
+- 7ec2633 Hiding the compile options cmake files under separate directory
+- 2166e5a Enhancing sanitizers combinations and new cmake dir for ones
+- 6485392 Introducing the sanitizers enabling info into the READMEs
+- 2190f74 Removing redundant cmake traces messages
+- a8833e9 Introducing the GCC compiler sanitizers
+- f2f2653 Release applib0.9.0 2025-06-06
+
 ## [applib0.9.0] - 2025-06-06
 
 - 8c15c24 Incrementing version to 0.9.0
@@ -223,6 +260,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[applib0.10.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/applib0.10.0)
 [applib0.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/applib0.9.0)
 [applib0.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/applib0.8.0)
 [applib0.7.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/applib0.7.0)
@@ -232,3 +270,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [app0.3.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.3.0)
 [app0.2.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.2.0)
 [v0.1.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/v0.1.0)
+

@@ -11,3 +11,4 @@ include(template-project-docker-variables-declare)
 configure_file(${DOCKERFILE_SRC} ${DOCKERFILE_DST})
 
 include(template-project-docker-single-runner-target)
+include(template-project-docker-Jenkins-pipeline-single-runner-target)

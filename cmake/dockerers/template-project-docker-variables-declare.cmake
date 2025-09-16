@@ -39,9 +39,16 @@ set(
   "The Dockerfile destination name"
 )
 
+set(
+  PROJECT_BINARY_PATH
+  ${CMAKE_BINARY_DIR}/src/${PROJECT_BINARY_NAME}
+)
+
 message(STATUS "Docker executable: ${DOCKER_EXEC}")
 message(STATUS "Dockerfile configure source full path: ${DOCKERFILE_SRC}")
 message(STATUS "Dockerfile destination name: ${DOCKERFILE_DST}")
 message(STATUS "Docker single run instance name: ${DOCKER_SINGLE_RUN_NAME}")
 message(STATUS "Docker host address and port: ${DOCKER_HOST_STR}")
 message(STATUS "Project current branch name: ${PROJECT_CURRENT_BRANCH_NAME}")
+message(STATUS "Project binary filepath: ${PROJECT_BINARY_PATH}")
+

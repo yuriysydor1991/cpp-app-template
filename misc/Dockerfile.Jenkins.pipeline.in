@@ -9,6 +9,8 @@ RUN apt install -y cppcheck
 RUN apt install -y valgrind
 RUN apt install -y flatpak
 RUN apt install -y clang-tidy
+RUN apt install -y libgtest-dev
+RUN apt install -y libgmock-dev
 
 ARG srcD=/usr/src
 ARG BUILDDIR=$srcD/${PROJECT_BINARY_NAME}-build-docker-singlerun

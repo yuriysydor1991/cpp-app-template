@@ -1,7 +1,3 @@
-def runApp() {
-  sh 'cd $BUILDDIR && src/CppAppTemplate'
-}
-  
 pipeline {
   agent any
   
@@ -12,12 +8,19 @@ pipeline {
 
   stages {
     stage('Checkout') {
+      when {
+        expression {
+          def files = sh(script: 'ls -A', returnStdout: true).trim()
+          return files == ""
+        }
+      }
+      
       steps {
         git branch: 'app',
             url: 'https://github.com/yuriysydor1991/cpp-app-template.git'
       }
     }
-      
+    
     stage('Code format configure') {
       steps {
         sh '''
@@ -47,7 +50,8 @@ pipeline {
         sh 'rm -fr $BUILDDIR'
         sh '''
           cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Debug -DENABLE_UNIT_TESTS=ON \
-            -DENABLE_SANITIZERS=ON -DMAX_LOG_LEVEL=5
+            -DENABLE_SANITIZERS=ON -DENABLE_CLANG_TIDY=ON -DENABLE_CPPCHECK=ON \
+            -DMAX_LOG_LEVEL=5
         '''
       }
     }
@@ -56,6 +60,14 @@ pipeline {
       steps {
         sh '''
           cmake --build $BUILDDIR -j$(nproc)
+        '''
+      }
+    }
+    
+    stage('cppcheck') {
+      steps {
+        sh '''
+          cmake --build $BUILDDIR -j$(nproc) --target cppcheck
         '''
       }
     }
@@ -96,14 +108,6 @@ pipeline {
       post { always { junit "$BUILDDIR/$BDJUNITOUT/*.xml" } }
     }
     
-    stage('Build try run') {
-      steps {
-        script { 
-          runApp()
-        }
-      }
-    }
-    
     stage('Release configure') {
       steps {
         sh 'rm -fr $BUILDDIR'
@@ -118,14 +122,6 @@ pipeline {
         sh '''
           cmake --build $BUILDDIR -j$(nproc)
         '''
-      }
-    }
-    
-    stage('Release try run') {
-      steps {
-        script { 
-          runApp()
-        }
       }
     }
   }

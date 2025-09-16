@@ -1,0 +1,186 @@
+pipeline {
+  agent any
+  
+  environment {
+    BUILDDIR="build"
+    BDJUNITOUT="junit-out"
+  }
+
+  stages {
+    stage('Checkout') {
+      when {
+        expression {
+          def files = sh(script: 'ls -A', returnStdout: true).trim()
+          return files == ""
+        }
+      }
+      
+      steps {
+        git branch: 'applib',
+            url: 'https://github.com/yuriysydor1991/cpp-app-template.git'
+      }
+    }
+    
+    stage('Code format configure') {
+      steps {
+        sh '''
+          cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Debug -DENABLE_CLANGFORMAT=ON
+        '''
+      }
+    }
+    
+    stage('Code format build (clang-format)') {
+      steps {
+        script {
+          def files = sh(script: 'git ls-files -m', returnStdout: true).trim()
+          return files == ""
+        }
+      }
+      
+      post {
+        success {
+          echo 'No files changed - OK'
+        }
+        failure {
+          echo 'Some files are not formatted - FAIL'
+        }
+      }
+    }
+
+    stage('Debug configure') {
+      steps {
+        sh 'rm -fr $BUILDDIR'
+        sh '''
+          cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Debug -DENABLE_UNIT_TESTS=ON \
+            -DENABLE_SANITIZERS=ON -DENABLE_CPPCHECK=ON \
+            -DMAX_LOG_LEVEL=5
+        '''
+      }
+    }
+    
+    stage('Debug build') {
+      steps {
+        sh '''
+          cmake --build $BUILDDIR -j$(nproc)
+        '''
+      }
+    }
+    
+    stage('cppcheck') {
+      steps {
+        sh '''
+          cmake --build $BUILDDIR -j$(nproc) --target cppcheck
+        '''
+      }
+    }
+    
+    stage('Unit Tests') {
+      parallel {
+        stage('UTEST_Application') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_Application\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_Application.junit.xml'
+          }
+        }
+        stage('UTEST_ApplicationContext') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationContext\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationContext.junit.xml'
+          }
+        }
+        stage('UTEST_ApplicationFactory') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationFactory\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationFactory.junit.xml'
+          }
+        }
+        stage('UTEST_ApplicationHelpPrinter') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationHelpPrinter\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationHelpPrinter.junit.xml' 
+          }
+        }
+        stage('UTEST_ApplicationVersionPrinter') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationVersionPrinter\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationVersionPrinter.junit.xml'
+          }
+        }
+        stage('UTEST_CommandLineParser') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_CommandLineParser\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_CommandLineParser.junit.xml'
+          }
+        }
+        stage('UTEST_ApplicationContext2LibraryContext') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationContext2LibraryContext\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationContext2LibraryContext.junit.xml'
+          }
+        }
+        stage('UTEST_LibraryFacade') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_LibraryFacade\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_LibraryFacade.junit.xml'
+          }
+        }
+        stage('UTEST_LibMain') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_LibMain\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_LibMain.junit.xml'
+          }
+        }
+        stage('UTEST_LibFactory') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_LibFactory\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_LibFactory.junit.xml'
+          }
+        }
+      }
+      post { always { junit "$BUILDDIR/$BDJUNITOUT/*.xml" } }
+    }
+    
+    stage('Debug configure (clang-tidy)') {
+      steps {
+        sh 'rm -fr $BUILDDIR'
+        sh '''
+          cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Debug -DENABLE_CLANG_TIDY=ON \
+            -DMAX_LOG_LEVEL=5
+        '''
+      }
+    }
+    
+    stage('Debug build (clang-tidy)') {
+      steps {
+        sh '''
+          cmake --build $BUILDDIR -j$(nproc)
+        '''
+      }
+    }
+    
+    stage('Release configure') {
+      steps {
+        sh 'rm -fr $BUILDDIR'
+        sh '''
+          cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Release
+        '''
+      }
+    }
+    
+    stage('Release build') {
+      steps {
+        sh '''
+          cmake --build $BUILDDIR -j$(nproc)
+        '''
+      }
+    }
+    
+    stage('Release install') {
+      steps {
+        sh '''
+          cmake --install $BUILDDIR --prefix $BUILDDIR/install-try
+        '''
+      }
+    }
+  }
+
+  post {
+    success {
+      echo '✅ Builds & Tests passed!'
+    }
+    failure {
+      echo '❌ Builds or Tests failed!'
+    }
+  }
+}
+

@@ -160,6 +160,12 @@ option(
   OFF
 )
 
+option(
+  ENABLE_JENKINS_DOCKER_PIPELINE
+  "Set to ON to enable the Jenkins pipeline run inside the Docker container"
+  OFF
+)
+
 string(TIMESTAMP PROJECT_CONFIGURE_DATE "%Y-%m-%d %H:%M:%S")
 
 execute_process(

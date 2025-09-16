@@ -47,3 +47,5 @@ message(STATUS "Dockerfile destination name: ${DOCKERFILE_DST}")
 message(STATUS "Docker single run instance name: ${DOCKER_SINGLE_RUN_NAME}")
 message(STATUS "Docker host address and port: ${DOCKER_HOST_STR}")
 message(STATUS "Project current branch name: ${PROJECT_CURRENT_BRANCH_NAME}")
+message(STATUS "Project binary filepath: ${PROJECT_BINARY_PATH}")
+

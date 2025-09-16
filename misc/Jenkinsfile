@@ -108,6 +108,24 @@ pipeline {
       post { always { junit "$BUILDDIR/$BDJUNITOUT/*.xml" } }
     }
     
+    stage('Debug configure (clang-tidy)') {
+      steps {
+        sh 'rm -fr $BUILDDIR'
+        sh '''
+          cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Debug -DENABLE_CLANG_TIDY=ON \
+            -DMAX_LOG_LEVEL=5
+        '''
+      }
+    }
+    
+    stage('Debug build (clang-tidy)') {
+      steps {
+        sh '''
+          cmake --build $BUILDDIR -j$(nproc)
+        '''
+      }
+    }
+    
     stage('Release configure') {
       steps {
         sh 'rm -fr $BUILDDIR'

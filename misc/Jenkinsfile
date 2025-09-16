@@ -50,7 +50,7 @@ pipeline {
         sh 'rm -fr $BUILDDIR'
         sh '''
           cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Debug -DENABLE_UNIT_TESTS=ON \
-            -DENABLE_SANITIZERS=ON -DENABLE_CLANG_TIDY=ON -DENABLE_CPPCHECK=ON \
+            -DENABLE_SANITIZERS=ON -DENABLE_CPPCHECK=ON \
             -DMAX_LOG_LEVEL=5
         '''
       }

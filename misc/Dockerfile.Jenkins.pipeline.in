@@ -12,12 +12,5 @@ RUN apt install -y clang-tidy
 RUN apt install -y libgtest-dev
 RUN apt install -y libgmock-dev
 
-ARG srcD=/usr/src
-ARG BUILDDIR=$srcD/${PROJECT_BINARY_NAME}-build-docker-singlerun
-ARG TMPPDIR=/tmp/${PROJECT_BINARY_NAME}
-ARG PRJDIR=$srcD/${PROJECT_BINARY_NAME}
-
-RUN --mount=from=project,target=$TMPPDIR cp -R $TMPPDIR $PRJDIR
-
 CMD ["jenkins.sh"]
 

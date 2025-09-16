@@ -1,0 +1,37 @@
+FROM jenkins/jenkins:lts
+
+USER root 
+
+RUN apt update
+RUN apt install -y libstdc++6 build-essential git cmake g++
+RUN apt install -y clang-format
+RUN apt install -y cppcheck
+RUN apt install -y valgrind
+RUN apt install -y flatpak
+RUN apt install -y clang-tidy
+RUN apt install -y libgtest-dev
+RUN apt install -y libgmock-dev
+RUN apt install -y libboost-all-dev
+
+ARG srcD=/usr/src
+
+WORKDIR $srcD
+
+RUN git clone --single-branch --progress --branch 4.11.4 --depth 1 https://github.com/emweb/wt.git wt
+
+ARG wtDir=$srcD/wt
+ARG wtBDir=$wtDir/build
+
+WORKDIR $srcD/wt
+
+RUN cmake -B $wtBDir -S $srcD/wt  -DENABLE_LIBWTDBO=OFF -DENABLE_OPENGL=OFF \
+  -DENABLE_FIREBIRD=OFF -DENABLE_POSTGRES=OFF -DENABLE_SQLITE=OFF \
+  -DENABLE_MYSQL=OFF -DENABLE_MSSQLSERVER=OFF -DINSTALL_DOCUMENTATION=OFF \
+  -DBUILD_EXAMPLES=OFF -DENABLE_QT4=OFF -DENABLE_QT5=OFF -DENABLE_QT6=OFF \
+  -DENABLE_LIBWTTEST=OFF -DENABLE_PANGO=OFF -DENABLE_HARU=OFF -DCONNECTOR_FCGI=OFF \
+  -DBUILD_TESTS=OFF -DCONNECTOR_ISAPI=OFF
+RUN cmake --build $wtBDir -j$(nproc)
+RUN cmake --install $wtBDir --prefix /usr
+
+CMD ["jenkins.sh"]
+

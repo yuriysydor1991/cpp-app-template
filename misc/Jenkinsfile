@@ -31,8 +31,10 @@ pipeline {
     
     stage('Code format build (clang-format)') {
       steps {
-        sh 'cmake --build $BUILDDIR -j$(nproc) --target clang-format'
-        sh 'if [[ ! -z $(git ls-files -m) ]] ; then exit 1 ; fi'
+        script {
+          def files = sh(script: 'git ls-files -m', returnStdout: true).trim()
+          return files == ""
+        }
       }
       
       post {

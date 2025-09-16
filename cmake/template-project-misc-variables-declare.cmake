@@ -166,6 +166,12 @@ option(
   OFF
 )
 
+option(
+  ENABLE_JENKINS_DOCKER_PIPELINE
+  "Set to ON to enable the Jenkins pipeline run inside the Docker container"
+  OFF
+)
+
 string(TIMESTAMP PROJECT_CONFIGURE_DATE "%Y-%m-%d %H:%M:%S")
 
 set(PROJECT_HTTP_LISTEN_ADDRESS "127.0.0.1" CACHE STRING "The default HTTP-server listen address")

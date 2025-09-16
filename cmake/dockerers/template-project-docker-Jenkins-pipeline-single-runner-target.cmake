@@ -27,6 +27,8 @@ set(
   "The Jenkins pipeline Dockerfile destination name"
 )
 
+configure_file(${JENKINS_PIPELINE_DOCKERFILE_SRC} ${JENKINS_PIPELINE_DOCKERFILE_DST})
+
 set(
   JENKINS_PIPELINE_DOCKER_IMAGE_NAME
   "${PROJECT_BINARY_NAME_lower}-jenkins-pipeline-image"
@@ -50,8 +52,6 @@ execute_process(
   ERROR_VARIABLE JENKINS_PIPELINE_DOCKER_CONTAINER_PRESENT
   OUTPUT_STRIP_TRAILING_WHITESPACE
 )
-
-configure_file(misc/Jenkinsfile.in Jenkinsfile @ONLY)
 
 if (JENKINS_PIPELINE_DOCKER_IMAGE_NAME_PRESENT STREQUAL "")
   set(

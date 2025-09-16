@@ -16,7 +16,7 @@ pipeline {
       }
       
       steps {
-        git branch: 'appBoostLog',
+        git branch: 'appFreeGlut',
             url: 'https://github.com/yuriysydor1991/cpp-app-template.git'
       }
     }

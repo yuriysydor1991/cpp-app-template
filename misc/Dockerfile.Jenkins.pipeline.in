@@ -11,7 +11,7 @@ RUN apt install -y flatpak
 RUN apt install -y clang-tidy
 RUN apt install -y libgtest-dev
 RUN apt install -y libgmock-dev
-RUN apt install -y reeglut3 freeglut3-dev libglew-dev
+RUN apt install -y freeglut3 freeglut3-dev libglew-dev
 
 CMD ["jenkins.sh"]
 

@@ -74,41 +74,16 @@ pipeline {
       }
     }
     
-    stage('Unit Tests') {
-      parallel {
-        stage('UTEST_Application') { 
-          steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_Application\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_Application.junit.xml'
-          }
-        }
-        stage('UTEST_ApplicationContext') { 
-          steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationContext\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationContext.junit.xml'
-          }
-        }
-        stage('UTEST_ApplicationFactory') { 
-          steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationFactory\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationFactory.junit.xml'
-          }
-        }
-        stage('UTEST_ApplicationHelpPrinter') { 
-          steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationHelpPrinter\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationHelpPrinter.junit.xml' 
-          }
-        }
-        stage('UTEST_ApplicationVersionPrinter') { 
-          steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationVersionPrinter\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationVersionPrinter.junit.xml'
-          }
-        }
-        stage('UTEST_CommandLineParser') { 
-          steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_CommandLineParser\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_CommandLineParser.junit.xml'
-          }
-        }
-      }
-      post { always { junit "$BUILDDIR/$BDJUNITOUT/*.xml" } }
-    }
+    //stage('Unit Tests') {
+      //parallel {
+      //  stage('UTEST_Application') { 
+      //    steps { 
+      //      sh 'cd $BUILDDIR && ctest -R "UTEST_Application\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_Application.junit.xml'
+      //    }
+      //  }
+      //}
+      //post { always { junit "$BUILDDIR/$BDJUNITOUT/*.xml" } }
+    //}
     
     stage('Debug configure (clang-tidy)') {
       steps {

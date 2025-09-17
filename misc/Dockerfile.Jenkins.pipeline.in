@@ -12,5 +12,18 @@ RUN apt install -y clang-tidy
 RUN apt install -y libgtest-dev
 RUN apt install -y libgmock-dev
 
+ARG srcD=/usr/src
+ARG prefixD=/usr
+
+WORKDIR $srcD
+
+RUN git clone https://github.com/SRombauts/SQLiteCpp.git
+
+WORKDIR $srcD/SQLiteCpp
+
+RUN cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$prefixD
+RUN cmake --build build -j$(nproc)
+RUN cmake --install build --prefix $prefixD
+
 CMD ["jenkins.sh"]
 

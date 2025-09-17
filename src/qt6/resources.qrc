@@ -2,5 +2,6 @@
   <qresource prefix="/">
     <file>ui/qml/main.qml</file>
     <file>ui/resources/images/kytok.org.ua-logo.png</file>
+    <file>ui/qml/components/DefaultWelcome.qml</file>
   </qresource>
 </RCC>

@@ -16,3 +16,6 @@ target_link_libraries(
   ${PROJECT_BINARY_NAME}
   TemplateProjectSimpleLoggerObj
 )
+
+add_subdirectory(tests)
+

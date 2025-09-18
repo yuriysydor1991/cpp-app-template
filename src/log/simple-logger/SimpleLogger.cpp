@@ -32,6 +32,10 @@ void SimpleLogger::log(const unsigned short& loglvl, const std::string& msg)
 
   if (alogfile.is_open()) {
     alogfile << finalLogStr;
+    
+    if (loglvl <= LVL_WARNING) {
+      alogfile.flush();
+    }
   }
 
   if (!toPrintMsgs.load()) {

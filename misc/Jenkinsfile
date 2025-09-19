@@ -127,7 +127,7 @@ pipeline {
           }
         }
       }
-      post { always { junit "$BUILDDIR/$BDJUNITOUT/*.xml" } }
+      post { always { junit "$BUILDDIR/$BDJUNITOUT/UTEST_*.xml" } }
     }
     
     stage('Component Tests') {
@@ -137,8 +137,13 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "CTEST_SimpleLogger\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_SimpleLogger.junit.xml'
           }
         }
+        stage('CTEST_app') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "CTEST_app\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_app.junit.xml'
+          }
+        }
       }
-      post { always { junit "$BUILDDIR/$BDJUNITOUT/*.xml" } }
+      post { always { junit "$BUILDDIR/$BDJUNITOUT/CTEST_*.xml" } }
     }
     
     stage('Debug configure (clang-tidy)') {

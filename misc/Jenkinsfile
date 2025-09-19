@@ -53,7 +53,7 @@ pipeline {
         sh '''
           cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Debug -DENABLE_UNIT_TESTS=ON \
             -DENABLE_SANITIZERS=ON -DENABLE_CPPCHECK=ON \
-            -DMAX_LOG_LEVEL=5
+            -DMAX_LOG_LEVEL=5 -DENABLE_COMPONENT_TESTS=ON
         '''
       }
     }
@@ -104,6 +104,17 @@ pipeline {
         stage('UTEST_CommandLineParser') { 
           steps { 
             sh 'cd $BUILDDIR && ctest -R "UTEST_CommandLineParser\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_CommandLineParser.junit.xml'
+          }
+        }
+      }
+      post { always { junit "$BUILDDIR/$BDJUNITOUT/*.xml" } }
+    }
+    
+    stage('Component Tests') {
+      parallel {
+        stage('CTEST_SimpleLogger') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "CTEST_SimpleLogger\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_SimpleLogger.junit.xml'
           }
         }
       }

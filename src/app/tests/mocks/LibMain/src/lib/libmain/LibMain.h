@@ -20,7 +20,7 @@ class LibMain : public templatelib0::ILib
 
   MOCK_METHOD(bool, libcall, (LibraryContextPtr ctx), (override));
 
-  static LibMainPtr create();
+  inline static LibMainPtr create() { return std::make_shared<LibMain>(); }
 };
 
 using LibMainPtr = LibMain::LibMainPtr;

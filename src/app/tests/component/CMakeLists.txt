@@ -4,6 +4,9 @@ if (NOT ENABLE_COMPONENT_TESTS)
   return()
 endif()
 
+# disabling the asserts for the tests
+add_compile_options(-DNDEBUG=1)
+
 add_executable(
   CTEST_app  
   CTEST_app.cpp
@@ -13,15 +16,19 @@ add_executable(
   ${CMAKE_SOURCE_DIR}/src/app/ApplicationHelpPrinter.cpp
   ${CMAKE_SOURCE_DIR}/src/app/CommandLineParser.cpp
   ${CMAKE_SOURCE_DIR}/src/app/ApplicationVersionPrinter.cpp
+  ${CMAKE_SOURCE_DIR}/src/app/ApplicationVersionPrinter.cpp
 )
 
 target_include_directories(
   CTEST_app
   PRIVATE
     ${APP_MOCKS_ROOT}/log
+    ${APP_MOCKS_ROOT}/LibraryFacade
+    ${APP_MOCKS_ROOT}/LibMain
+    ${APP_MOCKS_ROOT}/ApplicationContext2LibraryContext
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
-    ${CMAKE_SOURCE_DIR}/src/lib/facade
+    ${CMAKE_SOURCE_DIR}/src/lib/facade/public
 )
 
 target_link_libraries(

@@ -96,6 +96,17 @@ pipeline {
       post { always { junit "$BUILDDIR/$BDJUNITOUT/*.xml" } }
     }
     
+    stage('Component Tests') {
+      parallel {
+        stage('CTEST_SimpleLogger') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "CTEST_SimpleLogger\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_SimpleLogger.junit.xml'
+          }
+        }
+      }
+      post { always { junit "$BUILDDIR/$BDJUNITOUT/*.xml" } }
+    }
+    
     stage('Debug configure (clang-tidy)') {
       steps {
         sh 'rm -fr $BUILDDIR'

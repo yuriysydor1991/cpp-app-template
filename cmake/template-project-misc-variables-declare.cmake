@@ -22,6 +22,12 @@ option(
 )
 
 option(
+  ENABLE_COMPONENT_TESTS 
+  "Set to ON value if the component tests build and run should be available"
+  OFF
+)
+
+option(
   GTEST_TRY_SYSTEM_PROBE 
   "Set to ON value if current project CMake files should probe the system GTest"
   ON

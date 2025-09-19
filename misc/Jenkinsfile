@@ -53,7 +53,7 @@ pipeline {
         sh '''
           cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Debug -DENABLE_UNIT_TESTS=ON \
             -DENABLE_SANITIZERS=ON -DENABLE_CPPCHECK=ON \
-            -DMAX_LOG_LEVEL=5
+            -DMAX_LOG_LEVEL=5 -DENABLE_COMPONENT_TESTS=ON
         '''
       }
     }
@@ -107,7 +107,23 @@ pipeline {
           }
         }
       }
-      post { always { junit "$BUILDDIR/$BDJUNITOUT/*.xml" } }
+      post { always { junit "$BUILDDIR/$BDJUNITOUT/UTEST_*.xml" } }
+    }
+    
+    stage('Component Tests') {
+      parallel {
+        stage('CTEST_SimpleLogger') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "CTEST_SimpleLogger\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_SimpleLogger.junit.xml'
+          }
+        }
+        stage('CTEST_app') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "CTEST_app\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_app.junit.xml'
+          }
+        }
+      }
+      post { always { junit "$BUILDDIR/$BDJUNITOUT/CTEST_*.xml" } }
     }
     
     stage('Debug configure (clang-tidy)') {

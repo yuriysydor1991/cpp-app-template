@@ -21,6 +21,7 @@ target_include_directories(
     ${APP_MOCKS_ROOT}/log
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
+    ${CMAKE_SOURCE_DIR}/src/lib/facade
 )
 
 target_link_libraries(

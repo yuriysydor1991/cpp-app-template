@@ -2,14 +2,19 @@
 #include <gtest/gtest.h>
 
 #include "src/app/ApplicationFactory.h"
+#include "src/beasthttp/HttpController.h"
 
 using namespace app;
 using namespace testing;
+using namespace beasthttp;
 
 class CTEST_app : public Test
 {
  public:
   CTEST_app() = default;
+  ~CTEST_app() {
+    HttpController::onMockCreate = nullptr;
+  }
 
   int argc{0};
   char** argv{nullptr};
@@ -65,7 +70,38 @@ TEST_F(CTEST_app, create_application_success)
 
 TEST_F(CTEST_app, execute_success)
 {
+  testing::MockFunction<void(HttpController&)> httpEnsurer;
+
+  EXPECT_CALL(httpEnsurer, Call).Times(1).WillOnce(
+    testing::Invoke(
+      [](HttpController& http){
+        EXPECT_CALL(http, serve).Times(1).WillOnce(testing::Return(true));
+      }
+    )
+  );
+
+  HttpController::onMockCreate = httpEnsurer.AsStdFunction();
+  
   int status = ApplicationFactory::execute(argc, argv);
 
   EXPECT_EQ(status, 0);
+}
+
+TEST_F(CTEST_app, execute_http_controller_failure)
+{
+  testing::MockFunction<void(HttpController&)> httpEnsurer;
+
+  EXPECT_CALL(httpEnsurer, Call).Times(1).WillOnce(
+    testing::Invoke(
+      [](HttpController& http){
+        EXPECT_CALL(http, serve).Times(1).WillOnce(testing::Return(false));
+      }
+    )
+  );
+
+  HttpController::onMockCreate = httpEnsurer.AsStdFunction();
+  
+  int status = ApplicationFactory::execute(argc, argv);
+
+  EXPECT_NE(status, 0);
 }

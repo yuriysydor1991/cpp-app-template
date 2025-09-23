@@ -12,9 +12,7 @@ class CTEST_app : public Test
 {
  public:
   CTEST_app() = default;
-  ~CTEST_app(){
-    MySQLController::onMockCreate = nullptr;
-  }
+  ~CTEST_app() { MySQLController::onMockCreate = nullptr; }
 
   int argc{0};
   char** argv{nullptr};
@@ -72,12 +70,14 @@ TEST_F(CTEST_app, execute_success)
 {
   MockFunction<void(MySQLController&)> controllerEnsurer;
 
-  EXPECT_CALL(controllerEnsurer, Call).Times(1).WillOnce(Invoke([](MySQLController& i){
-    EXPECT_CALL(i, connect(_)).Times(1).WillOnce(Return(true));
-    EXPECT_CALL(i, get_current_date)
+  EXPECT_CALL(controllerEnsurer, Call)
+      .Times(1)
+      .WillOnce(Invoke([](MySQLController& i) {
+        EXPECT_CALL(i, connect(_)).Times(1).WillOnce(Return(true));
+        EXPECT_CALL(i, get_current_date)
             .Times(1)
             .WillOnce(Return(std::string{"2025-09-23"}));
-  }));
+      }));
 
   MySQLController::onMockCreate = controllerEnsurer.AsStdFunction();
 
@@ -90,11 +90,12 @@ TEST_F(CTEST_app, execute_failure)
 {
   MockFunction<void(MySQLController&)> controllerEnsurer;
 
-  EXPECT_CALL(controllerEnsurer, Call).Times(1).WillOnce(Invoke([](MySQLController& i){
-    EXPECT_CALL(i, connect(_)).Times(1).WillOnce(Return(false));
-    EXPECT_CALL(i, get_current_date)
-            .Times(0);
-  }));
+  EXPECT_CALL(controllerEnsurer, Call)
+      .Times(1)
+      .WillOnce(Invoke([](MySQLController& i) {
+        EXPECT_CALL(i, connect(_)).Times(1).WillOnce(Return(false));
+        EXPECT_CALL(i, get_current_date).Times(0);
+      }));
 
   MySQLController::onMockCreate = controllerEnsurer.AsStdFunction();
 

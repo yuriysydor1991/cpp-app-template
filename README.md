@@ -241,6 +241,10 @@ Details at the section [Enabling the Docker container build and run](#enabling-t
 
 # Project structure
 
+Here is a diagram of the `app` component:
+
+![app component class diagram](doc/diagrams/images/template-project-app-structure.svg)
+
 ## Implement code straight away!
 
 To proceed the application implementation right away look for the `Application` class' `Application.cpp` file which is designed to accept initial code of the application. Specifically, new code may be placed into the `int Application::run(std::shared_ptr<ApplicationContext> ctx)` method.

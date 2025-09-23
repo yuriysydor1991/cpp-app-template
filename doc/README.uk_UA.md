@@ -244,6 +244,10 @@ echo 'export DOCKER_HOST="tcp://127.0.0.1:2375"' >> ~/.bashrc
 
 # Структура проекту
 
+Наступна діаграма відображає структуру компоненту `app`:
+
+![app component class diagram](/doc/diagrams/images/template-project-app-structure.svg)
+
 ## Реалізуй код одразу!
 
 Щоб одразу приступити до реалізації конкретної програми необхідно перейти до файлу `Application.cpp` відповідного класу, який призначений для утримання початкового коду реалізації програми. Більш точно новий код повинен бути розміщений у методі `int Application::run(std::shared_ptr<ApplicationContext> ctx)`.

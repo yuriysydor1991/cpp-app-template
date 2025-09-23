@@ -1,15 +1,19 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include "src/PgSQLxx/PgSQL.h"
 #include "src/app/ApplicationFactory.h"
 
 using namespace app;
 using namespace testing;
+using namespace testing;
+using namespace pgsqli;
 
 class CTEST_app : public Test
 {
  public:
   CTEST_app() = default;
+  ~CTEST_app() { PgSQL::onMockCreate = nullptr; }
 
   int argc{0};
   char** argv{nullptr};
@@ -65,6 +69,21 @@ TEST_F(CTEST_app, create_application_success)
 
 TEST_F(CTEST_app, execute_success)
 {
+  static const std::string random_date{"2025-09-23"};
+
+  MockFunction<void(PgSQL&)> pgsqlEnsurer;
+
+  EXPECT_CALL(pgsqlEnsurer, Call(_))
+      .Times(1)
+      .WillOnce(Invoke([](PgSQL& instance) {
+        EXPECT_CALL(instance, connect(_)).Times(1).WillOnce(Return(true));
+        EXPECT_CALL(instance, get_current_date)
+            .Times(1)
+            .WillOnce(Return(random_date));
+      }));
+
+  PgSQL::onMockCreate = pgsqlEnsurer.AsStdFunction();
+
   int status = ApplicationFactory::execute(argc, argv);
 
   EXPECT_EQ(status, 0);

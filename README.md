@@ -239,6 +239,10 @@ Details at the section [Enabling the Docker container build and run](#enabling-t
 
 # Project structure
 
+Here is a diagram of the `app` component:
+
+![app component class diagram](doc/diagrams/images/template-project-app-structure.svg)
+
 ## Implement code straight away!
 
 To proceed the application implementation right away look for the `GtkmmIniter` class' `GtkmmIniter.cpp` and/or `GtkmmIniter.h` files which is designed to accept initial code of the application's window. The UI may be designed in the `src/gtkmm3/ui/GtkmmWindow.ui`.

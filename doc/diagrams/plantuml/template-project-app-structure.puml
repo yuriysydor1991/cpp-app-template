@@ -1,0 +1,85 @@
+@startuml
+
+package Applications-hierarchy {
+  abstract class IApplication {
+    +{abstract} int run(std::shared_ptr<ApplicationContext> ctx)
+
+    +{static}inline constexpr const int INVALID = 1;
+  }
+
+  class Application {
+    +{abstract} int run(std::shared_ptr<ApplicationContext> ctx)
+  }
+
+  class ApplicationHelpPrinter {
+    +{abstract} int run(std::shared_ptr<ApplicationContext> ctx)
+  }
+
+  class ApplicationVersionPrinter {
+    +{abstract} int run(std::shared_ptr<ApplicationContext> ctx)
+  }
+}
+
+class ApplicationContext {
+  +int& argc
+  +char**& argv
+  +bool print_help_and_exit{false}
+  +bool print_version_and_exit{false}
+  +std::vector<std::string> errors
+  +void push_error(const std::string& errorDescription)
+}
+
+package Facade {
+  class ApplicationFactory {
+    +{abstract} std::shared_ptr<ApplicationContext> create_default_context(int& gargc, char**& gargv)
+    +{abstract} std::shared_ptr<CommandLineParser> create_default_arg_parser()
+    +{abstract} std::shared_ptr<IApplication> create_default_application()
+    +{abstract} std::shared_ptr<IApplication> create_help_printer()
+    +{abstract} std::shared_ptr<IApplication> create_version_printer()
+    +{abstract} std::shared_ptr<ApplicationContext> create_context(int& gargc, char**& gargv)
+    +{abstract} std::shared_ptr<IApplication> create_application(std::shared_ptr<ApplicationContext> ctx)
+    +{abstract} int run(int& gargc, char**& gargv)
+    +{static} int execute(int& gargc, char**& gargv)
+  }
+}
+
+package CMD-flags-parser {
+  class CommandLineParser {
+    +{abstract} bool parse_args(std::shared_ptr<ApplicationContext> ctx)
+    +{static} std::string get_custom_logfile(const int& gargc, char** const& gargv)
+    #{abstract} bool parse_arg(std::shared_ptr<ApplicationContext> ctx, const std::string& param, const bool hasNext, const std::string& nextParam, int& paramIndex)
+    #{abstract} bool check_4_data(std::shared_ptr<ApplicationContext> ctx,const std::string& param, const bool hasNext, const std::string& nextParam)
+    #{abstract} const std::set<std::string>& get_params_requiring_data()
+    #{abstract} bool requires_data(const std::string& param)
+  }
+
+  class CMDParamNames {
+    +{static} inline const std::string HELPW{"--help"};
+    +{static} inline const std::string HELP{"-h"};
+    +{static} inline const std::string VERSIONW{"--version"};
+    +{static} inline const std::string VERSION{"-v"};
+    +{static} inline const std::string LOGPATHW{"--log-file"};
+    +{static} inline const std::string LOGPATH{"-l"};
+  }
+}
+
+IApplication <|.. Application
+IApplication <|.. ApplicationHelpPrinter
+IApplication <|.. ApplicationVersionPrinter
+
+ApplicationContext --> IApplication
+ApplicationContext --> Application
+ApplicationContext --> ApplicationHelpPrinter
+ApplicationContext --> ApplicationVersionPrinter
+ApplicationContext --> ApplicationFactory
+
+ApplicationFactory <.. IApplication
+ApplicationFactory <.. Application
+ApplicationFactory <.. ApplicationHelpPrinter
+ApplicationFactory <.. ApplicationVersionPrinter
+ApplicationFactory <.. ApplicationContext
+ApplicationFactory <.. CommandLineParser
+
+CommandLineParser <.. CMDParamNames
+
+@enduml

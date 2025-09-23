@@ -165,6 +165,12 @@ The `LibMain` class will be compiled into destination target library in order to
 
 It's preferable to create other directories which would contain implemented components of the library and include them into the `LibMain` class implementation, rather than put all the code inside the `LibMain` class itself (thats may be ok for a trivial library).
 
+## The library's installable include header files
+
+The [src/lib/facade/public](src/lib/facade/public) directory contains installable public include header files. Public header files are defining implemented library main facade interface for the underlying functionality. Introduce new classes and/or methods to share more functionality amongst any project of interest. The contents of the [src/lib/facade/public](src/lib/facade/public) will be installed for example under the default `include/CppAppTemplate-0` (in accordance of the project name and it's major version) sub-directory with respect of specified prefixed root install directory.
+
+Alongside successful installation of the library's binary and header files there will be installed appropriate CMake-module to ensure library visibility for the external projects requiring it. Examine the [src/lib/cmake/lib-cmake-module-gen.cmake](src/lib/cmake/lib-cmake-module-gen.cmake) and [src/lib/cmake/TemplateLibraryConfig.cmake.in](src/lib/cmake/TemplateLibraryConfig.cmake.in) CMake files for details on the library project CMake module.
+
 ## Changing the project and executable name
 
 Change the name of the project in the project's root `CMakeLists.txt` file by introducing a new value for the the `PROJECT_NAME`. It is recommended to do so the executable will represent your new library name instead of templated default one - the `libCppAppTemplateLib` (the `lib` prefix is adding automatically).

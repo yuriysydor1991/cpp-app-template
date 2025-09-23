@@ -1,11 +1,11 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "src/app/ApplicationFactory.h"
-#include "LibraryFacade.h"
 #include "LibraryContext.h"
-#include "src/lib/libmain/LibMain.h"
+#include "LibraryFacade.h"
+#include "src/app/ApplicationFactory.h"
 #include "src/converters/ApplicationContext2LibraryContext.h"
+#include "src/lib/libmain/LibMain.h"
 
 using namespace app;
 using namespace testing;
@@ -18,7 +18,8 @@ class CTEST_app : public Test
  public:
   CTEST_app() = default;
 
-  ~CTEST_app() {
+  ~CTEST_app()
+  {
     ApplicationContext2LibraryContext::onMockCreate = nullptr;
     LibraryFacade::resetMocks();
   }
@@ -80,24 +81,38 @@ TEST_F(CTEST_app, execute_success)
   auto libctx = std::make_shared<LibraryContext>();
   auto libmain = std::make_shared<LibMain>();
 
-  auto create_library_mock = std::make_unique<testing::MockFunction<ILibPtr(LibraryContextPtr ctx)>>();
-  auto create_library_context_mock = std::make_unique<testing::MockFunction<LibraryContextPtr()>>();
-  auto create_default_lib_mock = std::make_unique<testing::MockFunction<ILibPtr()>>();
-  testing::MockFunction<void(ApplicationContext2LibraryContext&)> converterEnsurer;
+  auto create_library_mock =
+      std::make_unique<testing::MockFunction<ILibPtr(LibraryContextPtr ctx)>>();
+  auto create_library_context_mock =
+      std::make_unique<testing::MockFunction<LibraryContextPtr()>>();
+  auto create_default_lib_mock =
+      std::make_unique<testing::MockFunction<ILibPtr()>>();
+  testing::MockFunction<void(ApplicationContext2LibraryContext&)>
+      converterEnsurer;
 
-  EXPECT_CALL(*create_library_context_mock, Call).Times(1).WillOnce(testing::Return(libctx));
-  EXPECT_CALL(*create_library_mock, Call).Times(1).WillOnce(testing::Return(libmain));
+  EXPECT_CALL(*create_library_context_mock, Call)
+      .Times(1)
+      .WillOnce(testing::Return(libctx));
+  EXPECT_CALL(*create_library_mock, Call)
+      .Times(1)
+      .WillOnce(testing::Return(libmain));
 
-  EXPECT_CALL(*libmain, libcall(libctx)).Times(1).WillOnce(testing::Return(true));
+  EXPECT_CALL(*libmain, libcall(libctx))
+      .Times(1)
+      .WillOnce(testing::Return(true));
 
-  EXPECT_CALL(converterEnsurer, Call).Times(1).WillOnce(testing::Invoke([](ApplicationContext2LibraryContext& i){
-    EXPECT_CALL(i, convert(_, _)).Times(1).WillOnce(testing::Return(true));
-  }));
+  EXPECT_CALL(converterEnsurer, Call)
+      .Times(1)
+      .WillOnce(testing::Invoke([](ApplicationContext2LibraryContext& i) {
+        EXPECT_CALL(i, convert(_, _)).Times(1).WillOnce(testing::Return(true));
+      }));
 
   LibraryFacade::create_library_mock = std::move(create_library_mock);
-  LibraryFacade::create_library_context_mock = std::move(create_library_context_mock);
+  LibraryFacade::create_library_context_mock =
+      std::move(create_library_context_mock);
   LibraryFacade::create_default_lib_mock = std::move(create_default_lib_mock);
-  ApplicationContext2LibraryContext::onMockCreate = converterEnsurer.AsStdFunction();
+  ApplicationContext2LibraryContext::onMockCreate =
+      converterEnsurer.AsStdFunction();
 
   int status = ApplicationFactory::execute(argc, argv);
 

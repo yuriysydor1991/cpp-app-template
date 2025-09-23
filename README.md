@@ -233,6 +233,10 @@ Details at the section [Enabling the Docker container build and run](#enabling-t
 
 # Project structure
 
+Here is a diagram of the `app` component:
+
+![app component class diagram](doc/diagrams/images/template-project-app-structure.svg)
+
 ## Implement code straight away!
 
 To proceed the application implementation right away look for the `FreeGlutIniter` class' `FreeGlutIniter.cpp` file which is designed to accept initial code of the 3D application. Specifically, new code may be placed into the `void FreeGlutIniter::display()` method.

@@ -2,9 +2,11 @@
 #include <gtest/gtest.h>
 
 #include "src/app/ApplicationFactory.h"
+#include "src/wt4/Wt4Server.h"
 
 using namespace app;
 using namespace testing;
+using namespace wt4server;
 
 class CTEST_app : public Test
 {
@@ -65,7 +67,26 @@ TEST_F(CTEST_app, create_application_success)
 
 TEST_F(CTEST_app, execute_success)
 {
+  MockFunction<int(std::shared_ptr<app::ApplicationContext>)> staticEnsurer;
+
+  EXPECT_CALL(staticEnsurer, Call(_)).Times(1).WillOnce(Return(0));
+
+  Wt4Server::run_mock = staticEnsurer.AsStdFunction();
+
   int status = ApplicationFactory::execute(argc, argv);
 
   EXPECT_EQ(status, 0);
+}
+
+TEST_F(CTEST_app, execute_failure)
+{
+  MockFunction<int(std::shared_ptr<app::ApplicationContext>)> staticEnsurer;
+
+  EXPECT_CALL(staticEnsurer, Call(_)).Times(1).WillOnce(Return(1));
+
+  Wt4Server::run_mock = staticEnsurer.AsStdFunction();
+
+  int status = ApplicationFactory::execute(argc, argv);
+
+  EXPECT_NE(status, 0);
 }

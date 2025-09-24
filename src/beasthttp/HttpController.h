@@ -2,6 +2,8 @@
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_HTTPCONTROLLER_CLASS_H
 
 #include <memory>
+#include <unordered_set>
+#include <thread>
 
 #include "src/app/ApplicationContext.h"
 #include "src/beasthttp/HttpContext.h"
@@ -70,8 +72,12 @@ class HttpController
    */
   virtual void handle_session(std::shared_ptr<tcp::socket> socket);
 
+  void wait_threads();
+  void clear_threads();
+
   std::unique_ptr<HttpContext> mcontext;
   std::shared_ptr<rhandlers::HandlersFactory> rhFactory;
+  std::unordered_set<std::shared_ptr<std::thread>> handlersThs;
 };
 
 }  // namespace beasthttp

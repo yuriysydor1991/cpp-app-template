@@ -8,6 +8,8 @@
 #include <memory>
 #include <thread>
 
+#include "src/log/log.h"
+
 namespace beasthttp
 {
 
@@ -37,15 +39,45 @@ bool HttpController::serve(std::shared_ptr<app::ApplicationContext> actx)
       auto socket = std::make_shared<tcp::socket>(ioc);
       acceptor.accept(*socket);
 
-      std::thread{[this, socket]() { handle_session(socket); }}.detach();
+      handlersThs.insert(std::make_shared<std::thread>([this, socket]() { handle_session(socket); }));
+
+      clear_threads();
     }
   }
   catch (const std::exception& e) {
-    std::cerr << "Server error: " << e.what() << std::endl;
+    LOGE("Server error: " << e.what());
     return false;
   }
 
   return true;
+}
+
+void HttpController::clear_threads()
+{
+  LOGD("Clearing empty handler thread");
+
+  auto titer = handlersThs.begin();
+
+  while (titer != handlersThs.end()) {
+    auto& th = *titer;
+    if (!th->joinable()) {
+      titer = handlersThs.erase(titer);
+      continue;
+    }
+
+    ++titer;
+  }
+}
+
+void HttpController::wait_threads()
+{
+  LOGD("Waiting for all threads to finish");
+
+  for (auto& th: handlersThs) {
+    if (th->joinable()) {
+      th->join();
+    }
+  }
 }
 
 std::unique_ptr<HttpContext> HttpController::create_context(
@@ -69,6 +101,7 @@ void HttpController::handle_session(std::shared_ptr<tcp::socket> socket)
   assert(mcontext != nullptr);
 
   if (socket == nullptr) {
+    LOGE("Invalid socket pointer provided");
     return;
   }
 
@@ -79,6 +112,7 @@ void HttpController::handle_session(std::shared_ptr<tcp::socket> socket)
   assert(handler != nullptr);
 
   if (handler == nullptr) {
+    LOGE("Fail to create appropriate session handler");
     return;
   }
 

@@ -2,8 +2,8 @@
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_HTTPCONTROLLER_CLASS_H
 
 #include <memory>
-#include <unordered_set>
 #include <thread>
+#include <unordered_set>
 
 #include "src/app/ApplicationContext.h"
 #include "src/beasthttp/HttpContext.h"

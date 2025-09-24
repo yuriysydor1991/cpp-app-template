@@ -5,6 +5,7 @@
 
 #include "project-global-decls.h"
 #include "src/beasthttp/beast-includes.h"
+#include "src/log/log.h"
 
 namespace beasthttp::rhandlers
 {
@@ -14,6 +15,7 @@ bool ResponseBuilder::build_response(std::shared_ptr<HTTPSessionContext> sctx)
   assert(sctx != nullptr);
 
   if (sctx == nullptr) {
+    LOGE("Invalid context pointer provided");
     return false;
   }
 

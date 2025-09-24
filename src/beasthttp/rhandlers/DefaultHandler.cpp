@@ -8,6 +8,7 @@
 #include "src/beasthttp/pages/PageBuilder.h"
 #include "src/beasthttp/rhandlers/HTTPSessionContext.h"
 #include "src/beasthttp/rhandlers/IRequestHandler.h"
+#include "src/log/log.h"
 
 namespace beasthttp::rhandlers
 {
@@ -18,28 +19,34 @@ bool DefaultHandler::handle_session(std::shared_ptr<HTTPSessionContext> sctx)
   assert(sctx->socket != nullptr);
 
   if (sctx == nullptr) {
+    LOGE("Invalid context pointer provided");
     return false;
   }
 
   try {
     if (!read_single_request(sctx)) {
+      LOGE("Fail to read request");
       return false;
     }
 
     if (!build_response(sctx)) {
+      LOGE("Fail to build response object");
       return false;
     }
 
     if (!build_request_response(sctx)) {
+      LOGE("Fail to build request's response");
       return false;
     }
 
     if (!write_response(sctx)) {
+      LOGD("Fail to write response");
       return false;
     }
   }
   catch (const std::exception& e) {
-    std::cerr << "Session error: " << e.what() << std::endl;
+    LOGE("Session error: " << e.what());
+    return false;
   }
 
   return true;
@@ -52,6 +59,7 @@ DefaultHandler::create_request_response_builder(
   assert(sctx != nullptr);
 
   if (sctx == nullptr) {
+    LOGE("Invalid context pointer provided");
     return {};
   }
 
@@ -64,6 +72,7 @@ bool DefaultHandler::build_request_response(
   assert(sctx != nullptr);
 
   if (sctx == nullptr) {
+    LOGE("Invalid context pointer provided");
     return false;
   }
 

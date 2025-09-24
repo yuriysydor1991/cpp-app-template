@@ -18,6 +18,7 @@ bool HttpController::serve(std::shared_ptr<app::ApplicationContext> actx)
   assert(actx != nullptr);
 
   if (actx == nullptr) {
+    LOGE("Invalid context pointer provided");
     return false;
   }
 
@@ -32,14 +33,15 @@ bool HttpController::serve(std::shared_ptr<app::ApplicationContext> actx)
     boost::asio::io_context ioc{1};
     tcp::acceptor acceptor{ioc, {address, port}};
 
-    std::cout << "Listening on http://" << mcontext->http_address() << ":"
-              << mcontext->http_port() << std::endl;
+    LOGI("Listening on http://" << mcontext->http_address() << ":"
+                                << mcontext->http_port());
 
     while (!mcontext->stop()) {
       auto socket = std::make_shared<tcp::socket>(ioc);
       acceptor.accept(*socket);
 
-      handlersThs.insert(std::make_shared<std::thread>([this, socket]() { handle_session(socket); }));
+      handlersThs.insert(std::make_shared<std::thread>(
+          [this, socket]() { handle_session(socket); }));
 
       clear_threads();
     }
@@ -73,7 +75,7 @@ void HttpController::wait_threads()
 {
   LOGD("Waiting for all threads to finish");
 
-  for (auto& th: handlersThs) {
+  for (auto& th : handlersThs) {
     if (th->joinable()) {
       th->join();
     }

@@ -6,6 +6,7 @@
 #include "project-global-decls.h"
 #include "src/beasthttp/pages/IPageBuilder.h"
 #include "src/beasthttp/rhandlers/HTTPSessionContext.h"
+#include "src/log/log.h"
 
 namespace beasthttp::pages
 {
@@ -16,6 +17,7 @@ bool PageBuilder::build_request_page(
   assert(sctx != nullptr);
 
   if (sctx == nullptr) {
+    LOGE("Invalid context pointer provided");
     return false;
   }
 

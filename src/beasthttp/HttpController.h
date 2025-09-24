@@ -22,6 +22,8 @@ namespace beasthttp
 class HttpController
 {
  public:
+  using HttpControllerPtr = std::shared_ptr<HttpController>;
+
   virtual ~HttpController();
   HttpController() = default;
 
@@ -36,6 +38,8 @@ class HttpController
    * @return Returns a true boolean value on the success and false otherwise.
    */
   virtual bool serve(std::shared_ptr<app::ApplicationContext> actx);
+
+  static HttpControllerPtr create();
 
  protected:
   /**
@@ -79,6 +83,8 @@ class HttpController
   std::shared_ptr<rhandlers::HandlersFactory> rhFactory;
   std::unordered_set<std::shared_ptr<std::thread>> handlersThs;
 };
+
+using HttpControllerPtr = HttpController::HttpControllerPtr;
 
 }  // namespace beasthttp
 

@@ -15,6 +15,11 @@ namespace beasthttp
 
 HttpController::~HttpController() { wait_threads(); }
 
+HttpControllerPtr HttpController::create()
+{
+  return std::make_shared<HttpController>();
+}
+
 bool HttpController::serve(std::shared_ptr<app::ApplicationContext> actx)
 {
   assert(actx != nullptr);

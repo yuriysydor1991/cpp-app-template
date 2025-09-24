@@ -13,6 +13,8 @@
 namespace beasthttp
 {
 
+HttpController::~HttpController() { wait_threads(); }
+
 bool HttpController::serve(std::shared_ptr<app::ApplicationContext> actx)
 {
   assert(actx != nullptr);
@@ -45,6 +47,8 @@ bool HttpController::serve(std::shared_ptr<app::ApplicationContext> actx)
 
       clear_threads();
     }
+
+    wait_threads();
   }
   catch (const std::exception& e) {
     LOGE("Server error: " << e.what());

@@ -1,2 +1,3 @@
 nullPointer:assert.cpp
 nullPointerRedundantCheck
+knownConditionTrueFalse

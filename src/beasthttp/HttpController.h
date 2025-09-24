@@ -22,7 +22,7 @@ namespace beasthttp
 class HttpController
 {
  public:
-  virtual ~HttpController() = default;
+  virtual ~HttpController();
   HttpController() = default;
 
   /**

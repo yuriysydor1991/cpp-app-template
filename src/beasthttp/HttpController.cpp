@@ -47,12 +47,18 @@ bool HttpController::serve(std::shared_ptr<app::ApplicationContext> actx)
       auto socket = std::make_shared<tcp::socket>(ioc);
       acceptor.accept(*socket);
 
-      handlersThs.insert(std::make_shared<std::thread>(
-          [this, socket]() { handle_session(socket); }));
+      auto future = std::make_shared<std::future<bool>>(
+          std::async(std::launch::async,
+                     [this, socket]() { return handle_session(socket); }));
 
-      clear_threads();
+      handlersThs.insert(future);
+
+      LOGT("Handling sessions: " << handlersThs.size());
+
+      clean_threads();
     }
 
+    LOGD("Waiting remaining threads to be finished");
     wait_threads();
   }
   catch (const std::exception& e) {
@@ -63,15 +69,15 @@ bool HttpController::serve(std::shared_ptr<app::ApplicationContext> actx)
   return true;
 }
 
-void HttpController::clear_threads()
+void HttpController::clean_threads()
 {
-  LOGD("Clearing empty handler thread");
+  LOGD("Cleaning ready handlers");
 
   auto titer = handlersThs.begin();
 
   while (titer != handlersThs.end()) {
     auto& th = *titer;
-    if (!th->joinable()) {
+    if (th->wait_for(std::chrono::seconds(0)) == std::future_status::ready) {
       titer = handlersThs.erase(titer);
       continue;
     }
@@ -82,13 +88,13 @@ void HttpController::clear_threads()
 
 void HttpController::wait_threads()
 {
-  LOGD("Waiting for all threads to finish");
+  LOGD("Waiting for all handlers to finish");
 
   for (auto& th : handlersThs) {
-    if (th->joinable()) {
-      th->join();
-    }
+    th->wait();
   }
+
+  handlersThs.clear();
 }
 
 std::unique_ptr<HttpContext> HttpController::create_context(
@@ -105,7 +111,7 @@ HttpController::create_http_session_context(std::shared_ptr<tcp::socket> socket)
   return std::make_shared<rhandlers::HTTPSessionContext>(socket);
 }
 
-void HttpController::handle_session(std::shared_ptr<tcp::socket> socket)
+bool HttpController::handle_session(std::shared_ptr<tcp::socket> socket)
 {
   assert(socket != nullptr);
   assert(rhFactory != nullptr);
@@ -113,7 +119,7 @@ void HttpController::handle_session(std::shared_ptr<tcp::socket> socket)
 
   if (socket == nullptr) {
     LOGE("Invalid socket pointer provided");
-    return;
+    return false;
   }
 
   auto sctx = create_http_session_context(socket);
@@ -124,10 +130,13 @@ void HttpController::handle_session(std::shared_ptr<tcp::socket> socket)
 
   if (handler == nullptr) {
     LOGE("Fail to create appropriate session handler");
-    return;
+    return false;
   }
 
+  /// @todo: make session requests read in cycle to recycle the connection
   handler->handle_session(sctx);
+
+  return true;
 }
 
 }  // namespace beasthttp

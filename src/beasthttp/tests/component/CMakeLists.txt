@@ -9,6 +9,7 @@ find_package(Boost REQUIRED COMPONENTS system thread)
 add_executable(
   CTEST_beasthttp  
   CTEST_beasthttp.cpp
+  HTTPHelper.cpp
   ${CMAKE_SOURCE_DIR}/src/beasthttp/HttpContext.cpp
   ${CMAKE_SOURCE_DIR}/src/beasthttp/HttpController.cpp
   ${CMAKE_SOURCE_DIR}/src/beasthttp/rhandlers/ResponseWriter.cpp
@@ -18,13 +19,14 @@ add_executable(
   ${CMAKE_SOURCE_DIR}/src/beasthttp/rhandlers/HandlersFactory.cpp
   ${CMAKE_SOURCE_DIR}/src/beasthttp/rhandlers/DefaultHandler.cpp
   ${CMAKE_SOURCE_DIR}/src/beasthttp/pages/PageBuilder.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/ApplicationContext.cpp
+  ${GLOBAL_MOCKS_ROOT}/ApplicationContext/src/app/ApplicationContext.cpp
 )
 
 # TODO: introduce mocks for the external components
 target_include_directories(
   CTEST_beasthttp
   PRIVATE
+    ${GLOBAL_MOCKS_ROOT}/ApplicationContext
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
 )

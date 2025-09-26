@@ -4,12 +4,12 @@ add_executable(
   UTEST_Application  
   UTEST_Application.cpp
   ${CMAKE_SOURCE_DIR}/src/app/Application.cpp
-  ${APP_MOCKS_ROOT}/ApplicationContext/src/app/ApplicationContext.cpp
+  ${GLOBAL_MOCKS_ROOT}/ApplicationContext/src/app/ApplicationContext.cpp
 )
 
 target_include_directories(
   UTEST_Application
-  PRIVATE ${APP_MOCKS_ROOT}/ApplicationContext
+  PRIVATE ${GLOBAL_MOCKS_ROOT}/ApplicationContext
   PRIVATE ${APP_MOCKS_ROOT}/HttpController
   PRIVATE ${APP_MOCKS_ROOT}/project-global-decls
   PRIVATE ${APP_MOCKS_ROOT}/log

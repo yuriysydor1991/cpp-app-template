@@ -104,7 +104,7 @@ std::shared_ptr<ResponseBuilder> DefaultHandler::create_response_builder(
 }
 
 std::shared_ptr<ResponseWriter> DefaultHandler::create_response_writer(
-    std::shared_ptr<HTTPSessionContext> sctx)
+    [[maybe_unused]] std::shared_ptr<HTTPSessionContext> sctx)
 {
   assert(sctx != nullptr);
 

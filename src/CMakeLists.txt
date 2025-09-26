@@ -26,6 +26,7 @@ configure_file(
   ${CMAKE_BINARY_DIR}/project-global-decls.h
 )
 
+add_subdirectory(tests)
 add_subdirectory(app)
 add_subdirectory(log)
 add_subdirectory(beasthttp)

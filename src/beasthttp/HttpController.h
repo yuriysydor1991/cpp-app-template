@@ -1,8 +1,8 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_HTTPCONTROLLER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_HTTPCONTROLLER_CLASS_H
 
+#include <future>
 #include <memory>
-#include <thread>
 #include <unordered_set>
 
 #include "src/app/ApplicationContext.h"
@@ -74,14 +74,15 @@ class HttpController
    * @param socket Socket through which the HTTP requests and HTTP responses
    * will be transferred.
    */
-  virtual void handle_session(std::shared_ptr<tcp::socket> socket);
+  virtual bool handle_session(std::shared_ptr<tcp::socket> socket);
 
   void wait_threads();
-  void clear_threads();
+  void clean_threads();
 
   std::unique_ptr<HttpContext> mcontext;
   std::shared_ptr<rhandlers::HandlersFactory> rhFactory;
-  std::unordered_set<std::shared_ptr<std::thread>> handlersThs;
+
+  std::unordered_set<std::shared_ptr<std::future<bool>>> handlersThs;
 };
 
 using HttpControllerPtr = HttpController::HttpControllerPtr;

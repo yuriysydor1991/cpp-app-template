@@ -6,6 +6,8 @@
 #include <string>
 #include <vector>
 
+#include "project-global-decls.h"
+
 namespace app
 {
 
@@ -22,6 +24,18 @@ struct ApplicationContext
   std::vector<std::string> errors;
 
   MOCK_METHOD(void, push_error, (const std::string& errorDescription));
+
+  /// @brief For security listen for a loopback only by default.
+  inline static const std::string& default_http_address =
+      project_decls::PROJECT_HTTP_LISTEN_ADDRESS;
+  inline static constexpr const unsigned short default_http_port =
+      project_decls::PROJECT_HTTP_LISTEN_PORT;
+
+  std::string http_address;
+  unsigned short http_port;
+
+  MOCK_METHOD(bool, stop, ());
+  MOCK_METHOD(void, stop, (bool nstop));
 };
 
 }  // namespace app

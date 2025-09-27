@@ -5,8 +5,116 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appBoostBeast0.9.0] - 2025-09-27
+
+- 03843ac Introducing some load CTs for the beasthttp component
+- b08c075 Introducing basic beasthttp CT infrastructure
+- 7997a68 Using wait_threads, fixing cppcheck warnings
+- 1a78d8c Introducing the logs into the beasthttp component
+- f2b2699 Refining handler threads in the HttpController
+- 0358e46 Introducing the PlantUML app component diagram into the READMEs
+- d7fef68 Applied code formatting
+- c49f0e1 Fixing app CTs
+- 6776a19 Enabling GTest during for CTs
+- f77b3c2 Pointing Jenkins configurable port into standart in-container 8080
+- 4a24e40 Making the Jenkins pipeline container and image names configurable
+- 69ecc5d Introducing basic app CTs samples
+- b897797 Introducing basic SimpleLogger CTs with CMake and Jenkins integration
+- a9ac652 Refining the branches link in the READMEs, introducing gitlab links also
+- 49120f9 Specifying the Jenkins container run target in the READMEs
+- 1a60566 Refining Jenkinsfile branch name on checkout
+- 31619a4 Introducing basic Jenkins pipeline CMake target and Jenkinsfile conf
+- 4e3e1e6 Fixing typo in the README.md
+- 2935bfe Introducing the valgrind callgrind profiler target for the project
+- 60c7d30 Introducing the gprof profiling target
+- 4607be4 Adding money emoji to donation notice in the READMEs
+- bed21cc Introducing the appCURL branch info into the READMEs
+- 17b0131 Introducing the enabling libcurl section into the READMEs
+- dee2e38 Introducing the libcurl cmake enabler script
+- c99801f Moving the DEFAULT_LOG_FILE_PATH macro declaration into severity-macro-consts.h
+- 55fde5b Refining unit tests to match the new log code
+- a0093f3 Introducing a custom log file cmd param for the executable
+- 1cea3d1 Introducing the DEFAULT_LOG_FILE_PATH cmake var and cpp macro to specify default dst log file location
+- 9d74f26 Introducing the CMDParamNames class to encapsulate CMD params names
+- 31fb5aa Introducing some marketing sentences in the README's goal section
+- fa474f2 Introducing the cmake/enablers subdirectory to locate the 3rd-party dependencies
+- da9f1dc Renaming template-project-make-GTest-available - template-project-GTest-enabler
+- a8c5787 Introducing the NLohmann JSON library enabler cmake module
+- d8e0ada Fixing the sanitizers cmake file in the READMEs
+- 45133e5 Avoiding unnecessary badly portable localtime_r usage
+- ac4e831 Introducing the thread id into simple logger
+- 3dbdb91 Avoiding backward time in the simple logs
+- 6a3bba8 Avoiding final log multiple str fetches
+- b7de59d Refining the log current timestamp method, increasing thread safety
+- dc9ca3c Introducing the CMake configurable log severity messages compilation switch
+- 7ee9080 Introducing the appBoostLog branch info into the READMEs
+- 63dd2d6 Hiding the compile options cmake files under separate directory
+- db1a50f Enhancing sanitizers combinations and new cmake dir for ones
+- 02147b5 Introducing the sanitizers enabling info into the READMEs
+- b8f0384 Removing redundant cmake traces messages
+- a4236a0 Introducing the GCC compiler sanitizers
+- f8b4c16 Applied code formatting
+- 2c1d94a Making the listen port confugurable through the CMake
+- a7b21ab Refined issues in the Docker READMEs doc
+- 3d79462 Separating the Docker single container build and run targets
+- 75c7da9 Refining the Docker target for boost.beast with UTs
+- 9024b40 Introducing the boost libs dependency for the Dockerfile
+- 4407ba3 Introducing the Docker single run container target.
+- 275b683 Adding project neatness to the READMEs
+- 96e861d Introducing the appLog4Cpp5 branch info into the READMEs
+- 26bcb53 Enabling multithreading in the flatpak boost build
+- 18fe6c2 Implementing the logging macros and a simple logger to perform log messaging
+- 61be0ad Introducing the appMongoDBCpp4 branch info into the READMEs
+- ca65084 Specifying libboost-all-dev as dependency for the deb package
+- ba54418 Making the flatpak source json conf file configurable during cmake conf stage
+- 648f432 Refining the platform and SDK versions for the flatpak in the READMEs install sections
+- 03eacee Allowing the network share for the dst flatpak package
+- fcb0697 Refining the deb cmake info for cpack
+- 3858373 Introducing the appSQLiteCpp3 branch info into the READMEs
+- a25512d Refining the ApplicationContext mock
+- 66a0c3a Refining flatpak url starter in the READMEs
+- c985232 Introducing the gitlab mirror into the READMEs
+- 51b0d95 Refining the flatpak target
+- cb4c5bb cppcheck warnings code refine
+- 2cc8a70 Introducing misc/.cppcheck-suppress file to list cppcheck suppressions of the false positives
+- cddbb06 Refining the Application class UTs.
+- b5ba157 Introducing the HttpController mock for the Application class UTs
+- 90cb7d9 Introducing the documentation comments into beasthttp component's code.
+- cc75dbb Introducing boost libs into the requirements
+- 354f372 Extending the PageBuilder for the default page building routines
+- 4403a10 Introducing the appMySQLCppConn branch info into the READMEs
+- eae75cc Introducing the donation notice into the READMEs
+- d1dd4d5 Introducing new component for request response builder
+- 1376a1e Moving the request reading routines to the DefaultHandler class
+- ce0aeda Moving the socket shutdown command to HTTPSessionContext class destructor
+- af54b5b Introducing the guarding if statements into ResponseWriter
+- afcb916 Extracting and introducing the ResponseWriter class
+- 07d9bfb Extracting and introducing the ResponseBuilder class
+- 3213101 Wrapping the request read call into try-catch
+- 056ab0a Extracting the HTTP request reading class into RequestReader
+- 0b719aa Extracting the http session context creation routine
+- c4e7ef5 Declaring and decomposing the http request handling into a new separate component
+- b0de856 Erasing redundant CMake include variable
+- 1c246f1 Marking the connection as close
+- cf9471a Marking appBoostBeast branch as a current one
+- 1e49937 Introducing the appBoostBeast branch info into the READMEs
+- fc09df7 introducing the basic http listener infrastructure with HttpController
+- 7ec125a Explicitly specifying the combining of the template branches
+- c793831 introducing the appPgSQLxx branch into the READMEs
+- 59a3f26 Introducing a new appWt4 branch info into the READMEs
+- ae60d2a Introducing the error exit code for a cppcheck target
+- 38256c1 Refining the cppcheck target
+- 9bf6620 Introducing the appMeson branch info into the READMEs
+- 97a6442 Refining READMEs
+- 05af0e5 Refining branches info
+- c8de777 Introducing the flatpak sections into the READMEs
+- 69ffe40 Introducing the flatpak package creation from the template source.
+- 4b00b9f Inserting the release tag link
+- 8bd91be Incrementing version to 0.9.0
+
 ## [app0.8.0] - 2025-03-20
 
+- dfff631 Release app0.8.0 2025-03-20
 - c2d08e9 Replacing int flag with a bool for the CommandLineParser
 - 5adff97 Erasing the /analyze from the default MSVC compile options
 - 3a70693 Introducing the DEB package gen info in the READMEs
@@ -174,6 +282,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[appBoostBeast0.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appBoostBeast0.9.0)
 [app0.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.8.0)
 [app0.7.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.7.0)
 [app0.6.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.6.0)

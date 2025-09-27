@@ -5,8 +5,88 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appSQLiteCpp30.9.0] - 2025-09-27
+
+- 666f228 Introducing the PlantUML app component diagram into the READMEs
+- 2189e41 Fixing cpp CTs
+- b5742bd Enabling GTest during for CTs
+- 02f8044 Pointing Jenkins configurable port into standart in-container 8080
+- f04c2ca Making the Jenkins pipeline container and image names configurable
+- 712a683 Introducing basic app CTs samples
+- c93dae4 Introducing basic SimpleLogger CTs with CMake and Jenkins integration
+- cf77735 Refining the branches link in the READMEs, introducing gitlab links also
+- d610c85 Specifying the Jenkins container run target in the READMEs
+- 0c926cd Moving SQLiteCpp wrapper installation into Jenkins' docker file
+- 19d42c6 Introducing basic Jenkins pipeline CMake target and Jenkinsfile conf
+- df35b83 Fixing typo in the README.md
+- 3368a3e Introducing the valgrind callgrind profiler target for the project
+- a0ba693 Introducing the gprof profiling target
+- 2c8108d Adding money emoji to donation notice in the READMEs
+- 3f7623a Introducing the appCURL branch info into the READMEs
+- 1180571 Introducing the enabling libcurl section into the READMEs
+- e919f5f Introducing the libcurl cmake enabler script
+- 2b8af00 Moving the DEFAULT_LOG_FILE_PATH macro declaration into severity-macro-consts.h
+- f26d006 Introducing misc/.cppcheck-suppress file to list cppcheck suppressions of the false positives
+- b0bd6b2 Refining unit tests to match the new log code
+- 4fdd8c0 Introducing a custom log file cmd param for the executable
+- deeb6da Introducing the DEFAULT_LOG_FILE_PATH cmake var and cpp macro to specify default dst log file location
+- 8a18755 Introducing the CMDParamNames class to encapsulate CMD params names
+- ce20a23 Introducing some marketing sentences in the README's goal section
+- f5d0730 Introducing the cmake/enablers subdirectory to locate the 3rd-party dependencies
+- d0eda5d Renaming emplate-project-make-GTest-available - template-project-GTest-enabler
+- 984da95 Introducing the NLohmann JSON library enabler cmake module
+- 49c40b7 Fixing the sanitizers cmake file in the READMEs
+- b1284d4 Avoiding unnecessary badly portable localtime_r usage
+- 144684f Introducing the thread id into simple logger
+- 128a43c Avoiding backward time in the simple logs
+- 37acd87 Avoiding final log multiple str fetches
+- 3b0ac79 Refining the log current timestamp method, increasing thread safety
+- 33526c3 Introducing the CMake configurable log severity messages compilation switch
+- bd5f26c Introducing the appBoostLog branch info into the READMEs
+- e32583e Hiding the compile options cmake files under separate directory
+- 970022b Enhancing sanitizers combinations and new cmake dir for ones
+- e625ae8 Introducing the sanitizers enabling info into the READMEs
+- ddd9001 Removing redundant cmake traces messages
+- 906e99b Introducing the GCC compiler sanitizers
+- bacb36a Refined issues in the Docker READMEs doc
+- 59b92cd Separating the Docker single container build and run targets
+- 87759d9 Introducing the Docker single run container target.
+- 7900dbb Adding project neatness to the READMEs
+- 9a1bd57 Introducing the appLog4Cpp5 branch info into the READMEs
+- a00a8a4 Implementing the logging macros and a simple logger to perform log messaging
+- 9817b4a Introducing the appMongoDBCpp4 branch info into the READMEs
+- 2e6693c Refining the cppcheck warnings for a QueryMaker
+- 88e1725 Refining the ApplicationContext class UTs
+- 4b55e56 Refining the Application class UTs
+- 969320a Refining the flatpak json conf file modules list
+- 1eacc78 Making the flatpak source json conf file configurable during cmake conf stage
+- a4453c3 Refining SQLiteCpp_FOUND in the cmake if
+- 556f854 Refining the deb cmake info for cpack
+- af936e6 Marking the appSQLiteCpp3 as current branch in the READMEs
+- 59c4dd9 Introducing the appSQLiteCpp3 branch info into the READMEs
+- 4b70908 Implementing basic SQLite3Cpp app infrastructure
+- 54a14f0 Transferring the IDBConnection abstract class with appropriate ApplicationContext contents
+- 5bd9fbf Refining the ApplicationContext mock
+- d4d25cb Introducing the gitlab mirror into the READMEs
+- 27154f8 Introducing the appMySQLCppConn branch info into the READMEs
+- 05dd8ff Introducing the donation notice into the READMEs
+- 8e577ce Introducing the appBoostBeast branch info into the READMEs
+- 7ec125a Explicitly specifying the combining of the template branches
+- c793831 introducing the appPgSQLxx branch into the READMEs
+- 59a3f26 Introducing a new appWt4 branch info into the READMEs
+- ae60d2a Introducing the error exit code for a cppcheck target
+- 38256c1 Refinining the cppcheck target
+- 9bf6620 Introducing the appMeson branch info into the READMEs
+- 97a6442 Refining READMEs
+- 05af0e5 Refining branches info
+- c8de777 Introducing the flatpak sections into the READMEs
+- 69ffe40 Introducing the flatpak package creation from the template source.
+- 4b00b9f Inserting the release tag link
+- 8bd91be Incrementing version to 0.8.0
+
 ## [app0.8.0] - 2025-03-20
 
+- dfff631 Release app0.8.0 2025-03-20
 - c2d08e9 Replacing int flag with a bool for the CommandLineParser
 - 5adff97 Erasing the /analyze from the default MSVC compile options
 - 3a70693 Introducing the DEB package gen info in the READMEs
@@ -174,6 +254,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[appSQLiteCpp30.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appSQLiteCpp30.9.0)
 [app0.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.8.0)
 [app0.7.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.7.0)
 [app0.6.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.6.0)

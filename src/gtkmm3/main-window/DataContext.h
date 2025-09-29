@@ -9,10 +9,6 @@
 namespace Gtkmm3i::main_window
 {
 
-#ifndef GTKMM_APP_RESOURCES_PREFIX
-#define GTKMM_APP_RESOURCES_PREFIX "/ua/org/kytok/template/gtkmm3/glade"
-#endif  // GTKMM_APP_RESOURCES_PREFIXs
-
 /**
  * @brief The root GTKmm3 window data context class.
  */

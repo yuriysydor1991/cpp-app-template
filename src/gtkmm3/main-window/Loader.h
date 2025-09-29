@@ -30,6 +30,7 @@ class Loader
   bool prepare_widgets();
   static bool load_css();
   bool prepare_random_logo();
+  void update_window_title();
 
   template <class WidgetType>
   WidgetType* get_widget(const std::string& id);

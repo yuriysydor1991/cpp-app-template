@@ -27,14 +27,9 @@ int GtkmmIniter::run(std::shared_ptr<app::ApplicationContext> nactx)
   auto app = Gtk::Application::create(actx->argc, actx->argv,
                                       project_decls::PROJECT_FLATPAK_URL);
 
-  if (!create_main_window_loader()) {
-    LOGE("Fail to create the loader");
+  if (!init_main_window()) {
+    LOGE("Fail to init subsystems");
     return false;
-  }
-
-  if (!prepare_main_window()) {
-    LOGE("Fail to prepare main window");
-    return app::IApplication::INVALID;
   }
 
   LOGD("Starting the GTKmm event loop");
@@ -77,6 +72,54 @@ bool GtkmmIniter::prepare_main_window()
   }
 
   window->show_all_children();
+
+  return true;
+}
+
+bool GtkmmIniter::create_events_handler()
+{
+  assert(loader != nullptr);
+
+  if (loader == nullptr) {
+    LOGE("Missing required main window loader instance");
+    return false;
+  }
+
+  handler = main_window::EventsHandler::create();
+
+  assert(handler != nullptr);
+
+  if (handler == nullptr) {
+    LOGE("Obtained invalid events handler instance");
+    return false;
+  }
+
+  if (!handler->init(loader)) {
+    LOGE("Fail to init the event handler instance");
+    return false;
+  }
+
+  return true;
+}
+
+bool GtkmmIniter::init_main_window()
+{
+  LOGD("Trying to initialize main window objects");
+
+  if (!create_main_window_loader()) {
+    LOGE("Fail to create the loader");
+    return false;
+  }
+
+  if (!prepare_main_window()) {
+    LOGE("Fail to prepare main window");
+    return app::IApplication::INVALID;
+  }
+
+  if (!create_events_handler()) {
+    LOGE("Fail to create the events handler instance");
+    return false;
+  }
 
   return true;
 }

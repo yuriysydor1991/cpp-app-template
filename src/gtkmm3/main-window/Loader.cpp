@@ -4,6 +4,7 @@
 #include <memory>
 #include <string>
 
+#include "project-global-decls.h"
 #include "src/gtkmm3/main-window/DataContext.h"
 #include "src/log/log.h"
 
@@ -50,7 +51,19 @@ bool Loader::prepare_widgets()
     return false;
   }
 
+  update_window_title();
+
   return true;
+}
+
+void Loader::update_window_title()
+{
+  static const std::string basicTitle =
+      project_decls::PROJECT_NAME + " " + project_decls::PROJECT_BUILD_VERSION;
+
+  assert(window() != nullptr);
+
+  window()->set_title(basicTitle);
 }
 
 bool Loader::load_css()

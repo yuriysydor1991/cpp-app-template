@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "src/app/ApplicationContext.h"
+#include "src/gtkmm3/main-window/EventsHandler.h"
 #include "src/gtkmm3/main-window/Loader.h"
 
 namespace Gtkmm3i
@@ -24,10 +25,13 @@ class GtkmmIniter
  protected:
   virtual bool create_main_window_loader();
   virtual bool prepare_main_window();
+  virtual bool create_events_handler();
+  virtual bool init_main_window();
 
   std::shared_ptr<app::ApplicationContext> actx;
 
   main_window::LoaderPtr loader;
+  main_window::EventsHandlerPtr handler;
 };
 
 }  // namespace Gtkmm3i

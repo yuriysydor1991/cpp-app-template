@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.13)
 add_library(
   CppAppTemplateGTKmmMainWindowSubComponentObj OBJECT
   Loader.cpp
+  EventsHandler.cpp
 )
 
 target_include_directories(

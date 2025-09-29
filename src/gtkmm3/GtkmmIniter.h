@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "src/app/ApplicationContext.h"
+#include "src/gtkmm3/main-window/Loader.h"
 
 namespace Gtkmm3i
 {
@@ -21,7 +22,12 @@ class GtkmmIniter
   virtual int run(std::shared_ptr<app::ApplicationContext> nactx);
 
  protected:
+  virtual bool create_main_window_loader();
+  virtual bool prepare_main_window();
+
   std::shared_ptr<app::ApplicationContext> actx;
+
+  main_window::LoaderPtr loader;
 };
 
 }  // namespace Gtkmm3i

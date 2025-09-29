@@ -27,15 +27,44 @@ int GtkmmIniter::run(std::shared_ptr<app::ApplicationContext> nactx)
   auto app = Gtk::Application::create(actx->argc, actx->argv,
                                       project_decls::PROJECT_FLATPAK_URL);
 
+  if (!create_main_window_loader()) {
+    LOGE("Fail to create the loader");
+    return false;
+  }
+
+  if (!prepare_main_window()) {
+    LOGE("Fail to prepare main window");
+    return app::IApplication::INVALID;
+  }
+
+  LOGD("Starting the GTKmm event loop");
+
+  return app->run(*loader->window());
+}
+
+bool GtkmmIniter::create_main_window_loader()
+{
   LOGD("Creating the main window loader instance");
 
-  auto loader = main_window::Loader::create();
+  loader = main_window::Loader::create();
 
   assert(loader != nullptr);
 
   if (!loader->init()) {
     LOGE("Failure while init loader");
-    return app::IApplication::INVALID;
+    return false;
+  }
+
+  return true;
+}
+
+bool GtkmmIniter::prepare_main_window()
+{
+  assert(loader != nullptr);
+
+  if (loader == nullptr) {
+    LOGE("No loader avaialble");
+    return false;
   }
 
   auto* window = loader->window();
@@ -44,14 +73,12 @@ int GtkmmIniter::run(std::shared_ptr<app::ApplicationContext> nactx)
 
   if (window == nullptr) {
     LOGE("Obtained invalid main window pointer");
-    return app::IApplication::INVALID;
+    return false;
   }
 
   window->show_all_children();
 
-  LOGD("Starting the GTKmm event loop");
-
-  return app->run(*window);
+  return true;
 }
 
 }  // namespace Gtkmm3i

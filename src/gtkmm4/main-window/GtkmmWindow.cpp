@@ -1,12 +1,13 @@
-#include "src/gtkmm3/main-window/GtkmmWindow.h"
+#include "src/gtkmm4/main-window/GtkmmWindow.h"
 
 #include <cassert>
 #include <iostream>
 #include <stdexcept>
 
 #include "project-global-decls.h"
+#include "src/log/log.h"
 
-namespace Gtkmm3i::main_window
+namespace Gtkmm4i::main_window
 {
 
 GtkmmWindow::GtkmmWindow()
@@ -23,20 +24,23 @@ bool GtkmmWindow::init()
 
   pack_widgets();
 
-  show_all_children();
-
   return true;
 }
 
 void GtkmmWindow::pack_widgets()
 {
+  box.set_orientation(Gtk::Orientation::VERTICAL);
   box.set_homogeneous(false);
 
-  box.pack_start(headerText, false, false);
-  box.pack_start(explanationText, false, false);
-  box.pack_start(image, true, true);
+  box.append(headerText);
+  box.append(explanationText);
 
-  add(box);
+  image.set_vexpand(true);
+  image.set_hexpand(true);
+
+  box.append(image);
+
+  set_child(box);
 }
 
 void GtkmmWindow::prepare_widgets()
@@ -53,15 +57,21 @@ void GtkmmWindow::prepare_widgets()
 
 void GtkmmWindow::prepare_css()
 {
-  auto css = Gtk::CssProvider::create();
+ auto css_provider = Gtk::CssProvider::create();
 
-  assert(css);
+  try {
+    css_provider->load_from_resource(main_css_res_path);
+  } catch (const Glib::Error& ex) {
+    LOGE("Failed to load CSS: " << ex.what());
+    return;
+  }
 
-  css->load_from_resource(main_css_res_path);
-
-  auto screen = Gdk::Display::get_default()->get_default_screen();
-  Gtk::StyleContext::add_provider_for_screen(
-      screen, css, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+  auto display = Gdk::Display::get_default();
+  Gtk::StyleContext::add_provider_for_display(
+    display,
+    css_provider,
+    GTK_STYLE_PROVIDER_PRIORITY_APPLICATION
+  );
 }
 
 void GtkmmWindow::prepare_header_label()
@@ -85,4 +95,4 @@ const std::string& GtkmmWindow::get_default_title()
 
 GtkmmWindowPtr GtkmmWindow::create() { return std::make_shared<GtkmmWindow>(); }
 
-}  // namespace Gtkmm3i::main_window
+}  // namespace Gtkmm4i::main_window

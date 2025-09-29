@@ -2,10 +2,10 @@
 #include <gtest/gtest.h>
 
 #include "src/app/Application.h"
-#include "src/gtkmm3/GtkmmIniter.h"
+#include "src/gtkmm4/GtkmmIniter.h"
 
 using namespace app;
-using namespace Gtkmm3i;
+using namespace Gtkmm4i;
 using namespace testing;
 
 class UTEST_Application : public Test

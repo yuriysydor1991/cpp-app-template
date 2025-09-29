@@ -11,7 +11,8 @@ RUN apt install -y flatpak
 RUN apt install -y clang-tidy
 RUN apt install -y libgtest-dev
 RUN apt install -y libgmock-dev
-RUN apt install -y pkg-config libgtkmm-3.0-dev
+RUN apt install -y pkg-config
+RUN apt install -y libgtkmm-4.0-dev
 
 CMD ["jenkins.sh"]
 

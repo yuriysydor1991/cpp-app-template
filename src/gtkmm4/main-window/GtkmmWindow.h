@@ -1,16 +1,16 @@
-#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMMWINDOW_CLASS_H
-#define YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMMWINDOW_CLASS_H
+#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMM4WINDOW_CLASS_H
+#define YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMM4WINDOW_CLASS_H
 
 #include <memory>
 #include <string>
 
-#include "src/gtkmm3/gtkmm_includes.h"
+#include "src/gtkmm4/gtkmm4_includes.h"
 
 #ifndef GTKMM_APP_RESOURCES_PREFIX
-#define GTKMM_APP_RESOURCES_PREFIX "/ua/org/kytok/template/gtkmm3"
+#define GTKMM_APP_RESOURCES_PREFIX "/ua/org/kytok/template/gtkmm4"
 #endif  // GTKMM_APP_RESOURCES_PREFIX
 
-namespace Gtkmm3i::main_window
+namespace Gtkmm4i::main_window
 {
 
 /**
@@ -48,7 +48,7 @@ class GtkmmWindow : public Gtk::Window
 
   Glib::RefPtr<Gio::Resource> resources{nullptr};
 
-  Gtk::VBox box;
+  Gtk::Box box;
 
   Gtk::Label headerText;
   Gtk::Label explanationText;
@@ -57,6 +57,6 @@ class GtkmmWindow : public Gtk::Window
 
 using GtkmmWindowPtr = GtkmmWindow::GtkmmWindowPtr;
 
-}  // namespace Gtkmm3i::main_window
+}  // namespace Gtkmm4i::main_window
 
-#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMMWINDOW_CLASS_H
+#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMM4WINDOW_CLASS_H

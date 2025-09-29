@@ -16,7 +16,7 @@ pipeline {
       }
       
       steps {
-        git branch: 'appGtkmm3',
+        git branch: 'appGtkmm4',
             url: 'https://github.com/yuriysydor1991/cpp-app-template.git'
       }
     }

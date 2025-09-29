@@ -1,14 +1,14 @@
-#include "src/gtkmm3/GtkmmIniter.h"
+#include "src/gtkmm4/GtkmmIniter.h"
 
 #include <cassert>
 
 #include "project-global-decls.h"
 #include "src/app/IApplication.h"
-#include "src/gtkmm3/gtkmm_includes.h"
-#include "src/gtkmm3/main-window/GtkmmWindow.h"
+#include "src/gtkmm4/gtkmm4_includes.h"
+#include "src/gtkmm4/main-window/GtkmmWindow.h"
 #include "src/log/log.h"
 
-namespace Gtkmm3i
+namespace Gtkmm4i
 {
 
 int GtkmmIniter::run(std::shared_ptr<app::ApplicationContext> nactx)
@@ -24,8 +24,7 @@ int GtkmmIniter::run(std::shared_ptr<app::ApplicationContext> nactx)
 
   LOGD("Trying to create the GTK3 app instance");
 
-  auto app = Gtk::Application::create(actx->argc, actx->argv,
-                                      project_decls::PROJECT_FLATPAK_URL);
+  auto app = Gtk::Application::create(project_decls::PROJECT_FLATPAK_URL);
 
   LOGD("Trying to create the GtkmmWindow instance");
 
@@ -40,7 +39,7 @@ int GtkmmIniter::run(std::shared_ptr<app::ApplicationContext> nactx)
 
   LOGD("Starting the GTK3 app");
 
-  return app->run(*window);
+  return app->run(actx->argc, actx->argv);
 }
 
-}  // namespace Gtkmm3i
+}  // namespace Gtkmm4i

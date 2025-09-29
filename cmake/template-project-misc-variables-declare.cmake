@@ -6,8 +6,8 @@ set(
 )
 
 set(
-  GTKMM_OBJECT_NAME "${PROJECT_NAME}GTKmmObj"
-  CACHE STRING "Project main binary name and target"
+  GTKMM_OBJECT_NAME "${PROJECT_NAME}GTKmm4Obj"
+  CACHE STRING "Project GTKmm4 binary obj library name and target"
 )
 
 set(

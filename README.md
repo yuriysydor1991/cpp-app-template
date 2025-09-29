@@ -96,10 +96,10 @@ In order to build minimum template project install the GCC C++ compiler with CMa
 sudo apt install -y git g++ cmake
 ```
 
-All necessary development packages for the GTKmm-3.0:
+All necessary development packages for the GTKmm-4.0:
 
 ```
-sudo apt install -y pkg-config libgtkmm-3.0-dev
+sudo apt install -y pkg-config libgtkmm-4.0-dev libglib2.0-dev-bin
 ```
 
 ## Required tools for the MS Windows based OS
@@ -249,7 +249,7 @@ Additional code may be introduced into the `Application` class implementation or
 
 ## Resource embedding
 
-To avoid any install and run dependencies any file registered as a resource are embedding into the binary. Resource embedding is performed through the `src/gtkmm3/ui/template.gresource.xml` GResource file resources of which are compiled into the C-resource by a `glib-compile-resources` command. Register new and remove old resources in the `src/gtkmm3/ui/template.gresource.xml` file in order to make them available in the binary executable. The examples of the resource obtaining and usage in the C++ code side may be examined in the default implementation of the `GtkmmWindow` class.
+To avoid any install and run dependencies any file registered as a resource are embedding into the binary. Resource embedding is performed through the `src/gtkmm4/ui/template.gresource.xml` GResource file resources of which are compiled into the C-resource by a `glib-compile-resources` command. Register new and remove old resources in the `src/gtkmm4/ui/template.gresource.xml` file in order to make them available in the binary executable. The examples of the resource obtaining and usage in the C++ code side may be examined in the default implementation of the `GtkmmWindow` class.
 
 ## Changing the project and executable name
 

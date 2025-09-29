@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.13)
 
-find_package(PkgConfig)
+find_package(PkgConfig REQUIRED)
 
-pkg_check_modules(GTKMM gtkmm-3.0 REQUIRED)
+pkg_check_modules(GTKMM gtkmm-4.0 REQUIRED)
 
 add_library(
   ${GTKMM_OBJECT_NAME} OBJECT
@@ -11,7 +11,7 @@ add_library(
 
 target_include_directories(
   ${GTKMM_OBJECT_NAME}
-  PRIVATE 
+  PUBLIC 
     ${GTKMM_INCLUDE_DIRS}
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}

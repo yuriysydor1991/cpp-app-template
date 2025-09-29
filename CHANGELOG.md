@@ -36,7 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 26f69f7 Introducing the NLohmann JSON library enabler cmake module
 - 0b43578 Refining the main header label size setup with CSS
 - 1504eae Introducing the main CSS styling file with it's preload for the window
-- 93b11c0 Renaming the templateGtkmm namespace into the Gtkmm3i
+- 93b11c0 Renaming the templateGtkmm namespace into the Gtkmm4i
 - c106a26 Refining the Application UTs
 - 6d8ce25 Passing whole application context instance into the GtkmmIniter run method.
 - 80d5c69 Fixing the sanitizers cmake file in the READMEs
@@ -109,7 +109,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - d347ffb Incrementing version to 0.8.0
 - 9403985 Mentioning the glib-compile-resources resource file in the READMEs
-- 347d86f Moving a src/gtkmm to the src/gtkmm3
+- 347d86f Moving a src/gtkmm to the src/gtkmm4
 - cbfbb5d Introducing GResource compilation with glib-compile-resources and resource lib target
 - 15da6a1 Removing annoying GTKmm vars traces
 - 14426ff Specifying the appGtkmm3Glade branch in the READMEs

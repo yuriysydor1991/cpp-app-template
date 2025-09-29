@@ -1,11 +1,11 @@
-#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMMINITER_CLASS_H
-#define YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMMINITER_CLASS_H
+#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMM4INITER_CLASS_H
+#define YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMM4INITER_CLASS_H
 
 #include <memory>
 
 #include "src/app/ApplicationContext.h"
 
-namespace Gtkmm3i
+namespace Gtkmm4i
 {
 
 /**
@@ -24,6 +24,6 @@ class GtkmmIniter
   std::shared_ptr<app::ApplicationContext> actx;
 };
 
-}  // namespace Gtkmm3i
+}  // namespace Gtkmm4i
 
-#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMMINITER_CLASS_H
+#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMM4INITER_CLASS_H

@@ -6,10 +6,6 @@
 
 #include "src/gtkmm4/gtkmm4_includes.h"
 
-#ifndef GTKMM_APP_RESOURCES_PREFIX
-#define GTKMM_APP_RESOURCES_PREFIX "/ua/org/kytok/template/gtkmm4"
-#endif  // GTKMM_APP_RESOURCES_PREFIX
-
 namespace Gtkmm4i::main_window
 {
 

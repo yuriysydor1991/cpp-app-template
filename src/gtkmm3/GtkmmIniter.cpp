@@ -29,7 +29,7 @@ int GtkmmIniter::run(std::shared_ptr<app::ApplicationContext> nactx)
 
   if (!init_main_window()) {
     LOGE("Fail to init subsystems");
-    return false;
+    return app::IApplication::INVALID;
   }
 
   LOGD("Starting the GTKmm event loop");
@@ -58,7 +58,7 @@ bool GtkmmIniter::prepare_main_window()
   assert(loader != nullptr);
 
   if (loader == nullptr) {
-    LOGE("No loader avaialble");
+    LOGE("No loader available");
     return false;
   }
 
@@ -113,7 +113,7 @@ bool GtkmmIniter::init_main_window()
 
   if (!prepare_main_window()) {
     LOGE("Fail to prepare main window");
-    return app::IApplication::INVALID;
+    return false;
   }
 
   if (!create_events_handler()) {

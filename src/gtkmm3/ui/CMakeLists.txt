@@ -5,7 +5,7 @@ find_program(GRSC_EXEC glib-compile-resources)
 configure_file(template.gresource.xml.in template.gresource.xml)
 
 set(RESOURCE_XML "${CMAKE_CURRENT_BINARY_DIR}/template.gresource.xml")
-set(RESOURCE_C "${CMAKE_BINARY_DIR}/template-resources.c")
+set(RESOURCE_C "${CMAKE_CURRENT_BINARY_DIR}/template-resources.c")
 
 add_custom_command(
   OUTPUT ${RESOURCE_C}

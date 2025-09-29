@@ -1,4 +1,4 @@
-#include "src/gtkmm3/GtkmmWindow.h"
+#include "src/gtkmm3/main-window/GtkmmWindow.h"
 
 #include <cassert>
 #include <iostream>
@@ -6,7 +6,7 @@
 
 #include "project-global-decls.h"
 
-namespace Gtkmm3i
+namespace Gtkmm3i::main_window
 {
 
 GtkmmWindow::GtkmmWindow()
@@ -15,13 +15,21 @@ GtkmmWindow::GtkmmWindow()
       explanationText{
           "Replace the default window implementation in GtkmmWindow class"}
 {
-  set_title(get_default_title());
+}
 
-  set_size_request(400, 300);
-  set_default_size(500, 400);
-
+bool GtkmmWindow::init()
+{
   prepare_widgets();
 
+  pack_widgets();
+
+  show_all_children();
+
+  return true;
+}
+
+void GtkmmWindow::pack_widgets()
+{
   box.set_homogeneous(false);
 
   box.pack_start(headerText, false, false);
@@ -29,12 +37,15 @@ GtkmmWindow::GtkmmWindow()
   box.pack_start(image, true, true);
 
   add(box);
-
-  show_all_children();
 }
 
 void GtkmmWindow::prepare_widgets()
 {
+  set_title(get_default_title());
+
+  set_size_request(400, 300);
+  set_default_size(500, 400);
+
   prepare_header_label();
   prepare_random_logo();
   prepare_css();
@@ -72,4 +83,6 @@ const std::string& GtkmmWindow::get_default_title()
   return default_title;
 }
 
-}  // namespace Gtkmm3i
+GtkmmWindowPtr GtkmmWindow::create() { return std::make_shared<GtkmmWindow>(); }
+
+}  // namespace Gtkmm3i::main_window

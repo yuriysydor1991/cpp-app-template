@@ -2,6 +2,7 @@
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMMWINDOW_CLASS_H
 
 #include <memory>
+#include <string>
 
 #include "src/gtkmm3/gtkmm_includes.h"
 
@@ -9,7 +10,7 @@
 #define GTKMM_APP_RESOURCES_PREFIX "/ua/org/kytok/template/gtkmm3"
 #endif  // GTKMM_APP_RESOURCES_PREFIX
 
-namespace Gtkmm3i
+namespace Gtkmm3i::main_window
 {
 
 /**
@@ -19,11 +20,17 @@ namespace Gtkmm3i
 class GtkmmWindow : public Gtk::Window
 {
  public:
+  using GtkmmWindowPtr = std::shared_ptr<GtkmmWindow>;
+
   virtual ~GtkmmWindow() = default;
   GtkmmWindow();
 
+  virtual bool init();
+
+  static GtkmmWindowPtr create();
+
  protected:
-  const std::string& get_default_title();
+  virtual const std::string& get_default_title();
 
  private:
   void prepare_header_label();
@@ -31,6 +38,7 @@ class GtkmmWindow : public Gtk::Window
   void prepare_global_resource();
   void prepare_widgets();
   void prepare_css();
+  void pack_widgets();
 
   inline static constexpr const char* const logo_res_path =
       GTKMM_APP_RESOURCES_PREFIX "/resources/images/kytok.org.ua-logo.png";
@@ -47,6 +55,8 @@ class GtkmmWindow : public Gtk::Window
   Gtk::Image image;
 };
 
-}  // namespace Gtkmm3i
+using GtkmmWindowPtr = GtkmmWindow::GtkmmWindowPtr;
+
+}  // namespace Gtkmm3i::main_window
 
 #endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMMWINDOW_CLASS_H

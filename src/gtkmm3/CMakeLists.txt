@@ -7,7 +7,6 @@ pkg_check_modules(GTKMM gtkmm-3.0 REQUIRED)
 add_library(
   ${GTKMM_OBJECT_NAME} OBJECT
   GtkmmIniter.cpp
-  GtkmmWindow.cpp
 )
 
 target_include_directories(
@@ -20,17 +19,12 @@ target_include_directories(
 
 target_link_directories(
   ${GTKMM_OBJECT_NAME}
-  PRIVATE ${GTKMM_LIBRARY_DIRS}
+  PUBLIC ${GTKMM_LIBRARY_DIRS}
 )
 
 target_link_libraries(
   ${GTKMM_OBJECT_NAME}
-  PRIVATE ${GTKMM_LIBRARIES}
-)
-
-target_include_directories(
-  ${PROJECT_BINARY_NAME}
-  PRIVATE ${GTKMM_INCLUDE_DIRS}
+  PUBLIC ${GTKMM_LIBRARIES}
 )
 
 target_link_libraries(
@@ -39,3 +33,4 @@ target_link_libraries(
 )
 
 add_subdirectory(ui)
+add_subdirectory(main-window)

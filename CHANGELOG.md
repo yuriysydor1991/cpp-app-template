@@ -5,8 +5,62 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+[appGtkmm3Glade0.10.0] - 2025-09-29
+
+- e64534b Refined spell mistakes
+- a739592 Introducing the EventsHandler class to contain the main window events handlers
+- 7e8e5fb Extracting the loader and main window prepare methods in GtkmmIniter
+- 038ad46 Moving gresource generated files into sub build directory
+- 385ad6b Making the GTKmm resource root path configurable
+- a804cf9 Extracting the main window DataContext and Loader classes from a GtkmmIniter
+- 4509ba8 Introducing the PlantUML app component diagram into the READMEs
+- c663f6e Fixing app CT
+- 2497315 Enabling GTest during for CTs
+- 45a059a Pointing Jenkins configurable port into standart in-container 8080
+- bb27fc1 Making the Jenkins pipeline container and image names configurable
+- d8c9e78 Introducing basic app CTs samples
+- 28d3407 Introducing basic SimpleLogger CTs with CMake and Jenkins integration
+- 8050bca Refining the branches link in the READMEs, introducing gitlab links also
+- 81d59ed Specifying the Jenkins container run target in the READMEs
+- 773e1ee Introducing basic Jenkins pipeline CMake target and Jenkinsfile conf
+- fc686a8 Fixing typo in the README.md
+- fd10d17 Introducing the valgrind callgrind profiler target for the project
+- fb1b13d Introducing the gprof profiling target
+- 1bc5cb2 Adding money emoji to donation notice in the READMEs
+- 3445338 Introducing the appCURL branch info into the READMEs
+- d8bfb27 Introducing the enabling libcurl section into the READMEs
+- cfb5a6c Introducing the libcurl cmake enabler script
+- 527b19c Moving the DEFAULT_LOG_FILE_PATH macro declaration into severity-macro-consts.h
+- c05c05a Refining unit tests to match the new log code
+- c2effab Introducing a custom log file cmd param for the executable
+- 396bdc4 Introducing the DEFAULT_LOG_FILE_PATH cmake var and cpp macro to specify default dst log file location
+- d1f49b3 Introducing the CMDParamNames class to encapsulate CMD params names
+- 510fec8 Introducing some marketing sentences in the README's goal section
+- 07029e5 Introducing the cmake/enablers subdirectory to locate the 3rd-party dependencies
+- aa7bd8f Renaming emplate-project-make-GTest-available - template-project-GTest-enabler
+- 0abd8f0 Introducing the NLohmann JSON library enabler cmake module
+- 5602f6f Introducing the main window CSS styling file main-window.css
+- 4dc7121 Renaming the templateGtkmm3 namespace into Gtkmm3i
+- 442fd0a Refining the Application UTs
+- 7598047 Passing whole application context instance into the GtkmmIniter run method.
+- 1a252b5 Fixing the sanitizers cmake file in the READMEs
+- 8f746fa Avoiding unnecessary badly portable localtime_r usage
+- 86656dc Introducing the thread id into simple logger
+- a82ce51 Avoiding backward time in the simple logs
+- ae231d3 Avoiding final log multiple str fetches
+- 85e47f3 Refining the log current timestamp method, increasing thread safety
+- bdd3ca3 Introducing the CMake configurable log severity messages compilation switch
+- 3a3cb58 Introducing the appBoostLog branch info into the READMEs
+- 99f5a83 Hiding the compile options cmake files under separate directory
+- 0f3c4d5 Enhancing sanitizers combinations and new cmake dir for ones
+- 116102c Introducing the sanitizers enabling info into the READMEs
+- 7c7308a Removing redundant cmake traces messages
+- a1a7b21 Introducing the GCC compiler sanitizers
+- a16c76d Incrementing version to 0.10.0
+
 ## [appGtkmm3Glade0.9.0] - 2025-06-06
 
+- b6195f0 Release appGtkmm3Glade0.9.0 2025-06-06
 - 66631ea Introducing misc/.cppcheck-suppress file to list cppcheck suppressions of the false positives
 - c95cf9e Refined issues in the Docker READMEs doc
 - be42016 Refining the Docker container target
@@ -227,6 +281,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[appGtkmm3Glade0.10.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appGtkmm3Glade0.10.0)
 [appGtkmm3Glade0.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appGtkmm3Glade0.9.0)
 [appGtkmm3Glade0.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appGtkmm3Glade0.8.0)
 [appGtkmm30.7.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appGtkmm30.7.0)

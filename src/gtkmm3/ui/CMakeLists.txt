@@ -2,8 +2,10 @@ cmake_minimum_required(VERSION 3.13)
 
 find_program(GRSC_EXEC glib-compile-resources)
 
-set(RESOURCE_XML "${CMAKE_CURRENT_SOURCE_DIR}/template.gresource.xml")
-set(RESOURCE_C "${CMAKE_BINARY_DIR}/template-resources.c")
+configure_file(template.gresource.xml.in template.gresource.xml)
+
+set(RESOURCE_XML "${CMAKE_CURRENT_BINARY_DIR}/template.gresource.xml")
+set(RESOURCE_C "${CMAKE_CURRENT_BINARY_DIR}/template-resources.c")
 
 add_custom_command(
   OUTPUT ${RESOURCE_C}

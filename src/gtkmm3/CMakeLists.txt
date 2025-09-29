@@ -4,6 +4,15 @@ find_package(PkgConfig)
 
 pkg_check_modules(GTKMM gtkmm-3.0 REQUIRED)
 
+set(
+  GTKMM_APP_RESOURCES_PREFIX 
+  "/ua/org/kytok/template/gtkmm3/glade"
+  CACHE STRING 
+  "The project's GTKmm resources root path"
+)
+
+add_compile_definitions(GTKMM_APP_RESOURCES_PREFIX=\"${GTKMM_APP_RESOURCES_PREFIX}\")
+
 add_library(
   ${GTKMM_OBJECT_NAME} OBJECT
   GtkmmIniter.cpp

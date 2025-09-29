@@ -20,7 +20,7 @@ add_library(
 
 target_include_directories(
   ${GTKMM_OBJECT_NAME}
-  PRIVATE 
+  PUBLIC 
     ${GTKMM_INCLUDE_DIRS}
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
@@ -28,17 +28,12 @@ target_include_directories(
 
 target_link_directories(
   ${GTKMM_OBJECT_NAME}
-  PRIVATE ${GTKMM_LIBRARY_DIRS}
+  PUBLIC ${GTKMM_LIBRARY_DIRS}
 )
 
 target_link_libraries(
   ${GTKMM_OBJECT_NAME}
-  PRIVATE ${GTKMM_LIBRARIES}
-)
-
-target_include_directories(
-  ${PROJECT_BINARY_NAME}
-  PRIVATE ${GTKMM_INCLUDE_DIRS}
+  PUBLIC ${GTKMM_LIBRARIES}
 )
 
 target_link_libraries(

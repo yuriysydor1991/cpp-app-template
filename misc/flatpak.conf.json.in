@@ -48,7 +48,7 @@
         {
           "type": "git",
           "url": "https://github.com/GNOME/gtkmm.git",
-          "tag": "3.24.8"
+          "tag": "4.20.0"
         }
       ],
       "config-opts": [

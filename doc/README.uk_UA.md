@@ -526,7 +526,7 @@ cmake --build . --target flatpak
 flatpak install --user CppAppTemplate-0.9.0.flatpak
 
 # для запуску встановленої програми
-flatpak run ua.org.kytok.template.gtkmm3.0.CppAppTemplate
+flatpak run ua.org.kytok.template.gtkmm4.CppAppTemplate
 ```
 
 ## Вмикання підтримки запуску Docker-контейнера

@@ -16,6 +16,9 @@ GtkmmWindow::GtkmmWindow()
       explanationText{
           "Replace the default window implementation in GtkmmWindow class"}
 {
+  if (!init()) {
+    LOGE("Fail to init");
+  }
 }
 
 bool GtkmmWindow::init()

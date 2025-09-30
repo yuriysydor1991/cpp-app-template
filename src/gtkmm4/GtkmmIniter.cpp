@@ -26,20 +26,9 @@ int GtkmmIniter::run(std::shared_ptr<app::ApplicationContext> nactx)
 
   auto app = Gtk::Application::create(project_decls::PROJECT_FLATPAK_URL);
 
-  LOGD("Trying to create the GtkmmWindow instance");
-
-  auto window = main_window::GtkmmWindow::create();
-
-  assert(window != nullptr);
-
-  if (!window->init()) {
-    LOGE("Fail to init the main window");
-    return false;
-  }
-
   LOGD("Starting the GTK3 app");
 
-  return app->run(actx->argc, actx->argv);
+  return app->make_window_and_run<main_window::GtkmmWindow>(actx->argc, actx->argv);
 }
 
 }  // namespace Gtkmm4i

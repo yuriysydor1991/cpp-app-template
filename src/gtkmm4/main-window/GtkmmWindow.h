@@ -21,12 +21,12 @@ class GtkmmWindow : public Gtk::Window
   virtual ~GtkmmWindow() = default;
   GtkmmWindow();
 
-  virtual bool init();
+  bool init();
 
   static GtkmmWindowPtr create();
 
  protected:
-  virtual const std::string& get_default_title();
+  const std::string& get_default_title();
 
  private:
   void prepare_header_label();

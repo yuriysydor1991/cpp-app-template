@@ -28,7 +28,8 @@ int GtkmmIniter::run(std::shared_ptr<app::ApplicationContext> nactx)
 
   LOGD("Starting the GTK3 app");
 
-  return app->make_window_and_run<main_window::GtkmmWindow>(actx->argc, actx->argv);
+  return app->make_window_and_run<main_window::GtkmmWindow>(actx->argc,
+                                                            actx->argv);
 }
 
 }  // namespace Gtkmm4i

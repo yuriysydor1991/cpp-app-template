@@ -215,7 +215,7 @@ Of course, project needs to be `git clone`-ed and it's root directory must be op
 ```
 # from the project root
 
-mkdir -vp build && cd build && cmake ../ && cmake --build . --target all
+cmake -B build -S . && cmake --build build
 ```
 
 Which effectively will create a directory named `build` (it's already added to the `.gitignore` list), configure project using the CMake available in the system (see the [Requirements](#requirements) section of this `README.md` file) and finally builds all the targets available in the project.
@@ -229,7 +229,7 @@ To enable project unit test availability (for building and running) reconfigure 
 ```
 # from the project root
 
-mkdir -vp build && cd build && cmake ../ -DENABLE_UNIT_TESTS=ON && cmake --build . --target all
+cmake -B build -S . -DENABLE_UNIT_TESTS=ON && cmake --build build
 ```
 
 ### Disabling system GTest probe 
@@ -237,7 +237,7 @@ mkdir -vp build && cd build && cmake ../ -DENABLE_UNIT_TESTS=ON && cmake --build
 To disable the system available GTest framework assets usage set appropriate value to the `GTEST_TRY_SYSTEM_PROBE` CMake variable by executing command like (GNU/Linux based):
 
 ```
-mkdir -vp build && cd build && cmake ../ -DENABLE_UNIT_TESTS=ON -DGTEST_TRY_SYSTEM_PROBE=OFF && cmake --build . --target all
+cmake -B build -S . -DENABLE_UNIT_TESTS=ON -DGTEST_TRY_SYSTEM_PROBE=OFF && cmake --build build
 ```
 
 During command execution project build system will try to make GTest available through the Internet only for current project with specified version in the `cmake/template-project-GTest-enabler.cmake` file.
@@ -251,7 +251,7 @@ To enable Doxygen documentation CMake-target during the project configure proces
 ```
 # inside the project root directory 
 
-mkdir -vp build && cd build && cmake ../ -DENABLE_DOC_DOXYGEN=ON
+cmake -B build -S . -DENABLE_DOC_DOXYGEN=ON
 ```
 
 Which effectively will create a directory named `build` inside the project root directory, enters it by a `cd` command and configures project to enable Doxygen documentation build.
@@ -259,9 +259,9 @@ Which effectively will create a directory named `build` inside the project root 
 Finally build the documentation by executing the command:
 
 ```
-# inside the project build directory
+# inside the project root directory
 
-cmake --build . --target Doxygen-doc
+cmake --build build --target Doxygen-doc
 ```
 
 Which in turn will generate the `doc/CppAppTemplate-html` directory (already added to the `.gitignore` file) which will contain the HTML-type documentation. In order to open and examine generated documentation open the `doc/CppAppTemplate-html/index.html` file. The `CppAppTemplate-html` directory name will change if changed default executable name for the project by setting a new value for the `PROJECT_NAME` in the `CMakeLists.txt` file or `PROJECT_LIBRARY_NAME` variable in the `template-project-misc-variables-declare.cmake` file or the `DOXYGEN_OUT_HTML_NAME` variable which in turn set the whole name for the directory.
@@ -275,7 +275,7 @@ It's possible to enable support for the document installation by setting up the 
 ```
 # inside the project build directory
 
-cmake ../ -DENABLE_DOC_DOXYGEN=ON -DDOXYGEN_DO_INSTALL=ON
+cmake -B build -S . -DENABLE_DOC_DOXYGEN=ON -DDOXYGEN_DO_INSTALL=ON
 ```
 
 The `DOXYGEN_OUT_HTML_NAME` CMake variable will configure the documentation html directory name (passed into the `Doxyfile`).
@@ -287,15 +287,15 @@ In order to make `clang-format` target available set the `ENABLE_CLANGFORMAT` va
 ```
 # inside the project root directory 
 
-mkdir -vp build && cd build && cmake ../ -DENABLE_CLANGFORMAT=ON
+cmake -B build -S . -DENABLE_CLANGFORMAT=ON
 ```
 
 To perform the whole project code format in accordance with available `misc/.clang-format` code formatter configuration execute next building command:
 
 ```
-# inside the project build directory
+# inside the project root directory
 
-cmake --build . --target clang-format
+cmake --build build --target clang-format
 ```
 
 The `clang-format` target details may be examined and/or altered in the `cmake/template-project-clang-format-target.cmake` CMake submodule file.
@@ -307,15 +307,15 @@ In order to make the cppcheck target available for the execution, configure proj
 ```
 # inside the project root directory 
 
-mkdir -vp build && cd build && cmake ../ -DENABLE_CPPCHECK=ON
+cmake -B build -S . -DENABLE_CPPCHECK=ON
 ```
 
 And to perform the actual static code analysis by itself run the `cppcheck` target for the build:
 
 ```
-# inside the project build directory
+# inside the project root directory
 
-cmake --build . --target cppcheck
+cmake --build build --target cppcheck
 ```
 
 The `cppcheck` target details may be examined and/or altered in the `cmake/template-project-cppcheck-target.cmake` CMake submodule file.
@@ -327,15 +327,15 @@ In order to enable the static code check for the each translation unit or each `
 ```
 # inside the project root directory
 
-mkdir -vp build && cd build && cmake ../ -DENABLE_CLANG_TIDY=ON
+cmake -B build -S . -DENABLE_CLANG_TIDY=ON
 ```
 
 And to perform the actual static code analysis by itself build any target of interest and the `clang-tidy` command will perform check on each of the compilation target:
 
 ```
-# inside the project build directory
+# inside the project root directory
 
-cmake --build . --target all
+cmake --build build --target all
 ```
 
 For more information about the `clang-tidy` examine the `cmake/template-project-clang-tidy-target.cmake`, `misc/.clang-tidy` files
@@ -350,15 +350,15 @@ In order to be able to generate the `deb` package file configure project to supp
 ```
 # inside the project root directory 
 
-mkdir -vp build && cd build && cmake ../ -DENABLE_DEB=ON
+cmake -B build -S . -DENABLE_DEB=ON
 ```
 
 Next, build all available targets required for the `deb` package
 
 ```
-# inside the project build directory
+# inside the project root directory
 
-cmake --build . --target all
+cmake --build build --target all
 ```
 
 Finally, execute the `cpack` command inside the template project build directory:

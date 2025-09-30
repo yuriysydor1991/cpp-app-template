@@ -1,7 +1,7 @@
 #include "src/gtkmm3/main-window/EventsHandler.h"
 
-#include <memory>
 #include <cassert>
+#include <memory>
 
 #include "src/gtkmm3/gtkmm_includes.h"
 #include "src/gtkmm3/main-window/Loader.h"

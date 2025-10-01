@@ -10,6 +10,8 @@ Enables rapid creation of a complete **software product** — not just raw code 
 
 **Just fork it and implement your application straight away!**
 
+The template project **is not a framework** in traditional means so infrastructure implementation items may be altered to fit needs or even erased in case of redundancy.
+
 See more at the [kytok.org.ua](http://www.kytok.org.ua/)
 
 💵 Donate at [http://kytok.org.ua/page/pozertvy](http://kytok.org.ua/page/pozertvy)

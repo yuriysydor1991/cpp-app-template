@@ -158,6 +158,10 @@ Examine the [Enabling the static code analyzer with clang-tidy](#enabling-the-st
 
 # Project structure
 
+Here is a diagram of the main `lib` component:
+
+![lib component](doc/diagrams/images/lib-class-structure.svg)
+
 ## Implement code straight away!
 
 To proceed the library implementation right away look for the `LibMain` class' `LibMain.cpp` file which is designed to accept initial code of the library. Specifically, new code may be placed into the `bool LibMain::libcall(std::shared_ptr<LibraryContext> ctx)` method. 

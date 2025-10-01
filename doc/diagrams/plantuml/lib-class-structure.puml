@@ -1,0 +1,51 @@
+@startuml
+
+package Library-Facade {
+  abstract class ILib {
+    +{abstract} bool libcall(LibraryContextPtr ctx)
+  }
+
+  class LibraryContext {
+  }
+
+  class LibraryFacade {
+    +{static} LibraryContextPtr create_library_context();
+    +{static} ILibPtr create_default_lib();
+    +{static} ILibPtr create_library(LibraryContextPtr ctx);
+  }
+}
+
+package Library-Implementation {
+  class LibMain {
+    +{abstract} bool libcall(LibraryContextPtr ctx)
+    +{static} LibMainPtr create()
+  }
+
+  class LibFactory {
+    +{abstract} ILibPtr create_default_lib()
+    +{abstract} LibraryContextPtr create_default_context()
+    +{abstract} ILibPtr create_appropriate_lib(LibraryContextPtr ctx)
+    +{static} LibFactoryPtr create_factory()
+  }
+}
+
+note Left of LibraryFacade : The facade for\nthe library implementation.\nCreates instances\nof LibMain through the LibFactory
+
+note Left of LibraryContext : Possible required\ndata placeholder\nto execute some libcalls
+note Bottom of ILib: The particular library\nimplementation interface declearer
+
+note Right of LibMain : The particular library implementation.\nIs created by LibFactory to return\nby LibraryFacade to the end user.
+note Bottom of LibFactory: The factory to create library implementations objects.
+
+ILib <|-- LibMain : Particular implementation
+
+LibraryContext <-- ILib
+LibraryContext <-- LibMain
+
+LibraryFacade ..> LibraryContext : implicitly creates with LibraryFacade
+LibraryFacade ..> LibMain : Implicitly creates with LibraryFacade
+LibraryFacade --> LibFactory : Creates
+
+LibMain --> LibFactory
+
+@enduml

@@ -233,9 +233,17 @@ echo 'export DOCKER_HOST="tcp://127.0.0.1:2375"' >> ~/.bashrc
 
 # Структура проекту
 
+## Компонент app
+
 Наступна діаграма відображає структуру компоненту `app`:
 
-![app component class diagram](/doc/diagrams/images/template-project-app-structure.svg)
+![діаграма класів компоненту app](/doc/diagrams/images/template-project-app-structure.svg)
+
+## Компонент lib
+
+Наступна діаграма описує структуру компоненту `lib`:
+
+![компонент lib](/doc/diagrams/images/lib-class-structure.svg)
 
 ## Реалізуй код одразу!
 

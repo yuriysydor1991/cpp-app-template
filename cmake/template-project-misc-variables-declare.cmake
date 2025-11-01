@@ -178,6 +178,12 @@ option(
   OFF
 )
 
+option(
+  ENABLE_LOGS_MICROSECONDS_TIME
+  "Set to OFF to disable the microseconds fields included into the log messages"
+  ON
+)
+
 string(TIMESTAMP PROJECT_CONFIGURE_DATE "%Y-%m-%d %H:%M:%S")
 
 execute_process(

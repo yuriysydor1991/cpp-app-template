@@ -4,7 +4,6 @@
 #include <QQmlApplicationEngine>
 #include <QString>
 
-#include "project-global-decls.h"
 #include "src/app/IApplication.h"
 #include "src/log/log.h"
 #include "src/qt6/QMLRes.h"
@@ -29,6 +28,9 @@ int Qt6Initer::run(std::shared_ptr<app::ApplicationContext> actx)
   QGuiApplication app(actx->argc, actx->argv);
   QQmlApplicationEngine engine;
 
+  LOGI("Trying to load " << QMLRes::get_url_main().toStdString());
+
+  engine.addImportPath(QMLRes::get_url_main_import());
   engine.load(QMLRes::get_url_main());
 
   if (engine.rootObjects().isEmpty()) {

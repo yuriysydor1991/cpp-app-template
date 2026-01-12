@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.16)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -9,11 +9,9 @@ find_package(
   COMPONENTS Core Gui Qml Quick QuickControls2
 )
 
-qt_add_library(
-  ${QT6_OBJECT_NAME} OBJECT
-  MANUAL_FINALIZATION
+qt6_add_library(
+  ${QT6_OBJECT_NAME} STATIC
   Qt6Initer.cpp
-  resources.qrc
   QMLRes.cpp
 )
 
@@ -23,12 +21,11 @@ target_include_directories(
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}
-  PUBLIC Qt6::Core
 )
 
 target_link_libraries(
   ${QT6_OBJECT_NAME}
-  PRIVATE
+  PUBLIC
     Qt6::Core
     Qt6::Gui
     Qt6::Qml
@@ -38,7 +35,8 @@ target_link_libraries(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  ${QT6_OBJECT_NAME}
+  PUBLIC
+    ${QT6_OBJECT_NAME}
 )
 
-qt_finalize_target(${QT6_OBJECT_NAME})
+add_subdirectory(ui)

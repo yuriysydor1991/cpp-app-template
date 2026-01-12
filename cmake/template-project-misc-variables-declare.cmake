@@ -11,6 +11,11 @@ set(
 )
 
 set(
+  PROJECT_URI "ua.org.kytok.template.Qt6.${PROJECT_BINARY_NAME}"
+  CACHE STRING "Project reverse URL identifier"
+)
+
+set(
   PROJECT_MAINTAINER "Your Name"
   CACHE STRING "Project maintainer name (used for the DEB package)"
 )

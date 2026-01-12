@@ -8,6 +8,8 @@ namespace project_decls {
 
 /// @brief Global project' binary name
 const std::string PROJECT_NAME = "${PROJECT_BINARY_NAME}" ;
+/// @brief Global project' reverse URI
+const std::string PROJECT_URI = "${PROJECT_URI}" ;
 /// @brief Global project' build version
 const std::string PROJECT_BUILD_VERSION = "${PROJECT_VERSION}" ;
 /// @brief Global project' configure git commit hash

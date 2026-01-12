@@ -1,22 +1,31 @@
 #include "src/qt6/QMLRes.h"
 
-#include <memory>
+#include <QString>
 
-#include "src/app/ApplicationContext.h"
+#include "project-global-decls.h"
 
 namespace Qt6i::qmlpaths
 {
 
-const QUrl& QMLRes::get_url_main()
+const QString& QMLRes::get_url_main()
 {
-  static const QUrl main_url = get_url_from(main_qml_path);
+  static const QString main_url{
+    QStringLiteral(":/")  
+    + QString::fromStdString(project_decls::PROJECT_URI) 
+    + QStringLiteral("/main/main.qml")
+  };
 
   return main_url;
 }
 
-inline QUrl QMLRes::get_url_from(const char* const& resPath)
+const QString& QMLRes::get_url_main_import()
 {
-  return QUrl{resPath};
+  static const QString main_import_url{
+    QStringLiteral(":/")  
+    + QString::fromStdString(project_decls::PROJECT_URI)
+  };
+
+  return main_import_url;
 }
 
 }  // namespace Qt6i::qmlpaths

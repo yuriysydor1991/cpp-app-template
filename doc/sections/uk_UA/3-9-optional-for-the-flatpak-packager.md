@@ -9,9 +9,9 @@ sudo apt install -y flatpak flatpak-builder
 Також знадобиться один з цільових SDK який може бути встановленим за допомогою команди подібної на наступну:
 
 ```
-flatpak install runtime/org.freedesktop.Sdk/x86_64/20.08
+flatpak install runtime/org.freedesktop.Sdk/x86_64/24.08
 ```
 
-Необіхдно замінити `runtime/org.freedesktop.Sdk/x86_64/20.08` власним варіантом обраного SDK. У документації до flatpak можна визначити як переглянути усі доступні варіанти.
+Необіхдно замінити `runtime/org.freedesktop.Sdk/x86_64/24.08` власним варіантом обраного SDK. У документації до flatpak можна визначити як переглянути усі доступні варіанти.
 
 Деталі у секції [Вмикання підтримки генерації flatpak пакету](/doc/sections/uk_UA/5-11-enabling-the-flatpak-package-generation-support.md).

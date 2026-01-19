@@ -1,7 +1,7 @@
 # Project build
 
 1. [IDE build](/doc/sections/en_US/5-1-IDE-build.md)
-1. [Command line build](/doc/sections/en_US/5-3-command-line-build.md)
+1. [Command line build](/doc/sections/en_US/5-2-command-line-build.md)
 1. Enabling testing
     1. [Enabling unit testing](/doc/sections/en_US/5-3-1-enabling-unit-testing.md)
     1. [Disabling system GTest probe](/doc/sections/en_US/5-3-2-disabling-system-GTest-probe.md)

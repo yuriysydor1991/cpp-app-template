@@ -1,7 +1,7 @@
 # Побудова проекту
 
 1. [Побудова за допомогою IDE](/doc/sections/uk_UA/5-1-IDE-build.md)
-1. [Побудова проекту-шаблону через командний рядок](/doc/sections/uk_UA/5-3-command-line-build.md)
+1. [Побудова проекту-шаблону через командний рядок](/doc/sections/uk_UA/5-2-command-line-build.md)
 1. Вмикання тестів
     1. [Вмикання юніт-тестів](/doc/sections/uk_UA/5-3-1-enabling-unit-testing.md)
     1. [Запобігання використання GTest з ОС](/doc/sections/uk_UA/5-3-2-disabling-system-GTest-probe.md)

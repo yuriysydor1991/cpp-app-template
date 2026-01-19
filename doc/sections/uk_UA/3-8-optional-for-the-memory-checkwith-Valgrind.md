@@ -6,4 +6,4 @@
 sudo apt install -y valgrind
 ```
 
-Біль детально у секції [Вмикання цілі динамічної перевірки пам'яті Valgrind](#вмикання-цілі-динамічної-перевірки-памяті-valgrind).
+Біль детально у секції [Вмикання цілі динамічної перевірки пам'яті Valgrind](/doc/sections/uk_UA/5-9-enabling-the-dynamic-memory-check-target-with-valgrind.md).

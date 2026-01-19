@@ -40,4 +40,4 @@ DOCKER_HOST="tcp://127.0.0.1:2375" docker run hello-world
 echo 'export DOCKER_HOST="tcp://127.0.0.1:2375"' >> ~/.bashrc
 ```
 
-Деталі у секції [Вмикання підтримки запуску Docker-контейнера](#вмикання-підтримки-запуску-docker-контейнера)
+Деталі у секції [Вмикання підтримки запуску Docker-контейнера](/doc/sections/uk_UA/5-12-enabling-the-docker-container-build-and-run.md).

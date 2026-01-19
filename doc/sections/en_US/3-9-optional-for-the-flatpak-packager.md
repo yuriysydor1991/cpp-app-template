@@ -14,4 +14,4 @@ flatpak install runtime/org.freedesktop.Sdk/x86_64/20.08
 
 Replace the `runtime/org.freedesktop.Sdk/x86_64/20.08` with your preferred SDK. Consult the flatpak documentation on how to list all available options.
 
-Look for the details at the [Enabling the flatpak package generation support](#enabling-the-flatpak-package-generation-support).
+Look for the details at the [Enabling the flatpak package generation support](/doc/sections/en_US/5-11-enabling-the-flatpak-package-generation-support.md).

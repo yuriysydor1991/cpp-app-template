@@ -6,4 +6,4 @@ In order to perform a static code analysis with the `clang-tidy` command install
 sudo apt install -y clang-tidy
 ```
 
-Examine the [Enabling the static code analyzer with clang-tidy](#enabling-the-static-code-analyzer-with-clang-tidy) section on how to enable the `cppcheck` target.
+Examine the [Enabling the static code analyzer with clang-tidy](/doc/sections/uk_UA/5-8-enabling-static-code-analyzer-with-clang-tidy.md) section on how to enable the `cppcheck` target.

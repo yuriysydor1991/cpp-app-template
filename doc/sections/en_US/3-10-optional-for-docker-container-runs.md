@@ -40,4 +40,4 @@ You may add the `export DOCKER_HOST="tcp://127.0.0.1:2375"` to your `.bashrc` fi
 echo 'export DOCKER_HOST="tcp://127.0.0.1:2375"' >> ~/.bashrc
 ```
 
-Details at the section [Enabling the Docker container build and run](#enabling-the-docker-container-build-and-run)
+Details at the section [Enabling the Docker container build and run](/doc/sections/en_US/5-12-enabling-the-docker-container-build-and-run.md).

@@ -16,4 +16,4 @@ mkdir -vp build && cd build && cmake ../ -DENABLE_CPPCHECK=ON
 cmake --build . --target cppcheck
 ```
 
-Деталі цілі `cppcheck` можна перегляну і/або змінити у файлі `cmake/template-project-cppcheck-target.cmake` системи збірки CMake.
+Деталі цілі `cppcheck` можна переглянути і/або змінити у файлі `cmake/template-project-cppcheck-target.cmake` системи збірки CMake.

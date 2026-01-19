@@ -6,4 +6,4 @@ To auto format code using available `clang-format` target the `clang-format` cod
 sudo apt install -y clang-format
 ```
 
-Examine configuring details in the [Enabling and performing code formatting target](#enabling-and-performing-code-formatting-target) subsection.
+Examine configuring details in the [Enabling and performing code formatting target](/doc/sections/en_US/5-6-enabling-and-performing-code-formatting-target.md) subsection.

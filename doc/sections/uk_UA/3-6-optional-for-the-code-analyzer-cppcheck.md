@@ -6,4 +6,4 @@
 sudo apt install -y cppcheck
 ```
 
-Більш детальніше у секції [Вмикання підтримки цілі статичного аналізатора коду cppcheck](#вмикання-підтримки-цілі-статичного-аналізатора-коду-cppcheck).
+Більш детальніше у секції [Вмикання підтримки цілі статичного аналізатора коду cppcheck](/doc/sections/uk_UA/5-7-enabling-the-static-code-analyzer-target-with-cppcheck.md).

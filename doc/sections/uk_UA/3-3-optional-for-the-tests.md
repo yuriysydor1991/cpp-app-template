@@ -6,4 +6,4 @@
 sudo apt install -y googletest
 ```
 
-Більш детально у секції [тести проекту](#тести-проекту).
+Більш детально у секції [тести проекту](/doc/sections/uk_UA/4-4-project-tests.md).

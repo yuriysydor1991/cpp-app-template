@@ -91,6 +91,7 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
     1. [Enabling gprof profiler analysis](/doc/sections/en_US/5-15-enabling-gprof-profiler-analysis.md)
     1. [Enabling vagrind's callgrind profiler analysis](/doc/sections/en_US/5-16-enabling-valgrinds-callgrind-profiler-analysis.md)
     1. [Enabling Jenkins pipeline inside Docker container](/doc/sections/en_US/5-17-enabling-Jenkins-pipeline-inside-Docker-container.md)
+    1. [Enabling the nlohmann json library](/doc/sections/en_US/5-18-enabling-the-nlohmann-json-library.md)
 1. [Run the executable](/doc/sections/en_US/6-run-the-executable.md)
     1. [IDE run](/doc/sections/en_US/6-1-IDE-run.md)
     1. Command line run

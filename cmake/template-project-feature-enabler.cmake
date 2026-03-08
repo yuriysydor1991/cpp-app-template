@@ -28,7 +28,7 @@ if(ENABLE_DEB)
 endif()
 
 if (ENABLE_NLOHMANN_JSON)
-  include(template-project-nlohman-json-enabler)
+  include(template-project-nlohmann-json-enabler)
 endif()
 
 if (ENABLE_LIBCURL)

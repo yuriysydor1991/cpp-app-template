@@ -22,11 +22,11 @@ int GtkmmIniter::run(std::shared_ptr<app::ApplicationContext> nactx)
 
   actx = nactx;
 
-  LOGD("Trying to create the GTK3 app instance");
+  LOGD("Trying to create the GTK4 app instance");
 
   auto app = Gtk::Application::create(project_decls::PROJECT_FLATPAK_URL);
 
-  LOGD("Starting the GTK3 app");
+  LOGD("Starting the GTK4 app");
 
   return app->make_window_and_run<main_window::GtkmmWindow>(actx->argc,
                                                             actx->argv);

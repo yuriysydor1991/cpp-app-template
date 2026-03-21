@@ -24,7 +24,7 @@ int GtkmmIniter::run(std::shared_ptr<app::ApplicationContext> nactx)
 
   LOGD("Trying to create the GTK4 app instance");
 
-  auto app = Gtk::Application::create(project_decls::PROJECT_FLATPAK_URL);
+  auto app = Gtk::Application::create(project_decls::PROJECT_REVERSE_URL);
 
   LOGD("Starting the GTK4 app");
 

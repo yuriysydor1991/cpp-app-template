@@ -6,6 +6,11 @@ set(
 )
 
 set(
+  PROJECT_REVERSE_URL ua.org.kytok.template.gtkmm4.${PROJECT_BINARY_NAME}
+  CACHE STRING "Project reverse URL string value"
+)
+
+set(
   GTKMM_OBJECT_NAME "${PROJECT_NAME}GTKmm4Obj"
   CACHE STRING "Project GTKmm4 binary obj library name and target"
 )
@@ -214,3 +219,4 @@ file(
 message(STATUS "PROJECT_NAME: ${PROJECT_NAME}")
 message(STATUS "PROJECT_BINARY_NAME: ${PROJECT_BINARY_NAME}")
 message(STATUS "PROJECT_CONFIGURE_DATE: ${PROJECT_CONFIGURE_DATE}")
+message(STATUS "PROJECT_REVERSE_URL: ${PROJECT_REVERSE_URL}")

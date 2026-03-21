@@ -15,7 +15,7 @@ const std::string PROJECT_BUILD_COMMIT = "${PROJECT_GIT_COMMIT}" ;
 /// @brief Global project' CMake configure date
 const std::string PROJECT_CONFIGURE_DATE = "${PROJECT_CONFIGURE_DATE}" ;
 /// @brief Global project' flatpak App URL
-const std::string PROJECT_FLATPAK_URL = "${FLATPAK_PROJECT_URL}" ;
+const std::string PROJECT_REVERSE_URL = "${PROJECT_REVERSE_URL}" ;
 
 } // namespace project_decls
 

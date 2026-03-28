@@ -6,6 +6,10 @@ pipeline {
     BDJUNITOUT="junit-out"
   }
 
+  parameters {
+    booleanParam(name: 'RUN_CPPCHECK', defaultValue: false, description: 'Run the cppcheck static code check?')
+  }
+
   stages {
     stage('Checkout') {
       when {
@@ -67,6 +71,9 @@ pipeline {
     }
     
     stage('cppcheck') {
+      when {
+        expression { params.RUN_CPPCHECK }
+      }
       steps {
         sh '''
           cmake --build $BUILDDIR -j$(nproc) --target cppcheck

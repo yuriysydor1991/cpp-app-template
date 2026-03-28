@@ -74,27 +74,7 @@ pipeline {
       }
     }
     
-    //stage('Unit Tests') {
-      //parallel {
-      //  stage('UTEST_Application') { 
-      //    steps { 
-      //      sh 'cd $BUILDDIR && ctest -R "UTEST_Application\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_Application.junit.xml'
-      //    }
-      //  }
-      //}
-      //post { always { junit "$BUILDDIR/$BDJUNITOUT/*.xml" } }
-    //}
-    
-    stage('Component Tests') {
-      parallel {
-        stage('CTEST_SimpleLogger') { 
-          steps { 
-            sh 'cd $BUILDDIR && ctest -R "CTEST_SimpleLogger\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_SimpleLogger.junit.xml'
-          }
-        }
-      }
-      post { always { junit "$BUILDDIR/$BDJUNITOUT/*.xml" } }
-    }
+    // see other branches of the cpp-app-template in order to see unit tests registration
     
     stage('Component Tests') {
       parallel {

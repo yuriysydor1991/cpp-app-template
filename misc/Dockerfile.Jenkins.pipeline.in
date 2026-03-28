@@ -12,5 +12,88 @@ RUN apt install -y clang-tidy
 RUN apt install -y libgtest-dev
 RUN apt install -y libgmock-dev
 
+RUN apt install -y meson
+RUN apt install -y pkg-config liblog4cpp5-dev
+RUN apt install -y libboost-all-dev
+
+RUN apt install -y qt6-base-dev qt6-base-dev-tools \
+  qt6-declarative-dev qt6-tools-dev qt6-tools-dev-tools \
+  qml6-module-qtquick qml6-module-qtqml-workerscript \
+  qml6-module-qtquick-templates qml6-module-qtquick-window \
+  qtquickcontrols2-5-dev libqt6gui6 qml-module-qtquick2 \
+  qml-module-qtquick-controls2 qml-module-qtquick-dialogs \
+  qml-module-qtquick-layouts qml-module-qtquick-shapes \
+  libqt6quick6 libqt6quickcontrols2-6 libqt6opengl6-dev \
+  libqt6openglwidgets6
+RUN apt install -y libopengl-dev libgl-dev
+RUN apt install -y qml6-module-qtquick-controls
+
+RUN apt install -y pkg-config libgtkmm-3.0-dev
+RUN apt install -y libgtkmm-4.0-dev
+
+RUN apt install -y libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-net-dev
+
+RUN apt install -y freeglut3-dev libglew-dev
+RUN apt install -y libcurl4-openssl-dev
+RUN apt install -y libpqxx-dev
+RUN apt install -y libmysqlcppconn-dev
+
+ARG srcD=/usr/src
+ARG prefixD=/usr
+
+
+# Witty
+WORKDIR $srcD
+
+RUN git clone --single-branch --progress --branch 4.11.4 --depth 1 https://github.com/emweb/wt.git wt
+
+ARG wtDir=$srcD/wt
+ARG wtBDir=$wtDir/build
+
+WORKDIR $srcD/wt
+
+RUN cmake -B $wtBDir -S $srcD/wt  -DENABLE_LIBWTDBO=OFF -DENABLE_OPENGL=OFF \
+  -DENABLE_FIREBIRD=OFF -DENABLE_POSTGRES=OFF -DENABLE_SQLITE=OFF \
+  -DENABLE_MYSQL=OFF -DENABLE_MSSQLSERVER=OFF -DINSTALL_DOCUMENTATION=OFF \
+  -DBUILD_EXAMPLES=OFF -DENABLE_QT4=OFF -DENABLE_QT5=OFF -DENABLE_QT6=OFF \
+  -DENABLE_LIBWTTEST=OFF -DENABLE_PANGO=OFF -DENABLE_HARU=OFF -DCONNECTOR_FCGI=OFF \
+  -DBUILD_TESTS=OFF -DCONNECTOR_ISAPI=OFF
+RUN cmake --build $wtBDir -j$(nproc)
+RUN cmake --install $wtBDir --prefix $prefixD
+
+
+# SQLite
+WORKDIR $srcD
+
+RUN git clone https://github.com/SRombauts/SQLiteCpp.git
+
+WORKDIR $srcD/SQLiteCpp
+
+RUN cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$prefixD
+RUN cmake --build build -j$(nproc)
+RUN cmake --install build --prefix $prefixD
+
+
+# MongoDB
+WORKDIR $srcD
+
+RUN git clone --single-branch --progress --branch master --depth 1  https://github.com/mongodb/mongo-c-driver.git mongo-c-driver
+WORKDIR $srcD/mongo-c-driver
+
+RUN cmake -B $srcD/mongo-c-driver/build -S $srcD/mongo-c-driver -DENABLE_TESTS=OFF -DENABLE_EXAMPLES=OFF -DCMAKE_INSTALL_LIBDIR=lib
+RUN cmake --build $srcD/mongo-c-driver/build -j$(nproc) --target all
+RUN cmake --install $srcD/mongo-c-driver/build --prefix /usr
+
+
+WORKDIR $srcD/
+
+RUN git clone --progress https://github.com/mongodb/mongo-cxx-driver.git mongo-cxx-driver
+WORKDIR $srcD/mongo-cxx-driver
+
+RUN cmake -B $srcD/mongo-cxx-driver/build -S $srcD/mongo-cxx-driver -DCMAKE_INSTALL_LIBDIR=lib \
+  -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE=Release -DENABLE_TESTS=OFF -DCMAKE_INSTALL_PREFIX=/usr
+RUN cmake --build $srcD/mongo-cxx-driver/build -j$(nproc) --target all
+RUN cmake --install $srcD/mongo-cxx-driver/build
+
 CMD ["jenkins.sh"]
 

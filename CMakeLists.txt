@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.13)
 
 # Change the PROJECT_NAME var value to change executable name
 set(
-  PROJECT_NAME "CppAppTemplate"
-  CACHE STRING "Project general name with an executable name"
+  PROJECT_NAME "CppAppTemplate-maintenance"
+  CACHE STRING "The cpp-app-template project maintenance branch"
 )
 
 project(

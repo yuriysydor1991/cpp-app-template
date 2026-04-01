@@ -10,7 +10,20 @@ set(
 
 set(
   DOCKER_SINGLE_RUN_CMD
-    DOCKER_HOST=${DOCKER_HOST_STR} ${DOCKER_EXEC} run --rm ${DOCKER_SINGLE_RUN_NAME}
+    xhost +local:docker &&
+    DOCKER_HOST=${DOCKER_HOST_STR} ${DOCKER_EXEC} run --rm -it
+    --env DISPLAY=$$DISPLAY
+    --env QT_X11_NO_MITSHM=1
+    --env XDG_RUNTIME_DIR=$$XDG_RUNTIME_DIR
+    --env XAUTHORITY=$$XAUTHORITY
+    --volume /tmp/.X11-unix:/tmp/.X11-unix
+    --volume $$XAUTHORITY:$$XAUTHORITY
+    --volume $$XDG_RUNTIME_DIR:$$XDG_RUNTIME_DIR
+    --device /dev/dri
+    --group-add video
+    --network host
+    ${DOCKER_SINGLE_RUN_NAME} &&
+    xhost -local:docker
 )
 
 message(STATUS "docker single build command: ${DOCKER_SINGLE_BUILD_CMD}")

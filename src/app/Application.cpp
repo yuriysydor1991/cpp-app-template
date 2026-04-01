@@ -5,6 +5,7 @@
 #include <memory>
 
 #include "src/log/log.h"
+#include "src/matplotxx/MatPlotxxController.h"
 
 namespace app
 {
@@ -18,7 +19,15 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  LOGI("Your application implementation goes here!");
+  matplotxxi::MatPlotxxControllerPtr ploter =
+      matplotxxi::MatPlotxxController::create();
+
+  assert(ploter != nullptr);
+
+  if (!ploter->run(ctx)) {
+    LOGE("Plotter signalled about fail status");
+    return INVALID;
+  }
 
   return 0;
 }

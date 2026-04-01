@@ -2,6 +2,28 @@ FROM ubuntu:22.04
 
 RUN apt update
 RUN apt install -y libstdc++6 build-essential git cmake g++
+RUN apt install -y gnuplot
+
+ARG srcD=/src
+ARG prefix=/usr
+
+WORKDIR $srcD
+
+ARG prjName=matplotplusplus
+ARG matPlotScr=$srcD/$prjName
+ARG matPlotBuild=$srcD/$prjName-build-docker-singlerun
+
+RUN git clone https://github.com/alandefreitas/matplotplusplus.git $prjName
+RUN cmake -B $matPlotBuild -S $matPlotScr \
+    -DMATPLOTPP_BUILD_EXAMPLES=OFF \
+    -DMATPLOTPP_BUILD_SHARED_LIBS=ON \
+    -DMATPLOTPP_BUILD_TESTS=OFF \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=ON \
+    -DCMAKE_INSTALL_PREFIX=$prefix
+RUN cmake --build $matPlotBuild -j$(nproc)
+RUN cmake --install $matPlotBuild --prefix $prefix
+
 
 ARG BUILDDIR=/src/${PROJECT_BINARY_NAME}-build-docker-singlerun
 
@@ -10,6 +32,6 @@ RUN --mount=from=project,target=/src/${PROJECT_BINARY_NAME} \
  mkdir -vp $BUILDDIR && \
  cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Release &&  \
  cmake --build $BUILDDIR -j$(nproc) --target ${PROJECT_BINARY_NAME} && \
- cmake --install $BUILDDIR --prefix /usr
+ cmake --install $BUILDDIR --prefix $prefix
 
 CMD ["${PROJECT_BINARY_NAME}"]

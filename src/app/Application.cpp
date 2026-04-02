@@ -19,12 +19,17 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  matplotxxi::MatPlotxxControllerPtr ploter =
+  matplotxxi::MatPlotxxControllerPtr plotter =
       matplotxxi::MatPlotxxController::create();
 
-  assert(ploter != nullptr);
+  assert(plotter != nullptr);
 
-  if (!ploter->run(ctx)) {
+  if (plotter == nullptr) {
+    LOGE("No plotter instance available");
+    return INVALID;
+  }
+
+  if (!plotter->run(ctx)) {
     LOGE("Plotter signalled about fail status");
     return INVALID;
   }

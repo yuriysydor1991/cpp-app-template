@@ -2,14 +2,22 @@
 #include <gtest/gtest.h>
 
 #include "src/app/ApplicationFactory.h"
+#include "src/log/log.h"
+#include "src/matplotxx/MatPlotxxController.h"
 
 using namespace app;
 using namespace testing;
+using namespace matplotxxi;
 
 class CTEST_app : public Test
 {
  public:
-  CTEST_app() = default;
+  CTEST_app()
+  {
+    MatPlotxxController::mock_create =
+        std::make_shared<MatPlotxxController::createMockType>();
+  }
+  virtual ~CTEST_app() { MatPlotxxController::mock_create.reset(); }
 
   int argc{0};
   char** argv{nullptr};
@@ -65,7 +73,44 @@ TEST_F(CTEST_app, create_application_success)
 
 TEST_F(CTEST_app, execute_success)
 {
+  MatPlotxxControllerPtr plotterInstance =
+      std::make_shared<MatPlotxxController>();
+
+  EXPECT_CALL(*plotterInstance, run(_)).Times(1).WillOnce(Return(true));
+  EXPECT_NE(MatPlotxxController::mock_create, nullptr);
+  EXPECT_CALL(*MatPlotxxController::mock_create, Call)
+      .Times(1)
+      .WillOnce(Invoke([&plotterInstance]() { return plotterInstance; }));
+
   int status = ApplicationFactory::execute(argc, argv);
 
   EXPECT_EQ(status, 0);
+}
+
+TEST_F(CTEST_app, plotter_signals_fail_status)
+{
+  MatPlotxxControllerPtr plotterInstance =
+      std::make_shared<MatPlotxxController>();
+
+  EXPECT_CALL(*plotterInstance, run(_)).Times(1).WillOnce(Return(false));
+  EXPECT_NE(MatPlotxxController::mock_create, nullptr);
+  EXPECT_CALL(*MatPlotxxController::mock_create, Call)
+      .Times(1)
+      .WillOnce(Invoke([&plotterInstance]() { return plotterInstance; }));
+
+  int status = ApplicationFactory::execute(argc, argv);
+
+  EXPECT_NE(status, 0);
+}
+
+TEST_F(CTEST_app, no_plotter_instance)
+{
+  EXPECT_NE(MatPlotxxController::mock_create, nullptr);
+  EXPECT_CALL(*MatPlotxxController::mock_create, Call)
+      .Times(1)
+      .WillOnce(Invoke([]() { return MatPlotxxControllerPtr{}; }));
+
+  int status = ApplicationFactory::execute(argc, argv);
+
+  EXPECT_NE(status, 0);
 }

@@ -5,6 +5,7 @@
 #include <memory>
 
 #include "src/log/log.h"
+#include "src/plplot/PLplotController.h"
 
 namespace app
 {
@@ -18,7 +19,19 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  LOGI("Your application implementation goes here!");
+  plploti::PLplotControllerPtr plotter = plploti::PLplotController::create();
+
+  assert(plotter != nullptr);
+
+  if (plotter == nullptr) {
+    LOGE("No plotter instance found");
+    return INVALID;
+  }
+
+  if (!plotter->run(ctx)) {
+    LOGE("Plotter instance returned invalid status");
+    return INVALID;
+  }
 
   return 0;
 }

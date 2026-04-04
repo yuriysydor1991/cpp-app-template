@@ -20,7 +20,7 @@ pipeline {
       }
       
       steps {
-        git branch: 'app',
+        git branch: 'appPLplot',
             url: 'https://github.com/yuriysydor1991/cpp-app-template.git'
       }
     }

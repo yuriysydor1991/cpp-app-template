@@ -1,10 +1,26 @@
 {
   "id": "${FLATPAK_PROJECT_URL}",
-  "runtime": "org.freedesktop.Platform",
-  "runtime-version": "24.08",
-  "sdk": "org.freedesktop.Sdk",
+  "runtime": "org.kde.Platform",
+  "runtime-version": "5.15",
+  "sdk": "org.kde.Sdk",
   "command": "${PROJECT_BINARY_NAME}",
   "modules": [
+    {
+      "name": "plplot",
+      "buildsystem": "cmake",
+      "builddir": true,
+      "config-opts": [
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DENABLE_fortran=OFF"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://git.code.sf.net/p/plplot/plplot",
+          "tag": "master"
+        }
+      ]
+    },
     {
       "name": "${PROJECT_NAME}",
       "buildsystem": "cmake",
@@ -16,5 +32,11 @@
         }
       ]
     }
+  ],
+  "finish-args": [
+    "--share=ipc", 
+    "--socket=fallback-x11",
+    "--socket=wayland",
+    "--device=dri"
   ]
 }

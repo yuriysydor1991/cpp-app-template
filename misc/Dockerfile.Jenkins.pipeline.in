@@ -11,6 +11,7 @@ RUN apt install -y flatpak
 RUN apt install -y clang-tidy
 RUN apt install -y libgtest-dev
 RUN apt install -y libgmock-dev
+RUN apt install -y libplplot-dev plplot-tcl-dev
 
 CMD ["jenkins.sh"]
 

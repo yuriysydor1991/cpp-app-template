@@ -2,9 +2,11 @@
 #include <gtest/gtest.h>
 
 #include "src/app/Application.h"
+#include "src/plplot/PLplotController.h"
 
 using namespace app;
 using namespace testing;
+using namespace plploti;
 
 class UTEST_Application : public Test
 {
@@ -13,6 +15,10 @@ class UTEST_Application : public Test
       : app{std::make_shared<Application>()},
         appCtx{std::make_shared<ApplicationContext>(argc, argv)}
   {
+    PLplotController::createMock = std::make_shared<PLplotController::createMockType>();
+  }
+  ~UTEST_Application() {
+    PLplotController::createMock.reset();
   }
 
   int argc{0};
@@ -26,9 +32,60 @@ TEST_F(UTEST_Application, no_context_error) { EXPECT_NE(app->run({}), 0); }
 
 TEST_F(UTEST_Application, normal_exit)
 {
+  PLplotControllerPtr plotter = std::make_shared<PLplotController>();
+
+  EXPECT_CALL(*plotter, run(appCtx)).Times(1).WillOnce(Return(true));
+
+  EXPECT_NE(PLplotController::createMock, nullptr);
+  EXPECT_CALL(*PLplotController::createMock, Call()).Times(1).WillOnce(
+    Invoke([plotter](){
+        return plotter;
+    })
+  );
+
   EXPECT_CALL(*appCtx, push_error(_)).Times(0);
 
   EXPECT_EQ(app->run(appCtx), 0);
+
+  EXPECT_TRUE(appCtx->errors.empty());
+
+  EXPECT_FALSE(appCtx->print_help_and_exit);
+  EXPECT_FALSE(appCtx->print_version_and_exit);
+}
+
+TEST_F(UTEST_Application, plotter_fail_status)
+{
+  PLplotControllerPtr plotter = std::make_shared<PLplotController>();
+
+  EXPECT_CALL(*plotter, run(appCtx)).Times(1).WillOnce(Return(false));
+  
+  EXPECT_NE(PLplotController::createMock, nullptr);
+  EXPECT_CALL(*PLplotController::createMock, Call()).Times(1).WillOnce(
+    Invoke([plotter](){
+        return plotter;
+    })
+  );
+
+  EXPECT_CALL(*appCtx, push_error(_)).Times(0);
+
+  EXPECT_NE(app->run(appCtx), 0);
+
+  EXPECT_TRUE(appCtx->errors.empty());
+
+  EXPECT_FALSE(appCtx->print_help_and_exit);
+  EXPECT_FALSE(appCtx->print_version_and_exit);
+}
+
+TEST_F(UTEST_Application, absent_plotter_instance)
+{  
+  EXPECT_NE(PLplotController::createMock, nullptr);
+  EXPECT_CALL(*PLplotController::createMock, Call()).Times(1).WillOnce(
+    Return(PLplotControllerPtr{})
+  );
+
+  EXPECT_CALL(*appCtx, push_error(_)).Times(0);
+
+  EXPECT_NE(app->run(appCtx), 0);
 
   EXPECT_TRUE(appCtx->errors.empty());
 

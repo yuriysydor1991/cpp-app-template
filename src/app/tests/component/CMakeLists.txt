@@ -4,6 +4,9 @@ if (NOT ENABLE_COMPONENT_TESTS)
   return()
 endif()
 
+# disabling the asserts for the tests
+add_compile_options(-DNDEBUG=1)
+
 add_executable(
   CTEST_app  
   CTEST_app.cpp
@@ -19,6 +22,7 @@ target_include_directories(
   CTEST_app
   PRIVATE
     ${APP_MOCKS_ROOT}/log
+    ${APP_MOCKS_ROOT}/PLplotController
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
 )

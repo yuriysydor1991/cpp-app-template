@@ -2,14 +2,22 @@
 #include <gtest/gtest.h>
 
 #include "src/app/ApplicationFactory.h"
+#include "src/plplot/PLplotController.h"
 
 using namespace app;
 using namespace testing;
+using namespace plploti;
 
 class CTEST_app : public Test
 {
  public:
-  CTEST_app() = default;
+  CTEST_app()
+  {
+    PLplotController::createMock = std::make_shared<PLplotController::createMockType>();
+  }
+  ~CTEST_app() {
+    PLplotController::createMock.reset();
+  }
 
   int argc{0};
   char** argv{nullptr};
@@ -65,7 +73,48 @@ TEST_F(CTEST_app, create_application_success)
 
 TEST_F(CTEST_app, execute_success)
 {
+  PLplotControllerPtr plotter = std::make_shared<PLplotController>();
+
+  EXPECT_CALL(*plotter, run(_)).Times(1).WillOnce(Return(true));
+
+  EXPECT_NE(PLplotController::createMock, nullptr);
+  EXPECT_CALL(*PLplotController::createMock, Call()).Times(1).WillOnce(
+    Invoke([plotter](){
+        return plotter;
+    })
+  );
+
   int status = ApplicationFactory::execute(argc, argv);
 
   EXPECT_EQ(status, 0);
+}
+
+TEST_F(CTEST_app, plotter_fail_status)
+{
+  PLplotControllerPtr plotter = std::make_shared<PLplotController>();
+
+  EXPECT_CALL(*plotter, run(_)).Times(1).WillOnce(Return(false));
+
+  EXPECT_NE(PLplotController::createMock, nullptr);
+  EXPECT_CALL(*PLplotController::createMock, Call()).Times(1).WillOnce(
+    Invoke([plotter](){
+        return plotter;
+    })
+  );
+
+  int status = ApplicationFactory::execute(argc, argv);
+
+  EXPECT_NE(status, 0);
+}
+
+TEST_F(CTEST_app, absent_plotter_instance)
+{
+  EXPECT_NE(PLplotController::createMock, nullptr);
+  EXPECT_CALL(*PLplotController::createMock, Call()).Times(1).WillOnce(
+    Return(PLplotControllerPtr{})
+  );
+
+  int status = ApplicationFactory::execute(argc, argv);
+
+  EXPECT_NE(status, 0);
 }

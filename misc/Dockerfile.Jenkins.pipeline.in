@@ -38,6 +38,8 @@ RUN apt install -y libcurl4-openssl-dev
 RUN apt install -y libpqxx-dev
 RUN apt install -y libmysqlcppconn-dev
 
+RUN apt install -y gnuplot
+
 ARG srcD=/usr/src
 ARG prefixD=/usr
 
@@ -94,6 +96,25 @@ RUN cmake -B $srcD/mongo-cxx-driver/build -S $srcD/mongo-cxx-driver -DCMAKE_INST
   -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE=Release -DENABLE_TESTS=OFF -DCMAKE_INSTALL_PREFIX=/usr
 RUN cmake --build $srcD/mongo-cxx-driver/build -j$(nproc) --target all
 RUN cmake --install $srcD/mongo-cxx-driver/build
+
+
+WORKDIR $srcD
+
+ARG prjName=matplotplusplus
+ARG matPlotScr=$srcD/$prjName
+ARG matPlotBuild=$srcD/$prjName-build-docker-singlerun
+
+RUN git clone https://github.com/alandefreitas/matplotplusplus.git $prjName
+RUN cmake -B $matPlotBuild -S $matPlotScr \
+    -DMATPLOTPP_BUILD_EXAMPLES=OFF \
+    -DMATPLOTPP_BUILD_SHARED_LIBS=ON \
+    -DMATPLOTPP_BUILD_TESTS=OFF \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=ON \
+    -DCMAKE_INSTALL_PREFIX=$prefixD
+RUN cmake --build $matPlotBuild -j$(nproc)
+RUN cmake --install $matPlotBuild --prefix $prefixD
+
 
 CMD ["jenkins.sh"]
 

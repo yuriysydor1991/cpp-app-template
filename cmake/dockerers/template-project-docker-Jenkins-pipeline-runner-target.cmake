@@ -133,3 +133,4 @@ add_custom_target(
   COMMENT "Running the Jenkins pipeline inside docker run instance"
 )
 
+include(template-project-docker-Jenkins-export-jobs-2-xml)

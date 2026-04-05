@@ -62,6 +62,7 @@
 ## Візуалізація Даних / Графіки / Діаграми
 
 - гілка `appMatPlotxx` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appMatPlotxx), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appMatPlotxx)] (**поточна**) котра містить інфраструктуру для швидкого старту розробки застосунку з використанням [MatPlot++](https://alandefreitas.github.io/matplotplusplus/) - бібліотека для малювання графіків на основі прогарми [gnuplot](http://www.gnuplot.info/) і [Qt6](https://www.qt.io/development/qt-framework/qt6).
+- гілка `appPLplot` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appPLplot), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appPLplot)] котра містить інфраструктуру для швидкого старту розробки застосунку з використанням [PLplot](https://plplot.sourceforge.net/) - потужної бібліотеки генерації графіків котра використовується у наукових програмах з багатьма інтерфейсами для різних віконних систем і мов програмування, і можливостями експорту у найпопулярніші формати зображень (PNG, SVG, JPEG, GIF, PDF і інші).
 
 Редагуй поточний файл `README.md` і `CHANGELOG.md` щоб документація відповідала впровадженому коду. Для перекладів даного файлу `README.md`:
 - `uk_UA` за відносною адресою doc/README.uk_UA.md

@@ -11,7 +11,18 @@ RUN apt install -y flatpak
 RUN apt install -y clang-tidy
 RUN apt install -y libgtest-dev
 RUN apt install -y libgmock-dev
-RUN apt install -y libplplot-dev plplot-tcl-dev
+
+ARG srcD=/src
+ARG prefixD=/usr
+
+WORKDIR $srcD
+
+ARG PLPLOTB=$srcD/plplot-build-docker-singlerun
+
+RUN git clone https://git.code.sf.net/p/plplot/plplot plplot
+RUN cmake -B $PLPLOTB -S plplot -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$prefixD -DENABLE_fortran=OFF
+RUN cmake --build $PLPLOTB -j$(nproc)
+RUN cmake --install $PLPLOTB --prefix $prefixD
 
 CMD ["jenkins.sh"]
 

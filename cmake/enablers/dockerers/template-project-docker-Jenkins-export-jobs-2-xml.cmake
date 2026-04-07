@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 3.13)
 
+if (NOT JENKINS_CLI_JAR_TARGETS)
+    return()
+endif()
+
 set(
     JENKINS_CLI_JAR_PATH 
     "" 

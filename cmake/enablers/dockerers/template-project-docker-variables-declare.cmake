@@ -65,6 +65,12 @@ set(
   ${CMAKE_BINARY_DIR}/src/${PROJECT_BINARY_NAME}
 )
 
+option(
+  JENKINS_CLI_JAR_TARGETS
+  "Set to ON if to enable the Jenkins instance connection and manipulation through jar client"
+  OFF
+)
+
 message(STATUS "Docker executable: ${DOCKER_EXEC}")
 message(STATUS "Dockerfile configure source full path: ${DOCKERFILE_SRC}")
 message(STATUS "Dockerfile destination name: ${DOCKERFILE_DST}")

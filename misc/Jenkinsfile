@@ -1,0 +1,169 @@
+pipeline {
+  agent any
+  
+  environment {
+    BUILDDIR="build"
+    BDJUNITOUT="junit-out"
+  }
+
+  parameters {
+    booleanParam(name: 'RUN_CPPCHECK', defaultValue: false, description: 'Run the cppcheck static code check?')
+  }
+
+  stages {
+    stage('Checkout') {
+      when {
+        expression {
+          def files = sh(script: 'ls -A', returnStdout: true).trim()
+          return files == ""
+        }
+      }
+      
+      steps {
+        git branch: 'lib',
+            url: 'https://github.com/yuriysydor1991/cpp-app-template.git'
+      }
+    }
+    
+    stage('Code format configure') {
+      steps {
+        sh '''
+          cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Debug -DENABLE_CLANGFORMAT=ON
+        '''
+      }
+    }
+    
+    stage('Code format build (clang-format)') {
+      steps {
+        script {
+          def files = sh(script: 'git ls-files -m', returnStdout: true).trim()
+          return files == ""
+        }
+      }
+      
+      post {
+        success {
+          echo 'No files changed - OK'
+        }
+        failure {
+          echo 'Some files are not formatted - FAIL'
+        }
+      }
+    }
+
+    stage('Debug configure') {
+      steps {
+        sh 'rm -fr $BUILDDIR'
+        sh '''
+          cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Debug -DENABLE_UNIT_TESTS=ON \
+            -DENABLE_SANITIZERS=ON -DENABLE_CPPCHECK=ON \
+            -DMAX_LOG_LEVEL=5 -DENABLE_COMPONENT_TESTS=ON
+        '''
+      }
+    }
+    
+    stage('Debug build') {
+      steps {
+        sh '''
+          cmake --build $BUILDDIR -j$(nproc)
+        '''
+      }
+    }
+    
+    stage('cppcheck') {
+      when {
+        expression { params.RUN_CPPCHECK }
+      }
+      steps {
+        sh '''
+          cmake --build $BUILDDIR -j$(nproc) --target cppcheck
+        '''
+      }
+    }
+    
+    stage('Unit Tests') {
+      parallel {
+        stage('UTEST_LibraryFacade') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_LibraryFacade\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_LibraryFacade.junit.xml'
+          }
+        }
+        stage('UTEST_LibFactory') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_LibFactory\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_LibFactory.junit.xml'
+          }
+        }
+        stage('UTEST_LibMain') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_LibMain\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_LibMain.junit.xml'
+          }
+        }
+      }
+      post { always { junit "$BUILDDIR/$BDJUNITOUT/UTEST_*.xml" } }
+    }
+    
+    stage('Component Tests') {
+      parallel {
+        stage('CTEST_SimpleLogger') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "CTEST_SimpleLogger\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_SimpleLogger.junit.xml'
+          }
+        }
+      }
+      post { always { junit "$BUILDDIR/$BDJUNITOUT/CTEST_*.xml" } }
+    }
+    
+    stage('Debug configure (clang-tidy)') {
+      steps {
+        sh 'rm -fr $BUILDDIR'
+        sh '''
+          cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Debug -DENABLE_CLANG_TIDY=ON \
+            -DMAX_LOG_LEVEL=5
+        '''
+      }
+    }
+    
+    stage('Debug build (clang-tidy)') {
+      steps {
+        sh '''
+          cmake --build $BUILDDIR -j$(nproc)
+        '''
+      }
+    }
+    
+    stage('Release configure') {
+      steps {
+        sh 'rm -fr $BUILDDIR'
+        sh '''
+          cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Release
+        '''
+      }
+    }
+    
+    stage('Release build') {
+      steps {
+        sh '''
+          cmake --build $BUILDDIR -j$(nproc)
+        '''
+      }
+    }
+    
+    stage('Release install') {
+      steps {
+        sh '''
+          cmake --install $BUILDDIR --prefix $BUILDDIR/install-try
+        '''
+      }
+    }
+  }
+
+  post {
+    success {
+      echo '✅ Builds & Tests passed!'
+    }
+    failure {
+      echo '❌ Builds or Tests failed!'
+    }
+  }
+}
+

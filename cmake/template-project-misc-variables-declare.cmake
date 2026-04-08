@@ -136,6 +136,12 @@ option(
   ON
 )
 
+option(
+  ENABLE_DOCKER
+  "Set to ON to enable the dockers run"
+  OFF
+)
+
 string(TIMESTAMP PROJECT_CONFIGURE_DATE "%Y-%m-%d %H:%M:%S")
 
 execute_process(

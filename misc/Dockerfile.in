@@ -2,14 +2,31 @@ FROM ${DOCKERFILE_SINGLE_RUN_BASE_IMAGE_STRING}
 
 RUN apt update
 RUN apt install -y libstdc++6 build-essential git cmake g++
+RUN apt install -y pkgconf
+RUN apt install -y libsystemd-dev
 
-ARG BUILDDIR=/src/${PROJECT_BINARY_NAME}-build-docker-singlerun
+ARG prefixD=/usr
+ARG srcD=/src
 
-RUN --mount=from=project,target=/src/${PROJECT_BINARY_NAME} \ 
- cd /src/${PROJECT_BINARY_NAME} && \
+ARG DBusCxxS=sdbus-cpp
+ARG DBusCxxB=$srcD/$DBusCxxS-build
+
+WORKDIR $srcD
+
+RUN git clone --branch v1.6.0 https://github.com/Kistler-Group/sdbus-cpp.git $DBusCxxS
+RUN cmake -B $DBusCxxB -S $DBusCxxS -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON
+RUN cmake --build $DBusCxxB -j$(nproc)
+RUN cmake --install $DBusCxxB --prefix $prefixD
+
+WORKDIR $srcD
+
+ARG BUILDDIR=$srcD/${PROJECT_BINARY_NAME}-build-docker-singlerun
+
+RUN --mount=from=project,target=$srcD/${PROJECT_BINARY_NAME} \ 
+ cd $srcD/${PROJECT_BINARY_NAME} && \
  mkdir -vp $BUILDDIR && \
  cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Release &&  \
  cmake --build $BUILDDIR -j$(nproc) --target ${PROJECT_BINARY_NAME} && \
- cmake --install $BUILDDIR --prefix /usr
+ cmake --install $BUILDDIR --prefix $prefixD
 
 CMD ["${PROJECT_BINARY_NAME}"]

@@ -5,6 +5,7 @@
 #include <memory>
 
 #include "src/log/log.h"
+#include "src/sdbuscxx/SDBusCxxController.h"
 
 namespace app
 {
@@ -18,7 +19,19 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  LOGI("Your application implementation goes here!");
+  sdbuscxxi::SDBusCxxControllerPtr sdbusconn = sdbuscxxi::SDBusCxxController::create();
+
+  assert(sdbusconn != nullptr);
+
+  if (sdbusconn == nullptr) {
+    LOGE("Fail during the SDBus-c++ connection object creation");
+    return INVALID;
+  }
+
+  if (!sdbusconn->run(ctx)) {
+    LOGE("DBus connection object signalled about invalid state");
+    return INVALID;
+  }
 
   return 0;
 }

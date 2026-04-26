@@ -32,7 +32,3 @@ endif()
 if (ENABLE_LIBCURL)
   include(template-project-libcurl-enabler)
 endif()
-
-if (ENABLE_DOCKER)
-  include(template-project-dockerers)
-endif()

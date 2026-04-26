@@ -28,3 +28,5 @@ message(STATUS "PROJECT_NAME: ${PROJECT_NAME}")
 
 add_subdirectory(src)
 add_subdirectory(doc)
+
+include(template-project-feature-enabler-post)

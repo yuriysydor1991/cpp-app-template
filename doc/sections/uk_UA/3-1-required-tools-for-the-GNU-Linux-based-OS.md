@@ -3,5 +3,5 @@
 Для того щоб виконати побудову проекту-шаблону необхідно встановити компілятор GCC C++ разом з системою побудови проекту CMake і системою версіювання Git:
 
 ```
-sudo apt install -y git g++ cmake
+sudo apt install -y git g++ cmake libsfml-dev
 ```

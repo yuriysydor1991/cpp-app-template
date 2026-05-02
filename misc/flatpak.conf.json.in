@@ -6,6 +6,66 @@
   "command": "${PROJECT_BINARY_NAME}",
   "modules": [
     {
+      "name": "mbedtls",
+      "buildsystem": "simple",
+      "build-commands": [
+        "sed -i 's/\\/\\/#define MBEDTLS_THREADING_PTHREAD/#define MBEDTLS_THREADING_PTHREAD/' include/mbedtls/mbedtls_config.h",
+        "sed -i 's/\\/\\/#define MBEDTLS_THREADING_C/#define MBEDTLS_THREADING_C/' include/mbedtls/mbedtls_config.h",
+        "cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/app -DUSE_SHARED_MBEDTLS_LIBRARY=ON -DLINK_WITH_PTHREAD=ON",
+        "cmake --build build -j$(nproc)",
+        "cmake --install build"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/Mbed-TLS/mbedtls.git",
+          "tag": "v3.6.6"
+        }
+      ]
+    },
+    {
+      "name": "sfml",
+      "buildsystem": "cmake",
+      "builddir": true,
+      "config-opts": [
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DBUILD_SHARED_LIBS=ON",
+        "-DSFML_BUILD_AUDIO=ON",
+        "-DSFML_BUILD_GRAPHICS=ON",
+        "-DSFML_BUILD_WINDOW=ON",
+        "-DSFML_BUILD_NETWORK=ON",
+        "-DSFML_BUILD_EXAMPLES=OFF",
+        "-DSFML_BUILD_DOC=OFF",
+        "-DSFML_BUILD_TEST_SUITE=OFF"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/SFML/SFML.git",
+          "tag": "2.6.2"
+        }
+      ],
+      "build-options": {
+        "build-args": [ "--share=network" ]
+      }
+    },
+    {
+      "name": "plotgencpp",
+      "buildsystem": "simple",
+      "build-commands": [
+        "cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/app",
+        "cmake --build build -j$(nproc)",
+        "find . -name 'libPlotGenCpp.so' -exec cp {} /app/lib64 \\;"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/skhelladi/PlotGenCpp.git",
+          "branch": "main"
+        }
+      ]
+    },
+    {
       "name": "${PROJECT_NAME}",
       "buildsystem": "cmake",
       "config-opts": ["-DCMAKE_BUILD_TYPE=Release"],
@@ -14,7 +74,10 @@
           "type": "dir",
           "path": "${CMAKE_SOURCE_DIR}"
         }
-      ]
+      ],
+      "build-options": {
+        "build-args": [ "--share=network" ]
+      }
     }
   ]
 }

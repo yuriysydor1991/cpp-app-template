@@ -11,6 +11,19 @@ RUN apt install -y flatpak
 RUN apt install -y clang-tidy
 RUN apt install -y libgtest-dev
 RUN apt install -y libgmock-dev
+RUN apt install -y libsfml-dev
+
+ARG prefixD=/usr
+ARG srcD = /src
+
+WORKDIR $srcD
+
+ARG plotgenD=PlotGenCpp
+ARG plotgenB=PlotGenCpp-build
+
+RUN git clone https://github.com/skhelladi/PlotGenCpp.git PlotGenCpp $plotgenD
+RUN cmake -B $plotgenB -S $plotgenD -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$prefixD
+RUN cmake --build $plotgenB -j$(nproc)
+RUN cmake --install $plotgenB --prefix $prefixD
 
 CMD ["jenkins.sh"]
-

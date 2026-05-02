@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.13)
 option(
   ENABLE_LIBCURL
   "Set to ON to enable the libcurl (by using system wide available or through the Internet)"
-  OFF
+  ON
 )
 
 if (NOT ENABLE_LIBCURL)
@@ -37,8 +37,3 @@ FetchContent_Declare(
 )
 
 FetchContent_MakeAvailable(libcurl)
-
-target_link_libraries(
-  ${PROJECT_BINARY_NAME}
-  CURL::libcurl
-)

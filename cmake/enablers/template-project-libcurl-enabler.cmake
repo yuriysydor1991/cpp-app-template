@@ -1,5 +1,15 @@
 cmake_minimum_required(VERSION 3.13)
 
+option(
+  ENABLE_LIBCURL
+  "Set to ON to enable the libcurl (by using system wide available or through the Internet)"
+  OFF
+)
+
+if (NOT ENABLE_LIBCURL)
+  return()
+endif()
+
 set(TEMPLATE_APP_CURL_GIT "https://github.com/curl/curl.git")
 set(TEMPLATE_APP_CURL_GIT_TAG "master")
 
@@ -27,3 +37,8 @@ FetchContent_Declare(
 )
 
 FetchContent_MakeAvailable(libcurl)
+
+target_link_libraries(
+  ${PROJECT_BINARY_NAME}
+  CURL::libcurl
+)

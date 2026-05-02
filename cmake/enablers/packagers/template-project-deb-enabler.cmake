@@ -1,5 +1,15 @@
 cmake_minimum_required(VERSION 3.13)
 
+option(
+  ENABLE_DEB
+  "Set to ON to enable the deb package creation from the project build artifacts"
+  OFF
+)
+
+if(NOT ENABLE_DEB)
+    return()
+endif()
+
 include(InstallRequiredSystemLibraries)
 
 set(CPACK_GENERATOR "DEB")

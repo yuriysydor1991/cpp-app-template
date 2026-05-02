@@ -1,5 +1,15 @@
 cmake_minimum_required(VERSION 3.13)
 
+option(
+  ENABLE_FLATPAK
+  "Set to ON to enable the flatpak package creation from the project build artifacts"
+  OFF
+)
+
+if(NOT ENABLE_FLATPAK)
+  return()
+endif()
+
 find_program(FLATPAKB_EXEC flatpak-builder REQUIRED)
 find_program(FLATPAK_EXEC flatpak REQUIRED)
 

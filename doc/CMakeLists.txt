@@ -28,7 +28,7 @@ option(
 )
 
 set(
-  DOXYGEN_OUT_HTML_NAME ${PROJECT_BINARY_NAME}-html
+  DOXYGEN_OUT_HTML_NAME ${PROJECT_LIBRARY_NAME}-html
   CACHE STRING "The Doxygen output HTML directory name (for the Doxyfile)"
 )
 

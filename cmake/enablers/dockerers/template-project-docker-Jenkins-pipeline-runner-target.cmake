@@ -14,14 +14,14 @@ option(
 
 set(
   JENKINS_PIPELINE_DOCKER_IMAGE_NAME
-  "${PROJECT_BINARY_NAME_lower}-jenkins-pipeline-image"
+  "${PROJECT_LIBRARY_NAME_lower}-jenkins-pipeline-image"
   CACHE STRING 
   "The Jenkins pipeline Dockerfile image name"
 )
 
 set(
   JENKINS_PIPELINE_DOCKER_CONTAINER_NAME
-  "${PROJECT_BINARY_NAME_lower}-jenkins-pipeline-run-container"
+  "${PROJECT_LIBRARY_NAME_lower}-jenkins-pipeline-run-container"
   CACHE STRING 
   "The Jenkins pipeline Dockerfile container name"
 )

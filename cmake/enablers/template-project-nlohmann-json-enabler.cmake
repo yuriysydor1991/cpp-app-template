@@ -39,6 +39,6 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(nlohmann-json)
 
 target_link_libraries(
-  ${PROJECT_BINARY_NAME}
+  ${PROJECT_LIBRARY_NAME}
   nlohmann_json::nlohmann_json
 )

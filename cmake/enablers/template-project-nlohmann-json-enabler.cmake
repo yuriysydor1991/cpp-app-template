@@ -1,5 +1,15 @@
 cmake_minimum_required(VERSION 3.13)
 
+option(
+  ENABLE_NLOHMANN_JSON
+  "Set to ON to enable the nlohmann json library (by using system wide available or through Internet)"
+  OFF
+)
+
+if (NOT ENABLE_NLOHMANN_JSON)
+  return()
+endif()
+
 set(TEMPLATE_APP_NLOHMANN_GIT "https://github.com/nlohmann/json.git")
 set(TEMPLATE_APP_NLOHMANN_GIT_TAG "master")
 
@@ -27,3 +37,8 @@ FetchContent_Declare(
 )
 
 FetchContent_MakeAvailable(nlohmann-json)
+
+target_link_libraries(
+  ${PROJECT_BINARY_NAME}
+  nlohmann_json::nlohmann_json
+)

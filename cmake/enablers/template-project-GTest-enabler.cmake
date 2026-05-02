@@ -1,5 +1,29 @@
 cmake_minimum_required(VERSION 3.13)
 
+option(
+  ENABLE_UNIT_TESTS 
+  "Set to ON value if unit tests build and run should be available"
+  OFF
+)
+
+option(
+  ENABLE_COMPONENT_TESTS 
+  "Set to ON value if the component tests build and run should be available"
+  OFF
+)
+
+option(
+  GTEST_TRY_SYSTEM_PROBE 
+  "Set to ON value if current project CMake files should probe the system GTest"
+  ON
+)
+
+if(NOT (ENABLE_UNIT_TESTS OR ENABLE_COMPONENT_TESTS))
+  return()
+endif()
+
+enable_testing()
+
 set(TEMPLATE_APP_GTEST_GIT "https://github.com/google/googletest.git")
 set(TEMPLATE_APP_GTEST_GIT_TAG "v1.16.0")
 

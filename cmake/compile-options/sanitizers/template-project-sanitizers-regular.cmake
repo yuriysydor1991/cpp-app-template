@@ -1,0 +1,39 @@
+cmake_minimum_required(VERSION 3.13)
+
+set(EXTRA_COMPILE_OPTIONS 
+  ${EXTRA_COMPILE_OPTIONS}   
+  -fsanitize=undefined 
+  -fsanitize=shift 
+  -fsanitize=shift-exponent 
+  -fsanitize=shift-base 
+  -fsanitize=integer-divide-by-zero 
+  -fsanitize=unreachable 
+  -fsanitize=vla-bound 
+  -fsanitize=null 
+  -fsanitize=return 
+  -fsanitize=signed-integer-overflow 
+  -fsanitize=bounds 
+  -fsanitize=bounds-strict 
+  -fsanitize=alignment 
+  -fsanitize=object-size 
+  -fsanitize=float-divide-by-zero 
+  -fsanitize=float-cast-overflow 
+  -fsanitize=nonnull-attribute 
+  -fsanitize=returns-nonnull-attribute 
+  -fsanitize=bool 
+  -fsanitize=enum 
+  -fsanitize=vptr 
+  -fsanitize=pointer-overflow 
+  -fsanitize=builtin 
+  -fsanitize-address-use-after-scope 
+  -fcf-protection=check 
+  -fstack-check
+  -fno-omit-frame-pointer
+  -fno-stack-clash-protection
+)
+
+set(
+  EXTRA_LINK_OPTIONS 
+  ${EXTRA_LINK_OPTIONS} 
+  -fsanitize=undefined
+)

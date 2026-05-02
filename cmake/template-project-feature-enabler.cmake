@@ -3,32 +3,23 @@ cmake_minimum_required(VERSION 3.13)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/compile-options")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/enablers")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/enablers/dockerers")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/enablers/packagers")
 
-if(ENABLE_UNIT_TESTS OR ENABLE_COMPONENT_TESTS)
-  enable_testing()
-  include(template-project-GTest-enabler)
-endif()
+include(template-project-GTest-enabler)
+include(template-project-clang-format-target)
+include(template-project-valgrind-target)
 
-if(ENABLE_CLANGFORMAT)
-  include(template-project-clang-format-target)
-endif()
+# packagers
+include(template-project-deb-enabler)
+include(template-project-flatpak-target)
 
-if(ENABLE_CPPCHECK)
-  include(template-project-cppcheck-target)
-endif()
+# compile options
+include(template-project-sanitizers)
 
-if(ENABLE_CLANG_TIDY)
-  include(template-project-clang-tidy-target)
-endif()
+# analyzers
+include(template-project-cppcheck-target)
+include(template-project-clang-tidy-target)
 
-if(ENABLE_DEB)
-  include(template-project-deb-enabler)
-endif()
-
-if (ENABLE_NLOHMANN_JSON)
-  include(template-project-nlohmann-json-enabler)
-endif()
-
-if (ENABLE_LIBCURL)
-  include(template-project-libcurl-enabler)
-endif()
+# profilers
+include(template-project-profiler-gprof)
+include(template-project-profiler-valgrind-callgrind)

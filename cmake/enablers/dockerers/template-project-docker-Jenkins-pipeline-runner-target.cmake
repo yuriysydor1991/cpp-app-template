@@ -1,15 +1,29 @@
 cmake_minimum_required(VERSION 3.13)
 
-if (NOT ENABLE_JENKINS_DOCKER_PIPELINE)
-  return()
-endif()
-
-find_program(SCRIPT_EXEC script REQUIRED)
+option(
+  ENABLE_JENKINS_DOCKER_PIPELINE
+  "Set to ON to enable the Jenkins pipeline run inside the Docker container"
+  OFF
+)
 
 option(
   JENKINS_PIPELINE_FORCE_REBUILD
   "Set to ON to force rebuild the default Jenkins pipeline image and container"
   OFF
+)
+
+set(
+  JENKINS_PIPELINE_DOCKER_IMAGE_NAME
+  "${PROJECT_BINARY_NAME_lower}-jenkins-pipeline-image"
+  CACHE STRING 
+  "The Jenkins pipeline Dockerfile image name"
+)
+
+set(
+  JENKINS_PIPELINE_DOCKER_CONTAINER_NAME
+  "${PROJECT_BINARY_NAME_lower}-jenkins-pipeline-run-container"
+  CACHE STRING 
+  "The Jenkins pipeline Dockerfile container name"
 )
 
 set(
@@ -33,21 +47,13 @@ set(
   "The Jenkins pipeline Dockerfile destination name"
 )
 
+if (NOT ENABLE_JENKINS_DOCKER_PIPELINE)
+  return()
+endif()
+
+find_program(SCRIPT_EXEC script REQUIRED)
+
 configure_file(${JENKINS_PIPELINE_DOCKERFILE_SRC} ${JENKINS_PIPELINE_DOCKERFILE_DST})
-
-set(
-  JENKINS_PIPELINE_DOCKER_IMAGE_NAME
-  "${PROJECT_LIBRARY_NAME_lower}-jenkins-pipeline-image"
-  CACHE STRING 
-  "The Jenkins pipeline Dockerfile image name"
-)
-
-set(
-  JENKINS_PIPELINE_DOCKER_CONTAINER_NAME
-  "${PROJECT_LIBRARY_NAME_lower}-jenkins-pipeline-run-container"
-  CACHE STRING 
-  "The Jenkins pipeline Dockerfile container name"
-)
 
 execute_process(
   COMMAND ${SCRIPT_EXEC} -q -c "DOCKER_HOST=${DOCKER_HOST_STR} ${DOCKER_EXEC} images -q ${JENKINS_PIPELINE_DOCKER_IMAGE_NAME}" /dev/null
@@ -63,7 +69,7 @@ execute_process(
 
 if (JENKINS_PIPELINE_FORCE_REBUILD)  
   if (NOT JENKINS_PIPELINE_DOCKER_CONTAINER_PRESENT STREQUAL "")
-    message(STATUS "Stoping and erasing the ${JENKINS_PIPELINE_DOCKER_CONTAINER_NAME} container")
+    message(STATUS "Stopping and erasing the ${JENKINS_PIPELINE_DOCKER_CONTAINER_NAME} container")
     set(JENKINS_PIPELINE_DOCKER_CONTAINER_PRESENT "")
     execute_process(
       COMMAND DOCKER_HOST=${DOCKER_HOST_STR} ${DOCKER_EXEC} container stop ${JENKINS_PIPELINE_DOCKER_CONTAINER_NAME}

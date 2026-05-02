@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 set(
   PROJECT_LIBRARY_NAME "${PROJECT_NAME}-${CMAKE_PROJECT_VERSION_MAJOR}"
   CACHE STRING "Project main library name and target"
@@ -15,82 +17,16 @@ set(
   CACHE STRING "Project maintainer email (used for the DEB package)"
 )
 
-option(
-  ENABLE_UNIT_TESTS 
-  "Set to ON value if unit tests build and run should be available"
-  OFF
-)
-
-option(
-  ENABLE_COMPONENT_TESTS 
-  "Set to ON value if the component tests build and run should be available"
-  OFF
-)
-
-option(
-  GTEST_TRY_SYSTEM_PROBE 
-  "Set to ON value if current project CMake files should probe the system GTest"
-  ON
-)
-
-option(
-  ENABLE_CLANGFORMAT
-  "Set to ON if to enable the clang-format command execution target."
-  OFF
-)
-
-option(
-  ENABLE_CPPCHECK
-  "Set to ON if to enable the cppcheck execution target."
-  OFF
-)
-
-option(
-  COMPILE_WARNINGS_AS_ERRORS
-  "Set to ON if to pass -Werror compile parameter to the GCC compiler."
-  OFF
-)
-
-option(
-  ENABLE_COMPILER_CODE_ANALYZER
-  "Set to ON if to pass -fanalyzer compile parameter to the GCC compiler. May dramatically increase the compile time."
-  OFF
-)
-
-option(
-  ENABLE_CLANG_TIDY
-  "Set to ON if enable the clang-tidy code check target."
-  OFF
-)
-
-option(
-  ENABLE_DEB
-  "Set to ON to enable the deb package creation from the project build artifacts"
-  OFF
-)
-
 set(
   MAX_LOG_LEVEL "3"
   CACHE STRING 
   "Sets the maximum severity of the compiled log messages. Error=0. Trace=5. By default Info=3"
 )
 
-option(
-  ENABLE_NLOHMANN_JSON
-  "Set to ON to enable the nlohmann json library (by using system wide available or through Internet)"
-  OFF
-)
-
 set(
   DEFAULT_LOG_FILE_PATH ""
   CACHE STRING 
   "Sets the default log file path"
-)
-
-option(
-  ENABLE_LIBCURL
-  "Set to ON to enable the libcurl (by using system wide available or through the Internet)"
-  OFF
 )
 
 option(

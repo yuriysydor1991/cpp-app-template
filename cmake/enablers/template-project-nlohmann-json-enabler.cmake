@@ -10,33 +10,14 @@ if (NOT ENABLE_NLOHMANN_JSON)
   return()
 endif()
 
-set(TEMPLATE_APP_NLOHMANN_GIT "https://github.com/nlohmann/json.git")
-set(TEMPLATE_APP_NLOHMANN_GIT_TAG "master")
+set(TEMPLATE_APP_NLOHMANN_GIT "https://github.com/nlohmann/json.git" CACHE STRING "The Nlohmann JSON library git source repository")
+set(TEMPLATE_APP_NLOHMANN_GIT_TAG "master" CACHE STRING "The Nlohmann JSON project git repository tag of interest")
 
-find_package(nlohmann_json QUIET)
-
-if (NLOHMANN_JSON_FOUND)
-  message(STATUS "System already contains the nlohmann json library")
-  return()
-else()
-  message(STATUS "The nlohmann json library is no available in the library")
-endif()
-
-message(STATUS "NLOHMANN was not found in the system (or probing is OFF)")
-message(STATUS "Trying to make nlohmann json library available through the Internet")
-
-message(STATUS "NLOHMANN URL: ${TEMPLATE_APP_NLOHMANN_GIT}")
-message(STATUS "NLOHMANN Tag: ${TEMPLATE_APP_NLOHMANN_GIT_TAG}")
-
-include(FetchContent)
-
-FetchContent_Declare(
-  nlohmann-json
+template_project_default_3rdparty_enabler(
+  NAME nlohmann_json 
   GIT_REPOSITORY ${TEMPLATE_APP_NLOHMANN_GIT}
-  GIT_TAG        ${TEMPLATE_APP_NLOHMANN_GIT_TAG}
+  GIT_TAG ${TEMPLATE_APP_NLOHMANN_GIT_TAG}
 )
-
-FetchContent_MakeAvailable(nlohmann-json)
 
 target_link_libraries(
   ${PROJECT_LIBRARY_NAME}

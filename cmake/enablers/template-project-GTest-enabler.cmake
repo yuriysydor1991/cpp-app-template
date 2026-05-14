@@ -24,35 +24,23 @@ endif()
 
 enable_testing()
 
-set(TEMPLATE_APP_GTEST_GIT "https://github.com/google/googletest.git")
-set(TEMPLATE_APP_GTEST_GIT_TAG "v1.16.0")
+set(TEMPLATE_APP_GTEST_GIT "https://github.com/google/googletest.git" CACHE STRING "The GoogleTest git source repository")
+set(TEMPLATE_APP_GTEST_GIT_TAG "v1.16.0" CACHE STRING "The GoogleTest project git repository tag of interest")
+
+if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+  # For Windows: Prevent overriding the parent project's compiler/linker settings
+  set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+endif()
 
 if (GTEST_TRY_SYSTEM_PROBE)
-  message(STATUS "Trying to probe the system GTest")
-  find_package(GTest QUIET)
+  set(DISABLE_SYSTEM_PROBE "")
 else()
-  message(STATUS "The system GTest available probing is OFF")
-endif()
-    
-if(GTest_FOUND)
-  return()
+  set(DISABLE_SYSTEM_PROBE "DISABLE_SYSTEM_PROBE")
 endif()
 
-message(STATUS "GTest was not found in the system (or probing is OFF)")
-message(STATUS "Trying to make GTest available through the Internet")
-
-message(STATUS "GTest URL: ${TEMPLATE_APP_GTEST_GIT}")
-message(STATUS "GTest Tag: ${TEMPLATE_APP_GTEST_GIT_TAG}")
-
-include(FetchContent)
-
-FetchContent_Declare(
-  googletest
-  GIT_REPOSITORY ${TEMPLATE_APP_GTEST_GIT}
-  GIT_TAG        ${TEMPLATE_APP_GTEST_GIT_TAG}
+template_project_default_3rdparty_enabler(
+    NAME GTest 
+    GIT_REPOSITORY ${TEMPLATE_APP_GTEST_GIT}
+    GIT_TAG ${TEMPLATE_APP_GTEST_GIT_TAG}
+    "${DISABLE_SYSTEM_PROBE}"
 )
-
-# For Windows: Prevent overriding the parent project's compiler/linker settings
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-
-FetchContent_MakeAvailable(googletest)

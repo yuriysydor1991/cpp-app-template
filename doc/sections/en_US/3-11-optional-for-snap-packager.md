@@ -1,3 +1,5 @@
+## Optional for the snap packager
+
 Install the `snapd` (if no available) and `snapcraft` packager application:
 
 ```
@@ -17,8 +19,8 @@ sudo usermod -aG lxd $USER
 # may require reboot
 reboot
 
-# initialize the LXD (will ask some questions)
-lxd init
+# initialize the LXD (without --auto will ask some questions)
+lxd init --auto
 
 # reboot OS
 reboot

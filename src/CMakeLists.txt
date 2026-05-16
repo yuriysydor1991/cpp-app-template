@@ -18,7 +18,7 @@ target_include_directories(
 
 install(
   TARGETS ${PROJECT_BINARY_NAME}
-  RUNTIME DESTINATION bin
+  RUNTIME DESTINATION ${PROJECT_BINARY_INSTALLATION_DIR}
 )
 
 configure_file(

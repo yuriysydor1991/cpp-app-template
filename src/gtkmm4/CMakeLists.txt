@@ -1,18 +1,5 @@
 cmake_minimum_required(VERSION 3.13)
 
-find_package(PkgConfig REQUIRED)
-
-pkg_check_modules(GTKMM gtkmm-4.0 REQUIRED)
-
-set(
-  GTKMM_APP_RESOURCES_PREFIX 
-  "/ua/org/kytok/template/gtkmm4/glade"
-  CACHE STRING 
-  "The project's GTKmm4 resources root path"
-)
-
-add_compile_definitions(GTKMM_APP_RESOURCES_PREFIX=\"${GTKMM_APP_RESOURCES_PREFIX}\")
-
 add_library(
   ${GTKMM_OBJECT_NAME} OBJECT
   GtkmmIniter.cpp

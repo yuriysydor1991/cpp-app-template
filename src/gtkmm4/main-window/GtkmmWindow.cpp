@@ -12,7 +12,7 @@ namespace Gtkmm4i::main_window
 
 GtkmmWindow::GtkmmWindow()
     : box{},
-      headerText{"Main GTKmm application"},
+      headerText{"Main GTKmm4 application"},
       explanationText{
           "Replace the default window implementation in GtkmmWindow class"}
 {

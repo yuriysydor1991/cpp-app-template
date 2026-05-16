@@ -7,6 +7,8 @@ set(
   CACHE STRING "Project main binary name and target"
 )
 
+string(TOLOWER ${PROJECT_BINARY_NAME} PROJECT_BINARY_NAME_lower)
+
 set(
   PROJECT_MAINTAINER "Your Name"
   CACHE STRING "Project maintainer name (used for the DEB package)"
@@ -21,6 +23,12 @@ set(
   MAX_LOG_LEVEL "3"
   CACHE STRING 
   "Sets the maximum severity of the compiled log messages. Error=0. Trace=5. By default Info=3"
+)
+
+set(
+  PROJECT_BINARY_INSTALLATION_DIR "bin"
+  CACHE STRING 
+  "Sets the project main binary installation directory"
 )
 
 set(

@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.13)
 option(
   ENABLE_SNAP
   "Set to ON to enable the snap package creation from the project build artifacts"
-  ON
+  OFF
 )
 
 if(NOT ENABLE_SNAP)

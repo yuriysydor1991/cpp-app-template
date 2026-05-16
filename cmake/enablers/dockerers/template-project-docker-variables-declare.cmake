@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.13)
 
-string(TOLOWER ${PROJECT_BINARY_NAME} PROJECT_BINARY_NAME_lower)
-
 set(
   DOCKER_HOST_ADDRESS
   "127.0.0.1"

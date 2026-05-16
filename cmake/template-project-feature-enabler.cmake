@@ -19,6 +19,7 @@ include(template-project-Gtkmm3-enabler)
 # packagers
 include(template-project-deb-enabler)
 include(template-project-flatpak-target)
+include(template-project-snap-enabler)
 
 # compile options
 include(template-project-sanitizers)

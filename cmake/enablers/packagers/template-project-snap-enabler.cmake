@@ -18,7 +18,7 @@ configure_file(
   ${CMAKE_CURRENT_BINARY_DIR}/snap/snapcraft.yaml
 )
 
-find_program(SNAPCRAFT_EXEC snapcraft REQUIRED)
+find_program(SNAPCRAFT_EXEC snapcraft)
 
 add_custom_target(
   snap

@@ -87,16 +87,11 @@
     1. [Необов'язкові пакети для запуску контейнера Docker](/doc/sections/uk_UA/3-10-optional-for-docker-container-runs.md)
     1. [Необов'язкові пакети для snap пакувальника](/doc/sections/uk_UA/3-11-optional-for-snap-packager.md)
 1. [Структура проекту](/doc/sections/uk_UA/4-project-structure.md)
-<<<<<<< HEAD
     1. [Діаграми проекту](/doc/sections/uk_UA/4-0-project-diagrams.md)
     1. [Реалізуй код одразу!](/doc/sections/uk_UA/4-1-implement-code-straight-away.md)
     1. [Зміна назви проекту і головного виконуваного файлу](/doc/sections/uk_UA/4-2-changing-the-project-and-executable-name.md)
     1. [Впровадження нових параметрів командного рядка](/doc/sections/uk_UA/4-6-introduction-of-the-custom-command-line-parameters.md)
     1. [Реалізація власних нащадків IApplication](/doc/sections/uk_UA/4-7-implementing-your-onw-IApplication-descendants.md)
-=======
-    1. [Реалізуй код одразу!](/doc/sections/uk_UA/4-1-implement-code-straight-away.md)
-    1. [Зміна назви проекту і головного виконуваного файлу](/doc/sections/uk_UA/4-2-changing-the-project-and-executable-name.md)
->>>>>>> 5aab638 (Introducing the snap documentation in the READMEs)
     1. [Версіювання і інші параметри проекту](/doc/sections/uk_UA/4-3-version-tracking-and-other-project-parameters.md)
     1. [Тести проекту](/doc/sections/uk_UA/4-4-project-tests.md)
         1. [Фреймворк тестів Google Test](/doc/sections/uk_UA/4-4-1-google-test.md)

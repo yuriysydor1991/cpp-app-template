@@ -33,6 +33,20 @@ TEST_F(UTEST_ApplicationContext, empty_context)
   EXPECT_TRUE(appCtx->errors.empty());
   EXPECT_FALSE(appCtx->print_help_and_exit);
   EXPECT_FALSE(appCtx->print_version_and_exit);
+  EXPECT_TRUE(appCtx->image_path.empty());
+  EXPECT_TRUE(appCtx->cascade_path.empty());
+}
+
+TEST_F(UTEST_ApplicationContext, image_and_cascade_paths_round_trip)
+{
+  static const std::string expectedImage{"/tmp/face.png"};
+  static const std::string expectedCascade{"/usr/share/cascade.xml"};
+
+  appCtx->image_path = expectedImage;
+  appCtx->cascade_path = expectedCascade;
+
+  EXPECT_EQ(appCtx->image_path, expectedImage);
+  EXPECT_EQ(appCtx->cascade_path, expectedCascade);
 }
 
 TEST_F(UTEST_ApplicationContext, custom_argc)

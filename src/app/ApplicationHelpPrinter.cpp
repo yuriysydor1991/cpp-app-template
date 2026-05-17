@@ -38,6 +38,15 @@ int ApplicationHelpPrinter::run(std::shared_ptr<ApplicationContext> ctx)
             << CMDParamNames::VERSION
             << " - print application version, build git "
                "commit and configure date"
+            << std::endl
+            << "\t" << CMDParamNames::LOGPATHW << " or "
+            << CMDParamNames::LOGPATH
+            << " <path> - write log messages into the given file" << std::endl
+            << "\t" << CMDParamNames::IMAGEW << " or " << CMDParamNames::IMAGE
+            << " <path> - run OpenCV face detection on the given image"
+            << std::endl
+            << "\t" << CMDParamNames::CASCADEW
+            << " <path> - override the default OpenCV Haar face cascade XML"
             << std::endl;
 
   return 0;

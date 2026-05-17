@@ -5,3 +5,11 @@
 ```
 sudo apt install -y git g++ cmake
 ```
+
+Гілка `appOpenCV` додатково використовує системні файли розробки [OpenCV](https://opencv.org/) і пакет даних з попередньо встановленими каскадами Хаара, тому їх також необхідно встановити:
+
+```
+sudo apt install -y libopencv-dev opencv-data
+```
+
+На дистрибутивах на базі RPM відповідні пакети називаються `opencv-devel` і `opencv-data`; на FreeBSD це `graphics/opencv` і `graphics/opencv-data` з `pkg`.

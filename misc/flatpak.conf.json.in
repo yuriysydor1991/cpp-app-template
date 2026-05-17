@@ -6,6 +6,35 @@
   "command": "${PROJECT_BINARY_NAME}",
   "modules": [
     {
+      "name": "opencv",
+      "buildsystem": "cmake-ninja",
+      "config-opts": [
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DBUILD_LIST=core,imgproc,imgcodecs,objdetect",
+        "-DBUILD_TESTS=OFF",
+        "-DBUILD_PERF_TESTS=OFF",
+        "-DBUILD_EXAMPLES=OFF",
+        "-DBUILD_opencv_apps=OFF",
+        "-DBUILD_DOCS=OFF",
+        "-DOPENCV_GENERATE_PKGCONFIG=ON",
+        "-DWITH_PROTOBUF=OFF",
+        "-DWITH_FFMPEG=OFF",
+        "-DWITH_GTK=OFF",
+        "-DWITH_V4L=OFF",
+        "-DWITH_TBB=OFF",
+        "-DWITH_IPP=OFF",
+        "-DWITH_OPENEXR=OFF",
+        "-DWITH_JASPER=OFF"
+      ],
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://github.com/opencv/opencv/archive/refs/tags/4.10.0.tar.gz",
+          "sha256": "b341b03a6f3dad36f9c4c01ea3f60a9d8caf3eba81b3b5fa3c98b9ff5b78b3a3"
+        }
+      ]
+    },
+    {
       "name": "${PROJECT_NAME}",
       "buildsystem": "cmake",
       "config-opts": ["-DCMAKE_BUILD_TYPE=Release"],

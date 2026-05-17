@@ -58,6 +58,20 @@ struct ApplicationContext
   std::vector<std::string> errors;
 
   /**
+   * @brief Optional path to the input image to scan with the OpenCV
+   * Haar cascade. When empty the Application::run only verifies that
+   * the cascade can be loaded.
+   */
+  std::string image_path;
+
+  /**
+   * @brief Optional override for the Haar cascade XML file path. When
+   * empty the OpenCVController falls back to its built-in list of
+   * system-wide candidates.
+   */
+  std::string cascade_path;
+
+  /**
    * @brief Pushes a new error description into the errors field;
    *
    * @param errorDescription The application error description.

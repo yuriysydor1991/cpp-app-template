@@ -24,6 +24,9 @@ class CMDParamNames
   inline static const std::string VERSION{"-v"};
   inline static const std::string LOGPATHW{"--log-file"};
   inline static const std::string LOGPATH{"-l"};
+  inline static const std::string IMAGEW{"--image"};
+  inline static const std::string IMAGE{"-i"};
+  inline static const std::string CASCADEW{"--face-cascade"};
 };
 
 }  // namespace app

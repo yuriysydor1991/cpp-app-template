@@ -20,7 +20,7 @@ pipeline {
       }
       
       steps {
-        git branch: 'app',
+        git branch: 'appOpenCV',
             url: 'https://github.com/yuriysydor1991/cpp-app-template.git'
       }
     }
@@ -108,25 +108,35 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationVersionPrinter\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationVersionPrinter.junit.xml'
           }
         }
-        stage('UTEST_CommandLineParser') { 
-          steps { 
+        stage('UTEST_CommandLineParser') {
+          steps {
             sh 'cd $BUILDDIR && ctest -R "UTEST_CommandLineParser\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_CommandLineParser.junit.xml'
+          }
+        }
+        stage('UTEST_OpenCVController') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_OpenCVController\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_OpenCVController.junit.xml'
           }
         }
       }
       post { always { junit "$BUILDDIR/$BDJUNITOUT/UTEST_*.xml" } }
     }
-    
+
     stage('Component Tests') {
       parallel {
-        stage('CTEST_SimpleLogger') { 
-          steps { 
+        stage('CTEST_SimpleLogger') {
+          steps {
             sh 'cd $BUILDDIR && ctest -R "CTEST_SimpleLogger\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_SimpleLogger.junit.xml'
           }
         }
-        stage('CTEST_app') { 
-          steps { 
+        stage('CTEST_app') {
+          steps {
             sh 'cd $BUILDDIR && ctest -R "CTEST_app\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_app.junit.xml'
+          }
+        }
+        stage('CTEST_opencv') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "CTEST_opencv\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_opencv.junit.xml'
           }
         }
       }

@@ -20,6 +20,7 @@ include(template-project-deb-enabler)
 include(template-project-flatpak-target)
 include(template-project-snap-enabler)
 include(template-project-freebsd-pkg-enabler)
+include(template-project-wix-enabler)
 
 # compile options
 include(template-project-sanitizers)

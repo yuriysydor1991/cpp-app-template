@@ -118,6 +118,7 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
     1. [Enabling the nlohmann json library](/doc/sections/en_US/5-18-enabling-the-nlohmann-json-library.md)
     1. [Enabling the snap packager](/doc/sections/en_US/5-19-enabling-the-snap-package-manager.md)
     1. [Enabling FreeBSD pkg package generation with cpack](/doc/sections/en_US/5-20-enabling-FreeBSD-pkg-package-generation-with-cpack.md)
+    1. [Enabling WIX MSI package generation with cpack](/doc/sections/en_US/5-21-enabling-WIX-MSI-package-generation-with-cpack.md)
 1. [Run the executable](/doc/sections/en_US/6-run-the-executable.md)
     1. [IDE run](/doc/sections/en_US/6-1-IDE-run.md)
     1. Command line run

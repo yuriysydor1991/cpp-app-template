@@ -15,6 +15,7 @@ include(template-project-clang-format-target)
 
 # packagers
 include(template-project-deb-enabler)
+include(template-project-freebsd-pkg-enabler)
 
 # compile options
 include(template-project-sanitizers)

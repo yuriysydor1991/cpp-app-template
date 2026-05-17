@@ -21,6 +21,7 @@ include(template-project-flatpak-target)
 include(template-project-snap-enabler)
 include(template-project-freebsd-pkg-enabler)
 include(template-project-wix-enabler)
+include(template-project-rpm-enabler)
 
 # compile options
 include(template-project-sanitizers)

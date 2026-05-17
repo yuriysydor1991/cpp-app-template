@@ -17,6 +17,7 @@ include(template-project-clang-format-target)
 include(template-project-deb-enabler)
 include(template-project-freebsd-pkg-enabler)
 include(template-project-wix-enabler)
+include(template-project-rpm-enabler)
 
 # compile options
 include(template-project-sanitizers)

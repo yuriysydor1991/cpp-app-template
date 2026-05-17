@@ -61,6 +61,11 @@ Examine available branches to find your most applicable variant of the template 
 - `appMatPlotxx` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appMatPlotxx), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appMatPlotxx)] the template infrastructure to fast start application development with the [MatPlot++](https://alandefreitas.github.io/matplotplusplus/) usage - a nice plot library with required [gnuplot](http://www.gnuplot.info/) application and [Qt6](https://www.qt.io/development/qt-framework/qt6).
 - `appPLplot` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appPLplot), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appPLplot)] the template infrastructure to fast start application development with the [PLplot](https://plplot.sourceforge.net/) usage - a powerful plotting library used in scientific applications with a lot of windowing and language bindings and export capabilities (PNG, SVG, JPEG, GIF, PDF and more).
 
+## Computer Vision / Image Processing
+
+- `appOpenCV` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appOpenCV), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appOpenCV)] the template infrastructure to fast start application development with the [OpenCV](https://opencv.org/) computer vision library.
+
+
 Alter current `README.md` and a `CHANGELOG.md` files to match your implementation introduced into the destination new project. Examine the `doc` directory for possible translations of a current md document:
 - `uk_UA` at [doc/README.uk_UA.md](doc/README.uk_UA.md)
 

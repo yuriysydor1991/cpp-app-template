@@ -1,0 +1,22 @@
+Name:           @PROJECT_NAME@
+Version:        @PROJECT_VERSION@
+Release:        1%{?dist}
+Summary:        @PROJECT_DESCRIPTION@
+
+License:        BSD
+URL:            http://www.kytok.org.ua/
+Group:          Applications/System
+Packager:       @PROJECT_MAINTAINER@ <@PROJECT_MAINTAINER_EMAIL@>
+
+BuildArch:      %{_arch}
+AutoReqProv:    no
+
+%description
+@PROJECT_DESCRIPTION@
+
+%install
+# DESTDIR-prepared by meson install before rpmbuild is invoked
+
+%files
+%defattr(-,root,root,-)
+/usr/bin/*

@@ -1,22 +1,29 @@
 option(
-  'ENABLE_DOC_DOXYGEN', 
-  type: 'boolean', 
-  value: false, 
+  'ENABLE_DOC_DOXYGEN',
+  type: 'boolean',
+  value: false,
   description: 'Enable the documentation build with the Doxygen'
 )
 
 option(
-  'DOXYGEN_DO_INSTALL', 
-  type: 'boolean', 
-  value: false, 
+  'DOXYGEN_DO_INSTALL',
+  type: 'boolean',
+  value: false,
   description: 'Enable the generated documentation installation'
 )
 
 option(
-  'ENABLE_UNIT_TESTS', 
-  type: 'boolean', 
-  value: false, 
+  'ENABLE_UNIT_TESTS',
+  type: 'boolean',
+  value: false,
   description: 'Enable the unit tests'
+)
+
+option(
+  'ENABLE_COMPONENT_TESTS',
+  type: 'boolean',
+  value: false,
+  description: 'Enable the component tests'
 )
 
 option(
@@ -27,10 +34,24 @@ option(
 )
 
 option(
+  'ENABLE_CLANG_TIDY',
+  type: 'boolean',
+  value: false,
+  description: 'Set to true to enable the clang-tidy code check target.'
+)
+
+option(
   'ENABLE_CPPCHECK',
   type: 'boolean',
   value: false,
-  description: 'Set to ON if to enable the cppcheck execution target.'
+  description: 'Set to true to enable the cppcheck execution target.'
+)
+
+option(
+  'ENABLE_VALGRIND',
+  type: 'boolean',
+  value: false,
+  description: 'Set to true to enable the valgrind memory check execution target.'
 )
 
 option(
@@ -41,8 +62,129 @@ option(
 )
 
 option(
+  'ENABLE_SNAP',
+  type: 'boolean',
+  value: false,
+  description: 'Enables the snap package creation target from the current project'
+)
+
+option(
+  'ENABLE_DEB',
+  type: 'boolean',
+  value: false,
+  description: 'Enables the deb package creation target from the current project'
+)
+
+option(
+  'ENABLE_RPM',
+  type: 'boolean',
+  value: false,
+  description: 'Enables the rpm package creation target from the current project'
+)
+
+option(
+  'ENABLE_FREEBSD_PKG',
+  type: 'boolean',
+  value: false,
+  description: 'Enables the FreeBSD pkg package creation target from the current project'
+)
+
+option(
+  'ENABLE_APPIMAGE',
+  type: 'boolean',
+  value: false,
+  description: 'Enables the AppImage portable bundle creation target from the current project'
+)
+
+option(
+  'ENABLE_WIX',
+  type: 'boolean',
+  value: false,
+  description: 'Enables the WIX MSI installer creation target (MS Windows hosts only)'
+)
+
+option(
   'ENABLE_DOCKER',
   type: 'boolean',
   value: false,
   description: 'Enables the docker container single build and run target in the current project'
+)
+
+option(
+  'ENABLE_SANITIZERS',
+  type: 'boolean',
+  value: false,
+  description: 'Enable the address+leak+undefined sanitizers compile options'
+)
+
+option(
+  'ENABLE_SANITIZERS_THREADS',
+  type: 'boolean',
+  value: false,
+  description: 'Enable the thread sanitizer compile options'
+)
+
+option(
+  'ENABLE_GPROF',
+  type: 'boolean',
+  value: false,
+  description: 'Enable the gprof application profiler analysis target'
+)
+
+option(
+  'ENABLE_CALLGRIND',
+  type: 'boolean',
+  value: false,
+  description: 'Enable the valgrind (callgrind) application profiler analysis target'
+)
+
+option(
+  'ENABLE_LIBCURL',
+  type: 'boolean',
+  value: false,
+  description: 'Set to true to enable the libcurl integration (probes the system installation)'
+)
+
+option(
+  'ENABLE_LIBXML2',
+  type: 'boolean',
+  value: false,
+  description: 'Set to true to enable the libxml2 integration (probes the system installation)'
+)
+
+option(
+  'ENABLE_NLOHMANN_JSON',
+  type: 'boolean',
+  value: false,
+  description: 'Set to true to enable the nlohmann_json header-only library (probes the system installation)'
+)
+
+option(
+  'ENABLE_OPENCV',
+  type: 'boolean',
+  value: false,
+  description: 'Set to true to enable the OpenCV integration (probes the system installation)'
+)
+
+option(
+  'MAX_LOG_LEVEL',
+  type: 'integer',
+  value: 3,
+  min: 0,
+  max: 5,
+  description: 'Maximum severity of the compiled log messages. Error=0. Trace=5.'
+)
+
+option(
+  'PROJECT_MAINTAINER',
+  type: 'string',
+  value: 'Your Name',
+  description: 'Project maintainer full name (used by packager targets)'
+)
+
+option(
+  'PROJECT_MAINTAINER_EMAIL',
+  type: 'string',
+  value: 'yourname@your.email.org',
+  description: 'Project maintainer email (used by packager targets)'
 )

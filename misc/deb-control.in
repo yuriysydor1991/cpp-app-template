@@ -1,0 +1,7 @@
+Package: @PROJECT_NAME@
+Version: @PROJECT_VERSION@
+Section: misc
+Priority: optional
+Architecture: @DEB_ARCH@
+Maintainer: @PROJECT_MAINTAINER@ <@PROJECT_MAINTAINER_EMAIL@>
+Description: @PROJECT_DESCRIPTION@

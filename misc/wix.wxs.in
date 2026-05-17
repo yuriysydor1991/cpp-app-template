@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*"
+           Name="@PROJECT_NAME@"
+           Language="1033"
+           Version="@PROJECT_VERSION@"
+           Manufacturer="@PROJECT_MAINTAINER@"
+           UpgradeCode="@WIX_UPGRADE_GUID@">
+
+    <Package InstallerVersion="200"
+             Compressed="yes"
+             InstallScope="perMachine"
+             Description="@PROJECT_DESCRIPTION@"
+             Manufacturer="@PROJECT_MAINTAINER@" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFiles64Folder">
+        <Directory Id="INSTALLFOLDER" Name="@PROJECT_NAME@">
+          <Component Id="MainExecutable" Guid="*">
+            <File Id="MainExe" Source="@PROJECT_NAME@.exe" KeyPath="yes" />
+          </Component>
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <Feature Id="MainFeature" Title="@PROJECT_NAME@" Level="1">
+      <ComponentRef Id="MainExecutable" />
+    </Feature>
+  </Product>
+</Wix>

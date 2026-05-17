@@ -1,0 +1,15 @@
+name: @PROJECT_NAME@
+version: "@PROJECT_VERSION@"
+origin: misc/@PROJECT_NAME@
+comment: "@PROJECT_DESCRIPTION@"
+desc: |
+  @PROJECT_DESCRIPTION@
+www: http://www.kytok.org.ua/
+maintainer: @PROJECT_MAINTAINER_EMAIL@
+prefix: /usr/local
+categories:
+  - misc
+abi: "FreeBSD:*:@FREEBSD_ARCH@"
+licenselogic: single
+licenses:
+  - BSD2CLAUSE

@@ -20,6 +20,7 @@ include(template-project-Gtkmm4-enabler)
 include(template-project-deb-enabler)
 include(template-project-flatpak-target)
 include(template-project-snap-enabler)
+include(template-project-freebsd-pkg-enabler)
 
 # compile options
 include(template-project-sanitizers)

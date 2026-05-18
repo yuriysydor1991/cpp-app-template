@@ -75,8 +75,6 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
 
 **Document is under the refinement**
 
-**Warning! Not all commands are converted to the [Meson](https://mesonbuild.com/) build system!**
-
 1. [Cloning the C++ template project](/doc/sections/en_US/1-cloning-the-cxx-template-project.md)
 1. [Forking and replacing the origin](/doc/sections/en_US/2-forking-and-replacing-the-origin.md)
 1. [Requirements](/doc/sections/en_US/3-requirements.md)
@@ -90,6 +88,13 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
     1. [Optional for the memory check with Valgrind](/doc/sections/en_US/3-8-optional-for-the-memory-checkwith-Valgrind.md)
     1. [Optional for the flatpak packager](/doc/sections/en_US/3-9-optional-for-the-flatpak-packager.md)
     1. [Optional for the Docker container runs](/doc/sections/en_US/3-10-optional-for-docker-container-runs.md)
+    1. [Optional for the libxml2 integration](/doc/sections/en_US/3-11-optional-for-the-libxml2-integration.md)
+    1. [Optional for the OpenCV integration](/doc/sections/en_US/3-12-optional-for-the-OpenCV-integration.md)
+    1. [Optional for the snap packager](/doc/sections/en_US/3-13-optional-for-the-snap-packager.md)
+    1. [Optional for the rpm packager](/doc/sections/en_US/3-14-optional-for-the-rpm-packager.md)
+    1. [Optional for the WIX packager](/doc/sections/en_US/3-15-optional-for-the-WIX-packager.md)
+    1. [Optional for the libcurl integration](/doc/sections/en_US/3-16-optional-for-the-libcurl-integration.md)
+    1. [Optional for the nlohmann JSON integration](/doc/sections/en_US/3-17-optional-for-the-nlohmann-json-integration.md)
 1. [Project structure](/doc/sections/en_US/4-project-structure.md)
     1. [Project diagrams](/doc/sections/en_US/4-0-project-diagrams.md)
     1. [Implement code straight away!](/doc/sections/en_US/4-1-implement-code-straight-away.md)
@@ -106,6 +111,7 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
     1. Enabling testing
         1. [Enabling unit testing](/doc/sections/en_US/5-3-1-enabling-unit-testing.md)
         1. [Disabling system GTest probe](/doc/sections/en_US/5-3-2-disabling-system-GTest-probe.md)
+        1. [Enabling component testing](/doc/sections/en_US/5-3-3-enabling-component-testing.md)
     1. [Documentation build](/doc/sections/en_US/5-4-documentation-build.md)
     1. [Configuring the documentation install support](/doc/sections/en_US/5-5-configuring-the-documentation-install-support.md)
     1. [Enabling and performing code formatting target](/doc/sections/en_US/5-6-enabling-and-performing-code-formatting-target.md)
@@ -119,14 +125,23 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
     1. [Enabling gprof profiler analysis](/doc/sections/en_US/5-15-enabling-gprof-profiler-analysis.md)
     1. [Enabling vagrind's callgrind profiler analysis](/doc/sections/en_US/5-16-enabling-valgrinds-callgrind-profiler-analysis.md)
     1. [Enabling Jenkins pipeline inside Docker container](/doc/sections/en_US/5-17-enabling-Jenkins-pipeline-inside-Docker-container.md)
-    1. [Enabling the nlohmann json library](/doc/sections/en_US/5-18-enabling-the-nlohmann-json-library.md)
+    1. [Enabling the nlohmann JSON library](/doc/sections/en_US/5-18-enabling-the-nlohmann-json-library.md)
     1. [Meson extra features](/doc/sections/en_US/5-19-meson-extra-features.md)
+    1. [Enabling the libxml2](/doc/sections/en_US/5-20-enabling-libxml2.md)
+    1. [Enabling the OpenCV](/doc/sections/en_US/5-21-enabling-OpenCV.md)
+    1. [Enabling the snap package generation support](/doc/sections/en_US/5-22-enabling-snap-package-generation.md)
+    1. [Enabling the DEB package generation support](/doc/sections/en_US/5-23-enabling-deb-package-generation.md)
+    1. [Enabling the RPM package generation support](/doc/sections/en_US/5-24-enabling-rpm-package-generation.md)
+    1. [Enabling the FreeBSD pkg package generation support](/doc/sections/en_US/5-25-enabling-freebsd-pkg-package-generation.md)
+    1. [Enabling the AppImage bundle generation support](/doc/sections/en_US/5-26-enabling-the-AppImage-bundle-generation.md)
+    1. [Enabling the WIX MSI installer generation support](/doc/sections/en_US/5-27-enabling-the-WIX-MSI-installer-generation.md)
+    1. [Project maintainer options](/doc/sections/en_US/5-28-project-maintainer-options.md)
 1. [Run the executable](/doc/sections/en_US/6-run-the-executable.md)
     1. [IDE run](/doc/sections/en_US/6-1-IDE-run.md)
     1. Command line run
         1. [Searching for the generated executable](/doc/sections/en_US/6-2-1-searching-for-the-generated-executable.md)
         1. [Starting the generated executable](/doc/sections/en_US/6-2-2-starting-the-generated-executable.md)
     1. Tests run
-        1. [Run tests by the ctest](/doc/sections/en_US/6-3-1-run-tests-by-the-ctest.md)
+        1. [Run tests by the meson test](/doc/sections/en_US/6-3-1-run-tests-by-the-ctest.md)
         1. [Manual tests run](/doc/sections/en_US/6-3-2-manual-tests-run.md)
 1. [Installing](/doc/sections/en_US/7-installing.md)

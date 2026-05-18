@@ -12,10 +12,6 @@ if get_option('ENABLE_SANITIZERS') or get_option('ENABLE_SANITIZERS_THREADS')
   subdir('template-project-sanitizers')
 endif
 
-if get_option('ENABLE_GPROF')
-  subdir('template-project-profiler-gprof')
-endif
-
 if get_option('ENABLE_CPPCHECK')
   subdir('template-project-cppcheck-target')
 endif
@@ -44,14 +40,6 @@ if get_option('ENABLE_OPENCV')
   subdir('template-project-OpenCV-enabler')
 endif
 
-if get_option('ENABLE_FLATPAK')
-  subdir('template-project-flatpak-target')
-endif
-
-if get_option('ENABLE_SNAP')
-  subdir('template-project-snap-enabler')
-endif
-
 if get_option('ENABLE_DEB')
   subdir('template-project-deb-enabler')
 endif
@@ -64,14 +52,6 @@ if get_option('ENABLE_FREEBSD_PKG')
   subdir('template-project-freebsd-pkg-enabler')
 endif
 
-if get_option('ENABLE_APPIMAGE')
-  subdir('template-project-AppImage-enabler')
-endif
-
 if get_option('ENABLE_WIX')
   subdir('template-project-wix-enabler')
-endif
-
-if get_option('ENABLE_DOCKER')
-  subdir('template-project-dockerers')
 endif

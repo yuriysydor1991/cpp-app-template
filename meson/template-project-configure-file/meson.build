@@ -1,7 +1,7 @@
 conf_data = configuration_data()
 
 conf_data.set('PROJECT_VERSION', meson.project_version())
-conf_data.set('PROJECT_NAME', meson.project_name())
+conf_data.set('PROJECT_NAME', PROJECT_LIBRARY_NAME)
 conf_data.set('PROJECT_GIT_COMMIT', git_hash)
 conf_data.set('PROJECT_CONFIGURE_DATE', timestamp)
 

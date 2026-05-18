@@ -1,3 +1,3 @@
-Here is a diagram of the `app` component:
+Here is a diagram of the `lib` component:
 
-![app component class diagram](/doc/diagrams/images/template-project-app-structure.svg)
+![lib component class diagram](/doc/diagrams/images/lib-class-structure.svg)

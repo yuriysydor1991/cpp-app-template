@@ -1,14 +1,14 @@
-**Твій охайний шаблон для С++ програми**
+**Твій охайний шаблон для С++ бібліотеки**
 
 # Ціль проекту-шаблону
 
-Проект-шаблон призначений для пришвидшення процесу побудови програми на стадії започаткування проекту за допомогою готової початкової структури програми. Отож розробник може одразу перейти до реалізації конкретної програми з мінімальними затратами на базову структуру.
+Проект-шаблон призначений для пришвидшення процесу побудови бібліотеки на стадії започаткування проекту за допомогою готової початкової структури бібліотеки. Отож розробник може одразу перейти до реалізації конкретної бібліотеки з мінімальними затратами на базову структуру.
 
-Полегшує вийти за рамки коду - створюй складні і готові до поставки **програмний продукти** швидко!
+Полегшує вийти за рамки коду - створюй складні і готові до поставки **програмні продукти** швидко!
 
 Дозволяє стрімке створення завершеного **програмного продукту** - на противагу звичайного куска коду чи простої програми.
 
-**Створи форк і одразу реалізуй свою програму!**
+**Створи форк і одразу реалізуй свою бібліотеку!**
 
 Шаблонний проект **не являється фреймворком** у традиційних термінах отож інфраструктурні елементи можна змінювати за бажанням або видалити за непотреби.
 
@@ -26,7 +26,8 @@
 - гілка `app` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/app), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/app)] яка містить загальні інфраструктурні класи програми для генераці одинарного бінарного виконуваного файлу.
 - гілка `applib` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/applib), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/applib)] яка складається з класів банарного виконуваного файлу з додатковими інфраструктурними класами для генерації підключаємої бібліотеки і заголовкових файлів (доступні для встановлення), що призначені для поширення коду бібліотеки для повторного перевикористання іншими бінарнами файлами.
 - гілка `lib` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/lib), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/lib)] і яка призначена для предоставляння початкової інфраструктури для реалізації бібліотеки разом з заголовковими підключаємими файлами і документацією за необхідності.
-- гілка `appMeson` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appMeson), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appMeson)] (**поточна**) яка містить загальні інфраструктурні класи програми для генераці одинарного бінарного виконуваного файлу разом з системою побудови [Meson](https://mesonbuild.com/).
+- гілка `appMeson` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appMeson), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appMeson)] яка містить загальні інфраструктурні класи програми для генераці одинарного бінарного виконуваного файлу разом з системою побудови [Meson](https://mesonbuild.com/).
+- гілка `libMeson` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/libMeson), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/libMeson)] (**поточна**) - шаблон бібліотеки з заголовковими підключаємими файлами і документацією, побудованою системою [Meson](https://mesonbuild.com/), знаходиться проектами-споживачами на Meson через `dependency()` (pkg-config) з опціональною підтримкою CMake `find_package()`.
 
 ## Логування
 
@@ -86,12 +87,8 @@
     1. [Необов'язкові пакети для форматування коду](/doc/sections/uk_UA/3-5-optional-for-the-code-formatting.md)
     1. [Необов'язкові пакети для статичного аналізатора коду cppcheck](/doc/sections/uk_UA/3-6-optional-for-the-code-analyzer-cppcheck.md)
     1. [Необов'язкові пакети для статичного аналізатора коду clang-tidy](/doc/sections/uk_UA/3-7-optional-for-the-code-analyzer-with-clang-tidy.md)
-    1. [Необов'язкові пакет для перевірки використання пам'яті за допомогою Valgrind](/doc/sections/uk_UA/3-8-optional-for-the-memory-checkwith-Valgrind.md)
-    1. [Необов'язкові програми для генерації пакету flatpak](/doc/sections/uk_UA/3-9-optional-for-the-flatpak-packager.md)
-    1. [Необов'язкові пакети для запуску контейнера Docker](/doc/sections/uk_UA/3-10-optional-for-docker-container-runs.md)
     1. [Необов'язкові пакети для інтеграції libxml2](/doc/sections/uk_UA/3-11-optional-for-the-libxml2-integration.md)
     1. [Необов'язкові пакети для інтеграції OpenCV](/doc/sections/uk_UA/3-12-optional-for-the-OpenCV-integration.md)
-    1. [Необов'язкові пакети для пакувальника snap](/doc/sections/uk_UA/3-13-optional-for-the-snap-packager.md)
     1. [Необов'язкові пакети для пакувальника rpm](/doc/sections/uk_UA/3-14-optional-for-the-rpm-packager.md)
     1. [Необов'язкові пакети для пакувальника WIX](/doc/sections/uk_UA/3-15-optional-for-the-WIX-packager.md)
     1. [Необов'язкові пакети для інтеграції libcurl](/doc/sections/uk_UA/3-16-optional-for-the-libcurl-integration.md)
@@ -99,13 +96,12 @@
 1. [Структура проекту](/doc/sections/uk_UA/4-project-structure.md)
     1. [Діаграми проекту](/doc/sections/uk_UA/4-0-project-diagrams.md)
     1. [Реалізуй код одразу!](/doc/sections/uk_UA/4-1-implement-code-straight-away.md)
-    1. [Зміна назви проекту і головного виконуваного файлу](/doc/sections/uk_UA/4-2-changing-the-project-and-executable-name.md)
-    1. [Впровадження нових параметрів командного рядка](/doc/sections/uk_UA/4-6-introduction-of-the-custom-command-line-parameters.md)
-    1. [Реалізація власних нащадків IApplication](/doc/sections/uk_UA/4-7-implementing-your-onw-IApplication-descendants.md)
+    1. [Зміна назви проекту і бібліотеки](/doc/sections/uk_UA/4-2-changing-the-project-and-executable-name.md)
     1. [Версіювання і інші параметри проекту](/doc/sections/uk_UA/4-3-version-tracking-and-other-project-parameters.md)
     1. [Тести проекту](/doc/sections/uk_UA/4-4-project-tests.md)
         1. [Фреймворк тестів Google Test](/doc/sections/uk_UA/4-4-1-google-test.md)
     1. [Розширення](/doc/sections/uk_UA/4-5-extensions.md)
+    1. [Публічні заголовкові файли бібліотеки для встановлення](/doc/sections/uk_UA/4-8-the-librarys-installable-include-header-files.md)
 1. [Побудова проекту](/doc/sections/uk_UA/5-project-build.md)
     1. [Побудова за допомогою IDE](/doc/sections/uk_UA/5-1-IDE-build.md)
     1. [Побудова проекту-шаблону через командний рядок](/doc/sections/uk_UA/5-2-command-line-build.md)
@@ -118,30 +114,18 @@
     1. [Вмикання підтримки форматування коду](/doc/sections/uk_UA/5-6-enabling-and-performing-code-formatting-target.md)
     1. [Вмикання підтримки цілі статичного аналізатора коду cppcheck](/doc/sections/uk_UA/5-7-enabling-the-static-code-analyzer-target-with-cppcheck.md)
     1. [Вмикання підтримки статичного аналізатора коду clang-tidy](/doc/sections/uk_UA/5-8-enabling-static-code-analyzer-with-clang-tidy.md)
-    1. [Вмикання цілі динамічної перевірки пам'яті Valgrind](/doc/sections/uk_UA/5-9-enabling-the-dynamic-memory-check-target-with-valgrind.md)
-    1. [Вмикання підтримки генерації flatpak пакету](/doc/sections/uk_UA/5-11-enabling-the-flatpak-package-generation-support.md)
-    1. [Вмикання підтримки запуску Docker-контейнера](/doc/sections/uk_UA/5-12-enabling-the-docker-container-build-and-run.md)
     1. [Вмикання перевірок під час виконання програми (sanitizers)](/doc/sections/uk_UA/5-13-enabling-sanitizers.md)
     1. [Вмикання інтеграції libcurl](/doc/sections/uk_UA/5-14-enabling-libcurl.md)
-    1. [Вмикання підтримки профілювання з gprof](/doc/sections/uk_UA/5-15-enabling-gprof-profiler-analysis.md)
-    1. [Вмикання підтримки профілювання за допомогою vagrind/callgrind](/doc/sections/uk_UA/5-16-enabling-valgrinds-callgrind-profiler-analysis.md)
-    1. [Вмикання конвеєра Jenkins всередині Docker контейнера](/doc/sections/uk_UA/5-17-enabling-Jenkins-pipeline-inside-Docker-container.md)
     1. [Вмикання інтеграції бібліотеки nlohmann JSON](/doc/sections/uk_UA/5-18-enabling-the-nlohmann-json-library.md)
     1. [Додаткові можливості Meson](/doc/sections/uk_UA/5-19-meson-extra-features.md)
     1. [Вмикання інтеграції libxml2](/doc/sections/uk_UA/5-20-enabling-libxml2.md)
     1. [Вмикання інтеграції OpenCV](/doc/sections/uk_UA/5-21-enabling-OpenCV.md)
-    1. [Вмикання підтримки генерації snap-пакету](/doc/sections/uk_UA/5-22-enabling-snap-package-generation.md)
     1. [Вмикання підтримки генерації DEB-пакету](/doc/sections/uk_UA/5-23-enabling-deb-package-generation.md)
     1. [Вмикання підтримки генерації RPM-пакету](/doc/sections/uk_UA/5-24-enabling-rpm-package-generation.md)
     1. [Вмикання підтримки генерації FreeBSD pkg-пакету](/doc/sections/uk_UA/5-25-enabling-freebsd-pkg-package-generation.md)
-    1. [Вмикання підтримки генерації AppImage-збірки](/doc/sections/uk_UA/5-26-enabling-the-AppImage-bundle-generation.md)
     1. [Вмикання підтримки генерації WIX MSI-інсталятора](/doc/sections/uk_UA/5-27-enabling-the-WIX-MSI-installer-generation.md)
     1. [Опції супровідника проекту](/doc/sections/uk_UA/5-28-project-maintainer-options.md)
-1. [Запуск головного виконуваного файлу](/doc/sections/uk_UA/6-run-the-executable.md)
-    1. [Запуск через IDE](/doc/sections/uk_UA/6-1-IDE-run.md)
-    1. Запуск з терміналу
-        1. [Пошук згенерованого виконуваного бінарного файлу](/doc/sections/uk_UA/6-2-1-searching-for-the-generated-executable.md)
-        1. [Запуск згенерованого виконуваного файлу](/doc/sections/uk_UA/6-2-2-starting-the-generated-executable.md)
+1. [Запуск доступних виконуваних файлів](/doc/sections/uk_UA/6-run-the-executable.md)
     1. Запуск тестів
         1. [Запуск тестів через meson test](/doc/sections/uk_UA/6-3-1-run-tests-by-the-ctest.md)
         1. [Ручний запуск тестів](/doc/sections/uk_UA/6-3-2-manual-tests-run.md)

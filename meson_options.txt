@@ -48,27 +48,6 @@ option(
 )
 
 option(
-  'ENABLE_VALGRIND',
-  type: 'boolean',
-  value: false,
-  description: 'Set to true to enable the valgrind memory check execution target.'
-)
-
-option(
-  'ENABLE_FLATPAK',
-  type: 'boolean',
-  value: false,
-  description: 'Enables the flatpak package creation target from the current project'
-)
-
-option(
-  'ENABLE_SNAP',
-  type: 'boolean',
-  value: false,
-  description: 'Enables the snap package creation target from the current project'
-)
-
-option(
   'ENABLE_DEB',
   type: 'boolean',
   value: false,
@@ -90,24 +69,10 @@ option(
 )
 
 option(
-  'ENABLE_APPIMAGE',
-  type: 'boolean',
-  value: false,
-  description: 'Enables the AppImage portable bundle creation target from the current project'
-)
-
-option(
   'ENABLE_WIX',
   type: 'boolean',
   value: false,
   description: 'Enables the WIX MSI installer creation target (MS Windows hosts only)'
-)
-
-option(
-  'ENABLE_DOCKER',
-  type: 'boolean',
-  value: false,
-  description: 'Enables the docker container single build and run target in the current project'
 )
 
 option(
@@ -122,20 +87,6 @@ option(
   type: 'boolean',
   value: false,
   description: 'Enable the thread sanitizer compile options'
-)
-
-option(
-  'ENABLE_GPROF',
-  type: 'boolean',
-  value: false,
-  description: 'Enable the gprof application profiler analysis target'
-)
-
-option(
-  'ENABLE_CALLGRIND',
-  type: 'boolean',
-  value: false,
-  description: 'Enable the valgrind (callgrind) application profiler analysis target'
 )
 
 option(
@@ -164,6 +115,20 @@ option(
   type: 'boolean',
   value: false,
   description: 'Set to true to enable the OpenCV integration (probes the system installation)'
+)
+
+option(
+  'ENABLE_LOGS_MICROSECONDS_TIME',
+  type: 'boolean',
+  value: true,
+  description: 'Include the microseconds field into emitted log messages'
+)
+
+option(
+  'DEFAULT_LOG_FILE_PATH',
+  type: 'string',
+  value: '',
+  description: 'Default directory where the log file is created (empty - current working directory)'
 )
 
 option(

@@ -125,6 +125,7 @@
     1. [Вмикання підтримки генерації FreeBSD pkg-пакету](/doc/sections/uk_UA/5-25-enabling-freebsd-pkg-package-generation.md)
     1. [Вмикання підтримки генерації WIX MSI-інсталятора](/doc/sections/uk_UA/5-27-enabling-the-WIX-MSI-installer-generation.md)
     1. [Опції супровідника проекту](/doc/sections/uk_UA/5-28-project-maintainer-options.md)
+    1. [Налаштування складових імені встановлюваної бібліотеки](/doc/sections/uk_UA/5-29-customizing-library-name-segments.md)
 1. [Запуск доступних виконуваних файлів](/doc/sections/uk_UA/6-run-the-executable.md)
     1. Запуск тестів
         1. [Запуск тестів через meson test](/doc/sections/uk_UA/6-3-1-run-tests-by-the-ctest.md)

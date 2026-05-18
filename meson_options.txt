@@ -141,6 +141,27 @@ option(
 )
 
 option(
+  'LIB_INCLUDE_MINOR_IN_NAME',
+  type: 'boolean',
+  value: false,
+  description: 'Append .<minor> to the installable library name (binary, headers subdir, pkg-config, CMake package dir)'
+)
+
+option(
+  'LIB_INCLUDE_MICRO_IN_NAME',
+  type: 'boolean',
+  value: false,
+  description: 'Append .<micro> after the minor segment to the installable library name. Implies LIB_INCLUDE_MINOR_IN_NAME.'
+)
+
+option(
+  'LIB_NAME_SUFFIX',
+  type: 'string',
+  value: '',
+  description: 'Optional trailing suffix appended to the installable library name (e.g. "-dev")'
+)
+
+option(
   'PROJECT_MAINTAINER',
   type: 'string',
   value: 'Your Name',

@@ -28,4 +28,6 @@ XML-файл каскаду Хаара, який постачається раз
 - `/usr/local/share/opencv/haarcascades/haarcascade_frontalface_default.xml`
 - Шляхи macOS Homebrew у `/usr/local/Cellar` і `/opt/homebrew`
 
+Метод `app::Application::run` лише делегує виклик до `opencvi::OpenCVController::run` для того щоб можна було швидко перемикатися між наявними прикладами OpenCV без редагування компоненту `app`. Поточний диспетчер викликає `opencvi::OpenCVController::face_recognition_example`, в якому розміщено код завантаження каскаду Хаара і сканування зображення. Щоб додати новий приклад - оголоси новий метод у класі `opencvi::OpenCVController` і переадресуй на нього виклик з `opencvi::OpenCVController::run`.
+
 Деталі публічного інтерфейсу інтеграції шукай у файлі [src/opencv/OpenCVController.h](/src/opencv/OpenCVController.h) (клас `opencvi::OpenCVController`).

@@ -27,23 +27,10 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  if (!opencv->load_cascade(ctx->cascade_path)) {
-    LOGE("Failed to load the pre-installed Haar cascade. Provide the path "
-         "explicitly with --face-cascade <path/to/haarcascade_frontalface_default.xml>");
+  if (!opencv->run(ctx)) {
+    LOGE("OpenCVController signalled about failure");
     return INVALID;
   }
-
-  LOGI("OpenCV face cascade loaded from " << opencv->get_cascade_path());
-
-  if (ctx->image_path.empty()) {
-    LOGI("No --image was provided, nothing to scan. The OpenCV face detection "
-         "stack is initialised and ready.");
-    return 0;
-  }
-
-  const auto faces = opencv->detect(ctx->image_path);
-
-  LOGI("Detected " << faces.size() << " face(s) in " << ctx->image_path);
 
   return 0;
 }

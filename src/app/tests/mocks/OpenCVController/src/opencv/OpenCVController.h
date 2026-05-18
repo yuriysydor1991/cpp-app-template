@@ -7,6 +7,8 @@
 #include <string>
 #include <vector>
 
+#include "src/app/ApplicationContext.h"
+
 namespace cv
 {
 
@@ -34,6 +36,7 @@ class OpenCVController
  public:
   using faces_buffer = std::vector<cv::Rect>;
   using OpenCVControllerPtr = std::shared_ptr<OpenCVController>;
+  using appctx = std::shared_ptr<app::ApplicationContext>;
 
   virtual ~OpenCVController() = default;
 
@@ -47,6 +50,8 @@ class OpenCVController
     ON_CALL(*this, load_cascade(_)).WillByDefault(Return(true));
     ON_CALL(*this, get_cascade_path())
         .WillByDefault(ReturnRef(defaultCascadePath));
+    ON_CALL(*this, run(_)).WillByDefault(Return(true));
+    ON_CALL(*this, face_recognition_example(_)).WillByDefault(Return(true));
 
     if (onMockCreate) {
       onMockCreate(*this);
@@ -61,6 +66,8 @@ class OpenCVController
   MOCK_METHOD(faces_buffer, detect, (const cv::Mat& image));
   MOCK_METHOD(faces_buffer, detect, (const std::string& imagePath));
   MOCK_METHOD(const std::string&, get_cascade_path, (), (const));
+  MOCK_METHOD(bool, run, (appctx ctx));
+  MOCK_METHOD(bool, face_recognition_example, (appctx ctx));
 
   inline static OpenCVControllerPtr create()
   {

@@ -102,6 +102,49 @@ const std::string& OpenCVController::get_cascade_path() const
   return loadedCascadePath;
 }
 
+bool OpenCVController::run(appctx ctx)
+{
+  assert(ctx != nullptr);
+
+  if (ctx == nullptr) {
+    LOGE("No valid context pointer provided");
+    return false;
+  }
+
+  return face_recognition_example(ctx);
+}
+
+bool OpenCVController::face_recognition_example(appctx ctx)
+{
+  assert(ctx != nullptr);
+
+  if (ctx == nullptr) {
+    LOGE("No valid context pointer provided");
+    return false;
+  }
+
+  if (!load_cascade(ctx->cascade_path)) {
+    LOGE("Failed to load the pre-installed Haar cascade. Provide the path "
+         "explicitly with --face-cascade "
+         "<path/to/haarcascade_frontalface_default.xml>");
+    return false;
+  }
+
+  LOGI("OpenCV face cascade loaded from " << get_cascade_path());
+
+  if (ctx->image_path.empty()) {
+    LOGI("No --image was provided, nothing to scan. The OpenCV face detection "
+         "stack is initialised and ready.");
+    return true;
+  }
+
+  const auto faces = detect(ctx->image_path);
+
+  LOGI("Detected " << faces.size() << " face(s) in " << ctx->image_path);
+
+  return true;
+}
+
 std::string OpenCVController::default_cascade_path()
 {
   static const std::array<const char*, 6> kCandidates{{

@@ -4,6 +4,7 @@ add_executable(
   UTEST_OpenCVController
   UTEST_OpenCVController.cpp
   ${CMAKE_SOURCE_DIR}/src/opencv/OpenCVController.cpp
+  ${CMAKE_SOURCE_DIR}/src/app/ApplicationContext.cpp
 )
 
 target_include_directories(

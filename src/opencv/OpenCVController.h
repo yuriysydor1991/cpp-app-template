@@ -8,6 +8,8 @@
 #include <string>
 #include <vector>
 
+#include "src/app/ApplicationContext.h"
+
 /**
  * @brief The OpenCV adaptor subsystem namespace.
  */
@@ -28,11 +30,38 @@ class OpenCVController
  public:
   using faces_buffer = std::vector<cv::Rect>;
   using OpenCVControllerPtr = std::shared_ptr<OpenCVController>;
+  using appctx = std::shared_ptr<app::ApplicationContext>;
 
   virtual ~OpenCVController() = default;
   OpenCVController();
   OpenCVController(const OpenCVController&) = delete;
   OpenCVController(OpenCVController&&) = delete;
+
+  /**
+   * @brief The OpenCV controller dispatcher. Acts as the single entry
+   * point for the App::run delegation so that the available examples
+   * can be switched without touching the app component.
+   *
+   * @param ctx Filled application context to forward to the picked
+   *        example. Must not be null.
+   *
+   * @return true on success, false if the chosen example reported a
+   *         failure or the context was invalid.
+   */
+  virtual bool run(appctx ctx);
+
+  /**
+   * @brief Factory entry point that constructs a default-initialised
+   * OpenCVController instance wrapped into the shared pointer alias
+   * OpenCVControllerPtr. Preferred over directly calling the
+   * constructor so that the ownership semantics stay consistent
+   * across the codebase and so that the existing call sites keep
+   * working when the underlying allocation strategy changes.
+   *
+   * @return A non-null shared pointer to the freshly created
+   *         controller.
+   */
+  static OpenCVControllerPtr create();
 
   /**
    * @brief Loads the requested Haar cascade XML file.
@@ -73,6 +102,20 @@ class OpenCVController
   virtual const std::string& get_cascade_path() const;
 
   /**
+   * @brief Loads the Haar cascade declared by the application context
+   * and, when an input image is provided, runs the OpenCV face
+   * detector against it. Kept as a self-contained example so that
+   * additional examples can be added next to it.
+   *
+   * @param ctx Filled application context with the optional
+   *        `cascade_path` and `image_path` fields.
+   *
+   * @return true when the cascade was loaded and (optionally) the
+   *         detection ran to completion, false otherwise.
+   */
+  virtual bool face_recognition_example(appctx ctx);
+
+  /**
    * @brief Returns the first cascade path candidate found on the
    * filesystem out of the well-known system-wide install locations.
    *
@@ -80,9 +123,7 @@ class OpenCVController
    */
   static std::string default_cascade_path();
 
-  static OpenCVControllerPtr create();
-
- private:
+private:
   inline static constexpr const double DEFAULT_SCALE_FACTOR = 1.1;
   inline static constexpr const int DEFAULT_MIN_NEIGHBORS = 3;
   inline static constexpr const int DEFAULT_MIN_SIZE_PX = 24;

@@ -5,7 +5,9 @@
 #include <opencv2/imgproc.hpp>
 
 #include <filesystem>
+#include <memory>
 
+#include "src/app/ApplicationContext.h"
 #include "src/opencv/OpenCVController.h"
 
 using namespace opencvi;
@@ -14,9 +16,17 @@ using namespace testing;
 class UTEST_OpenCVController : public Test
 {
  public:
-  UTEST_OpenCVController() : controller{OpenCVController::create()} {}
+  UTEST_OpenCVController()
+      : controller{OpenCVController::create()},
+        ctx{std::make_shared<app::ApplicationContext>(argc, argv)}
+  {
+  }
+
+  int argc{0};
+  char** argv{nullptr};
 
   OpenCVController::OpenCVControllerPtr controller;
+  std::shared_ptr<app::ApplicationContext> ctx;
 };
 
 TEST_F(UTEST_OpenCVController, create_success)
@@ -76,4 +86,52 @@ TEST_F(UTEST_OpenCVController, load_default_cascade_when_available)
   const auto faces = controller->detect(blank);
 
   EXPECT_TRUE(faces.empty());
+}
+
+TEST_F(UTEST_OpenCVController, run_with_null_context_returns_false)
+{
+  EXPECT_FALSE(controller->run({}));
+}
+
+TEST_F(UTEST_OpenCVController, face_recognition_example_with_null_context_returns_false)
+{
+  EXPECT_FALSE(controller->face_recognition_example({}));
+}
+
+TEST_F(UTEST_OpenCVController, face_recognition_example_fails_on_missing_cascade)
+{
+  ctx->cascade_path = "/tmp/this/path/does/not/exist.xml";
+
+  EXPECT_FALSE(controller->face_recognition_example(ctx));
+}
+
+TEST_F(UTEST_OpenCVController, run_fails_on_missing_cascade)
+{
+  ctx->cascade_path = "/tmp/this/path/does/not/exist.xml";
+
+  EXPECT_FALSE(controller->run(ctx));
+}
+
+TEST_F(UTEST_OpenCVController, face_recognition_example_succeeds_without_image)
+{
+  const std::string defaultPath = OpenCVController::default_cascade_path();
+
+  if (defaultPath.empty()) {
+    GTEST_SKIP() << "No preinstalled OpenCV Haar cascade was found on the host";
+  }
+
+  EXPECT_TRUE(controller->face_recognition_example(ctx));
+  EXPECT_EQ(controller->get_cascade_path(), defaultPath);
+}
+
+TEST_F(UTEST_OpenCVController, run_succeeds_without_image)
+{
+  const std::string defaultPath = OpenCVController::default_cascade_path();
+
+  if (defaultPath.empty()) {
+    GTEST_SKIP() << "No preinstalled OpenCV Haar cascade was found on the host";
+  }
+
+  EXPECT_TRUE(controller->run(ctx));
+  EXPECT_EQ(controller->get_cascade_path(), defaultPath);
 }

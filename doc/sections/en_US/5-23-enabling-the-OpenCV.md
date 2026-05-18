@@ -28,4 +28,6 @@ The Haar cascade XML that ships with the system OpenCV installation - `haarcasca
 - `/usr/local/share/opencv/haarcascades/haarcascade_frontalface_default.xml`
 - macOS Homebrew locations under `/usr/local/Cellar` and `/opt/homebrew`
 
+The `app::Application::run` method only delegates to `opencvi::OpenCVController::run` so that the available OpenCV examples can be swapped without touching the `app` component. The current dispatcher invokes `opencvi::OpenCVController::face_recognition_example` which holds the Haar cascade loading and image scanning logic. Add a new example method to `opencvi::OpenCVController` and route `opencvi::OpenCVController::run` to it to quickly switch between examples.
+
 Refer to the implementation of `opencvi::OpenCVController` at [src/opencv/OpenCVController.h](/src/opencv/OpenCVController.h) for the public surface of the integration.

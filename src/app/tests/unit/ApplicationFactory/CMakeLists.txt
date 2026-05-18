@@ -15,7 +15,7 @@ target_include_directories(
   PRIVATE ${APP_MOCKS_ROOT}/ApplicationVersionPrinter
   PRIVATE ${APP_MOCKS_ROOT}/CommandLineParser
   PRIVATE ${APP_MOCKS_ROOT}/project-global-decls
-  PRIVATE ${APP_MOCKS_ROOT}/log
+  PRIVATE ${GENERAL_MOCKS_ROOT}/log
   PRIVATE ${CMAKE_SOURCE_DIR}
 )
 

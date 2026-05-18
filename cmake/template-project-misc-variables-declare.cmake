@@ -2,10 +2,55 @@ cmake_minimum_required(VERSION 3.13)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-set(
-  PROJECT_LIBRARY_NAME "${PROJECT_NAME}-${CMAKE_PROJECT_VERSION_MAJOR}"
-  CACHE STRING "Project main library name and target"
+option(
+  LIB_INCLUDE_MINOR_IN_NAME
+  "Append .<minor> to the installable library name (binary, headers subdir, CMake package dir)"
+  OFF
 )
+
+option(
+  LIB_INCLUDE_MICRO_IN_NAME
+  "Append .<micro> after the minor segment to the installable library name. Implies LIB_INCLUDE_MINOR_IN_NAME."
+  OFF
+)
+
+set(
+  LIB_NAME_SUFFIX ""
+  CACHE STRING
+  "Optional trailing suffix appended to the installable library name (e.g. '-dev')."
+)
+
+set(_lib_name "${PROJECT_NAME}-${CMAKE_PROJECT_VERSION_MAJOR}")
+
+if(LIB_INCLUDE_MICRO_IN_NAME AND NOT LIB_INCLUDE_MINOR_IN_NAME)
+  message(WARNING
+    "LIB_INCLUDE_MICRO_IN_NAME=ON requires LIB_INCLUDE_MINOR_IN_NAME=ON - "
+    "enabling LIB_INCLUDE_MINOR_IN_NAME implicitly."
+  )
+  set(LIB_INCLUDE_MINOR_IN_NAME ON CACHE BOOL "" FORCE)
+endif()
+
+if(LIB_INCLUDE_MINOR_IN_NAME)
+  set(_lib_name "${_lib_name}.${CMAKE_PROJECT_VERSION_MINOR}")
+endif()
+
+if(LIB_INCLUDE_MICRO_IN_NAME)
+  set(_lib_name "${_lib_name}.${CMAKE_PROJECT_VERSION_PATCH}")
+endif()
+
+if(LIB_NAME_SUFFIX)
+  set(_lib_name "${_lib_name}${LIB_NAME_SUFFIX}")
+endif()
+
+set(
+  PROJECT_LIBRARY_NAME "${_lib_name}"
+  CACHE STRING "Project main library name and target"
+  FORCE
+)
+
+unset(_lib_name)
+
+message(STATUS "PROJECT_LIBRARY_NAME: ${PROJECT_LIBRARY_NAME}")
 
 set(
   PROJECT_MAINTAINER "Your Name"
@@ -19,13 +64,13 @@ set(
 
 set(
   MAX_LOG_LEVEL "3"
-  CACHE STRING 
+  CACHE STRING
   "Sets the maximum severity of the compiled log messages. Error=0. Trace=5. By default Info=3"
 )
 
 set(
   DEFAULT_LOG_FILE_PATH ""
-  CACHE STRING 
+  CACHE STRING
   "Sets the default log file path"
 )
 
@@ -50,9 +95,9 @@ execute_process(
 )
 
 file(
-  GLOB_RECURSE 
-  ALLSOURCES 
-  LIST_DIRECTORIES false 
+  GLOB_RECURSE
+  ALLSOURCES
+  LIST_DIRECTORIES false
   CONFIGURE_DEPENDS
   "src/*.h" "src/*.cpp"
 )

@@ -9,10 +9,53 @@ set(
 
 string(TOLOWER ${PROJECT_BINARY_NAME} PROJECT_BINARY_NAME_lower)
 
-set(
-  PROJECT_LIBRARY_NAME "${PROJECT_NAME}-${CMAKE_PROJECT_VERSION_MAJOR}"
-  CACHE STRING "Project main library name and target"
+option(
+  LIB_INCLUDE_MINOR_IN_NAME
+  "Append .<minor> to the installable library name (binary, headers subdir, CMake package dir)"
+  OFF
 )
+
+option(
+  LIB_INCLUDE_MICRO_IN_NAME
+  "Append .<micro> after the minor segment to the installable library name. Implies LIB_INCLUDE_MINOR_IN_NAME."
+  OFF
+)
+
+set(
+  LIB_NAME_SUFFIX ""
+  CACHE STRING
+  "Optional trailing suffix appended to the installable library name (e.g. '-dev')."
+)
+
+set(_lib_name "${PROJECT_NAME}-${CMAKE_PROJECT_VERSION_MAJOR}")
+
+if(LIB_INCLUDE_MICRO_IN_NAME AND NOT LIB_INCLUDE_MINOR_IN_NAME)
+  message(WARNING
+    "LIB_INCLUDE_MICRO_IN_NAME=ON requires LIB_INCLUDE_MINOR_IN_NAME=ON - "
+    "enabling LIB_INCLUDE_MINOR_IN_NAME implicitly."
+  )
+  set(LIB_INCLUDE_MINOR_IN_NAME ON CACHE BOOL "" FORCE)
+endif()
+
+if(LIB_INCLUDE_MINOR_IN_NAME)
+  set(_lib_name "${_lib_name}.${CMAKE_PROJECT_VERSION_MINOR}")
+endif()
+
+if(LIB_INCLUDE_MICRO_IN_NAME)
+  set(_lib_name "${_lib_name}.${CMAKE_PROJECT_VERSION_PATCH}")
+endif()
+
+if(LIB_NAME_SUFFIX)
+  set(_lib_name "${_lib_name}${LIB_NAME_SUFFIX}")
+endif()
+
+set(
+  PROJECT_LIBRARY_NAME "${_lib_name}"
+  CACHE STRING "Project main library name and target"
+  FORCE
+)
+
+unset(_lib_name)
 
 set(
   PROJECT_MAINTAINER "Your Name"
@@ -72,4 +115,5 @@ file(
 
 message(STATUS "PROJECT_NAME: ${PROJECT_NAME}")
 message(STATUS "PROJECT_BINARY_NAME: ${PROJECT_BINARY_NAME}")
+message(STATUS "PROJECT_LIBRARY_NAME: ${PROJECT_LIBRARY_NAME}")
 message(STATUS "PROJECT_CONFIGURE_DATE: ${PROJECT_CONFIGURE_DATE}")

@@ -6,11 +6,4 @@
 sudo apt install -y git g++ cmake
 ```
 
-Щоб зробити доступною бібліотеку [SDL2](https://en.wikipedia.org/wiki/Simple_DirectMedia_Layer) можна скористатися наступною командою:
-
-```
-sudo apt install -y libsdl2-dev libsdl2-doc \
-  libsdl2-image-2.0-0 libsdl2-image-dev libsdl2-mixer-2.0-0 \
-  libsdl2-mixer-dev libsdl2-net-2.0-0 libsdl2-net-dev \
-  libsdl2-ttf-dev
-```
+Пакети розробки [SDL2](https://en.wikipedia.org/wiki/Simple_DirectMedia_Layer) винесено у окрему секцію - дивись [Обов'язкові пакети для розробки з SDL2](/doc/sections/uk_UA/3-12-required-for-the-SDL2-development.md).

@@ -91,6 +91,7 @@
     1. [Необов'язковий програми для генерації пакету flatpak](/doc/sections/uk_UA/3-9-optional-for-the-flatpak-packager.md)
     1. [Необов'язкові пакети для запуску контейнера Docker](/doc/sections/uk_UA/3-10-optional-for-docker-container-runs.md)
     1. [Необов'язкові пакети для snap пакувальника](/doc/sections/uk_UA/3-11-optional-for-snap-packager.md)
+    1. [Обов'язкові пакети для розробки з SDL2](/doc/sections/uk_UA/3-12-required-for-the-SDL2-development.md)
 1. [Структура проекту](/doc/sections/uk_UA/4-project-structure.md)
     1. [Діаграми проекту](/doc/sections/uk_UA/4-0-project-diagrams.md)
     1. [Реалізуй код одразу!](/doc/sections/uk_UA/4-1-implement-code-straight-away.md)

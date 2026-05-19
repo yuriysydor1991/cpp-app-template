@@ -90,6 +90,7 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
     1. [Optional for the flatpak packager](/doc/sections/en_US/3-9-optional-for-the-flatpak-packager.md)
     1. [Optional for the Docker container runs](/doc/sections/en_US/3-10-optional-for-docker-container-runs.md)
     1. [Optional for the snap packager](/doc/sections/en_US/3-11-optional-for-snap-packager.md)
+    1. [Required packages for the SDL2 development](/doc/sections/en_US/3-12-required-for-the-SDL2-development.md)
 1. [Project structure](/doc/sections/en_US/4-project-structure.md)
     1. [Project diagrams](/doc/sections/en_US/4-0-project-diagrams.md)
     1. [Implement code straight away!](/doc/sections/en_US/4-1-implement-code-straight-away.md)

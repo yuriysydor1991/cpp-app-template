@@ -33,3 +33,7 @@ target_link_libraries(
 
 add_subdirectory(Painter)
 add_subdirectory(Eventer)
+
+if(ENABLE_UNIT_TESTS OR ENABLE_COMPONENT_TESTS)
+  add_subdirectory(tests)
+endif()

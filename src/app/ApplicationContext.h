@@ -17,6 +17,10 @@ namespace app
  * The ApplicationHelpPrinter class instance is printing command line help
  * for available command line parameters that may be stored in
  * the current class instance (if registered properly).
+ *
+ * To pass new fields to the underlying library calls register them
+ * inside the ApplicationContext2LibraryContext and LibraryContext class.
+ * See the default Application class run method implementation.
  */
 struct ApplicationContext
 {

@@ -26,8 +26,9 @@ Examine available branches to find your most applicable variant of the template 
 - `app` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/app), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/app)] with just general application related classes to generate a single binary executable.
 - `applib` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/applib), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/applib)] for the application binary with additional separate library binary and header files (available for the installation) in order to provide library's code reusability across multiple applications.
 - `lib` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/lib), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/lib)] for the library with the headers include files (and documentation) without target binary.
-- `appMeson` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appMeson), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appMeson)] (**current**) with just general application related classes to generate a single binary executable with the [Meson](https://mesonbuild.com/) build system.
+- `appMeson` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appMeson), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appMeson)] with just general application related classes to generate a single binary executable with the [Meson](https://mesonbuild.com/) build system.
 - `libMeson` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/libMeson), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/libMeson)] for the library with the headers include files (and documentation) without target binary, built with the [Meson](https://mesonbuild.com/) build system and detectable by downstream Meson projects via `dependency()` (pkg-config) with optional CMake `find_package()` support.
+- `applibMeson` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/applibMeson), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/applibMeson)] (**current**) for the application binary with additional separate library binary and header files (available for the installation) in order to provide library's code reusability across multiple applications, built with the [Meson](https://mesonbuild.com/) build system. A Meson-based analogue of the `applib` branch.
 
 ## Logging messages
 
@@ -102,6 +103,8 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
     1. [Changing the project and executable name](/doc/sections/en_US/4-2-changing-the-project-and-executable-name.md)
     1. [Introducing custom command line parameters](/doc/sections/en_US/4-6-introduction-of-the-custom-command-line-parameters.md)
     1. [Implement your own IApplication descendants](/doc/sections/en_US/4-7-implementing-your-onw-IApplication-descendants.md)
+    1. [Implement your own ILib descendants](/doc/sections/en_US/4-8-implement-your-own-ILib-descendants.md)
+    1. [The library's installable include header files](/doc/sections/en_US/4-9-the-librarys-installable-include-header-files.md)
     1. [Version tracking and other project parameters](/doc/sections/en_US/4-3-version-tracking-and-other-project-parameters.md)
     1. [Project tests](/doc/sections/en_US/4-4-project-tests.md)
         1. [Google Test](/doc/sections/en_US/4-4-1-google-test.md)
@@ -137,6 +140,7 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
     1. [Enabling the AppImage bundle generation support](/doc/sections/en_US/5-26-enabling-the-AppImage-bundle-generation.md)
     1. [Enabling the WIX MSI installer generation support](/doc/sections/en_US/5-27-enabling-the-WIX-MSI-installer-generation.md)
     1. [Project maintainer options](/doc/sections/en_US/5-28-project-maintainer-options.md)
+    1. [Customizing the installable library name segments](/doc/sections/en_US/5-29-customizing-library-name-segments.md)
 1. [Run the executable](/doc/sections/en_US/6-run-the-executable.md)
     1. [IDE run](/doc/sections/en_US/6-1-IDE-run.md)
     1. Command line run

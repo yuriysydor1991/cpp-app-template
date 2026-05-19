@@ -8,7 +8,7 @@ applib = static_library(
     'Application.cpp',
     'ApplicationContext.cpp'
   ],
-  include_directories: configuration_inc,
+  include_directories: [configuration_inc, lib_public_includes],
   dependencies: template_project_extra_deps,
   cpp_args: template_project_extra_cpp_args
 )

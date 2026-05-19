@@ -5,6 +5,8 @@
 1. [Зміна назви проекту і головного виконуваного файлу](/doc/sections/uk_UA/4-2-changing-the-project-and-executable-name.md)
 1. [Впровадження нових параметрів командного рядка](/doc/sections/uk_UA/4-6-introduction-of-the-custom-command-line-parameters.md)
 1. [Реалізація власних нащадків IApplication](/doc/sections/uk_UA/4-7-implementing-your-onw-IApplication-descendants.md)
+1. [Реалізація власних нащадків ILib](/doc/sections/uk_UA/4-8-implement-your-own-ILib-descendants.md)
+1. [Публічні заголовкові файли бібліотеки для встановлення](/doc/sections/uk_UA/4-9-the-librarys-installable-include-header-files.md)
 1. [Версіювання і інші параметри проекту](/doc/sections/uk_UA/4-3-version-tracking-and-other-project-parameters.md)
 1. [Тести проекту](/doc/sections/uk_UA/4-4-project-tests.md)
     1. [Фреймворк тестів Google Test](/doc/sections/uk_UA/4-4-1-google-test.md)

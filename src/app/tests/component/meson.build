@@ -14,8 +14,13 @@ CTEST_app = executable(
   dependencies: gtest_deps,
   include_directories: [
     MOCK_log,
-    configuration_inc
-  ]
+    APP_MOCK_LibraryFacade,
+    APP_MOCK_LibMain,
+    APP_MOCK_ApplicationContext2LibraryContext,
+    configuration_inc,
+    lib_public_includes,
+  ],
+  cpp_args: ['-DNDEBUG=1']
 )
 
 test(

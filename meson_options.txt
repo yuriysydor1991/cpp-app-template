@@ -167,12 +167,47 @@ option(
 )
 
 option(
+  'ENABLE_LOGS_MICROSECONDS_TIME',
+  type: 'boolean',
+  value: true,
+  description: 'Include the microseconds field into emitted log messages'
+)
+
+option(
+  'DEFAULT_LOG_FILE_PATH',
+  type: 'string',
+  value: '',
+  description: 'Default directory where the log file is created (empty - current working directory)'
+)
+
+option(
   'MAX_LOG_LEVEL',
   type: 'integer',
   value: 3,
   min: 0,
   max: 5,
   description: 'Maximum severity of the compiled log messages. Error=0. Trace=5.'
+)
+
+option(
+  'LIB_INCLUDE_MINOR_IN_NAME',
+  type: 'boolean',
+  value: false,
+  description: 'Append .<minor> to the installable library name (binary, headers subdir, pkg-config, CMake package dir)'
+)
+
+option(
+  'LIB_INCLUDE_MICRO_IN_NAME',
+  type: 'boolean',
+  value: false,
+  description: 'Append .<micro> after the minor segment to the installable library name. Implies LIB_INCLUDE_MINOR_IN_NAME.'
+)
+
+option(
+  'LIB_NAME_SUFFIX',
+  type: 'string',
+  value: '',
+  description: 'Optional trailing suffix appended to the installable library name (e.g. "-dev")'
 )
 
 option(

@@ -30,3 +30,4 @@
 1. [Enabling the AppImage bundle generation support](/doc/sections/en_US/5-26-enabling-the-AppImage-bundle-generation.md)
 1. [Enabling the WIX MSI installer generation support](/doc/sections/en_US/5-27-enabling-the-WIX-MSI-installer-generation.md)
 1. [Project maintainer options](/doc/sections/en_US/5-28-project-maintainer-options.md)
+1. [Customizing the installable library name segments](/doc/sections/en_US/5-29-customizing-library-name-segments.md)

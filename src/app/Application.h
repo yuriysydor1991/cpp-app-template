@@ -3,8 +3,11 @@
 
 #include <memory>
 
+#include "LibraryContext.h"
+#include "LibraryFacade.h"
 #include "src/app/ApplicationContext.h"
 #include "src/app/IApplication.h"
+#include "src/converters/ApplicationContext2LibraryContext.h"
 
 namespace app
 {
@@ -28,6 +31,14 @@ class Application : public IApplication
    * and other value otherwise.
    */
   virtual int run(std::shared_ptr<ApplicationContext> ctx) override;
+
+ protected:
+  using LibraryContextPtr = templatelib0::LibraryContextPtr;
+  using DefaultCtxConPtr = converters::DefaultCtxConPtr;
+
+  DefaultCtxConPtr create_ctx_converter();
+  LibraryContextPtr create_and_convert_libctx(
+      std::shared_ptr<ApplicationContext> ctx);
 };
 
 }  // namespace app

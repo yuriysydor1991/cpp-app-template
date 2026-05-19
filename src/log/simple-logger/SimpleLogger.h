@@ -7,10 +7,7 @@
 #include <string>
 
 #include "project-global-decls.h"
-
-#ifndef DEFAULT_LOG_FILE_PATH
-#define DEFAULT_LOG_FILE_PATH ""
-#endif  // DEFAULT_LOG_FILE_PATH
+#include "src/log/severity-macro-consts.h"
 
 /**
  * @brief The simple logger quick implementation encapsulation namespace.
@@ -25,18 +22,17 @@ namespace simple_logger
 class SimpleLogger
 {
  public:
-  inline static constexpr const unsigned short LVL_ERROR = 1U;
-  inline static constexpr const unsigned short LVL_WARNING = 2U;
-  inline static constexpr const unsigned short LVL_INFO = 3U;
-  inline static constexpr const unsigned short LVL_DEBUG = 4U;
-  inline static constexpr const unsigned short LVL_TRACE = 5U;
+  inline static constexpr const unsigned short LVL_ERROR = MACRO_LVL_ERROR;
+  inline static constexpr const unsigned short LVL_WARNING = MACRO_LVL_WARNING;
+  inline static constexpr const unsigned short LVL_INFO = MACRO_LVL_INFO;
+  inline static constexpr const unsigned short LVL_DEBUG = MACRO_LVL_DEBUG;
+  inline static constexpr const unsigned short LVL_TRACE = MACRO_LVL_TRACE;
 
   inline static constexpr const char* const defaultLogDateFormat =
       "%Y-%m-%d %H:%M:%S";
 
   inline static const std::string default_log_name =
-      project_decls::PROJECT_NAME + "-" + project_decls::PROJECT_BUILD_VERSION +
-      ".log";
+      project_decls::PROJECT_NAME + ".log";
 
   virtual ~SimpleLogger() = default;
   SimpleLogger() = default;
@@ -110,8 +106,8 @@ class SimpleLogger
    * @param toPrintValue Defines if simple logger should print messages to the
    * stdout stream. See the SimpleLogger::print for more details.
    */
-  static void init(const std::string& filepath = default_log_name,
-                   const unsigned short& nlvl = LVL_INFO,
+  static void init(const std::string& filepath = get_default_full_log_path(),
+                   const unsigned short& nlvl = MAX_LOG_LEVEL,
                    const bool toPrintValue = true);
 
  private:
@@ -124,10 +120,13 @@ class SimpleLogger
    */
   static void insert_current_timestamp(std::ostringstream& oss);
 
+  static std::string get_full_log_path(const std::string& logname);
+  static std::string get_default_full_log_path();
+
   inline static std::atomic_bool toPrintMsgs{true};
   inline static std::fstream alogfile;
   inline static std::mutex alogfile_m;
-  inline static unsigned short lvl{LVL_INFO};
+  inline static unsigned short lvl{MAX_LOG_LEVEL};
 };
 
 }  // namespace simple_logger

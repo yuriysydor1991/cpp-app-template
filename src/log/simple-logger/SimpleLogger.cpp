@@ -32,6 +32,10 @@ void SimpleLogger::log(const unsigned short& loglvl, const std::string& msg)
 
   if (alogfile.is_open()) {
     alogfile << finalLogStr;
+
+    if (loglvl <= LVL_WARNING) {
+      alogfile.flush();
+    }
   }
 
   if (!toPrintMsgs.load()) {
@@ -61,6 +65,10 @@ void SimpleLogger::logfile(const std::string& filepath)
     return;
   }
 
+  if (alogfile.is_open()) {
+    alogfile.close();
+  }
+
   alogfile.open(filepath.c_str(), std::fstream::app);
 
   if (!alogfile.is_open()) {
@@ -85,9 +93,6 @@ void SimpleLogger::init(const std::string& filepath, const unsigned short& nlvl,
 
 inline void SimpleLogger::insert_current_timestamp(std::ostringstream& oss)
 {
-  static constexpr const char microsecFiller = '0';
-  static constexpr const unsigned int microsecWidth = 6U;
-
   using namespace std::chrono;
 
   const auto now = system_clock::now();
@@ -95,15 +100,20 @@ inline void SimpleLogger::insert_current_timestamp(std::ostringstream& oss)
   const time_t now_time_t = system_clock::to_time_t(now);
   std::tm timeHolder = *std::localtime(&now_time_t);
 
-  const auto timeSinceEpoch = now.time_since_epoch();
+  oss << std::put_time(&timeHolder, defaultLogDateFormat);
 
+#ifdef ENABLE_LOGS_MICROSECONDS_TIME
+  static constexpr const char microsecFiller = '0';
+  static constexpr const unsigned int microsecWidth = 6U;
+
+  const auto timeSinceEpoch = now.time_since_epoch();
   auto seconds = duration_cast<std::chrono::seconds>(timeSinceEpoch);
   auto microseconds =
       duration_cast<std::chrono::microseconds>(timeSinceEpoch - seconds);
 
-  oss << std::put_time(&timeHolder, defaultLogDateFormat);
   oss << '.' << std::setfill(microsecFiller) << std::setw(microsecWidth)
       << microseconds.count();
+#endif  // ENABLE_LOGS_MICROSECONDS_TIME
 }
 
 const std::string& SimpleLogger::lvl_repr(const unsigned short& glvl)
@@ -119,6 +129,22 @@ const std::string& SimpleLogger::lvl_repr(const unsigned short& glvl)
   }
 
   return reprs[glvl];
+}
+
+std::string SimpleLogger::get_full_log_path(const std::string& logname)
+{
+  namespace fs = std::filesystem;
+
+  static const fs::path default_log_path = DEFAULT_LOG_FILE_PATH;
+
+  const fs::path logpath = default_log_path / logname;
+
+  return logpath.string();
+}
+
+std::string SimpleLogger::get_default_full_log_path()
+{
+  return get_full_log_path(default_log_name);
 }
 
 }  // namespace simple_logger

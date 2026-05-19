@@ -5,3 +5,6 @@ MOCK_ApplicationVersionPrinter = include_directories('ApplicationVersionPrinter'
 MOCK_CommandLineParser = include_directories('CommandLineParser')
 MOCK_project_global_decls = include_directories('project-global-decls')
 MOCK_log = include_directories('log')
+APP_MOCK_LibraryFacade = include_directories('LibraryFacade')
+APP_MOCK_LibMain = include_directories('LibMain')
+APP_MOCK_ApplicationContext2LibraryContext = include_directories('ApplicationContext2LibraryContext')

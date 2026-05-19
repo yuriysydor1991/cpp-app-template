@@ -3,14 +3,29 @@ configuration_inc = [
   include_directories('.')
 ]
 
-subdir('app')
+if get_option('ENABLE_UNIT_TESTS') or get_option('ENABLE_COMPONENT_TESTS')
+  gtest_dep = dependency('gtest', required: true)
+  gmock_dep = dependency('gmock', required: true)
+  gtest_main_dep = dependency('gtest_main', required: true)
+
+  gtest_deps = [gtest_dep, gmock_dep, gtest_main_dep]
+endif
+
+if get_option('ENABLE_UNIT_TESTS')
+  subdir('tests/mocks')
+endif
+
 subdir('log')
+subdir('lib')
+subdir('app')
+subdir('converters')
 
 template_project_main_binary = executable(
   meson.project_name(),
   ['main.cpp'],
-  include_directories: configuration_inc,
-  link_whole: [applib, loglib],
+  include_directories: [configuration_inc, lib_public_includes],
+  link_whole: [applib, converters_lib],
+  link_with: [template_project_main_library],
   dependencies: template_project_extra_deps,
   cpp_args: template_project_extra_cpp_args,
   link_args: template_project_extra_link_args,

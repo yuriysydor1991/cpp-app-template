@@ -30,3 +30,4 @@
 1. [Вмикання підтримки генерації AppImage-збірки](/doc/sections/uk_UA/5-26-enabling-the-AppImage-bundle-generation.md)
 1. [Вмикання підтримки генерації WIX MSI-інсталятора](/doc/sections/uk_UA/5-27-enabling-the-WIX-MSI-installer-generation.md)
 1. [Опції супровідника проекту](/doc/sections/uk_UA/5-28-project-maintainer-options.md)
+1. [Налаштування складових імені встановлюваної бібліотеки](/doc/sections/uk_UA/5-29-customizing-library-name-segments.md)

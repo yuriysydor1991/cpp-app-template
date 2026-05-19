@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.13)
 
-find_package(SDL2 REQUIRED)
-
 add_executable(
   UTEST_SDLContext
   UTEST_SDLContext.cpp
@@ -11,7 +9,6 @@ add_executable(
 
 target_include_directories(
   UTEST_SDLContext
-  PRIVATE ${SDL2_INCLUDE_DIRS}
   PRIVATE ${APP_MOCKS_ROOT}/log
   PRIVATE ${CMAKE_SOURCE_DIR}
   PRIVATE ${CMAKE_BINARY_DIR}
@@ -19,7 +16,7 @@ target_include_directories(
 
 target_link_libraries(
   UTEST_SDLContext
-  ${SDL2_LIBRARIES}
+  SDL2::SDL2
   GTest::gtest_main GTest::gmock
 )
 

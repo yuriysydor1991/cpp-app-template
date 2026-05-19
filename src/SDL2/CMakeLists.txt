@@ -1,8 +1,5 @@
 cmake_minimum_required(VERSION 3.13)
 
-find_package(SDL2 REQUIRED)
-find_package(OpenGL REQUIRED)
-
 add_library(
   TemplateSDL2Obj OBJECT
   SDL2Initer.cpp
@@ -12,17 +9,16 @@ add_library(
 )
 
 target_include_directories(
-  TemplateSDL2Obj 
-  PRIVATE 
-    ${SDL2_INCLUDE_DIRS}
+  TemplateSDL2Obj
+  PRIVATE
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
 )
 
 target_link_libraries(
-  TemplateSDL2Obj 
-  PRIVATE 
-  ${SDL2_LIBRARIES}
+  TemplateSDL2Obj
+  PRIVATE
+  SDL2::SDL2
   ${OPENGL_LIBRARIES}
 )
 

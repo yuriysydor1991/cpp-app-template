@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.13)
 
-find_package(SDL3 REQUIRED)
-
 add_executable(
   CTEST_eventer
   CTEST_eventer.cpp

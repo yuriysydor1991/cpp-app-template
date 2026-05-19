@@ -1,6 +1,25 @@
 ## Required packages for the SDL3 development
 
-The template project depends on the [SDL3](https://wiki.libsdl.org/SDL3/FrontPage) library together with the [OpenGL](https://www.opengl.org/) headers. The CMake configuration step probes them via `find_package(SDL3 REQUIRED)` and `find_package(OpenGL REQUIRED)` so both must be present on the host system at configure time.
+The template project depends on the [SDL3](https://wiki.libsdl.org/SDL3/FrontPage) library together with the [OpenGL](https://www.opengl.org/) headers. CMake acquires SDL3 through the dedicated `cmake/enablers/template-project-SDL3-enabler.cmake` enabler module which defaults to **FetchContent**: when SDL3 is not installed locally, the enabler clones `libsdl-org/SDL` at the tag pinned in `TEMPLATE_APP_SDL3_GIT_TAG` (default `release-3.2.10`) and builds `SDL3::SDL3` from source as part of the project build. OpenGL is still required from the host (`find_package(OpenGL REQUIRED)`).
+
+### Switching between FetchContent and the system SDL3
+
+The enabler exposes the `SDL3_DISABLE_SYSTEM_PROBE` CMake option:
+
+| Option value | Behaviour |
+|---|---|
+| `ON` (default for `appSDL3`) | Skip `find_package(SDL3)` and pull SDL3 from FetchContent unconditionally - useful on hosts without `libsdl3-dev`. |
+| `OFF` | Probe the system first via `find_package(SDL3 QUIET)`, fall back to FetchContent only when SDL3 is missing. |
+
+Re-point the source or pin a different revision with `TEMPLATE_APP_SDL3_GIT` (URL) and `TEMPLATE_APP_SDL3_GIT_TAG` (git tag / branch / sha) cache strings, e.g.:
+
+```
+cmake -S . -B build \
+  -DSDL3_DISABLE_SYSTEM_PROBE=OFF \
+  -DTEMPLATE_APP_SDL3_GIT_TAG=release-3.2.10
+```
+
+The sections below cover the system-install paths if you prefer to opt into `find_package` mode.
 
 ### GNU/Linux (Debian/Ubuntu/derivatives)
 

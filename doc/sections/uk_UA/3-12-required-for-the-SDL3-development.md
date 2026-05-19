@@ -1,6 +1,25 @@
 ## Обов'язкові пакети для розробки з SDL3
 
-Проект-шаблон залежить від бібліотеки [SDL3](https://wiki.libsdl.org/SDL3/FrontPage) разом з заголовковими файлами [OpenGL](https://www.opengl.org/). CMake конфігурує їх через `find_package(SDL3 REQUIRED)` і `find_package(OpenGL REQUIRED)` отож обидві бібліотеки мають бути присутніми в системі під час конфігурації.
+Проект-шаблон залежить від бібліотеки [SDL3](https://wiki.libsdl.org/SDL3/FrontPage) разом з заголовковими файлами [OpenGL](https://www.opengl.org/). CMake отримує SDL3 через окремий enabler-модуль `cmake/enablers/template-project-SDL3-enabler.cmake`, який за замовчуванням використовує **FetchContent**: якщо SDL3 у системі відсутній, enabler клонує `libsdl-org/SDL` за тегом з `TEMPLATE_APP_SDL3_GIT_TAG` (за замовчуванням `release-3.2.10`) і збирає `SDL3::SDL3` з джерел разом з проектом. OpenGL все ще шукається у системі через `find_package(OpenGL REQUIRED)`.
+
+### Перемикання між FetchContent і системним SDL3
+
+Enabler пропонує опцію CMake `SDL3_DISABLE_SYSTEM_PROBE`:
+
+| Значення опції | Поведінка |
+|---|---|
+| `ON` (за замовчуванням для `appSDL3`) | Пропустити `find_package(SDL3)` і одразу використати FetchContent - корисно на хостах без `libsdl3-dev`. |
+| `OFF` | Спочатку шукати у системі через `find_package(SDL3 QUIET)`, лише потім перейти на FetchContent якщо SDL3 не знайдено. |
+
+Переключи URL або зафіксуй конкретну ревізію через рядкові cache-змінні `TEMPLATE_APP_SDL3_GIT` (URL) і `TEMPLATE_APP_SDL3_GIT_TAG` (git-тег / гілка / sha), наприклад:
+
+```
+cmake -S . -B build \
+  -DSDL3_DISABLE_SYSTEM_PROBE=OFF \
+  -DTEMPLATE_APP_SDL3_GIT_TAG=release-3.2.10
+```
+
+Нижче перелічено варіанти системного встановлення на випадок якщо ти бажаєш переключитись у режим `find_package`.
 
 ### GNU/Лінукс (Debian/Ubuntu та похідні)
 

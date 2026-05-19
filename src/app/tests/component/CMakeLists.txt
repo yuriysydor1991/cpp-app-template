@@ -26,6 +26,7 @@ target_include_directories(
 
 target_link_libraries(
   CTEST_app
+  SDL3::SDL3
   GTest::gtest_main GTest::gmock
 )
 

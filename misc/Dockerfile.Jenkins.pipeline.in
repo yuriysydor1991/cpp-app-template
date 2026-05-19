@@ -11,7 +11,7 @@ RUN apt install -y flatpak
 RUN apt install -y clang-tidy
 RUN apt install -y libgtest-dev
 RUN apt install -y libgmock-dev
-RUN apt install -y libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-net-dev
+RUN apt install -y libsdl3-dev libsdl3-image-dev libsdl3-ttf-dev libgl1-mesa-dev
 
 CMD ["jenkins.sh"]
 

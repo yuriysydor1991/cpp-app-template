@@ -6,4 +6,4 @@
 sudo apt install -y git g++ cmake
 ```
 
-Пакети розробки [SDL2](https://en.wikipedia.org/wiki/Simple_DirectMedia_Layer) винесено у окрему секцію - дивись [Обов'язкові пакети для розробки з SDL2](/doc/sections/uk_UA/3-12-required-for-the-SDL2-development.md).
+Пакети розробки [SDL3](https://wiki.libsdl.org/SDL3/FrontPage) винесено у окрему секцію - дивись [Обов'язкові пакети для розробки з SDL3](/doc/sections/uk_UA/3-12-required-for-the-SDL3-development.md).

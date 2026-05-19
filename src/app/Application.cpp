@@ -4,7 +4,7 @@
 #include <iostream>
 #include <memory>
 
-#include "src/SDL2/SDL2Initer.h"
+#include "src/SDL3/SDL3Initer.h"
 #include "src/log/log.h"
 
 namespace app
@@ -19,10 +19,10 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  templateSDL2::SDL2Initer opengl;
+  templateSDL3::SDL3Initer opengl;
 
   if (opengl.run(ctx) != 0) {
-    LOGE("The SDL2 controller returned invalid state");
+    LOGE("The SDL3 controller returned invalid state");
     return INVALID;
   }
 

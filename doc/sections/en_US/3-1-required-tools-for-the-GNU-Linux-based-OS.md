@@ -6,4 +6,4 @@ In order to build minimum template project install the GCC C++ compiler with CMa
 sudo apt install -y git g++ cmake
 ```
 
-The [SDL2](https://en.wikipedia.org/wiki/Simple_DirectMedia_Layer) development packages are documented separately - see [Required packages for the SDL2 development](/doc/sections/en_US/3-12-required-for-the-SDL2-development.md).
+The [SDL3](https://wiki.libsdl.org/SDL3/FrontPage) development packages are documented separately - see [Required packages for the SDL3 development](/doc/sections/en_US/3-12-required-for-the-SDL3-development.md).

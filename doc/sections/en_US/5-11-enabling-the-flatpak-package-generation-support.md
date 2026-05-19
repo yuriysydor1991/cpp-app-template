@@ -28,5 +28,5 @@ Refer to the flatpak documentation on how to install and run applications distri
 flatpak install --user CppAppTemplate-0.9.0.flatpak
 
 # to run the application
-flatpak run ua.org.kytok.template.SDL2.CppAppTemplate
+flatpak run ua.org.kytok.template.SDL3.CppAppTemplate
 ```

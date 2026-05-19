@@ -28,5 +28,5 @@ cmake --build . --target flatpak
 flatpak install --user CppAppTemplate-0.9.0.flatpak
 
 # для запуску встановленої програми
-flatpak run ua.org.kytok.template.SDL2.CppAppTemplate
+flatpak run ua.org.kytok.template.SDL3.CppAppTemplate
 ```

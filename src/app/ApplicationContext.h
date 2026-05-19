@@ -69,7 +69,7 @@ struct ApplicationContext
   bool stop();
 
  private:
-  /// @brief Mark to true if to stop the SDL2 event loop
+  /// @brief Mark to true if to stop the SDL3 event loop
   std::atomic_bool toStop;
 };
 

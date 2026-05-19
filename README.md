@@ -43,7 +43,8 @@ Examine available branches to find your most applicable variant of the template 
 
 ## 3D / OpenGL
 
-- `appSDL2` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSDL2), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSDL2)] (**current**) with just general application related classes to generate a single binary executable with a [SDL2](https://en.wikipedia.org/wiki/Simple_DirectMedia_Layer) library for the [OpenGL](https://www.opengl.org/) 3D development and more!
+- `appSDL2` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSDL2), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSDL2)] with just general application related classes to generate a single binary executable with a [SDL2](https://en.wikipedia.org/wiki/Simple_DirectMedia_Layer) library for the [OpenGL](https://www.opengl.org/) 3D development and more!
+- `appSDL3` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSDL3), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSDL3)] (**current**) is the [SDL3](https://wiki.libsdl.org/SDL3/FrontPage) analogue of the `appSDL2` branch - same app/eventer/painter structure ported to the SDL3 API for the [OpenGL](https://www.opengl.org/) 3D development.
 - `appFreeGlut` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appFreeGlut), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appFreeGlut)] with just general application related classes to generate a single binary executable with a [FreeGlut](https://freeglut.sourceforge.net/) library for the [OpenGL](https://www.opengl.org/) 3D development.
 
 ## Web / HTTP / Net
@@ -90,7 +91,7 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
     1. [Optional for the flatpak packager](/doc/sections/en_US/3-9-optional-for-the-flatpak-packager.md)
     1. [Optional for the Docker container runs](/doc/sections/en_US/3-10-optional-for-docker-container-runs.md)
     1. [Optional for the snap packager](/doc/sections/en_US/3-11-optional-for-snap-packager.md)
-    1. [Required packages for the SDL2 development](/doc/sections/en_US/3-12-required-for-the-SDL2-development.md)
+    1. [Required packages for the SDL3 development](/doc/sections/en_US/3-12-required-for-the-SDL3-development.md)
 1. [Project structure](/doc/sections/en_US/4-project-structure.md)
     1. [Project diagrams](/doc/sections/en_US/4-0-project-diagrams.md)
     1. [Implement code straight away!](/doc/sections/en_US/4-1-implement-code-straight-away.md)

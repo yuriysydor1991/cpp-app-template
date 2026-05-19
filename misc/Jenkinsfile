@@ -21,7 +21,7 @@ pipeline {
       }
       
       steps {
-        git branch: 'appSDL2',
+        git branch: 'appSDL3',
             url: 'https://github.com/yuriysydor1991/cpp-app-template.git'
       }
     }

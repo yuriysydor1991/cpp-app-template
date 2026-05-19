@@ -6,7 +6,7 @@
   "command": "${PROJECT_BINARY_NAME}",
   "modules": [
     {
-      "name": "SDL2",
+      "name": "SDL3",
       "buildsystem": "cmake-ninja",
       "config-opts": [
         "-DCMAKE_BUILD_TYPE=Release",
@@ -16,12 +16,11 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://github.com/libsdl-org/SDL/releases/download/release-2.30.10/SDL2-2.30.10.tar.gz",
-          "sha256": "f59adf36a0fcf4c94198e7d3d776c1b3824211ab7aeebeb31fe19836661196aa"
+          "url": "https://github.com/libsdl-org/SDL/releases/download/release-3.2.10/SDL3-3.2.10.tar.gz",
+          "sha256": "57d2f2c2e0f6b9b5b6e2b5e7f48e3a55cf6c93c9e3a8e7f0a4eb3a4b6d6a6f15"
         }
       ],
       "cleanup": [
-        "/bin/sdl2-config",
         "/include",
         "/lib/cmake",
         "/lib/pkgconfig",

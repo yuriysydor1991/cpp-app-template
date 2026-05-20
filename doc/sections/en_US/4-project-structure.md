@@ -8,6 +8,7 @@
 1. [Implement your own IApplication descendants](/doc/sections/en_US/4-7-implementing-your-onw-IApplication-descendants.md)
 1. [Implement your own ILib descendants](/doc/sections/en_US/4-8-implement-your-own-ILib-descendants.md)
 1. [Version tracking and other project parameters](/doc/sections/en_US/4-3-version-tracking-and-other-project-parameters.md)
+1. [Minimal possible versions](/doc/sections/en_US/4-6-minimal-possible-versions.md)
 1. [Project tests](/doc/sections/en_US/4-4-project-tests.md)
     1. [Google Test](/doc/sections/en_US/4-4-1-google-test.md)
 1. [Extensions](/doc/sections/en_US/4-5-extensions.md)

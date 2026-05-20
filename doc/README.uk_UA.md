@@ -103,6 +103,7 @@
 =======
 >>>>>>> 860c012 (Removing unmerged lines in the doc/README.uk_UA.md)
     1. [Версіювання і інші параметри проекту](/doc/sections/uk_UA/4-3-version-tracking-and-other-project-parameters.md)
+    1. [Мінімально можливі версії](/doc/sections/uk_UA/4-6-minimal-possible-versions.md)
     1. [Тести проекту](/doc/sections/uk_UA/4-4-project-tests.md)
         1. [Фреймворк тестів Google Test](/doc/sections/uk_UA/4-4-1-google-test.md)
     1. [Розширення](/doc/sections/uk_UA/4-5-extensions.md)

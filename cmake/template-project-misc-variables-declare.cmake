@@ -10,13 +10,13 @@ set(
 string(TOLOWER ${PROJECT_BINARY_NAME} PROJECT_BINARY_NAME_lower)
 
 set(
-  PROJECT_REVERSE_URL ua.org.kytok.template.gtkmm4.${PROJECT_BINARY_NAME}
+  PROJECT_REVERSE_URL ua.org.kytok.template.wxwidgets.${PROJECT_BINARY_NAME}
   CACHE STRING "Project reverse URL string value"
 )
 
 set(
-  GTKMM_OBJECT_NAME "${PROJECT_NAME}GTKmm4Obj"
-  CACHE STRING "Project GTKmm4 binary obj library name and target"
+  WXWIDGETS_OBJECT_NAME "${PROJECT_NAME}wxWidgetsObj"
+  CACHE STRING "Project wxWidgets binary obj library name and target"
 )
 
 set(

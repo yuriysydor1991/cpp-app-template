@@ -12,7 +12,7 @@ RUN apt install -y clang-tidy
 RUN apt install -y libgtest-dev
 RUN apt install -y libgmock-dev
 RUN apt install -y pkg-config
-RUN apt install -y libgtkmm-4.0-dev
+RUN apt install -y libgtk-3-dev
 
 CMD ["jenkins.sh"]
 

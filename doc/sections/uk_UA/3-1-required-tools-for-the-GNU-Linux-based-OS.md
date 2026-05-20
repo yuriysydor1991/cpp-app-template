@@ -6,15 +6,8 @@
 sudo apt install -y git g++ cmake
 ```
 
-Щоб встановити усі необхідні пакунки розробника GTKmm-4.0 необхідно виконати команду:
+Саму бібліотеку wxWidgets завантажує і будує з вихідних кодів механізм CMake FetchContent (див. секцію [wxWidgets через FetchContent](/doc/sections/uk_UA/4-6-wxwidgets-fetchcontent-integration.md)), тому встановлювати окремий пакунок wxWidgets не потрібно. На GNU/Linux wxWidgets будує свій бекенд GTK, отож необхідно встановити пакунки розробника GTK:
 
 ```
-sudo apt install -y pkg-config libgtkmm-4.0-dev libglib2.0-dev-bin
-```
-
-
-Для того щоб мати змогу розробляти візуальний інтерфейс необіхдно встановити спеціалізований інструмент розробки [Glade](https://en.wikipedia.org/wiki/Glade_Interface_Designer) за допомогою команди:
-
-```
-sudo apt install -y glade
+sudo apt install -y pkg-config libgtk-3-dev
 ```

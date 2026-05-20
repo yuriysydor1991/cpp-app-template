@@ -2,10 +2,10 @@
 #include <gtest/gtest.h>
 
 #include "src/app/Application.h"
-#include "src/gtkmm4/GtkmmIniter.h"
+#include "src/wxwidgets/WxWidgetsIniter.h"
 
 using namespace app;
-using namespace Gtkmm4i;
+using namespace wxwi;
 using namespace testing;
 
 class UTEST_Application : public Test
@@ -17,7 +17,7 @@ class UTEST_Application : public Test
   {
   }
 
-  ~UTEST_Application() { GtkmmIniter::onMockCreate = nullptr; }
+  ~UTEST_Application() { WxWidgetsIniter::onMockCreate = nullptr; }
 
   int argc{0};
   char** argv{nullptr};
@@ -30,15 +30,15 @@ TEST_F(UTEST_Application, no_context_error) { EXPECT_NE(app->run({}), 0); }
 
 TEST_F(UTEST_Application, normal_exit)
 {
-  MockFunction<void(GtkmmIniter & instance)> initerEnsurer;
+  MockFunction<void(WxWidgetsIniter & instance)> initerEnsurer;
 
   EXPECT_CALL(initerEnsurer, Call(_))
       .Times(1)
-      .WillOnce(Invoke([&](GtkmmIniter& instance) {
+      .WillOnce(Invoke([&](WxWidgetsIniter& instance) {
         EXPECT_CALL(instance, run(appCtx)).Times(1).WillOnce(Return(0));
       }));
 
-  GtkmmIniter::onMockCreate = initerEnsurer.AsStdFunction();
+  WxWidgetsIniter::onMockCreate = initerEnsurer.AsStdFunction();
 
   EXPECT_CALL(*appCtx, push_error(_)).Times(0);
 
@@ -52,15 +52,15 @@ TEST_F(UTEST_Application, normal_exit)
 
 TEST_F(UTEST_Application, invalid_exit_status)
 {
-  MockFunction<void(GtkmmIniter & instance)> initerEnsurer;
+  MockFunction<void(WxWidgetsIniter & instance)> initerEnsurer;
 
   EXPECT_CALL(initerEnsurer, Call(_))
       .Times(1)
-      .WillOnce(Invoke([&](GtkmmIniter& instance) {
+      .WillOnce(Invoke([&](WxWidgetsIniter& instance) {
         EXPECT_CALL(instance, run(appCtx)).Times(1).WillOnce(Return(1));
       }));
 
-  GtkmmIniter::onMockCreate = initerEnsurer.AsStdFunction();
+  WxWidgetsIniter::onMockCreate = initerEnsurer.AsStdFunction();
 
   EXPECT_CALL(*appCtx, push_error(_)).Times(0);
 

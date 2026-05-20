@@ -2,7 +2,7 @@
 
 1. [Діаграми проекту](/doc/sections/uk_UA/4-0-project-diagrams.md)
 1. [Реалізуй код одразу!](/doc/sections/uk_UA/4-1-implement-code-straight-away.md)
-1. [Компіляція ресурсів](/doc/sections/uk_UA/4-6-gtkmm4-resource-embedding.md)
+1. [wxWidgets через FetchContent](/doc/sections/uk_UA/4-6-wxwidgets-fetchcontent-integration.md)
 1. [Зміна назви проекту і головного виконуваного файлу](/doc/sections/uk_UA/4-2-changing-the-project-and-executable-name.md)
 1. [Впровадження нових параметрів командного рядка](/doc/sections/uk_UA/4-6-introduction-of-the-custom-command-line-parameters.md)
 1. [Реалізація власних нащадків IApplication](/doc/sections/uk_UA/4-7-implementing-your-onw-IApplication-descendants.md)

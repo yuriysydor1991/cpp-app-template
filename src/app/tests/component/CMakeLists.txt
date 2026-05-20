@@ -19,7 +19,7 @@ target_include_directories(
   CTEST_app
   PRIVATE
     ${APP_MOCKS_ROOT}/log
-    ${APP_MOCKS_ROOT}/GtkmmIniter
+    ${APP_MOCKS_ROOT}/WxWidgetsIniter
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
 )

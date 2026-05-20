@@ -2,7 +2,7 @@
 
 1. [Project diagrams](/doc/sections/en_US/4-0-project-diagrams.md)
 1. [Implement code straight away!](/doc/sections/en_US/4-1-implement-code-straight-away.md)
-1. [Resource embedding](/doc/sections/en_US/4-6-gtkmm4-resource-embedding.md)
+1. [wxWidgets via FetchContent](/doc/sections/en_US/4-6-wxwidgets-fetchcontent-integration.md)
 1. [Changing the project and executable name](/doc/sections/en_US/4-2-changing-the-project-and-executable-name.md)
 1. [Introducing custom command line parameters](/doc/sections/en_US/4-6-introduction-of-the-custom-command-line-parameters.md)
 1. [Implement your own IApplication descendants](/doc/sections/en_US/4-7-implementing-your-onw-IApplication-descendants.md)

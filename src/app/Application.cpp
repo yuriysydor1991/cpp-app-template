@@ -4,8 +4,8 @@
 #include <iostream>
 #include <memory>
 
-#include "src/gtkmm4/GtkmmIniter.h"
 #include "src/log/log.h"
+#include "src/wxwidgets/WxWidgetsIniter.h"
 
 namespace app
 {
@@ -19,19 +19,19 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  std::shared_ptr<Gtkmm4i::GtkmmIniter> gtkmmIniter = create_gtkmm_initer();
+  std::shared_ptr<wxwi::WxWidgetsIniter> wxIniter = create_wx_initer();
 
-  if (gtkmmIniter->run(ctx) != 0) {
-    LOGE("The gtkmm controller returned invalid execution status");
+  if (wxIniter->run(ctx) != 0) {
+    LOGE("The wxWidgets controller returned invalid execution status");
     return INVALID;
   }
 
   return 0;
 }
 
-std::shared_ptr<Gtkmm4i::GtkmmIniter> Application::create_gtkmm_initer()
+std::shared_ptr<wxwi::WxWidgetsIniter> Application::create_wx_initer()
 {
-  return std::make_shared<Gtkmm4i::GtkmmIniter>();
+  return std::make_shared<wxwi::WxWidgetsIniter>();
 }
 
 }  // namespace app

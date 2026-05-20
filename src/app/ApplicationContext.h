@@ -68,30 +68,30 @@ struct ApplicationContext
    */
   void push_error(const std::string& errorDescription);
 
-  /// @brief PostgreSQL database name
-  std::string pg_dbname;
+  /// @brief Firebird database name, path or alias
+  std::string fb_dbname;
 
-  /// @brief PostgreSQL user name
-  std::string pg_user;
+  /// @brief Firebird user name
+  std::string fb_user;
 
-  /// @brief PostgreSQL user password
-  std::string pg_password;
+  /// @brief Firebird user password
+  std::string fb_password;
 
-  /// @brief PostgreSQL hostname
-  std::string pg_host;
+  /// @brief Firebird hostname
+  std::string fb_host;
 
-  /// @brief PostgreSQL port
-  std::string pg_port;
+  /// @brief Firebird port
+  std::string fb_port;
 
-  static const std::string default_pg_name;
+  static const std::string default_fb_name;
   /// @brief Remember to change this publicly visible credentials!!!
-  static const std::string default_pg_user;
+  static const std::string default_fb_user;
   /// @brief Remember to change this publicly visible credentials!!!
-  static const std::string default_pg_password;
+  static const std::string default_fb_password;
 
-  /// @brief The PostgreSQL connection interface object. Connected in default
+  /// @brief The Firebird connection interface object. Connected in default
   /// Application class implementation.
-  std::shared_ptr<IDBConnection> pg_connection;
+  std::shared_ptr<IDBConnection> db_connection;
 };
 
 }  // namespace app

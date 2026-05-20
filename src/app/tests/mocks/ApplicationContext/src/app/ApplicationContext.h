@@ -23,7 +23,7 @@ struct ApplicationContext
   bool print_version_and_exit{false};
   std::vector<std::string> errors;
 
-  std::shared_ptr<IDBConnection> pg_connection;
+  std::shared_ptr<IDBConnection> db_connection;
 
   MOCK_METHOD(void, push_error, (const std::string& errorDescription));
 };

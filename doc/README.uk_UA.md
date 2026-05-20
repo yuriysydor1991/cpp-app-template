@@ -54,7 +54,8 @@
 
 ## Системи керування базами даних (СУБД) / SQL / NoSQL
 
-- гілка `appPgSQLxx` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appPgSQLxx), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appPgSQLxx)] (**поточна**) котра містить інфраструктуру для швидкого старту розробки застосунку з використанням СУБД [PostgreSQL](https://en.wikipedia.org/wiki/PostgreSQL)
+- гілка `appPgSQLxx` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appPgSQLxx), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appPgSQLxx)] котра містить інфраструктуру для швидкого старту розробки застосунку з використанням СУБД [PostgreSQL](https://en.wikipedia.org/wiki/PostgreSQL)
+- гілка `appFirebird` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appFirebird), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appFirebird)] (**поточна**) котра містить інфраструктуру для швидкого старту розробки застосунку з використанням СУБД [Firebird](https://firebirdsql.org/) через рідну клієнтську бібліотеку (fbclient)
 - гілка `appMySQLCppConn` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appMySQLCppConn), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appMySQLCppConn)] котра містить інфраструктуру для швидкого старту розробки застосунку з використанням СУБД [MySQL](https://uk.wikipedia.org/wiki/MySQL)
 - гілка `appSQLiteCpp3` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSQLiteCpp3), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSQLiteCpp3)] котра містить інфраструктуру для швидкого старту розробки застосунку з використанням СУБД [SQLite](https://en.wikipedia.org/wiki/SQLite) через бібліотеку [SQLiteCpp](https://github.com/SRombauts/SQLiteCpp)
 - гілка `appMongoDBCpp4` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appMongoDBCpp4), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appMongoDBCpp4)] котра містить інфраструктуру для швидкого старту розробки застосунку з використанням NoSQL СУБД [MongoDB](https://en.wikipedia.org/wiki/MongoDB)
@@ -82,7 +83,7 @@
 1. [Вимоги](/doc/sections/uk_UA/3-requirements.md)
     1. [Обов'язкові інструменти для ОС на базі GNU/Лінукс](/doc/sections/uk_UA/3-1-required-tools-for-the-GNU-Linux-based-OS.md)
     1. [Обов'язкові інструменти для ОС на базі MS Windows](/doc/sections/uk_UA/3-2-required-tools-for-the-MS-Windows-based-OS.md)
-    1. [Обов'язкові пакунки для підключення до PostgreSQL](/doc/sections/uk_UA/3-11-required-package-for-PostgreSQL-connection.md)
+    1. [Обов'язкові пакунки для підключення до Firebird](/doc/sections/uk_UA/3-11-required-package-for-Firebird-connection.md)
     1. [Необов'язкові пакети для тестів](/doc/sections/uk_UA/3-3-optional-for-the-tests.md)
     1. [Необов'язкові пакети для створення документації](/doc/sections/uk_UA/3-4-optional-for-the-documentation.md)
     1. [Необов'язкові пакети для форматування коду](/doc/sections/uk_UA/3-5-optional-for-the-code-formatting.md)

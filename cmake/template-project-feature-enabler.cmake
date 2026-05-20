@@ -15,6 +15,9 @@ include(template-project-GTest-enabler)
 include(template-project-clang-format-target)
 include(template-project-valgrind-target)
 
+# 3rd-party libraries required before the src tree is configured
+include(template-project-firebird-enabler)
+
 # packagers
 include(template-project-deb-enabler)
 include(template-project-flatpak-target)

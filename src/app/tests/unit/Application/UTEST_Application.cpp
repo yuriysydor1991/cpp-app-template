@@ -5,7 +5,7 @@
 
 using namespace app;
 using namespace testing;
-using namespace pgsqli;
+using namespace firebirdi;
 
 class UTEST_Application : public Test
 {
@@ -18,7 +18,7 @@ class UTEST_Application : public Test
 
   ~UTEST_Application()
   {
-    PgSQL::onMockCreate = nullptr;
+    Firebird::onMockCreate = nullptr;
     app.reset();
     appCtx.reset();
   }
@@ -36,18 +36,18 @@ TEST_F(UTEST_Application, normal_exit)
 {
   static const std::string random_date{"2025-05-07"};
 
-  MockFunction<void(PgSQL&)> pgsqlEnsurer;
+  MockFunction<void(Firebird&)> firebirdEnsurer;
 
-  EXPECT_CALL(pgsqlEnsurer, Call(_))
+  EXPECT_CALL(firebirdEnsurer, Call(_))
       .Times(1)
-      .WillOnce(Invoke([](PgSQL& instance) {
+      .WillOnce(Invoke([](Firebird& instance) {
         EXPECT_CALL(instance, connect(_)).Times(1).WillOnce(Return(true));
         EXPECT_CALL(instance, get_current_date)
             .Times(1)
             .WillOnce(Return(random_date));
       }));
 
-  PgSQL::onMockCreate = pgsqlEnsurer.AsStdFunction();
+  Firebird::onMockCreate = firebirdEnsurer.AsStdFunction();
 
   EXPECT_CALL(*appCtx, push_error(_)).Times(0);
 
@@ -63,16 +63,16 @@ TEST_F(UTEST_Application, failure_to_connect)
 {
   static const std::string random_date{"2025-05-07"};
 
-  MockFunction<void(PgSQL&)> pgsqlEnsurer;
+  MockFunction<void(Firebird&)> firebirdEnsurer;
 
-  EXPECT_CALL(pgsqlEnsurer, Call(_))
+  EXPECT_CALL(firebirdEnsurer, Call(_))
       .Times(1)
-      .WillOnce(Invoke([](PgSQL& instance) {
+      .WillOnce(Invoke([](Firebird& instance) {
         EXPECT_CALL(instance, connect(_)).Times(1).WillOnce(Return(false));
         EXPECT_CALL(instance, get_current_date).Times(0);
       }));
 
-  PgSQL::onMockCreate = pgsqlEnsurer.AsStdFunction();
+  Firebird::onMockCreate = firebirdEnsurer.AsStdFunction();
 
   EXPECT_CALL(*appCtx, push_error(_)).Times(0);
 

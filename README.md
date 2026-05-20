@@ -54,7 +54,8 @@ Examine available branches to find your most applicable variant of the template 
 
 ## Database Management systems (DBMS) / SQL / NoSQL
 
-- `appPgSQLxx` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appPgSQLxx), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appPgSQLxx)] (**current**)  the template infrastructure to fast start application development with the [PostgreSQL DBMS](https://en.wikipedia.org/wiki/PostgreSQL) usage.
+- `appPgSQLxx` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appPgSQLxx), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appPgSQLxx)] the template infrastructure to fast start application development with the [PostgreSQL DBMS](https://en.wikipedia.org/wiki/PostgreSQL) usage.
+- `appFirebird` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appFirebird), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appFirebird)] (**current**) the template infrastructure to fast start application development with the [Firebird DBMS](https://firebirdsql.org/) usage through the native client library (fbclient).
 - `appMySQLCppConn` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appMySQLCppConn), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appMySQLCppConn)] the template infrastructure to fast start application development with the [MySQL DBMS](https://en.wikipedia.org/wiki/MySQL) usage.
 - `appSQLiteCpp3` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSQLiteCpp3), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSQLiteCpp3)] the template infrastructure to fast start application development with the [SQLite DBMS](https://en.wikipedia.org/wiki/SQLite) and [SQLiteCpp C++ bind](https://github.com/SRombauts/SQLiteCpp) usage.
 - `appMongoDBCpp4` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appMongoDBCpp4), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appMongoDBCpp4)] the template infrastructure to fast start application development with the [MongoDB NoSQL DBMS](https://en.wikipedia.org/wiki/MongoDB) usage.
@@ -81,7 +82,7 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
 1. [Requirements](/doc/sections/en_US/3-requirements.md)
     1. [Required tools for the GNU/Linux based OS](/doc/sections/en_US/3-1-required-tools-for-the-GNU-Linux-based-OS.md)
     1. [Required tools for the MS Windows based OS](/doc/sections/en_US/3-2-required-tools-for-the-MS-Windows-based-OS.md)
-    1. [Required package for PostgreSQL connection](/doc/sections/en_US/3-11-required-package-for-PostgreSQL-connection.md)
+    1. [Required package for Firebird connection](/doc/sections/en_US/3-11-required-package-for-Firebird-connection.md)
     1. [Optional for the tests](/doc/sections/en_US/3-3-optional-for-the-tests.md)
     1. [Optional for the documentation](/doc/sections/en_US/3-4-optional-for-the-documentation.md)
     1. [Optional for the code formatting](/doc/sections/en_US/3-5-optional-for-the-code-formatting.md)

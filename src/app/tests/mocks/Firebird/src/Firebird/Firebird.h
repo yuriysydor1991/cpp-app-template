@@ -1,30 +1,29 @@
-#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_PGSQL_CLASS_H
-#define YOUR_CPP_APP_TEMPLATE_PROJECT_PGSQL_CLASS_H
+#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_FIREBIRD_CLASS_H
+#define YOUR_CPP_APP_TEMPLATE_PROJECT_FIREBIRD_CLASS_H
 
 #include <gmock/gmock.h>
 
 #include <functional>
 #include <memory>
 
-#include "src/PgSQLxx/sql/QueryMaker.h"
 #include "src/app/ApplicationContext.h"
 #include "src/app/IDBConnection.h"
 
-namespace pgsqli
+namespace firebirdi
 {
 
-class PgSQL : public app::IDBConnection
+class Firebird : public app::IDBConnection
 {
  public:
-  virtual ~PgSQL() = default;
-  PgSQL()
+  virtual ~Firebird() = default;
+  Firebird()
   {
     if (onMockCreate) {
       onMockCreate(*this);
     }
   }
 
-  inline static std::function<void(PgSQL&)> onMockCreate;
+  inline static std::function<void(Firebird&)> onMockCreate;
 
   MOCK_METHOD(bool, connect, (std::shared_ptr<app::ApplicationContext> nctx),
               (override));
@@ -32,6 +31,6 @@ class PgSQL : public app::IDBConnection
   MOCK_METHOD(std::string, get_current_date, (), (override));
 };
 
-}  // namespace pgsqli
+}  // namespace firebirdi
 
-#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_PGSQL_CLASS_H
+#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_FIREBIRD_CLASS_H

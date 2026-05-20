@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.13)
 
 add_library(
-  TemplatePgSQLObj OBJECT
-  PgSQL.cpp
+  TemplateFirebirdHelpersObj OBJECT
+  FbConnStringMaker.cpp
 )
 
 target_include_directories(
-  TemplatePgSQLObj 
+  TemplateFirebirdHelpersObj
   PRIVATE
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
@@ -14,8 +14,5 @@ target_include_directories(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  TemplatePgSQLObj pqxx
+  TemplateFirebirdHelpersObj
 )
-
-add_subdirectory(helpers)
-add_subdirectory(sql)

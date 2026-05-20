@@ -25,16 +25,16 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  assert(actx->pg_connection != nullptr);
+  assert(actx->db_connection != nullptr);
 
-  const std::string pgsqlDate = actx->pg_connection->get_current_date();
+  const std::string firebirdDate = actx->db_connection->get_current_date();
 
-  LOGI("PostgreSQL' current date: " << pgsqlDate);
+  LOGI("Firebird' current date: " << firebirdDate);
 
   return 0;
 }
 
-std::shared_ptr<pgsqli::PgSQL> Application::create_pg_conn()
+std::shared_ptr<firebirdi::Firebird> Application::create_db_conn()
 {
   assert(actx != nullptr);
 
@@ -43,16 +43,16 @@ std::shared_ptr<pgsqli::PgSQL> Application::create_pg_conn()
     return {};
   }
 
-  return std::make_shared<pgsqli::PgSQL>();
+  return std::make_shared<firebirdi::Firebird>();
 }
 
 bool Application::connect()
 {
   assert(actx != nullptr);
 
-  actx->pg_connection = create_pg_conn();
+  actx->db_connection = create_db_conn();
 
-  return actx->pg_connection != nullptr && actx->pg_connection->connect(actx);
+  return actx->db_connection != nullptr && actx->db_connection->connect(actx);
 }
 
 }  // namespace app

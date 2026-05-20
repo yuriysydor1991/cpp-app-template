@@ -15,5 +15,8 @@ sudo apt install -y qt6-base-dev qt6-base-dev-tools \
   qml6-module-qtquick-particles qml6-module-qtquick-pdf \
   qml6-module-qtquick-scene2d qml6-module-qtquick-scene3d \
   qml6-module-qtquick-shapes qml6-module-qtquick-tooling \
-  qml6-module-qtquick-timeline
+  qml6-module-qtquick-timeline \
+  qt6-charts-dev qml6-module-qtcharts
 ```
+
+Пакети `qt6-charts-dev` і `qml6-module-qtcharts` надають модуль [QtCharts](https://doc.qt.io/qt-6/qtcharts-index.html), що містить QML-елемент [ChartView](https://doc.qt.io/qt-6/qml-qtcharts-chartview.html), який використовується у цій гілці.

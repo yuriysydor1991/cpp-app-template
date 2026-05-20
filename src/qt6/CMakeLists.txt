@@ -22,6 +22,7 @@ target_link_libraries(
     Qt6::Qml
     Qt6::Quick
     Qt6::QuickControls2
+    Qt6::Charts
 )
 
 target_link_libraries(

@@ -15,5 +15,8 @@ sudo apt install -y qt6-base-dev qt6-base-dev-tools \
   qml6-module-qtquick-particles qml6-module-qtquick-pdf \
   qml6-module-qtquick-scene2d qml6-module-qtquick-scene3d \
   qml6-module-qtquick-shapes qml6-module-qtquick-tooling \
-  qml6-module-qtquick-timeline
+  qml6-module-qtquick-timeline \
+  qt6-charts-dev qml6-module-qtcharts
 ```
+
+The `qt6-charts-dev` and `qml6-module-qtcharts` packages provide the [QtCharts](https://doc.qt.io/qt-6/qtcharts-index.html) module that exposes the [ChartView](https://doc.qt.io/qt-6/qml-qtcharts-chartview.html) QML element used by this branch.

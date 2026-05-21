@@ -1,21 +1,5 @@
 cmake_minimum_required(VERSION 3.13)
 
-# Reusable enabler module for the wxWidgets GUI library.
-#
-# Kept in a separate file (just like the libcurl and the LibXml2 enablers) so it
-# may be reused across components and branches. Including this module exposes
-# the imported targets wx::core and wx::base that the component links against.
-#
-# wxWidgets is not assumed to be installed on the system. The module first
-# probes for a ready CMake-package (CONFIG mode) wxWidgets that already exposes
-# the wx::core / wx::base imported targets - either a system installation or, for
-# the Flatpak package, the dedicated wxWidgets module declared in
-# misc/flatpak.conf.json.in. When none is found it falls back to building
-# wxWidgets from source through the shared template_project_default_3rdparty_enabler()
-# FetchContent helper. On GNU/Linux wxWidgets builds its GTK backend, so the GTK
-# development packages are required for that source build (see the requirements
-# documentation section).
-
 option(
   ENABLE_WXWIDGETS
   "Enables wxWidgets for the project (a CMake-package one or via FetchContent through the Internet)"
@@ -35,10 +19,23 @@ set(
   CACHE STRING "The wxWidgets project git repository tag of interest"
 )
 
-template_project_default_3rdparty_enabler(
-    NAME wxWidgets
-    GIT_REPOSITORY ${TEMPLATE_APP_WXWIDGETS_GIT}
-    GIT_TAG        ${TEMPLATE_APP_WXWIDGETS_GIT_TAG}
-)
+find_package(wxWidgets CONFIG QUIET COMPONENTS core base)
+
+if(TARGET wx::core)
+  message(STATUS "The system already provides the wxWidgets library")
+else()
+  message(STATUS "The wxWidgets library is not available as a CMake package")
+  message(STATUS "Building wxWidgets ${TEMPLATE_APP_WXWIDGETS_GIT_TAG} from source through the Internet")
+
+  # DISABLE_SYSTEM_PROBE: the CONFIG probe above is the system probe; the shared
+  # helper must not re-probe in MODULE mode (it would match a system wxWidgets
+  # without exposing the wx::core / wx::base targets and skip the source build).
+  template_project_default_3rdparty_enabler(
+      DISABLE_SYSTEM_PROBE
+      NAME wxWidgets
+      GIT_REPOSITORY ${TEMPLATE_APP_WXWIDGETS_GIT}
+      GIT_TAG        ${TEMPLATE_APP_WXWIDGETS_GIT_TAG}
+  )
+endif()
 
 message(STATUS "The project wxWidgets is made available")

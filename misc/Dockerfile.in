@@ -4,9 +4,29 @@ RUN apt update
 RUN apt install -y libstdc++6 build-essential git cmake g++ pkg-config
 RUN apt install -y libgtk-3-dev
 
+# Preinstall wxWidgets (the same revision the project's CMake enabler requests)
+# so the project build below discovers it as a ready CMake package (the wx::core
+# / wx::base targets) instead of fetching and building it through FetchContent.
+# Built statically, so the produced executable embeds wxWidgets and only the GTK
+# runtime libraries are needed afterwards. The recursive clone pulls the bundled
+# 3rd-party submodules (zlib, png, jpeg, ...) wxWidgets builds from.
+RUN git clone --recurse-submodules --shallow-submodules --depth 1 \
+      --branch ${TEMPLATE_APP_WXWIDGETS_GIT_TAG} \
+      ${TEMPLATE_APP_WXWIDGETS_GIT} /src/wxWidgets && \
+    cmake -S /src/wxWidgets -B /src/wxWidgets/build \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DwxBUILD_SHARED=OFF \
+      -DwxBUILD_SAMPLES=OFF \
+      -DwxBUILD_TESTS=OFF \
+      -DwxBUILD_DEMOS=OFF \
+      -DwxBUILD_BENCHMARKS=OFF && \
+    cmake --build /src/wxWidgets/build -j$(nproc) && \
+    cmake --install /src/wxWidgets/build --prefix /usr && \
+    rm -rf /src/wxWidgets
+
 ARG BUILDDIR=/src/${PROJECT_BINARY_NAME}-build-docker-singlerun
 
-RUN --mount=from=project,target=/src/${PROJECT_BINARY_NAME} \ 
+RUN --mount=from=project,target=/src/${PROJECT_BINARY_NAME} \
  cd /src/${PROJECT_BINARY_NAME} && \
  mkdir -vp $BUILDDIR && \
  cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Release &&  \

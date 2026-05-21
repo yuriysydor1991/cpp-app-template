@@ -1,6 +1,6 @@
 FROM jenkins/jenkins:lts
 
-USER root 
+USER root
 
 RUN apt update
 RUN apt install -y libstdc++6 build-essential git cmake g++
@@ -14,5 +14,23 @@ RUN apt install -y libgmock-dev
 RUN apt install -y pkg-config
 RUN apt install -y libgtk-3-dev
 
-CMD ["jenkins.sh"]
+# Preinstall wxWidgets (the same revision the project's CMake enabler requests)
+# so pipeline builds discover it as a ready CMake package (the wx::core /
+# wx::base targets) instead of fetching and building it through FetchContent on
+# every run. Built statically; the recursive clone pulls the bundled 3rd-party
+# submodules (zlib, png, jpeg, ...) wxWidgets builds from.
+RUN git clone --recurse-submodules --shallow-submodules --depth 1 \
+      --branch ${TEMPLATE_APP_WXWIDGETS_GIT_TAG} \
+      ${TEMPLATE_APP_WXWIDGETS_GIT} /tmp/wxWidgets && \
+    cmake -S /tmp/wxWidgets -B /tmp/wxWidgets/build \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DwxBUILD_SHARED=OFF \
+      -DwxBUILD_SAMPLES=OFF \
+      -DwxBUILD_TESTS=OFF \
+      -DwxBUILD_DEMOS=OFF \
+      -DwxBUILD_BENCHMARKS=OFF && \
+    cmake --build /tmp/wxWidgets/build -j$(nproc) && \
+    cmake --install /tmp/wxWidgets/build --prefix /usr && \
+    rm -rf /tmp/wxWidgets
 
+CMD ["jenkins.sh"]

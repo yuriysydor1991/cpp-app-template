@@ -114,6 +114,16 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "UTEST_CommandLineParser\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_CommandLineParser.junit.xml'
           }
         }
+        stage('UTEST_WindowConfig') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_WindowConfig\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_WindowConfig.junit.xml'
+          }
+        }
+        stage('UTEST_WxWidgetsIniter') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_WxWidgetsIniter\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_WxWidgetsIniter.junit.xml'
+          }
+        }
       }
       post { always { junit "$BUILDDIR/$BDJUNITOUT/UTEST_*.xml" } }
     }
@@ -128,6 +138,11 @@ pipeline {
         stage('CTEST_app') { 
           steps { 
             sh 'cd $BUILDDIR && ctest -R "CTEST_app\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_app.junit.xml'
+          }
+        }
+        stage('CTEST_WxWidgets') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "CTEST_WxWidgets\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_WxWidgets.junit.xml'
           }
         }
       }

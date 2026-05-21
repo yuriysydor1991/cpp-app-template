@@ -6,13 +6,40 @@
   "command": "${PROJECT_BINARY_NAME}",
   "modules": [
     {
-      "comment": "The project builds wxWidgets from source through CMake FetchContent, so the build needs network access and the GNOME SDK (which provides the GTK development files used by the wxWidgets GTK backend).",
+      "comment": "wxWidgets is built and installed as a standalone module so the project finds it as a ready CMake package (the wx::core / wx::base targets) instead of downloading and building it through the CMake enabler's FetchContent. Pinned to the same v3.3.2 the wxWidgets CMake enabler requests and built statically, so nothing of it has to ship at runtime.",
+      "name": "wxWidgets",
+      "buildsystem": "cmake-ninja",
+      "config-opts": [
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DwxBUILD_SHARED=OFF",
+        "-DwxBUILD_SAMPLES=OFF",
+        "-DwxBUILD_TESTS=OFF",
+        "-DwxBUILD_DEMOS=OFF",
+        "-DwxBUILD_BENCHMARKS=OFF"
+      ],
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://github.com/wxWidgets/wxWidgets/releases/download/v3.3.2/wxWidgets-3.3.2.tar.bz2",
+          "sha256": "50a28cb668de47b0e006cd6ebed8cf4f76c1cac6116fb3c978c44478219103f2"
+        }
+      ],
+      "cleanup": [
+        "/bin/wx-config",
+        "/include",
+        "/lib/cmake",
+        "/lib/pkgconfig",
+        "/lib/wx",
+        "/share/aclocal",
+        "/share/bakefile",
+        "*.a"
+      ]
+    },
+    {
+      "comment": "The project links wxWidgets statically against the wxWidgets module built above, so this module needs neither build-time network access nor the CMake enabler's FetchContent download.",
       "name": "${PROJECT_NAME}",
       "buildsystem": "cmake",
       "config-opts": ["-DCMAKE_BUILD_TYPE=Release"],
-      "build-options": {
-        "build-args": [ "--share=network" ]
-      },
       "sources": [
         {
           "type": "dir",

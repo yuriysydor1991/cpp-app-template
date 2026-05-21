@@ -2,6 +2,7 @@
 #include <gtest/gtest.h>
 
 #include "src/app/ApplicationFactory.h"
+#include "src/cocoa/CocoaIniter.h"
 
 using namespace app;
 using namespace testing;

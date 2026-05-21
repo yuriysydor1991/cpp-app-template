@@ -9,6 +9,19 @@ add_executable(
   main.cpp
 )
 
+# On macOS the executable is produced as a .app bundle so it behaves as a proper
+# Cocoa GUI application and can be packaged as a .dmg / .pkg.
+if(APPLE)
+  set_target_properties(
+    ${PROJECT_BINARY_NAME} PROPERTIES
+    MACOSX_BUNDLE TRUE
+    MACOSX_BUNDLE_BUNDLE_NAME "${PROJECT_NAME}"
+    MACOSX_BUNDLE_GUI_IDENTIFIER "ua.org.kytok.template.${PROJECT_BINARY_NAME_lower}"
+    MACOSX_BUNDLE_BUNDLE_VERSION "${PROJECT_VERSION}"
+    MACOSX_BUNDLE_SHORT_VERSION_STRING "${PROJECT_VERSION}"
+  )
+endif()
+
 target_include_directories(
   ${PROJECT_BINARY_NAME}
   PRIVATE ${CMAKE_SOURCE_DIR}
@@ -19,6 +32,7 @@ target_include_directories(
 install(
   TARGETS ${PROJECT_BINARY_NAME}
   RUNTIME DESTINATION ${PROJECT_BINARY_INSTALLATION_DIR}
+  BUNDLE DESTINATION ${PROJECT_BINARY_INSTALLATION_DIR}
 )
 
 configure_file(
@@ -28,3 +42,4 @@ configure_file(
 
 add_subdirectory(app)
 add_subdirectory(log)
+add_subdirectory(cocoa)

@@ -7,21 +7,15 @@ include(template-project-enabler-function)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/compile-options")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/compile-options/sanitizers")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/enablers")
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/enablers/profilers")
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/enablers/dockerers")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/enablers/packagers")
 
 include(template-project-GTest-enabler)
 include(template-project-clang-format-target)
-include(template-project-valgrind-target)
+include(template-project-Cocoa-enabler)
 
-# packagers
-include(template-project-deb-enabler)
-include(template-project-flatpak-target)
-include(template-project-snap-enabler)
-include(template-project-freebsd-pkg-enabler)
-include(template-project-wix-enabler)
-include(template-project-rpm-enabler)
+# packagers (macOS .app bundle as a .dmg and a .pkg via CPack; the GNU/Linux
+# and the Windows packagers were dropped for this macOS-only Cocoa branch)
+include(template-project-macos-package-enabler)
 
 # compile options
 include(template-project-sanitizers)
@@ -29,7 +23,3 @@ include(template-project-sanitizers)
 # analyzers
 include(template-project-cppcheck-target)
 include(template-project-clang-tidy-target)
-
-# profilers
-include(template-project-profiler-gprof)
-include(template-project-profiler-valgrind-callgrind)

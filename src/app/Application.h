@@ -5,6 +5,7 @@
 
 #include "src/app/ApplicationContext.h"
 #include "src/app/IApplication.h"
+#include "src/cocoa/CocoaIniter.h"
 
 namespace app
 {
@@ -28,6 +29,9 @@ class Application : public IApplication
    * and other value otherwise.
    */
   virtual int run(std::shared_ptr<ApplicationContext> ctx) override;
+
+ protected:
+  virtual std::shared_ptr<cocoa::CocoaIniter> create_cocoa_initer();
 };
 
 }  // namespace app

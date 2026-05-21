@@ -1,0 +1,97 @@
+# GitHub Actions pipeline analogous to misc/Jenkinsfile.
+#
+# It mirrors the Jenkins stages on an Ubuntu runner: a clang-format check, a
+# Debug build with sanitizers running the unit and component tests (with an
+# optional cppcheck pass), a clang-tidy build, and a Release build + install.
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      run_cppcheck:
+        description: 'Run the cppcheck static code check?'
+        type: boolean
+        default: false
+
+# Cancel superseded runs for the same ref.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  BUILDDIR: build
+  BDJUNITOUT: junit-out
+
+jobs:
+  code-format:
+    name: Code format (clang-format)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install tools
+        run: sudo apt-get update && sudo apt-get install -y build-essential cmake g++ clang-format
+      - name: Code format configure
+        run: cmake -S . -B "$BUILDDIR" -DCMAKE_BUILD_TYPE=Debug -DENABLE_CLANGFORMAT=ON
+      - name: Code format build (clang-format)
+        run: cmake --build "$BUILDDIR" --target clang-format
+      - name: Verify the sources are clang-format clean
+        run: git diff --exit-code
+
+  build-and-test:
+    name: Debug build & tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install tools
+        run: sudo apt-get update && sudo apt-get install -y build-essential cmake g++ cppcheck libgtest-dev libgmock-dev
+      - name: Debug configure
+        run: |
+          cmake -S . -B "$BUILDDIR" -DCMAKE_BUILD_TYPE=Debug -DENABLE_UNIT_TESTS=ON \
+            -DENABLE_SANITIZERS=ON -DENABLE_CPPCHECK=ON \
+            -DMAX_LOG_LEVEL=5 -DENABLE_COMPONENT_TESTS=ON
+      - name: Debug build
+        run: cmake --build "$BUILDDIR" -j"$(nproc)"
+      - name: cppcheck
+        if: ${{ inputs.run_cppcheck }}
+        run: cmake --build "$BUILDDIR" -j"$(nproc)" --target cppcheck
+      - name: Unit Tests
+        run: |
+          mkdir -p "$BUILDDIR/$BDJUNITOUT"
+          cd "$BUILDDIR" && ctest -R "UTEST_" --output-on-failure --output-junit "$BDJUNITOUT/UTEST.junit.xml"
+      - name: Component Tests
+        run: cd "$BUILDDIR" && ctest -R "CTEST_" --output-on-failure --output-junit "$BDJUNITOUT/CTEST.junit.xml"
+      - name: Upload JUnit test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: junit-results
+          path: ${{ env.BUILDDIR }}/${{ env.BDJUNITOUT }}/*.xml
+          if-no-files-found: ignore
+
+  clang-tidy:
+    name: clang-tidy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install tools
+        run: sudo apt-get update && sudo apt-get install -y build-essential cmake g++ clang-tidy
+      - name: Debug configure (clang-tidy)
+        run: cmake -S . -B "$BUILDDIR" -DCMAKE_BUILD_TYPE=Debug -DENABLE_CLANG_TIDY=ON -DMAX_LOG_LEVEL=5
+      - name: Debug build (clang-tidy runs during compilation)
+        run: cmake --build "$BUILDDIR" -j"$(nproc)"
+
+  release:
+    name: Release build & install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install tools
+        run: sudo apt-get update && sudo apt-get install -y build-essential cmake g++
+      - name: Release configure
+        run: cmake -S . -B "$BUILDDIR" -DCMAKE_BUILD_TYPE=Release
+      - name: Release build
+        run: cmake --build "$BUILDDIR" -j"$(nproc)"
+      - name: Release install
+        run: cmake --install "$BUILDDIR" --prefix "$BUILDDIR/install-try"

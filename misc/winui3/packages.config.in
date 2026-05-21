@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  NuGet packages restored by cmake/enablers/template-project-WinUI3-enabler.cmake
+  on Windows. Versions are taken from the TEMPLATE_APP_WINAPPSDK_VERSION /
+  TEMPLATE_APP_CPPWINRT_VERSION CMake cache variables.
+-->
+<packages>
+  <package id="Microsoft.WindowsAppSDK" version="@TEMPLATE_APP_WINAPPSDK_VERSION@" targetFramework="native" />
+  <package id="Microsoft.Windows.CppWinRT" version="@TEMPLATE_APP_CPPWINRT_VERSION@" targetFramework="native" />
+</packages>

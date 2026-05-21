@@ -10,6 +10,11 @@ set(
 string(TOLOWER ${PROJECT_BINARY_NAME} PROJECT_BINARY_NAME_lower)
 
 set(
+  WINUI3_OBJECT_NAME "${PROJECT_NAME}WinUI3Obj"
+  CACHE STRING "Project WinUI 3 orchestration obj library name and target"
+)
+
+set(
   PROJECT_MAINTAINER "Your Name"
   CACHE STRING "Project maintainer name (used for the DEB package)"
 )

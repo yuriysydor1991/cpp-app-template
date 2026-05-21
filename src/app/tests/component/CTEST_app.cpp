@@ -2,6 +2,7 @@
 #include <gtest/gtest.h>
 
 #include "src/app/ApplicationFactory.h"
+#include "src/winui3/WinUI3Initer.h"
 
 using namespace app;
 using namespace testing;

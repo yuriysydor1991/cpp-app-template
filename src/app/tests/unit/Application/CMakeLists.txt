@@ -10,6 +10,7 @@ add_executable(
 target_include_directories(
   UTEST_Application
   PRIVATE ${APP_MOCKS_ROOT}/ApplicationContext
+  PRIVATE ${APP_MOCKS_ROOT}/WinUI3Initer
   PRIVATE ${APP_MOCKS_ROOT}/project-global-decls
   PRIVATE ${APP_MOCKS_ROOT}/log
   PRIVATE ${CMAKE_SOURCE_DIR}

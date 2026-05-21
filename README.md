@@ -23,7 +23,7 @@ Examine available branches to find your most applicable variant of the template 
 ## Basic application infrastructure
 
 - `main` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template)] just the clear `main` function and all available CMake integrations with no additional app infrastructure classes.
-- `app` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/app), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/app)] (**current**) with just general application related classes to generate a single binary executable.
+- `app` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/app), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/app)] with just general application related classes to generate a single binary executable.
 - `applib` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/applib), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/applib)] for the application binary with additional separate library binary and header files (available for the installation) in order to provide library's code reusability across multiple applications.
 - `lib` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/lib), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/lib)] for the library with the headers include files (and documentation) without target binary.
 - `appMeson` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appMeson), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appMeson)] with just general application related classes to generate a single binary executable with the [Meson](https://mesonbuild.com/) build system.
@@ -40,6 +40,7 @@ Examine available branches to find your most applicable variant of the template 
 - `appGtkmm3` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appGtkmm3), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appGtkmm3)] for the application general classes with additional defined structure for the [Gtkmm](https://gtkmm.gnome.org/en/index.html)-3.0 with C++ window application development.
 - `appGtkmm3Glade` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appGtkmm3Glade), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appGtkmm3Glade)] for the application general classes with additional defined structure for the C++ application development with [Gtkmm](https://gtkmm.gnome.org/en/index.html)-3.0 and [Glade](https://en.wikipedia.org/wiki/Glade_Interface_Designer) application with XML UI creation.
 - `appGtkmm4` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appGtkmm4), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appGtkmm4)] for the application general classes with additional defined structure for the [Gtkmm-4](https://gtkmm.gnome.org/en/index.html) with C++ window application development.
+- `appWinUI3` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appWinUI3), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appWinUI3)] (**current**) for the application general classes with additional defined structure for the [Microsoft WinUI 3](https://learn.microsoft.com/windows/apps/winui/winui3/) + [C++/WinRT](https://learn.microsoft.com/windows/uwp/cpp-and-winrt-apis/) Microsoft Windows desktop application development. This is a **Windows-only** branch: the GNU/Linux packagers (flatpak, snap, deb, rpm, FreeBSD pkg), the Docker integration and the Valgrind/gprof profilers were removed, the WIX (MSI) packager is kept, and the Jenkins pipeline targets a Windows agent. The platform-independent core still builds and is unit/component tested on any platform.
 
 ## 3D / OpenGL
 
@@ -86,13 +87,10 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
     1. [Optional for the code formatting](/doc/sections/en_US/3-5-optional-for-the-code-formatting.md)
     1. [Optional for the code analyzer (cppcheck)](/doc/sections/en_US/3-6-optional-for-the-code-analyzer-cppcheck.md)
     1. [Optional for the code analyzer with clang-tidy](/doc/sections/en_US/3-7-optional-for-the-code-analyzer-with-clang-tidy.md)
-    1. [Optional for the memory check with Valgrind](/doc/sections/en_US/3-8-optional-for-the-memory-checkwith-Valgrind.md)
-    1. [Optional for the flatpak packager](/doc/sections/en_US/3-9-optional-for-the-flatpak-packager.md)
-    1. [Optional for the Docker container runs](/doc/sections/en_US/3-10-optional-for-docker-container-runs.md)
-    1. [Optional for the snap packager](/doc/sections/en_US/3-11-optional-for-snap-packager.md)
 1. [Project structure](/doc/sections/en_US/4-project-structure.md)
     1. [Project diagrams](/doc/sections/en_US/4-0-project-diagrams.md)
     1. [Implement code straight away!](/doc/sections/en_US/4-1-implement-code-straight-away.md)
+    1. [WinUI 3 + C++/WinRT integration](/doc/sections/en_US/4-8-winui3-cppwinrt-integration.md)
     1. [Changing the project and executable name](/doc/sections/en_US/4-2-changing-the-project-and-executable-name.md)
     1. [Introducing custom command line parameters](/doc/sections/en_US/4-6-introduction-of-the-custom-command-line-parameters.md)
     1. [Implement your own IApplication descendants](/doc/sections/en_US/4-7-implementing-your-onw-IApplication-descendants.md)
@@ -112,20 +110,10 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
     1. [Enabling and performing code formatting target](/doc/sections/en_US/5-6-enabling-and-performing-code-formatting-target.md)
     1. [Enabling the static code analyzer target with cppcheck](/doc/sections/en_US/5-7-enabling-the-static-code-analyzer-target-with-cppcheck.md)
     1. [Enabling the static code analyzer with clang-tidy](/doc/sections/en_US/5-8-enabling-static-code-analyzer-with-clang-tidy.md)
-    1. [Enabling the dynamic memory check target with valgrind](/doc/sections/en_US/5-9-enabling-the-dynamic-memory-check-target-with-valgrind.md)
-    1. [Enabling DEB package generation with cpack](/doc/sections/en_US/5-10-enabling-DEB-package-generation-with-cpack.md)
-    1. [Enabling the flatpak package generation support](/doc/sections/en_US/5-11-enabling-the-flatpak-package-generation-support.md)
-    1. [Enabling the Docker container build and run](/doc/sections/en_US/5-12-enabling-the-docker-container-build-and-run.md)
     1. [Enabling sanitizers](/doc/sections/en_US/5-13-enabling-sanitizers.md)
     1. [Enabling the libcurl](/doc/sections/en_US/5-14-enabling-libcurl.md)
-    1. [Enabling gprof profiler analysis](/doc/sections/en_US/5-15-enabling-gprof-profiler-analysis.md)
-    1. [Enabling vagrind's callgrind profiler analysis](/doc/sections/en_US/5-16-enabling-valgrinds-callgrind-profiler-analysis.md)
-    1. [Enabling Jenkins pipeline inside Docker container](/doc/sections/en_US/5-17-enabling-Jenkins-pipeline-inside-Docker-container.md)
     1. [Enabling the nlohmann json library](/doc/sections/en_US/5-18-enabling-the-nlohmann-json-library.md)
-    1. [Enabling the snap packager](/doc/sections/en_US/5-19-enabling-the-snap-package-manager.md)
-    1. [Enabling FreeBSD pkg package generation with cpack](/doc/sections/en_US/5-20-enabling-FreeBSD-pkg-package-generation-with-cpack.md)
     1. [Enabling WIX MSI package generation with cpack](/doc/sections/en_US/5-21-enabling-WIX-MSI-package-generation-with-cpack.md)
-    1. [Enabling RPM package generation with cpack](/doc/sections/en_US/5-22-enabling-RPM-package-generation-with-cpack.md)
 1. [Run the executable](/doc/sections/en_US/6-run-the-executable.md)
     1. [IDE run](/doc/sections/en_US/6-1-IDE-run.md)
     1. Command line run

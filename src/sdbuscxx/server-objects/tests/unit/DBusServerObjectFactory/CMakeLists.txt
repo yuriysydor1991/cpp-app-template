@@ -1,21 +1,21 @@
 cmake_minimum_required(VERSION 3.13)
 
 add_executable(
-  CTEST_Hostname1QueryHandler
-  CTEST_Hostname1QueryHandler.cpp
-  ${CMAKE_SOURCE_DIR}/src/sdbuscxx/query-handlers/Hostname1QueryHandler.cpp
-  ${CMAKE_SOURCE_DIR}/src/sdbuscxx/query-handlers/DBusQueryHandlerFactory.cpp
+  UTEST_DBusServerObjectFactory
+  UTEST_DBusServerObjectFactory.cpp
+  ${CMAKE_SOURCE_DIR}/src/sdbuscxx/server-objects/DBusServerObjectFactory.cpp
+  ${CMAKE_SOURCE_DIR}/src/sdbuscxx/server-objects/CurrentDateServerObject.cpp
 )
 
 target_include_directories(
-  CTEST_Hostname1QueryHandler
+  UTEST_DBusServerObjectFactory
   PRIVATE ${SDBUSCXX_MOCKS_ROOT}/log
   PRIVATE ${CMAKE_SOURCE_DIR}
   PRIVATE ${CMAKE_BINARY_DIR}
 )
 
 target_link_libraries(
-  CTEST_Hostname1QueryHandler
+  UTEST_DBusServerObjectFactory
   GTest::gtest_main GTest::gmock
 )
 
@@ -25,7 +25,7 @@ target_link_libraries(
 include(GoogleTest)
 
 gtest_add_tests(
-  TARGET CTEST_Hostname1QueryHandler
+  TARGET UTEST_DBusServerObjectFactory
   TEST_SUFFIX .noArgs
   TEST_LIST noArgsTests
 )

@@ -1,14 +1,14 @@
 #include "SDBusCxxController.h"
 
 #include <cassert>
-#include <memory>
 #include <exception>
+#include <memory>
 
 #include <sdbus-c++/sdbus-c++.h>
 
 #include "src/log/log.h"
-#include "src/sdbuscxx/query-handlers/DBusQueryHandlerFactory.h"
-#include "src/sdbuscxx/query-handlers/IDBusQueryHandler.h"
+#include "src/sdbuscxx/server-objects/DBusServerObjectFactory.h"
+#include "src/sdbuscxx/server-objects/IDBusServerObject.h"
 
 namespace sdbuscxxi
 {
@@ -18,8 +18,8 @@ bool SDBusCxxController::run(std::shared_ptr<app::ApplicationContext> ctx)
   assert(ctx != nullptr);
 
   if (ctx == nullptr) {
-      LOGE("No valid context pointer provided");
-      return false;
+    LOGE("No valid context pointer provided");
+    return false;
   }
 
   appctx = ctx;
@@ -29,9 +29,9 @@ bool SDBusCxxController::run(std::shared_ptr<app::ApplicationContext> ctx)
     return false;
   }
 
-  if (!make_example_demo_call()) {
-      LOGE("Demo DBus call failure");
-      return false;
+  if (!serve()) {
+    LOGE("DBus server failure");
+    return false;
   }
 
   return true;
@@ -40,9 +40,10 @@ bool SDBusCxxController::run(std::shared_ptr<app::ApplicationContext> ctx)
 bool SDBusCxxController::init()
 {
   try {
-    // Connect to the system bus (hostname1 and other well-known
-    // system services are only exposed on the system bus)
-    conn = sdbus::createSystemBusConnection();
+    // Connect to the session bus: this simple server owns its own well known
+    // name, and requesting a name on the session bus needs no extra policy
+    // (unlike the system bus, which requires a /etc/dbus-1/system.d rule).
+    conn = sdbus::createSessionBusConnection();
   } catch (const std::exception& e) {
     LOGE("Exception during the connection object creation: " << e.what());
     return false;
@@ -65,7 +66,7 @@ bool SDBusCxxController::inited()
   return conn != nullptr;
 }
 
-bool SDBusCxxController::make_example_demo_call()
+bool SDBusCxxController::serve()
 {
   assert(conn != nullptr);
 
@@ -74,30 +75,49 @@ bool SDBusCxxController::make_example_demo_call()
     return false;
   }
 
-  DBusQueryHandlerFactory factory;
+  DBusServerObjectFactory factory;
 
-  IDBusQueryHandlerPtr handler = factory.create_default_handler();
+  serverObject = factory.create_default_object();
 
-  assert(handler != nullptr);
+  assert(serverObject != nullptr);
 
-  if (handler == nullptr) {
-    LOGE("Fail to create a DBus query handler");
+  if (serverObject == nullptr) {
+    LOGE("Fail to create a DBus server object");
     return false;
   }
 
-  return handler->handle(conn.get());
+  try {
+    // Create the object at its path, register its interface vtable, then claim
+    // the well known name and start serving requests.
+    object = sdbus::createObject(*conn, serverObject->object_path());
+
+    serverObject->register_on(*object);
+
+    conn->requestName(serverObject->service_name());
+
+    LOGI("DBus server is running on the session bus. Service: "
+         << serverObject->service_name()
+         << ", object: " << serverObject->object_path());
+
+    conn->enterEventLoop();
+  } catch (const sdbus::Error& e) {
+    LOGE("DBus error: [" << e.getName() << "] " << e.getMessage());
+    return false;
+  }
+
+  return true;
 }
 
 SDBusCxxControllerPtr SDBusCxxController::create()
 {
-    SDBusCxxControllerPtr ptr = std::make_shared<SDBusCxxController>();
+  SDBusCxxControllerPtr ptr = std::make_shared<SDBusCxxController>();
 
-    if (!ptr->init()) {
-      LOGE("Fail to init the newly created controller");
-      return {};
-    }
+  if (!ptr->init()) {
+    LOGE("Fail to init the newly created controller");
+    return {};
+  }
 
-    return ptr;
+  return ptr;
 }
 
 }  // namespace sdbuscxxi

@@ -4,4 +4,4 @@ if(NOT ENABLE_COMPONENT_TESTS)
   return()
 endif()
 
-add_subdirectory(Hostname1QueryHandler)
+add_subdirectory(CurrentDateServerObject)

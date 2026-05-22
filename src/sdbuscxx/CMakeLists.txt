@@ -17,4 +17,4 @@ target_link_libraries(
   TemplateProjectSDBusCxxControllerObj
 )
 
-add_subdirectory(query-handlers)
+add_subdirectory(server-objects)

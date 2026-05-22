@@ -7,5 +7,5 @@ endif()
 # disabling the asserts for the tests
 add_compile_options(-DNDEBUG=1)
 
-add_subdirectory(Hostname1QueryHandler)
-add_subdirectory(DBusQueryHandlerFactory)
+add_subdirectory(CurrentDateServerObject)
+add_subdirectory(DBusServerObjectFactory)

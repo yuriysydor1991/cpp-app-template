@@ -60,18 +60,18 @@ target_link_libraries(
 )
 
 target_link_libraries(
-  TemplateProjectDBusQueryHandlersObj
+  TemplateProjectDBusServerObjectsObj
   ${SDBUSCPP_LINK_TARGET}
 )
 
-# The test executables compile the query handler sources directly and therefore
+# The test executables compile the server object sources directly and therefore
 # need the sdbus-c++ usage requirements (headers + link) too. They are declared
 # while processing the src/ tree (before this enabler runs in the post step) and
 # only exist when unit/component testing is enabled, hence the per-target guard.
 foreach(sdbuscxx_test_target
-        UTEST_Hostname1QueryHandler
-        UTEST_DBusQueryHandlerFactory
-        CTEST_Hostname1QueryHandler)
+        UTEST_CurrentDateServerObject
+        UTEST_DBusServerObjectFactory
+        CTEST_CurrentDateServerObject)
   if (TARGET ${sdbuscxx_test_target})
     target_link_libraries(${sdbuscxx_test_target} ${SDBUSCPP_LINK_TARGET})
   endif()

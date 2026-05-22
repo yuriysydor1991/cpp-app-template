@@ -20,7 +20,7 @@ pipeline {
       }
       
       steps {
-        git branch: 'app',
+        git branch: 'appSDBusCxxServer',
             url: 'https://github.com/yuriysydor1991/cpp-app-template.git'
       }
     }
@@ -113,14 +113,14 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "UTEST_CommandLineParser\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_CommandLineParser.junit.xml'
           }
         }
-        stage('UTEST_Hostname1QueryHandler') {
+        stage('UTEST_CurrentDateServerObject') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_Hostname1QueryHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_Hostname1QueryHandler.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_CurrentDateServerObject\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_CurrentDateServerObject.junit.xml'
           }
         }
-        stage('UTEST_DBusQueryHandlerFactory') {
+        stage('UTEST_DBusServerObjectFactory') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_DBusQueryHandlerFactory\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_DBusQueryHandlerFactory.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_DBusServerObjectFactory\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_DBusServerObjectFactory.junit.xml'
           }
         }
       }
@@ -139,9 +139,9 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "CTEST_app\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_app.junit.xml'
           }
         }
-        stage('CTEST_Hostname1QueryHandler') {
+        stage('CTEST_CurrentDateServerObject') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_Hostname1QueryHandler\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_Hostname1QueryHandler.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_CurrentDateServerObject\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_CurrentDateServerObject.junit.xml'
           }
         }
       }

@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 3.13)
 
 add_library(
-  TemplateProjectDBusQueryHandlersObj OBJECT
-  Hostname1QueryHandler.cpp
-  DBusQueryHandlerFactory.cpp
+  TemplateProjectDBusServerObjectsObj OBJECT
+  CurrentDateServerObject.cpp
+  DBusServerObjectFactory.cpp
 )
 
 target_include_directories(
-  TemplateProjectDBusQueryHandlersObj
+  TemplateProjectDBusServerObjectsObj
   PRIVATE
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
@@ -15,7 +15,7 @@ target_include_directories(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  TemplateProjectDBusQueryHandlersObj
+  TemplateProjectDBusServerObjectsObj
 )
 
 add_subdirectory(tests)

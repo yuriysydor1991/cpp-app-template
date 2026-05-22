@@ -16,3 +16,5 @@ CMakeSettings.json
 *.log
 gmon.out
 analysis.txt
+
+.claude/*

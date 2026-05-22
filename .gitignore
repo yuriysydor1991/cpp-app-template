@@ -13,3 +13,10 @@ doc/*-html/*
 out/*
 CMakeSettings.json
 *.log
+<<<<<<< HEAD
+=======
+gmon.out
+analysis.txt
+
+.claude/*
+>>>>>>> 15cc922 (Adding .claude dir to .gitignore)

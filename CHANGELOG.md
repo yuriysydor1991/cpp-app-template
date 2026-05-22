@@ -5,8 +5,64 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+## [main0.12.0] - 2026-05-22
+
+- 15cc922 Adding .claude dir to .gitignore
+- 4377d2d Introducing project structure section subsection
+- 022d75c Introducing the libMeson branch info into the READMEs
+- 89c0619 Introducing info about newly created branch appOpenCV into READMEs with it's cmake enabler.
+- 061b257 Introducing the CPack's RPM package generator integration
+- b1b87bb Introducing the MS Windows WIX package generation through CPack integration
+- 0df039a Introducing the project's FreeBSD pkg package generation support through CPack. Works only on FreeBSD.
+- de79c7a Deleting REQUIRED marking from the snapcraft's find_program
+- 84840c6 By default disabling the snap package manager
+- a0019f4 Refining the READMEs issues
+- 5aab638 Introducing the snap documentation in the READMEs
+- 82a4d4c Introducing the snap packager integration
+- 4d648de Introducing and migrating to the template_project_default_3rdparty_enabler cmake function. Making enablers git sources variables modifiable.
+- 299ce6d Moving all CMake variables declarations into their respectful enablers.
+- 77ae259 Moving Doxygen related CMake variables into doc/CMakeLists.txt file
+- aa8c5d5 Introducing the libxml2 enabler cmake module
+- ae3fa3a Enhancing the cmake files fs structure
+- ad9948f Making docker base image configurable through CMake variables
+- 6aa34a7 Introducing the appPLplot branch info into the READMEs
+- 065491f Introducing the MatPlot++ appMatPlotxx branch into the READMEs
+- d63ca6c Making the cppcheck stage optional due to unstable results
+- 2cda7cf Fixing clang-tidy conf misspell
+- 286cd82 Switching off the clang-tydy's unrecognizable AnalyzeTemporaryDtors config param
+- bfdb643 Supressing the cppcheck's missingIncludeSystem and unusedStructMember warnings.
+- 5c318cd Fixing the main Jenkinsfile pipeline script.
+- 9eb25b9 Loggging README's misspell refine
+- 399a644 Missing newlines in the READMEs
+- ae6b6b9 Grouping and categorising available template flavors links in the READMEs
+- 79920a1 Renaming properly Nlohmann JSON library CMake enabler file
+- 57ab382 Introducing the forgottent Nlohmann JSON library enabler info into the READMEs
+- 898f8cb Fixing 'command line build' links
+- cd7d51b Additional READMEs split refinements. Adding new sub sections for the "project structure".
+- b78814f Splitting main READMEs files into separate sub sections files under the /doc/sections/[locale] Since people are afraid of the large documents.
+- 47f4d94 Introducing the ENABLE_LOGS_MICROSECONDS_TIME CMake option in order to be able to disable microseconds in the log messages.
+- 70aeb0b Introducing explicit template altering notice in the READMEs headers
+- 289605e Optimizing some CMake commands in the README.md
+- 9bede14 Introducing the appGtkmm4 branch info into the READMEs
+- 2ce3c54 Enabling GTest during for CTs
+- f6b0242 Pointing Jenkins configurable port into standart in-container 8080
+- 6b76c98 Making the Jenkins pipeline container and image names configurable
+- 0590f02 Introducing basic SimpleLogger CTs with CMake and Jenkins integration
+- 2a3e69a Adding CTs CMake flag to a Jenkins pipeline debug build
+- d171624 Introducing basic SimpleLogger CTs with CMake and Jenkins integration
+- a12f160 Introducing the SimpleLogger CTs samples
+- 0c25987 Refining the branches link in the READMEs, introducing gitlab links also
+- 94cf40b Fixing another link type in the README.md
+- 1d90533 Fixing link typo inside READMEs
+- 7f7f230 Specifying the Jenkins container run target in the READMEs
+- ba50a1d Erasing UTs Jenkins stage due to absens of UTs
+- 9995775 Introducing basic Jenkins pipeline CMake target and Jenkinsfile conf
+- ac33438 Incrementing version to 0.12.0
+
 ## [main0.11.0] - 2025-09-08
 
+- 06edab4 Release main0.11.0 at 2025-09-08
 - ff7a28a Fixing typo in the README.md
 - 5851c08 Introducing the valgrind callgrind profiler target for the project
 - 0a57308 Introducing the gprof profiling target
@@ -251,6 +307,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[main0.12.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/main0.12.0)
 [main0.11.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/main0.11.0)
 [main0.10.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/main0.10.0)
 [main0.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/main0.9.0)

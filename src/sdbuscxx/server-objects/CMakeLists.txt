@@ -14,6 +14,11 @@ target_include_directories(
 )
 
 target_link_libraries(
+  TemplateProjectDBusServerObjectsObj
+  ${SDBUSCPP_LINK_TARGET}
+)
+
+target_link_libraries(
   ${PROJECT_BINARY_NAME}
   TemplateProjectDBusServerObjectsObj
 )

@@ -16,7 +16,7 @@
 #endif  // LOG_INIT
 
 #ifndef LOG_INIT_PATH
-#define LOG_INIT_PATH(filepath) default_logger::SimpleLogger::init(filepath);
+#define LOG_INIT_PATH(filepath) default_logger::DefaultLogger::init(filepath);
 #endif  // LOG_INIT_PATH
 
 #ifndef LOG_INIT_DEFAULTS

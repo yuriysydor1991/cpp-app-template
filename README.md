@@ -23,7 +23,7 @@ Examine available branches to find your most applicable variant of the template 
 ## Basic application infrastructure
 
 - `main` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template)] just the clear `main` function and all available CMake integrations with no additional app infrastructure classes.
-- `app` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/app), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/app)] (**current**) with just general application related classes to generate a single binary executable.
+- `app` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/app), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/app)] with just general application related classes to generate a single binary executable.
 - `applib` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/applib), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/applib)] for the application binary with additional separate library binary and header files (available for the installation) in order to provide library's code reusability across multiple applications.
 - `lib` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/lib), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/lib)] for the library with the headers include files (and documentation) without target binary.
 - `appMeson` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appMeson), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appMeson)] with just general application related classes to generate a single binary executable with the [Meson](https://mesonbuild.com/) build system.
@@ -71,7 +71,7 @@ Examine available branches to find your most applicable variant of the template 
 ## System / DBus
 
 - `appSDBusCxxClient` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSDBusCxxClient), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSDBusCxxClient)] with just general application related classes to generate a single binary executable with the usage of [Kistler-Group's sdbus-c++](https://github.com/Kistler-Group/sdbus-cpp.git) library as a [DBus](https://en.wikipedia.org/wiki/D-Bus) services client.
-- `appSDBusCxxServer` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSDBusCxxServer), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSDBusCxxServer)] with just general application related classes to generate a single binary executable with the usage of [Kistler-Group's sdbus-c++](https://github.com/Kistler-Group/sdbus-cpp.git) library as a server on the [DBus](https://en.wikipedia.org/wiki/D-Bus).
+- `appSDBusCxxServer` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSDBusCxxServer), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSDBusCxxServer)] (**current**) with just general application related classes to generate a single binary executable with the usage of [Kistler-Group's sdbus-c++](https://github.com/Kistler-Group/sdbus-cpp.git) library as a server on the [DBus](https://en.wikipedia.org/wiki/D-Bus).
 
 
 Alter current `README.md` and a `CHANGELOG.md` files to match your implementation introduced into the destination new project. Examine the `doc` directory for possible translations of a current md document:

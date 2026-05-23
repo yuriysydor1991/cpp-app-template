@@ -129,9 +129,14 @@ pipeline {
     
     stage('Component Tests') {
       parallel {
-        stage('CTEST_SimpleLogger') { 
-          steps { 
-            sh 'cd $BUILDDIR && ctest -R "CTEST_SimpleLogger\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_SimpleLogger.junit.xml'
+        stage('CTEST_DefaultLogger') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "CTEST_DefaultLogger\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_DefaultLogger.junit.xml'
+          }
+        }
+        stage('CTEST_log') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "CTEST_log\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_log.junit.xml'
           }
         }
         stage('CTEST_app') { 

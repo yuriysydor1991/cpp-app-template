@@ -103,10 +103,7 @@
     1. [Зміна назви проекту і головного виконуваного файлу](/doc/sections/uk_UA/4-2-changing-the-project-and-executable-name.md)
     1. [Впровадження нових параметрів командного рядка](/doc/sections/uk_UA/4-6-introduction-of-the-custom-command-line-parameters.md)
     1. [Реалізація власних нащадків IApplication](/doc/sections/uk_UA/4-7-implementing-your-onw-IApplication-descendants.md)
-<<<<<<< HEAD
     1. [Реалізація власних нащадків ILib](/doc/sections/uk_UA/4-8-implement-your-own-ILib-descendants.md)
-=======
->>>>>>> 860c012 (Removing unmerged lines in the doc/README.uk_UA.md)
     1. [Версіювання і інші параметри проекту](/doc/sections/uk_UA/4-3-version-tracking-and-other-project-parameters.md)
     1. [Мінімально можливі версії](/doc/sections/uk_UA/4-6-minimal-possible-versions.md)
     1. [Тести проекту](/doc/sections/uk_UA/4-4-project-tests.md)

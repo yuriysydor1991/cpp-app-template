@@ -27,6 +27,7 @@ target_include_directories(
   CTEST_beasthttp
   PRIVATE
     ${GLOBAL_MOCKS_ROOT}/ApplicationContext
+    ${GLOBAL_MOCKS_ROOT}/log
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
 )
@@ -35,7 +36,6 @@ target_link_libraries(
   CTEST_beasthttp
   GTest::gtest_main GTest::gmock
   Boost::system Boost::thread
-  TemplateProjectSimpleLoggerObj
 )
 
 include(GoogleTest)

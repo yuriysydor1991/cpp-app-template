@@ -8,9 +8,7 @@ pipeline {
 
   parameters {
     booleanParam(name: 'RUN_CPPCHECK', defaultValue: false, description: 'Run the cppcheck static code check?')
-<<<<<<< HEAD
     booleanParam(name: 'RUN_CLANGTIDY', defaultValue: false, description: 'Run the clang-tidy static code check?')
-=======
     // Template project specific: optional packager checks, all disabled by
     // default and opt-in (e.g. WIX is MS Windows only, FreeBSD pkg is FreeBSD
     // only). Safe to drop together with the template stages below.
@@ -20,7 +18,6 @@ pipeline {
     booleanParam(name: 'RUN_SNAP_PACKAGER', defaultValue: false, description: 'Template: build and check the snap package?')
     booleanParam(name: 'RUN_FREEBSD_PACKAGER', defaultValue: false, description: 'Template: build and check the FreeBSD pkg package? (FreeBSD only)')
     booleanParam(name: 'RUN_WIX_PACKAGER', defaultValue: false, description: 'Template: build and check the WIX MSI package? (MS Windows only)')
->>>>>>> a2e93cb (Add template-specific packager, documentation and registration checks)
   }
 
   stages {

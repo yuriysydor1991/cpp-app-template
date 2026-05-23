@@ -6,6 +6,21 @@
   "command": "${PROJECT_BINARY_NAME}",
   "modules": [
     {
+      "name": "sdbus-c++",
+      "buildsystem": "cmake-ninja",
+      "config-opts": [
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DSDBUSCPP_BUILD_DOCS=OFF"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/Kistler-Group/sdbus-cpp.git",
+          "tag": "v2.1.0"
+        }
+      ]
+    },
+    {
       "name": "${PROJECT_NAME}",
       "buildsystem": "cmake",
       "config-opts": ["-DCMAKE_BUILD_TYPE=Release"],

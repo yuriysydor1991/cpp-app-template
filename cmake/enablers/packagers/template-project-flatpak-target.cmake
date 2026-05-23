@@ -19,7 +19,7 @@ set(FLATPAK_DST_NAME ${PROJECT_BINARY_NAME}-${CMAKE_PROJECT_VERSION}.flatpak)
 set(flatpakConfDst ${CMAKE_BINARY_DIR}/flatpak.conf.json)
 set(
   FLATPAK_CONF_SRC 
-  ${CMAKE_SOURCE_DIR}/misc/flatpak.conf.json.in 
+  ${CMAKE_SOURCE_DIR}/misc/packagers/flatpak.conf.json.in 
   CACHE STRING "The flatpak json conf source file cmake configured"
 )
 

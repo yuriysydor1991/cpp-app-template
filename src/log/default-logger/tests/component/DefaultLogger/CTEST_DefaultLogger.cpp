@@ -7,30 +7,30 @@
 #include <string>
 #include <thread>
 
-#include "src/log/simple-logger/SimpleLogger.h"
+#include "src/log/default-logger/DefaultLogger.h"
 
 using namespace testing;
-using namespace simple_logger;
+using namespace default_logger;
 
-class CTEST_SimpleLogger : public Test
+class CTEST_DefaultLogger : public Test
 {
  public:
   inline static const std::string test_default_log_file =
-      CTEST_SimpleLogger_DATA_DIR "/CTEST_SimpleLogger.log";
+      CTEST_DefaultLogger_DATA_DIR "/CTEST_DefaultLogger.log";
   inline static const unsigned short& default_log_level =
-      SimpleLogger::LVL_TRACE;
+      DefaultLogger::LVL_TRACE;
 
-  CTEST_SimpleLogger() { clear_default_log_file(); }
-  ~CTEST_SimpleLogger() { clear_default_log_file(); }
+  CTEST_DefaultLogger() { clear_default_log_file(); }
+  ~CTEST_DefaultLogger() { clear_default_log_file(); }
 
   void default_log_lvl_init(const unsigned short& lvl)
   {
-    SimpleLogger::init(test_default_log_file, lvl, true);
+    DefaultLogger::init(test_default_log_file, lvl, true);
   }
 
   void default_log_init(const bool print = true)
   {
-    SimpleLogger::init(test_default_log_file, default_log_level, print);
+    DefaultLogger::init(test_default_log_file, default_log_level, print);
   }
 
   std::string get_default_log_file_contents()
@@ -58,21 +58,21 @@ class CTEST_SimpleLogger : public Test
   }
 
   const std::set<unsigned short> levelsSet{
-      SimpleLogger::LVL_ERROR, SimpleLogger::LVL_WARNING,
-      SimpleLogger::LVL_INFO, SimpleLogger::LVL_DEBUG, SimpleLogger::LVL_TRACE};
+      DefaultLogger::LVL_ERROR, DefaultLogger::LVL_WARNING,
+      DefaultLogger::LVL_INFO, DefaultLogger::LVL_DEBUG, DefaultLogger::LVL_TRACE};
 };
 
-TEST_F(CTEST_SimpleLogger, nonempty_defaultLogDateFormat)
+TEST_F(CTEST_DefaultLogger, nonempty_defaultLogDateFormat)
 {
-  EXPECT_FALSE(std::string{SimpleLogger::defaultLogDateFormat}.empty());
+  EXPECT_FALSE(std::string{DefaultLogger::defaultLogDateFormat}.empty());
 }
 
-TEST_F(CTEST_SimpleLogger, nonempty_default_log_name)
+TEST_F(CTEST_DefaultLogger, nonempty_default_log_name)
 {
-  EXPECT_FALSE(SimpleLogger::default_log_name.empty());
+  EXPECT_FALSE(DefaultLogger::default_log_name.empty());
 }
 
-TEST_F(CTEST_SimpleLogger, no_equal_levels)
+TEST_F(CTEST_DefaultLogger, no_equal_levels)
 {
   EXPECT_GE(levelsSet.size(), 5U);
 
@@ -85,13 +85,13 @@ TEST_F(CTEST_SimpleLogger, no_equal_levels)
   }
 }
 
-TEST_F(CTEST_SimpleLogger, first_error_log)
+TEST_F(CTEST_DefaultLogger, first_error_log)
 {
   static const std::string test_str = "first log test 0123-";
 
   default_log_init();
 
-  SimpleLogger::log(SimpleLogger::LVL_ERROR, test_str);
+  DefaultLogger::log(DefaultLogger::LVL_ERROR, test_str);
 
   const auto logs = get_default_log_file_contents();
 
@@ -100,11 +100,11 @@ TEST_F(CTEST_SimpleLogger, first_error_log)
   EXPECT_THAT(logs, EndsWith(test_str + "\n"));
 }
 
-TEST_F(CTEST_SimpleLogger, trace_with_max_debug_log_absent)
+TEST_F(CTEST_DefaultLogger, trace_with_max_debug_log_absent)
 {
-  default_log_lvl_init(SimpleLogger::LVL_DEBUG);
+  default_log_lvl_init(DefaultLogger::LVL_DEBUG);
 
-  SimpleLogger::log(SimpleLogger::LVL_TRACE, "Expect absent");
+  DefaultLogger::log(DefaultLogger::LVL_TRACE, "Expect absent");
 
   const auto logs = get_default_log_file_contents();
 
@@ -112,11 +112,11 @@ TEST_F(CTEST_SimpleLogger, trace_with_max_debug_log_absent)
   EXPECT_EQ(logs, std::string{});
 }
 
-TEST_F(CTEST_SimpleLogger, debug_with_max_info_log_absent)
+TEST_F(CTEST_DefaultLogger, debug_with_max_info_log_absent)
 {
-  default_log_lvl_init(SimpleLogger::LVL_INFO);
+  default_log_lvl_init(DefaultLogger::LVL_INFO);
 
-  SimpleLogger::log(SimpleLogger::LVL_DEBUG, "Expect absent");
+  DefaultLogger::log(DefaultLogger::LVL_DEBUG, "Expect absent");
 
   const auto logs = get_default_log_file_contents();
 
@@ -124,11 +124,11 @@ TEST_F(CTEST_SimpleLogger, debug_with_max_info_log_absent)
   EXPECT_EQ(logs, std::string{});
 }
 
-TEST_F(CTEST_SimpleLogger, info_with_max_warning_log_absent)
+TEST_F(CTEST_DefaultLogger, info_with_max_warning_log_absent)
 {
-  default_log_lvl_init(SimpleLogger::LVL_WARNING);
+  default_log_lvl_init(DefaultLogger::LVL_WARNING);
 
-  SimpleLogger::log(SimpleLogger::LVL_INFO, "Expect absent");
+  DefaultLogger::log(DefaultLogger::LVL_INFO, "Expect absent");
 
   const auto logs = get_default_log_file_contents();
 
@@ -136,11 +136,11 @@ TEST_F(CTEST_SimpleLogger, info_with_max_warning_log_absent)
   EXPECT_EQ(logs, std::string{});
 }
 
-TEST_F(CTEST_SimpleLogger, warning_with_max_error_log_absent)
+TEST_F(CTEST_DefaultLogger, warning_with_max_error_log_absent)
 {
-  default_log_lvl_init(SimpleLogger::LVL_ERROR);
+  default_log_lvl_init(DefaultLogger::LVL_ERROR);
 
-  SimpleLogger::log(SimpleLogger::LVL_WARNING, "Expect absent");
+  DefaultLogger::log(DefaultLogger::LVL_WARNING, "Expect absent");
 
   const auto logs = get_default_log_file_contents();
 
@@ -148,13 +148,13 @@ TEST_F(CTEST_SimpleLogger, warning_with_max_error_log_absent)
   EXPECT_EQ(logs, std::string{});
 }
 
-TEST_F(CTEST_SimpleLogger, warning_with_max_info_log_present)
+TEST_F(CTEST_DefaultLogger, warning_with_max_info_log_present)
 {
   static const std::string expect = "expect present";
 
-  default_log_lvl_init(SimpleLogger::LVL_INFO);
+  default_log_lvl_init(DefaultLogger::LVL_INFO);
 
-  SimpleLogger::log(SimpleLogger::LVL_WARNING, expect);
+  DefaultLogger::log(DefaultLogger::LVL_WARNING, expect);
 
   const auto logs = get_default_log_file_contents();
 
@@ -162,13 +162,13 @@ TEST_F(CTEST_SimpleLogger, warning_with_max_info_log_present)
   EXPECT_THAT(logs, EndsWith(expect + "\n"));
 }
 
-TEST_F(CTEST_SimpleLogger, error_with_max_warning_log_present)
+TEST_F(CTEST_DefaultLogger, error_with_max_warning_log_present)
 {
   static const std::string expect = "expect present";
 
-  default_log_lvl_init(SimpleLogger::LVL_WARNING);
+  default_log_lvl_init(DefaultLogger::LVL_WARNING);
 
-  SimpleLogger::log(SimpleLogger::LVL_ERROR, expect);
+  DefaultLogger::log(DefaultLogger::LVL_ERROR, expect);
 
   const auto logs = get_default_log_file_contents();
 
@@ -176,7 +176,7 @@ TEST_F(CTEST_SimpleLogger, error_with_max_warning_log_present)
   EXPECT_THAT(logs, EndsWith(expect + "\n"));
 }
 
-TEST_F(CTEST_SimpleLogger, multithread_logs)
+TEST_F(CTEST_DefaultLogger, multithread_logs)
 {
   static constexpr const unsigned int iters_per_thread = 1000U;
 
@@ -186,7 +186,7 @@ TEST_F(CTEST_SimpleLogger, multithread_logs)
 
   const auto concurencyLog = []() {
     for (auto jter = 0U; jter < iters_per_thread; ++jter) {
-      SimpleLogger::log(SimpleLogger::LVL_ERROR,
+      DefaultLogger::log(DefaultLogger::LVL_ERROR,
                         "Concurency thread log msg #" + std::to_string(jter));
     }
   };

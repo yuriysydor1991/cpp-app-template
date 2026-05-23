@@ -123,6 +123,21 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "UTEST_CommandLineParser\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_CommandLineParser.junit.xml'
           }
         }
+        stage('UTEST_EventQuitHandler') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_EventQuitHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_EventQuitHandler.junit.xml'
+          }
+        }
+        stage('UTEST_EventsHandlersFactory') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_EventsHandlersFactory\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_EventsHandlersFactory.junit.xml'
+          }
+        }
+        stage('UTEST_SDLContext') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_SDLContext\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_SDLContext.junit.xml'
+          }
+        }
       }
       post { always { junit "$BUILDDIR/$BDJUNITOUT/UTEST_*.xml" } }
     }
@@ -142,6 +157,11 @@ pipeline {
         stage('CTEST_app') { 
           steps { 
             sh 'cd $BUILDDIR && ctest -R "CTEST_app\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_app.junit.xml'
+          }
+        }
+        stage('CTEST_eventer') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "CTEST_eventer\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_eventer.junit.xml'
           }
         }
       }

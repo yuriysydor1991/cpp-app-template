@@ -64,15 +64,13 @@ target_link_libraries(
   ${SDBUSCPP_LINK_TARGET}
 )
 
-# The test executables compile the server object sources directly and therefore
-# need the sdbus-c++ usage requirements (headers + link) too. They are declared
-# while processing the src/ tree (before this enabler runs in the post step) and
-# only exist when unit/component testing is enabled, hence the per-target guard.
+# Only the component tests exercise a live bus and therefore link the real
+# sdbus-c++. They are declared while processing the src/ tree (before this
+# enabler runs in the post step) and only exist when component testing is
+# enabled, hence the per-target guard. The unit tests instead compile their
+# sources against the header-only sdbus-c++ mock and link no real library.
 foreach(sdbuscxx_test_target
-        UTEST_CurrentDateServerObject
-        UTEST_DBusServerObjectFactory
         CTEST_CurrentDateServerObject
-        UTEST_SDBusCxxController
         CTEST_SDBusCxxController)
   if (TARGET ${sdbuscxx_test_target})
     target_link_libraries(${sdbuscxx_test_target} ${SDBUSCPP_LINK_TARGET})

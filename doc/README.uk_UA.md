@@ -23,7 +23,7 @@
 ## Базова структура програми
 
 - гілка `main` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template)] один файл з функцією `main` і з усіма можливими інтеграціями для генерації одного бінарного виконуваного файлу.
-- гілка `app` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/app), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/app)] (**поточна**) яка містить загальні інфраструктурні класи програми для генераці одинарного бінарного виконуваного файлу.
+- гілка `app` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/app), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/app)] яка містить загальні інфраструктурні класи програми для генераці одинарного бінарного виконуваного файлу.
 - гілка `applib` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/applib), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/applib)] яка складається з класів банарного виконуваного файлу з додатковими інфраструктурними класами для генерації підключаємої бібліотеки і заголовкових файлів (доступні для встановлення), що призначені для поширення коду бібліотеки для повторного перевикористання іншими бінарнами файлами.
 - гілка `lib` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/lib), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/lib)] і яка призначена для предоставляння початкової інфраструктури для реалізації бібліотеки разом з заголовковими підключаємими файлами і документацією за необхідності.
 - гілка `appMeson` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appMeson), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appMeson)] яка містить загальні інфраструктурні класи програми для генераці одинарного бінарного виконуваного файлу разом з системою побудови [Meson](https://mesonbuild.com/).
@@ -71,7 +71,7 @@
 
 ## System / DBus
 
-- `appSDBusCxxClient` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSDBusCxxClient), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSDBusCxxClient)] яка містить загальні інфраструктурні класи програми для генераці одинарного бінарного виконуваного файлу з використанням [Kistler-Group's sdbus-c++](https://github.com/Kistler-Group/sdbus-cpp.git) бібліотеки для побудови клієнта сервісів розміщених на шині [DBus](https://uk.wikipedia.org/wiki/D-Bus)
+- `appSDBusCxxClient` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSDBusCxxClient), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSDBusCxxClient)] (**поточна**) яка містить загальні інфраструктурні класи програми для генераці одинарного бінарного виконуваного файлу з використанням [Kistler-Group's sdbus-c++](https://github.com/Kistler-Group/sdbus-cpp.git) бібліотеки для побудови клієнта сервісів розміщених на шині [DBus](https://uk.wikipedia.org/wiki/D-Bus)
 - `appSDBusCxxServer` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSDBusCxxServer), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSDBusCxxServer)] яка містить загальні інфраструктурні класи програми для генераці одинарного бінарного виконуваного файлу з використанням [Kistler-Group's sdbus-c++](https://github.com/Kistler-Group/sdbus-cpp.git) бібліотеки для побудови сервера на шині [DBus](https://uk.wikipedia.org/wiki/D-Bus).
 
 

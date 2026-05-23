@@ -71,7 +71,9 @@ target_link_libraries(
 foreach(sdbuscxx_test_target
         UTEST_CurrentDateServerObject
         UTEST_DBusServerObjectFactory
-        CTEST_CurrentDateServerObject)
+        CTEST_CurrentDateServerObject
+        UTEST_SDBusCxxController
+        CTEST_SDBusCxxController)
   if (TARGET ${sdbuscxx_test_target})
     target_link_libraries(${sdbuscxx_test_target} ${SDBUSCPP_LINK_TARGET})
   endif()

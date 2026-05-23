@@ -1,4 +1,4 @@
-#include "src/log/simple-logger/SimpleLogger.h"
+#include "src/log/default-logger/DefaultLogger.h"
 
 #include <array>
 #include <chrono>
@@ -10,10 +10,10 @@
 #include <string>
 #include <thread>
 
-namespace simple_logger
+namespace default_logger
 {
 
-void SimpleLogger::log(const unsigned short& loglvl, const std::string& msg)
+void DefaultLogger::log(const unsigned short& loglvl, const std::string& msg)
 {
   if (loglvl > lvl) {
     return;
@@ -49,7 +49,7 @@ void SimpleLogger::log(const unsigned short& loglvl, const std::string& msg)
   }
 }
 
-void SimpleLogger::log(const unsigned short& loglvl, const char* const filePath,
+void DefaultLogger::log(const unsigned short& loglvl, const char* const filePath,
                        const int& fileLine, const std::string& msg)
 {
   std::filesystem::path fullPath{filePath};
@@ -59,7 +59,7 @@ void SimpleLogger::log(const unsigned short& loglvl, const char* const filePath,
   log(loglvl, filename + ":" + std::to_string(fileLine) + " : " + msg);
 }
 
-void SimpleLogger::logfile(const std::string& filepath)
+void DefaultLogger::logfile(const std::string& filepath)
 {
   if (filepath.empty()) {
     return;
@@ -76,14 +76,14 @@ void SimpleLogger::logfile(const std::string& filepath)
   }
 }
 
-void SimpleLogger::print(const bool toPrintValue)
+void DefaultLogger::print(const bool toPrintValue)
 {
   toPrintMsgs.store(toPrintValue);
 }
 
-void SimpleLogger::level(const unsigned short& nlvl) { lvl = nlvl; }
+void DefaultLogger::level(const unsigned short& nlvl) { lvl = nlvl; }
 
-void SimpleLogger::init(const std::string& filepath, const unsigned short& nlvl,
+void DefaultLogger::init(const std::string& filepath, const unsigned short& nlvl,
                         const bool toPrintValue)
 {
   logfile(filepath);
@@ -91,7 +91,7 @@ void SimpleLogger::init(const std::string& filepath, const unsigned short& nlvl,
   print(toPrintValue);
 }
 
-inline void SimpleLogger::insert_current_timestamp(std::ostringstream& oss)
+inline void DefaultLogger::insert_current_timestamp(std::ostringstream& oss)
 {
   using namespace std::chrono;
 
@@ -116,7 +116,7 @@ inline void SimpleLogger::insert_current_timestamp(std::ostringstream& oss)
 #endif  // ENABLE_LOGS_MICROSECONDS_TIME
 }
 
-const std::string& SimpleLogger::lvl_repr(const unsigned short& glvl)
+const std::string& DefaultLogger::lvl_repr(const unsigned short& glvl)
 {
   static constexpr const unsigned short maxLvls = 6U;
   static const std::array<const std::string, maxLvls> reprs{
@@ -131,7 +131,7 @@ const std::string& SimpleLogger::lvl_repr(const unsigned short& glvl)
   return reprs[glvl];
 }
 
-std::string SimpleLogger::get_full_log_path(const std::string& logname)
+std::string DefaultLogger::get_full_log_path(const std::string& logname)
 {
   namespace fs = std::filesystem;
 
@@ -142,9 +142,9 @@ std::string SimpleLogger::get_full_log_path(const std::string& logname)
   return logpath.string();
 }
 
-std::string SimpleLogger::get_default_full_log_path()
+std::string DefaultLogger::get_default_full_log_path()
 {
   return get_full_log_path(default_log_name);
 }
 
-}  // namespace simple_logger
+}  // namespace default_logger

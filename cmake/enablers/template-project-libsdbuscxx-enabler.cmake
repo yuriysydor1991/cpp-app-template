@@ -71,7 +71,9 @@ target_link_libraries(
 foreach(sdbuscxx_test_target
         UTEST_Hostname1QueryHandler
         UTEST_DBusQueryHandlerFactory
-        CTEST_Hostname1QueryHandler)
+        CTEST_Hostname1QueryHandler
+        UTEST_SDBusCxxController
+        CTEST_SDBusCxxController)
   if (TARGET ${sdbuscxx_test_target})
     target_link_libraries(${sdbuscxx_test_target} ${SDBUSCPP_LINK_TARGET})
   endif()

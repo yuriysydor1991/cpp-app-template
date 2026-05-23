@@ -18,3 +18,4 @@ target_link_libraries(
 )
 
 add_subdirectory(query-handlers)
+add_subdirectory(tests)

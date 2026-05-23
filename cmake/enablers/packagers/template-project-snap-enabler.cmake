@@ -14,7 +14,7 @@ set(TEMPLATE_PROJECT_SNAP_GRADE "devel" CACHE STRING "The snap package grade")
 set(TEMPLATE_PROJECT_SNAP_CONFINEMENT "strict" CACHE STRING "The snap package confinement")
 
 configure_file(
-  ${CMAKE_SOURCE_DIR}/misc/snap/snapcraft.yaml.in
+  ${CMAKE_SOURCE_DIR}/misc/packagers/snapcraft.yaml.in
   ${CMAKE_CURRENT_BINARY_DIR}/snap/snapcraft.yaml
 )
 

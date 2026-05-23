@@ -143,6 +143,11 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "CTEST_app\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_app.junit.xml'
           }
         }
+        stage('CTEST_beasthttp') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "CTEST_beasthttp\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_beasthttp.junit.xml'
+          }
+        }
       }
       post { always { junit "$BUILDDIR/$BDJUNITOUT/CTEST_*.xml" } }
     }

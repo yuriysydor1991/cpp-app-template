@@ -13,6 +13,11 @@ target_include_directories(
 )
 
 target_link_libraries(
+  TemplateProjectSDBusCxxControllerObj
+  ${SDBUSCPP_LINK_TARGET}
+)
+
+target_link_libraries(
   ${PROJECT_BINARY_NAME}
   TemplateProjectSDBusCxxControllerObj
 )

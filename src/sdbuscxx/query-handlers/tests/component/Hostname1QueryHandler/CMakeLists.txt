@@ -9,7 +9,7 @@ add_executable(
 
 target_include_directories(
   CTEST_Hostname1QueryHandler
-  PRIVATE ${SDBUSCXX_MOCKS_ROOT}/log
+  PRIVATE ${GENERAL_MOCKS_ROOT}/log
   PRIVATE ${CMAKE_SOURCE_DIR}
   PRIVATE ${CMAKE_BINARY_DIR}
 )

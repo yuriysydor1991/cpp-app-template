@@ -3,45 +3,42 @@
 
 #include <memory>
 
+#include <sdbus-c++/sdbus-c++.h>
+
 #include "src/app/ApplicationContext.h"
 #include "src/sdbuscxx/SDBusCxxController.h"
+#include "src/sdbuscxx/query-handlers/DBusQueryHandlerFactory.h"
+#include "src/sdbuscxx/query-handlers/IDBusQueryHandler.h"
 
 using namespace testing;
 using namespace sdbuscxxi;
-
-namespace
-{
-
-/**
- * @brief Test double that neutralises the bus-touching seams so the run()
- * orchestration can be exercised without a live system bus.
- *
- * init() never opens a real connection and inited() reports the controller as
- * initialized, letting the test drive run() past its initialization guard and
- * into the demo call - which then fails gracefully because no real connection
- * was established.
- */
-class TestableSDBusCxxController : public SDBusCxxController
-{
- protected:
-  bool init() override { return true; }
-  bool inited() override { return true; }
-};
-
-}  // namespace
 
 class UTEST_SDBusCxxController : public Test
 {
  public:
   UTEST_SDBusCxxController()
-      : appCtx{std::make_shared<app::ApplicationContext>(argc, argv)}
+      : appCtx{std::make_shared<app::ApplicationContext>(argc, argv)},
+        handler{std::make_shared<NiceMock<IDBusQueryHandler>>()}
   {
+    // The controller builds a DBusQueryHandlerFactory internally; route every
+    // created factory to hand out the fixture's mock handler.
+    DBusQueryHandlerFactory::onMockCreate = [this](DBusQueryHandlerFactory& f) {
+      EXPECT_CALL(f, create_default_handler()).WillRepeatedly(Return(handler));
+    };
+    sdbus::mock::fail_bus_connection() = false;
+  }
+
+  ~UTEST_SDBusCxxController() override
+  {
+    DBusQueryHandlerFactory::onMockCreate = nullptr;
+    sdbus::mock::fail_bus_connection() = false;
   }
 
   int argc{0};
   char** argv{nullptr};
 
   std::shared_ptr<app::ApplicationContext> appCtx;
+  std::shared_ptr<NiceMock<IDBusQueryHandler>> handler;
 };
 
 TEST_F(UTEST_SDBusCxxController, run_returns_false_on_null_context)
@@ -55,18 +52,36 @@ TEST_F(UTEST_SDBusCxxController, run_returns_false_on_null_context)
 
 TEST_F(UTEST_SDBusCxxController, run_returns_false_when_not_initialized)
 {
-  // A freshly constructed controller holds no connection, so inited() is false
-  // and run() must bail out before attempting any bus interaction.
+  // A controller built directly (not through create()) holds no connection, so
+  // inited() is false and run() bails out before the demo call.
   SDBusCxxController controller;
 
   EXPECT_FALSE(controller.run(appCtx));
 }
 
-TEST_F(UTEST_SDBusCxxController, run_returns_false_when_query_cannot_reach_bus)
+TEST_F(UTEST_SDBusCxxController, run_succeeds_when_query_handler_succeeds)
 {
-  // Past the initialization guard the demo call still has no live connection to
-  // talk to, so the orchestration must report the failure back as false.
-  TestableSDBusCxxController controller;
+  ON_CALL(*handler, handle(_)).WillByDefault(Return(true));
 
-  EXPECT_FALSE(controller.run(appCtx));
+  SDBusCxxControllerPtr controller = SDBusCxxController::create();
+
+  ASSERT_NE(controller, nullptr);
+  EXPECT_TRUE(controller->run(appCtx));
+}
+
+TEST_F(UTEST_SDBusCxxController, run_returns_false_when_query_handler_fails)
+{
+  ON_CALL(*handler, handle(_)).WillByDefault(Return(false));
+
+  SDBusCxxControllerPtr controller = SDBusCxxController::create();
+
+  ASSERT_NE(controller, nullptr);
+  EXPECT_FALSE(controller->run(appCtx));
+}
+
+TEST_F(UTEST_SDBusCxxController, create_returns_null_when_bus_unavailable)
+{
+  sdbus::mock::fail_bus_connection() = true;
+
+  EXPECT_EQ(SDBusCxxController::create(), nullptr);
 }

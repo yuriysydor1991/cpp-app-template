@@ -1,15 +1,31 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include <memory>
+
 #include "src/app/ApplicationFactory.h"
+#include "src/sdbuscxx/SDBusCxxController.h"
 
 using namespace app;
+using namespace sdbuscxxi;
 using namespace testing;
 
 class CTEST_app : public Test
 {
  public:
-  CTEST_app() = default;
+  CTEST_app()
+  {
+    // The real controller opens a live D-Bus connection and pulls in
+    // sdbus-c++. Route the app facade through a controller that simply reports
+    // a successful run so the factory wiring is exercised without a bus.
+    SDBusCxxController::onMockCreate = []() {
+      auto controller = std::make_shared<NiceMock<SDBusCxxController>>();
+      ON_CALL(*controller, run(_)).WillByDefault(Return(true));
+      return controller;
+    };
+  }
+
+  ~CTEST_app() override { SDBusCxxController::onMockCreate = nullptr; }
 
   int argc{0};
   char** argv{nullptr};

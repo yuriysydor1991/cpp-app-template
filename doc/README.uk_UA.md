@@ -43,8 +43,8 @@
 
 ## 3D / OpenGL
 
+- гілка `appSDL3` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSDL3), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSDL3)] (**поточна**) яка містить загальні класи для генераці одинарного бінарного виконуваного файлу разом з початковою інфраструктурою для розробки у [OpenGL](https://www.opengl.org/) 3D разом з [SDL3](https://wiki.libsdl.org/SDL3/FrontPage) і набагато більше!
 - гілка `appSDL2` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSDL2), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSDL2)] яка містить загальні класи для генераці одинарного бінарного виконуваного файлу разом з початковою інфраструктурою для розробки у [OpenGL](https://www.opengl.org/) 3D разом з [SDL2](https://en.wikipedia.org/wiki/Simple_DirectMedia_Layer) і набагато більше!
-- гілка `appSDL3` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSDL3), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSDL3)] (**поточна**) - [SDL3](https://wiki.libsdl.org/SDL3/FrontPage) аналог гілки `appSDL2`: та сама структура app/eventer/painter перенесена на API SDL3 для 3D розробки з [OpenGL](https://www.opengl.org/).
 - гілка `appFreeGlut` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appFreeGlut), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appFreeGlut)] яка містить загальні класи для генераці одинарного бінарного виконуваного файлу разом з початковою інфраструктурою для розробки у [OpenGL](https://www.opengl.org/) 3D разом з [FreeGlut](https://freeglut.sourceforge.net/).
 
 ## Web / HTTP / Мережа

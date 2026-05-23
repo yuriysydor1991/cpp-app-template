@@ -46,7 +46,7 @@ set(
 
 set(
   DOCKERFILE_SRC 
-  "${CMAKE_SOURCE_DIR}/misc/Dockerfile.in" 
+  "${CMAKE_SOURCE_DIR}/misc/Dockerfiles/Dockerfile.in" 
   CACHE STRING 
   "The Dockerfile full path"
 )

@@ -35,7 +35,7 @@ set(
 
 set(
   JENKINS_PIPELINE_DOCKERFILE_SRC 
-  "${CMAKE_SOURCE_DIR}/misc/Dockerfile.Jenkins.pipeline.in" 
+  "${CMAKE_SOURCE_DIR}/misc/Dockerfiles/Dockerfile.Jenkins.pipeline.in" 
   CACHE STRING 
   "The Jenkins pipeline Dockerfile full path"
 )

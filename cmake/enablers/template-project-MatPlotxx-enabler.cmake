@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.13)
 option(
   ENABLE_MATPLOTCXX
   "Set to ON to enable the MatPlotC++ (by using system wide available or through the Internet)"
-  OFF
+  ON
 )
 
 if (NOT ENABLE_MATPLOTCXX)

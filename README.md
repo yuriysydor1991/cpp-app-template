@@ -66,6 +66,11 @@ Examine available branches to find your most applicable variant of the template 
 
 - `appOpenCV` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appOpenCV), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appOpenCV)] the template infrastructure to fast start application development with the [OpenCV](https://opencv.org/) computer vision library.
 
+## System / DBus
+
+- `appSDBusCxxClient` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSDBusCxxClient), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSDBusCxxClient)] with just general application related classes to generate a single binary executable with the usage of [Kistler-Group's sdbus-c++](https://github.com/Kistler-Group/sdbus-cpp.git) library as a [DBus](https://en.wikipedia.org/wiki/D-Bus) services client.
+- `appSDBusCxxServer` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSDBusCxxServer), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSDBusCxxServer)] with just general application related classes to generate a single binary executable with the usage of [Kistler-Group's sdbus-c++](https://github.com/Kistler-Group/sdbus-cpp.git) library as a server on the [DBus](https://en.wikipedia.org/wiki/D-Bus).
+
 
 Alter current `README.md` and a `CHANGELOG.md` files to match your implementation introduced into the destination new project. Examine the `doc` directory for possible translations of a current md document:
 - `uk_UA` at [doc/README.uk_UA.md](doc/README.uk_UA.md)

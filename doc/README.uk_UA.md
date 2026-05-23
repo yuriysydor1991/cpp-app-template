@@ -69,6 +69,11 @@
 
 - гілка `appOpenCV` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appOpenCV), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appOpenCV)] (**поточна**) котра містить інфраструктуру для швидкого старту розробки застосунку з використанням бібліотеки компʼютерного зору [OpenCV](https://opencv.org/) і її стандартного попередньо встановленого каскаду Хаара для виявлення обличь (`haarcascade_frontalface_default.xml`).
 
+## System / DBus
+
+- `appSDBusCxxClient` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSDBusCxxClient), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSDBusCxxClient)] яка містить загальні інфраструктурні класи програми для генераці одинарного бінарного виконуваного файлу з використанням [Kistler-Group's sdbus-c++](https://github.com/Kistler-Group/sdbus-cpp.git) бібліотеки для побудови клієнта сервісів розміщених на шині [DBus](https://uk.wikipedia.org/wiki/D-Bus)
+- `appSDBusCxxServer` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSDBusCxxServer), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSDBusCxxServer)] яка містить загальні інфраструктурні класи програми для генераці одинарного бінарного виконуваного файлу з використанням [Kistler-Group's sdbus-c++](https://github.com/Kistler-Group/sdbus-cpp.git) бібліотеки для побудови сервера на шині [DBus](https://uk.wikipedia.org/wiki/D-Bus).
+
 Редагуй поточний файл `README.md` і `CHANGELOG.md` щоб документація відповідала впровадженому коду. Для перекладів даного файлу `README.md`:
 - `uk_UA` за відносною адресою doc/README.uk_UA.md
 

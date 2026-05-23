@@ -12,6 +12,15 @@ pipeline {
 
   parameters {
     booleanParam(name: 'RUN_CPPCHECK', defaultValue: false, description: 'Run the cppcheck static code check?')
+    // Template project specific: optional packager checks, all disabled by
+    // default and opt-in (e.g. WIX is MS Windows only, FreeBSD pkg is FreeBSD
+    // only). Safe to drop together with the template stages below.
+    booleanParam(name: 'RUN_FLATPAK_PACKAGER', defaultValue: false, description: 'Template: build and check the flatpak package?')
+    booleanParam(name: 'RUN_DEB_PACKAGER', defaultValue: false, description: 'Template: build and check the deb package?')
+    booleanParam(name: 'RUN_RPM_PACKAGER', defaultValue: false, description: 'Template: build and check the RPM package?')
+    booleanParam(name: 'RUN_SNAP_PACKAGER', defaultValue: false, description: 'Template: build and check the snap package?')
+    booleanParam(name: 'RUN_FREEBSD_PACKAGER', defaultValue: false, description: 'Template: build and check the FreeBSD pkg package? (FreeBSD only)')
+    booleanParam(name: 'RUN_WIX_PACKAGER', defaultValue: false, description: 'Template: build and check the WIX MSI package? (MS Windows only)')
   }
 
   stages {
@@ -142,6 +151,230 @@ pipeline {
     stage('macOS package (.dmg + .pkg)') {
       steps {
         sh 'cd $BUILDDIR && cpack'
+      }
+    }
+
+    // =====================================================================
+    // Template project specific checks.
+    //
+    // Everything below is specific to the cpp-app-template project itself and
+    // is safe to delete in a real project implementation derived from this
+    // template. The stages are written generically - they discover the doc
+    // sections, the enablers, the declared tests and the produced packages
+    // dynamically, with no hardcoded names - so they can be reused as-is on
+    // the other template branches.
+    // =====================================================================
+
+    stage('Template: no git conflict markers') {
+      steps {
+        sh '''
+          if git grep -nE "^(<<<<<<<|>>>>>>>)" -- .; then
+            echo "FAIL: the files listed above contain git conflict markers (unmerged content)"
+            exit 1
+          fi
+          echo "OK: no git conflict markers found in the tracked files"
+        '''
+      }
+    }
+
+    stage('Template: no en_US doc sections in the uk_UA README') {
+      steps {
+        sh '''
+          if grep -nE "doc/sections/en_US/" doc/README.uk_UA.md; then
+            echo "FAIL: the uk_UA README links en_US sections; it must use uk_UA sections only"
+            exit 1
+          fi
+          echo "OK: the uk_UA README references no en_US sections"
+        '''
+      }
+    }
+
+    stage('Template: no uk_UA doc sections in the top-level README') {
+      steps {
+        sh '''
+          if grep -nE "doc/sections/uk_UA/" README.md; then
+            echo "FAIL: the top-level README links uk_UA sections; it must use en_US sections only"
+            exit 1
+          fi
+          echo "OK: the top-level README references no uk_UA sections"
+        '''
+      }
+    }
+
+    stage('Template: every doc section is linked in its README') {
+      steps {
+        sh '''
+          status=0
+          for langdir in doc/sections/*/; do
+            [ -d "$langdir" ] || continue
+            lang="$(basename "$langdir")"
+            if [ "$lang" = "en_US" ]; then
+              readme="README.md"
+            else
+              readme="doc/README.${lang}.md"
+            fi
+            if [ ! -f "$readme" ]; then
+              echo "FAIL: no README ($readme) found for the doc/sections/$lang language"
+              status=1
+              continue
+            fi
+            for f in "$langdir"*; do
+              [ -f "$f" ] || continue
+              if ! grep -qF "$f" "$readme"; then
+                echo "FAIL: $f is not linked in $readme"
+                status=1
+              fi
+            done
+          done
+          [ "$status" -eq 0 ] || exit 1
+          echo "OK: every doc/sections file is linked in its README"
+        '''
+      }
+    }
+
+    stage('Template: every enabler is registered') {
+      steps {
+        sh '''
+          included="$( { cat cmake/template-project-feature-enabler.cmake cmake/template-project-feature-enabler-post.cmake; find cmake/enablers -name "*.cmake" -exec cat {} +; } | grep "include(" | sed "s/.*include(//; s/).*//" | tr -d " " | sort -u )"
+          status=0
+          for f in $(find cmake/enablers -name "*.cmake" | sort); do
+            mod="$(basename "$f" .cmake)"
+            if ! echo "$included" | grep -qx "$mod"; then
+              echo "FAIL: enabler $mod ($f) is not registered in the template-project-feature-enabler files"
+              status=1
+            fi
+          done
+          [ "$status" -eq 0 ] || exit 1
+          echo "OK: every enabler under cmake/enablers is registered"
+        '''
+      }
+    }
+
+    stage('Template: every declared test is registered in the pipeline') {
+      steps {
+        sh '''
+          declared="$(grep -rA3 "gtest_add_tests" --include=CMakeLists.txt src | grep -oE "TARGET[[:space:]]+[A-Za-z0-9_]+" | awk '{print $2}' | sort -u)"
+          status=0
+          for t in $declared; do
+            if ! grep -qF "$t" misc/Jenkinsfile; then
+              echo "FAIL: test $t is declared in the CMake files but not registered in this Jenkinsfile"
+              status=1
+            fi
+          done
+          [ "$status" -eq 0 ] || exit 1
+          echo "OK: every CMake-declared test is registered in the pipeline"
+        '''
+      }
+    }
+
+    // Packager checks are intentionally separate sequential stages (not a
+    // parallel block): each runs a full CMake configure + build, so running
+    // them in parallel could overload the build agent.
+    stage('Template: flatpak package') {
+      when { expression { params.RUN_FLATPAK_PACKAGER } }
+      steps {
+        sh '''
+          BD="$BUILDDIR-pkg-flatpak"
+          rm -fr "$BD"
+          cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_FLATPAK=ON
+          cmake --build "$BD" -j$(nproc)
+          cmake --build "$BD" --target flatpak
+          if [ -z "$(find "$BD" -maxdepth 2 -name '*.flatpak' -print -quit)" ]; then
+            echo "FAIL: CMake did not produce a .flatpak bundle"
+            exit 1
+          fi
+          echo "OK: produced $(find "$BD" -maxdepth 2 -name '*.flatpak')"
+        '''
+      }
+    }
+
+    stage('Template: deb package') {
+      when { expression { params.RUN_DEB_PACKAGER } }
+      steps {
+        sh '''
+          BD="$BUILDDIR-pkg-deb"
+          rm -fr "$BD"
+          cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_DEB=ON
+          cmake --build "$BD" -j$(nproc)
+          ( cd "$BD" && cpack -G DEB )
+          if [ -z "$(find "$BD" -maxdepth 2 -name '*.deb' -print -quit)" ]; then
+            echo "FAIL: CMake/CPack did not produce a .deb package"
+            exit 1
+          fi
+          echo "OK: produced $(find "$BD" -maxdepth 2 -name '*.deb')"
+        '''
+      }
+    }
+
+    stage('Template: rpm package') {
+      when { expression { params.RUN_RPM_PACKAGER } }
+      steps {
+        sh '''
+          BD="$BUILDDIR-pkg-rpm"
+          rm -fr "$BD"
+          cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_RPM=ON
+          cmake --build "$BD" -j$(nproc)
+          ( cd "$BD" && cpack -G RPM )
+          if [ -z "$(find "$BD" -maxdepth 2 -name '*.rpm' -print -quit)" ]; then
+            echo "FAIL: CMake/CPack did not produce a .rpm package"
+            exit 1
+          fi
+          echo "OK: produced $(find "$BD" -maxdepth 2 -name '*.rpm')"
+        '''
+      }
+    }
+
+    stage('Template: snap package') {
+      when { expression { params.RUN_SNAP_PACKAGER } }
+      steps {
+        sh '''
+          BD="$BUILDDIR-pkg-snap"
+          rm -fr "$BD"
+          cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_SNAP=ON
+          cmake --build "$BD" -j$(nproc)
+          cmake --build "$BD" --target snap
+          if [ -z "$(find "$BD" -maxdepth 3 -name '*.snap' -print -quit)" ]; then
+            echo "FAIL: CMake did not produce a .snap package"
+            exit 1
+          fi
+          echo "OK: produced $(find "$BD" -maxdepth 3 -name '*.snap')"
+        '''
+      }
+    }
+
+    stage('Template: freebsd-pkg package') {
+      when { expression { params.RUN_FREEBSD_PACKAGER } }
+      steps {
+        sh '''
+          BD="$BUILDDIR-pkg-freebsd"
+          rm -fr "$BD"
+          cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_FREEBSD_PKG=ON
+          cmake --build "$BD" -j$(nproc)
+          ( cd "$BD" && cpack -G FREEBSD )
+          if [ -z "$(find "$BD" -maxdepth 2 -name '*.pkg' -print -quit)" ]; then
+            echo "FAIL: CMake/CPack did not produce a FreeBSD .pkg package"
+            exit 1
+          fi
+          echo "OK: produced $(find "$BD" -maxdepth 2 -name '*.pkg')"
+        '''
+      }
+    }
+
+    stage('Template: wix-msi package') {
+      when { expression { params.RUN_WIX_PACKAGER } }
+      steps {
+        sh '''
+          BD="$BUILDDIR-pkg-wix"
+          rm -fr "$BD"
+          cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_WIX=ON
+          cmake --build "$BD" -j$(nproc)
+          ( cd "$BD" && cpack -G WIX )
+          if [ -z "$(find "$BD" -maxdepth 2 -name '*.msi' -print -quit)" ]; then
+            echo "FAIL: CMake/CPack did not produce a .msi package"
+            exit 1
+          fi
+          echo "OK: produced $(find "$BD" -maxdepth 2 -name '*.msi')"
+        '''
       }
     }
   }

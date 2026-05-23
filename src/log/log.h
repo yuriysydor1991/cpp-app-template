@@ -4,7 +4,7 @@
 #include <sstream>
 
 #include "src/log/severity-macro-consts.h"
-#include "src/log/simple-logger/SimpleLogger.h"
+#include "src/log/default-logger/DefaultLogger.h"
 
 #ifndef LOG_INIT
 /**
@@ -12,11 +12,11 @@
  * as by default is used in the app::ApplicationFactory::execute method.
  */
 #define LOG_INIT(filepath, logLvl, printMessages) \
-  simple_logger::SimpleLogger::init(filepath, logLvl, printMessages);
+  default_logger::DefaultLogger::init(filepath, logLvl, printMessages);
 #endif  // LOG_INIT
 
 #ifndef LOG_INIT_DEFAULTS
-#define LOG_INIT_DEFAULTS() simple_logger::SimpleLogger::init();
+#define LOG_INIT_DEFAULTS() default_logger::DefaultLogger::init();
 #endif  // LOG_INIT_DEFAULTS
 
 #ifndef LOG_BODY
@@ -27,7 +27,7 @@
   {                                                              \
     std::stringstream logMessageContainer;                       \
     logMessageContainer << msg;                                  \
-    simple_logger::SimpleLogger::log(LOGLVL, __FILE__, __LINE__, \
+    default_logger::DefaultLogger::log(LOGLVL, __FILE__, __LINE__, \
                                      logMessageContainer.str()); \
   }
 #endif  // LOG_BODY
@@ -39,7 +39,7 @@
  * @param msg The logging message which may use the << operator
  * and each of the log elements MUST be converted into the std::string.
  */
-#define LOGE(msg) LOG_BODY(simple_logger::SimpleLogger::LVL_ERROR, msg)
+#define LOGE(msg) LOG_BODY(default_logger::DefaultLogger::LVL_ERROR, msg)
 #endif  // LOGE
 
 #ifndef LOGI
@@ -50,7 +50,7 @@
  * @param msg The logging message which may use the << operator
  * and each of the log elements MUST be converted into the std::string.
  */
-#define LOGI(msg) LOG_BODY(simple_logger::SimpleLogger::LVL_INFO, msg)
+#define LOGI(msg) LOG_BODY(default_logger::DefaultLogger::LVL_INFO, msg)
 #else
 #define LOGI(msg)
 #endif  // MAX_LOG_LEVEL
@@ -64,7 +64,7 @@
  * @param msg The logging message which may use the << operator
  * and each of the log elements MUST be converted into the std::string.
  */
-#define LOGW(msg) LOG_BODY(simple_logger::SimpleLogger::LVL_WARNING, msg)
+#define LOGW(msg) LOG_BODY(default_logger::DefaultLogger::LVL_WARNING, msg)
 #else
 #define LOGW(msg)
 #endif  // MAX_LOG_LEVEL
@@ -78,7 +78,7 @@
  * @param msg The logging message which may use the << operator
  * and each of the log elements MUST be converted into the std::string.
  */
-#define LOGD(msg) LOG_BODY(simple_logger::SimpleLogger::LVL_DEBUG, msg)
+#define LOGD(msg) LOG_BODY(default_logger::DefaultLogger::LVL_DEBUG, msg)
 #else
 #define LOGD(msg)
 #endif  // MAX_LOG_LEVEL
@@ -92,7 +92,7 @@
  * @param msg The logging message which may use the << operator
  * and each of the log elements MUST be converted into the std::string.
  */
-#define LOGT(msg) LOG_BODY(simple_logger::SimpleLogger::LVL_TRACE, msg)
+#define LOGT(msg) LOG_BODY(default_logger::DefaultLogger::LVL_TRACE, msg)
 #else
 #define LOGT(msg)
 #endif  // MAX_LOG_LEVEL

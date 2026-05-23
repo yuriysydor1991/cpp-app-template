@@ -8,9 +8,11 @@ pipeline {
 
   parameters {
     booleanParam(name: 'RUN_CPPCHECK', defaultValue: false, description: 'Run the cppcheck static code check?')
-    // Template project specific: optional packager checks. flatpak and deb run
-    // by default, the rest are opt-in (e.g. WIX is MS Windows only, FreeBSD pkg
-    // is FreeBSD only). Safe to drop together with the template stages below.
+    // Template project specific: optional packager checks, all disabled by
+    // default and opt-in (e.g. WIX is MS Windows only, FreeBSD pkg is FreeBSD
+    // only). Safe to drop together with the template stages below.
+    booleanParam(name: 'RUN_FLATPAK_PACKAGER', defaultValue: false, description: 'Template: build and check the flatpak package?')
+    booleanParam(name: 'RUN_DEB_PACKAGER', defaultValue: false, description: 'Template: build and check the deb package?')
     booleanParam(name: 'RUN_RPM_PACKAGER', defaultValue: false, description: 'Template: build and check the RPM package?')
     booleanParam(name: 'RUN_SNAP_PACKAGER', defaultValue: false, description: 'Template: build and check the snap package?')
     booleanParam(name: 'RUN_FREEBSD_PACKAGER', defaultValue: false, description: 'Template: build and check the FreeBSD pkg package? (FreeBSD only)')
@@ -160,6 +162,18 @@ pipeline {
     // the other template branches.
     // =====================================================================
 
+    stage('Template: no git conflict markers') {
+      steps {
+        sh '''
+          if git grep -nE "^(<<<<<<<|>>>>>>>)" -- .; then
+            echo "FAIL: the files listed above contain git conflict markers (unmerged content)"
+            exit 1
+          fi
+          echo "OK: no git conflict markers found in the tracked files"
+        '''
+      }
+    }
+
     stage('Template: no en_US doc sections in the uk_UA README') {
       steps {
         sh '''
@@ -250,108 +264,114 @@ pipeline {
       }
     }
 
-    stage('Template: packagers') {
-      parallel {
-        stage('flatpak') {
-          steps {
-            sh '''
-              BD="$BUILDDIR-pkg-flatpak"
-              rm -fr "$BD"
-              cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_FLATPAK=ON
-              cmake --build "$BD" -j$(nproc)
-              cmake --build "$BD" --target flatpak
-              if [ -z "$(find "$BD" -maxdepth 2 -name '*.flatpak' -print -quit)" ]; then
-                echo "FAIL: CMake did not produce a .flatpak bundle"
-                exit 1
-              fi
-              echo "OK: produced $(find "$BD" -maxdepth 2 -name '*.flatpak')"
-            '''
-          }
-        }
-        stage('deb') {
-          steps {
-            sh '''
-              BD="$BUILDDIR-pkg-deb"
-              rm -fr "$BD"
-              cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_DEB=ON
-              cmake --build "$BD" -j$(nproc)
-              ( cd "$BD" && cpack -G DEB )
-              if [ -z "$(find "$BD" -maxdepth 2 -name '*.deb' -print -quit)" ]; then
-                echo "FAIL: CMake/CPack did not produce a .deb package"
-                exit 1
-              fi
-              echo "OK: produced $(find "$BD" -maxdepth 2 -name '*.deb')"
-            '''
-          }
-        }
-        stage('rpm') {
-          when { expression { params.RUN_RPM_PACKAGER } }
-          steps {
-            sh '''
-              BD="$BUILDDIR-pkg-rpm"
-              rm -fr "$BD"
-              cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_RPM=ON
-              cmake --build "$BD" -j$(nproc)
-              ( cd "$BD" && cpack -G RPM )
-              if [ -z "$(find "$BD" -maxdepth 2 -name '*.rpm' -print -quit)" ]; then
-                echo "FAIL: CMake/CPack did not produce a .rpm package"
-                exit 1
-              fi
-              echo "OK: produced $(find "$BD" -maxdepth 2 -name '*.rpm')"
-            '''
-          }
-        }
-        stage('snap') {
-          when { expression { params.RUN_SNAP_PACKAGER } }
-          steps {
-            sh '''
-              BD="$BUILDDIR-pkg-snap"
-              rm -fr "$BD"
-              cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_SNAP=ON
-              cmake --build "$BD" -j$(nproc)
-              cmake --build "$BD" --target snap
-              if [ -z "$(find "$BD" -maxdepth 3 -name '*.snap' -print -quit)" ]; then
-                echo "FAIL: CMake did not produce a .snap package"
-                exit 1
-              fi
-              echo "OK: produced $(find "$BD" -maxdepth 3 -name '*.snap')"
-            '''
-          }
-        }
-        stage('freebsd-pkg') {
-          when { expression { params.RUN_FREEBSD_PACKAGER } }
-          steps {
-            sh '''
-              BD="$BUILDDIR-pkg-freebsd"
-              rm -fr "$BD"
-              cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_FREEBSD_PKG=ON
-              cmake --build "$BD" -j$(nproc)
-              ( cd "$BD" && cpack -G FREEBSD )
-              if [ -z "$(find "$BD" -maxdepth 2 -name '*.pkg' -print -quit)" ]; then
-                echo "FAIL: CMake/CPack did not produce a FreeBSD .pkg package"
-                exit 1
-              fi
-              echo "OK: produced $(find "$BD" -maxdepth 2 -name '*.pkg')"
-            '''
-          }
-        }
-        stage('wix-msi') {
-          when { expression { params.RUN_WIX_PACKAGER } }
-          steps {
-            sh '''
-              BD="$BUILDDIR-pkg-wix"
-              rm -fr "$BD"
-              cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_WIX=ON
-              cmake --build "$BD" -j$(nproc)
-              ( cd "$BD" && cpack -G WIX )
-              if [ -z "$(find "$BD" -maxdepth 2 -name '*.msi' -print -quit)" ]; then
-                echo "FAIL: CMake/CPack did not produce a .msi package"
-                exit 1
-              fi
-              echo "OK: produced $(find "$BD" -maxdepth 2 -name '*.msi')"
-            '''
-          }
-        }
+    // Packager checks are intentionally separate sequential stages (not a
+    // parallel block): each runs a full CMake configure + build, so running
+    // them in parallel could overload the build agent.
+    stage('Template: flatpak package') {
+      when { expression { params.RUN_FLATPAK_PACKAGER } }
+      steps {
+        sh '''
+          BD="$BUILDDIR-pkg-flatpak"
+          rm -fr "$BD"
+          cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_FLATPAK=ON
+          cmake --build "$BD" -j$(nproc)
+          cmake --build "$BD" --target flatpak
+          if [ -z "$(find "$BD" -maxdepth 2 -name '*.flatpak' -print -quit)" ]; then
+            echo "FAIL: CMake did not produce a .flatpak bundle"
+            exit 1
+          fi
+          echo "OK: produced $(find "$BD" -maxdepth 2 -name '*.flatpak')"
+        '''
+      }
+    }
+
+    stage('Template: deb package') {
+      when { expression { params.RUN_DEB_PACKAGER } }
+      steps {
+        sh '''
+          BD="$BUILDDIR-pkg-deb"
+          rm -fr "$BD"
+          cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_DEB=ON
+          cmake --build "$BD" -j$(nproc)
+          ( cd "$BD" && cpack -G DEB )
+          if [ -z "$(find "$BD" -maxdepth 2 -name '*.deb' -print -quit)" ]; then
+            echo "FAIL: CMake/CPack did not produce a .deb package"
+            exit 1
+          fi
+          echo "OK: produced $(find "$BD" -maxdepth 2 -name '*.deb')"
+        '''
+      }
+    }
+
+    stage('Template: rpm package') {
+      when { expression { params.RUN_RPM_PACKAGER } }
+      steps {
+        sh '''
+          BD="$BUILDDIR-pkg-rpm"
+          rm -fr "$BD"
+          cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_RPM=ON
+          cmake --build "$BD" -j$(nproc)
+          ( cd "$BD" && cpack -G RPM )
+          if [ -z "$(find "$BD" -maxdepth 2 -name '*.rpm' -print -quit)" ]; then
+            echo "FAIL: CMake/CPack did not produce a .rpm package"
+            exit 1
+          fi
+          echo "OK: produced $(find "$BD" -maxdepth 2 -name '*.rpm')"
+        '''
+      }
+    }
+
+    stage('Template: snap package') {
+      when { expression { params.RUN_SNAP_PACKAGER } }
+      steps {
+        sh '''
+          BD="$BUILDDIR-pkg-snap"
+          rm -fr "$BD"
+          cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_SNAP=ON
+          cmake --build "$BD" -j$(nproc)
+          cmake --build "$BD" --target snap
+          if [ -z "$(find "$BD" -maxdepth 3 -name '*.snap' -print -quit)" ]; then
+            echo "FAIL: CMake did not produce a .snap package"
+            exit 1
+          fi
+          echo "OK: produced $(find "$BD" -maxdepth 3 -name '*.snap')"
+        '''
+      }
+    }
+
+    stage('Template: freebsd-pkg package') {
+      when { expression { params.RUN_FREEBSD_PACKAGER } }
+      steps {
+        sh '''
+          BD="$BUILDDIR-pkg-freebsd"
+          rm -fr "$BD"
+          cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_FREEBSD_PKG=ON
+          cmake --build "$BD" -j$(nproc)
+          ( cd "$BD" && cpack -G FREEBSD )
+          if [ -z "$(find "$BD" -maxdepth 2 -name '*.pkg' -print -quit)" ]; then
+            echo "FAIL: CMake/CPack did not produce a FreeBSD .pkg package"
+            exit 1
+          fi
+          echo "OK: produced $(find "$BD" -maxdepth 2 -name '*.pkg')"
+        '''
+      }
+    }
+
+    stage('Template: wix-msi package') {
+      when { expression { params.RUN_WIX_PACKAGER } }
+      steps {
+        sh '''
+          BD="$BUILDDIR-pkg-wix"
+          rm -fr "$BD"
+          cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_WIX=ON
+          cmake --build "$BD" -j$(nproc)
+          ( cd "$BD" && cpack -G WIX )
+          if [ -z "$(find "$BD" -maxdepth 2 -name '*.msi' -print -quit)" ]; then
+            echo "FAIL: CMake/CPack did not produce a .msi package"
+            exit 1
+          fi
+          echo "OK: produced $(find "$BD" -maxdepth 2 -name '*.msi')"
+        '''
       }
     }
   }

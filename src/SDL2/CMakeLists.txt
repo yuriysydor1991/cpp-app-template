@@ -17,7 +17,7 @@ target_include_directories(
 
 target_link_libraries(
   TemplateSDL2Obj
-  PRIVATE
+  PUBLIC
   SDL2::SDL2
   ${OPENGL_LIBRARIES}
 )

@@ -1,8 +1,6 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_SDL2INITER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_SDL2INITER_CLASS_H
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_opengl.h>
 #include <gmock/gmock.h>
 
 #include <functional>

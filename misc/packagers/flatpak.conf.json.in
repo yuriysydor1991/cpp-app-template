@@ -15,17 +15,11 @@
       ],
       "sources": [
         {
-          "type": "archive",
-          "url": "https://github.com/libsdl-org/SDL/releases/download/release-2.30.10/SDL2-2.30.10.tar.gz",
-          "sha256": "f59adf36a0fcf4c94198e7d3d776c1b3824211ab7aeebeb31fe19836661196aa"
+          "type": "git",
+          "url": "https://github.com/libsdl-org/SDL.git",
+          "tag": "release-2.30.10",
+          "commit": "9c821dc21ccbd69b2bda421fdb35cb4ae2da8f5e"
         }
-      ],
-      "cleanup": [
-        "/bin/sdl2-config",
-        "/include",
-        "/lib/cmake",
-        "/lib/pkgconfig",
-        "/share/aclocal"
       ]
     },
     {
@@ -45,7 +39,6 @@
     "--socket=fallback-x11",
     "--socket=wayland",
     "--device=dri",
-    "--share=network",
     "--socket=pulseaudio"
   ]
 }

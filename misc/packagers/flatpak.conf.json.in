@@ -9,7 +9,10 @@
       "name": "SDL3",
       "buildsystem": "cmake-ninja",
       "config-opts": [
-        "-DCMAKE_BUILD_TYPE=Release"
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DSDL_STATIC=OFF",
+        "-DSDL_SHARED=ON",
+        "-DCMAKE_INSTALL_LIBDIR=lib"
       ],
       "sources": [
         {

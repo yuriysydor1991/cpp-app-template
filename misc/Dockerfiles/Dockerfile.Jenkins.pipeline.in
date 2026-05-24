@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:lts
+FROM jenkins/jenkins:latest
 
 USER root 
 
@@ -7,7 +7,7 @@ RUN apt install -y libstdc++6 build-essential git cmake g++
 RUN apt install -y clang-format
 RUN apt install -y cppcheck
 RUN apt install -y valgrind
-RUN apt install -y flatpak
+RUN apt install -y flatpak flatpak-builder
 RUN apt install -y clang-tidy
 RUN apt install -y libgtest-dev
 RUN apt install -y libgmock-dev
@@ -39,6 +39,33 @@ RUN apt install -y libpqxx-dev
 RUN apt install -y libmysqlcppconn-dev
 
 RUN apt install -y gnuplot
+
+RUN apt install -y snapd
+
+RUN apt install -y mesa-common-dev ffmpeg
+
+RUN apt install -y wget curl htop btop 
+RUN apt install -y nmap traceroute whois
+RUN apt install -y automake autoconf autoconf-doc fdupes
+
+RUN apt install -y libopencv-dev libopencv-dnn-dev libopencv-imgcodecs-dev \
+  libopencv-imgproc-dev opencv-data opencv-doc
+
+RUN apt install -y nano
+
+RUN apt install -y firebird-dev
+RUN apt install -y libsdl3-dev libsdl3-image-dev libsdl3-ttf-dev libgl1-mesa-dev
+
+RUN apt install -y libnotify-dev
+RUN apt install -y libgstreamerd-3-dev libgstreamermm-1.0-dev libgstreamer1.0-dev
+WORKDIR /src/wxWidgets
+RUN git clone --branch v3.3.2 https://github.com/wxWidgets/wxWidgets.git wxWidgets
+WORKDIR /src/wxWidgets/wxWidgets
+RUN git submodule update --init
+WORKDIR /src/wxWidgets/
+RUN cmake -S wxWidgets -B wxWidgets-build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
+RUN cmake --build wxWidgets-build -j$(nproc)
+RUN cmake --install wxWidgets-build --prefix /usr
 
 ARG srcD=/usr/src
 ARG prefixD=/usr

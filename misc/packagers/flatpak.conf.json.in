@@ -9,22 +9,15 @@
       "name": "SDL3",
       "buildsystem": "cmake-ninja",
       "config-opts": [
-        "-DCMAKE_BUILD_TYPE=Release",
-        "-DSDL_STATIC=OFF",
-        "-DSDL_SHARED=ON"
+        "-DCMAKE_BUILD_TYPE=Release"
       ],
       "sources": [
         {
-          "type": "archive",
-          "url": "https://github.com/libsdl-org/SDL/releases/download/release-3.2.10/SDL3-3.2.10.tar.gz",
-          "sha256": "57d2f2c2e0f6b9b5b6e2b5e7f48e3a55cf6c93c9e3a8e7f0a4eb3a4b6d6a6f15"
+          "type": "git",
+          "url": "https://github.com/libsdl-org/SDL.git",
+          "tag": "release-3.2.10",
+          "commit": "877399b2b2cf21e67554ed9046410f268ce1d1b2"
         }
-      ],
-      "cleanup": [
-        "/include",
-        "/lib/cmake",
-        "/lib/pkgconfig",
-        "/share/aclocal"
       ]
     },
     {
@@ -44,7 +37,6 @@
     "--socket=fallback-x11",
     "--socket=wayland",
     "--device=dri",
-    "--share=network",
     "--socket=pulseaudio"
   ]
 }

@@ -132,6 +132,11 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "UTEST_DBusQueryHandlerFactory\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_DBusQueryHandlerFactory.junit.xml'
           }
         }
+        stage('UTEST_SDBusCxxController') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_SDBusCxxController\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_SDBusCxxController.junit.xml'
+          }
+        }
       }
       post { always { junit "$BUILDDIR/$BDJUNITOUT/UTEST_*.xml" } }
     }
@@ -156,6 +161,11 @@ pipeline {
         stage('CTEST_Hostname1QueryHandler') {
           steps {
             sh 'cd $BUILDDIR && ctest -R "CTEST_Hostname1QueryHandler\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_Hostname1QueryHandler.junit.xml'
+          }
+        }
+        stage('CTEST_SDBusCxxController') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "CTEST_SDBusCxxController\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_SDBusCxxController.junit.xml'
           }
         }
       }

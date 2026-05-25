@@ -142,6 +142,27 @@ RUN cmake -B $matPlotBuild -S $matPlotScr \
 RUN cmake --build $matPlotBuild -j$(nproc)
 RUN cmake --install $matPlotBuild --prefix $prefixD
 
+RUN flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
+RUN flatpak install -y runtime/org.freedesktop.Platform/x86_64/24.08
+RUN flatpak install -y runtime/org.freedesktop.Sdk/x86_64/24.08
+RUN flatpak install -y runtime/org.kde.Platform/x86_64/6.8
+RUN flatpak install -y runtime/org.kde.Sdk/x86_64/6.8
+
+
+# SDBus-C++
+WORKDIR $srcD
+
+ARG sdbuscxxName=sdbus-cpp
+ARG sdbuscxxScr=$srcD/$sdbuscxxName
+ARG sdbuscxxBuild=$srcD/$sdbuscxxName-build-docker-singlerun
+
+RUN git clone --branch v2.1.0 --depth 1 https://github.com/Kistler-Group/sdbus-cpp.git $sdbuscxxName
+RUN cmake -B $sdbuscxxBuild -S $sdbuscxxScr \
+    -DSDBUSCPP_BUILD_DOCS=OFF \
+    -DCMAKE_INSTALL_PREFIX=$prefixD
+RUN cmake --build $sdbuscxxBuild -j$(nproc)
+RUN cmake --install $sdbuscxxBuild --prefix $prefixD
+
 
 CMD ["jenkins.sh"]
-

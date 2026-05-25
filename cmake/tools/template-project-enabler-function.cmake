@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.13)
 function(template_project_default_3rdparty_enabler)
   set(FCN_KEYWORDS_FLAGS DISABLE_SYSTEM_PROBE)
   set(FCN_KEYWORDS_SINGLE NAME GIT_REPOSITORY GIT_TAG)
-  set(FCN_KEYWORDS_MULTI "")
+  set(FCN_KEYWORDS_MULTI COMPONENTS)
 
   cmake_parse_arguments(
     "ARG"
@@ -12,9 +12,13 @@ function(template_project_default_3rdparty_enabler)
     "${FCN_KEYWORDS_MULTI}"
     ${ARGN})
 
+  if(ARG_COMPONENTS)
+    set(COMPONENTS_STR COMPONENTS ${ARG_COMPONENTS})
+  endif()
+
   if (NOT ARG_DISABLE_SYSTEM_PROBE)
     message(STATUS "Trying to probe system installed ${ARG_NAME}")
-    find_package(${ARG_NAME} QUIET)
+    find_package(${ARG_NAME} QUIET ${COMPONENTS_STR})
   endif()
 
   if (${ARG_NAME}_FOUND)

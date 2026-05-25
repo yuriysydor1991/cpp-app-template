@@ -6,18 +6,12 @@
       <jobProperties/>
       <triggers/>
       <parameters>
-        <string>RUN_FLATPAK_PACKAGER</string>
-        <string>RUN_SNAP_PACKAGER</string>
-        <string>RUN_FREEBSD_PACKAGER</string>
-        <string>RUN_RPM_PACKAGER</string>
         <string>RUN_CPPCHECK</string>
-        <string>RUN_DEB_PACKAGER</string>
-        <string>RUN_WIX_PACKAGER</string>
       </parameters>
       <options/>
     </org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction>
   </actions>
-  <description>applib</description>
+  <description>CppAppTemplate @ GitHub appFirebird</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <org.jenkinsci.plugins.workflow.job.properties.DisableConcurrentBuildsJobProperty>
@@ -45,36 +39,6 @@
           <description>Run the cppcheck static code check?</description>
           <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
-        <hudson.model.BooleanParameterDefinition>
-          <name>RUN_FLATPAK_PACKAGER</name>
-          <description>Template: build and check the flatpak package?</description>
-          <defaultValue>false</defaultValue>
-        </hudson.model.BooleanParameterDefinition>
-        <hudson.model.BooleanParameterDefinition>
-          <name>RUN_DEB_PACKAGER</name>
-          <description>Template: build and check the deb package?</description>
-          <defaultValue>false</defaultValue>
-        </hudson.model.BooleanParameterDefinition>
-        <hudson.model.BooleanParameterDefinition>
-          <name>RUN_RPM_PACKAGER</name>
-          <description>Template: build and check the RPM package?</description>
-          <defaultValue>false</defaultValue>
-        </hudson.model.BooleanParameterDefinition>
-        <hudson.model.BooleanParameterDefinition>
-          <name>RUN_SNAP_PACKAGER</name>
-          <description>Template: build and check the snap package?</description>
-          <defaultValue>false</defaultValue>
-        </hudson.model.BooleanParameterDefinition>
-        <hudson.model.BooleanParameterDefinition>
-          <name>RUN_FREEBSD_PACKAGER</name>
-          <description>Template: build and check the FreeBSD pkg package? (FreeBSD only)</description>
-          <defaultValue>false</defaultValue>
-        </hudson.model.BooleanParameterDefinition>
-        <hudson.model.BooleanParameterDefinition>
-          <name>RUN_WIX_PACKAGER</name>
-          <description>Template: build and check the WIX MSI package? (MS Windows only)</description>
-          <defaultValue>false</defaultValue>
-        </hudson.model.BooleanParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
   </properties>
@@ -88,7 +52,7 @@
       </userRemoteConfigs>
       <branches>
         <hudson.plugins.git.BranchSpec>
-          <name>applib</name>
+          <name>appFirebird</name>
         </hudson.plugins.git.BranchSpec>
       </branches>
       <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>

@@ -9,6 +9,7 @@
         <string>RUN_FLATPAK_PACKAGER</string>
         <string>RUN_SNAP_PACKAGER</string>
         <string>RUN_FREEBSD_PACKAGER</string>
+        <string>RUN_CLANGTIDY</string>
         <string>RUN_RPM_PACKAGER</string>
         <string>RUN_CPPCHECK</string>
         <string>RUN_DEB_PACKAGER</string>
@@ -17,7 +18,7 @@
       <options/>
     </org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction>
   </actions>
-  <description>applib</description>
+  <description>CppAppTemplate @ GitHub appSDL3</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <org.jenkinsci.plugins.workflow.job.properties.DisableConcurrentBuildsJobProperty>
@@ -43,6 +44,11 @@
         <hudson.model.BooleanParameterDefinition>
           <name>RUN_CPPCHECK</name>
           <description>Run the cppcheck static code check?</description>
+          <defaultValue>false</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>RUN_CLANGTIDY</name>
+          <description>Run the clang-tidy static code check?</description>
           <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
@@ -88,7 +94,7 @@
       </userRemoteConfigs>
       <branches>
         <hudson.plugins.git.BranchSpec>
-          <name>applib</name>
+          <name>appSDL3</name>
         </hudson.plugins.git.BranchSpec>
       </branches>
       <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>

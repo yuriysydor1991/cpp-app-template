@@ -18,6 +18,7 @@ template_project_default_3rdparty_enabler(
   NAME SFML 
   GIT_REPOSITORY ${TEMPLATE_APP_SFML_GIT}
   GIT_TAG        ${TEMPLATE_APP_SFML_GIT_TAG}
+  COMPONENTS     graphics window system
 )
 
 target_link_libraries(

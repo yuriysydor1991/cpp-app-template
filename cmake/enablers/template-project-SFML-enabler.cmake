@@ -10,7 +10,7 @@ if (NOT ENABLE_SFML)
     return()
 endif()
 
-set(TEMPLATE_APP_SFML_GIT "https://github.com/skhelladi/SFML.git" CACHE STRING "The SFML library git source repository")
+set(TEMPLATE_APP_SFML_GIT "https://github.com/SFML/SFML.git" CACHE STRING "The SFML library git source repository")
 set(TEMPLATE_APP_SFML_GIT_TAG "main" CACHE STRING "The SFML library git source repository tag")
 
 # COMPONENTS graphics window system

@@ -16,3 +16,5 @@ target_link_libraries(
   ${PROJECT_BINARY_NAME}
   TemplateProjectPlotGenCppControllerObj
 )
+
+add_subdirectory(tests)

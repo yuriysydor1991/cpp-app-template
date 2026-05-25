@@ -117,9 +117,14 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationVersionPrinter\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationVersionPrinter.junit.xml'
           }
         }
-        stage('UTEST_CommandLineParser') { 
-          steps { 
+        stage('UTEST_CommandLineParser') {
+          steps {
             sh 'cd $BUILDDIR && ctest -R "UTEST_CommandLineParser\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_CommandLineParser.junit.xml'
+          }
+        }
+        stage('UTEST_PlotGenCppController') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_PlotGenCppController\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_PlotGenCppController.junit.xml'
           }
         }
       }
@@ -138,9 +143,14 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "CTEST_log\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_log.junit.xml'
           }
         }
-        stage('CTEST_app') { 
-          steps { 
+        stage('CTEST_app') {
+          steps {
             sh 'cd $BUILDDIR && ctest -R "CTEST_app\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_app.junit.xml'
+          }
+        }
+        stage('CTEST_plotgencpp') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "CTEST_plotgencpp\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_plotgencpp.junit.xml'
           }
         }
       }

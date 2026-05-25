@@ -10,39 +10,21 @@ if (NOT ENABLE_PLOTGENCPP)
     return()
 endif()
 
-set(TEMPLATE_APP_PLOTGENCPP_GIT "https://github.com/skhelladi/PlotGenCpp.git")
-set(TEMPLATE_APP_PLOTGENCPP_GIT_TAG "main")
+set(TEMPLATE_APP_PLOTGENCPP_GIT "https://github.com/skhelladi/PlotGenCpp.git" CACHE STRING "The PlotGenCpp library git source repository")
+set(TEMPLATE_APP_PLOTGENCPP_GIT_TAG "main" CACHE STRING "The PlotGenCpp library git source repository tag")
 
-find_package(PlotGenCpp QUIET)
+template_project_default_3rdparty_enabler(
+  NAME PlotGenCpp 
+  GIT_REPOSITORY ${TEMPLATE_APP_PLOTGENCPP_GIT}
+  GIT_TAG        ${TEMPLATE_APP_PLOTGENCPP_GIT_TAG}
+)
 
-if (PlotGenCpp_FOUND)
-  message(STATUS "System already contains the PlotGenCpp library")
-else()
-  message(STATUS "The PlotGenCpp library is not available in the system")
-
-  message(STATUS "PlotGenCpp was not found in the system (or probing is OFF)")
-  message(STATUS "Trying to make PlotGenCpp library available through the Internet")
-
-  message(STATUS "PlotGenCpp URL: ${TEMPLATE_APP_PLOTGENCPP_GIT}")
-  message(STATUS "PlotGenCpp Tag: ${TEMPLATE_APP_PLOTGENCPP_GIT_TAG}")
-
-  include(FetchContent)
-
-  FetchContent_Declare(
-    PlotGenCpp
-    GIT_REPOSITORY ${TEMPLATE_APP_PLOTGENCPP_GIT}
-    GIT_TAG        ${TEMPLATE_APP_PLOTGENCPP_GIT_TAG}
-  )
-
-  FetchContent_MakeAvailable(PlotGenCpp)
-
-  install(TARGETS PlotGenCpp
-    EXPORT PlotGenCpp
-    ARCHIVE DESTINATION lib
-    LIBRARY DESTINATION lib
-    RUNTIME DESTINATION bin
-  )
-endif()
+# install(TARGETS PlotGenCpp
+#     EXPORT PlotGenCpp
+#     ARCHIVE DESTINATION lib
+#     LIBRARY DESTINATION lib
+#     RUNTIME DESTINATION bin
+#   )
 
 target_link_libraries(
   TemplateProjectPlotGenCppControllerObj

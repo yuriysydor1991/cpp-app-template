@@ -9,7 +9,9 @@ qt_add_qml_module(
   URI components
   RESOURCE_PREFIX /${PROJECT_URI}
   QML_FILES
-      DefaultWelcome.qml
+      Map.qml
+  RESOURCES
+      map.html
 )
 
 target_link_libraries(

@@ -3,6 +3,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QString>
+#include <QtWebEngineQuick/qtwebenginequickglobal.h>
 
 #include "src/app/IApplication.h"
 #include "src/log/log.h"
@@ -24,6 +25,8 @@ int Qt6Initer::run(std::shared_ptr<app::ApplicationContext> actx)
 
   QCoreApplication::setOrganizationName(
       QString::fromStdString(project_decls::PROJECT_NAME));
+
+  QtWebEngineQuick::initialize();
 
   QGuiApplication app(actx->argc, actx->argv);
   QQmlApplicationEngine engine;

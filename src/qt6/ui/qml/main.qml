@@ -11,7 +11,7 @@ ApplicationWindow {
   minimumWidth: 400
   minimumHeight: 250
 
-  DefaultWelcome {
+  Map {
     anchors.fill: parent
   }
 }

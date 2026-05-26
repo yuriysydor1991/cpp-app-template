@@ -15,5 +15,7 @@ sudo apt install -y qt6-base-dev qt6-base-dev-tools \
   qml6-module-qtquick-particles qml6-module-qtquick-pdf \
   qml6-module-qtquick-scene2d qml6-module-qtquick-scene3d \
   qml6-module-qtquick-shapes qml6-module-qtquick-tooling \
-  qml6-module-qtquick-timeline
+  qml6-module-qtquick-timeline \
+  qt6-webview-dev qml6-module-qtwebview \
+  qt6-webengine-dev libqt6webenginecore6 qt6-webengine-dev-tools
 ```

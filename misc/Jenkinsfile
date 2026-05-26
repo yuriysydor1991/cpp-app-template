@@ -1,0 +1,173 @@
+pipeline {
+  agent any
+
+  environment {
+    BUILDDIR="build"
+  }
+
+  parameters {
+    booleanParam(name: 'RUN_CPPCHECK', defaultValue: false, description: 'Run the cppcheck static code check?')
+  }
+
+  stages {
+    stage('Checkout') {
+      when {
+        expression {
+          def files = sh(script: 'ls -A', returnStdout: true).trim()
+          return files == ""
+        }
+      }
+
+      steps {
+        git branch: 'libMeson',
+            url: 'https://github.com/yuriysydor1991/cpp-app-template.git'
+      }
+    }
+
+    stage('Code format configure') {
+      steps {
+        sh 'rm -fr $BUILDDIR'
+        sh '''
+          meson setup $BUILDDIR -DENABLE_CLANGFORMAT=true
+        '''
+      }
+    }
+
+    stage('Code format build (clang-format)') {
+      steps {
+        sh '''
+          meson compile -C $BUILDDIR clang-format
+        '''
+        script {
+          def files = sh(script: 'git ls-files -m', returnStdout: true).trim()
+          if (files) {
+            error "Some files are not formatted:\n${files}"
+          }
+        }
+      }
+
+      post {
+        success {
+          echo 'No files changed - OK'
+        }
+        failure {
+          echo 'Some files are not formatted - FAIL'
+        }
+      }
+    }
+
+    stage('Debug configure') {
+      steps {
+        sh 'rm -fr $BUILDDIR'
+        sh '''
+          meson setup $BUILDDIR --buildtype=debug -DENABLE_UNIT_TESTS=true \
+            -DENABLE_SANITIZERS=true -DENABLE_CPPCHECK=true \
+            -DMAX_LOG_LEVEL=5 -DENABLE_COMPONENT_TESTS=true
+        '''
+      }
+    }
+
+    stage('Debug build') {
+      steps {
+        sh '''
+          meson compile -C $BUILDDIR
+        '''
+      }
+    }
+
+    stage('cppcheck') {
+      when {
+        expression { params.RUN_CPPCHECK }
+      }
+      steps {
+        sh '''
+          meson compile -C $BUILDDIR cppcheck
+        '''
+      }
+    }
+
+    stage('Unit Tests') {
+      parallel {
+        stage('UTEST_LibraryFacade') {
+          steps {
+            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_LibraryFacade --suite UTEST_LibraryFacade'
+          }
+        }
+        stage('UTEST_LibFactory') {
+          steps {
+            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_LibFactory --suite UTEST_LibFactory'
+          }
+        }
+        stage('UTEST_LibMain') {
+          steps {
+            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_LibMain --suite UTEST_LibMain'
+          }
+        }
+      }
+      post { always { junit "$BUILDDIR/meson-logs/UTEST_*.junit.xml" } }
+    }
+
+    stage('Component Tests') {
+      parallel {
+        stage('CTEST_SimpleLogger') {
+          steps {
+            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase CTEST_SimpleLogger --suite CTEST_SimpleLogger'
+          }
+        }
+      }
+      post { always { junit "$BUILDDIR/meson-logs/CTEST_*.junit.xml" } }
+    }
+
+    stage('Debug configure (clang-tidy)') {
+      steps {
+        sh 'rm -fr $BUILDDIR'
+        sh '''
+          meson setup $BUILDDIR --buildtype=debug -DENABLE_CLANG_TIDY=true \
+            -DMAX_LOG_LEVEL=5
+        '''
+      }
+    }
+
+    stage('Debug build (clang-tidy)') {
+      steps {
+        sh '''
+          meson compile -C $BUILDDIR clang-tidy
+        '''
+      }
+    }
+
+    stage('Release configure') {
+      steps {
+        sh 'rm -fr $BUILDDIR'
+        sh '''
+          meson setup $BUILDDIR --buildtype=release
+        '''
+      }
+    }
+
+    stage('Release build') {
+      steps {
+        sh '''
+          meson compile -C $BUILDDIR
+        '''
+      }
+    }
+
+    stage('Release install') {
+      steps {
+        sh '''
+          meson install -C $BUILDDIR --destdir "$(pwd)/$BUILDDIR/install-try"
+        '''
+      }
+    }
+  }
+
+  post {
+    success {
+      echo '✅ Builds & Tests passed!'
+    }
+    failure {
+      echo '❌ Builds or Tests failed!'
+    }
+  }
+}

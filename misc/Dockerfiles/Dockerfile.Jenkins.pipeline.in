@@ -164,5 +164,9 @@ RUN cmake -B $sdbuscxxBuild -S $sdbuscxxScr \
 RUN cmake --build $sdbuscxxBuild -j$(nproc)
 RUN cmake --install $sdbuscxxBuild --prefix $prefixD
 
+RUN apt install -y qt6-webview-dev qml6-module-qtwebview \
+  qt6-webengine-dev libqt6webenginecore6 qt6-webengine-dev-tools
+RUN apt install -y libwebkitgtk-6.0-dev
+
 
 CMD ["jenkins.sh"]

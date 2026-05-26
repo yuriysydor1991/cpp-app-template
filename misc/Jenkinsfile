@@ -1,0 +1,447 @@
+pipeline {
+  agent any
+
+  environment {
+    BUILDDIR="build"
+  }
+
+  parameters {
+    booleanParam(name: 'RUN_CPPCHECK', defaultValue: false, description: 'Run the cppcheck static code check?')
+    // Template project specific: optional packager checks, all disabled by
+    // default and opt-in (e.g. WIX is MS Windows only, FreeBSD pkg is FreeBSD
+    // only). Safe to drop together with the template stages below.
+    booleanParam(name: 'RUN_FLATPAK_PACKAGER', defaultValue: false, description: 'Template: build and check the flatpak package?')
+    booleanParam(name: 'RUN_DEB_PACKAGER', defaultValue: false, description: 'Template: build and check the deb package?')
+    booleanParam(name: 'RUN_RPM_PACKAGER', defaultValue: false, description: 'Template: build and check the RPM package?')
+    booleanParam(name: 'RUN_SNAP_PACKAGER', defaultValue: false, description: 'Template: build and check the snap package?')
+    booleanParam(name: 'RUN_FREEBSD_PACKAGER', defaultValue: false, description: 'Template: build and check the FreeBSD pkg package? (FreeBSD only)')
+    booleanParam(name: 'RUN_WIX_PACKAGER', defaultValue: false, description: 'Template: build and check the WIX MSI package? (MS Windows only)')
+  }
+
+  stages {
+    stage('Checkout') {
+      when {
+        expression {
+          def files = sh(script: 'ls -A', returnStdout: true).trim()
+          return files == ""
+        }
+      }
+
+      steps {
+        git branch: 'applibMeson',
+            url: 'https://github.com/yuriysydor1991/cpp-app-template.git'
+      }
+    }
+
+    stage('Code format configure') {
+      steps {
+        sh 'rm -fr $BUILDDIR'
+        sh '''
+          meson setup $BUILDDIR -DENABLE_CLANGFORMAT=true
+        '''
+      }
+    }
+
+    stage('Code format build (clang-format)') {
+      steps {
+        sh '''
+          meson compile -C $BUILDDIR clang-format
+        '''
+        script {
+          def files = sh(script: 'git ls-files -m', returnStdout: true).trim()
+          if (files) {
+            error "Some files are not formatted:\n${files}"
+          }
+        }
+      }
+
+      post {
+        success {
+          echo 'No files changed - OK'
+        }
+        failure {
+          echo 'Some files are not formatted - FAIL'
+        }
+      }
+    }
+
+    stage('Debug configure') {
+      steps {
+        sh 'rm -fr $BUILDDIR'
+        sh '''
+          meson setup $BUILDDIR --buildtype=debug -DENABLE_UNIT_TESTS=true \
+            -DENABLE_SANITIZERS=true -DENABLE_CPPCHECK=true \
+            -DMAX_LOG_LEVEL=5 -DENABLE_COMPONENT_TESTS=true
+        '''
+      }
+    }
+
+    stage('Debug build') {
+      steps {
+        sh '''
+          meson compile -C $BUILDDIR
+        '''
+      }
+    }
+
+    stage('cppcheck') {
+      when {
+        expression { params.RUN_CPPCHECK }
+      }
+      steps {
+        sh '''
+          meson compile -C $BUILDDIR cppcheck
+        '''
+      }
+    }
+
+    stage('Unit Tests') {
+      parallel {
+        stage('UTEST_Application') {
+          steps {
+            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_Application --suite UTEST_Application'
+          }
+        }
+        stage('UTEST_ApplicationContext') {
+          steps {
+            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_ApplicationContext --suite UTEST_ApplicationContext'
+          }
+        }
+        stage('UTEST_ApplicationFactory') {
+          steps {
+            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_ApplicationFactory --suite UTEST_ApplicationFactory'
+          }
+        }
+        stage('UTEST_ApplicationHelpPrinter') {
+          steps {
+            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_ApplicationHelpPrinter --suite UTEST_ApplicationHelpPrinter'
+          }
+        }
+        stage('UTEST_ApplicationVersionPrinter') {
+          steps {
+            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_ApplicationVersionPrinter --suite UTEST_ApplicationVersionPrinter'
+          }
+        }
+        stage('UTEST_CommandLineParser') {
+          steps {
+            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_CommandLineParser --suite UTEST_CommandLineParser'
+          }
+        }
+        stage('UTEST_ApplicationContext2LibraryContext') {
+          steps {
+            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_ApplicationContext2LibraryContext --suite UTEST_ApplicationContext2LibraryContext'
+          }
+        }
+        stage('UTEST_LibraryFacade') {
+          steps {
+            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_LibraryFacade --suite UTEST_LibraryFacade'
+          }
+        }
+        stage('UTEST_LibMain') {
+          steps {
+            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_LibMain --suite UTEST_LibMain'
+          }
+        }
+        stage('UTEST_LibFactory') {
+          steps {
+            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_LibFactory --suite UTEST_LibFactory'
+          }
+        }
+      }
+      post { always { junit "$BUILDDIR/meson-logs/UTEST_*.junit.xml" } }
+    }
+
+    stage('Component Tests') {
+      parallel {
+        stage('CTEST_SimpleLogger') {
+          steps {
+            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase CTEST_SimpleLogger --suite CTEST_SimpleLogger'
+          }
+        }
+        stage('CTEST_app') {
+          steps {
+            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase CTEST_app --suite CTEST_app'
+          }
+        }
+      }
+      post { always { junit "$BUILDDIR/meson-logs/CTEST_*.junit.xml" } }
+    }
+
+    stage('Debug configure (clang-tidy)') {
+      steps {
+        sh 'rm -fr $BUILDDIR'
+        sh '''
+          meson setup $BUILDDIR --buildtype=debug -DENABLE_CLANG_TIDY=true \
+            -DMAX_LOG_LEVEL=5
+        '''
+      }
+    }
+
+    stage('Debug build (clang-tidy)') {
+      steps {
+        sh '''
+          meson compile -C $BUILDDIR clang-tidy
+        '''
+      }
+    }
+
+    stage('Release configure') {
+      steps {
+        sh 'rm -fr $BUILDDIR'
+        sh '''
+          meson setup $BUILDDIR --buildtype=release
+        '''
+      }
+    }
+
+    stage('Release build') {
+      steps {
+        sh '''
+          meson compile -C $BUILDDIR
+        '''
+      }
+    }
+
+    stage('Release install') {
+      steps {
+        sh '''
+          meson install -C $BUILDDIR --destdir "$(pwd)/$BUILDDIR/install-try"
+        '''
+      }
+    }
+
+    // =====================================================================
+    // Template project specific checks.
+    //
+    // Everything below is specific to the cpp-app-template project itself and
+    // is safe to delete in a real project implementation derived from this
+    // template. The stages are written generically - they discover the doc
+    // sections, the meson submodules, the declared tests and the produced
+    // packages dynamically, with no hardcoded names - so they can be reused
+    // as-is on the other Meson template branches.
+    // =====================================================================
+
+    stage('Template: no git conflict markers') {
+      steps {
+        sh '''
+          if git grep -nE "^(<<<<<<<|>>>>>>>)" -- .; then
+            echo "FAIL: the files listed above contain git conflict markers (unmerged content)"
+            exit 1
+          fi
+          echo "OK: no git conflict markers found in the tracked files"
+        '''
+      }
+    }
+
+    stage('Template: no en_US doc sections in the uk_UA README') {
+      steps {
+        sh '''
+          if grep -nE "doc/sections/en_US/" doc/README.uk_UA.md; then
+            echo "FAIL: the uk_UA README links en_US sections; it must use uk_UA sections only"
+            exit 1
+          fi
+          echo "OK: the uk_UA README references no en_US sections"
+        '''
+      }
+    }
+
+    stage('Template: no uk_UA doc sections in the top-level README') {
+      steps {
+        sh '''
+          if grep -nE "doc/sections/uk_UA/" README.md; then
+            echo "FAIL: the top-level README links uk_UA sections; it must use en_US sections only"
+            exit 1
+          fi
+          echo "OK: the top-level README references no uk_UA sections"
+        '''
+      }
+    }
+
+    stage('Template: every doc section is linked in its README') {
+      steps {
+        sh '''
+          status=0
+          for langdir in doc/sections/*/; do
+            [ -d "$langdir" ] || continue
+            lang="$(basename "$langdir")"
+            if [ "$lang" = "en_US" ]; then
+              readme="README.md"
+            else
+              readme="doc/README.${lang}.md"
+            fi
+            if [ ! -f "$readme" ]; then
+              echo "FAIL: no README ($readme) found for the doc/sections/$lang language"
+              status=1
+              continue
+            fi
+            for f in "$langdir"*; do
+              [ -f "$f" ] || continue
+              if ! grep -qF "$f" "$readme"; then
+                echo "FAIL: $f is not linked in $readme"
+                status=1
+              fi
+            done
+          done
+          [ "$status" -eq 0 ] || exit 1
+          echo "OK: every doc/sections file is linked in its README"
+        '''
+      }
+    }
+
+    stage('Template: every meson submodule is wired via subdir()') {
+      steps {
+        sh '''
+          wired="$(grep -rh "subdir(" --include=meson.build . | cut -d"'" -f2 | sort -u)"
+          status=0
+          for d in meson/*/; do
+            [ -f "${d}meson.build" ] || continue
+            mod="$(basename "$d")"
+            if ! echo "$wired" | grep -qx "$mod"; then
+              echo "FAIL: meson submodule $mod ($d) is not wired via subdir() in the meson build files"
+              status=1
+            fi
+          done
+          [ "$status" -eq 0 ] || exit 1
+          echo "OK: every meson/ submodule is wired via subdir()"
+        '''
+      }
+    }
+
+    stage('Template: every declared test is registered in the pipeline') {
+      steps {
+        sh '''
+          declared="$(grep -rh "suite:" --include=meson.build src | cut -d"'" -f2 | sort -u)"
+          status=0
+          for t in $declared; do
+            if ! grep -qF "$t" misc/Jenkinsfile; then
+              echo "FAIL: test suite $t is declared in the meson.build files but not registered in this Jenkinsfile"
+              status=1
+            fi
+          done
+          [ "$status" -eq 0 ] || exit 1
+          echo "OK: every meson-declared test suite is registered in the pipeline"
+        '''
+      }
+    }
+
+    // Packager checks are intentionally separate sequential stages (not a
+    // parallel block): each runs a full Meson configure + build, so running
+    // them in parallel could overload the build agent.
+    stage('Template: flatpak package') {
+      when { expression { params.RUN_FLATPAK_PACKAGER } }
+      steps {
+        sh '''
+          BD="$BUILDDIR-pkg-flatpak"
+          rm -fr "$BD"
+          meson setup "$BD" --buildtype=release -DENABLE_FLATPAK=true
+          meson compile -C "$BD"
+          meson compile -C "$BD" flatpak
+          if [ -z "$(find "$BD" -name '*.flatpak' -print -quit)" ]; then
+            echo "FAIL: Meson did not produce a .flatpak bundle"
+            exit 1
+          fi
+          echo "OK: produced $(find "$BD" -name '*.flatpak' | head -n1)"
+        '''
+      }
+    }
+
+    stage('Template: deb package') {
+      when { expression { params.RUN_DEB_PACKAGER } }
+      steps {
+        sh '''
+          BD="$BUILDDIR-pkg-deb"
+          rm -fr "$BD"
+          meson setup "$BD" --buildtype=release -DENABLE_DEB=true
+          meson compile -C "$BD"
+          meson compile -C "$BD" deb
+          if [ -z "$(find "$BD" -name '*.deb' -print -quit)" ]; then
+            echo "FAIL: Meson did not produce a .deb package"
+            exit 1
+          fi
+          echo "OK: produced $(find "$BD" -name '*.deb' | head -n1)"
+        '''
+      }
+    }
+
+    stage('Template: rpm package') {
+      when { expression { params.RUN_RPM_PACKAGER } }
+      steps {
+        sh '''
+          BD="$BUILDDIR-pkg-rpm"
+          rm -fr "$BD"
+          meson setup "$BD" --buildtype=release -DENABLE_RPM=true
+          meson compile -C "$BD"
+          meson compile -C "$BD" rpm
+          if [ -z "$(find "$BD" -name '*.rpm' -print -quit)" ]; then
+            echo "FAIL: Meson did not produce a .rpm package"
+            exit 1
+          fi
+          echo "OK: produced $(find "$BD" -name '*.rpm' | head -n1)"
+        '''
+      }
+    }
+
+    stage('Template: snap package') {
+      when { expression { params.RUN_SNAP_PACKAGER } }
+      steps {
+        sh '''
+          BD="$BUILDDIR-pkg-snap"
+          rm -fr "$BD"
+          meson setup "$BD" --buildtype=release -DENABLE_SNAP=true
+          meson compile -C "$BD"
+          meson compile -C "$BD" snap
+          if [ -z "$(find "$BD" -name '*.snap' -print -quit)" ]; then
+            echo "FAIL: Meson did not produce a .snap package"
+            exit 1
+          fi
+          echo "OK: produced $(find "$BD" -name '*.snap' | head -n1)"
+        '''
+      }
+    }
+
+    stage('Template: freebsd-pkg package') {
+      when { expression { params.RUN_FREEBSD_PACKAGER } }
+      steps {
+        sh '''
+          BD="$BUILDDIR-pkg-freebsd"
+          rm -fr "$BD"
+          meson setup "$BD" --buildtype=release -DENABLE_FREEBSD_PKG=true
+          meson compile -C "$BD"
+          meson compile -C "$BD" freebsd-pkg
+          if [ -z "$(find "$BD" -name '*.pkg' -print -quit)" ]; then
+            echo "FAIL: Meson did not produce a FreeBSD .pkg package"
+            exit 1
+          fi
+          echo "OK: produced $(find "$BD" -name '*.pkg' | head -n1)"
+        '''
+      }
+    }
+
+    stage('Template: wix-msi package') {
+      when { expression { params.RUN_WIX_PACKAGER } }
+      steps {
+        sh '''
+          BD="$BUILDDIR-pkg-wix"
+          rm -fr "$BD"
+          meson setup "$BD" --buildtype=release -DENABLE_WIX=true
+          meson compile -C "$BD"
+          meson compile -C "$BD" wix
+          if [ -z "$(find "$BD" -name '*.msi' -print -quit)" ]; then
+            echo "FAIL: Meson did not produce a .msi package"
+            exit 1
+          fi
+          echo "OK: produced $(find "$BD" -name '*.msi' | head -n1)"
+        '''
+      }
+    }
+  }
+
+  post {
+    success {
+      echo '✅ Builds & Tests passed!'
+    }
+    failure {
+      echo '❌ Builds or Tests failed!'
+    }
+  }
+}

@@ -29,4 +29,5 @@ target_link_libraries(
 )
 
 add_subdirectory(ui)
+add_subdirectory(components)
 add_subdirectory(main-window)

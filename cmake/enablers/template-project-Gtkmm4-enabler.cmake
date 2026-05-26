@@ -12,7 +12,7 @@ endif()
 
 find_package(PkgConfig)
 
-pkg_check_modules(GTKMM gtkmm-4.0 REQUIRED)
+pkg_check_modules(GTKMM gtkmm-4.0 webkitgtk-6.0 REQUIRED)
 
 string(REPLACE  "." "/" GTKMM_APP_RESOURCES_PREFIX_COMPUTED "/${PROJECT_REVERSE_URL}")
 

@@ -1,6 +1,6 @@
 #include "src/qt6/Qt6Initer.h"
 
-#include <QGuiApplication>
+#include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QString>
 
@@ -25,7 +25,7 @@ int Qt6Initer::run(std::shared_ptr<app::ApplicationContext> actx)
   QCoreApplication::setOrganizationName(
       QString::fromStdString(project_decls::PROJECT_NAME));
 
-  QGuiApplication app(actx->argc, actx->argv);
+  QApplication app(actx->argc, actx->argv);
   QQmlApplicationEngine engine;
 
   LOGI("Trying to load " << QMLRes::get_url_main().toStdString());

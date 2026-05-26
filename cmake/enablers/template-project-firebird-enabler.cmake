@@ -2,14 +2,16 @@ cmake_minimum_required(VERSION 3.13)
 
 # Reusable enabler module for the Firebird client library (fbclient).
 #
-# Kept in a separate file (just like the libcurl and the LibXml2 enablers) so it
-# may be reused across components and branches. Including this module defines
-# the imported target `Firebird::fbclient` that components link against.
+# Mirrors the libcurl/LibXml2/nlohmann-json enablers: it delegates to the
+# shared template_project_default_3rdparty_enabler, which probes the system
+# installation first and only falls back to fetching the upstream sources when
+# nothing is found. The system probe is performed through the project
+# cmake/FindFirebird.cmake module, which exposes the Firebird::fbclient imported
+# target the Firebird driver links against.
 #
-# The Firebird client library does not ship a CMake package config nor a
-# reliable pkg-config file across distributions, so the library and the headers
-# are discovered with find_library()/find_path(). Optional hints may be provided
-# through the cache variables declared below.
+# Building Firebird from source is heavy and seldom needed: the development
+# package (for example 'sudo apt install -y firebird-dev') is the expected and
+# supported path.
 
 option(
   ENABLE_FIREBIRD
@@ -21,51 +23,11 @@ if (NOT ENABLE_FIREBIRD)
   return()
 endif()
 
-set(
-  TEMPLATE_APP_FIREBIRD_INCLUDE_HINT ""
-  CACHE PATH "Optional directory hint that contains the Firebird ibase.h header"
+set(TEMPLATE_APP_FIREBIRD_GIT "https://github.com/FirebirdSQL/firebird.git" CACHE STRING "The Firebird library git source repository")
+set(TEMPLATE_APP_FIREBIRD_GIT_TAG "master" CACHE STRING "The Firebird project git repository tag of interest")
+
+template_project_default_3rdparty_enabler(
+  NAME Firebird
+  GIT_REPOSITORY ${TEMPLATE_APP_FIREBIRD_GIT}
+  GIT_TAG ${TEMPLATE_APP_FIREBIRD_GIT_TAG}
 )
-
-set(
-  TEMPLATE_APP_FIREBIRD_LIB_HINT ""
-  CACHE PATH "Optional directory hint that contains the Firebird client library"
-)
-
-find_path(
-  FIREBIRD_INCLUDE_DIR
-  NAMES ibase.h
-  HINTS ${TEMPLATE_APP_FIREBIRD_INCLUDE_HINT}
-  PATH_SUFFIXES firebird
-)
-
-find_library(
-  FIREBIRD_LIBRARY
-  NAMES fbclient fbclient_ms
-  HINTS ${TEMPLATE_APP_FIREBIRD_LIB_HINT}
-)
-
-include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(
-  Firebird
-  REQUIRED_VARS FIREBIRD_LIBRARY FIREBIRD_INCLUDE_DIR
-)
-
-if (NOT Firebird_FOUND)
-  message(FATAL_ERROR
-    "The Firebird client library (fbclient) was not found. Install the "
-    "development package (for example 'sudo apt install -y firebird-dev'), or "
-    "provide the TEMPLATE_APP_FIREBIRD_INCLUDE_HINT and "
-    "TEMPLATE_APP_FIREBIRD_LIB_HINT cache hints. Configure with "
-    "-DENABLE_FIREBIRD=OFF only if you are removing the Firebird integration.")
-endif()
-
-if (NOT TARGET Firebird::fbclient)
-  add_library(Firebird::fbclient UNKNOWN IMPORTED)
-  set_target_properties(
-    Firebird::fbclient PROPERTIES
-    IMPORTED_LOCATION "${FIREBIRD_LIBRARY}"
-    INTERFACE_INCLUDE_DIRECTORIES "${FIREBIRD_INCLUDE_DIR}"
-  )
-endif()
-
-mark_as_advanced(FIREBIRD_INCLUDE_DIR FIREBIRD_LIBRARY)

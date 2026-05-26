@@ -61,11 +61,16 @@
 - гілка `appMongoDBCpp4` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appMongoDBCpp4), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appMongoDBCpp4)] котра містить інфраструктуру для швидкого старту розробки застосунку з використанням NoSQL СУБД [MongoDB](https://en.wikipedia.org/wiki/MongoDB)
 
 
-## Візуалізація Даних / Графіки / Діаграми
+## Візуалізація Даних / Графіки / Діаграми / Карти
 
 - гілка `appMatPlotxx` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appMatPlotxx), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appMatPlotxx)] котра містить інфраструктуру для швидкого старту розробки застосунку з використанням [MatPlot++](https://alandefreitas.github.io/matplotplusplus/) - бібліотека для малювання графіків на основі прогарми [gnuplot](http://www.gnuplot.info/) і [Qt6](https://www.qt.io/development/qt-framework/qt6).
 - гілка `appPLplot` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appPLplot), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appPLplot)] котра містить інфраструктуру для швидкого старту розробки застосунку з використанням [PLplot](https://plplot.sourceforge.net/) - потужної бібліотеки генерації графіків котра використовується у наукових програмах з багатьма інтерфейсами для різних віконних систем і мов програмування, і можливостями експорту у найпопулярніші формати зображень (PNG, SVG, JPEG, GIF, PDF і інші).
+<<<<<<< HEAD
 - гілка `appQt6ChartView` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appQt6ChartView), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appQt6ChartView)] (**поточна**) котра містить інфраструктуру для швидкого старту візуалізації даних і малювання графіків безпосередньо у вікні [Qt6](https://www.qt.io/development/qt-framework/qt6) [QML](https://doc.qt.io/qt-6/qtqml-index.html) за допомогою вбудованого елемента [ChartView](https://doc.qt.io/qt-6/qml-qtcharts-chartview.html) з модуля [QtCharts](https://doc.qt.io/qt-6/qtcharts-index.html).
+=======
+- гілка `appGtkmm4LeafLet` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appGtkmm4LeafLet), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appGtkmm4LeafLet)] яка містить загальні інфраструктурні класи програми для генераці одинарного бінарного виконуваного файлу з використанням [Gtkmm-4](https://gtkmm.gnome.org/en/index.html) з [WebKitGtk](https://webkitgtk.org/) і картами [LeafLet](https://leafletjs.com/)
+- гілка `appQt6LeafLet` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appQt6LeafLet), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appQt6LeafLet)] яка містить загальні інфраструктурні класи програми для генераці одинарного бінарного виконуваного файлу разом з [Qt6](https://www.qt.io/development/qt-framework/qt6)/[QML](https://doc.qt.io/qt-6/qtqml-index.html) і [WebView QML](https://doc.qt.io/qt-6/qml-qtwebview-webview.html) а також картами [LeafLet](https://leafletjs.com/)
+>>>>>>> 09d39ead (Introducing the appGtkmm4LeafLet and appQt6LeafLet branches info into the READMEs)
 
 ## Компʼютерний зір / Обробка зображень
 

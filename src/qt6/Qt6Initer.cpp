@@ -2,11 +2,14 @@
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 #include <QString>
 
 #include "src/app/IApplication.h"
 #include "src/log/log.h"
 #include "src/qt6/QMLRes.h"
+#include "src/qtdbus/QtDBusController.h"
+#include "src/qtdbus/SystemInformation.h"
 
 namespace Qt6i
 {
@@ -27,6 +30,24 @@ int Qt6Initer::run(std::shared_ptr<app::ApplicationContext> actx)
 
   QGuiApplication app(actx->argc, actx->argv);
   QQmlApplicationEngine engine;
+
+  // Query the general system information over the system D-Bus (hostname1)
+  // and publish it to QML as the "systemInfo" context property so the main
+  // window may simply bind to it. An unreachable bus is non-fatal for the GUI:
+  // the window still opens and surfaces the problem through systemInfo.error.
+  qtdbusi::SystemInformation sysinfo;
+  qtdbusi::QtDBusControllerPtr dbus = qtdbusi::QtDBusController::create();
+
+  if (dbus == nullptr) {
+    LOGW("System D-Bus is not reachable; system information stays empty");
+    sysinfo.error = QStringLiteral("The system D-Bus bus is not reachable");
+    sysinfo.notifyChanged();
+  } else if (!dbus->run(sysinfo)) {
+    LOGW("Failed to obtain the system information over D-Bus");
+  }
+
+  engine.rootContext()->setContextProperty(QStringLiteral("systemInfo"),
+                                            &sysinfo);
 
   LOGI("Trying to load " << QMLRes::get_url_main().toStdString());
 

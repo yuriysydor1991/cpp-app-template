@@ -17,3 +17,5 @@ sudo apt install -y qt6-base-dev qt6-base-dev-tools \
   qml6-module-qtquick-shapes qml6-module-qtquick-tooling \
   qml6-module-qtquick-timeline
 ```
+
+The native D-Bus client used by this branch relies on the [QtDBus](https://doc.qt.io/qt-6/qtdbus-index.html) module (the CMake `Qt6::DBus` target), which is already part of the `qt6-base-dev` package listed above, so no extra build dependency is required. At run time the executable needs access to a running [D-Bus](https://en.wikipedia.org/wiki/D-Bus) **system** bus exposing the [systemd-hostnamed](https://www.freedesktop.org/software/systemd/man/latest/org.freedesktop.hostname1.html) (`org.freedesktop.hostname1`) service - a standard component of any systemd based GNU/Linux system. When the bus is not reachable the window still opens and shows the corresponding error instead of the system information.

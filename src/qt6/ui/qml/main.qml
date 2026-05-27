@@ -6,12 +6,12 @@ import components
 ApplicationWindow {
   visible: true
   
-  width: 500
-  height: 300
-  minimumWidth: 400
-  minimumHeight: 250
+  width: 560
+  height: 360
+  minimumWidth: 420
+  minimumHeight: 280
 
-  DefaultWelcome {
+  DefaultSystemInfo {
     anchors.fill: parent
   }
 }

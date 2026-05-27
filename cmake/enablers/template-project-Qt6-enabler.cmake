@@ -16,5 +16,5 @@ set(CMAKE_AUTOUIC ON)
 
 find_package(
   Qt6 REQUIRED
-  COMPONENTS Core Gui Qml Quick QuickControls2 DBus
+  COMPONENTS Core DBus
 )

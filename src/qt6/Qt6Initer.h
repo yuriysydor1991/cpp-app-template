@@ -9,7 +9,11 @@ namespace Qt6i
 {
 
 /**
- * @brief The Qt initialization and starter class.
+ * @brief The Qt6 application initialization and starter class.
+ *
+ * Creates the QCoreApplication instance required by the Qt D-Bus module and
+ * drives the QtDBusController that reads the general system information and logs
+ * it. No GUI/QML is involved.
  */
 class Qt6Initer
 {
@@ -18,7 +22,8 @@ class Qt6Initer
   Qt6Initer() = default;
 
   /**
-   * @brief Starts the Qt6 available application.
+   * @brief Starts the Qt6 application: reads and logs the general system
+   * information over the system D-Bus.
    *
    * @param actx The application context with all the necessary info.
    *

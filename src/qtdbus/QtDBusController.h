@@ -9,8 +9,6 @@
 namespace qtdbusi
 {
 
-class SystemInformation;
-
 /**
  * @brief Owns the system bus connection and drives the system information
  * query through a query handler.
@@ -29,14 +27,12 @@ class QtDBusController
   QtDBusController() = default;
 
   /**
-   * @brief Reads the general system information into the given holder.
-   *
-   * @param info The system information holder to populate.
+   * @brief Reads the general system information and logs it.
    *
    * @return Returns true on success and false if the controller is not
    * initialized or the query handler reports a failure.
    */
-  virtual bool run(SystemInformation& info);
+  virtual bool run();
 
   /**
    * @brief Creates a controller with an established system bus connection.
@@ -63,7 +59,7 @@ class QtDBusController
   std::optional<QDBusConnection> connection;
 
  private:
-  bool make_system_info_call(SystemInformation& info);
+  bool make_system_info_call();
 };
 
 using QtDBusControllerPtr = QtDBusController::QtDBusControllerPtr;

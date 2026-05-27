@@ -7,7 +7,6 @@ add_executable(
   UTEST_Hostname1QueryHandler
   UTEST_Hostname1QueryHandler.cpp
   ${CMAKE_SOURCE_DIR}/src/qtdbus/query-handlers/Hostname1QueryHandler.cpp
-  ${CMAKE_SOURCE_DIR}/src/qtdbus/SystemInformation.cpp
 )
 
 target_include_directories(

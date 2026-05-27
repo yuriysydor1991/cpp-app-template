@@ -5,7 +5,6 @@
 
 #include <QString>
 
-#include "src/qtdbus/SystemInformation.h"
 #include "src/qtdbus/query-handlers/Hostname1QueryHandler.h"
 
 class QDBusConnection;
@@ -31,8 +30,8 @@ QDBusConnection* fake_connection()
 
 /**
  * @brief Test double that replaces the only bus-touching method with a
- * configurable callback, so the handle() orchestration can be exercised in
- * isolation, without a live D-Bus.
+ * configurable callback, so the handle() orchestration (and its LOGI logging)
+ * can be exercised in isolation, without a live D-Bus.
  */
 class TestableHostname1QueryHandler : public Hostname1QueryHandler
 {
@@ -59,10 +58,9 @@ class UTEST_Hostname1QueryHandler : public Test
 {
  public:
   TestableHostname1QueryHandler handler;
-  SystemInformation info;
 };
 
-TEST_F(UTEST_Hostname1QueryHandler, handle_fills_info_on_successful_fetch)
+TEST_F(UTEST_Hostname1QueryHandler, handle_returns_true_on_successful_fetch)
 {
   QDBusConnection* received = nullptr;
 
@@ -81,19 +79,11 @@ TEST_F(UTEST_Hostname1QueryHandler, handle_fills_info_on_successful_fetch)
         return true;
       };
 
-  EXPECT_TRUE(handler.handle(fake_connection(), info));
+  EXPECT_TRUE(handler.handle(fake_connection()));
   EXPECT_EQ(received, fake_connection());
-
-  EXPECT_EQ(info.hostname, QStringLiteral("unit-test-host"));
-  EXPECT_EQ(info.prettyHostname, QStringLiteral("Unit Test Host"));
-  EXPECT_EQ(info.operatingSystemPrettyName, QStringLiteral("UnitTestOS 1.0"));
-  EXPECT_EQ(info.kernelName, QStringLiteral("Linux"));
-  EXPECT_EQ(info.kernelRelease, QStringLiteral("0.0.0-unit"));
-  EXPECT_EQ(info.chassis, QStringLiteral("container"));
-  EXPECT_TRUE(info.error.isEmpty());
 }
 
-TEST_F(UTEST_Hostname1QueryHandler, handle_returns_false_and_reports_dbus_error)
+TEST_F(UTEST_Hostname1QueryHandler, handle_returns_false_on_dbus_error)
 {
   handler.onFetch =
       [&](QDBusConnection*,
@@ -104,8 +94,7 @@ TEST_F(UTEST_Hostname1QueryHandler, handle_returns_false_and_reports_dbus_error)
         return false;
       };
 
-  EXPECT_FALSE(handler.handle(fake_connection(), info));
-  EXPECT_FALSE(info.error.isEmpty());
+  EXPECT_FALSE(handler.handle(fake_connection()));
 }
 
 TEST_F(UTEST_Hostname1QueryHandler, handle_returns_false_on_null_connection)
@@ -121,7 +110,7 @@ TEST_F(UTEST_Hostname1QueryHandler, handle_returns_false_on_null_connection)
 
   // Asserts are compiled out for the unit tests (NDEBUG), so the explicit
   // nullptr guard inside handle() is what is being exercised here.
-  EXPECT_FALSE(handler.handle(nullptr, info));
+  EXPECT_FALSE(handler.handle(nullptr));
   EXPECT_FALSE(fetchCalled);
 }
 

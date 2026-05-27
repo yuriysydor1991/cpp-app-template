@@ -6,7 +6,6 @@
 #include <QDBusConnection>
 
 #include "src/qtdbus/QtDBusController.h"
-#include "src/qtdbus/SystemInformation.h"
 #include "src/qtdbus/query-handlers/DBusQueryHandlerFactory.h"
 #include "src/qtdbus/query-handlers/IDBusQueryHandler.h"
 
@@ -50,7 +49,6 @@ class UTEST_QtDBusController : public Test
   }
 
   std::shared_ptr<NiceMock<IDBusQueryHandler>> handler;
-  SystemInformation info;
 };
 
 TEST_F(UTEST_QtDBusController, run_returns_false_when_not_initialized)
@@ -59,23 +57,23 @@ TEST_F(UTEST_QtDBusController, run_returns_false_when_not_initialized)
   // inited() is false and run() bails out before the query call.
   QtDBusController controller;
 
-  EXPECT_FALSE(controller.run(info));
+  EXPECT_FALSE(controller.run());
 }
 
 TEST_F(UTEST_QtDBusController, run_succeeds_when_query_handler_succeeds)
 {
-  ON_CALL(*handler, handle(_, _)).WillByDefault(Return(true));
+  ON_CALL(*handler, handle(_)).WillByDefault(Return(true));
 
   TestableQtDBusController controller;
 
-  EXPECT_TRUE(controller.run(info));
+  EXPECT_TRUE(controller.run());
 }
 
 TEST_F(UTEST_QtDBusController, run_returns_false_when_query_handler_fails)
 {
-  ON_CALL(*handler, handle(_, _)).WillByDefault(Return(false));
+  ON_CALL(*handler, handle(_)).WillByDefault(Return(false));
 
   TestableQtDBusController controller;
 
-  EXPECT_FALSE(controller.run(info));
+  EXPECT_FALSE(controller.run());
 }

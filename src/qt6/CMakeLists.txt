@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 3.16)
 qt6_add_library(
   ${QT6_OBJECT_NAME} STATIC
   Qt6Initer.cpp
-  QMLRes.cpp
 )
 
 target_include_directories(
@@ -18,10 +17,6 @@ target_link_libraries(
   ${QT6_OBJECT_NAME}
   PUBLIC
     Qt6::Core
-    Qt6::Gui
-    Qt6::Qml
-    Qt6::Quick
-    Qt6::QuickControls2
     Qt6::DBus
 )
 
@@ -30,5 +25,3 @@ target_link_libraries(
   PUBLIC
     ${QT6_OBJECT_NAME}
 )
-
-add_subdirectory(ui)

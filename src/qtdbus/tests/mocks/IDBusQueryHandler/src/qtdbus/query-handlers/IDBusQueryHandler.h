@@ -5,8 +5,6 @@
 
 #include <memory>
 
-#include "src/qtdbus/SystemInformation.h"
-
 class QDBusConnection;
 
 namespace qtdbusi
@@ -24,8 +22,7 @@ class IDBusQueryHandler
   virtual ~IDBusQueryHandler() = default;
   IDBusQueryHandler() = default;
 
-  MOCK_METHOD(bool, handle,
-              (QDBusConnection * connection, SystemInformation& info));
+  MOCK_METHOD(bool, handle, (QDBusConnection * connection));
 };
 
 using IDBusQueryHandlerPtr = IDBusQueryHandler::IDBusQueryHandlerPtr;

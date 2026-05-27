@@ -10,7 +10,6 @@
 #include <QVariant>
 
 #include "src/log/log.h"
-#include "src/qtdbus/SystemInformation.h"
 
 namespace qtdbusi
 {
@@ -36,15 +35,12 @@ QString property_string(const QVariantMap& properties, const QString& name)
 
 }  // namespace
 
-bool Hostname1QueryHandler::handle(QDBusConnection* connection,
-                                   SystemInformation& info)
+bool Hostname1QueryHandler::handle(QDBusConnection* connection)
 {
   assert(connection != nullptr);
 
   if (connection == nullptr) {
     LOGE("No valid bus connection provided");
-    info.error = QStringLiteral("No valid D-Bus connection");
-    info.notifyChanged();
     return false;
   }
 
@@ -54,19 +50,8 @@ bool Hostname1QueryHandler::handle(QDBusConnection* connection,
   if (!fetch_properties(connection, props, error)) {
     LOGE("D-Bus error while reading hostname1 properties: "
          << error.toStdString());
-    info.error = error;
-    info.notifyChanged();
     return false;
   }
-
-  info.hostname = props.hostname;
-  info.prettyHostname = props.prettyHostname;
-  info.operatingSystemPrettyName = props.osPrettyName;
-  info.kernelName = props.kernelName;
-  info.kernelRelease = props.kernelRelease;
-  info.chassis = props.chassis;
-  info.error.clear();
-  info.notifyChanged();
 
   LOGI("hostname: " << props.hostname.toStdString());
   LOGI("Pretty hostname: " << props.prettyHostname.toStdString());

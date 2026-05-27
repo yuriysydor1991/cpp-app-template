@@ -6,7 +6,6 @@
 #include <QCoreApplication>
 #include <QDBusConnection>
 
-#include "src/qtdbus/SystemInformation.h"
 #include "src/qtdbus/query-handlers/DBusQueryHandlerFactory.h"
 #include "src/qtdbus/query-handlers/Hostname1QueryHandler.h"
 #include "src/qtdbus/query-handlers/IDBusQueryHandler.h"
@@ -23,7 +22,6 @@ class CTEST_Hostname1QueryHandler : public Test
   }
 
   DBusQueryHandlerFactory factory;
-  SystemInformation info;
 };
 
 TEST_F(CTEST_Hostname1QueryHandler, factory_creates_non_null_default_handler)
@@ -53,12 +51,9 @@ TEST_F(CTEST_Hostname1QueryHandler, live_system_bus_query)
   ASSERT_NE(handler, nullptr);
 
   // hostname1 (systemd-hostnamed) is a standard, bus-activatable system
-  // service; on a host that exposes a system bus the read-only properties must
-  // be retrievable without elevated privileges.
-  EXPECT_TRUE(handler->handle(&bus, info));
-
-  // The static Hostname is always present on a systemd host.
-  EXPECT_FALSE(info.hostname.isEmpty());
+  // service; on a host that exposes a system bus the read-only properties are
+  // retrievable without elevated privileges and get logged.
+  EXPECT_TRUE(handler->handle(&bus));
 }
 
 int main(int argc, char** argv)

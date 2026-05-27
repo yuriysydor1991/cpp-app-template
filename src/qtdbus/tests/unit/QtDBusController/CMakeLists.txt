@@ -8,7 +8,6 @@ add_executable(
   UTEST_QtDBusController
   UTEST_QtDBusController.cpp
   ${CMAKE_SOURCE_DIR}/src/qtdbus/QtDBusController.cpp
-  ${CMAKE_SOURCE_DIR}/src/qtdbus/SystemInformation.cpp
 )
 
 target_include_directories(

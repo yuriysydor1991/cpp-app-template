@@ -6,21 +6,20 @@
 #include <QDBusError>
 
 #include "src/log/log.h"
-#include "src/qtdbus/SystemInformation.h"
 #include "src/qtdbus/query-handlers/DBusQueryHandlerFactory.h"
 #include "src/qtdbus/query-handlers/IDBusQueryHandler.h"
 
 namespace qtdbusi
 {
 
-bool QtDBusController::run(SystemInformation& info)
+bool QtDBusController::run()
 {
   if (!inited()) {
     LOGE("Object is not initialized");
     return false;
   }
 
-  return make_system_info_call(info);
+  return make_system_info_call();
 }
 
 bool QtDBusController::init()
@@ -51,7 +50,7 @@ QDBusConnection* QtDBusController::connection_ptr()
   return connection.has_value() ? &connection.value() : nullptr;
 }
 
-bool QtDBusController::make_system_info_call(SystemInformation& info)
+bool QtDBusController::make_system_info_call()
 {
   DBusQueryHandlerFactory factory;
 
@@ -62,7 +61,7 @@ bool QtDBusController::make_system_info_call(SystemInformation& info)
     return false;
   }
 
-  return handler->handle(connection_ptr(), info);
+  return handler->handle(connection_ptr());
 }
 
 QtDBusControllerPtr QtDBusController::create()

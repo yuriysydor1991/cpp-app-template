@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 3.16)
 add_library(
   TemplateProjectQtDBusControllerObj OBJECT
   QtDBusController.cpp
-  SystemInformation.cpp
 )
 
 target_include_directories(

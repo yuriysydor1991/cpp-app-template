@@ -10,8 +10,6 @@ class QDBusConnection;
 namespace qtdbusi
 {
 
-class SystemInformation;
-
 /**
  * @brief A query handler that reads a few well known, read only properties from
  * the systemd-hostnamed service (org.freedesktop.hostname1) on the system bus
@@ -52,17 +50,15 @@ class Hostname1QueryHandler : public IDBusQueryHandler
   Hostname1QueryHandler() = default;
 
   /**
-   * @brief Reads the hostname1 properties through the given connection, stores
-   * them into the provided holder and logs them.
+   * @brief Reads the hostname1 properties through the given connection and logs
+   * them via the LOGI logging calls.
    *
    * @param connection A pointer to a valid, connected system bus connection.
-   * @param info The system information holder to populate.
    *
    * @return Returns true in case the properties were read successfully and
-   * false in case of any D-Bus error or an invalid connection (in which case
-   * info.error is filled with a human readable description).
+   * false in case of any D-Bus error or an invalid connection.
    */
-  bool handle(QDBusConnection* connection, SystemInformation& info) override;
+  bool handle(QDBusConnection* connection) override;
 
  protected:
   /**

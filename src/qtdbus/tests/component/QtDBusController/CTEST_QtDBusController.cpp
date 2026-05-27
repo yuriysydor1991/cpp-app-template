@@ -5,7 +5,6 @@
 #include <QDBusConnection>
 
 #include "src/qtdbus/QtDBusController.h"
-#include "src/qtdbus/SystemInformation.h"
 
 using namespace testing;
 using namespace qtdbusi;
@@ -20,8 +19,6 @@ class CTEST_QtDBusController : public Test
   {
     return QDBusConnection::systemBus().isConnected();
   }
-
-  SystemInformation info;
 };
 
 TEST_F(CTEST_QtDBusController, create_reflects_system_bus_availability)
@@ -48,10 +45,9 @@ TEST_F(CTEST_QtDBusController, run_against_live_system_bus)
   ASSERT_NE(controller, nullptr);
 
   // hostname1 (systemd-hostnamed) is a standard, bus-activatable system
-  // service, so on a host that exposes a system bus run() must complete and the
-  // mandatory Hostname property must come back non-empty.
-  EXPECT_TRUE(controller->run(info));
-  EXPECT_FALSE(info.hostname.isEmpty());
+  // service, so on a host that exposes a system bus run() reads its read-only
+  // properties, logs them and completes successfully.
+  EXPECT_TRUE(controller->run());
 }
 
 int main(int argc, char** argv)

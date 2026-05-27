@@ -7,7 +7,6 @@ add_executable(
   CTEST_QtDBusController
   CTEST_QtDBusController.cpp
   ${CMAKE_SOURCE_DIR}/src/qtdbus/QtDBusController.cpp
-  ${CMAKE_SOURCE_DIR}/src/qtdbus/SystemInformation.cpp
   ${CMAKE_SOURCE_DIR}/src/qtdbus/query-handlers/DBusQueryHandlerFactory.cpp
   ${CMAKE_SOURCE_DIR}/src/qtdbus/query-handlers/Hostname1QueryHandler.cpp
 )

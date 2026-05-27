@@ -15,5 +15,9 @@ sudo apt install -y qt6-base-dev qt6-base-dev-tools \
   qml6-module-qtquick-particles qml6-module-qtquick-pdf \
   qml6-module-qtquick-scene2d qml6-module-qtquick-scene3d \
   qml6-module-qtquick-shapes qml6-module-qtquick-tooling \
-  qml6-module-qtquick-timeline
+  qml6-module-qtquick-timeline \
+  qt6-location-dev qt6-positioning-dev \
+  qml6-module-qtlocation qml6-module-qtpositioning
 ```
+
+The `qt6-location-dev`, `qt6-positioning-dev`, `qml6-module-qtlocation` and `qml6-module-qtpositioning` packages provide the [Qt Location](https://doc.qt.io/qt-6/qtlocation-index.html) and [Qt Positioning](https://doc.qt.io/qt-6/qtpositioning-index.html) modules that expose the native [Map](https://doc.qt.io/qt-6/qml-qtlocation-map.html) QML element (together with its bundled `osm` OpenStreetMap geo services plugin) used by this branch. They require Qt 6.5 or newer, where the Qt Location module was reintroduced.

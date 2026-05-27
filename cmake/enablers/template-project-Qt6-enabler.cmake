@@ -15,6 +15,6 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 find_package(
-  Qt6 REQUIRED 
-  COMPONENTS Core Gui Qml Quick QuickControls2
+  Qt6 REQUIRED
+  COMPONENTS Core Gui Qml Quick QuickControls2 Location Positioning
 )

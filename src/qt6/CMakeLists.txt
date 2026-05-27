@@ -22,6 +22,8 @@ target_link_libraries(
     Qt6::Qml
     Qt6::Quick
     Qt6::QuickControls2
+    Qt6::Location
+    Qt6::Positioning
 )
 
 target_link_libraries(

@@ -13,6 +13,9 @@ apps:
     command: ${PROJECT_BINARY_INSTALLATION_DIR}/${PROJECT_BINARY_NAME}
     plugs:
       - home
+      - x11
+      - wayland
+      - opengl
 
 parts:
   ${PROJECT_BINARY_NAME}:
@@ -22,3 +25,9 @@ parts:
     cmake-parameters:
       - -DCMAKE_BUILD_TYPE=Release
       - -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
+    build-packages:
+      - libsfml-dev
+    stage-packages:
+      - libsfml-graphics2.6
+      - libsfml-window2.6
+      - libsfml-system2.6

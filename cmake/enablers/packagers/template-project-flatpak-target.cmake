@@ -13,7 +13,7 @@ endif()
 find_program(FLATPAKB_EXEC flatpak-builder REQUIRED)
 find_program(FLATPAK_EXEC flatpak REQUIRED)
 
-set(FLATPAK_PROJECT_URL ua.org.kytok.template.${PROJECT_BINARY_NAME})
+set(FLATPAK_PROJECT_URL ua.org.kytok.template.SFML.${PROJECT_BINARY_NAME})
 set(FLATPAK_REPO ${PROJECT_BINARY_NAME}-repo)
 set(FLATPAK_DST_NAME ${PROJECT_BINARY_NAME}-${CMAKE_PROJECT_VERSION}.flatpak)
 set(flatpakConfDst ${CMAKE_BINARY_DIR}/flatpak.conf.json)

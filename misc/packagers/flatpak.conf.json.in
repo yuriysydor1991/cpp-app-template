@@ -6,6 +6,28 @@
   "command": "${PROJECT_BINARY_NAME}",
   "modules": [
     {
+      "name": "sfml",
+      "buildsystem": "cmake",
+      "builddir": true,
+      "config-opts": [
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DBUILD_SHARED_LIBS=ON",
+        "-DSFML_BUILD_AUDIO=OFF",
+        "-DSFML_BUILD_NETWORK=OFF",
+        "-DSFML_BUILD_GRAPHICS=ON",
+        "-DSFML_BUILD_WINDOW=ON",
+        "-DSFML_BUILD_EXAMPLES=OFF",
+        "-DSFML_BUILD_DOC=OFF"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/SFML/SFML.git",
+          "tag": "2.6.2"
+        }
+      ]
+    },
+    {
       "name": "${PROJECT_NAME}",
       "buildsystem": "cmake",
       "config-opts": ["-DCMAKE_BUILD_TYPE=Release"],
@@ -14,7 +36,10 @@
           "type": "dir",
           "path": "${CMAKE_SOURCE_DIR}"
         }
-      ]
+      ],
+      "build-options": {
+        "build-args": [ "--share=network" ]
+      }
     }
   ]
 }

@@ -12,6 +12,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/enablers/dockerers")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/enablers/packagers")
 
 include(template-project-GTest-enabler)
+include(template-project-SFML-enabler)
 include(template-project-clang-format-target)
 include(template-project-valgrind-target)
 

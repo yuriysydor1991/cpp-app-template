@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appSFML0.1.0] - 2026-05-28
+
+- Branch out from the `app` template branch into the `appSFML` SFML variant.
+- Introduce the SFML cmake enabler with the system probe and a CMake FetchContent (SFML 2.6.2) fallback.
+- Introduce the SFML component (context, context builder, initer, event subsystem and painter) modeled on the appSDL2/appSDL3 branches.
+- Introduce the SFML component unit and component tests together with the app level SFMLIniter mock.
+- Wire the SFML packages info into the READMEs, the flatpak/snap/Docker packagers and the Jenkins pipeline.
+
 ## [app0.10.0] - 2025-09-08
 
 - 5e10927 Fixing typo in the README.md

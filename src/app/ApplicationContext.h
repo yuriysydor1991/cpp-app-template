@@ -1,6 +1,7 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATIONCONTEXT_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATIONCONTEXT_CLASS_H
 
+#include <atomic>
 #include <string>
 #include <vector>
 
@@ -63,6 +64,24 @@ struct ApplicationContext
    * @param errorDescription The application error description.
    */
   void push_error(const std::string& errorDescription);
+
+  /**
+   * @brief Requests (or clears) the stop of the SFML event loop.
+   *
+   * @param nStop Pass true to request the event loop to stop.
+   */
+  void stop(const bool nStop);
+
+  /**
+   * @brief Tells whether the SFML event loop was requested to stop.
+   *
+   * @return Returns true if the event loop should stop.
+   */
+  bool stop();
+
+ private:
+  /// @brief Marked to true in order to stop the SFML event loop.
+  std::atomic_bool toStop;
 };
 
 }  // namespace app

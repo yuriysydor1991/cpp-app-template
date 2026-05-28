@@ -23,7 +23,7 @@
 ## Базова структура програми
 
 - гілка `main` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template)] один файл з функцією `main` і з усіма можливими інтеграціями для генерації одного бінарного виконуваного файлу.
-- гілка `app` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/app), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/app)] (**поточна**) яка містить загальні інфраструктурні класи програми для генераці одинарного бінарного виконуваного файлу.
+- гілка `app` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/app), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/app)] яка містить загальні інфраструктурні класи програми для генераці одинарного бінарного виконуваного файлу.
 - гілка `applib` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/applib), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/applib)] яка складається з класів банарного виконуваного файлу з додатковими інфраструктурними класами для генерації підключаємої бібліотеки і заголовкових файлів (доступні для встановлення), що призначені для поширення коду бібліотеки для повторного перевикористання іншими бінарнами файлами.
 - гілка `lib` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/lib), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/lib)] і яка призначена для предоставляння початкової інфраструктури для реалізації бібліотеки разом з заголовковими підключаємими файлами і документацією за необхідності.
 - гілка `appMeson` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appMeson), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appMeson)] яка містить загальні інфраструктурні класи програми для генераці одинарного бінарного виконуваного файлу разом з системою побудови [Meson](https://mesonbuild.com/).
@@ -46,6 +46,7 @@
 
 - гілка `appSDL3` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSDL3), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSDL3)] - яка містить загальні класи для генераці одинарного бінарного виконуваного файлу разом з початковою інфраструктурою для розробки у [OpenGL](https://www.opengl.org/) 3D разом з [SDL3](https://wiki.libsdl.org/SDL3/FrontPage) і набагато більше!
 - гілка `appSDL2` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSDL2), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSDL2)] яка містить загальні класи для генераці одинарного бінарного виконуваного файлу разом з початковою інфраструктурою для розробки у [OpenGL](https://www.opengl.org/) 3D разом з [SDL2](https://en.wikipedia.org/wiki/Simple_DirectMedia_Layer) і набагато більше!
+- гілка `appSFML` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSFML), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSFML)] (**поточна**) яка містить загальні класи для генераці одинарного бінарного виконуваного файлу разом з початковою інфраструктурою на базі мультимедійної бібліотеки [SFML](https://www.sfml-dev.org/) (2D графіка, вікна, ввід та доступ до [OpenGL](https://www.opengl.org/)), яка надається системним пакетом або резервним механізмом CMake FetchContent.
 - гілка `appFreeGlut` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appFreeGlut), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appFreeGlut)] яка містить загальні класи для генераці одинарного бінарного виконуваного файлу разом з початковою інфраструктурою для розробки у [OpenGL](https://www.opengl.org/) 3D разом з [FreeGlut](https://freeglut.sourceforge.net/).
 
 ## Web / HTTP / Мережа
@@ -104,6 +105,7 @@
     1. [Необов'язковий програми для генерації пакету flatpak](/doc/sections/uk_UA/3-9-optional-for-the-flatpak-packager.md)
     1. [Необов'язкові пакети для запуску контейнера Docker](/doc/sections/uk_UA/3-10-optional-for-docker-container-runs.md)
     1. [Необов'язкові пакети для snap пакувальника](/doc/sections/uk_UA/3-11-optional-for-snap-packager.md)
+    1. [Обов'язкові пакети для розробки з SFML](/doc/sections/uk_UA/3-12-required-for-the-SFML-development.md)
 1. [Структура проекту](/doc/sections/uk_UA/4-project-structure.md)
     1. [Діаграми проекту](/doc/sections/uk_UA/4-0-project-diagrams.md)
     1. [Реалізуй код одразу!](/doc/sections/uk_UA/4-1-implement-code-straight-away.md)

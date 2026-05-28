@@ -4,6 +4,7 @@
 #include <iostream>
 #include <memory>
 
+#include "src/SFML/SFMLIniter.h"
 #include "src/log/log.h"
 
 namespace app
@@ -18,7 +19,12 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  LOGI("Your application implementation goes here!");
+  templateSFML::SFMLIniter sfml;
+
+  if (sfml.run(ctx) != 0) {
+    LOGE("The SFML controller returned invalid state");
+    return INVALID;
+  }
 
   return 0;
 }

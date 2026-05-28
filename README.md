@@ -23,7 +23,7 @@ Examine available branches to find your most applicable variant of the template 
 ## Basic application infrastructure
 
 - `main` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template)] just the clear `main` function and all available CMake integrations with no additional app infrastructure classes.
-- `app` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/app), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/app)] (**current**) with just general application related classes to generate a single binary executable.
+- `app` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/app), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/app)] with just general application related classes to generate a single binary executable.
 - `applib` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/applib), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/applib)] for the application binary with additional separate library binary and header files (available for the installation) in order to provide library's code reusability across multiple applications.
 - `lib` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/lib), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/lib)] for the library with the headers include files (and documentation) without target binary.
 - `appMeson` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appMeson), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appMeson)] with just general application related classes to generate a single binary executable with the [Meson](https://mesonbuild.com/) build system.
@@ -46,6 +46,7 @@ Examine available branches to find your most applicable variant of the template 
 
 - `appSDL3` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSDL3), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSDL3)] with just general application related classes to generate a single binary executable with a [SDL3](https://wiki.libsdl.org/SDL3/FrontPage) library for the [OpenGL](https://www.opengl.org/) 3D development and more!
 - `appSDL2` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSDL2), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSDL2)] with just general application related classes to generate a single binary executable with a [SDL2](https://en.wikipedia.org/wiki/Simple_DirectMedia_Layer) library for the [OpenGL](https://www.opengl.org/) 3D development and more!
+- `appSFML` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSFML), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSFML)] (**current**) with just general application related classes to generate a single binary executable with the [SFML](https://www.sfml-dev.org/) multimedia library (2D graphics, windowing, input and [OpenGL](https://www.opengl.org/) access) provided through the system package or the CMake FetchContent fallback.
 - `appFreeGlut` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appFreeGlut), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appFreeGlut)] with just general application related classes to generate a single binary executable with a [FreeGlut](https://freeglut.sourceforge.net/) library for the [OpenGL](https://www.opengl.org/) 3D development.
 
 ## Web / HTTP / Net
@@ -103,6 +104,7 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
     1. [Optional for the flatpak packager](/doc/sections/en_US/3-9-optional-for-the-flatpak-packager.md)
     1. [Optional for the Docker container runs](/doc/sections/en_US/3-10-optional-for-docker-container-runs.md)
     1. [Optional for the snap packager](/doc/sections/en_US/3-11-optional-for-snap-packager.md)
+    1. [Required packages for the SFML development](/doc/sections/en_US/3-12-required-for-the-SFML-development.md)
 1. [Project structure](/doc/sections/en_US/4-project-structure.md)
     1. [Project diagrams](/doc/sections/en_US/4-0-project-diagrams.md)
     1. [Implement code straight away!](/doc/sections/en_US/4-1-implement-code-straight-away.md)

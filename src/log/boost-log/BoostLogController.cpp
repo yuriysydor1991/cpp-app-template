@@ -44,8 +44,9 @@ void BoostLogController::init_stdout()
 void BoostLogController::init_file()
 {
   logging::add_file_log(
-      keywords::file_name = default_log_name,
+      keywords::file_name = lfilepath,
       keywords::open_mode = std::ios_base::app,
+      keywords::auto_flush = true,
       keywords::format =
           (expr::stream
            << expr::format_date_time<boost::posix_time::ptime>(
@@ -80,11 +81,15 @@ logging::trivial::severity_level BoostLogController::get_boost_lvl(
       logging::trivial::trace,
   };
 
+  if (prjlvl <= 1U) {
+    return boost_sevs.front();
+  }
+
   if (prjlvl >= max_sev) {
     return boost_sevs.back();
   }
 
-  return boost_sevs[prjlvl];
+  return boost_sevs[prjlvl - 1U];
 }
 
 }  // namespace boost_log

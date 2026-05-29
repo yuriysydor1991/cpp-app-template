@@ -81,11 +81,15 @@ log4cpp::Priority::PriorityLevel Log4Cpp5Init::get_log4cpp_priority(
                    log4cpp::Priority::NOTICE, log4cpp::Priority::INFO,
                    log4cpp::Priority::DEBUG};
 
+  if (prjsev <= 1U) {
+    return log4cpp_prio.front();
+  }
+
   if (prjsev >= max_prio) {
     return log4cpp_prio.back();
   }
 
-  return log4cpp_prio[prjsev];
+  return log4cpp_prio[prjsev - 1U];
 }
 
 std::string Log4Cpp5Init::get_full_log_path(const std::string& logname)

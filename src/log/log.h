@@ -90,7 +90,7 @@
  * @param msg The logging message which may use the << operator
  * and each of the log elements MUST be converted into the std::string.
  */
-#define LOGD(msg) LOG_BODY(debugStream, msg)
+#define LOGD(msg) LOG_BODY(infoStream, msg)
 #else
 #define LOGD(msg)
 #endif  // MAX_LOG_LEVEL
@@ -104,7 +104,7 @@
  * @param msg The logging message which may use the << operator
  * and each of the log elements MUST be converted into the std::string.
  */
-#define LOGT(msg) LOG_BODY(infoStream, msg)
+#define LOGT(msg) LOG_BODY(debugStream, msg)
 #else
 #define LOGT(msg)
 #endif  // MAX_LOG_LEVEL

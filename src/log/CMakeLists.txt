@@ -9,3 +9,5 @@ target_link_libraries(
 )
 
 add_subdirectory(log4cpp5-init)
+
+add_subdirectory(tests)

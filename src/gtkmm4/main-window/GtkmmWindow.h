@@ -4,6 +4,7 @@
 #include <memory>
 #include <string>
 
+#include "src/gtkmm4/gl-area/GLTriangleArea.h"
 #include "src/gtkmm4/gtkmm4_includes.h"
 
 namespace Gtkmm4i::main_window
@@ -49,6 +50,8 @@ class GtkmmWindow : public Gtk::Window
   Gtk::Label headerText;
   Gtk::Label explanationText;
   Gtk::Image image;
+
+  gl_area::GLTriangleArea glArea;
 };
 
 using GtkmmWindowPtr = GtkmmWindow::GtkmmWindowPtr;

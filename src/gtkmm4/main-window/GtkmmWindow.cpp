@@ -38,10 +38,14 @@ void GtkmmWindow::pack_widgets()
   box.append(headerText);
   box.append(explanationText);
 
-  image.set_vexpand(true);
+  image.set_vexpand(false);
   image.set_hexpand(true);
 
   box.append(image);
+
+  glArea.set_expand(true);
+
+  box.append(glArea);
 
   set_child(box);
 }

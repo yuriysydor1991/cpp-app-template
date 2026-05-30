@@ -35,6 +35,13 @@ void WinUI3MainWindow::build_content(const helpers::WindowConfig& config)
   panel.Children().Append(header);
   panel.Children().Append(explanation);
 
+  // The Direct3D rendering canvas (blank black) below the welcome text. Give
+  // it an explicit size so the SwapChainPanel gets a non-zero layout pass.
+  auto canvas = gl_canvas.panel();
+  canvas.Width(320);
+  canvas.Height(240);
+  panel.Children().Append(canvas);
+
   win.Content(panel);
 }
 

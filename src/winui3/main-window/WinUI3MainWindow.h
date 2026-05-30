@@ -1,6 +1,7 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_WINUI3MAINWINDOW_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_WINUI3MAINWINDOW_CLASS_H
 
+#include "src/winui3/gl-area/GLTriangleArea.h"
 #include "src/winui3/helpers/WindowConfig.h"
 #include "src/winui3/winui3_includes.h"
 
@@ -27,6 +28,7 @@ class WinUI3MainWindow
   void build_content(const helpers::WindowConfig& config);
 
   winrt::Microsoft::UI::Xaml::Window win{nullptr};
+  gl_area::GLTriangleArea gl_canvas;
 };
 
 }  // namespace winui3::main_window

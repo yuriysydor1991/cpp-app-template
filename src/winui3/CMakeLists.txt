@@ -28,6 +28,7 @@ add_subdirectory(app)
 # Windows App SDK is available); off Windows the app subdirectory builds a stub
 # launch seam instead.
 if(WIN32 AND TARGET winui3::sdk)
+  add_subdirectory(gl-area)
   add_subdirectory(main-window)
 endif()
 

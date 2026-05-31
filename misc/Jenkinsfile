@@ -8,6 +8,7 @@ pipeline {
 
   parameters {
     booleanParam(name: 'RUN_CPPCHECK', defaultValue: false, description: 'Run the cppcheck static code check?')
+    booleanParam(name: 'RUN_CLANGTIDY', defaultValue: false, description: 'Run the clang-tidy build/static code check?')
     // Template project specific: optional packager checks, all disabled by
     // default and opt-in (e.g. WIX is MS Windows only, FreeBSD pkg is FreeBSD
     // only). Safe to drop together with the template stages below.
@@ -158,6 +159,9 @@ pipeline {
     }
     
     stage('Debug configure (clang-tidy)') {
+      when {
+        expression { params.RUN_CLANGTIDY }
+      }
       steps {
         sh 'rm -fr $BUILDDIR'
         sh '''
@@ -168,6 +172,9 @@ pipeline {
     }
     
     stage('Debug build (clang-tidy)') {
+      when {
+        expression { params.RUN_CLANGTIDY }
+      }
       steps {
         sh '''
           cmake --build $BUILDDIR -j$(nproc)

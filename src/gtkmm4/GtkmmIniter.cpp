@@ -2,10 +2,10 @@
 
 #include <cassert>
 
-#include "project-global-decls.h"
+#include <giomm/init.h>
+
 #include "src/app/IApplication.h"
-#include "src/gtkmm4/gtkmm4_includes.h"
-#include "src/gtkmm4/main-window/GtkmmWindow.h"
+#include "src/gdbus/GDBusController.h"
 #include "src/log/log.h"
 
 namespace Gtkmm4i
@@ -20,16 +20,25 @@ int GtkmmIniter::run(std::shared_ptr<app::ApplicationContext> nactx)
     return app::IApplication::INVALID;
   }
 
-  actx = nactx;
+  // giomm/GLib must be initialized before any Gio::DBus usage. No GLib main
+  // loop is run: the controller performs synchronous (blocking) property reads,
+  // logs the obtained system information through the LOGI calls in the query
+  // handler and returns. No GUI window is created.
+  Gio::init();
 
-  LOGD("Trying to create the GTK4 app instance");
+  gdbusi::GDBusControllerPtr dbus = gdbusi::GDBusController::create();
 
-  auto app = Gtk::Application::create(project_decls::PROJECT_REVERSE_URL);
+  if (dbus == nullptr) {
+    LOGE("Fail to create the system D-Bus controller");
+    return app::IApplication::INVALID;
+  }
 
-  LOGD("Starting the GTK4 app");
+  if (!dbus->run()) {
+    LOGE("Failed to obtain the system information over D-Bus");
+    return app::IApplication::INVALID;
+  }
 
-  return app->make_window_and_run<main_window::GtkmmWindow>(actx->argc,
-                                                            actx->argv);
+  return 0;
 }
 
 }  // namespace Gtkmm4i

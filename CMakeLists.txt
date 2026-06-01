@@ -17,12 +17,7 @@ project(
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Git REQUIRED)
-
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
-
-include(template-project-misc-variables-declare)
-include(template-project-feature-enabler)
+include(cmake/template-project-bootstrap.cmake)
 
 message(STATUS "PROJECT_NAME: ${PROJECT_NAME}")
 

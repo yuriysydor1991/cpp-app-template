@@ -1,20 +1,18 @@
 #include "src/qt6/Qt6Initer.h"
 
+#include <cassert>
+
 #include <QGuiApplication>
-#include <QQmlApplicationEngine>
-#include <QString>
 
 #include "src/app/IApplication.h"
 #include "src/log/log.h"
-#include "src/qt6/QMLRes.h"
+#include "src/qtvulkan/QtVulkanController.h"
 
 namespace Qt6i
 {
 
 int Qt6Initer::run(std::shared_ptr<app::ApplicationContext> actx)
 {
-  using QMLRes = qmlpaths::QMLRes;
-
   assert(actx != nullptr);
 
   if (actx == nullptr) {
@@ -22,23 +20,26 @@ int Qt6Initer::run(std::shared_ptr<app::ApplicationContext> actx)
     return app::IApplication::INVALID;
   }
 
-  QCoreApplication::setOrganizationName(
-      QString::fromStdString(project_decls::PROJECT_NAME));
-
+  // QVulkanInstance (Qt6::Gui) obtains the platform Vulkan instance through the
+  // platform integration, which requires a living QGuiApplication. No event
+  // loop (app.exec()) is required: the controller creates the instance,
+  // enumerates the physical devices, logs them through the LOGI calls in the
+  // device info handler and returns.
   QGuiApplication app(actx->argc, actx->argv);
-  QQmlApplicationEngine engine;
 
-  LOGI("Trying to load " << QMLRes::get_url_main().toStdString());
+  qtvulkani::QtVulkanControllerPtr vulkan = qtvulkani::QtVulkanController::create();
 
-  engine.addImportPath(QMLRes::get_url_main_import());
-  engine.load(QMLRes::get_url_main());
-
-  if (engine.rootObjects().isEmpty()) {
-    LOGE("Fail to initialize the Qt6 QML engine");
+  if (vulkan == nullptr) {
+    LOGE("Fail to create the Qt Vulkan controller");
     return app::IApplication::INVALID;
   }
 
-  return app.exec();
+  if (!vulkan->run()) {
+    LOGE("Failed to enumerate the Vulkan physical devices");
+    return app::IApplication::INVALID;
+  }
+
+  return 0;
 }
 
 }  // namespace Qt6i

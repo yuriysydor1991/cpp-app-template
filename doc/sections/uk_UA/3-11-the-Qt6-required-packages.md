@@ -3,17 +3,23 @@
 Для того щоб зробити доступними ресурси Qt6, необхідно скористатися командою яка виглядатиме наступним чином (ОС на базі GNU/Linux):
 
 ```
-# багацько пакетів Qt6, що можуть знадобитись
+# обов'язкові пакети Qt6
 
-sudo apt install -y qt6-base-dev qt6-base-dev-tools \
-  qt6-declarative-dev qt6-tools-dev qt6-tools-dev-tools \
-  qml6-module-qtquick qml6-module-qtqml-workerscript \
-  qml6-module-qtquick-templates qml6-module-qtquick-window \
-  qml6-module-qtquick-controls qml6-module-qtquick-layouts \
-  qml6-module-qtquick-dialogs qml6-module-qtquick-virtualkeyboard \
-  qml6-module-qtquick-localstorage qml6-module-qtquick-nativestyle \
-  qml6-module-qtquick-particles qml6-module-qtquick-pdf \
-  qml6-module-qtquick-scene2d qml6-module-qtquick-scene3d \
-  qml6-module-qtquick-shapes qml6-module-qtquick-tooling \
-  qml6-module-qtquick-timeline
+sudo apt install -y qt6-base-dev qt6-base-dev-tools
 ```
+
+Ця гілка використовує Vulkan через нативний [Qt6](https://www.qt.io/development/qt-framework/qt6) [QVulkanInstance](https://doc.qt.io/qt-6/qvulkaninstance.html), який знаходиться у модулі Qt GUI (`Qt6::Gui`): використовуються лише модулі Qt6 Core та Gui, обидва з яких постачаються разом з пакетом `qt6-base-dev` вище — модулі Qt Quick/QML не потрібні.
+
+Заголовкові файли Vulkan (базові типи `VkInstance`/`VkPhysicalDevice`, на які посилається код, знаходяться за допомогою `FindVulkan` від CMake) надаються пакетом розробки завантажувача Vulkan:
+
+```
+sudo apt install -y libvulkan-dev
+```
+
+Для запуску програмі потрібен сумісний з [Vulkan](https://www.vulkan.org/) драйвер (Installable Client Driver) та плагін платформи Qt, який підтримує Vulkan (наприклад, плагін `xcb` у сесії X11). На машині без дискретної відеокарти програмний растеризатор Mesa (lavapipe) надає придатний програмний пристрій:
+
+```
+sudo apt install -y mesa-vulkan-drivers
+```
+
+Якщо створити придатний інстанс Vulkan не вдається (немає драйвера, або плагін платформи не підтримує Vulkan), програма виводить відповідну помилку і завершується з ненульовим статусом; інакше вона виводить перелічені фізичні пристрої та їхні властивості через виклики логування LOGI.

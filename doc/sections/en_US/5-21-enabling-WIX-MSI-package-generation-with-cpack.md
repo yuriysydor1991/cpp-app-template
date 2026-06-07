@@ -38,6 +38,6 @@ The following cache variables may optionally be overridden in order to tune the 
 - `TEMPLATE_PROJECT_WIX_LICENSE_RTF` - Optional absolute path to a RTF or TXT license file shown by the installer.
 - `TEMPLATE_PROJECT_WIX_PRODUCT_ICON` - Optional absolute path to a `.ico` file used as the MSI product icon.
 
-In addition to those, the package vendor is taken from `PROJECT_MAINTAINER`, the maintainer contact from `PROJECT_MAINTAINER_EMAIL`, and the description from the project `DESCRIPTION`. The install root under `Program Files` is the `PROJECT_NAME`. There is no need to declare anything new in the project's CMake files in order to start producing installers - just turn the option on.
+In addition to those, the package vendor is taken from `PROJECT_MAINTAINER`, the maintainer contact from `PROJECT_MAINTAINER_EMAIL`, and the description from the project `DESCRIPTION`. The install root under `Program Files` is the `CMAKE_PROJECT_NAME`. There is no need to declare anything new in the project's CMake files in order to start producing installers - just turn the option on.
 
 > **Runtime note.** Like the `DEB` generator which delegates to `dpkg-deb`, CPack's `WIX` generator delegates to the [WiX Toolset](https://wixtoolset.org/) (the `candle.exe` / `light.exe` tools). It is therefore expected to be run on Microsoft Windows with the WiX Toolset installed and available on the `PATH`. The CMake module itself is platform-agnostic - it only configures CPack and does not invoke any external program directly.

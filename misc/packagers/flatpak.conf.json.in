@@ -6,7 +6,7 @@
   "command": "${PROJECT_BINARY_NAME}",
   "modules": [
     {
-      "name": "${PROJECT_NAME}",
+      "name": "${CMAKE_PROJECT_NAME}",
       "buildsystem": "cmake",
       "config-opts": ["-DCMAKE_BUILD_TYPE=Release"],
       "sources": [

@@ -37,7 +37,7 @@
     },
     {
       "comment": "The project links wxWidgets statically against the wxWidgets module built above, so this module needs neither build-time network access nor the CMake enabler's FetchContent download.",
-      "name": "${PROJECT_NAME}",
+      "name": "${CMAKE_PROJECT_NAME}",
       "buildsystem": "cmake",
       "config-opts": ["-DCMAKE_BUILD_TYPE=Release"],
       "sources": [

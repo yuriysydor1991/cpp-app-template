@@ -6,12 +6,12 @@
 #pragma GCC diagnostic ignored "-Wall -Wextra -Werror -Wunknown-pragmas"
 #pragma warning(push, 0)  // MSVC
 
+#include <gdkmm/dmabuftexturebuilder.h>
+#include <gdkmm/texture.h>
 #include <gio/gio.h>
 #include <giomm/resource.h>
 #include <gtkmm.h>
-#include <gtkmm/box.h>
-#include <gtkmm/image.h>
-#include <gtkmm/label.h>
+#include <gtkmm/picture.h>
 
 #pragma warning(pop)
 #pragma GCC diagnostic pop

@@ -14,8 +14,10 @@ target_include_directories(
 )
 
 target_link_libraries(
-  TemplateGtkmm4MainWindowObj 
-  PUBLIC ${GTKMM_LIBRARIES}
+  TemplateGtkmm4MainWindowObj
+  PUBLIC
+    ${GTKMM_LIBRARIES}
+    ${VULKAN_LINK_TARGET}
 )
 
 target_link_libraries(

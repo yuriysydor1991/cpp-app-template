@@ -23,4 +23,5 @@ target_link_libraries(
 )
 
 add_subdirectory(device-info)
+add_subdirectory(dmabuf)
 add_subdirectory(tests)

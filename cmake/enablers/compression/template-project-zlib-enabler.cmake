@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.13)
 option(
     ENABLE_ZLIB
     "Enables the zlib compression library (deflate, gzip, zip) for the project usage through system installed one or FetchContent by internet"
-    OFF
+    ON
 )
 
 if (NOT ENABLE_ZLIB)

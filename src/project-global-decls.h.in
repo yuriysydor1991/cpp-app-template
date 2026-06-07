@@ -3,7 +3,7 @@
 
 #include <string>
 
-/// @brief Global declaration for the project by CMake variables
+/// @brief Global compile-time declarations of the project parameters
 namespace project_decls {
 
 /// @brief Global project' binary name
@@ -14,7 +14,7 @@ const std::string PROJECT_URI = "${PROJECT_URI}" ;
 const std::string PROJECT_BUILD_VERSION = "${PROJECT_VERSION}" ;
 /// @brief Global project' configure git commit hash
 const std::string PROJECT_BUILD_COMMIT = "${PROJECT_GIT_COMMIT}" ;
-/// @brief Global project' CMake configure date
+/// @brief Global project' configure date
 const std::string PROJECT_CONFIGURE_DATE = "${PROJECT_CONFIGURE_DATE}" ;
 
 } // namespace project_decls

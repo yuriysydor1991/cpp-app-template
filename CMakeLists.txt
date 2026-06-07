@@ -1,13 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
-# Change the PROJECT_NAME var value to change executable name
-set(
-  PROJECT_NAME "CppAppTemplate-maintenance"
-  CACHE STRING "The cpp-app-template project maintenance branch"
-)
-
 project(
-  ${PROJECT_NAME}
+  CppAppTemplate-maintenance
   VERSION 0.12.0
   DESCRIPTION "A C++ Template project for you!"
   HOMEPAGE_URL "http://www.kytok.org.ua/"

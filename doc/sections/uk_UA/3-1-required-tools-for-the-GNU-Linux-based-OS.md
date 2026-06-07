@@ -12,6 +12,12 @@ sudo apt install -y git g++ cmake
 sudo apt install -y pkg-config libgtkmm-4.0-dev libglib2.0-dev-bin
 ```
 
+Завантажувач та заголовкові файли Vulkan, що використовуються для переліку фізичних пристроїв (а також драйвер часу виконання, наприклад з Mesa, щоб переліку було що повідомляти):
+
+```
+sudo apt install -y libvulkan-dev mesa-vulkan-drivers
+```
+
 
 Для того щоб мати змогу розробляти візуальний інтерфейс необіхдно встановити спеціалізований інструмент розробки [Glade](https://en.wikipedia.org/wiki/Glade_Interface_Designer) за допомогою команди:
 

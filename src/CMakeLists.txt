@@ -26,6 +26,9 @@ configure_file(
   ${CMAKE_BINARY_DIR}/project-global-decls.h
 )
 
+set(GENERAL_MOCKS_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/tests/mocks")
+
 add_subdirectory(app)
 add_subdirectory(log)
 add_subdirectory(gtkmm4)
+add_subdirectory(vulkan)

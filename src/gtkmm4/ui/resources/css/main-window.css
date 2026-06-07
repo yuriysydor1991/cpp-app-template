@@ -1,4 +1,5 @@
-.header-label
+/* The blank, black window background. Replace with your own styling. */
+window
 {
-  font-size: 50px;
+  background-color: black;
 }

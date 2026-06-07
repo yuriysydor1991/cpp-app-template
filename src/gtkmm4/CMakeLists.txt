@@ -20,7 +20,9 @@ target_link_directories(
 
 target_link_libraries(
   ${GTKMM_OBJECT_NAME}
-  PUBLIC ${GTKMM_LIBRARIES}
+  PUBLIC
+    ${GTKMM_LIBRARIES}
+    ${VULKAN_LINK_TARGET}
 )
 
 target_link_libraries(

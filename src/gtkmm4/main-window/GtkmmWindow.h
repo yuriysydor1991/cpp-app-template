@@ -10,8 +10,14 @@ namespace Gtkmm4i::main_window
 {
 
 /**
- * @brief The root GTKmm window class to show
- * templated GUI window.
+ * @brief The root GTKmm4 window class showing a blank, black window.
+ *
+ * GTK4 exposes no Vulkan rendering widget (its toplevel surface is GTK managed
+ * and the GdkVulkanContext API is deprecated and unwrapped by gtkmm), so this
+ * branch keeps the Vulkan work headless (the physical device enumeration is
+ * driven by the GtkmmIniter) and demonstrates a plain, blank black window - the
+ * GTK counterpart of the blank black windows shown by the appSDL2 / appFreeGlut
+ * branches. The black background is applied through an embedded CSS resource.
  */
 class GtkmmWindow : public Gtk::Window
 {
@@ -29,26 +35,14 @@ class GtkmmWindow : public Gtk::Window
   const std::string& get_default_title();
 
  private:
-  void prepare_header_label();
-  void prepare_random_logo();
-  void prepare_global_resource();
-  void prepare_widgets();
+  void prepare_window();
   void prepare_css();
-  void pack_widgets();
 
-  inline static constexpr const char* const logo_res_path =
-      GTKMM_APP_RESOURCES_PREFIX "/resources/images/kytok.org.ua-logo.png";
   inline static constexpr const char* const main_css_res_path =
       GTKMM_APP_RESOURCES_PREFIX "/resources/css/main-window.css";
-  inline static constexpr const char* const header_label_class = "header-label";
 
-  Glib::RefPtr<Gio::Resource> resources{nullptr};
-
-  Gtk::Box box;
-
-  Gtk::Label headerText;
-  Gtk::Label explanationText;
-  Gtk::Image image;
+  inline static constexpr const int W_DEFAULT_WIDTH = 650;
+  inline static constexpr const int W_DEFAULT_HEIGHT = 400;
 };
 
 using GtkmmWindowPtr = GtkmmWindow::GtkmmWindowPtr;

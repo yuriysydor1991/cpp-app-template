@@ -17,6 +17,7 @@ include(template-project-GTest-enabler)
 include(template-project-clang-format-target)
 include(template-project-valgrind-target)
 include(template-project-Gtkmm4-enabler)
+include(template-project-Vulkan-enabler)
 
 # packagers
 include(template-project-deb-enabler)

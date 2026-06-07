@@ -20,7 +20,7 @@ set(
   "Optional trailing suffix appended to the installable library name (e.g. '-dev')."
 )
 
-set(_lib_name "${PROJECT_NAME}-${CMAKE_PROJECT_VERSION_MAJOR}")
+set(_lib_name "${CMAKE_PROJECT_NAME}-${CMAKE_PROJECT_VERSION_MAJOR}")
 
 if(LIB_INCLUDE_MICRO_IN_NAME AND NOT LIB_INCLUDE_MINOR_IN_NAME)
   message(WARNING

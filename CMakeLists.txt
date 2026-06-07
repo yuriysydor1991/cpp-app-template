@@ -1,13 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
-# Change the PROJECT_NAME var value to change executable name
-set(
-  PROJECT_NAME "CppAppTemplate"
-  CACHE STRING "Project general name with the target library name."
-)
-
 project(
-  ${PROJECT_NAME}
+  CppAppTemplate
   VERSION 0.11.0
   DESCRIPTION "A C++ Template project with only target library for you!"
   HOMEPAGE_URL "http://www.kytok.org.ua/"
@@ -19,7 +13,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include(cmake/template-project-bootstrap.cmake)
 
-message(STATUS "PROJECT_NAME: ${PROJECT_NAME}")
+message(STATUS "PROJECT_NAME: CppAppTemplate")
 
 add_subdirectory(src)
 add_subdirectory(doc)

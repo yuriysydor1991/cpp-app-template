@@ -2,8 +2,10 @@
 
 #include <cassert>
 
-#include <QGuiApplication>
+#include <QApplication>
 #include <QString>
+#include <QVBoxLayout>
+#include <QWidget>
 
 #include "project-global-decls.h"
 #include "src/app/IApplication.h"
@@ -30,10 +32,11 @@ int Qt6Initer::run(std::shared_ptr<app::ApplicationContext> actx)
   }
 
   // QVulkanInstance (Qt6::Gui) obtains the platform Vulkan instance through the
-  // platform integration, which requires a living QGuiApplication.
-  QGuiApplication app(actx->argc, actx->argv);
+  // platform integration, which requires a living Q(Gui)Application.
+  QApplication app(actx->argc, actx->argv);
 
-  qtvulkani::QtVulkanControllerPtr vulkan = qtvulkani::QtVulkanController::create();
+  qtvulkani::QtVulkanControllerPtr vulkan =
+      qtvulkani::QtVulkanController::create();
 
   if (vulkan == nullptr) {
     LOGE("Fail to create the Qt Vulkan controller");
@@ -45,16 +48,26 @@ int Qt6Initer::run(std::shared_ptr<app::ApplicationContext> actx)
     return app::IApplication::INVALID;
   }
 
-  // Reuse the controller's already validated instance for a blank, black
-  // Vulkan rendered window. The window must not outlive the controller (it owns
-  // the QVulkanInstance), which is guaranteed here: both live on this stack and
-  // the window is destroyed first when run() returns after the event loop ends.
-  qtvulkani::BlankVulkanWindow window;
-  window.setVulkanInstance(vulkan->vulkan_instance());
-  window.resize(W_DEFAULT_WIDTH, W_DEFAULT_HEIGHT);
-  window.setTitle(QString::fromStdString(project_decls::PROJECT_NAME + " " +
-                                         project_decls::PROJECT_BUILD_VERSION));
-  window.show();
+  // The Vulkan surface lives in a QVulkanWindow, which is a bare QWindow. Shown
+  // on its own a top level QWindow is not reliably given window manager
+  // decorations (no title bar, borders or controls), so it is hosted inside a
+  // top level QWidget through QWidget::createWindowContainer(): the widget is a
+  // normal decorated application window and the Vulkan surface fills its client
+  // area. The QVulkanWindow is reparented into (and destroyed with) the
+  // container and reuses the controller's already validated instance.
+  auto* vulkanWindow = new qtvulkani::BlankVulkanWindow;
+  vulkanWindow->setVulkanInstance(vulkan->vulkan_instance());
+
+  QWidget topLevel;
+  topLevel.setWindowTitle(QString::fromStdString(
+      project_decls::PROJECT_NAME + " " + project_decls::PROJECT_BUILD_VERSION));
+  topLevel.resize(W_DEFAULT_WIDTH, W_DEFAULT_HEIGHT);
+
+  auto* layout = new QVBoxLayout(&topLevel);
+  layout->setContentsMargins(0, 0, 0, 0);
+  layout->addWidget(QWidget::createWindowContainer(vulkanWindow, &topLevel));
+
+  topLevel.show();
 
   return app.exec();
 }

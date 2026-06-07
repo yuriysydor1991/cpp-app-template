@@ -18,6 +18,7 @@ target_link_libraries(
   PUBLIC
     Qt6::Core
     Qt6::Gui
+    Qt6::Widgets
     ${VULKAN_LINK_TARGET}
 )
 

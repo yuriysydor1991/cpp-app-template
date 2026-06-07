@@ -52,6 +52,11 @@ QVulkanInstance* QtVulkanController::instance_ptr()
   return vulkanInstance.has_value() ? &vulkanInstance.value() : nullptr;
 }
 
+QVulkanInstance* QtVulkanController::vulkan_instance()
+{
+  return instance_ptr();
+}
+
 bool QtVulkanController::make_device_info_call()
 {
   DeviceInfoHandlerFactory factory;

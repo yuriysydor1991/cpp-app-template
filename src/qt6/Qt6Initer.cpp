@@ -3,13 +3,22 @@
 #include <cassert>
 
 #include <QGuiApplication>
+#include <QString>
 
+#include "project-global-decls.h"
 #include "src/app/IApplication.h"
 #include "src/log/log.h"
 #include "src/qtvulkan/QtVulkanController.h"
+#include "src/qtvulkan/window/BlankVulkanWindow.h"
 
 namespace Qt6i
 {
+
+namespace
+{
+constexpr const int W_DEFAULT_WIDTH = 650;
+constexpr const int W_DEFAULT_HEIGHT = 400;
+}  // namespace
 
 int Qt6Initer::run(std::shared_ptr<app::ApplicationContext> actx)
 {
@@ -21,10 +30,7 @@ int Qt6Initer::run(std::shared_ptr<app::ApplicationContext> actx)
   }
 
   // QVulkanInstance (Qt6::Gui) obtains the platform Vulkan instance through the
-  // platform integration, which requires a living QGuiApplication. No event
-  // loop (app.exec()) is required: the controller creates the instance,
-  // enumerates the physical devices, logs them through the LOGI calls in the
-  // device info handler and returns.
+  // platform integration, which requires a living QGuiApplication.
   QGuiApplication app(actx->argc, actx->argv);
 
   qtvulkani::QtVulkanControllerPtr vulkan = qtvulkani::QtVulkanController::create();
@@ -39,7 +45,18 @@ int Qt6Initer::run(std::shared_ptr<app::ApplicationContext> actx)
     return app::IApplication::INVALID;
   }
 
-  return 0;
+  // Reuse the controller's already validated instance for a blank, black
+  // Vulkan rendered window. The window must not outlive the controller (it owns
+  // the QVulkanInstance), which is guaranteed here: both live on this stack and
+  // the window is destroyed first when run() returns after the event loop ends.
+  qtvulkani::BlankVulkanWindow window;
+  window.setVulkanInstance(vulkan->vulkan_instance());
+  window.resize(W_DEFAULT_WIDTH, W_DEFAULT_HEIGHT);
+  window.setTitle(QString::fromStdString(project_decls::PROJECT_NAME + " " +
+                                         project_decls::PROJECT_BUILD_VERSION));
+  window.show();
+
+  return app.exec();
 }
 
 }  // namespace Qt6i

@@ -48,6 +48,18 @@ class QtVulkanController
    */
   static QtVulkanControllerPtr create();
 
+  /**
+   * @brief Provides the created Vulkan instance owned by the controller.
+   *
+   * Lets the GUI reuse the very same instance the controller brought up and
+   * validated (a QVulkanInstance is designed to be shared, e.g. assigned to a
+   * QVulkanWindow with setVulkanInstance()). The returned pointer stays valid
+   * for as long as the controller is alive.
+   *
+   * @return A pointer to the held QVulkanInstance, or nullptr when none is held.
+   */
+  QVulkanInstance* vulkan_instance();
+
  protected:
   virtual bool init();
   virtual bool inited() const;

@@ -1,19 +1,20 @@
 cmake_minimum_required(VERSION 3.16)
 
 add_library(
-  TemplateProjectQtVulkanControllerObj OBJECT
-  QtVulkanController.cpp
+  TemplateProjectQtVulkanWindowObj OBJECT
+  BlankVulkanWindow.cpp
+  BlankVulkanRenderer.cpp
 )
 
 target_include_directories(
-  TemplateProjectQtVulkanControllerObj
+  TemplateProjectQtVulkanWindowObj
   PRIVATE
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
 )
 
 target_link_libraries(
-  TemplateProjectQtVulkanControllerObj
+  TemplateProjectQtVulkanWindowObj
   PUBLIC
     Qt6::Core
     Qt6::Gui
@@ -23,9 +24,5 @@ target_link_libraries(
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
   PUBLIC
-    TemplateProjectQtVulkanControllerObj
+    TemplateProjectQtVulkanWindowObj
 )
-
-add_subdirectory(device-info)
-add_subdirectory(window)
-add_subdirectory(tests)

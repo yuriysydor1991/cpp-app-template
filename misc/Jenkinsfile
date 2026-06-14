@@ -29,7 +29,7 @@ pipeline {
       }
       
       steps {
-        git branch: 'app',
+        git branch: 'appZlib',
             url: 'https://github.com/yuriysydor1991/cpp-app-template.git'
       }
     }

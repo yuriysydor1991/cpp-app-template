@@ -10,6 +10,7 @@ include(template-project-OpenCV-enabler)
 
 # compression
 include(template-project-zlib-enabler)
+include(template-project-liblzma-enabler)
 
 # images
 include(template-project-libpng-enabler)

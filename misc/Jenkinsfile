@@ -30,7 +30,7 @@ pipeline {
       }
       
       steps {
-        git branch: 'appQt6',
+        git branch: 'appQt6ChartView',
             url: 'https://github.com/yuriysydor1991/cpp-app-template.git'
       }
     }

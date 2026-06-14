@@ -93,6 +93,21 @@ pipeline {
     
     stage('Unit Tests') {
       parallel {
+        stage('UTEST_DeviceInfoHandlerFactory') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_DeviceInfoHandlerFactory\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_DeviceInfoHandlerFactory.junit.xml'
+          }
+        }
+        stage('UTEST_PhysicalDeviceInfoHandler') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_PhysicalDeviceInfoHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_PhysicalDeviceInfoHandler.junit.xml'
+          }
+        }
+        stage('UTEST_VulkanController') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_VulkanController\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_VulkanController.junit.xml'
+          }
+        }
         stage('UTEST_Application') { 
           steps { 
             sh 'cd $BUILDDIR && ctest -R "UTEST_Application\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_Application.junit.xml'
@@ -129,6 +144,16 @@ pipeline {
     
     stage('Component Tests') {
       parallel {
+        stage('CTEST_PhysicalDeviceInfoHandler') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "CTEST_PhysicalDeviceInfoHandler\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_PhysicalDeviceInfoHandler.junit.xml'
+          }
+        }
+        stage('CTEST_VulkanController') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "CTEST_VulkanController\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_VulkanController.junit.xml'
+          }
+        }
         stage('CTEST_DefaultLogger') {
           steps {
             sh 'cd $BUILDDIR && ctest -R "CTEST_DefaultLogger\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_DefaultLogger.junit.xml'

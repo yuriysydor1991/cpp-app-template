@@ -20,7 +20,7 @@ pipeline {
       }
       
       steps {
-        git branch: 'main',
+        git branch: 'maintenance',
             url: 'https://github.com/yuriysydor1991/cpp-app-template.git'
       }
     }

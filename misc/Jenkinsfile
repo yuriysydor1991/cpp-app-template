@@ -93,6 +93,21 @@ pipeline {
     
     stage('Unit Tests') {
       parallel {
+        stage('UTEST_DBusQueryHandlerFactory') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_DBusQueryHandlerFactory\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_DBusQueryHandlerFactory.junit.xml'
+          }
+        }
+        stage('UTEST_GDBusController') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_GDBusController\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_GDBusController.junit.xml'
+          }
+        }
+        stage('UTEST_Hostname1QueryHandler') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_Hostname1QueryHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_Hostname1QueryHandler.junit.xml'
+          }
+        }
         stage('UTEST_Application') { 
           steps { 
             sh 'cd $BUILDDIR && ctest -R "UTEST_Application\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_Application.junit.xml'
@@ -129,6 +144,16 @@ pipeline {
     
     stage('Component Tests') {
       parallel {
+        stage('CTEST_GDBusController') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "CTEST_GDBusController\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_GDBusController.junit.xml'
+          }
+        }
+        stage('CTEST_Hostname1QueryHandler') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "CTEST_Hostname1QueryHandler\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_Hostname1QueryHandler.junit.xml'
+          }
+        }
         stage('CTEST_DefaultLogger') {
           steps {
             sh 'cd $BUILDDIR && ctest -R "CTEST_DefaultLogger\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_DefaultLogger.junit.xml'

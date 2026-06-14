@@ -58,7 +58,10 @@ set(CPACK_RPM_PACKAGE_SUMMARY ${CMAKE_PROJECT_DESCRIPTION})
 set(CPACK_RPM_PACKAGE_DESCRIPTION ${CMAKE_PROJECT_DESCRIPTION})
 set(CPACK_RPM_PACKAGE_VENDOR "${PROJECT_MAINTAINER}")
 set(CPACK_RPM_PACKAGE_ARCHITECTURE ${TEMPLATE_PROJECT_RPM_PACKAGE_ARCHITECTURE})
-set(CPACK_RPM_PACKAGE_REQUIRES "")
+# The executable links the system liblzma shared library, so the generated
+# package requires it at runtime (the RPM distributions name it xz-libs). Drop
+# this if you switch the liblzma enabler to a static FetchContent build instead.
+set(CPACK_RPM_PACKAGE_REQUIRES "xz-libs")
 set(CPACK_RPM_COMPONENT_INSTALL ON)
 
 include(CPack)

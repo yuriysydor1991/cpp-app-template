@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.13)
 option(
     ENABLE_LIBLZMA
     "Enables the liblzma (XZ Utils) compression library (.xz / LZMA2, legacy .lzma) for the project usage through system installed one or FetchContent by internet"
-    OFF
+    ON
 )
 
 if (NOT ENABLE_LIBLZMA)

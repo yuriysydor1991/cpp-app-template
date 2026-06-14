@@ -115,6 +115,13 @@ ZlibController::buffer ZlibController::uncompress(const buffer& input)
 bool ZlibController::compress_to_file(const std::string& path,
                                       const buffer& input)
 {
+  assert(fits_in_uInt(input.size()));
+  if (!fits_in_uInt(input.size())) {
+    LOGE("zlib compress_to_file input of " << input.size()
+                                           << " bytes exceeds the uInt limit");
+    return false;
+  }
+
   gzFile file = gzopen(path.c_str(), "wb");
   if (file == nullptr) {
     LOGE("Failed to open the gzip file for writing: " << path);

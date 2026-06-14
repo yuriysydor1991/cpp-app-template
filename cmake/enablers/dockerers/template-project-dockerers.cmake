@@ -22,3 +22,4 @@ configure_file(${DOCKERFILE_SRC} ${DOCKERFILE_DST})
 
 include(template-project-docker-single-runner-target)
 include(template-project-docker-Jenkins-pipeline-runner-target)
+include(template-project-docker-Jenkins-import-jobs-from-xml)

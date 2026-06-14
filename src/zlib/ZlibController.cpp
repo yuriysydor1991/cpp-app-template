@@ -3,6 +3,8 @@
 #include <zlib.h>
 
 #include <array>
+#include <cassert>
+#include <limits>
 #include <memory>
 
 #include "src/log/log.h"
@@ -13,10 +15,25 @@ namespace zlibi
 namespace
 {
 constexpr std::size_t CHUNK = 16384U;
+
+// zlib's z_stream stores avail_in in a 32-bit uInt, so a buffer whose size does
+// not fit into uInt would be silently truncated (e.g. >= 4 GiB on platforms
+// with a 32-bit uInt). Callers must reject such inputs instead of corrupting.
+bool fits_in_uInt(std::size_t size)
+{
+  return size <= static_cast<std::size_t>(std::numeric_limits<uInt>::max());
+}
 }  // namespace
 
 ZlibController::buffer ZlibController::compress(const buffer& input)
 {
+  assert(fits_in_uInt(input.size()));
+  if (!fits_in_uInt(input.size())) {
+    LOGE("zlib compress input of " << input.size()
+                                   << " bytes exceeds the uInt limit");
+    return {};
+  }
+
   z_stream zs{};
   if (deflateInit(&zs, Z_BEST_COMPRESSION) != Z_OK) {
     LOGE("zlib deflateInit failed");
@@ -55,6 +72,13 @@ ZlibController::buffer ZlibController::uncompress(const buffer& input)
 
   if (input.empty()) {
     return out;
+  }
+
+  assert(fits_in_uInt(input.size()));
+  if (!fits_in_uInt(input.size())) {
+    LOGE("zlib uncompress input of " << input.size()
+                                     << " bytes exceeds the uInt limit");
+    return {};
   }
 
   z_stream zs{};

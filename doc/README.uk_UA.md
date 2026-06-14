@@ -225,6 +225,7 @@
     1. [Вмикання інтеграції OpenSSL](/doc/sections/uk_UA/5-project-build/security/5-35-enabling-the-openssl-library.md)
         1. [Параметри захисту бінарних файлів](/doc/sections/uk_UA/5-project-build/security/5-49-the-binary-hardening-options.md)
     1. [Вмикання інтеграції zlib](/doc/sections/uk_UA/5-project-build/compression/5-23-enabling-the-zlib-library.md)
+    1. [Вмикання інтеграції liblzma](/doc/sections/uk_UA/5-project-build/compression/5-34-enabling-the-liblzma-library.md)
     1. [Вмикання інтеграції libpng](/doc/sections/uk_UA/5-project-build/image-libraries/5-24-enabling-the-libpng-library.md)
     1. [Вмикання інтеграції libjpeg](/doc/sections/uk_UA/5-project-build/image-libraries/5-25-enabling-the-libjpeg-library.md)
     1. [Вмикання інтеграції libwebp](/doc/sections/uk_UA/5-project-build/image-libraries/5-26-enabling-the-libwebp-library.md)

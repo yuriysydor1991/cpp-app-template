@@ -29,7 +29,7 @@ pipeline {
       }
       
       steps {
-        git branch: 'appBoostLog',
+        git branch: 'appWt4',
             url: 'https://github.com/yuriysydor1991/cpp-app-template.git'
       }
     }

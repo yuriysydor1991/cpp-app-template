@@ -16,4 +16,4 @@ cmake -S . -B build -DENABLE_DOCKER=ON
 cmake --build build --target docker-single-run 
 ```
 
-Для деталей CMake-цілі побудови `docker-single-run` слід звернутись до файлу `cmake/dockerers/template-project-docker-single-runner-target.cmake`.
+Для деталей CMake-цілі побудови `docker-single-run` слід звернутись до файлу `cmake/enablers/dockerers/template-project-docker-single-runner-target.cmake`.

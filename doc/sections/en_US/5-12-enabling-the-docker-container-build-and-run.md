@@ -16,4 +16,4 @@ After that there should be available the Docker build and run CMake target `dock
 cmake --build build --target docker-single-run 
 ```
 
-Examine the `cmake/dockerers/template-project-docker-single-runner-target.cmake` file for the `docker-single-run` target details.
+Examine the `cmake/enablers/dockerers/template-project-docker-single-runner-target.cmake` file for the `docker-single-run` target details.

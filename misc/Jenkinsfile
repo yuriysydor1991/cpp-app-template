@@ -31,7 +31,7 @@ pipeline {
       }
 
       steps {
-        git branch: 'appWinUI3',
+        git branch: 'appWinUI3GLArea',
             url: 'https://github.com/yuriysydor1991/cpp-app-template.git'
       }
     }

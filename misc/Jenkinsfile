@@ -30,7 +30,7 @@ pipeline {
       }
       
       steps {
-        git branch: 'appGtkmm4',
+        git branch: 'appGtkmm4GDBusClient',
             url: 'https://github.com/yuriysydor1991/cpp-app-template.git'
       }
     }

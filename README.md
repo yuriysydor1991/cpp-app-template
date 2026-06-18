@@ -149,6 +149,7 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
     1. [Enabling FreeBSD pkg package generation with cpack](/doc/sections/en_US/5-20-enabling-FreeBSD-pkg-package-generation-with-cpack.md)
     1. [Enabling WIX MSI package generation with cpack](/doc/sections/en_US/5-21-enabling-WIX-MSI-package-generation-with-cpack.md)
     1. [Enabling RPM package generation with cpack](/doc/sections/en_US/5-22-enabling-RPM-package-generation-with-cpack.md)
+    1. [Enabling the OpenSSL library](/doc/sections/en_US/5-35-enabling-the-openssl-library.md)
     1. [Enabling the zlib library](/doc/sections/en_US/5-23-enabling-the-zlib-library.md)
     1. [Enabling the libpng library](/doc/sections/en_US/5-24-enabling-the-libpng-library.md)
     1. [Enabling the libjpeg library](/doc/sections/en_US/5-25-enabling-the-libjpeg-library.md)

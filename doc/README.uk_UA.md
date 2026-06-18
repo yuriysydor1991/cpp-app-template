@@ -150,6 +150,7 @@
     1. [Вмикання підтримки генерування пакунків FreeBSD pkg з cpack](/doc/sections/uk_UA/5-20-enabling-FreeBSD-pkg-package-generation-with-cpack.md)
     1. [Вмикання підтримки генерування WIX MSI-пакетів з cpack](/doc/sections/uk_UA/5-21-enabling-WIX-MSI-package-generation-with-cpack.md)
     1. [Вмикання підтримки генерування RPM-пакунків з cpack](/doc/sections/uk_UA/5-22-enabling-RPM-package-generation-with-cpack.md)
+    1. [Вмикання інтеграції OpenSSL](/doc/sections/uk_UA/5-35-enabling-the-openssl-library.md)
     1. [Вмикання інтеграції zlib](/doc/sections/uk_UA/5-23-enabling-the-zlib-library.md)
     1. [Вмикання інтеграції libpng](/doc/sections/uk_UA/5-24-enabling-the-libpng-library.md)
     1. [Вмикання інтеграції libjpeg](/doc/sections/uk_UA/5-25-enabling-the-libjpeg-library.md)

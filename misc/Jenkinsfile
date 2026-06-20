@@ -239,8 +239,8 @@ pipeline {
           find . -name "*.md" -not -path "./.git/*" | sort > "$MDLIST"
 
           while IFS= read -r mdfile; do
-            grep -oE '\[[^]]*\]\([^)]+\)' "$mdfile" 2>/dev/null \
-              | sed 's/.*](\(.*\))$/\1/' > "$LINKLIST"
+            grep -oE '[[][^]]*[]][(][^)]+[)]' "$mdfile" 2>/dev/null \
+              | sed 's/.*][(]\\(.*\\)[)]$/\\1/' > "$LINKLIST"
 
             while IFS= read -r link; do
               [ -z "$link" ] && continue

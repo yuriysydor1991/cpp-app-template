@@ -229,6 +229,55 @@ pipeline {
       }
     }
 
+    stage('Template: no broken markdown links') {
+      steps {
+        sh '''
+          python3 - <<'PYEOF'
+import re, os, sys
+
+ROOT = '.'
+link_re = re.compile(r'\[([^\]]*)\]\(([^)]+)\)')
+broken = []
+
+for dirpath, dirs, files in os.walk(ROOT):
+    dirs[:] = [d for d in dirs if d != '.git']
+    for fname in sorted(files):
+        if not fname.endswith('.md'):
+            continue
+        fpath = os.path.join(dirpath, fname)
+        try:
+            content = open(fpath).read()
+        except Exception:
+            continue
+        for m in link_re.finditer(content):
+            raw = m.group(2)
+            link = raw.split('#')[0].strip()
+            if not link or re.match(r'^(https?|mailto|ftp)://', link):
+                continue
+            if link.startswith('/'):
+                target = os.path.join(ROOT, link.lstrip('/'))
+            else:
+                target = os.path.normpath(os.path.join(os.path.dirname(fpath), link))
+            if not os.path.isfile(target):
+                broken.append((fpath, raw))
+
+if broken:
+    print('FAIL: {} broken markdown link(s) found:'.format(len(broken)))
+    for src, lnk in broken:
+        print('  {}: -> {}'.format(src, lnk))
+    sys.exit(1)
+
+md_count = sum(
+    1 for d, _, fs in os.walk(ROOT)
+    if '.git' not in d.split(os.sep)
+    for f in fs if f.endswith('.md')
+)
+print('OK: all links in {} .md files are valid'.format(md_count))
+PYEOF
+        '''
+      }
+    }
+
     stage('Template: every enabler is registered') {
       steps {
         sh '''

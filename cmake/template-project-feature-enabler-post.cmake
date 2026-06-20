@@ -6,6 +6,9 @@ include(template-project-libcurl-enabler)
 include(template-project-libxml2-enabler)
 include(template-project-OpenCV-enabler)
 
+# security / cryptography
+include(template-project-openssl-enabler)
+
 # compression
 include(template-project-zlib-enabler)
 include(template-project-liblzma-enabler)

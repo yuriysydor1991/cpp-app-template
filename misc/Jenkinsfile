@@ -8,15 +8,6 @@ pipeline {
 
   parameters {
     booleanParam(name: 'RUN_CPPCHECK', defaultValue: false, description: 'Run the cppcheck static code check?')
-    // Template project specific: optional packager checks, all disabled by
-    // default and opt-in (e.g. WIX is MS Windows only, FreeBSD pkg is FreeBSD
-    // only). Safe to drop together with the template stages below.
-    booleanParam(name: 'RUN_FLATPAK_PACKAGER', defaultValue: false, description: 'Template: build and check the flatpak package?')
-    booleanParam(name: 'RUN_DEB_PACKAGER', defaultValue: false, description: 'Template: build and check the deb package?')
-    booleanParam(name: 'RUN_RPM_PACKAGER', defaultValue: false, description: 'Template: build and check the RPM package?')
-    booleanParam(name: 'RUN_SNAP_PACKAGER', defaultValue: false, description: 'Template: build and check the snap package?')
-    booleanParam(name: 'RUN_FREEBSD_PACKAGER', defaultValue: false, description: 'Template: build and check the FreeBSD pkg package? (FreeBSD only)')
-    booleanParam(name: 'RUN_WIX_PACKAGER', defaultValue: false, description: 'Template: build and check the WIX MSI package? (MS Windows only)')
   }
 
   stages {
@@ -29,7 +20,7 @@ pipeline {
       }
       
       steps {
-        git branch: 'main',
+        git branch: 'appBoostLog',
             url: 'https://github.com/yuriysydor1991/cpp-app-template.git'
       }
     }
@@ -90,22 +81,56 @@ pipeline {
       }
     }
     
-    // see other branches of the cpp-app-template in order to see unit tests registration
+    stage('Unit Tests') {
+      parallel {
+        stage('UTEST_Application') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_Application\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_Application.junit.xml'
+          }
+        }
+        stage('UTEST_ApplicationContext') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationContext\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationContext.junit.xml'
+          }
+        }
+        stage('UTEST_ApplicationFactory') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationFactory\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationFactory.junit.xml'
+          }
+        }
+        stage('UTEST_ApplicationHelpPrinter') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationHelpPrinter\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationHelpPrinter.junit.xml' 
+          }
+        }
+        stage('UTEST_ApplicationVersionPrinter') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationVersionPrinter\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationVersionPrinter.junit.xml'
+          }
+        }
+        stage('UTEST_CommandLineParser') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_CommandLineParser\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_CommandLineParser.junit.xml'
+          }
+        }
+      }
+      post { always { junit "$BUILDDIR/$BDJUNITOUT/UTEST_*.xml" } }
+    }
     
     stage('Component Tests') {
       parallel {
-        stage('CTEST_DefaultLogger') {
-          steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_DefaultLogger\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_DefaultLogger.junit.xml'
-          }
-        }
         stage('CTEST_log') {
           steps {
             sh 'cd $BUILDDIR && ctest -R "CTEST_log\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_log.junit.xml'
           }
         }
+        stage('CTEST_app') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "CTEST_app\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_app.junit.xml'
+          }
+        }
       }
-      post { always { junit "$BUILDDIR/$BDJUNITOUT/*.xml" } }
+      post { always { junit "$BUILDDIR/$BDJUNITOUT/CTEST_*.xml" } }
     }
     
     stage('Debug configure (clang-tidy)') {
@@ -150,8 +175,9 @@ pipeline {
         '''
       }
     }
+  }
 
-    // =====================================================================
+  // =====================================================================
     // Template project specific checks.
     //
     // Everything below is specific to the cpp-app-template project itself and
@@ -412,6 +438,7 @@ pipeline {
       }
     }
   }
+
 
   post {
     success {

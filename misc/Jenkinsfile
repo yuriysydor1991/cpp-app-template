@@ -1,9 +1,14 @@
 pipeline {
-  agent any
-  
+  // WinUI 3 + C++/WinRT is a Windows-only stack, so this pipeline expects a
+  // Windows build agent with Visual Studio 2022 (MSVC + CMake + ctest) and the
+  // Windows App SDK / NuGet available. Label your Jenkins Windows node 'windows'
+  // (or adjust the agent below).
+  agent { label 'windows' }
+
   environment {
-    BUILDDIR="build"
-    BDJUNITOUT="junit-out"
+    BUILDDIR = 'build'
+    BDJUNITOUT = 'junit-out'
+    CMAKE_GENERATOR = 'Visual Studio 17 2022'
   }
 
   parameters {
@@ -22,76 +27,84 @@ pipeline {
   stages {
     stage('Checkout') {
       when {
-        expression {
-          def files = sh(script: 'ls -A', returnStdout: true).trim()
-          return files == ""
-        }
+        expression { return !fileExists('CMakeLists.txt') }
       }
-      
+
       steps {
-        git branch: 'main',
+        git branch: 'appWinUI3GLArea',
             url: 'https://github.com/yuriysydor1991/cpp-app-template.git'
       }
     }
-    
-    stage('Code format configure') {
+
+    stage('Configure') {
       steps {
-        sh '''
-          cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Debug -DENABLE_CLANGFORMAT=ON
-        '''
-      }
-    }
-    
-    stage('Code format build (clang-format)') {
-      steps {
-        script {
-          def files = sh(script: 'git ls-files -m', returnStdout: true).trim()
-          return files == ""
-        }
-      }
-      
-      post {
-        success {
-          echo 'No files changed - OK'
-        }
-        failure {
-          echo 'Some files are not formatted - FAIL'
-        }
+        bat 'cmake -S . -B %BUILDDIR% -G "%CMAKE_GENERATOR%" -A x64 ^
+              -DENABLE_UNIT_TESTS=ON -DENABLE_COMPONENT_TESTS=ON ^
+              -DENABLE_WIX=ON -DMAX_LOG_LEVEL=5'
       }
     }
 
-    stage('Debug configure') {
+    stage('Build (Debug)') {
       steps {
-        sh 'rm -fr $BUILDDIR'
-        sh '''
-          cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Debug -DENABLE_UNIT_TESTS=ON \
-            -DENABLE_SANITIZERS=ON -DENABLE_CPPCHECK=ON \
-            -DMAX_LOG_LEVEL=5 -DENABLE_COMPONENT_TESTS=ON
-        '''
+        bat 'cmake --build %BUILDDIR% --config Debug'
       }
     }
-    
-    stage('Debug build') {
-      steps {
-        sh '''
-          cmake --build $BUILDDIR -j$(nproc)
-        '''
-      }
-    }
-    
+
     stage('cppcheck') {
       when {
         expression { params.RUN_CPPCHECK }
       }
       steps {
-        sh '''
-          cmake --build $BUILDDIR -j$(nproc) --target cppcheck
-        '''
+        bat 'cmake --build %BUILDDIR% --config Debug --target cppcheck'
       }
     }
-    
-    // see other branches of the cpp-app-template in order to see unit tests registration
-    
+
+    stage('Unit Tests') {
+      parallel {
+        stage('UTEST_Application') {
+          steps {
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_Application\\." --output-on-failure --output-junit %BDJUNITOUT%/UTEST_Application.junit.xml'
+          }
+        }
+        stage('UTEST_ApplicationContext') {
+          steps {
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_ApplicationContext\\." --output-on-failure --output-junit %BDJUNITOUT%/UTEST_ApplicationContext.junit.xml'
+          }
+        }
+        stage('UTEST_ApplicationFactory') {
+          steps {
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_ApplicationFactory\\." --output-on-failure --output-junit %BDJUNITOUT%/UTEST_ApplicationFactory.junit.xml'
+          }
+        }
+        stage('UTEST_ApplicationHelpPrinter') {
+          steps {
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_ApplicationHelpPrinter\\." --output-on-failure --output-junit %BDJUNITOUT%/UTEST_ApplicationHelpPrinter.junit.xml'
+          }
+        }
+        stage('UTEST_ApplicationVersionPrinter') {
+          steps {
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_ApplicationVersionPrinter\\." --output-on-failure --output-junit %BDJUNITOUT%/UTEST_ApplicationVersionPrinter.junit.xml'
+          }
+        }
+        stage('UTEST_CommandLineParser') {
+          steps {
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_CommandLineParser\\." --output-on-failure --output-junit %BDJUNITOUT%/UTEST_CommandLineParser.junit.xml'
+          }
+        }
+        stage('UTEST_WindowConfig') {
+          steps {
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_WindowConfig\\." --output-on-failure --output-junit %BDJUNITOUT%/UTEST_WindowConfig.junit.xml'
+          }
+        }
+        stage('UTEST_WinUI3Initer') {
+          steps {
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_WinUI3Initer\\." --output-on-failure --output-junit %BDJUNITOUT%/UTEST_WinUI3Initer.junit.xml'
+          }
+        }
+      }
+      post { always { junit "${BUILDDIR}/${BDJUNITOUT}/UTEST_*.xml" } }
+    }
+
     stage('Component Tests') {
       parallel {
         stage('CTEST_DefaultLogger') {
@@ -104,50 +117,35 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "CTEST_log\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_log.junit.xml'
           }
         }
+        stage('CTEST_app') {
+          steps {
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "CTEST_app\\." --output-on-failure --output-junit %BDJUNITOUT%/CTEST_app.junit.xml'
+          }
+        }
+        stage('CTEST_WinUI3') {
+          steps {
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "CTEST_WinUI3\\." --output-on-failure --output-junit %BDJUNITOUT%/CTEST_WinUI3.junit.xml'
+          }
+        }
       }
-      post { always { junit "$BUILDDIR/$BDJUNITOUT/*.xml" } }
+      post { always { junit "${BUILDDIR}/${BDJUNITOUT}/CTEST_*.xml" } }
     }
-    
-    stage('Debug configure (clang-tidy)') {
+
+    stage('Build (Release)') {
       steps {
-        sh 'rm -fr $BUILDDIR'
-        sh '''
-          cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Debug -DENABLE_CLANG_TIDY=ON \
-            -DMAX_LOG_LEVEL=5
-        '''
+        bat 'cmake --build %BUILDDIR% --config Release'
       }
     }
-    
-    stage('Debug build (clang-tidy)') {
-      steps {
-        sh '''
-          cmake --build $BUILDDIR -j$(nproc)
-        '''
-      }
-    }
-    
-    stage('Release configure') {
-      steps {
-        sh 'rm -fr $BUILDDIR'
-        sh '''
-          cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Release
-        '''
-      }
-    }
-    
-    stage('Release build') {
-      steps {
-        sh '''
-          cmake --build $BUILDDIR -j$(nproc)
-        '''
-      }
-    }
-    
+
     stage('Release install') {
       steps {
-        sh '''
-          cmake --install $BUILDDIR --prefix $BUILDDIR/install-try
-        '''
+        bat 'cmake --install %BUILDDIR% --config Release --prefix %BUILDDIR%\\install-try'
+      }
+    }
+
+    stage('WIX package') {
+      steps {
+        bat 'cd %BUILDDIR% && cpack -C Release -G WIX'
       }
     }
 
@@ -422,4 +420,3 @@ pipeline {
     }
   }
 }
-

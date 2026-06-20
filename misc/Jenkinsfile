@@ -1,13 +1,9 @@
 pipeline {
-  // Cocoa / AppKit + Objective-C++ is a macOS-only stack, so this pipeline
-  // expects a macOS build agent with the Xcode command line tools (clang +
-  // Objective-C++), CMake and ctest. Label your Jenkins macOS node 'macos'
-  // (or adjust the agent below).
-  agent { label 'macos' }
-
+  agent any
+  
   environment {
-    BUILDDIR = 'build'
-    BDJUNITOUT = 'junit-out'
+    BUILDDIR="build"
+    BDJUNITOUT="junit-out"
   }
 
   parameters {
@@ -31,83 +27,71 @@ pipeline {
           return files == ""
         }
       }
-
+      
       steps {
-        git branch: 'appCocoa',
+        git branch: 'main',
             url: 'https://github.com/yuriysydor1991/cpp-app-template.git'
+      }
+    }
+    
+    stage('Code format configure') {
+      steps {
+        sh '''
+          cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Debug -DENABLE_CLANGFORMAT=ON
+        '''
+      }
+    }
+    
+    stage('Code format build (clang-format)') {
+      steps {
+        script {
+          def files = sh(script: 'git ls-files -m', returnStdout: true).trim()
+          return files == ""
+        }
+      }
+      
+      post {
+        success {
+          echo 'No files changed - OK'
+        }
+        failure {
+          echo 'Some files are not formatted - FAIL'
+        }
       }
     }
 
     stage('Debug configure') {
       steps {
+        sh 'rm -fr $BUILDDIR'
         sh '''
           cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Debug -DENABLE_UNIT_TESTS=ON \
-            -DENABLE_COMPONENT_TESTS=ON -DMAX_LOG_LEVEL=5
+            -DENABLE_SANITIZERS=ON -DENABLE_CPPCHECK=ON \
+            -DMAX_LOG_LEVEL=5 -DENABLE_COMPONENT_TESTS=ON
         '''
       }
     }
-
+    
     stage('Debug build') {
       steps {
-        sh 'cmake --build $BUILDDIR -j$(sysctl -n hw.ncpu)'
+        sh '''
+          cmake --build $BUILDDIR -j$(nproc)
+        '''
       }
     }
-
+    
     stage('cppcheck') {
       when {
         expression { params.RUN_CPPCHECK }
       }
       steps {
-        sh 'cmake --build $BUILDDIR -j$(sysctl -n hw.ncpu) --target cppcheck'
+        sh '''
+          cmake --build $BUILDDIR -j$(nproc) --target cppcheck
+        '''
       }
     }
-
-    stage('Unit Tests') {
-      parallel {
-        stage('UTEST_Application') {
-          steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_Application\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_Application.junit.xml'
-          }
-        }
-        stage('UTEST_ApplicationContext') {
-          steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationContext\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationContext.junit.xml'
-          }
-        }
-        stage('UTEST_ApplicationFactory') {
-          steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationFactory\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationFactory.junit.xml'
-          }
-        }
-        stage('UTEST_ApplicationHelpPrinter') {
-          steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationHelpPrinter\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationHelpPrinter.junit.xml'
-          }
-        }
-        stage('UTEST_ApplicationVersionPrinter') {
-          steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationVersionPrinter\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationVersionPrinter.junit.xml'
-          }
-        }
-        stage('UTEST_CommandLineParser') {
-          steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_CommandLineParser\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_CommandLineParser.junit.xml'
-          }
-        }
-        stage('UTEST_WindowConfig') {
-          steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_WindowConfig\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_WindowConfig.junit.xml'
-          }
-        }
-        stage('UTEST_CocoaIniter') {
-          steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_CocoaIniter\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_CocoaIniter.junit.xml'
-          }
-        }
-      }
-      post { always { junit "$BUILDDIR/$BDJUNITOUT/UTEST_*.xml" } }
-    }
-
+    
+    // see other branches of the cpp-app-template in order to see unit tests registration
+    
     stage('Component Tests') {
       parallel {
         stage('CTEST_DefaultLogger') {
@@ -120,42 +104,50 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "CTEST_log\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_log.junit.xml'
           }
         }
-        stage('CTEST_app') {
-          steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_app\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_app.junit.xml'
-          }
-        }
-        stage('CTEST_Cocoa') {
-          steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_Cocoa\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_Cocoa.junit.xml'
-          }
-        }
       }
-      post { always { junit "$BUILDDIR/$BDJUNITOUT/CTEST_*.xml" } }
+      post { always { junit "$BUILDDIR/$BDJUNITOUT/*.xml" } }
     }
-
+    
+    stage('Debug configure (clang-tidy)') {
+      steps {
+        sh 'rm -fr $BUILDDIR'
+        sh '''
+          cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Debug -DENABLE_CLANG_TIDY=ON \
+            -DMAX_LOG_LEVEL=5
+        '''
+      }
+    }
+    
+    stage('Debug build (clang-tidy)') {
+      steps {
+        sh '''
+          cmake --build $BUILDDIR -j$(nproc)
+        '''
+      }
+    }
+    
     stage('Release configure') {
       steps {
         sh 'rm -fr $BUILDDIR'
-        sh 'cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Release -DENABLE_MACOS_PACKAGE=ON'
+        sh '''
+          cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Release
+        '''
       }
     }
-
+    
     stage('Release build') {
       steps {
-        sh 'cmake --build $BUILDDIR -j$(sysctl -n hw.ncpu)'
+        sh '''
+          cmake --build $BUILDDIR -j$(nproc)
+        '''
       }
     }
-
+    
     stage('Release install') {
       steps {
-        sh 'cmake --install $BUILDDIR --prefix $BUILDDIR/install-try'
-      }
-    }
-
-    stage('macOS package (.dmg + .pkg)') {
-      steps {
-        sh 'cd $BUILDDIR && cpack'
+        sh '''
+          cmake --install $BUILDDIR --prefix $BUILDDIR/install-try
+        '''
       }
     }
 
@@ -233,6 +225,55 @@ pipeline {
           done
           [ "$status" -eq 0 ] || exit 1
           echo "OK: every doc/sections file is linked in its README"
+        '''
+      }
+    }
+
+    stage('Template: no broken markdown links') {
+      steps {
+        sh '''
+          python3 - <<'PYEOF'
+import re, os, sys
+
+ROOT = '.'
+link_re = re.compile(r'\[([^\]]*)\]\(([^)]+)\)')
+broken = []
+
+for dirpath, dirs, files in os.walk(ROOT):
+    dirs[:] = [d for d in dirs if d != '.git']
+    for fname in sorted(files):
+        if not fname.endswith('.md'):
+            continue
+        fpath = os.path.join(dirpath, fname)
+        try:
+            content = open(fpath).read()
+        except Exception:
+            continue
+        for m in link_re.finditer(content):
+            raw = m.group(2)
+            link = raw.split('#')[0].strip()
+            if not link or re.match(r'^(https?|mailto|ftp)://', link):
+                continue
+            if link.startswith('/'):
+                target = os.path.join(ROOT, link.lstrip('/'))
+            else:
+                target = os.path.normpath(os.path.join(os.path.dirname(fpath), link))
+            if not os.path.isfile(target):
+                broken.append((fpath, raw))
+
+if broken:
+    print('FAIL: {} broken markdown link(s) found:'.format(len(broken)))
+    for src, lnk in broken:
+        print('  {}: -> {}'.format(src, lnk))
+    sys.exit(1)
+
+md_count = sum(
+    1 for d, _, fs in os.walk(ROOT)
+    if '.git' not in d.split(os.sep)
+    for f in fs if f.endswith('.md')
+)
+print('OK: all links in {} .md files are valid'.format(md_count))
+PYEOF
         '''
       }
     }
@@ -393,3 +434,4 @@ pipeline {
     }
   }
 }
+

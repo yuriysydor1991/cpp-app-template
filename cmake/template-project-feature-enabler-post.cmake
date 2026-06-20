@@ -23,3 +23,6 @@ include(template-project-libavif-enabler)
 include(template-project-libheif-enabler)
 
 
+
+# security / cryptography
+include(template-project-openssl-enabler)

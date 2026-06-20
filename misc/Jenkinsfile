@@ -29,7 +29,7 @@ pipeline {
       }
       
       steps {
-        git branch: 'appSDBusCxxServer',
+        git branch: 'main',
             url: 'https://github.com/yuriysydor1991/cpp-app-template.git'
       }
     }
@@ -90,56 +90,7 @@ pipeline {
       }
     }
     
-    stage('Unit Tests') {
-      parallel {
-        stage('UTEST_Application') { 
-          steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_Application\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_Application.junit.xml'
-          }
-        }
-        stage('UTEST_ApplicationContext') { 
-          steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationContext\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationContext.junit.xml'
-          }
-        }
-        stage('UTEST_ApplicationFactory') { 
-          steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationFactory\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationFactory.junit.xml'
-          }
-        }
-        stage('UTEST_ApplicationHelpPrinter') { 
-          steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationHelpPrinter\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationHelpPrinter.junit.xml' 
-          }
-        }
-        stage('UTEST_ApplicationVersionPrinter') { 
-          steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationVersionPrinter\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationVersionPrinter.junit.xml'
-          }
-        }
-        stage('UTEST_CommandLineParser') { 
-          steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_CommandLineParser\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_CommandLineParser.junit.xml'
-          }
-        }
-        stage('UTEST_CurrentDateServerObject') {
-          steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_CurrentDateServerObject\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_CurrentDateServerObject.junit.xml'
-          }
-        }
-        stage('UTEST_DBusServerObjectFactory') {
-          steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_DBusServerObjectFactory\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_DBusServerObjectFactory.junit.xml'
-          }
-        }
-        stage('UTEST_SDBusCxxController') {
-          steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_SDBusCxxController\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_SDBusCxxController.junit.xml'
-          }
-        }
-      }
-      post { always { junit "$BUILDDIR/$BDJUNITOUT/UTEST_*.xml" } }
-    }
+    // see other branches of the cpp-app-template in order to see unit tests registration
     
     stage('Component Tests') {
       parallel {
@@ -153,23 +104,8 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "CTEST_log\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_log.junit.xml'
           }
         }
-        stage('CTEST_app') { 
-          steps { 
-            sh 'cd $BUILDDIR && ctest -R "CTEST_app\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_app.junit.xml'
-          }
-        }
-        stage('CTEST_CurrentDateServerObject') {
-          steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_CurrentDateServerObject\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_CurrentDateServerObject.junit.xml'
-          }
-        }
-        stage('CTEST_SDBusCxxController') {
-          steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_SDBusCxxController\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_SDBusCxxController.junit.xml'
-          }
-        }
       }
-      post { always { junit "$BUILDDIR/$BDJUNITOUT/CTEST_*.xml" } }
+      post { always { junit "$BUILDDIR/$BDJUNITOUT/*.xml" } }
     }
     
     stage('Debug configure (clang-tidy)') {
@@ -289,6 +225,55 @@ pipeline {
           done
           [ "$status" -eq 0 ] || exit 1
           echo "OK: every doc/sections file is linked in its README"
+        '''
+      }
+    }
+
+    stage('Template: no broken markdown links') {
+      steps {
+        sh '''
+          python3 - <<'PYEOF'
+import re, os, sys
+
+ROOT = '.'
+link_re = re.compile(r'\[([^\]]*)\]\(([^)]+)\)')
+broken = []
+
+for dirpath, dirs, files in os.walk(ROOT):
+    dirs[:] = [d for d in dirs if d != '.git']
+    for fname in sorted(files):
+        if not fname.endswith('.md'):
+            continue
+        fpath = os.path.join(dirpath, fname)
+        try:
+            content = open(fpath).read()
+        except Exception:
+            continue
+        for m in link_re.finditer(content):
+            raw = m.group(2)
+            link = raw.split('#')[0].strip()
+            if not link or re.match(r'^(https?|mailto|ftp)://', link):
+                continue
+            if link.startswith('/'):
+                target = os.path.join(ROOT, link.lstrip('/'))
+            else:
+                target = os.path.normpath(os.path.join(os.path.dirname(fpath), link))
+            if not os.path.isfile(target):
+                broken.append((fpath, raw))
+
+if broken:
+    print('FAIL: {} broken markdown link(s) found:'.format(len(broken)))
+    for src, lnk in broken:
+        print('  {}: -> {}'.format(src, lnk))
+    sys.exit(1)
+
+md_count = sum(
+    1 for d, _, fs in os.walk(ROOT)
+    if '.git' not in d.split(os.sep)
+    for f in fs if f.endswith('.md')
+)
+print('OK: all links in {} .md files are valid'.format(md_count))
+PYEOF
         '''
       }
     }

@@ -232,48 +232,36 @@ pipeline {
     stage('Template: no broken markdown links') {
       steps {
         sh '''
-          python3 - <<'PYEOF'
-import re, os, sys
+          MDLIST=$(mktemp)
+          LINKLIST=$(mktemp)
+          trap 'rm -f "$MDLIST" "$LINKLIST"' EXIT
 
-ROOT = '.'
-link_re = re.compile(r'\[([^\]]*)\]\(([^)]+)\)')
-broken = []
+          find . -name "*.md" -not -path "./.git/*" | sort > "$MDLIST"
 
-for dirpath, dirs, files in os.walk(ROOT):
-    dirs[:] = [d for d in dirs if d != '.git']
-    for fname in sorted(files):
-        if not fname.endswith('.md'):
-            continue
-        fpath = os.path.join(dirpath, fname)
-        try:
-            content = open(fpath).read()
-        except Exception:
-            continue
-        for m in link_re.finditer(content):
-            raw = m.group(2)
-            link = raw.split('#')[0].strip()
-            if not link or re.match(r'^(https?|mailto|ftp)://', link):
-                continue
-            if link.startswith('/'):
-                target = os.path.join(ROOT, link.lstrip('/'))
-            else:
-                target = os.path.normpath(os.path.join(os.path.dirname(fpath), link))
-            if not os.path.isfile(target):
-                broken.append((fpath, raw))
+          while IFS= read -r mdfile; do
+            grep -oE '\[[^]]*\]\([^)]+\)' "$mdfile" 2>/dev/null \
+              | sed 's/.*](\(.*\))$/\1/' > "$LINKLIST"
 
-if broken:
-    print('FAIL: {} broken markdown link(s) found:'.format(len(broken)))
-    for src, lnk in broken:
-        print('  {}: -> {}'.format(src, lnk))
-    sys.exit(1)
+            while IFS= read -r link; do
+              [ -z "$link" ] && continue
+              target="${link%%#*}"
+              [ -z "$target" ] && continue
+              case "$target" in http://*|https://*|mailto:*|ftp://*) continue ;; esac
+              if [ "${target#/}" != "$target" ]; then
+                resolved="${target#/}"
+              else
+                resolved="$(dirname "$mdfile")/${target}"
+              fi
+              if [ ! -f "$resolved" ]; then
+                echo "FAIL: broken link in $mdfile"
+                echo "  link:     $link"
+                echo "  resolved: $resolved"
+                exit 1
+              fi
+            done < "$LINKLIST"
+          done < "$MDLIST"
 
-md_count = sum(
-    1 for d, _, fs in os.walk(ROOT)
-    if '.git' not in d.split(os.sep)
-    for f in fs if f.endswith('.md')
-)
-print('OK: all links in {} .md files are valid'.format(md_count))
-PYEOF
+          echo "OK: all *.md files have valid links"
         '''
       }
     }

@@ -161,6 +161,8 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
     1. Libraries
         1. [Enabling the libcurl](/doc/sections/en_US/5-14-enabling-libcurl.md)
         1. [Enabling the nlohmann json library](/doc/sections/en_US/5-18-enabling-the-nlohmann-json-library.md)
+    1. Security / Cryptography
+        1. [Enabling the OpenSSL library](/doc/sections/en_US/5-35-enabling-the-openssl-library.md)
     1. Compression
         1. [Enabling the zlib library](/doc/sections/en_US/5-23-enabling-the-zlib-library.md)
         1. [Enabling the liblzma library](/doc/sections/en_US/5-34-enabling-the-liblzma-library.md)

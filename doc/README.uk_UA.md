@@ -160,6 +160,8 @@
         1. [Вмикання інтеграції libcurl](/doc/sections/uk_UA/5-14-enabling-libcurl.md)
         1. [Вмикання інтеграції бібліотеки nlohmann JSON](/doc/sections/uk_UA/5-18-enabling-the-nlohmann-json-library.md)
         1. [Вмикання інтеграції OpenCV](/doc/sections/uk_UA/5-23-enabling-the-OpenCV.md)
+    1. Безпека / Криптографія
+        1. [Вмикання інтеграції OpenSSL](/doc/sections/uk_UA/5-35-enabling-the-openssl-library.md)
     1. Стиснення даних
         1. [Вмикання інтеграції zlib](/doc/sections/uk_UA/5-23-enabling-the-zlib-library.md)
         1. [Вмикання інтеграції liblzma](/doc/sections/uk_UA/5-34-enabling-the-liblzma-library.md)

@@ -11,7 +11,6 @@ pipeline {
     // Template project specific: optional packager checks, all disabled by
     // default and opt-in (e.g. WIX is MS Windows only, FreeBSD pkg is FreeBSD
     // only). Safe to drop together with the template stages below.
-    booleanParam(name: 'RUN_FLATPAK_PACKAGER', defaultValue: false, description: 'Template: build and check the flatpak package?')
     booleanParam(name: 'RUN_DEB_PACKAGER', defaultValue: false, description: 'Template: build and check the deb package?')
     booleanParam(name: 'RUN_RPM_PACKAGER', defaultValue: false, description: 'Template: build and check the RPM package?')
     booleanParam(name: 'RUN_SNAP_PACKAGER', defaultValue: false, description: 'Template: build and check the snap package?')
@@ -29,7 +28,7 @@ pipeline {
       }
       
       steps {
-        git branch: 'main',
+        git branch: 'lib',
             url: 'https://github.com/yuriysydor1991/cpp-app-template.git'
       }
     }
@@ -90,22 +89,36 @@ pipeline {
       }
     }
     
-    // see other branches of the cpp-app-template in order to see unit tests registration
-    
-    stage('Component Tests') {
+    stage('Unit Tests') {
       parallel {
-        stage('CTEST_DefaultLogger') {
-          steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_DefaultLogger\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_DefaultLogger.junit.xml'
+        stage('UTEST_LibraryFacade') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_LibraryFacade\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_LibraryFacade.junit.xml'
           }
         }
-        stage('CTEST_log') {
-          steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_log\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_log.junit.xml'
+        stage('UTEST_LibFactory') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_LibFactory\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_LibFactory.junit.xml'
+          }
+        }
+        stage('UTEST_LibMain') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_LibMain\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_LibMain.junit.xml'
           }
         }
       }
-      post { always { junit "$BUILDDIR/$BDJUNITOUT/*.xml" } }
+      post { always { junit "$BUILDDIR/$BDJUNITOUT/UTEST_*.xml" } }
+    }
+    
+    stage('Component Tests') {
+      parallel {
+        stage('CTEST_SimpleLogger') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "CTEST_SimpleLogger\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_SimpleLogger.junit.xml'
+          }
+        }
+      }
+      post { always { junit "$BUILDDIR/$BDJUNITOUT/CTEST_*.xml" } }
     }
     
     stage('Debug configure (clang-tidy)') {
@@ -304,23 +317,6 @@ pipeline {
     // Packager checks are intentionally separate sequential stages (not a
     // parallel block): each runs a full CMake configure + build, so running
     // them in parallel could overload the build agent.
-    stage('Template: flatpak package') {
-      when { expression { params.RUN_FLATPAK_PACKAGER } }
-      steps {
-        sh '''
-          BD="$BUILDDIR-pkg-flatpak"
-          rm -fr "$BD"
-          cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_FLATPAK=ON
-          cmake --build "$BD" -j$(nproc)
-          cmake --build "$BD" --target flatpak
-          if [ -z "$(find "$BD" -maxdepth 2 -name '*.flatpak' -print -quit)" ]; then
-            echo "FAIL: CMake did not produce a .flatpak bundle"
-            exit 1
-          fi
-          echo "OK: produced $(find "$BD" -maxdepth 2 -name '*.flatpak')"
-        '''
-      }
-    }
 
     stage('Template: deb package') {
       when { expression { params.RUN_DEB_PACKAGER } }

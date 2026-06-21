@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:latest
+FROM jenkins/jenkins:lts
 
 USER root 
 
@@ -170,7 +170,111 @@ RUN cmake --install $sdbuscxxBuild --prefix $prefixD
 
 RUN apt install -y qt6-webview-dev qml6-module-qtwebview \
   qt6-webengine-dev libqt6webenginecore6 qt6-webengine-dev-tools
-RUN apt install -y 
+
+
+WORKDIR $srcD
+
+
+RUN git clone --branch maintenance --depth 1 https://github.com/yuriysydor1991/cpp-app-template.git cpp-app-template
+RUN cp -R $srcD/cpp-app-template/misc/Jenkins/Jenkins-exported-jobs/ /usr/share/jenkins/ref/jobs-import/
+
+RUN cat > /usr/share/jenkins/ref/plugins.txt <<'EOF'
+# Job organization
+cloudbees-folder
+
+# Security / Auth
+matrix-auth
+ldap
+
+# Credentials
+credentials-binding
+
+# Build management
+build-timeout
+timestamper
+ws-cleanup
+
+# Build tools
+ant
+gradle
+
+# SCM
+git
+
+# Pipeline
+workflow-aggregator
+
+# GitHub
+github-branch-source
+pipeline-github-lib
+
+# Agents
+ssh-slaves
+
+# UI
+dark-theme
+theme-manager
+
+# Email
+email-ext
+mailer
+
+# Markup
+antisamy-markup-formatter
+
+# Visualization
+pipeline-graph-view
+
+# Library dependency
+jsoup
+
+instance-identity
+command-launcher
+jdk-tool
+pipeline-stage-view
+github
+ssh-credentials
+credentials
+plain-credentials
+scm-api
+branch-api
+workflow-job
+workflow-cps
+workflow-support
+workflow-basic-steps
+workflow-durable-task-step
+workflow-scm-step
+EOF
+
+RUN jenkins-plugin-cli --plugin-file /usr/share/jenkins/ref/plugins.txt
+
+RUN cat > /usr/share/jenkins/ref/init.groovy.d/import-jobs.groovy <<'EOF'
+import jenkins.model.Jenkins
+
+def jenkins = Jenkins.instance
+def jobsDir = new File('/usr/share/jenkins/ref/jobs-import')
+
+if (!jobsDir.exists()) {
+  println "No jobs-import directory found"
+  return
+}
+
+jobsDir.eachFileMatch(~/.*\.xml/) { file ->
+  def jobName = file.name.replaceFirst(/\.xml$/, '')
+
+  if (jenkins.getItem(jobName) != null) {
+    println "Job '${jobName}' already exists, skipping"
+    return
+  }
+
+  println "Importing job '${jobName}' from ${file}"
+  file.withInputStream { stream ->
+    jenkins.createProjectFromXML(jobName, stream)
+  }
+}
+
+jenkins.save()
+EOF
 
 
 CMD ["jenkins.sh"]

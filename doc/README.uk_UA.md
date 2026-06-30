@@ -161,7 +161,7 @@
         1. [Вмикання інтеграції OpenJPEG (JPEG 2000)](/doc/sections/uk_UA/5-project-build/image-libraries/5-31-enabling-the-openjpeg-library.md)
         1. [Вмикання інтеграції libavif (AVIF)](/doc/sections/uk_UA/5-project-build/image-libraries/5-32-enabling-the-libavif-library.md)
         1. [Вмикання інтеграції libheif (HEIF/HEIC)](/doc/sections/uk_UA/5-project-build/image-libraries/5-33-enabling-the-libheif-library.md)
-1. [Запуск головного виконуваного файлу](/doc/sections/uk_UA/6-run-the-executable/6-run-avaialble-executables.md)
+1. [Запуск доступних виконуваних файлів](/doc/sections/uk_UA/6-run-the-executable/6-run-avaialble-executables.md)
     1. Запуск тестів
         1. [Запуск тестів за допомогою ctest](/doc/sections/uk_UA/6-run-the-executable/6-3-1-run-tests-by-the-ctest.md)
         1. [Ручний запуск тестів](/doc/sections/uk_UA/6-run-the-executable/6-3-2-manual-tests-run.md)

@@ -23,7 +23,7 @@ Examine available branches to find your most applicable variant of the template 
 ## Basic application infrastructure
 
 - `main` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template)] just the clear `main` function and all available CMake integrations with no additional app infrastructure classes.
-- `app` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/app), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/app)] (**current**) with just general application related classes to generate a single binary executable.
+- `app` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/app), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/app)] with just general application related classes to generate a single binary executable.
 - `applib` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/applib), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/applib)] for the application binary with additional separate library binary and header files (available for the installation) in order to provide library's code reusability across multiple applications.
 - `lib` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/lib), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/lib)] for the library with the headers include files (and documentation) without target binary.
 - `appMeson` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appMeson), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appMeson)] with just general application related classes to generate a single binary executable with the [Meson](https://mesonbuild.com/) build system.
@@ -72,6 +72,7 @@ Examine available branches to find your most applicable variant of the template 
 
 - `appMatPlotxx` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appMatPlotxx), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appMatPlotxx)] the template infrastructure to fast start application development with the [MatPlot++](https://alandefreitas.github.io/matplotplusplus/) usage - a nice plot library with required [gnuplot](http://www.gnuplot.info/) application and [Qt6](https://www.qt.io/development/qt-framework/qt6).
 - `appPLplot` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appPLplot), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appPLplot)] the template infrastructure to fast start application development with the [PLplot](https://plplot.sourceforge.net/) usage - a powerful plotting library used in scientific applications with a lot of windowing and language bindings and export capabilities (PNG, SVG, JPEG, GIF, PDF and more).
+- `appPGPLOT` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appPGPLOT), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appPGPLOT)] (**current**) the template infrastructure to fast start application development with the [PGPLOT](https://sites.astro.caltech.edu/~tjp/pgplot/) usage - a classic scientific graphics subroutine library widely used in the astronomy field, integrated through it's C (cpgplot) binding and supporting both the original library and it's free [giza](https://danieljprice.github.io/giza/) drop-in replacement.
 - `appQt6ChartView` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appQt6ChartView), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appQt6ChartView)] the template infrastructure to fast start data visualization and plotting right inside a [Qt6](https://www.qt.io/development/qt-framework/qt6) [QML](https://doc.qt.io/qt-6/qtqml-index.html) window with the native [ChartView](https://doc.qt.io/qt-6/qml-qtcharts-chartview.html) element from the [QtCharts](https://doc.qt.io/qt-6/qtcharts-index.html) module.
 
 ## Maps
@@ -109,6 +110,7 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
 1. [Requirements](/doc/sections/en_US/3-requirements/3-requirements.md)
     1. [Required tools for the GNU/Linux based OS](/doc/sections/en_US/3-requirements/3-1-required-tools-for-the-GNU-Linux-based-OS.md)
     1. [Required tools for the MS Windows based OS](/doc/sections/en_US/3-requirements/3-2-required-tools-for-the-MS-Windows-based-OS.md)
+    1. [Required PGPLOT packages](/doc/sections/en_US/3-requirements/3-11-required-pgplot-packages.md)
     1. [Optional for the tests](/doc/sections/en_US/3-requirements/3-3-optional-for-the-tests.md)
     1. [Optional for the documentation](/doc/sections/en_US/3-requirements/3-4-optional-for-the-documentation.md)
     1. [Optional for the code formatting](/doc/sections/en_US/3-requirements/3-5-optional-for-the-code-formatting.md)

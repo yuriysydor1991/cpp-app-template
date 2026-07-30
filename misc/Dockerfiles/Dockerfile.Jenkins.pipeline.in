@@ -12,5 +12,9 @@ RUN apt install -y clang-tidy
 RUN apt install -y libgtest-dev
 RUN apt install -y libgmock-dev
 
+# the free giza drop-in replacement of the PGPLOT cpgplot interface, since the
+# original pgplot5-dev package lives in the non-free (multiverse) repositories
+RUN apt install -y giza-dev
+
 CMD ["jenkins.sh"]
 

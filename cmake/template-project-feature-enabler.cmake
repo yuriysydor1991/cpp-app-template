@@ -17,6 +17,11 @@ include(template-project-GTest-enabler)
 include(template-project-clang-format-target)
 include(template-project-valgrind-target)
 
+# plots / data visualization
+# included before the add_subdirectory(src) call of the root CMakeLists.txt
+# since the src/pgplot sources require the PGPLOT headers at their compile time
+include(template-project-PGPLOT-enabler)
+
 # packagers
 include(template-project-deb-enabler)
 include(template-project-flatpak-target)

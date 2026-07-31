@@ -1,3 +1,3 @@
-Наступна діаграма відображає структуру компоненту `app`:
+Наступна діаграма описує структуру головного компоненту `lib`:
 
-![Діграма компоненту app](/doc/diagrams/images/template-project-app-structure.svg)
+![компонент lib](/doc/diagrams/images/lib-class-structure.svg)

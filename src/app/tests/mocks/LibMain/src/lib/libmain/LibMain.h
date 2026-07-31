@@ -1,6 +1,8 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_LIBRARYMAIN_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_LIBRARYMAIN_CLASS_H
 
+#include <gmock/gmock.h>
+
 #include <memory>
 
 #include "ILib.h"
@@ -15,7 +17,7 @@ class LibMain : public templatelib0::ILib
   using LibMainPtr = std::shared_ptr<LibMain>;
   using LibraryContextPtr = templatelib0::LibraryContextPtr;
 
-  virtual ~LibMain() = default;
+  ~LibMain() override = default;
   LibMain() = default;
 
   MOCK_METHOD(bool, libcall, (LibraryContextPtr ctx), (override));

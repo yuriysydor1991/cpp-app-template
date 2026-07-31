@@ -25,10 +25,11 @@ class UTEST_CommandLineParser : public Test
     static std::string binaryName{"binaryName"};
     static std::string secondArg;
 
-    static char* customArgv[] = {binaryName.data(), secondArg.data()};
-
     secondArg = secondParam;
 
+    static char* customArgv[2] = {};
+
+    customArgv[0] = binaryName.data();
     customArgv[1] = secondArg.data();
 
     argc = 2;

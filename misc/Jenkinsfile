@@ -147,6 +147,7 @@ pipeline {
         sh 'rm -fr $BUILDDIR'
         sh '''
           meson setup $BUILDDIR --buildtype=debug -DENABLE_CLANG_TIDY=true \
+            -DENABLE_UNIT_TESTS=true -DENABLE_COMPONENT_TESTS=true \
             -DMAX_LOG_LEVEL=5
         '''
       }

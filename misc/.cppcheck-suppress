@@ -1,3 +1,4 @@
 nullPointer:assert.cpp
 missingIncludeSystem
 unusedStructMember
+ctuOneDefinitionRuleViolation:*/mocks/log/src/log/log.h

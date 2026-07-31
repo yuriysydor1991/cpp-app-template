@@ -17,7 +17,7 @@ class LibMain : public templatelib0::ILib
   using LibMainPtr = std::shared_ptr<LibMain>;
   using LibraryContextPtr = templatelib0::LibraryContextPtr;
 
-  virtual ~LibMain() = default;
+  ~LibMain() override = default;
   LibMain() = default;
 
   MOCK_METHOD(bool, libcall, (LibraryContextPtr ctx), (override));

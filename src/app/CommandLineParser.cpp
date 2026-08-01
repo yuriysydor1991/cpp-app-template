@@ -118,7 +118,8 @@ bool CommandLineParser::requires_data(const std::string& param)
          requireNext.cend();
 }
 
-std::string CommandLineParser::get_custom_logfile(int& gargc, char**& gargv)
+std::string CommandLineParser::get_custom_logfile(const int& gargc,
+                                                  char** const& gargv)
 {
   std::string logf;
 

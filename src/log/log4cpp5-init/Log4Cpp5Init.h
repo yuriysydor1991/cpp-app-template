@@ -43,10 +43,9 @@ class Log4Cpp5Init
    */
   explicit Log4Cpp5Init(
       const std::string& filepath = get_default_full_log_path(),
-      const unsigned short& nlvl = default_priority,
-      const bool toPrintValue = true);
+      const unsigned short& nlvl = default_priority, bool toPrintValue = true);
 
-  static std::string get_filename_only(const char* const filePath);
+  static std::string get_filename_only(const char* filePath);
 
  protected:
   /**

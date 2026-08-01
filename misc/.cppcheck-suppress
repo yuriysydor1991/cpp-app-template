@@ -1,2 +1,4 @@
 nullPointer:assert.cpp
-constParameter
+missingIncludeSystem
+unusedStructMember
+functionConst

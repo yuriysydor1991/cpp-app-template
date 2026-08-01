@@ -1,10 +1,9 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <vulkan/vulkan.h>
 
 #include <cstdint>
 #include <memory>
-
-#include <vulkan/vulkan.h>
 
 #include "src/app/ApplicationContext.h"
 #include "src/vulkan/VulkanController.h"
@@ -90,7 +89,8 @@ TEST_F(UTEST_VulkanController, create_returns_null_when_instance_unavailable)
 
 TEST_F(UTEST_VulkanController, exposes_expected_instance_parameters)
 {
-  EXPECT_STREQ(VulkanController::applicationName, "cpp-app-template-vulkan-app");
+  EXPECT_STREQ(VulkanController::applicationName,
+               "cpp-app-template-vulkan-app");
   EXPECT_STREQ(VulkanController::engineName, "cpp-app-template-vulkan-engine");
   const std::uint32_t expectedApiVersion = VK_API_VERSION_1_0;
   EXPECT_EQ(VulkanController::apiVersion, expectedApiVersion);

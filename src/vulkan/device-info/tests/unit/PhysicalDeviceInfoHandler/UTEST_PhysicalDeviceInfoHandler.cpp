@@ -1,11 +1,10 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <vulkan/vulkan.h>
 
 #include <functional>
 #include <stdexcept>
 #include <vector>
-
-#include <vulkan/vulkan.h>
 
 #include "src/vulkan/device-info/PhysicalDeviceInfoHandler.h"
 
@@ -19,8 +18,8 @@ namespace
  * @brief A non-null, opaque Vulkan instance handle.
  *
  * It is never dereferenced because the fetch_devices() seam is overridden in
- * the test double below, so a real, created Vulkan instance (which would require
- * a live loader / driver) is not needed to drive handle().
+ * the test double below, so a real, created Vulkan instance (which would
+ * require a live loader / driver) is not needed to drive handle().
  */
 VkInstance fake_instance()
 {
@@ -83,14 +82,14 @@ TEST_F(UTEST_PhysicalDeviceInfoHandler, handle_returns_true_on_successful_fetch)
   EXPECT_EQ(received, fake_instance());
 }
 
-TEST_F(UTEST_PhysicalDeviceInfoHandler, handle_returns_true_on_empty_device_list)
+TEST_F(UTEST_PhysicalDeviceInfoHandler,
+       handle_returns_true_on_empty_device_list)
 {
   bool fetchCalled = false;
 
   handler.onFetchDevices = [&](VkInstance) {
     fetchCalled = true;
-    return std::vector<
-        TestablePhysicalDeviceInfoHandler::PhysicalDeviceInfo>{};
+    return std::vector<TestablePhysicalDeviceInfoHandler::PhysicalDeviceInfo>{};
   };
 
   // Zero reported devices is a valid, successful enumeration outcome.
@@ -98,10 +97,10 @@ TEST_F(UTEST_PhysicalDeviceInfoHandler, handle_returns_true_on_empty_device_list
   EXPECT_TRUE(fetchCalled);
 }
 
-TEST_F(UTEST_PhysicalDeviceInfoHandler, handle_returns_false_on_enumeration_error)
+TEST_F(UTEST_PhysicalDeviceInfoHandler,
+       handle_returns_false_on_enumeration_error)
 {
-  handler.onFetchDevices =
-      [&](VkInstance)
+  handler.onFetchDevices = [&](VkInstance)
       -> std::vector<TestablePhysicalDeviceInfoHandler::PhysicalDeviceInfo> {
     throw std::runtime_error("vkEnumeratePhysicalDevices failed");
   };
@@ -115,8 +114,7 @@ TEST_F(UTEST_PhysicalDeviceInfoHandler, handle_returns_false_on_null_instance)
 
   handler.onFetchDevices = [&](VkInstance) {
     fetchCalled = true;
-    return std::vector<
-        TestablePhysicalDeviceInfoHandler::PhysicalDeviceInfo>{};
+    return std::vector<TestablePhysicalDeviceInfoHandler::PhysicalDeviceInfo>{};
   };
 
   // Asserts are compiled out for the unit tests (NDEBUG), so the explicit

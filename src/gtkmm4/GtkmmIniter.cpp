@@ -25,8 +25,9 @@ int GtkmmIniter::run(std::shared_ptr<app::ApplicationContext> nactx)
 
   // The Vulkan work is headless (raw libvulkan, no GTK dependency): create an
   // instance, enumerate the physical devices and log their properties before
-  // the GTK main loop is entered. GTK4 exposes no usable Vulkan rendering widget
-  // (see GtkmmWindow), so the window itself is a plain, blank black GTK window.
+  // the GTK main loop is entered. GTK4 exposes no usable Vulkan rendering
+  // widget (see GtkmmWindow), so the window itself is a plain, blank black GTK
+  // window.
   vulkani::VulkanControllerPtr vulkan = vulkani::VulkanController::create();
 
   if (vulkan == nullptr) {

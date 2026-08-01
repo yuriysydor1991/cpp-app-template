@@ -9,7 +9,8 @@
 //
 // Only the handles, structures, enumerators, version helpers and the entry
 // points actually referenced by the production code are reproduced here, with
-// the same names and (compatible) signatures the real <vulkan/vulkan.h> exposes.
+// the same names and (compatible) signatures the real <vulkan/vulkan.h>
+// exposes.
 
 #include <cstdint>
 
@@ -36,9 +37,9 @@ typedef int VkResult;
 // ---- version helpers ------------------------------------------------------
 // Defined with C++ casts (instead of the real header's C-style casts) so the
 // mock does not trip the project's -Wold-style-cast on the unit test sources.
-#define VK_MAKE_VERSION(major, minor, patch)                \
-  ((static_cast<std::uint32_t>(major) << 22) |              \
-   (static_cast<std::uint32_t>(minor) << 12) |              \
+#define VK_MAKE_VERSION(major, minor, patch)   \
+  ((static_cast<std::uint32_t>(major) << 22) | \
+   (static_cast<std::uint32_t>(minor) << 12) | \
    static_cast<std::uint32_t>(patch))
 
 #define VK_VERSION_MAJOR(version) (static_cast<std::uint32_t>(version) >> 22)
@@ -147,9 +148,10 @@ inline VkResult vkEnumeratePhysicalDevices(VkInstance,
                                            std::uint32_t* pPhysicalDeviceCount,
                                            VkPhysicalDevice* pPhysicalDevices)
 {
-  // The mock reports no physical devices: the production fetch_devices() seam is
-  // overridden in the unit tests, so this default only needs to keep the
-  // factory / handler sources that reference the symbol compilable and linkable.
+  // The mock reports no physical devices: the production fetch_devices() seam
+  // is overridden in the unit tests, so this default only needs to keep the
+  // factory / handler sources that reference the symbol compilable and
+  // linkable.
   if (pPhysicalDeviceCount != nullptr && pPhysicalDevices == nullptr) {
     *pPhysicalDeviceCount = 0;
   }

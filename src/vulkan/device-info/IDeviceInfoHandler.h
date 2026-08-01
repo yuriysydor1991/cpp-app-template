@@ -1,9 +1,9 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_IDEVICEINFOHANDLER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_IDEVICEINFOHANDLER_CLASS_H
 
-#include <memory>
-
 #include <vulkan/vulkan.h>
+
+#include <memory>
 
 namespace vulkani
 {
@@ -18,9 +18,10 @@ namespace vulkani
  * instance life cycle and the concrete query logic decoupled and independently
  * testable.
  *
- * The handle() method takes the raw VkInstance handle (which is itself an opaque
- * pointer) rather than the owning controller, so the handler stays free of the
- * instance ownership concerns and is trivially testable with a fake handle.
+ * The handle() method takes the raw VkInstance handle (which is itself an
+ * opaque pointer) rather than the owning controller, so the handler stays free
+ * of the instance ownership concerns and is trivially testable with a fake
+ * handle.
  */
 class IDeviceInfoHandler
 {
@@ -34,8 +35,8 @@ class IDeviceInfoHandler
    * @brief Execute the handler's query against the given, already created,
    * Vulkan instance.
    *
-   * @param instance A valid, created Vulkan instance handle owned by the caller.
-   * Must not be a VK_NULL_HANDLE.
+   * @param instance A valid, created Vulkan instance handle owned by the
+   * caller. Must not be a VK_NULL_HANDLE.
    *
    * @return Returns true in case of success and false in case of any error.
    */

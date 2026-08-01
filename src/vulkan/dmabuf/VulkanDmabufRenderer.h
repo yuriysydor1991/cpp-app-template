@@ -1,11 +1,11 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_VULKANDMABUFRENDERER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_VULKANDMABUFRENDERER_CLASS_H
 
+#include <vulkan/vulkan.h>
+
 #include <cstdint>
 #include <memory>
 #include <optional>
-
-#include <vulkan/vulkan.h>
 
 #include "src/vulkan/dmabuf/DmabufFrame.h"
 
@@ -93,7 +93,8 @@ class VulkanDmabufRenderer
   VkCommandPool commandPool{VK_NULL_HANDLE};
 
   PFN_vkGetMemoryFdKHR pfnGetMemoryFdKHR{nullptr};
-  PFN_vkGetImageDrmFormatModifierPropertiesEXT pfnGetModifierProperties{nullptr};
+  PFN_vkGetImageDrmFormatModifierPropertiesEXT pfnGetModifierProperties{
+      nullptr};
 
   std::optional<DmabufFrame> frameInfo;
 };

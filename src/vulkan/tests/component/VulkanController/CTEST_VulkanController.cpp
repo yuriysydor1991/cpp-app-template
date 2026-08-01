@@ -1,9 +1,8 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <vulkan/vulkan.h>
 
 #include <memory>
-
-#include <vulkan/vulkan.h>
 
 #include "src/app/ApplicationContext.h"
 #include "src/vulkan/VulkanController.h"

@@ -1,10 +1,10 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_VULKANCONTROLLER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_VULKANCONTROLLER_CLASS_H
 
+#include <vulkan/vulkan.h>
+
 #include <cstdint>
 #include <memory>
-
-#include <vulkan/vulkan.h>
 
 #include "src/app/ApplicationContext.h"
 
@@ -23,8 +23,8 @@ namespace vulkani
  * a VkInstance up front, so a non-null controller is always usable. The actual
  * Vulkan touching steps (the instance creation and the @ref inited() check) are
  * kept behind small protected, overridable seams, so the run() orchestration
- * may be unit tested without a live Vulkan loader. The real path is exercised by
- * the component test against the system Vulkan runtime.
+ * may be unit tested without a live Vulkan loader. The real path is exercised
+ * by the component test against the system Vulkan runtime.
  */
 class VulkanController
 {

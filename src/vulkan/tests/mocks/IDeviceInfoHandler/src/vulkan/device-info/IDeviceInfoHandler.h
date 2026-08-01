@@ -2,10 +2,9 @@
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_IDEVICEINFOHANDLER_CLASS_H
 
 #include <gmock/gmock.h>
+#include <vulkan/vulkan.h>
 
 #include <memory>
-
-#include <vulkan/vulkan.h>
 
 namespace vulkani
 {

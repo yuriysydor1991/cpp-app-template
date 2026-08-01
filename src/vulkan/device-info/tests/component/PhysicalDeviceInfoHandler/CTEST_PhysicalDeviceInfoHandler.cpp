@@ -1,9 +1,8 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <vulkan/vulkan.h>
 
 #include <memory>
-
-#include <vulkan/vulkan.h>
 
 #include "src/vulkan/device-info/DeviceInfoHandlerFactory.h"
 #include "src/vulkan/device-info/IDeviceInfoHandler.h"
@@ -18,7 +17,8 @@ class CTEST_PhysicalDeviceInfoHandler : public Test
   DeviceInfoHandlerFactory factory;
 };
 
-TEST_F(CTEST_PhysicalDeviceInfoHandler, factory_creates_non_null_default_handler)
+TEST_F(CTEST_PhysicalDeviceInfoHandler,
+       factory_creates_non_null_default_handler)
 {
   IDeviceInfoHandlerPtr handler = factory.create_default_handler();
 

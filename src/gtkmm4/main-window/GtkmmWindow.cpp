@@ -53,7 +53,8 @@ bool GtkmmWindow::show_vulkan_surface()
   }
 
   picture.set_paintable(texture);
-  // Fill the whole window with the Vulkan frame (no theme colored letterboxing).
+  // Fill the whole window with the Vulkan frame (no theme colored
+  // letterboxing).
   picture.set_content_fit(Gtk::ContentFit::FILL);
   set_child(picture);
 

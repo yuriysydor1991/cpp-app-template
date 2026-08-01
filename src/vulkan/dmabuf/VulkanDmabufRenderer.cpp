@@ -1,14 +1,13 @@
 #include "src/vulkan/dmabuf/VulkanDmabufRenderer.h"
 
 #include <unistd.h>
+#include <vulkan/vulkan.h>
 
 #include <array>
 #include <cstdint>
 #include <cstring>
 #include <limits>
 #include <vector>
-
-#include <vulkan/vulkan.h>
 
 #include "src/log/log.h"
 
@@ -236,8 +235,7 @@ bool VulkanDmabufRenderer::create_image(std::uint32_t width,
   createInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
   createInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 
-  const VkResult result =
-      vkCreateImage(device, &createInfo, nullptr, &image);
+  const VkResult result = vkCreateImage(device, &createInfo, nullptr, &image);
 
   if (result != VK_SUCCESS) {
     LOGE("vkCreateImage (DRM format modifier) failed with the VkResult code: "
@@ -529,10 +527,9 @@ bool VulkanDmabufRenderer::export_dmabuf(std::uint32_t width,
 
   frameInfo = result;
 
-  LOGD("Exported a "
-       << width << "x" << height
-       << " Vulkan dma-buf (stride=" << result.stride
-       << ", modifier=" << result.modifier << ")");
+  LOGD("Exported a " << width << "x" << height
+                     << " Vulkan dma-buf (stride=" << result.stride
+                     << ", modifier=" << result.modifier << ")");
 
   return true;
 }

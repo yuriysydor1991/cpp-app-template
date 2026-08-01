@@ -1,9 +1,9 @@
 #include "src/vulkan/VulkanController.h"
 
+#include <vulkan/vulkan.h>
+
 #include <cassert>
 #include <memory>
-
-#include <vulkan/vulkan.h>
 
 #include "src/log/log.h"
 #include "src/vulkan/device-info/DeviceInfoHandlerFactory.h"

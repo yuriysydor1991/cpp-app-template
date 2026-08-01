@@ -1,12 +1,12 @@
 #include "src/vulkan/device-info/PhysicalDeviceInfoHandler.h"
 
+#include <vulkan/vulkan.h>
+
 #include <cassert>
 #include <cstdint>
 #include <stdexcept>
 #include <string>
 #include <vector>
-
-#include <vulkan/vulkan.h>
 
 #include "src/log/log.h"
 

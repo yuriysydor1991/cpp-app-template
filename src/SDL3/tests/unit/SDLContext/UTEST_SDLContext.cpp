@@ -13,8 +13,7 @@ using namespace testing;
 class UTEST_SDLContext : public Test
 {
  public:
-  UTEST_SDLContext()
-      : appCtx{std::make_shared<ApplicationContext>(argc, argv)}
+  UTEST_SDLContext() : appCtx{std::make_shared<ApplicationContext>(argc, argv)}
   {
   }
 

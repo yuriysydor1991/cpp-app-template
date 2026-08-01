@@ -86,8 +86,7 @@ bool CommandLineParser::parse_arg(std::shared_ptr<ApplicationContext> ctx,
     // skipping already parsed cmd params
     paramIndex++;
     return true;
-  } else if (param == CMDParamNames::IMAGEW ||
-             param == CMDParamNames::IMAGE) {
+  } else if (param == CMDParamNames::IMAGEW || param == CMDParamNames::IMAGE) {
     ctx->image_path = nextParam;
     paramIndex++;
     return true;

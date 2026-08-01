@@ -1,11 +1,10 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include <opencv2/core.hpp>
-#include <opencv2/imgproc.hpp>
-
 #include <filesystem>
 #include <memory>
+#include <opencv2/core.hpp>
+#include <opencv2/imgproc.hpp>
 
 #include "src/app/ApplicationContext.h"
 #include "src/opencv/OpenCVController.h"
@@ -93,12 +92,14 @@ TEST_F(UTEST_OpenCVController, run_with_null_context_returns_false)
   EXPECT_FALSE(controller->run({}));
 }
 
-TEST_F(UTEST_OpenCVController, face_recognition_example_with_null_context_returns_false)
+TEST_F(UTEST_OpenCVController,
+       face_recognition_example_with_null_context_returns_false)
 {
   EXPECT_FALSE(controller->face_recognition_example({}));
 }
 
-TEST_F(UTEST_OpenCVController, face_recognition_example_fails_on_missing_cascade)
+TEST_F(UTEST_OpenCVController,
+       face_recognition_example_fails_on_missing_cascade)
 {
   ctx->cascade_path = "/tmp/this/path/does/not/exist.xml";
 

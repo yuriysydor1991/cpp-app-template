@@ -1,12 +1,11 @@
 #include "src/opencv/OpenCVController.h"
 
-#include <opencv2/imgcodecs.hpp>
-#include <opencv2/imgproc.hpp>
-
 #include <array>
 #include <cassert>
 #include <filesystem>
 #include <memory>
+#include <opencv2/imgcodecs.hpp>
+#include <opencv2/imgproc.hpp>
 #include <string>
 #include <vector>
 
@@ -23,8 +22,9 @@ bool OpenCVController::load_cascade(const std::string& cascadePath)
       cascadePath.empty() ? default_cascade_path() : cascadePath;
 
   if (target.empty()) {
-    LOGE("No Haar cascade XML file path was provided and no system-wide "
-         "default was found");
+    LOGE(
+        "No Haar cascade XML file path was provided and no system-wide "
+        "default was found");
     return false;
   }
 
@@ -124,17 +124,19 @@ bool OpenCVController::face_recognition_example(appctx ctx)
   }
 
   if (!load_cascade(ctx->cascade_path)) {
-    LOGE("Failed to load the pre-installed Haar cascade. Provide the path "
-         "explicitly with --face-cascade "
-         "<path/to/haarcascade_frontalface_default.xml>");
+    LOGE(
+        "Failed to load the pre-installed Haar cascade. Provide the path "
+        "explicitly with --face-cascade "
+        "<path/to/haarcascade_frontalface_default.xml>");
     return false;
   }
 
   LOGI("OpenCV face cascade loaded from " << get_cascade_path());
 
   if (ctx->image_path.empty()) {
-    LOGI("No --image was provided, nothing to scan. The OpenCV face detection "
-         "stack is initialised and ready.");
+    LOGI(
+        "No --image was provided, nothing to scan. The OpenCV face detection "
+        "stack is initialised and ready.");
     return true;
   }
 

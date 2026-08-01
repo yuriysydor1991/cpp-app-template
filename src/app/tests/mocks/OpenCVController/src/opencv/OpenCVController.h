@@ -40,8 +40,10 @@ class OpenCVController
 
   virtual ~OpenCVController() = default;
 
-  OpenCVController() : defaultCascadePath{"/usr/share/opencv4/haarcascades/"
-                                          "haarcascade_frontalface_default.xml"}
+  OpenCVController()
+      : defaultCascadePath{
+            "/usr/share/opencv4/haarcascades/"
+            "haarcascade_frontalface_default.xml"}
   {
     using ::testing::_;
     using ::testing::Return;

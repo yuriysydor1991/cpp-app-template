@@ -1,10 +1,9 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_OPENCVCONTROLLER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_OPENCVCONTROLLER_CLASS_H
 
+#include <memory>
 #include <opencv2/core.hpp>
 #include <opencv2/objdetect.hpp>
-
-#include <memory>
 #include <string>
 #include <vector>
 
@@ -123,7 +122,7 @@ class OpenCVController
    */
   static std::string default_cascade_path();
 
-private:
+ private:
   inline static constexpr const double DEFAULT_SCALE_FACTOR = 1.1;
   inline static constexpr const int DEFAULT_MIN_NEIGHBORS = 3;
   inline static constexpr const int DEFAULT_MIN_SIZE_PX = 24;

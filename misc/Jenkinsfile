@@ -184,9 +184,8 @@ pipeline {
         '''
       }
     }
-  }
 
-  // =====================================================================
+    // =====================================================================
     // Template project specific checks.
     //
     // Everything below is specific to the cpp-app-template project itself and

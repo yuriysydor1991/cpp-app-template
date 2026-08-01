@@ -32,7 +32,7 @@ namespace keywords = boost::log::keywords;
 class BoostLogController
 {
  public:
-  inline static constexpr const char* const defaultLogDateFormat =
+  static constexpr const char* const defaultLogDateFormat =
       "%Y-%m-%d %H:%M:%S.%f";
 
   inline static const std::string default_log_name =
@@ -44,7 +44,7 @@ class BoostLogController
 
   static void init(const std::string& filepath = default_log_name,
                    const unsigned int& nlvl = MAX_LOG_LEVEL,
-                   const bool toPrintValue = true);
+                   bool toPrintValue = true);
 
   static src::severity_logger<logging::trivial::severity_level>& get_lg();
 
@@ -60,7 +60,7 @@ class BoostLogController
   inline static std::atomic_bool toPrintMsgs{true};
   inline static std::string lfilepath;
   inline static logging::trivial::severity_level lvl = logging::trivial::info;
-  inline static src::severity_logger<logging::trivial::severity_level> lg;
+  inline static src::severity_logger<logging::trivial::severity_level> logger;
 };
 
 }  // namespace boost_log

@@ -1,12 +1,6 @@
 cmake_minimum_required(VERSION 3.13)
 
-find_package(Boost REQUIRED COMPONENTS
-  log
-  log_setup
-  thread
-  system
-  filesystem
-)
+# The Boost::* targets are looked up by the parent src/log/CMakeLists.txt.
 
 add_library(
   TemplateBoostLogControllerObj OBJECT
@@ -28,7 +22,6 @@ target_link_libraries(
   Boost::log
   Boost::log_setup
   Boost::thread
-  Boost::system
   Boost::filesystem
   pthread
 )

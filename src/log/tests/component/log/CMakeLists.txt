@@ -13,6 +13,8 @@ add_executable(
 target_compile_definitions(
   CTEST_log
   PRIVATE CTEST_log_DATA_DIR=\"${CMAKE_CURRENT_BINARY_DIR}\"
+  # Must match the TemplateBoostLogControllerObj target definition.
+  PRIVATE BOOST_LOG_DYN_LINK
 )
 
 target_include_directories(
@@ -24,7 +26,9 @@ target_include_directories(
 
 target_link_libraries(
   CTEST_log
-  GTest::gtest_main GTest::gmock Boost::log Boost::log_setup
+  GTest::gtest_main GTest::gmock
+  Boost::log Boost::log_setup Boost::thread Boost::filesystem
+  pthread
 )
 
 include(GoogleTest)

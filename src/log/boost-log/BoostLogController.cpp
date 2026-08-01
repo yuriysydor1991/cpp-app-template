@@ -44,8 +44,7 @@ void BoostLogController::init_stdout()
 void BoostLogController::init_file()
 {
   logging::add_file_log(
-      keywords::file_name = lfilepath,
-      keywords::open_mode = std::ios_base::app,
+      keywords::file_name = lfilepath, keywords::open_mode = std::ios_base::app,
       keywords::auto_flush = true,
       keywords::format =
           (expr::stream
@@ -60,7 +59,7 @@ void BoostLogController::init_file()
 src::severity_logger<logging::trivial::severity_level>&
 BoostLogController::get_lg()
 {
-  return lg;
+  return logger;
 }
 
 std::string BoostLogController::get_filename(const std::string& filepath)

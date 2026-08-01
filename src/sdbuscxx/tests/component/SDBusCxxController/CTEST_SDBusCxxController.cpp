@@ -1,10 +1,9 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <sdbus-c++/sdbus-c++.h>
 
 #include <memory>
 #include <string>
-
-#include <sdbus-c++/sdbus-c++.h>
 
 #include "src/app/ApplicationContext.h"
 #include "src/sdbuscxx/SDBusCxxController.h"
@@ -29,7 +28,8 @@ class CTEST_SDBusCxxController : public Test
       std::unique_ptr<sdbus::IConnection> probe =
           sdbus::createSystemBusConnection();
       return probe != nullptr;
-    } catch (const sdbus::Error&) {
+    }
+    catch (const sdbus::Error&) {
       return false;
     }
   }
@@ -63,8 +63,8 @@ TEST_F(CTEST_SDBusCxxController, run_against_live_system_bus)
 
   ASSERT_NE(controller, nullptr);
 
-  // The demo call reads read-only properties from hostname1 (systemd-hostnamed),
-  // a standard bus-activatable system service, so on a host that exposes a
-  // system bus run() must complete successfully.
+  // The demo call reads read-only properties from hostname1
+  // (systemd-hostnamed), a standard bus-activatable system service, so on a
+  // host that exposes a system bus run() must complete successfully.
   EXPECT_TRUE(controller->run(appCtx));
 }

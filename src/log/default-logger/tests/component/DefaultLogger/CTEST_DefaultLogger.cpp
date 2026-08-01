@@ -59,7 +59,8 @@ class CTEST_DefaultLogger : public Test
 
   const std::set<unsigned short> levelsSet{
       DefaultLogger::LVL_ERROR, DefaultLogger::LVL_WARNING,
-      DefaultLogger::LVL_INFO, DefaultLogger::LVL_DEBUG, DefaultLogger::LVL_TRACE};
+      DefaultLogger::LVL_INFO, DefaultLogger::LVL_DEBUG,
+      DefaultLogger::LVL_TRACE};
 };
 
 TEST_F(CTEST_DefaultLogger, nonempty_defaultLogDateFormat)
@@ -187,7 +188,7 @@ TEST_F(CTEST_DefaultLogger, multithread_logs)
   const auto concurencyLog = []() {
     for (auto jter = 0U; jter < iters_per_thread; ++jter) {
       DefaultLogger::log(DefaultLogger::LVL_ERROR,
-                        "Concurency thread log msg #" + std::to_string(jter));
+                         "Concurency thread log msg #" + std::to_string(jter));
     }
   };
 

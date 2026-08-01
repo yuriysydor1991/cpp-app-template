@@ -1,9 +1,8 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <sdbus-c++/sdbus-c++.h>
 
 #include <memory>
-
-#include <sdbus-c++/sdbus-c++.h>
 
 #include "src/app/ApplicationContext.h"
 #include "src/sdbuscxx/SDBusCxxController.h"

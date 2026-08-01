@@ -1,10 +1,9 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <sdbus-c++/sdbus-c++.h>
 
 #include <functional>
 #include <string>
-
-#include <sdbus-c++/sdbus-c++.h>
 
 #include "src/sdbuscxx/query-handlers/Hostname1QueryHandler.h"
 
@@ -80,8 +79,7 @@ TEST_F(UTEST_Hostname1QueryHandler, handle_returns_true_on_successful_fetch)
 
 TEST_F(UTEST_Hostname1QueryHandler, handle_returns_false_on_dbus_error)
 {
-  handler.onFetchProperties =
-      [&](sdbus::IConnection*)
+  handler.onFetchProperties = [&](sdbus::IConnection*)
       -> TestableHostname1QueryHandler::Hostname1Properties {
     throw sdbus::Error(
         sdbus::Error::Name{"org.freedesktop.DBus.Error.ServiceUnknown"},

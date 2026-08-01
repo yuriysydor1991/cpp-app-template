@@ -1,10 +1,10 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_HOSTNAME1QUERYHANDLER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_HOSTNAME1QUERYHANDLER_CLASS_H
 
+#include <sdbus-c++/sdbus-c++.h>
+
 #include <memory>
 #include <string>
-
-#include <sdbus-c++/sdbus-c++.h>
 
 #include "src/sdbuscxx/query-handlers/IDBusQueryHandler.h"
 

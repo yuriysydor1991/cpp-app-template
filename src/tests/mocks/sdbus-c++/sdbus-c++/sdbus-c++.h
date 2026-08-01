@@ -193,7 +193,8 @@ inline std::unique_ptr<IConnection> createSessionBusConnection()
   return std::make_unique<IConnection>();
 }
 
-inline std::unique_ptr<IProxy> createProxy(IConnection&, ServiceName, ObjectPath)
+inline std::unique_ptr<IProxy> createProxy(IConnection&, ServiceName,
+                                           ObjectPath)
 {
   return std::make_unique<IProxy>();
 }

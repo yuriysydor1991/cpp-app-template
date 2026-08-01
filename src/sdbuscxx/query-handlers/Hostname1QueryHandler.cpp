@@ -1,10 +1,10 @@
 #include "src/sdbuscxx/query-handlers/Hostname1QueryHandler.h"
 
+#include <sdbus-c++/sdbus-c++.h>
+
 #include <cassert>
 #include <memory>
 #include <string>
-
-#include <sdbus-c++/sdbus-c++.h>
 
 #include "src/log/log.h"
 
@@ -26,7 +26,8 @@ bool Hostname1QueryHandler::handle(sdbus::IConnection* connection)
     LOGI("hostname: " << props.hostname);
     LOGI("Pretty hostname: " << props.prettyHostname);
     LOGI("OS name: " << props.osPrettyName);
-  } catch (const sdbus::Error& e) {
+  }
+  catch (const sdbus::Error& e) {
     LOGE("DBus error: [" << e.getName() << "] " << e.getMessage());
     return false;
   }

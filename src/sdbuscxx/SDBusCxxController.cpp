@@ -1,10 +1,10 @@
 #include "SDBusCxxController.h"
 
-#include <cassert>
-#include <memory>
-#include <exception>
-
 #include <sdbus-c++/sdbus-c++.h>
+
+#include <cassert>
+#include <exception>
+#include <memory>
 
 #include "src/log/log.h"
 #include "src/sdbuscxx/query-handlers/DBusQueryHandlerFactory.h"
@@ -18,8 +18,8 @@ bool SDBusCxxController::run(std::shared_ptr<app::ApplicationContext> ctx)
   assert(ctx != nullptr);
 
   if (ctx == nullptr) {
-      LOGE("No valid context pointer provided");
-      return false;
+    LOGE("No valid context pointer provided");
+    return false;
   }
 
   appctx = ctx;
@@ -30,8 +30,8 @@ bool SDBusCxxController::run(std::shared_ptr<app::ApplicationContext> ctx)
   }
 
   if (!make_example_demo_call()) {
-      LOGE("Demo DBus call failure");
-      return false;
+    LOGE("Demo DBus call failure");
+    return false;
   }
 
   return true;
@@ -43,7 +43,8 @@ bool SDBusCxxController::init()
     // Connect to the system bus (hostname1 and other well-known
     // system services are only exposed on the system bus)
     conn = sdbus::createSystemBusConnection();
-  } catch (const std::exception& e) {
+  }
+  catch (const std::exception& e) {
     LOGE("Exception during the connection object creation: " << e.what());
     return false;
   }
@@ -60,10 +61,7 @@ bool SDBusCxxController::init()
   return true;
 }
 
-bool SDBusCxxController::inited()
-{
-  return conn != nullptr;
-}
+bool SDBusCxxController::inited() { return conn != nullptr; }
 
 bool SDBusCxxController::make_example_demo_call()
 {
@@ -90,14 +88,14 @@ bool SDBusCxxController::make_example_demo_call()
 
 SDBusCxxControllerPtr SDBusCxxController::create()
 {
-    SDBusCxxControllerPtr ptr = std::make_shared<SDBusCxxController>();
+  SDBusCxxControllerPtr ptr = std::make_shared<SDBusCxxController>();
 
-    if (!ptr->init()) {
-      LOGE("Fail to init the newly created controller");
-      return {};
-    }
+  if (!ptr->init()) {
+    LOGE("Fail to init the newly created controller");
+    return {};
+  }
 
-    return ptr;
+  return ptr;
 }
 
 }  // namespace sdbuscxxi

@@ -1,10 +1,9 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <sdbus-c++/sdbus-c++.h>
 
 #include <memory>
 #include <string>
-
-#include <sdbus-c++/sdbus-c++.h>
 
 #include "src/sdbuscxx/query-handlers/DBusQueryHandlerFactory.h"
 #include "src/sdbuscxx/query-handlers/Hostname1QueryHandler.h"
@@ -49,7 +48,8 @@ TEST_F(CTEST_Hostname1QueryHandler, live_system_bus_query)
 
   try {
     conn = sdbus::createSystemBusConnection();
-  } catch (const sdbus::Error& e) {
+  }
+  catch (const sdbus::Error& e) {
     GTEST_SKIP() << "System bus is not reachable in this environment: ["
                  << static_cast<std::string>(e.getName()) << "] "
                  << e.getMessage();

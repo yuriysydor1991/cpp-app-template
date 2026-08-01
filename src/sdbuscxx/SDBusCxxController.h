@@ -1,9 +1,9 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_SDBUSCXXCONTROLLER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_SDBUSCXXCONTROLLER_CLASS_H
 
-#include <memory>
-
 #include <sdbus-c++/sdbus-c++.h>
+
+#include <memory>
 
 #include "src/app/ApplicationContext.h"
 
@@ -22,16 +22,16 @@ class SDBusCxxController
 
   static SDBusCxxControllerPtr create();
 
-protected:
-    virtual bool init();
-    virtual bool inited();
+ protected:
+  virtual bool init();
+  virtual bool inited();
 
-    std::shared_ptr<app::ApplicationContext> appctx;
+  std::shared_ptr<app::ApplicationContext> appctx;
 
-private:
-    bool make_example_demo_call();
+ private:
+  bool make_example_demo_call();
 
-    std::unique_ptr<sdbus::IConnection> conn;
+  std::unique_ptr<sdbus::IConnection> conn;
 };
 
 using SDBusCxxControllerPtr = SDBusCxxController::SDBusCxxControllerPtr;

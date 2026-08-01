@@ -2,10 +2,9 @@
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_IDBUSQUERYHANDLER_CLASS_H
 
 #include <gmock/gmock.h>
+#include <sdbus-c++/sdbus-c++.h>
 
 #include <memory>
-
-#include <sdbus-c++/sdbus-c++.h>
 
 namespace sdbuscxxi
 {
@@ -22,7 +21,7 @@ class IDBusQueryHandler
   virtual ~IDBusQueryHandler() = default;
   IDBusQueryHandler() = default;
 
-  MOCK_METHOD(bool, handle, (sdbus::IConnection* connection));
+  MOCK_METHOD(bool, handle, (sdbus::IConnection * connection));
 };
 
 using IDBusQueryHandlerPtr = IDBusQueryHandler::IDBusQueryHandlerPtr;

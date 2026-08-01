@@ -15,11 +15,10 @@ class UTEST_Application : public Test
       : app{std::make_shared<Application>()},
         appCtx{std::make_shared<ApplicationContext>(argc, argv)}
   {
-    PLplotController::createMock = std::make_shared<PLplotController::createMockType>();
+    PLplotController::createMock =
+        std::make_shared<PLplotController::createMockType>();
   }
-  ~UTEST_Application() {
-    PLplotController::createMock.reset();
-  }
+  ~UTEST_Application() { PLplotController::createMock.reset(); }
 
   int argc{0};
   char** argv{nullptr};
@@ -37,11 +36,9 @@ TEST_F(UTEST_Application, normal_exit)
   EXPECT_CALL(*plotter, run(appCtx)).Times(1).WillOnce(Return(true));
 
   EXPECT_NE(PLplotController::createMock, nullptr);
-  EXPECT_CALL(*PLplotController::createMock, Call()).Times(1).WillOnce(
-    Invoke([plotter](){
-        return plotter;
-    })
-  );
+  EXPECT_CALL(*PLplotController::createMock, Call())
+      .Times(1)
+      .WillOnce(Invoke([plotter]() { return plotter; }));
 
   EXPECT_CALL(*appCtx, push_error(_)).Times(0);
 
@@ -58,13 +55,11 @@ TEST_F(UTEST_Application, plotter_fail_status)
   PLplotControllerPtr plotter = std::make_shared<PLplotController>();
 
   EXPECT_CALL(*plotter, run(appCtx)).Times(1).WillOnce(Return(false));
-  
+
   EXPECT_NE(PLplotController::createMock, nullptr);
-  EXPECT_CALL(*PLplotController::createMock, Call()).Times(1).WillOnce(
-    Invoke([plotter](){
-        return plotter;
-    })
-  );
+  EXPECT_CALL(*PLplotController::createMock, Call())
+      .Times(1)
+      .WillOnce(Invoke([plotter]() { return plotter; }));
 
   EXPECT_CALL(*appCtx, push_error(_)).Times(0);
 
@@ -77,11 +72,11 @@ TEST_F(UTEST_Application, plotter_fail_status)
 }
 
 TEST_F(UTEST_Application, absent_plotter_instance)
-{  
+{
   EXPECT_NE(PLplotController::createMock, nullptr);
-  EXPECT_CALL(*PLplotController::createMock, Call()).Times(1).WillOnce(
-    Return(PLplotControllerPtr{})
-  );
+  EXPECT_CALL(*PLplotController::createMock, Call())
+      .Times(1)
+      .WillOnce(Return(PLplotControllerPtr{}));
 
   EXPECT_CALL(*appCtx, push_error(_)).Times(0);
 

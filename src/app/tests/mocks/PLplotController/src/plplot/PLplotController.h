@@ -1,8 +1,9 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_PLPLOTCONTROLLER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_PLPLOTCONTROLLER_CLASS_H
 
-#include <memory>
 #include <gmock/gmock.h>
+
+#include <memory>
 
 #include "src/app/ApplicationContext.h"
 
@@ -22,8 +23,10 @@ class PLplotController
   using createMockType = testing::MockFunction<PLplotControllerPtr()>;
   inline static std::shared_ptr<createMockType> createMock;
 
-  inline static PLplotControllerPtr create() {
-    return createMock != nullptr ? createMock->AsStdFunction()() : PLplotControllerPtr{};
+  inline static PLplotControllerPtr create()
+  {
+    return createMock != nullptr ? createMock->AsStdFunction()()
+                                 : PLplotControllerPtr{};
   }
 };
 

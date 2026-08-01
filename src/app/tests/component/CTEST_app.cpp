@@ -13,11 +13,10 @@ class CTEST_app : public Test
  public:
   CTEST_app()
   {
-    PLplotController::createMock = std::make_shared<PLplotController::createMockType>();
+    PLplotController::createMock =
+        std::make_shared<PLplotController::createMockType>();
   }
-  ~CTEST_app() {
-    PLplotController::createMock.reset();
-  }
+  ~CTEST_app() { PLplotController::createMock.reset(); }
 
   int argc{0};
   char** argv{nullptr};
@@ -78,11 +77,9 @@ TEST_F(CTEST_app, execute_success)
   EXPECT_CALL(*plotter, run(_)).Times(1).WillOnce(Return(true));
 
   EXPECT_NE(PLplotController::createMock, nullptr);
-  EXPECT_CALL(*PLplotController::createMock, Call()).Times(1).WillOnce(
-    Invoke([plotter](){
-        return plotter;
-    })
-  );
+  EXPECT_CALL(*PLplotController::createMock, Call())
+      .Times(1)
+      .WillOnce(Invoke([plotter]() { return plotter; }));
 
   int status = ApplicationFactory::execute(argc, argv);
 
@@ -96,11 +93,9 @@ TEST_F(CTEST_app, plotter_fail_status)
   EXPECT_CALL(*plotter, run(_)).Times(1).WillOnce(Return(false));
 
   EXPECT_NE(PLplotController::createMock, nullptr);
-  EXPECT_CALL(*PLplotController::createMock, Call()).Times(1).WillOnce(
-    Invoke([plotter](){
-        return plotter;
-    })
-  );
+  EXPECT_CALL(*PLplotController::createMock, Call())
+      .Times(1)
+      .WillOnce(Invoke([plotter]() { return plotter; }));
 
   int status = ApplicationFactory::execute(argc, argv);
 
@@ -110,9 +105,9 @@ TEST_F(CTEST_app, plotter_fail_status)
 TEST_F(CTEST_app, absent_plotter_instance)
 {
   EXPECT_NE(PLplotController::createMock, nullptr);
-  EXPECT_CALL(*PLplotController::createMock, Call()).Times(1).WillOnce(
-    Return(PLplotControllerPtr{})
-  );
+  EXPECT_CALL(*PLplotController::createMock, Call())
+      .Times(1)
+      .WillOnce(Return(PLplotControllerPtr{}));
 
   int status = ApplicationFactory::execute(argc, argv);
 

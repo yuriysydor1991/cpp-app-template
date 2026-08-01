@@ -10,10 +10,9 @@ namespace Qt6i::qmlpaths
 const QString& QMLRes::get_url_main()
 {
   static const QString main_url{
-    QStringLiteral(":/")  
-    + QString::fromStdString(project_decls::PROJECT_URI) 
-    + QStringLiteral("/main/main.qml")
-  };
+      QStringLiteral(":/") +
+      QString::fromStdString(project_decls::PROJECT_URI) +
+      QStringLiteral("/main/main.qml")};
 
   return main_url;
 }
@@ -21,9 +20,8 @@ const QString& QMLRes::get_url_main()
 const QString& QMLRes::get_url_main_import()
 {
   static const QString main_import_url{
-    QStringLiteral(":/")  
-    + QString::fromStdString(project_decls::PROJECT_URI)
-  };
+      QStringLiteral(":/") +
+      QString::fromStdString(project_decls::PROJECT_URI)};
 
   return main_import_url;
 }

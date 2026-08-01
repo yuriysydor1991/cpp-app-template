@@ -13,7 +13,8 @@ GLTriangleArea::GLTriangleArea()
   set_size_request(320, 240);
   set_auto_render(true);
 
-  signal_realize().connect(sigc::mem_fun(*this, &GLTriangleArea::on_area_realize));
+  signal_realize().connect(
+      sigc::mem_fun(*this, &GLTriangleArea::on_area_realize));
   // unrealize before the default handler so the GL context is still current
   signal_unrealize().connect(
       sigc::mem_fun(*this, &GLTriangleArea::on_area_unrealize), false);
@@ -68,8 +69,9 @@ bool GLTriangleArea::on_area_render(const Glib::RefPtr<Gdk::GLContext>& /*ctx*/)
 
   // Blank black canvas. Enter your own OpenGL draw commands below to render a
   // scene into the Gtk::GLArea framebuffer.
-  LOGI("Gtk::GLArea blank frame rendered - add your OpenGL commands in "
-       "GLTriangleArea::on_area_render()");
+  LOGI(
+      "Gtk::GLArea blank frame rendered - add your OpenGL commands in "
+      "GLTriangleArea::on_area_render()");
 
   glFlush();
 

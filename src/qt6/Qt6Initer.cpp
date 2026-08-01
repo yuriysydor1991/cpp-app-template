@@ -1,9 +1,10 @@
 #include "src/qt6/Qt6Initer.h"
 
+#include <QtWebEngineQuick/qtwebenginequickglobal.h>
+
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QString>
-#include <QtWebEngineQuick/qtwebenginequickglobal.h>
 
 #include "src/app/IApplication.h"
 #include "src/log/log.h"

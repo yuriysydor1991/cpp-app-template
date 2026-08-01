@@ -15,9 +15,9 @@ namespace zlibi
  * @brief A small zlib wrapper that hides the streaming boilerplate behind a few
  * simple compress / uncompress methods (in memory and to / from gzip files).
  *
- * The in-memory methods use the zlib (deflate) wrapper; the file methods use the
- * gzip (.gz) container. All methods log and return an empty result / false on a
- * zlib error instead of throwing, so they are trivial to call.
+ * The in-memory methods use the zlib (deflate) wrapper; the file methods use
+ * the gzip (.gz) container. All methods log and return an empty result / false
+ * on a zlib error instead of throwing, so they are trivial to call.
  */
 class ZlibController
 {
@@ -64,7 +64,8 @@ class ZlibController
    *
    * @param path The source file path.
    *
-   * @return The decompressed bytes, or an empty buffer on any I/O or zlib error.
+   * @return The decompressed bytes, or an empty buffer on any I/O or zlib
+   * error.
    */
   virtual buffer uncompress_from_file(const std::string& path);
 

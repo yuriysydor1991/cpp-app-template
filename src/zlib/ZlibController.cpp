@@ -158,8 +158,8 @@ ZlibController::buffer ZlibController::uncompress_from_file(
 
   std::array<unsigned char, CHUNK> chunk{};
   int read = 0;
-  while ((read = gzread(file, chunk.data(), static_cast<unsigned>(chunk.size()))) >
-         0) {
+  while ((read = gzread(file, chunk.data(),
+                        static_cast<unsigned>(chunk.size()))) > 0) {
     out.insert(out.end(), chunk.data(), chunk.data() + read);
   }
 

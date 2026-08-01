@@ -36,10 +36,7 @@ buffer pseudo_random(std::size_t n)
   return b;
 }
 
-buffer from_string(const std::string& s)
-{
-  return buffer(s.begin(), s.end());
-}
+buffer from_string(const std::string& s) { return buffer(s.begin(), s.end()); }
 
 }  // namespace
 
@@ -151,5 +148,6 @@ TEST_F(CTEST_ZlibController, file_round_trip_pseudo_random)
 
 TEST_F(CTEST_ZlibController, uncompress_from_missing_file_returns_empty)
 {
-  EXPECT_TRUE(zlib.uncompress_from_file("ctest_zlib_does_not_exist.gz").empty());
+  EXPECT_TRUE(
+      zlib.uncompress_from_file("ctest_zlib_does_not_exist.gz").empty());
 }

@@ -24,7 +24,8 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
   assert(zlib != nullptr);
 
   const std::string sentence = "Hello, compressed sentence!";
-  const zlibi::ZlibController::buffer original(sentence.begin(), sentence.end());
+  const zlibi::ZlibController::buffer original(sentence.begin(),
+                                               sentence.end());
 
   const auto compressed = zlib->compress(original);
   const auto restored = zlib->uncompress(compressed);

@@ -44,9 +44,14 @@ pipeline {
     
     stage('Code format build (clang-format)') {
       steps {
+        sh '''
+          cmake --build $BUILDDIR --target clang-format
+        '''
         script {
           def files = sh(script: 'git ls-files -m', returnStdout: true).trim()
-          return files == ""
+          if (files) {
+            error "Some files are not formatted:\n${files}"
+          }
         }
       }
       

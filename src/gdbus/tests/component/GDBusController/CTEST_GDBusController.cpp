@@ -1,9 +1,8 @@
-#include <gmock/gmock.h>
-#include <gtest/gtest.h>
-
 #include <giomm/dbusconnection.h>
 #include <giomm/init.h>
 #include <glibmm/error.h>
+#include <gmock/gmock.h>
+#include <gtest/gtest.h>
 
 #include "src/gdbus/GDBusController.h"
 

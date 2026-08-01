@@ -1,12 +1,11 @@
-#include <gmock/gmock.h>
-#include <gtest/gtest.h>
-
-#include <memory>
-
 #include <giomm/dbusconnection.h>
 #include <giomm/init.h>
 #include <glibmm/error.h>
 #include <glibmm/refptr.h>
+#include <gmock/gmock.h>
+#include <gtest/gtest.h>
+
+#include <memory>
 
 #include "src/gdbus/query-handlers/DBusQueryHandlerFactory.h"
 #include "src/gdbus/query-handlers/Hostname1QueryHandler.h"

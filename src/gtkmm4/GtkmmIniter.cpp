@@ -1,8 +1,8 @@
 #include "src/gtkmm4/GtkmmIniter.h"
 
-#include <cassert>
-
 #include <giomm/init.h>
+
+#include <cassert>
 
 #include "src/app/IApplication.h"
 #include "src/gdbus/GDBusController.h"

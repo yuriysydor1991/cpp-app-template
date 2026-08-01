@@ -1,12 +1,12 @@
 #include "src/gdbus/query-handlers/Hostname1QueryHandler.h"
 
-#include <cassert>
-#include <map>
-
 #include <giomm/dbusconnection.h>
 #include <glibmm/error.h>
 #include <glibmm/ustring.h>
 #include <glibmm/variant.h>
+
+#include <cassert>
+#include <map>
 
 #include "src/log/log.h"
 

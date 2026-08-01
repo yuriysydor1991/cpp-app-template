@@ -1,9 +1,9 @@
 #include "src/gdbus/GDBusController.h"
 
-#include <memory>
-
 #include <giomm/dbusconnection.h>
 #include <glibmm/error.h>
+
+#include <memory>
 
 #include "src/gdbus/query-handlers/DBusQueryHandlerFactory.h"
 #include "src/gdbus/query-handlers/IDBusQueryHandler.h"

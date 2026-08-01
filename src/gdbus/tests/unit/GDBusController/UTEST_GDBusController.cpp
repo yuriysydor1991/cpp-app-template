@@ -1,9 +1,8 @@
+#include <giomm/dbusconnection.h>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 #include <memory>
-
-#include <giomm/dbusconnection.h>
 
 #include "src/gdbus/GDBusController.h"
 #include "src/gdbus/query-handlers/DBusQueryHandlerFactory.h"

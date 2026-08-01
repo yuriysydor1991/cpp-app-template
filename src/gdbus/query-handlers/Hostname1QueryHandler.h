@@ -1,9 +1,9 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_HOSTNAME1QUERYHANDLER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_HOSTNAME1QUERYHANDLER_CLASS_H
 
-#include <string>
-
 #include <glibmm/ustring.h>
+
+#include <string>
 
 #include "src/gdbus/query-handlers/IDBusQueryHandler.h"
 

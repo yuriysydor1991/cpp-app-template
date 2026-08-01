@@ -1,10 +1,10 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_GDBUSCONTROLLER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_GDBUSCONTROLLER_CLASS_H
 
-#include <memory>
-
 #include <giomm/dbusconnection.h>
 #include <glibmm/refptr.h>
+
+#include <memory>
 
 namespace gdbusi
 {

@@ -1,7 +1,6 @@
 #include "src/SFML/Eventer/EventsController.h"
 
 #include <SFML/Window/Event.hpp>
-
 #include <cassert>
 #include <memory>
 

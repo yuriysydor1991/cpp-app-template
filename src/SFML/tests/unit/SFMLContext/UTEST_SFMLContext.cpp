@@ -13,8 +13,7 @@ using namespace testing;
 class UTEST_SFMLContext : public Test
 {
  public:
-  UTEST_SFMLContext()
-      : appCtx{std::make_shared<ApplicationContext>(argc, argv)}
+  UTEST_SFMLContext() : appCtx{std::make_shared<ApplicationContext>(argc, argv)}
   {
   }
 

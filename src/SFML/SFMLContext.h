@@ -2,7 +2,6 @@
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_SFMLCONTEXT_CLASS_H
 
 #include <SFML/Graphics/RenderWindow.hpp>
-
 #include <memory>
 
 #include "src/app/ApplicationContext.h"

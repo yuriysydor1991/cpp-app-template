@@ -1,7 +1,7 @@
-#include <SFML/Window/Event.hpp>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include <SFML/Window/Event.hpp>
 #include <memory>
 
 #include "src/SFML/Eventer/EventsHandlers/EventClosedHandler.h"

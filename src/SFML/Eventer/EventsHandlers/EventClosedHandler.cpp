@@ -1,7 +1,6 @@
 #include "src/SFML/Eventer/EventsHandlers/EventClosedHandler.h"
 
 #include <SFML/Window/Event.hpp>
-
 #include <cassert>
 #include <memory>
 

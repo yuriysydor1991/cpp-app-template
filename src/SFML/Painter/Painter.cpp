@@ -3,7 +3,6 @@
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
-
 #include <cassert>
 #include <memory>
 

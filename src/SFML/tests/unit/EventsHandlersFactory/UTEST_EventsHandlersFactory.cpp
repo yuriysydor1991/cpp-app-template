@@ -1,7 +1,7 @@
-#include <SFML/Window/Event.hpp>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include <SFML/Window/Event.hpp>
 #include <memory>
 
 #include "src/SFML/Eventer/EventsHandlers/EventClosedHandler.h"
@@ -56,7 +56,8 @@ TEST_F(UTEST_EventsHandlersFactory, unknown_event_returns_null)
   EXPECT_EQ(handler, nullptr);
 }
 
-TEST_F(UTEST_EventsHandlersFactory, repeated_create_calls_return_fresh_instances)
+TEST_F(UTEST_EventsHandlersFactory,
+       repeated_create_calls_return_fresh_instances)
 {
   sf::Event event{};
   event.type = sf::Event::Closed;

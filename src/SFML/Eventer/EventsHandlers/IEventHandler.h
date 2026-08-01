@@ -2,7 +2,6 @@
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_SFML_IEVENTHANDLER_ABSTRACT_CLASS_H
 
 #include <SFML/Window/Event.hpp>
-
 #include <memory>
 
 #include "src/SFML/SFMLContext.h"

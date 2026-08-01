@@ -19,7 +19,8 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  plotgencppi::PlotGenCppControllerPtr plotter = plotgencppi::PlotGenCppController::create();
+  plotgencppi::PlotGenCppControllerPtr plotter =
+      plotgencppi::PlotGenCppController::create();
 
   assert(plotter != nullptr);
 

@@ -23,8 +23,8 @@ class PlotGenCppController
 
   static PlotGenCppControllerPtr create();
 
-private:
-    bool drawTheExamplePlot();
+ private:
+  bool drawTheExamplePlot();
 };
 
 using PlotGenCppControllerPtr = PlotGenCppController::PlotGenCppControllerPtr;

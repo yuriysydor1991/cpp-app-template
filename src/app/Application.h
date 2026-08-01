@@ -19,7 +19,7 @@ namespace app
 class Application : public IApplication
 {
  public:
-  virtual ~Application() = default;
+  ~Application() override = default;
   Application() = default;
 
   /**

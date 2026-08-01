@@ -12,8 +12,7 @@ namespace winui3::app
  * Derives from the C++/WinRT ApplicationT<> CRTP base (the code-only equivalent
  * of the generated App.xaml) and creates/activates the main window on launch.
  */
-class WinUI3App
-    : public winrt::Microsoft::UI::Xaml::ApplicationT<WinUI3App>
+class WinUI3App : public winrt::Microsoft::UI::Xaml::ApplicationT<WinUI3App>
 {
  public:
   void OnLaunched(

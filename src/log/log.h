@@ -3,8 +3,8 @@
 
 #include <sstream>
 
-#include "src/log/severity-macro-consts.h"
 #include "src/log/default-logger/DefaultLogger.h"
+#include "src/log/severity-macro-consts.h"
 
 #ifndef LOG_INIT
 /**
@@ -23,12 +23,12 @@
 /**
  * @brief The internal logger macro to define the general logging code body.
  */
-#define LOG_BODY(LOGLVL, msg)                                    \
-  {                                                              \
-    std::stringstream logMessageContainer;                       \
-    logMessageContainer << msg;                                  \
+#define LOG_BODY(LOGLVL, msg)                                      \
+  {                                                                \
+    std::stringstream logMessageContainer;                         \
+    logMessageContainer << msg;                                    \
     default_logger::DefaultLogger::log(LOGLVL, __FILE__, __LINE__, \
-                                     logMessageContainer.str()); \
+                                       logMessageContainer.str()); \
   }
 #endif  // LOG_BODY
 

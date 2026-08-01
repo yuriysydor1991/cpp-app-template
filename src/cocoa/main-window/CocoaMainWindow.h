@@ -10,10 +10,10 @@ namespace cocoa::main_window
 /**
  * @brief The default templated macOS Cocoa main window.
  *
- * Builds an AppKit NSWindow and its content programmatically (no .xib/.nib file)
- * from the Cocoa independent WindowConfig, so the shown texts, title and sizes
- * stay testable in isolation. Replace build_content() with your own UI when
- * starting development. The held NSWindow is reference counted by ARC.
+ * Builds an AppKit NSWindow and its content programmatically (no .xib/.nib
+ * file) from the Cocoa independent WindowConfig, so the shown texts, title and
+ * sizes stay testable in isolation. Replace build_content() with your own UI
+ * when starting development. The held NSWindow is reference counted by ARC.
  */
 class CocoaMainWindow
 {

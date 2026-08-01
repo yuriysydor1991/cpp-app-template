@@ -1,6 +1,6 @@
 loglib = static_library(
-  'TemplateProjectSimpleLoggerObj',
-  ['SimpleLogger.cpp'],
+  'TemplateProjectDefaultLoggerObj',
+  ['DefaultLogger.cpp'],
   include_directories: configuration_inc,
   pic: true,
 )

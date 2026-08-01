@@ -153,9 +153,9 @@ pipeline {
 
     stage('Component Tests') {
       parallel {
-        stage('CTEST_SimpleLogger') {
+        stage('CTEST_DefaultLogger') {
           steps {
-            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase CTEST_SimpleLogger --suite CTEST_SimpleLogger'
+            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase CTEST_DefaultLogger --suite CTEST_DefaultLogger'
           }
         }
         stage('CTEST_app') {

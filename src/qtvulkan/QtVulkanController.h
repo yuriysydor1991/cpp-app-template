@@ -1,10 +1,9 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_QTVULKANCONTROLLER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_QTVULKANCONTROLLER_CLASS_H
 
+#include <QVulkanInstance>
 #include <memory>
 #include <optional>
-
-#include <QVulkanInstance>
 
 /**
  * @brief The namespace to contain all the entities related to the native Qt
@@ -18,10 +17,10 @@ namespace qtvulkani
  * through a device info handler.
  *
  * The native Qt Vulkan (Qt6::Gui QVulkanInstance) counterpart of the app-based
- * appVulkan branch VulkanController. Created through the static create() factory
- * method which brings up the Vulkan instance up front, so a non-null instance is
- * always usable. A living QGuiApplication is required by the platform Vulkan
- * integration before create() is called.
+ * appVulkan branch VulkanController. Created through the static create()
+ * factory method which brings up the Vulkan instance up front, so a non-null
+ * instance is always usable. A living QGuiApplication is required by the
+ * platform Vulkan integration before create() is called.
  */
 class QtVulkanController
 {
@@ -56,7 +55,8 @@ class QtVulkanController
    * QVulkanWindow with setVulkanInstance()). The returned pointer stays valid
    * for as long as the controller is alive.
    *
-   * @return A pointer to the held QVulkanInstance, or nullptr when none is held.
+   * @return A pointer to the held QVulkanInstance, or nullptr when none is
+   * held.
    */
   QVulkanInstance* vulkan_instance();
 
@@ -70,7 +70,8 @@ class QtVulkanController
    * Exposed as an overridable seam so the orchestration in run() may be unit
    * tested without a live Vulkan runtime.
    *
-   * @return A pointer to the held QVulkanInstance, or nullptr when none is held.
+   * @return A pointer to the held QVulkanInstance, or nullptr when none is
+   * held.
    */
   virtual QVulkanInstance* instance_ptr();
 

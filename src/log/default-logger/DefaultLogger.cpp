@@ -49,8 +49,9 @@ void DefaultLogger::log(const unsigned short& loglvl, const std::string& msg)
   }
 }
 
-void DefaultLogger::log(const unsigned short& loglvl, const char* const filePath,
-                       const int& fileLine, const std::string& msg)
+void DefaultLogger::log(const unsigned short& loglvl,
+                        const char* const filePath, const int& fileLine,
+                        const std::string& msg)
 {
   std::filesystem::path fullPath{filePath};
 
@@ -83,8 +84,8 @@ void DefaultLogger::print(const bool toPrintValue)
 
 void DefaultLogger::level(const unsigned short& nlvl) { lvl = nlvl; }
 
-void DefaultLogger::init(const std::string& filepath, const unsigned short& nlvl,
-                        const bool toPrintValue)
+void DefaultLogger::init(const std::string& filepath,
+                         const unsigned short& nlvl, const bool toPrintValue)
 {
   logfile(filepath);
   level(nlvl);

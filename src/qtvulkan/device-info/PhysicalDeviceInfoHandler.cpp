@@ -1,13 +1,13 @@
 #include "src/qtvulkan/device-info/PhysicalDeviceInfoHandler.h"
 
+#include <vulkan/vulkan.h>
+
+#include <QVulkanFunctions>
+#include <QVulkanInstance>
 #include <cstdint>
 #include <stdexcept>
 #include <string>
 #include <vector>
-
-#include <QVulkanFunctions>
-#include <QVulkanInstance>
-#include <vulkan/vulkan.h>
 
 #include "src/log/log.h"
 

@@ -1,11 +1,11 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_PHYSICALDEVICEINFOHANDLER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_PHYSICALDEVICEINFOHANDLER_CLASS_H
 
+#include <vulkan/vulkan.h>
+
 #include <cstdint>
 #include <string>
 #include <vector>
-
-#include <vulkan/vulkan.h>
 
 #include "src/qtvulkan/device-info/IDeviceInfoHandler.h"
 
@@ -76,9 +76,11 @@ class PhysicalDeviceInfoHandler : public IDeviceInfoHandler
    *
    * @return Returns the per device condensed properties.
    *
-   * @throws std::runtime_error in case any of the Vulkan enumeration calls fail.
+   * @throws std::runtime_error in case any of the Vulkan enumeration calls
+   * fail.
    */
-  virtual std::vector<PhysicalDeviceInfo> fetch_devices(QVulkanInstance* instance);
+  virtual std::vector<PhysicalDeviceInfo> fetch_devices(
+      QVulkanInstance* instance);
 };
 
 }  // namespace qtvulkani

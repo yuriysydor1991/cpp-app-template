@@ -1,12 +1,12 @@
 #include "src/qtvulkan/window/BlankVulkanRenderer.h"
 
-#include <array>
-#include <cstdint>
+#include <vulkan/vulkan.h>
 
 #include <QSize>
 #include <QVulkanDeviceFunctions>
 #include <QVulkanInstance>
-#include <vulkan/vulkan.h>
+#include <array>
+#include <cstdint>
 
 namespace qtvulkani
 {

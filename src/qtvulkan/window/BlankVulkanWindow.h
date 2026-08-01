@@ -20,8 +20,8 @@ class BlankVulkanWindow : public QVulkanWindow
   /**
    * @brief Creates the renderer driving this window.
    *
-   * Called by QVulkanWindow once the window is exposed. The returned renderer is
-   * owned (and destroyed) by the QVulkanWindow.
+   * Called by QVulkanWindow once the window is exposed. The returned renderer
+   * is owned (and destroyed) by the QVulkanWindow.
    *
    * @return Returns a newly created BlankVulkanRenderer bound to this window.
    */

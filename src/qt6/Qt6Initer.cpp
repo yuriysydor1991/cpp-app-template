@@ -1,11 +1,10 @@
 #include "src/qt6/Qt6Initer.h"
 
-#include <cassert>
-
 #include <QApplication>
 #include <QString>
 #include <QVBoxLayout>
 #include <QWidget>
+#include <cassert>
 
 #include "project-global-decls.h"
 #include "src/app/IApplication.h"
@@ -59,8 +58,9 @@ int Qt6Initer::run(std::shared_ptr<app::ApplicationContext> actx)
   vulkanWindow->setVulkanInstance(vulkan->vulkan_instance());
 
   QWidget topLevel;
-  topLevel.setWindowTitle(QString::fromStdString(
-      project_decls::PROJECT_NAME + " " + project_decls::PROJECT_BUILD_VERSION));
+  topLevel.setWindowTitle(
+      QString::fromStdString(project_decls::PROJECT_NAME + " " +
+                             project_decls::PROJECT_BUILD_VERSION));
   topLevel.resize(W_DEFAULT_WIDTH, W_DEFAULT_HEIGHT);
 
   auto* layout = new QVBoxLayout(&topLevel);

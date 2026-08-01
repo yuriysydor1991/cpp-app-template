@@ -60,10 +60,10 @@ TEST_F(CTEST_QtVulkanController, run_against_live_runtime)
 
 int main(int argc, char** argv)
 {
-  // QVulkanInstance needs a QGuiApplication with a platform plugin that supports
-  // Vulkan. Default to the offscreen plugin when running headless so the test
-  // binary starts (the live Vulkan cases then skip), while still honoring a real
-  // display when one is configured.
+  // QVulkanInstance needs a QGuiApplication with a platform plugin that
+  // supports Vulkan. Default to the offscreen plugin when running headless so
+  // the test binary starts (the live Vulkan cases then skip), while still
+  // honoring a real display when one is configured.
   if (qEnvironmentVariableIsEmpty("QT_QPA_PLATFORM") &&
       qEnvironmentVariableIsEmpty("DISPLAY") &&
       qEnvironmentVariableIsEmpty("WAYLAND_DISPLAY")) {

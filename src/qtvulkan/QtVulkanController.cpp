@@ -1,9 +1,8 @@
 #include "src/qtvulkan/QtVulkanController.h"
 
-#include <memory>
-
 #include <QVersionNumber>
 #include <QVulkanInstance>
+#include <memory>
 
 #include "src/log/log.h"
 #include "src/qtvulkan/device-info/DeviceInfoHandlerFactory.h"

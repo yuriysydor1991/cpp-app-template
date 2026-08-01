@@ -13,10 +13,10 @@ namespace Qt6i
  *
  * Creates the QGuiApplication instance required by the native Qt Vulkan
  * integration (QVulkanInstance lives in Qt6::Gui and needs the platform
- * integration) and drives the QtVulkanController that creates a Vulkan instance,
- * enumerates the available physical devices and logs their properties. The same
- * instance then backs a blank, black, Vulkan rendered window (BlankVulkanWindow)
- * shown for the lifetime of the Qt event loop.
+ * integration) and drives the QtVulkanController that creates a Vulkan
+ * instance, enumerates the available physical devices and logs their
+ * properties. The same instance then backs a blank, black, Vulkan rendered
+ * window (BlankVulkanWindow) shown for the lifetime of the Qt event loop.
  */
 class Qt6Initer
 {

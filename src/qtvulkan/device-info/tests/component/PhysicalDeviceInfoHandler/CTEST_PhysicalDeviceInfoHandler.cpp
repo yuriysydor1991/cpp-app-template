@@ -1,12 +1,11 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include <memory>
-
 #include <QGuiApplication>
 #include <QVersionNumber>
 #include <QVulkanInstance>
 #include <QtGlobal>
+#include <memory>
 
 #include "src/qtvulkan/device-info/DeviceInfoHandlerFactory.h"
 #include "src/qtvulkan/device-info/IDeviceInfoHandler.h"
@@ -21,7 +20,8 @@ class CTEST_PhysicalDeviceInfoHandler : public Test
   DeviceInfoHandlerFactory factory;
 };
 
-TEST_F(CTEST_PhysicalDeviceInfoHandler, factory_creates_non_null_default_handler)
+TEST_F(CTEST_PhysicalDeviceInfoHandler,
+       factory_creates_non_null_default_handler)
 {
   IDeviceInfoHandlerPtr handler = factory.create_default_handler();
 
@@ -66,10 +66,10 @@ TEST_F(CTEST_PhysicalDeviceInfoHandler, live_runtime_enumeration)
 
 int main(int argc, char** argv)
 {
-  // QVulkanInstance needs a QGuiApplication with a platform plugin that supports
-  // Vulkan. Default to the offscreen plugin when running headless so the test
-  // binary starts (the live Vulkan case then skips), while still honoring a real
-  // display when one is configured.
+  // QVulkanInstance needs a QGuiApplication with a platform plugin that
+  // supports Vulkan. Default to the offscreen plugin when running headless so
+  // the test binary starts (the live Vulkan case then skips), while still
+  // honoring a real display when one is configured.
   if (qEnvironmentVariableIsEmpty("QT_QPA_PLATFORM") &&
       qEnvironmentVariableIsEmpty("DISPLAY") &&
       qEnvironmentVariableIsEmpty("WAYLAND_DISPLAY")) {

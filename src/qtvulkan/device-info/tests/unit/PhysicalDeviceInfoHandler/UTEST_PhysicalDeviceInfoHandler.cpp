@@ -1,11 +1,10 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <vulkan/vulkan.h>
 
 #include <functional>
 #include <stdexcept>
 #include <vector>
-
-#include <vulkan/vulkan.h>
 
 #include "src/qtvulkan/device-info/PhysicalDeviceInfoHandler.h"
 
@@ -21,8 +20,9 @@ namespace
  * @brief A non-null, opaque QVulkanInstance pointer.
  *
  * It is never dereferenced because the fetch_devices() seam is overridden in
- * the test double below, so a real, created QVulkanInstance (which would require
- * a QGuiApplication and a live Vulkan runtime) is not needed to drive handle().
+ * the test double below, so a real, created QVulkanInstance (which would
+ * require a QGuiApplication and a live Vulkan runtime) is not needed to drive
+ * handle().
  */
 QVulkanInstance* fake_instance()
 {
@@ -41,10 +41,12 @@ class TestablePhysicalDeviceInfoHandler : public PhysicalDeviceInfoHandler
   // Re-export the protected result type so the test bodies can name it.
   using PhysicalDeviceInfoHandler::PhysicalDeviceInfo;
 
-  std::function<std::vector<PhysicalDeviceInfo>(QVulkanInstance*)> onFetchDevices;
+  std::function<std::vector<PhysicalDeviceInfo>(QVulkanInstance*)>
+      onFetchDevices;
 
  protected:
-  std::vector<PhysicalDeviceInfo> fetch_devices(QVulkanInstance* instance) override
+  std::vector<PhysicalDeviceInfo> fetch_devices(
+      QVulkanInstance* instance) override
   {
     if (onFetchDevices) {
       return onFetchDevices(instance);
@@ -85,14 +87,14 @@ TEST_F(UTEST_PhysicalDeviceInfoHandler, handle_returns_true_on_successful_fetch)
   EXPECT_EQ(received, fake_instance());
 }
 
-TEST_F(UTEST_PhysicalDeviceInfoHandler, handle_returns_true_on_empty_device_list)
+TEST_F(UTEST_PhysicalDeviceInfoHandler,
+       handle_returns_true_on_empty_device_list)
 {
   bool fetchCalled = false;
 
   handler.onFetchDevices = [&](QVulkanInstance*) {
     fetchCalled = true;
-    return std::vector<
-        TestablePhysicalDeviceInfoHandler::PhysicalDeviceInfo>{};
+    return std::vector<TestablePhysicalDeviceInfoHandler::PhysicalDeviceInfo>{};
   };
 
   // Zero reported devices is a valid, successful enumeration outcome.
@@ -100,10 +102,10 @@ TEST_F(UTEST_PhysicalDeviceInfoHandler, handle_returns_true_on_empty_device_list
   EXPECT_TRUE(fetchCalled);
 }
 
-TEST_F(UTEST_PhysicalDeviceInfoHandler, handle_returns_false_on_enumeration_error)
+TEST_F(UTEST_PhysicalDeviceInfoHandler,
+       handle_returns_false_on_enumeration_error)
 {
-  handler.onFetchDevices =
-      [&](QVulkanInstance*)
+  handler.onFetchDevices = [&](QVulkanInstance*)
       -> std::vector<TestablePhysicalDeviceInfoHandler::PhysicalDeviceInfo> {
     throw std::runtime_error("vkEnumeratePhysicalDevices failed");
   };
@@ -117,8 +119,7 @@ TEST_F(UTEST_PhysicalDeviceInfoHandler, handle_returns_false_on_null_instance)
 
   handler.onFetchDevices = [&](QVulkanInstance*) {
     fetchCalled = true;
-    return std::vector<
-        TestablePhysicalDeviceInfoHandler::PhysicalDeviceInfo>{};
+    return std::vector<TestablePhysicalDeviceInfoHandler::PhysicalDeviceInfo>{};
   };
 
   EXPECT_FALSE(handler.handle(nullptr));

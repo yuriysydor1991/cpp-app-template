@@ -276,5 +276,6 @@ jobsDir.eachFileMatch(~/.*\.xml/) { file ->
 jenkins.save()
 EOF
 
+USER jenkins
 
 CMD ["jenkins.sh"]

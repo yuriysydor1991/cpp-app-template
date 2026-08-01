@@ -19,7 +19,8 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  sdbuscxxi::SDBusCxxControllerPtr sdbusconn = sdbuscxxi::SDBusCxxController::create();
+  sdbuscxxi::SDBusCxxControllerPtr sdbusconn =
+      sdbuscxxi::SDBusCxxController::create();
 
   assert(sdbusconn != nullptr);
 

@@ -1,9 +1,8 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <sdbus-c++/sdbus-c++.h>
 
 #include <memory>
-
-#include <sdbus-c++/sdbus-c++.h>
 
 #include "src/app/ApplicationContext.h"
 #include "src/sdbuscxx/SDBusCxxController.h"
@@ -20,13 +19,15 @@ class UTEST_SDBusCxxController : public Test
       : appCtx{std::make_shared<app::ApplicationContext>(argc, argv)},
         serverObject{std::make_shared<NiceMock<IDBusServerObject>>()}
   {
-    ON_CALL(*serverObject, service_name()).WillByDefault(ReturnRef(serviceName));
+    ON_CALL(*serverObject, service_name())
+        .WillByDefault(ReturnRef(serviceName));
     ON_CALL(*serverObject, object_path()).WillByDefault(ReturnRef(objectPath));
 
     // The controller builds a DBusServerObjectFactory internally; route every
     // created factory to hand out the fixture's mock server object.
     DBusServerObjectFactory::onMockCreate = [this](DBusServerObjectFactory& f) {
-      EXPECT_CALL(f, create_default_object()).WillRepeatedly(Return(serverObject));
+      EXPECT_CALL(f, create_default_object())
+          .WillRepeatedly(Return(serverObject));
     };
     sdbus::mock::fail_bus_connection() = false;
   }
@@ -75,7 +76,8 @@ TEST_F(UTEST_SDBusCxxController, run_succeeds_when_server_starts)
   EXPECT_TRUE(controller->run(appCtx));
 }
 
-TEST_F(UTEST_SDBusCxxController, run_returns_false_when_server_object_unavailable)
+TEST_F(UTEST_SDBusCxxController,
+       run_returns_false_when_server_object_unavailable)
 {
   DBusServerObjectFactory::onMockCreate = [](DBusServerObjectFactory& f) {
     EXPECT_CALL(f, create_default_object())

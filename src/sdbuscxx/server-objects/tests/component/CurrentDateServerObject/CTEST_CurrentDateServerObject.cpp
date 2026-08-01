@@ -1,12 +1,11 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <sdbus-c++/sdbus-c++.h>
 
 #include <cctype>
 #include <cstddef>
 #include <memory>
 #include <string>
-
-#include <sdbus-c++/sdbus-c++.h>
 
 #include "src/sdbuscxx/server-objects/CurrentDateServerObject.h"
 #include "src/sdbuscxx/server-objects/DBusServerObjectFactory.h"
@@ -30,7 +29,8 @@ TEST_F(CTEST_CurrentDateServerObject, factory_default_object_is_current_date)
 {
   IDBusServerObjectPtr object = factory.create_default_object();
 
-  EXPECT_NE(std::dynamic_pointer_cast<CurrentDateServerObject>(object), nullptr);
+  EXPECT_NE(std::dynamic_pointer_cast<CurrentDateServerObject>(object),
+            nullptr);
 }
 
 TEST_F(CTEST_CurrentDateServerObject, served_current_date_roundtrip)
@@ -39,7 +39,8 @@ TEST_F(CTEST_CurrentDateServerObject, served_current_date_roundtrip)
 
   try {
     serverConn = sdbus::createSessionBusConnection();
-  } catch (const sdbus::Error& e) {
+  }
+  catch (const sdbus::Error& e) {
     GTEST_SKIP() << "Session bus is not reachable in this environment: ["
                  << static_cast<std::string>(e.getName()) << "] "
                  << e.getMessage();

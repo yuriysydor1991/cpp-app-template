@@ -1,10 +1,10 @@
 #include "SDBusCxxController.h"
 
+#include <sdbus-c++/sdbus-c++.h>
+
 #include <cassert>
 #include <exception>
 #include <memory>
-
-#include <sdbus-c++/sdbus-c++.h>
 
 #include "src/log/log.h"
 #include "src/sdbuscxx/server-objects/DBusServerObjectFactory.h"
@@ -44,7 +44,8 @@ bool SDBusCxxController::init()
     // name, and requesting a name on the session bus needs no extra policy
     // (unlike the system bus, which requires a /etc/dbus-1/system.d rule).
     conn = sdbus::createSessionBusConnection();
-  } catch (const std::exception& e) {
+  }
+  catch (const std::exception& e) {
     LOGE("Exception during the connection object creation: " << e.what());
     return false;
   }
@@ -61,10 +62,7 @@ bool SDBusCxxController::init()
   return true;
 }
 
-bool SDBusCxxController::inited()
-{
-  return conn != nullptr;
-}
+bool SDBusCxxController::inited() { return conn != nullptr; }
 
 bool SDBusCxxController::serve()
 {
@@ -100,7 +98,8 @@ bool SDBusCxxController::serve()
          << ", object: " << serverObject->object_path());
 
     conn->enterEventLoop();
-  } catch (const sdbus::Error& e) {
+  }
+  catch (const sdbus::Error& e) {
     LOGE("DBus error: [" << e.getName() << "] " << e.getMessage());
     return false;
   }

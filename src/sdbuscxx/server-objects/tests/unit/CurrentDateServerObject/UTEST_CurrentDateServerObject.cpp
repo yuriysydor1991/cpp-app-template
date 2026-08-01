@@ -19,7 +19,8 @@ namespace
 constexpr std::time_t kKnownTimestamp = 1609459200;
 
 /**
- * @brief Test double exposing the now() seam so current_date() is deterministic.
+ * @brief Test double exposing the now() seam so current_date() is
+ * deterministic.
  */
 class TestableCurrentDateServerObject : public CurrentDateServerObject
 {
@@ -59,7 +60,8 @@ TEST_F(UTEST_CurrentDateServerObject, format_date_epoch)
 
 TEST_F(UTEST_CurrentDateServerObject, format_date_known_timestamp)
 {
-  EXPECT_EQ(CurrentDateServerObject::format_date(kKnownTimestamp), "2021-01-01");
+  EXPECT_EQ(CurrentDateServerObject::format_date(kKnownTimestamp),
+            "2021-01-01");
 }
 
 TEST_F(UTEST_CurrentDateServerObject, current_date_has_iso_format)

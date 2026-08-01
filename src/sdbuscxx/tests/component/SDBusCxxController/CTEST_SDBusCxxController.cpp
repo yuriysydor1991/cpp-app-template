@@ -1,9 +1,8 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <sdbus-c++/sdbus-c++.h>
 
 #include <memory>
-
-#include <sdbus-c++/sdbus-c++.h>
 
 #include "src/sdbuscxx/SDBusCxxController.h"
 
@@ -22,7 +21,8 @@ class CTEST_SDBusCxxController : public Test
       std::unique_ptr<sdbus::IConnection> probe =
           sdbus::createSessionBusConnection();
       return probe != nullptr;
-    } catch (const sdbus::Error&) {
+    }
+    catch (const sdbus::Error&) {
       return false;
     }
   }

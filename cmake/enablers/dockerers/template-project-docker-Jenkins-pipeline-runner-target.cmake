@@ -47,6 +47,13 @@ set(
   "The Jenkins pipeline Dockerfile destination name"
 )
 
+set(
+  JENKINS_PIPELINE_DOCKER_MAX_CORES
+  4
+  CACHE STRING 
+  "The Jenkins pipeline docker containers max allowed CPU cores"
+)
+
 if (NOT ENABLE_JENKINS_DOCKER_PIPELINE)
   return()
 endif()
@@ -113,6 +120,10 @@ if (JENKINS_PIPELINE_DOCKER_CONTAINER_PRESENT STREQUAL "")
       -p ${JENKINS_PIPELINES_PANEL_HTTP_PORT}:8080
       -p 50000:50000
       --name ${JENKINS_PIPELINE_DOCKER_CONTAINER_NAME}
+      --cpus ${JENKINS_PIPELINE_DOCKER_MAX_CORES}
+      --cap-add=SYS_ADMIN \
+      --security-opt apparmor=unconfined \
+      --security-opt seccomp=unconfined \
       ${JENKINS_PIPELINE_DOCKER_IMAGE_NAME}
   )
 else()

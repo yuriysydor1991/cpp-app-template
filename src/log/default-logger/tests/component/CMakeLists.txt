@@ -4,5 +4,5 @@ if (NOT ENABLE_COMPONENT_TESTS)
   return()
 endif()
 
-add_subdirectory(SimpleLogger)
+add_subdirectory(DefaultLogger)
 

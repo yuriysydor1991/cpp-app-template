@@ -263,8 +263,7 @@ pipeline {
               status=1
               continue
             fi
-            for f in "$langdir"*; do
-              [ -f "$f" ] || continue
+            for f in $(find "$langdir" -type f | sort); do
               if ! grep -qF "$f" "$readme"; then
                 echo "FAIL: $f is not linked in $readme"
                 status=1

@@ -10,7 +10,7 @@ RUN apt install -y qt6-base-dev qt6-base-dev-tools \
   qml-module-qtquick-controls2 qml-module-qtquick-dialogs \
   qml-module-qtquick-layouts qml-module-qtquick-shapes \
   libqt6quick6 libqt6quickcontrols2-6 libqt6opengl6-dev \
-  libqt6openglwidgets6
+  libqt6openglwidgets6 qt6-charts-dev qml6-module-qtcharts
 RUN apt install -y libopengl-dev libgl-dev
 RUN apt install -y qml6-module-qtquick-controls
 

@@ -14,4 +14,4 @@ add_project_arguments(
   language: 'cpp',
 )
 
-subdir('simple-logger')
+subdir('default-logger')

@@ -15,7 +15,7 @@ namespace firebirdi
 class Firebird : public app::IDBConnection
 {
  public:
-  virtual ~Firebird() = default;
+  ~Firebird() override = default;
   Firebird()
   {
     if (onMockCreate) {

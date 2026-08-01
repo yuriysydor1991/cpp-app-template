@@ -107,9 +107,9 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "UTEST_Firebird\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_Firebird.junit.xml'
           }
         }
-        stage('UTEST_FirebirdQueryMaker') {
+        stage('UTEST_QueryMaker') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_FirebirdQueryMaker\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_FirebirdQueryMaker.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_QueryMaker\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_QueryMaker.junit.xml'
           }
         }
         stage('UTEST_Application') { 
@@ -279,8 +279,7 @@ pipeline {
               status=1
               continue
             fi
-            for f in "$langdir"*; do
-              [ -f "$f" ] || continue
+            for f in $(find "$langdir" -type f | sort); do
               if ! grep -qF "$f" "$readme"; then
                 echo "FAIL: $f is not linked in $readme"
                 status=1

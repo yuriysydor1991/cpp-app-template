@@ -44,6 +44,9 @@ class FbClient : public IFbClient
   std::string query_scalar(const std::string& query) override;
 
  private:
+  /// @brief The non-virtual detach used by both detach() and the destructor.
+  void do_detach();
+
   struct Impl;
   std::unique_ptr<Impl> impl;
 };

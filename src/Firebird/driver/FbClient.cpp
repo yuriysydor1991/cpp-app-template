@@ -53,7 +53,9 @@ bool has_error(const ISC_STATUS_ARRAY& status)
 
 FbClient::FbClient() : impl{std::make_unique<Impl>()} {}
 
-FbClient::~FbClient() { detach(); }
+// Calls the non-virtual do_detach(): a virtual call during destruction would
+// bypass the dynamic dispatch anyway.
+FbClient::~FbClient() { do_detach(); }
 
 bool FbClient::attach(const std::string& database, const std::string& user,
                       const std::string& password)
@@ -87,9 +89,13 @@ bool FbClient::attach(const std::string& database, const std::string& user,
   return attached();
 }
 
-void FbClient::detach()
+void FbClient::detach() { do_detach(); }
+
+bool FbClient::attached() const { return impl->db != 0; }
+
+void FbClient::do_detach()
 {
-  if (!attached()) {
+  if (impl->db == 0) {
     return;
   }
 
@@ -97,8 +103,6 @@ void FbClient::detach()
 
   impl->db = 0;
 }
-
-bool FbClient::attached() const { return impl->db != 0; }
 
 std::string FbClient::query_scalar(const std::string& query)
 {
@@ -137,8 +141,8 @@ std::string FbClient::query_scalar(const std::string& query)
 
   // Bind the single (VARCHAR) output column to a local buffer.
   XSQLVAR& var = out_sqlda->sqlvar[0];
-  const short buffer_len = static_cast<short>(var.sqllen + sizeof(short) + 1);
-  std::vector<char> buffer(static_cast<size_t>(buffer_len), 0);
+  const size_t buffer_len = static_cast<size_t>(var.sqllen) + sizeof(short) + 1;
+  std::vector<char> buffer(buffer_len, 0);
   short null_flag = 0;
 
   var.sqldata = buffer.data();

@@ -121,9 +121,9 @@ if (JENKINS_PIPELINE_DOCKER_CONTAINER_PRESENT STREQUAL "")
       -p 50000:50000
       --name ${JENKINS_PIPELINE_DOCKER_CONTAINER_NAME}
       --cpus ${JENKINS_PIPELINE_DOCKER_MAX_CORES}
-      --cap-add=SYS_ADMIN \
-      --security-opt apparmor=unconfined \
-      --security-opt seccomp=unconfined \
+      --cap-add=SYS_ADMIN
+      --security-opt apparmor=unconfined
+      --security-opt seccomp=unconfined
       ${JENKINS_PIPELINE_DOCKER_IMAGE_NAME}
   )
 else()

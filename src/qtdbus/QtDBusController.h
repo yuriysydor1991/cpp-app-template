@@ -1,10 +1,9 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_QTDBUSCONTROLLER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_QTDBUSCONTROLLER_CLASS_H
 
+#include <QDBusConnection>
 #include <memory>
 #include <optional>
-
-#include <QDBusConnection>
 
 namespace qtdbusi
 {

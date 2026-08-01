@@ -1,10 +1,9 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include <memory>
-
 #include <QCoreApplication>
 #include <QDBusConnection>
+#include <memory>
 
 #include "src/qtdbus/query-handlers/DBusQueryHandlerFactory.h"
 #include "src/qtdbus/query-handlers/Hostname1QueryHandler.h"

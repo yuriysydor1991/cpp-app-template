@@ -1,9 +1,8 @@
 #include "src/qtdbus/QtDBusController.h"
 
-#include <memory>
-
 #include <QDBusConnection>
 #include <QDBusError>
+#include <memory>
 
 #include "src/log/log.h"
 #include "src/qtdbus/query-handlers/DBusQueryHandlerFactory.h"

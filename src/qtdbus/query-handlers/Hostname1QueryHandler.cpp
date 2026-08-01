@@ -1,13 +1,12 @@
 #include "src/qtdbus/query-handlers/Hostname1QueryHandler.h"
 
-#include <cassert>
-
 #include <QDBusConnection>
 #include <QDBusInterface>
 #include <QDBusReply>
 #include <QDBusVariant>
 #include <QMap>
 #include <QVariant>
+#include <cassert>
 
 #include "src/log/log.h"
 

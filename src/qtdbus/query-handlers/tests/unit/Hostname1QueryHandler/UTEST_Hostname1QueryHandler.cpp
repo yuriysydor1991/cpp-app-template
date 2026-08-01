@@ -1,9 +1,8 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include <functional>
-
 #include <QString>
+#include <functional>
 
 #include "src/qtdbus/query-handlers/Hostname1QueryHandler.h"
 
@@ -64,20 +63,20 @@ TEST_F(UTEST_Hostname1QueryHandler, handle_returns_true_on_successful_fetch)
 {
   QDBusConnection* received = nullptr;
 
-  handler.onFetch =
-      [&](QDBusConnection* connection,
-          TestableHostname1QueryHandler::Hostname1Properties& out, QString&) {
-        received = connection;
+  handler.onFetch = [&](QDBusConnection* connection,
+                        TestableHostname1QueryHandler::Hostname1Properties& out,
+                        QString&) {
+    received = connection;
 
-        out.hostname = "unit-test-host";
-        out.prettyHostname = "Unit Test Host";
-        out.osPrettyName = "UnitTestOS 1.0";
-        out.kernelName = "Linux";
-        out.kernelRelease = "0.0.0-unit";
-        out.chassis = "container";
+    out.hostname = "unit-test-host";
+    out.prettyHostname = "Unit Test Host";
+    out.osPrettyName = "UnitTestOS 1.0";
+    out.kernelName = "Linux";
+    out.kernelRelease = "0.0.0-unit";
+    out.chassis = "container";
 
-        return true;
-      };
+    return true;
+  };
 
   EXPECT_TRUE(handler.handle(fake_connection()));
   EXPECT_EQ(received, fake_connection());
@@ -85,14 +84,14 @@ TEST_F(UTEST_Hostname1QueryHandler, handle_returns_true_on_successful_fetch)
 
 TEST_F(UTEST_Hostname1QueryHandler, handle_returns_false_on_dbus_error)
 {
-  handler.onFetch =
-      [&](QDBusConnection*,
-          TestableHostname1QueryHandler::Hostname1Properties&, QString& error) {
-        error = QStringLiteral(
-            "org.freedesktop.DBus.Error.ServiceUnknown: the name "
-            "org.freedesktop.hostname1 was not provided by any .service files");
-        return false;
-      };
+  handler.onFetch = [&](QDBusConnection*,
+                        TestableHostname1QueryHandler::Hostname1Properties&,
+                        QString& error) {
+    error = QStringLiteral(
+        "org.freedesktop.DBus.Error.ServiceUnknown: the name "
+        "org.freedesktop.hostname1 was not provided by any .service files");
+    return false;
+  };
 
   EXPECT_FALSE(handler.handle(fake_connection()));
 }
@@ -101,12 +100,12 @@ TEST_F(UTEST_Hostname1QueryHandler, handle_returns_false_on_null_connection)
 {
   bool fetchCalled = false;
 
-  handler.onFetch =
-      [&](QDBusConnection*,
-          TestableHostname1QueryHandler::Hostname1Properties&, QString&) {
-        fetchCalled = true;
-        return true;
-      };
+  handler.onFetch = [&](QDBusConnection*,
+                        TestableHostname1QueryHandler::Hostname1Properties&,
+                        QString&) {
+    fetchCalled = true;
+    return true;
+  };
 
   // Asserts are compiled out for the unit tests (NDEBUG), so the explicit
   // nullptr guard inside handle() is what is being exercised here.

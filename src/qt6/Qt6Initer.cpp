@@ -1,8 +1,7 @@
 #include "src/qt6/Qt6Initer.h"
 
-#include <cassert>
-
 #include <QCoreApplication>
+#include <cassert>
 
 #include "src/app/IApplication.h"
 #include "src/log/log.h"

@@ -10,7 +10,8 @@ WindowConfig::WindowConfig(const std::string& app_name,
     : window_title{app_name + " " + app_version},
       header{"Main WinUI 3 application"},
       explanation{
-          "Replace the default window implementation in the WinUI3MainWindow class"}
+          "Replace the default window implementation in the WinUI3MainWindow "
+          "class"}
 {
 }
 

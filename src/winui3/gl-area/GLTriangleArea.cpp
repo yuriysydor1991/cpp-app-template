@@ -34,7 +34,8 @@ void RenderState::ensure_device()
     return;
   }
 
-  // BGRA support is required to drive a composition (SwapChainPanel) swap chain.
+  // BGRA support is required to drive a composition (SwapChainPanel) swap
+  // chain.
   const UINT flags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
 
   winrt::check_hresult(D3D11CreateDevice(
@@ -57,8 +58,7 @@ void RenderState::create_swapchain(const muxc::SwapChainPanel& panel,
     winrt::check_hresult(swap_chain->ResizeBuffers(
         2, static_cast<UINT>(width), static_cast<UINT>(height),
         DXGI_FORMAT_B8G8R8A8_UNORM, 0));
-  }
-  else {
+  } else {
     const auto dxgi_device = device.as<IDXGIDevice>();
     winrt::com_ptr<IDXGIAdapter> adapter;
     winrt::check_hresult(dxgi_device->GetAdapter(adapter.put()));
@@ -106,8 +106,9 @@ void RenderState::render()
 
   // Blank black canvas. Enter your own Direct3D draw commands below to render
   // a scene into the SwapChainPanel back buffer.
-  LOGI("WinUI 3 GLTriangleArea blank frame rendered - add your Direct3D "
-       "commands in RenderState::render()");
+  LOGI(
+      "WinUI 3 GLTriangleArea blank frame rendered - add your Direct3D "
+      "commands in RenderState::render()");
 
   winrt::check_hresult(swap_chain->Present(1, 0));
 }
@@ -119,8 +120,9 @@ GLTriangleArea::GLTriangleArea()
   // draw a frame. SizeChanged also fires for the initial layout pass, which is
   // when the device and swap chain are first created. The handler captures the
   // shared state (so rendering survives this wrapper) and takes the panel from
-  // the event sender (so the state never references the panel back -> no cycle).
-  // DPI/composition-scale handling is omitted to keep this starting point minimal.
+  // the event sender (so the state never references the panel back -> no
+  // cycle). DPI/composition-scale handling is omitted to keep this starting
+  // point minimal.
   const auto st = state;
   swap_panel.SizeChanged(
       [st](const winrt::Windows::Foundation::IInspectable& sender,

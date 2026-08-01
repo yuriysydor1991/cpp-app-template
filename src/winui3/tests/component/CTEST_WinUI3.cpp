@@ -17,9 +17,10 @@ namespace
 {
 // Records what the (simulated) WinUI 3 application does when the real
 // WinUI3Initer launches it. This keeps the real run() -> launch() ->
-// run_winui_application() seam intact while building a real WindowConfig the way
-// WinUI3App::OnLaunched() would, so the whole WinUI free part of the component
-// is exercised together without the Windows App SDK and without a GUI.
+// run_winui_application() seam intact while building a real WindowConfig the
+// way WinUI3App::OnLaunched() would, so the whole WinUI free part of the
+// component is exercised together without the Windows App SDK and without a
+// GUI.
 int g_seen_argc = -1;
 std::string g_built_title;
 }  // namespace

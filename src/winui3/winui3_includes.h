@@ -9,10 +9,10 @@
 // from the Windows SDK + Windows App SDK metadata; see the WinUI 3 enabler and
 // the documentation for how that generation is wired on a Windows host.
 
-#include <winrt/Windows.Foundation.h>
-#include <winrt/Microsoft.UI.Xaml.h>
 #include <winrt/Microsoft.UI.Xaml.Controls.h>
 #include <winrt/Microsoft.UI.Xaml.Markup.h>
 #include <winrt/Microsoft.UI.Xaml.Media.h>
+#include <winrt/Microsoft.UI.Xaml.h>
+#include <winrt/Windows.Foundation.h>
 
 #endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_WINUI3_INCLUDES_H

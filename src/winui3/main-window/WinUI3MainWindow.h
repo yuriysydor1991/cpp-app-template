@@ -12,9 +12,9 @@ namespace winui3::main_window
  * @brief The default templated WinUI 3 main window.
  *
  * Builds a WinUI 3 Window and its content programmatically (no XAML file) from
- * the WinUI 3 independent WindowConfig, so the shown texts, title and sizes stay
- * testable in isolation. Replace build_content() with your own UI (or a real
- * XAML page) when starting development.
+ * the WinUI 3 independent WindowConfig, so the shown texts, title and sizes
+ * stay testable in isolation. Replace build_content() with your own UI (or a
+ * real XAML page) when starting development.
  */
 class WinUI3MainWindow
 {

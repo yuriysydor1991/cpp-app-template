@@ -15,7 +15,7 @@ namespace app
 class ApplicationHelpPrinter : public IApplication
 {
  public:
-  virtual ~ApplicationHelpPrinter() = default;
+  ~ApplicationHelpPrinter() override = default;
   ApplicationHelpPrinter() = default;
 
   /**

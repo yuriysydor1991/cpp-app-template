@@ -56,7 +56,8 @@ TEST_F(UTEST_EventsHandlersFactory, unknown_event_returns_null)
   EXPECT_EQ(handler, nullptr);
 }
 
-TEST_F(UTEST_EventsHandlersFactory, repeated_create_calls_return_fresh_instances)
+TEST_F(UTEST_EventsHandlersFactory,
+       repeated_create_calls_return_fresh_instances)
 {
   SDL_Event event{};
   event.type = SDL_QUIT;

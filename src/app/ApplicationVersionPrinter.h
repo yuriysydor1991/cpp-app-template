@@ -15,7 +15,7 @@ namespace app
 class ApplicationVersionPrinter : public IApplication
 {
  public:
-  virtual ~ApplicationVersionPrinter() = default;
+  ~ApplicationVersionPrinter() override = default;
   ApplicationVersionPrinter() = default;
 
   /**

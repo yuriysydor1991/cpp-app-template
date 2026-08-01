@@ -1,1 +1,1 @@
-subdir('simple-logger')
+subdir('default-logger')

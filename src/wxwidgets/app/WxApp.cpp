@@ -14,10 +14,7 @@ wxIMPLEMENT_APP_NO_MAIN(TemplateWxApp);
 namespace wxwi
 {
 
-int run_wx_application(int& argc, char**& argv)
-{
-  return wxEntry(argc, argv);
-}
+int run_wx_application(int& argc, char**& argv) { return wxEntry(argc, argv); }
 
 }  // namespace wxwi
 

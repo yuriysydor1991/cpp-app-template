@@ -9,7 +9,8 @@ WindowConfig::WindowConfig(const std::string& app_name,
                            const std::string& app_version)
     : window_title{app_name + " " + app_version},
       header{"Main wxWidgets application"},
-      explanation{"Replace the default window implementation in the WxMainFrame class"}
+      explanation{
+          "Replace the default window implementation in the WxMainFrame class"}
 {
 }
 

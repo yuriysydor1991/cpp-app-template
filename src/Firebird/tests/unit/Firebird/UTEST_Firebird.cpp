@@ -27,8 +27,7 @@ namespace
 class TestFirebird : public Firebird
 {
  public:
-  explicit TestFirebird(std::shared_ptr<IFbClient> nclient)
-      : injected{nclient}
+  explicit TestFirebird(std::shared_ptr<IFbClient> nclient) : injected{nclient}
   {
   }
 

@@ -125,8 +125,8 @@ std::string FbClient::query_scalar(const std::string& query)
 
   isc_dsql_allocate_statement(impl->status, &impl->db, &stmt);
 
-  isc_dsql_prepare(impl->status, &trans, &stmt, 0, query.c_str(), SQL_DIALECT_V6,
-                   out_sqlda);
+  isc_dsql_prepare(impl->status, &trans, &stmt, 0, query.c_str(),
+                   SQL_DIALECT_V6, out_sqlda);
   if (has_error(impl->status) || out_sqlda->sqld < 1) {
     LOGE("Failure to prepare the Firebird query: " << query);
     isc_dsql_free_statement(impl->status, &stmt, DSQL_drop);

@@ -53,10 +53,7 @@ std::string Firebird::make_conn_string()
   return csmaker->make_conn_string(actx);
 }
 
-bool Firebird::connected()
-{
-  return client != nullptr && client->attached();
-}
+bool Firebird::connected() { return client != nullptr && client->attached(); }
 
 std::string Firebird::get_current_date()
 {

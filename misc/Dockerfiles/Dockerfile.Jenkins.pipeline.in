@@ -13,5 +13,7 @@ RUN apt install -y libgtest-dev
 RUN apt install -y libgmock-dev
 RUN apt install -y freeglut3-dev libglew-dev
 
+USER jenkins
+
 CMD ["jenkins.sh"]
 

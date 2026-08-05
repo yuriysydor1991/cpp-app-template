@@ -24,5 +24,7 @@ RUN cmake -B $PLPLOTB -S plplot -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFI
 RUN cmake --build $PLPLOTB -j$(nproc)
 RUN cmake --install $PLPLOTB --prefix $prefixD
 
+USER jenkins
+
 CMD ["jenkins.sh"]
 

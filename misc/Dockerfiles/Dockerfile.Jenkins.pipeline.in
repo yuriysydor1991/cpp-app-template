@@ -23,5 +23,7 @@ RUN apt install -y qt6-base-dev qt6-base-dev-tools \
 RUN apt install -y libopengl-dev libgl-dev
 RUN apt install -y qml6-module-qtquick-controls
 
+USER jenkins
+
 CMD ["jenkins.sh"]
 

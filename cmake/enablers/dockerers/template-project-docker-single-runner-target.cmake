@@ -10,16 +10,16 @@ set(
 
 set(
   DOCKER_SINGLE_RUN_CMD
-    xhost +local:root && 
+    xhost +local: && 
     DOCKER_HOST=${DOCKER_HOST_STR} ${DOCKER_EXEC} run --rm 
     --env DISPLAY=$$DISPLAY
     --env QT_X11_NO_MITSHM=1
     --volume /tmp/.X11-unix:/tmp/.X11-unix
-    --volume $$HOME/.Xauthority:/root/.Xauthority
+    --volume $$HOME/.Xauthority:/home/${DOCKERFILE_SINGLE_RUN_USER_NAME}/.Xauthority
     -v $(XDG_RUNTIME_DIR):$(XDG_RUNTIME_DIR)
     --network host
     ${DOCKER_SINGLE_RUN_NAME} &&
-    xhost -local:root
+    xhost -local:
 )
 
 message(STATUS "docker single build command: ${DOCKER_SINGLE_BUILD_CMD}")

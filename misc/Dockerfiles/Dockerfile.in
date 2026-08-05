@@ -29,4 +29,6 @@ RUN --mount=from=project,target=$srcD/${PROJECT_BINARY_NAME} \
  cmake --build $BUILDDIR -j$(nproc) --target ${PROJECT_BINARY_NAME} && \
  cmake --install $BUILDDIR --prefix $prefixD
 
+USER ${DOCKERFILE_SINGLE_RUN_USER_NAME}
+
 CMD ["${PROJECT_BINARY_NAME}"]

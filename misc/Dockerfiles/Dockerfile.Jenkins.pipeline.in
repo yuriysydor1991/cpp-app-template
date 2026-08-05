@@ -16,5 +16,7 @@ RUN apt install -y libgmock-dev
 # original pgplot5-dev package lives in the non-free (multiverse) repositories
 RUN apt install -y giza-dev
 
+USER jenkins
+
 CMD ["jenkins.sh"]
 

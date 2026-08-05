@@ -34,4 +34,6 @@ RUN cmake --build $matPlotBuild -j$(nproc)
 RUN cmake --install $matPlotBuild --prefix $prefix
 
 
+USER jenkins
+
 CMD ["jenkins.sh"]

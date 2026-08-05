@@ -26,4 +26,6 @@ RUN cmake -B $plotgenB -S $plotgenD -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_P
 RUN cmake --build $plotgenB -j$(nproc)
 RUN cmake --install $plotgenB --prefix $prefixD
 
+USER jenkins
+
 CMD ["jenkins.sh"]

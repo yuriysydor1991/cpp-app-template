@@ -26,4 +26,8 @@ RUN --mount=from=project,target=/src/${PROJECT_BINARY_NAME} \
  cmake --build $BUILDDIR -j$(nproc) --target ${PROJECT_BINARY_NAME} && \
  cmake --install $BUILDDIR --prefix /usr
 
+RUN install -o ${DOCKERFILE_SINGLE_RUN_USER_NAME} /dev/null /var/log/${PROJECT_BINARY_NAME}-${CMAKE_PROJECT_VERSION}-http-access.log
+
+USER ${DOCKERFILE_SINGLE_RUN_USER_NAME}
+
 CMD ["${PROJECT_BINARY_NAME}", "--docroot", "/usr/local/share/Wt/resources", "--http-listen", "0.0.0.0:${WT4_DOCKER_PORT}", "--accesslog", "/var/log/${PROJECT_BINARY_NAME}-${CMAKE_PROJECT_VERSION}-http-access.log"]

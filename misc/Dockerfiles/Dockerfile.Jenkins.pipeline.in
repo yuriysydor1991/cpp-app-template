@@ -33,5 +33,7 @@ RUN cmake -B $wtBDir -S $srcD/wt  -DENABLE_LIBWTDBO=OFF -DENABLE_OPENGL=OFF \
 RUN cmake --build $wtBDir -j$(nproc)
 RUN cmake --install $wtBDir --prefix /usr
 
+USER jenkins
+
 CMD ["jenkins.sh"]
 

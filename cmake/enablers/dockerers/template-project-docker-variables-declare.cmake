@@ -32,7 +32,7 @@ set(
 
 set(
   DOCKERFILE_SINGLE_RUN_BASE_IMAGE_VERSION
-  "22.04"
+  "24.04"
   CACHE STRING 
   "The Dockerfile source environment version"
 )
@@ -42,6 +42,13 @@ set(
   "${DOCKERFILE_SINGLE_RUN_BASE_IMAGE_NAME}:${DOCKERFILE_SINGLE_RUN_BASE_IMAGE_VERSION}"
   CACHE STRING 
   "The Dockerfile source environment full string (e.g. ubuntu:22.04)"
+)
+
+set(
+  DOCKERFILE_SINGLE_RUN_USER_NAME
+  "ubuntu"
+  CACHE STRING 
+  "The Dockerfile unprivileged user name to run the container under"
 )
 
 set(
@@ -68,3 +75,4 @@ message(STATUS "Docker host address and port: ${DOCKER_HOST_STR}")
 message(STATUS "Project current branch name: ${PROJECT_CURRENT_BRANCH_NAME}")
 message(STATUS "Project binary filepath: ${PROJECT_BINARY_PATH}")
 message(STATUS "Docker source environment base image string: ${DOCKERFILE_SINGLE_RUN_BASE_IMAGE_STRING}")
+message(STATUS "Docker container user name: ${DOCKERFILE_SINGLE_RUN_USER_NAME}")

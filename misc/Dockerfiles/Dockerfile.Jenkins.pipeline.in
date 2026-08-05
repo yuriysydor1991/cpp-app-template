@@ -13,5 +13,7 @@ RUN apt install -y libgtest-dev
 RUN apt install -y libgmock-dev
 RUN apt install -y pkg-config libgtkmm-3.0-dev
 
+USER jenkins
+
 CMD ["jenkins.sh"]
 

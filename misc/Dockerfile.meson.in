@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 RUN apt update
 RUN apt install -y libstdc++6 build-essential git cmake g++
@@ -11,5 +11,7 @@ RUN --mount=from=project,target=/src/@PROJECT_BINARY_NAME@ \
  meson setup $BUILDDIR && \
  meson compile -C ${BUILDDIR} && \
  meson install -C ${BUILDDIR}
+
+USER ubuntu
 
 CMD ["@PROJECT_BINARY_NAME@"]

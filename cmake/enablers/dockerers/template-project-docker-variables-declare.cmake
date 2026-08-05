@@ -42,6 +42,13 @@ set(
 )
 
 set(
+  DOCKERFILE_SINGLE_RUN_USER_NAME
+  "jenkins"
+  CACHE STRING 
+  "The Dockerfile unprivileged user name to run the container under"
+)
+
+set(
   PROJECT_BINARY_PATH
   ${CMAKE_BINARY_DIR}/src/${PROJECT_LIBRARY_NAME}
 )
@@ -53,3 +60,4 @@ message(STATUS "Docker host address and port: ${DOCKER_HOST_STR}")
 message(STATUS "Project current branch name: ${PROJECT_CURRENT_BRANCH_NAME}")
 message(STATUS "Project binary filepath: ${PROJECT_BINARY_PATH}")
 message(STATUS "Docker source environment base image string: ${DOCKERFILE_SINGLE_RUN_BASE_IMAGE_STRING}")
+message(STATUS "Docker container user name: ${DOCKERFILE_SINGLE_RUN_USER_NAME}")

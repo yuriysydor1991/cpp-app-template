@@ -12,4 +12,6 @@ RUN apt install -y clang-tidy
 RUN apt install -y libgtest-dev
 RUN apt install -y libgmock-dev
 
+USER ${DOCKERFILE_SINGLE_RUN_USER_NAME}
+
 CMD ["jenkins.sh"]

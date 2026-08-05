@@ -36,5 +36,7 @@ RUN cmake -B $SRCD/mongo-cxx-driver/build -S $SRCD/mongo-cxx-driver -DCMAKE_INST
 RUN cmake --build $SRCD/mongo-cxx-driver/build -j$(nproc) --target all
 RUN cmake --install $SRCD/mongo-cxx-driver/build
 
+USER jenkins
+
 CMD ["jenkins.sh"]
 

@@ -33,4 +33,6 @@ RUN git clone --recurse-submodules --shallow-submodules --depth 1 \
     cmake --install /tmp/wxWidgets/build --prefix /usr && \
     rm -rf /tmp/wxWidgets
 
+USER jenkins
+
 CMD ["jenkins.sh"]

@@ -25,5 +25,7 @@ RUN cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$prefi
 RUN cmake --build build -j$(nproc)
 RUN cmake --install build --prefix $prefixD
 
+USER jenkins
+
 CMD ["jenkins.sh"]
 

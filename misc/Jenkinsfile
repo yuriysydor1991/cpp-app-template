@@ -266,6 +266,122 @@ pipeline {
       }
     }
 
+    stage('Template: no broken external documentation URLs') {
+      steps {
+        sh '''
+          set +x
+
+          MDLIST=$(mktemp)
+          URLLIST=$(mktemp)
+          UNIQLIST=$(mktemp)
+          BADLIST=$(mktemp)
+          WARNLIST=$(mktemp)
+          trap 'rm -f "$MDLIST" "$URLLIST" "$UNIQLIST" "$BADLIST" "$WARNLIST"' EXIT
+
+          BT='`'
+          DQ='"'
+          CURLOPTS="--silent --location --globoff --connect-timeout 15 --max-time 45 --retry 2 --retry-delay 5 --output /dev/null"
+
+          find . -name "*.md" -not -path "./.git/*" | sort > "$MDLIST"
+
+          # Collect every external URL together with the documentation file it
+          # sits in, unwrapping it from the markdown link, the inline code and
+          # the HTML decorations and dropping the local and the templated ones.
+          while IFS= read -r mdfile; do
+            grep -oE "(https?|ftps?|git)://[^[:space:]]+" "$mdfile" 2>/dev/null |
+            while IFS= read -r raw; do
+              url="$raw"
+              url="${url%%${BT}*}"
+              url="${url%%${DQ}*}"
+              url="${url%%<*}"
+              url="${url%%>*}"
+              url="${url%%]*}"
+              case "$url" in *"("*) ;; *) url="${url%%)*}" ;; esac
+              url=$(printf '%s' "$url" | sed 's/[.,;:!?]*$//')
+              case "$url" in
+                *://) continue ;;
+                *'$'*|*'{'*|*'@'*) continue ;;
+                *//localhost*|*//127.*|*//0.0.0.0*|*//'[::1]'*|*//192.168.*) continue ;;
+                *//example.com*|*//example.org*) continue ;;
+              esac
+              printf '%s %s\\n' "$url" "$mdfile"
+            done
+          done < "$MDLIST" | sort -u > "$URLLIST"
+
+          awk '{print $1}' "$URLLIST" | sort -u > "$UNIQLIST"
+          echo "Checking $(wc -l < "$UNIQLIST") external URL(s) from $(wc -l < "$MDLIST") documentation file(s)"
+
+          while IFS= read -r url; do
+            case "$url" in
+              git://*)
+                if git ls-remote "$url" > /dev/null 2>&1; then
+                  echo "  OK      $url"
+                else
+                  echo "  BROKEN  $url (git ls-remote failed)"
+                  echo "$url git-unreachable" >> "$BADLIST"
+                fi
+                continue
+                ;;
+              ftp://*|ftps://*)
+                if curl $CURLOPTS "$url" > /dev/null 2>&1; then
+                  echo "  OK      $url"
+                else
+                  echo "  BROKEN  $url (FTP request failed)"
+                  echo "$url ftp-unreachable" >> "$BADLIST"
+                fi
+                continue
+                ;;
+            esac
+
+            code=$(curl $CURLOPTS --head --write-out '%{http_code}' "$url" 2>/dev/null) || true
+            case "$code" in
+              2*|3*) echo "  OK      $url ($code)" ; continue ;;
+            esac
+
+            # Some servers reject or mishandle HEAD - retry the URL with a GET.
+            code=$(curl $CURLOPTS --request GET --write-out '%{http_code}' "$url" 2>/dev/null) || true
+            case "$code" in
+              2*|3*) echo "  OK      $url ($code on GET)" ;;
+              401|403|418|429)
+                echo "  WARN    $url ($code - the server refuses the automated requests)"
+                echo "$url $code" >> "$WARNLIST"
+                ;;
+              000)
+                echo "  BROKEN  $url (no response: DNS, TLS or connection failure)"
+                echo "$url no-response" >> "$BADLIST"
+                ;;
+              *)
+                echo "  BROKEN  $url ($code)"
+                echo "$url $code" >> "$BADLIST"
+                ;;
+            esac
+          done < "$UNIQLIST"
+
+          if [ -s "$WARNLIST" ]; then
+            echo ""
+            echo "WARNING: the servers below refuse the automated requests, so their pages are left unverified:"
+            while read -r url code; do
+              echo "  $url ($code)"
+              awk -v u="$url" '$1 == u {print "      referenced by " $2}' "$URLLIST" | sort -u
+            done < "$WARNLIST"
+          fi
+
+          if [ -s "$BADLIST" ]; then
+            echo ""
+            echo "FAIL: the documentation references the unreachable external URLs:"
+            while read -r url code; do
+              echo "  $url ($code)"
+              awk -v u="$url" '$1 == u {print "      referenced by " $2}' "$URLLIST" | sort -u
+            done < "$BADLIST"
+            exit 1
+          fi
+
+          echo ""
+          echo "OK: every external documentation URL is reachable"
+        '''
+      }
+    }
+
     stage('Template: every enabler is registered') {
       steps {
         sh '''

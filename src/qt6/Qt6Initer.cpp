@@ -2,14 +2,26 @@
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlEngine>
 #include <QString>
 
 #include "src/app/IApplication.h"
 #include "src/log/log.h"
 #include "src/qt6/QMLRes.h"
+#include "src/qt6/gl-area/GLTriangleItem.h"
 
 namespace Qt6i
 {
+
+namespace
+{
+
+/** @brief The QML module the C++ implemented items are exposed through. */
+constexpr const char* GLAREA_URI = "glarea";
+constexpr int GLAREA_VERSION_MAJOR = 1;
+constexpr int GLAREA_VERSION_MINOR = 0;
+
+}  // namespace
 
 int Qt6Initer::run(std::shared_ptr<app::ApplicationContext> actx)
 {
@@ -26,6 +38,12 @@ int Qt6Initer::run(std::shared_ptr<app::ApplicationContext> actx)
       QString::fromStdString(project_decls::PROJECT_NAME));
 
   QGuiApplication app(actx->argc, actx->argv);
+
+  // Every C++ implemented QML type has to be registered before the QML files
+  // referencing it are loaded.
+  qmlRegisterType<gl_area::GLTriangleItem>(
+      GLAREA_URI, GLAREA_VERSION_MAJOR, GLAREA_VERSION_MINOR, "GLTriangleItem");
+
   QQmlApplicationEngine engine;
 
   LOGI("Trying to load " << QMLRes::get_url_main().toStdString());

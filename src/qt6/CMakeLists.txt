@@ -19,6 +19,7 @@ target_link_libraries(
   PUBLIC
     Qt6::Core
     Qt6::Gui
+    Qt6::OpenGL
     Qt6::Qml
     Qt6::Quick
     Qt6::QuickControls2
@@ -30,4 +31,5 @@ target_link_libraries(
     ${QT6_OBJECT_NAME}
 )
 
+add_subdirectory(gl-area)
 add_subdirectory(ui)

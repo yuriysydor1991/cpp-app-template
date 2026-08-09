@@ -325,7 +325,7 @@ pipeline {
               else
                 resolved="$(dirname "$mdfile")/${target}"
               fi
-              if [ ! -f "$resolved" ]; then
+              if [ ! -e "$resolved" ]; then
                 echo "FAIL: broken link in $mdfile"
                 echo "  link:     $link"
                 echo "  resolved: $resolved"

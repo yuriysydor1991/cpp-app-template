@@ -9,6 +9,7 @@
         <string>RUN_FLATPAK_PACKAGER</string>
         <string>RUN_SNAP_PACKAGER</string>
         <string>RUN_FREEBSD_PACKAGER</string>
+        <string>RUN_CLANGTIDY</string>
         <string>RUN_RPM_PACKAGER</string>
         <string>RUN_CPPCHECK</string>
         <string>RUN_DEB_PACKAGER</string>
@@ -17,21 +18,14 @@
       <options/>
     </org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction>
   </actions>
-  <description>CppAppTemplate @ GitHub appMatPlotxx</description>
+  <description>darknetxx @ GitLab</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <org.jenkinsci.plugins.workflow.job.properties.DisableConcurrentBuildsJobProperty>
       <abortPrevious>false</abortPrevious>
     </org.jenkinsci.plugins.workflow.job.properties.DisableConcurrentBuildsJobProperty>
-    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.46.0.1">
-      <projectUrl>https://github.com/yuriysydor1991/cpp-app-template.git/</projectUrl>
-      <displayName></displayName>
-    </com.coravy.hudson.plugins.github.GithubProjectProperty>
     <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
       <triggers>
-        <com.cloudbees.jenkins.GitHubPushTrigger plugin="github@1.46.0.1">
-          <spec></spec>
-        </com.cloudbees.jenkins.GitHubPushTrigger>
         <hudson.triggers.SCMTrigger>
           <spec>H/5 * * * *</spec>
           <ignorePostCommitHooks>false</ignorePostCommitHooks>
@@ -46,33 +40,38 @@
           <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
+          <name>RUN_CLANGTIDY</name>
+          <description>Run the clang-tidy build static code check?</description>
+          <defaultValue>false</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
           <name>RUN_FLATPAK_PACKAGER</name>
-          <description>Template: build and check the flatpak package?</description>
+          <description>Build and check the flatpak package?</description>
           <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
           <name>RUN_DEB_PACKAGER</name>
-          <description>Template: build and check the deb package?</description>
+          <description>Build and check the deb package?</description>
           <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
           <name>RUN_RPM_PACKAGER</name>
-          <description>Template: build and check the RPM package?</description>
+          <description>Build and check the RPM package?</description>
           <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
           <name>RUN_SNAP_PACKAGER</name>
-          <description>Template: build and check the snap package?</description>
+          <description>Build and check the snap package?</description>
           <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
           <name>RUN_FREEBSD_PACKAGER</name>
-          <description>Template: build and check the FreeBSD pkg package? (FreeBSD only)</description>
+          <description>Build and check the FreeBSD pkg package? (FreeBSD only)</description>
           <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
           <name>RUN_WIX_PACKAGER</name>
-          <description>Template: build and check the WIX MSI package? (MS Windows only)</description>
+          <description>Build and check the WIX MSI package? (MS Windows only)</description>
           <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
       </parameterDefinitions>
@@ -83,12 +82,12 @@
       <configVersion>2</configVersion>
       <userRemoteConfigs>
         <hudson.plugins.git.UserRemoteConfig>
-          <url>https://github.com/yuriysydor1991/cpp-app-template.git</url>
+          <url>https://gitlab.com/yuriysydor1991/darknetxx.git</url>
         </hudson.plugins.git.UserRemoteConfig>
       </userRemoteConfigs>
       <branches>
         <hudson.plugins.git.BranchSpec>
-          <name>appMatPlotxx</name>
+          <name>master</name>
         </hudson.plugins.git.BranchSpec>
       </branches>
       <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -96,7 +95,7 @@
       <extensions/>
     </scm>
     <scriptPath>misc/Jenkinsfile</scriptPath>
-    <lightweight>true</lightweight>
+    <lightweight>false</lightweight>
   </definition>
   <triggers/>
   <disabled>false</disabled>

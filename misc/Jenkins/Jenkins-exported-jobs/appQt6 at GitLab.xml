@@ -9,6 +9,7 @@
         <string>RUN_FLATPAK_PACKAGER</string>
         <string>RUN_SNAP_PACKAGER</string>
         <string>RUN_FREEBSD_PACKAGER</string>
+        <string>RUN_CLANGTIDY</string>
         <string>RUN_RPM_PACKAGER</string>
         <string>RUN_CPPCHECK</string>
         <string>RUN_DEB_PACKAGER</string>
@@ -17,21 +18,14 @@
       <options/>
     </org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction>
   </actions>
-  <description>CppAppTemplate @ GitHub appMatPlotxx</description>
+  <description>CppAppTemplate @ GitLab appQt6</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <org.jenkinsci.plugins.workflow.job.properties.DisableConcurrentBuildsJobProperty>
       <abortPrevious>false</abortPrevious>
     </org.jenkinsci.plugins.workflow.job.properties.DisableConcurrentBuildsJobProperty>
-    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.46.0.1">
-      <projectUrl>https://github.com/yuriysydor1991/cpp-app-template.git/</projectUrl>
-      <displayName></displayName>
-    </com.coravy.hudson.plugins.github.GithubProjectProperty>
     <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
       <triggers>
-        <com.cloudbees.jenkins.GitHubPushTrigger plugin="github@1.46.0.1">
-          <spec></spec>
-        </com.cloudbees.jenkins.GitHubPushTrigger>
         <hudson.triggers.SCMTrigger>
           <spec>H/5 * * * *</spec>
           <ignorePostCommitHooks>false</ignorePostCommitHooks>
@@ -43,6 +37,11 @@
         <hudson.model.BooleanParameterDefinition>
           <name>RUN_CPPCHECK</name>
           <description>Run the cppcheck static code check?</description>
+          <defaultValue>false</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>RUN_CLANGTIDY</name>
+          <description>Run the clang-tidy static code check?</description>
           <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
@@ -83,12 +82,12 @@
       <configVersion>2</configVersion>
       <userRemoteConfigs>
         <hudson.plugins.git.UserRemoteConfig>
-          <url>https://github.com/yuriysydor1991/cpp-app-template.git</url>
+          <url>https://gitlab.com/yuriysydor1991/cpp-app-template.git</url>
         </hudson.plugins.git.UserRemoteConfig>
       </userRemoteConfigs>
       <branches>
         <hudson.plugins.git.BranchSpec>
-          <name>appMatPlotxx</name>
+          <name>appQt6</name>
         </hudson.plugins.git.BranchSpec>
       </branches>
       <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -96,7 +95,7 @@
       <extensions/>
     </scm>
     <scriptPath>misc/Jenkinsfile</scriptPath>
-    <lightweight>true</lightweight>
+    <lightweight>false</lightweight>
   </definition>
   <triggers/>
   <disabled>false</disabled>

@@ -6,18 +6,12 @@
       <jobProperties/>
       <triggers/>
       <parameters>
-        <string>RUN_FLATPAK_PACKAGER</string>
-        <string>RUN_SNAP_PACKAGER</string>
-        <string>RUN_FREEBSD_PACKAGER</string>
-        <string>RUN_RPM_PACKAGER</string>
         <string>RUN_CPPCHECK</string>
-        <string>RUN_DEB_PACKAGER</string>
-        <string>RUN_WIX_PACKAGER</string>
       </parameters>
       <options/>
     </org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction>
   </actions>
-  <description>CppAppTemplate @ GitHub appMatPlotxx</description>
+  <description>CppAppTemplate @ GitHub appMeson</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <org.jenkinsci.plugins.workflow.job.properties.DisableConcurrentBuildsJobProperty>
@@ -27,6 +21,15 @@
       <projectUrl>https://github.com/yuriysydor1991/cpp-app-template.git/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.BooleanParameterDefinition>
+          <name>RUN_CPPCHECK</name>
+          <description>Run the cppcheck static code check?</description>
+          <defaultValue>false</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
     <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
       <triggers>
         <com.cloudbees.jenkins.GitHubPushTrigger plugin="github@1.46.0.1">
@@ -38,45 +41,6 @@
         </hudson.triggers.SCMTrigger>
       </triggers>
     </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
-    <hudson.model.ParametersDefinitionProperty>
-      <parameterDefinitions>
-        <hudson.model.BooleanParameterDefinition>
-          <name>RUN_CPPCHECK</name>
-          <description>Run the cppcheck static code check?</description>
-          <defaultValue>false</defaultValue>
-        </hudson.model.BooleanParameterDefinition>
-        <hudson.model.BooleanParameterDefinition>
-          <name>RUN_FLATPAK_PACKAGER</name>
-          <description>Template: build and check the flatpak package?</description>
-          <defaultValue>false</defaultValue>
-        </hudson.model.BooleanParameterDefinition>
-        <hudson.model.BooleanParameterDefinition>
-          <name>RUN_DEB_PACKAGER</name>
-          <description>Template: build and check the deb package?</description>
-          <defaultValue>false</defaultValue>
-        </hudson.model.BooleanParameterDefinition>
-        <hudson.model.BooleanParameterDefinition>
-          <name>RUN_RPM_PACKAGER</name>
-          <description>Template: build and check the RPM package?</description>
-          <defaultValue>false</defaultValue>
-        </hudson.model.BooleanParameterDefinition>
-        <hudson.model.BooleanParameterDefinition>
-          <name>RUN_SNAP_PACKAGER</name>
-          <description>Template: build and check the snap package?</description>
-          <defaultValue>false</defaultValue>
-        </hudson.model.BooleanParameterDefinition>
-        <hudson.model.BooleanParameterDefinition>
-          <name>RUN_FREEBSD_PACKAGER</name>
-          <description>Template: build and check the FreeBSD pkg package? (FreeBSD only)</description>
-          <defaultValue>false</defaultValue>
-        </hudson.model.BooleanParameterDefinition>
-        <hudson.model.BooleanParameterDefinition>
-          <name>RUN_WIX_PACKAGER</name>
-          <description>Template: build and check the WIX MSI package? (MS Windows only)</description>
-          <defaultValue>false</defaultValue>
-        </hudson.model.BooleanParameterDefinition>
-      </parameterDefinitions>
-    </hudson.model.ParametersDefinitionProperty>
   </properties>
   <definition class="org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition" plugin="workflow-cps@4331.v9d06ed4658ff">
     <scm class="hudson.plugins.git.GitSCM" plugin="git@5.10.1">
@@ -88,7 +52,7 @@
       </userRemoteConfigs>
       <branches>
         <hudson.plugins.git.BranchSpec>
-          <name>appMatPlotxx</name>
+          <name>appMeson</name>
         </hudson.plugins.git.BranchSpec>
       </branches>
       <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -99,5 +63,5 @@
     <lightweight>true</lightweight>
   </definition>
   <triggers/>
-  <disabled>false</disabled>
+  <disabled>true</disabled>
 </flow-definition>

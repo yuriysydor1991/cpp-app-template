@@ -37,6 +37,27 @@ class UTEST_CommandLineParser : public Test
     argv = customArgv;
   }
 
+  void three_args(const char* const secondParam, const char* const thirdParam)
+  {
+    static std::string binaryName{"binaryName"};
+    static std::string secondArg;
+    static std::string thirdArg;
+
+    static char* customArgv[] = {binaryName.data(), secondArg.data(),
+                                 thirdArg.data()};
+
+    secondArg = secondParam;
+    thirdArg = thirdParam;
+
+    // False positive: the secondArg has a static storage duration.
+    // cppcheck-suppress invalidContainer
+    customArgv[1] = secondArg.data();
+    customArgv[2] = thirdArg.data();
+
+    argc = 3;
+    argv = customArgv;
+  }
+
   int argc{0};
   char** argv{nullptr};
 
@@ -122,4 +143,114 @@ TEST_F(UTEST_CommandLineParser, unknown_flag)
   EXPECT_TRUE(appctx->print_help_and_exit);
   EXPECT_FALSE(appctx->print_version_and_exit);
   EXPECT_TRUE(appctx->errors.empty());
+}
+
+TEST_F(UTEST_CommandLineParser, token_long)
+{
+  static const std::string token{"an-openai-api-token"};
+
+  three_args("--token", token.c_str());
+
+  EXPECT_CALL(*appctx, push_error(_)).Times(0);
+
+  EXPECT_TRUE(parser->parse_args(appctx));
+
+  EXPECT_EQ(appctx->openai_token, token);
+  EXPECT_TRUE(appctx->openai_question.empty());
+  EXPECT_FALSE(appctx->print_help_and_exit);
+  EXPECT_FALSE(appctx->print_version_and_exit);
+}
+
+TEST_F(UTEST_CommandLineParser, token_short)
+{
+  static const std::string token{"an-openai-api-token"};
+
+  three_args("-t", token.c_str());
+
+  EXPECT_CALL(*appctx, push_error(_)).Times(0);
+
+  EXPECT_TRUE(parser->parse_args(appctx));
+
+  EXPECT_EQ(appctx->openai_token, token);
+}
+
+TEST_F(UTEST_CommandLineParser, question_long)
+{
+  static const std::string question{"What is the point of taxes?"};
+
+  three_args("--question", question.c_str());
+
+  EXPECT_CALL(*appctx, push_error(_)).Times(0);
+
+  EXPECT_TRUE(parser->parse_args(appctx));
+
+  EXPECT_EQ(appctx->openai_question, question);
+  EXPECT_TRUE(appctx->openai_token.empty());
+}
+
+TEST_F(UTEST_CommandLineParser, question_short)
+{
+  static const std::string question{"What is the point of taxes?"};
+
+  three_args("-q", question.c_str());
+
+  EXPECT_CALL(*appctx, push_error(_)).Times(0);
+
+  EXPECT_TRUE(parser->parse_args(appctx));
+
+  EXPECT_EQ(appctx->openai_question, question);
+}
+
+TEST_F(UTEST_CommandLineParser, model_long)
+{
+  static const std::string model{"gpt-4o"};
+
+  three_args("--model", model.c_str());
+
+  EXPECT_CALL(*appctx, push_error(_)).Times(0);
+
+  EXPECT_TRUE(parser->parse_args(appctx));
+
+  EXPECT_EQ(appctx->openai_model, model);
+}
+
+TEST_F(UTEST_CommandLineParser, model_short)
+{
+  static const std::string model{"gpt-4o"};
+
+  three_args("-m", model.c_str());
+
+  EXPECT_CALL(*appctx, push_error(_)).Times(0);
+
+  EXPECT_TRUE(parser->parse_args(appctx));
+
+  EXPECT_EQ(appctx->openai_model, model);
+}
+
+TEST_F(UTEST_CommandLineParser, token_without_data)
+{
+  static const std::string expectedError{
+      "Parameter --token requires the data next to it."};
+
+  two_args("--token");
+
+  EXPECT_CALL(*appctx, push_error(expectedError)).Times(1);
+
+  EXPECT_FALSE(parser->parse_args(appctx));
+
+  EXPECT_TRUE(appctx->openai_token.empty());
+}
+
+TEST_F(UTEST_CommandLineParser, question_without_data)
+{
+  static const std::string expectedError{
+      "Parameter --question requires the data next to it."};
+
+  two_args("--question");
+
+  EXPECT_CALL(*appctx, push_error(expectedError)).Times(1);
+
+  EXPECT_FALSE(parser->parse_args(appctx));
+
+  EXPECT_TRUE(appctx->openai_question.empty());
 }

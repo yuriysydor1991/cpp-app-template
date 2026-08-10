@@ -6,6 +6,7 @@
 
 #include "project-global-decls.h"
 #include "src/app/CMDParamNames.h"
+#include "src/liboai/OAIController.h"
 #include "src/log/log.h"
 
 namespace app
@@ -38,7 +39,24 @@ int ApplicationHelpPrinter::run(std::shared_ptr<ApplicationContext> ctx)
             << CMDParamNames::VERSION
             << " - print application version, build git "
                "commit and configure date"
-            << std::endl;
+            << std::endl
+            << "\t" << CMDParamNames::LOGPATHW << " or "
+            << CMDParamNames::LOGPATH
+            << " <path> - write the log messages into the given file"
+            << std::endl
+            << "\t" << CMDParamNames::TOKENW << " or " << CMDParamNames::TOKEN
+            << " <token> - the OpenAI API token to authorize the ChatGPT "
+               "call with. Taken from the "
+            << liboaii::OAIController::TOKEN_ENV_VAR
+            << " environment variable when omitted" << std::endl
+            << "\t" << CMDParamNames::QUESTIONW << " or "
+            << CMDParamNames::QUESTION
+            << " <question> - the question to ask the ChatGPT about"
+            << std::endl
+            << "\t" << CMDParamNames::MODELW << " or " << CMDParamNames::MODEL
+            << " <model> - the chat completion model to ask. The "
+            << liboaii::OAIController::DEFAULT_MODEL
+            << " one is asked when omitted" << std::endl;
 
   return 0;
 }

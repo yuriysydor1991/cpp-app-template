@@ -86,6 +86,19 @@ bool CommandLineParser::parse_arg(std::shared_ptr<ApplicationContext> ctx,
     // skipping already parsed cmd params
     paramIndex++;
     return true;
+  } else if (param == CMDParamNames::TOKENW || param == CMDParamNames::TOKEN) {
+    ctx->openai_token = nextParam;
+    paramIndex++;
+    return true;
+  } else if (param == CMDParamNames::QUESTIONW ||
+             param == CMDParamNames::QUESTION) {
+    ctx->openai_question = nextParam;
+    paramIndex++;
+    return true;
+  } else if (param == CMDParamNames::MODELW || param == CMDParamNames::MODEL) {
+    ctx->openai_model = nextParam;
+    paramIndex++;
+    return true;
   } else {
     ctx->print_help_and_exit = true;
     ctx->push_error("Unknown parameter: " + param);
@@ -104,8 +117,11 @@ const std::set<std::string>& CommandLineParser::get_params_requiring_data()
 {
   // Place here command line parameters that are requiring
   // some data after it.
-  static const std::set<std::string> requireNext{CMDParamNames::LOGPATHW,
-                                                 CMDParamNames::LOGPATH};
+  static const std::set<std::string> requireNext{
+      CMDParamNames::LOGPATHW,  CMDParamNames::LOGPATH,
+      CMDParamNames::TOKENW,    CMDParamNames::TOKEN,
+      CMDParamNames::QUESTIONW, CMDParamNames::QUESTION,
+      CMDParamNames::MODELW,    CMDParamNames::MODEL};
 
   return requireNext;
 }

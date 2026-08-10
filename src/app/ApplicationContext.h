@@ -58,6 +58,25 @@ struct ApplicationContext
   std::vector<std::string> errors;
 
   /**
+   * @brief The OpenAI API token to authorize the ChatGPT calls with. When
+   * empty the OAIController takes the token from the environment variable
+   * named in it's TOKEN_ENV_VAR field.
+   */
+  std::string openai_token;
+
+  /**
+   * @brief The question to ask the ChatGPT about. When empty the
+   * Application::run only prints the hint on how to provide one.
+   */
+  std::string openai_question;
+
+  /**
+   * @brief An optional chat completion model override. When empty the
+   * OAIController asks it's DEFAULT_MODEL one.
+   */
+  std::string openai_model;
+
+  /**
    * @brief Pushes a new error description into the errors field;
    *
    * @param errorDescription The application error description.

@@ -85,6 +85,10 @@ Examine available branches to find your most applicable variant of the template 
 
 - `appOpenCV` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appOpenCV), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appOpenCV)] the template infrastructure to fast start application development with the [OpenCV](https://opencv.org/) computer vision library.
 
+## Artificial intelligence / LLM
+
+- `appCURLClaude` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appCURLClaude), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appCURLClaude)] with general application related classes to generate a single binary executable that asks [Claude](https://www.claude.com/) a question given in the command line over the [Anthropic API](https://platform.claude.com/docs/en/api/overview) and prints the received answer. Anthropic ships no official C++ SDK, so the branch talks to the API directly with the [libcurl](https://curl.se/libcurl/) and the [nlohmann JSON](https://github.com/nlohmann/json) libraries and carries no third party API wrapper.
+
 ## System / DBus
 
 - `appSDBusCxxClient` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSDBusCxxClient), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSDBusCxxClient)] (**current**) with just general application related classes to generate a single binary executable with the usage of [Kistler-Group's sdbus-c++](https://github.com/Kistler-Group/sdbus-cpp.git) library as a [DBus](https://en.wikipedia.org/wiki/D-Bus) services client.

@@ -29,7 +29,7 @@ pipeline {
       }
       
       steps {
-        git branch: 'appCURL',
+        git branch: 'appCURLClaude',
             url: 'https://github.com/yuriysydor1991/cpp-app-template.git'
       }
     }
@@ -122,9 +122,14 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationVersionPrinter\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationVersionPrinter.junit.xml'
           }
         }
-        stage('UTEST_CommandLineParser') { 
-          steps { 
+        stage('UTEST_CommandLineParser') {
+          steps {
             sh 'cd $BUILDDIR && ctest -R "UTEST_CommandLineParser\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_CommandLineParser.junit.xml'
+          }
+        }
+        stage('UTEST_ClaudeController') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_ClaudeController\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ClaudeController.junit.xml'
           }
         }
       }

@@ -13,6 +13,7 @@ apps:
     command: ${PROJECT_BINARY_INSTALLATION_DIR}/${PROJECT_BINARY_NAME}
     plugs:
       - home
+      - network
 
 parts:
   ${PROJECT_BINARY_NAME}:
@@ -22,3 +23,8 @@ parts:
     cmake-parameters:
       - -DCMAKE_BUILD_TYPE=Release
       - -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
+    build-packages:
+      - libcurl4-openssl-dev
+      - nlohmann-json3-dev
+    stage-packages:
+      - libcurl4t64

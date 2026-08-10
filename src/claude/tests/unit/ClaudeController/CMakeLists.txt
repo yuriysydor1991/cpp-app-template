@@ -1,0 +1,30 @@
+cmake_minimum_required(VERSION 3.13)
+
+add_executable(
+  UTEST_ClaudeController
+  UTEST_ClaudeController.cpp
+  ${CMAKE_SOURCE_DIR}/src/claude/ClaudeController.cpp
+)
+
+target_include_directories(
+  UTEST_ClaudeController
+  PRIVATE ${CLAUDE_MOCKS_ROOT}/CURLController
+  PRIVATE ${CLAUDE_MOCKS_ROOT}/log
+  PRIVATE ${CMAKE_SOURCE_DIR}
+)
+
+target_link_libraries(
+  UTEST_ClaudeController
+  GTest::gtest_main GTest::gmock
+  nlohmann_json::nlohmann_json
+)
+
+include(GoogleTest)
+
+gtest_add_tests(
+  TARGET UTEST_ClaudeController
+  TEST_SUFFIX .noArgs
+  TEST_LIST noArgsTests
+)
+
+set_tests_properties(${noArgsTests} PROPERTIES TIMEOUT 600)

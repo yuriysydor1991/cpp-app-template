@@ -1,12 +1,12 @@
 #include "src/app/Application.h"
 
 #include <cassert>
-#include <fstream>
 #include <iostream>
 #include <memory>
+#include <string>
 
-#include "project-global-decls.h"
-#include "src/CURL/CURLController.h"
+#include "src/app/CMDParamNames.h"
+#include "src/claude/ClaudeController.h"
 #include "src/log/log.h"
 
 namespace app
@@ -21,14 +21,48 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  auto curl = curli::CURLController::create();
+  if (ctx->claude_question.empty()) {
+    LOGI("No question provided");
 
-  assert(curl != nullptr);
+    std::cout << "Ask the Claude model about something by providing a question "
+                 "with the "
+              << CMDParamNames::QUESTIONW << " command line parameter."
+              << std::endl;
 
-  auto data = curl->download(project_decls::PROJECT_HOME_URL);
+    return 0;
+  }
 
-  LOGI("Downloaded " << project_decls::PROJECT_HOME_URL
-                     << " URL data: " << std::string(data.begin(), data.end()));
+  auto controller = claudei::ClaudeController::create();
+
+  assert(controller != nullptr);
+
+  const bool tokenIsSet = ctx->claude_token.empty()
+                              ? controller->set_token_from_env()
+                              : controller->set_token(ctx->claude_token);
+
+  if (!tokenIsSet) {
+    ctx->push_error("No valid Anthropic API token provided. Give it with the " +
+                    CMDParamNames::TOKENW +
+                    " command line parameter or "
+                    "through the " +
+                    claudei::ClaudeController::TOKEN_ENV_VAR +
+                    " environment variable.");
+    LOGE("No valid Anthropic API token provided");
+    return INVALID;
+  }
+
+  const std::string answer =
+      controller->ask(ctx->claude_question, ctx->claude_model);
+
+  if (answer.empty()) {
+    ctx->push_error("No answer received from the Claude model.");
+    LOGE("No answer received from the Claude model");
+    return INVALID;
+  }
+
+  LOGI("The Claude answer is received");
+
+  std::cout << answer << std::endl;
 
   return 0;
 }

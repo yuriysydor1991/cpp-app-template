@@ -3,6 +3,7 @@
 #include <cassert>
 #include <functional>
 #include <memory>
+#include <string>
 #include <vector>
 
 #include "src/log/log.h"
@@ -77,42 +78,100 @@ CURLController::CURLController()
 
 CURLController::download_buffer& CURLController::get() { return cbuff; }
 
-CURLController::download_buffer& CURLController::download(
-    const std::string& url)
+long CURLController::last_response_code() const { return responseCode; }
+
+bool CURLController::prepare(const std::string& url)
 {
   cbuff.clear();
+  responseCode = 0L;
 
   assert(!url.empty());
 
   if (url.empty()) {
     LOGE("Invalid URL provided");
-    return cbuff;
+    return false;
   }
 
   if (curl == nullptr) {
     LOGE("Fail to create download context");
-    return cbuff;
+    return false;
   }
+
+  // dropping the options of the previous request, so a plain download after
+  // a post does not inherit it's method, body and headers.
+  curl_easy_reset(curl);
 
   curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
   curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, wcallback);
   curl_easy_setopt(curl, CURLOPT_WRITEDATA, this);
-  curl_easy_setopt(curl, CURLOPT_TIMEOUT, DEFAULT_TIMEOUT);
   curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, DEFAULT_CONNECTTIMEOUT);
+
+  return true;
+}
+
+CURLController::download_buffer& CURLController::perform()
+{
+  const CURLcode res = curl_easy_perform(curl);
+
+  if (res != CURLE_OK) {
+    LOGE("CURL error: " << curl_easy_strerror(res));
+    cbuff.clear();
+    return cbuff;
+  }
+
+  curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &responseCode);
+
+  LOGT("Fetched " << cbuff.size() << " bytes total with the " << responseCode
+                  << " HTTP status");
+
+  return cbuff;
+}
+
+CURLController::download_buffer& CURLController::download(
+    const std::string& url)
+{
+  if (!prepare(url)) {
+    return cbuff;
+  }
+
+  curl_easy_setopt(curl, CURLOPT_TIMEOUT, DEFAULT_TIMEOUT);
   curl_easy_setopt(curl, CURLOPT_LOW_SPEED_TIME, DEFAULT_LOWSPEEDSECS);
   curl_easy_setopt(curl, CURLOPT_LOW_SPEED_LIMIT, DEFAULT_LOWSPEEDLIMIT);
 
   LOGT("Trying to download the data for " << url);
 
-  CURLcode res = curl_easy_perform(curl);
+  return perform();
+}
 
-  if (res != CURLE_OK) {
-    LOGE("CURL error: " << curl_easy_strerror(res));
+CURLController::download_buffer& CURLController::post(
+    const std::string& url, const std::string& body,
+    const std::vector<std::string>& headers)
+{
+  if (!prepare(url)) {
+    return cbuff;
   }
 
-  LOGT("Fetched " << cbuff.size() << " bytes total");
+  struct curl_slist* headerList{nullptr};
 
-  return cbuff;
+  for (const auto& header : headers) {
+    headerList = curl_slist_append(headerList, header.c_str());
+  }
+
+  // No low speed abort here: a server that is still composing it's answer
+  // sends nothing meanwhile, which the low speed limit takes for a stall.
+  curl_easy_setopt(curl, CURLOPT_TIMEOUT, DEFAULT_POST_TIMEOUT);
+  curl_easy_setopt(curl, CURLOPT_POST, 1L);
+  curl_easy_setopt(curl, CURLOPT_POSTFIELDS, body.c_str());
+  curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, static_cast<long>(body.size()));
+  curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headerList);
+
+  LOGT("Trying to post " << body.size() << " bytes to " << url);
+
+  auto& received = perform();
+
+  curl_slist_free_all(headerList);
+
+  return received;
 }
 
 CURLControllerPtr CURLController::create()

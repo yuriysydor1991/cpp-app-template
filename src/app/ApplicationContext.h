@@ -58,6 +58,25 @@ struct ApplicationContext
   std::vector<std::string> errors;
 
   /**
+   * @brief The Anthropic API token to authorize the Claude calls with. When
+   * empty the ClaudeController takes the token from the environment variable
+   * named in it's TOKEN_ENV_VAR field.
+   */
+  std::string claude_token;
+
+  /**
+   * @brief The question to ask the Claude model about. When empty the
+   * Application::run only prints the hint on how to provide one.
+   */
+  std::string claude_question;
+
+  /**
+   * @brief An optional model override. When empty the ClaudeController asks
+   * it's DEFAULT_MODEL one.
+   */
+  std::string claude_model;
+
+  /**
    * @brief Pushes a new error description into the errors field;
    *
    * @param errorDescription The application error description.

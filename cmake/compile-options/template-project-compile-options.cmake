@@ -14,6 +14,11 @@ option(
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/compile-options")
 
+# The position independent code is the compile time counterpart of the -pie
+# linker hardening option. CMake gives the -fPIE flavour to the executables and
+# the -fPIC one to the libraries, so the project shared library keeps building.
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
 if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   include(template-project-compile-options-MSVC)
 else()

@@ -4,6 +4,7 @@ add_executable(
   CTEST_DefaultLogger  
   CTEST_DefaultLogger.cpp
   ${CMAKE_SOURCE_DIR}/src/log/default-logger/DefaultLogger.cpp
+  ${CMAKE_SOURCE_DIR}/src/log/default-logger/real-default-logger/RealDefaultLogger.cpp
 )
 
 target_compile_definitions(

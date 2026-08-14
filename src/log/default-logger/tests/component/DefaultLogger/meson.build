@@ -1,6 +1,7 @@
 CTEST_DefaultLogger_sources = files(
   'CTEST_DefaultLogger.cpp',
   join_paths(project_include_root, 'src', 'log', 'default-logger', 'DefaultLogger.cpp'),
+  join_paths(project_include_root, 'src', 'log', 'default-logger', 'real-default-logger', 'RealDefaultLogger.cpp'),
 )
 
 CTEST_DefaultLogger = executable(

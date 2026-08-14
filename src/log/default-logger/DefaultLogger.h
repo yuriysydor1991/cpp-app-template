@@ -1,12 +1,11 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_DEFAULT_LOGGER_IMPLEMENTATION_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_DEFAULT_LOGGER_IMPLEMENTATION_CLASS_H
 
-#include <atomic>
-#include <fstream>
-#include <mutex>
+#include <memory>
 #include <string>
 
-#include "project-global-decls.h"
+#include "src/log/ILogger.h"
+#include "src/log/default-logger/real-default-logger/RealDefaultLogger.h"
 #include "src/log/severity-macro-consts.h"
 
 /**
@@ -16,23 +15,41 @@ namespace default_logger
 {
 
 /**
- * @brief The default logger class implementation. Replace it with log4cpp or
- * similar if necessary.
+ * @brief The default logger static proxy class. It holds no logging code by
+ * itself and forwards every static method call into the logger::ILogger
+ * implementation instance returned by the DefaultLogger::real_logger getter.
+ *
+ * The instance is held by the abstract logger::ILogger interface pointer and
+ * not by a particular logger class one, so any implementation of that interface
+ * is accepted by the DefaultLogger::real_logger setter. The
+ * default_logger::RealDefaultLogger implementation is created only as the
+ * default one.
  */
 class DefaultLogger
 {
  public:
-  inline static constexpr const unsigned short LVL_ERROR = MACRO_LVL_ERROR;
-  inline static constexpr const unsigned short LVL_WARNING = MACRO_LVL_WARNING;
-  inline static constexpr const unsigned short LVL_INFO = MACRO_LVL_INFO;
-  inline static constexpr const unsigned short LVL_DEBUG = MACRO_LVL_DEBUG;
-  inline static constexpr const unsigned short LVL_TRACE = MACRO_LVL_TRACE;
+  /**
+   * @brief The real logger instance holder type. It points to the abstract
+   * logger::ILogger interface, so any implementation of it fits.
+   */
+  using RealLoggerPtr = logger::ILoggerPtr;
+
+  inline static constexpr const unsigned short LVL_ERROR =
+      logger::ILogger::LVL_ERROR;
+  inline static constexpr const unsigned short LVL_WARNING =
+      logger::ILogger::LVL_WARNING;
+  inline static constexpr const unsigned short LVL_INFO =
+      logger::ILogger::LVL_INFO;
+  inline static constexpr const unsigned short LVL_DEBUG =
+      logger::ILogger::LVL_DEBUG;
+  inline static constexpr const unsigned short LVL_TRACE =
+      logger::ILogger::LVL_TRACE;
 
   inline static constexpr const char* const defaultLogDateFormat =
-      "%Y-%m-%d %H:%M:%S";
+      RealDefaultLogger::defaultLogDateFormat;
 
-  inline static const std::string default_log_name =
-      project_decls::PROJECT_NAME + ".log";
+  inline static const std::string& default_log_name =
+      RealDefaultLogger::default_log_name;
 
   virtual ~DefaultLogger() = default;
   DefaultLogger() = default;
@@ -106,27 +123,59 @@ class DefaultLogger
    * @param toPrintValue Defines if default logger should print messages to the
    * stdout stream. See the DefaultLogger::print for more details.
    */
-  static void init(const std::string& filepath = get_default_full_log_path(),
+  static void init(const std::string& filepath =
+                       RealDefaultLogger::get_default_full_log_path(),
                    const unsigned short& nlvl = MAX_LOG_LEVEL,
                    const bool toPrintValue = true);
 
+  /**
+   * @brief Returns the real logger instance which stands behind all the
+   * DefaultLogger static methods. The very first call creates the default
+   * default_logger::RealDefaultLogger one.
+   *
+   * Pass the returned instance into the `lib`-style projects through their
+   * logging initializer macroses to make them log into the very same logger
+   * instance.
+   *
+   * @return Returns the never null real logger instance.
+   */
+  static RealLoggerPtr real_logger();
+
+  /**
+   * @brief Sets the real logger instance which will receive all the further
+   * DefaultLogger static method calls. Call it before any logging attempt,
+   * usually right at the `lib`-style project initialization.
+   *
+   * Any logger::ILogger implementation is accepted, so the whole logging
+   * behaviour is replaceable without touching the logging macroses.
+   *
+   * @param newRealLogger The new real logger instance. If the null pointer
+   * given - nothing will be performed.
+   */
+  static void real_logger(const RealLoggerPtr& newRealLogger);
+
+  /**
+   * @brief Tells if the real logger instance was handed over from the outside
+   * through the DefaultLogger::real_logger setter.
+   *
+   * A `lib`-style project must not apply its own default logging settings onto
+   * an adopted instance, because those settings are owned by the code which
+   * uses that library.
+   *
+   * @return Returns true if the real logger instance was given from the
+   * outside and false if it is the own default one.
+   */
+  static bool real_logger_adopted();
+
  private:
   /**
-   * @brief Method to define current log message timestamp.
-   * Not a thread safe.
+   * @brief Provides an access to the real logger instance holder itself.
    *
-   * @param oss The stringstream which will accept the current time
-   * stamp for the log message.
+   * @return Returns the modifiable real logger instance holder.
    */
-  static void insert_current_timestamp(std::ostringstream& oss);
+  static RealLoggerPtr& real_logger_holder();
 
-  static std::string get_full_log_path(const std::string& logname);
-  static std::string get_default_full_log_path();
-
-  inline static std::atomic_bool toPrintMsgs{true};
-  inline static std::fstream alogfile;
-  inline static std::mutex alogfile_m;
-  inline static unsigned short lvl{MAX_LOG_LEVEL};
+  inline static bool adopted{false};
 };
 
 }  // namespace default_logger

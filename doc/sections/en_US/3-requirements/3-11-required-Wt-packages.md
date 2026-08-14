@@ -1,7 +1,6 @@
 ## Required Wt packages
 
-In order to make the [Wt C++ framework](https://www.webtoolkit.eu/wt) available to develop application it's preferable to refer to the official framework page located at [https://www.
-webtoolkit.eu/wt/download](https://www.webtoolkit.eu/wt/download).
+In order to make the [Wt C++ framework](https://www.webtoolkit.eu/wt) available to develop application it's preferable to refer to the official framework page located at [https://www.webtoolkit.eu/wt/download](https://www.webtoolkit.eu/wt/download).
 
 Refer to the [Wt C++ framework](https://www.webtoolkit.eu/wt) documentation for a list of it's required packages and tools.
 

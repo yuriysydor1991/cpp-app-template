@@ -11,7 +11,10 @@ if (NOT ENABLE_SFML)
 endif()
 
 set(TEMPLATE_APP_SFML_GIT "https://github.com/SFML/SFML.git" CACHE STRING "The SFML library git source repository")
-set(TEMPLATE_APP_SFML_GIT_TAG "main" CACHE STRING "The SFML library git source repository tag")
+# The PlotGenCpp library and the sfml-graphics, sfml-window and sfml-system
+# target names below belong to the SFML 2 line, so the fallback clone points to
+# its latest release and not to the SFML 3 default branch.
+set(TEMPLATE_APP_SFML_GIT_TAG "2.6.2" CACHE STRING "The SFML library git source repository tag")
 
 # COMPONENTS graphics window system
 template_project_default_3rdparty_enabler(

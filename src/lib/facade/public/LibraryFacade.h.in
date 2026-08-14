@@ -1,12 +1,12 @@
-#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_LIBRARYFACADE_CLASS_H
-#define YOUR_CPP_APP_TEMPLATE_PROJECT_LIBRARYFACADE_CLASS_H
+#ifndef @PROJECT_LIB_NAMESPACE@_LIBRARYFACADE_CLASS_H
+#define @PROJECT_LIB_NAMESPACE@_LIBRARYFACADE_CLASS_H
 
 #include <memory>
 
 #include "ILib.h"
 #include "LibraryContext.h"
 
-namespace templatelib0
+namespace @PROJECT_LIB_NAMESPACE@
 {
 
 /**
@@ -51,6 +51,6 @@ class LibraryFacade
   static ILibPtr create_library(LibraryContextPtr ctx);
 };
 
-}  // namespace templatelib0
+}  // namespace @PROJECT_LIB_NAMESPACE@
 
-#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_LIBRARYFACADE_CLASS_H
+#endif  // @PROJECT_LIB_NAMESPACE@_LIBRARYFACADE_CLASS_H

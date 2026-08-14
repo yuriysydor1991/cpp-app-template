@@ -1,9 +1,10 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include "project-lib-decls.h"
 #include "src/lib/libmain/LibFactory.h"
 
-using namespace lib0impl;
+using namespace TEMPLATE_LIB_IMPL_NAMESPACE;
 using namespace testing;
 
 class UTEST_LibFactory : public Test

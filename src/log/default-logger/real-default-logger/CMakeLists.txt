@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.13)
 
 add_library(
-  TemplateProjectDefaultLoggerObj OBJECT
-  DefaultLogger.cpp
+  TemplateProjectRealDefaultLoggerObj OBJECT
+  RealDefaultLogger.cpp
 )
 
 target_include_directories(
-  TemplateProjectDefaultLoggerObj
+  TemplateProjectRealDefaultLoggerObj
   PRIVATE
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
@@ -14,9 +14,6 @@ target_include_directories(
 
 # The objects become a part of the project shared library.
 set_target_properties(
-  TemplateProjectDefaultLoggerObj
+  TemplateProjectRealDefaultLoggerObj
   PROPERTIES POSITION_INDEPENDENT_CODE ON
 )
-
-add_subdirectory(real-default-logger)
-add_subdirectory(tests)

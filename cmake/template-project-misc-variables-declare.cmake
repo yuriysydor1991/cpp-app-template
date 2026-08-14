@@ -52,6 +52,32 @@ unset(_lib_name)
 
 message(STATUS "PROJECT_LIBRARY_NAME: ${PROJECT_LIBRARY_NAME}")
 
+# The library public C++ namespace. It is derived from the top level project
+# name, so every project derived from this template owns a unique one and an
+# application may depend on many derived libraries at once. Two libraries
+# sharing a namespace share their symbols too, and the loader then silently
+# binds every call of both of them into whichever library it resolved first.
+string(MAKE_C_IDENTIFIER "${CMAKE_PROJECT_NAME}" _lib_namespace)
+
+set(
+  PROJECT_LIB_NAMESPACE "${_lib_namespace}_${CMAKE_PROJECT_VERSION_MAJOR}"
+  CACHE STRING "The library public C++ namespace, unique per derived project"
+  FORCE
+)
+
+unset(_lib_namespace)
+
+message(STATUS "PROJECT_LIB_NAMESPACE: ${PROJECT_LIB_NAMESPACE}")
+
+# The directory the public headers are generated into. It is declared here and
+# not in the src/lib subdirectory, because the analyzer targets are created
+# before that subdirectory is added and have to reach those headers too.
+set(
+  PROJECT_LIB_PUBLIC_INCLUDE_DIR "${CMAKE_BINARY_DIR}/include"
+  CACHE PATH "The generated library public headers include directory"
+  FORCE
+)
+
 set(
   PROJECT_MAINTAINER "Your Name"
   CACHE STRING "Project maintainer name (used for the DEB package)"

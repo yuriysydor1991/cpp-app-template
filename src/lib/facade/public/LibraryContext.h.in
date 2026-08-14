@@ -1,5 +1,5 @@
-#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_LIBRARYCONTEXT_CLASS_H
-#define YOUR_CPP_APP_TEMPLATE_PROJECT_LIBRARYCONTEXT_CLASS_H
+#ifndef @PROJECT_LIB_NAMESPACE@_LIBRARYCONTEXT_CLASS_H
+#define @PROJECT_LIB_NAMESPACE@_LIBRARYCONTEXT_CLASS_H
 
 #include <memory>
 
@@ -7,7 +7,7 @@
  * @brief The facade interface namespace for the library.
  * Designed to give access to the library functionality.
  */
-namespace templatelib0
+namespace @PROJECT_LIB_NAMESPACE@
 {
 
 /**
@@ -33,6 +33,6 @@ class LibraryContext
 
 using LibraryContextPtr = LibraryContext::LibraryContextPtr;
 
-}  // namespace templatelib0
+}  // namespace @PROJECT_LIB_NAMESPACE@
 
-#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_LIBRARYCONTEXT_CLASS_H
+#endif  // @PROJECT_LIB_NAMESPACE@_LIBRARYCONTEXT_CLASS_H

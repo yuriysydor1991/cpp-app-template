@@ -70,7 +70,8 @@ pipeline {
         sh '''
           cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Debug -DENABLE_UNIT_TESTS=ON \
             -DENABLE_SANITIZERS=ON -DENABLE_CPPCHECK=ON \
-            -DMAX_LOG_LEVEL=5 -DENABLE_COMPONENT_TESTS=ON
+            -DMAX_LOG_LEVEL=5 -DENABLE_COMPONENT_TESTS=ON \
+            -DENABLE_INTEGRATION_TESTS=ON
         '''
       }
     }
@@ -117,15 +118,31 @@ pipeline {
     
     stage('Component Tests') {
       parallel {
-        stage('CTEST_DefaultLogger') { 
-          steps { 
-            sh 'cd $BUILDDIR && ctest -R "CTEST_DefaultLogger\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_DefaultLogger.junit.xml'
+        stage('CTEST_DefaultLogger') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "CTEST_DefaultLogger" --output-on-failure --output-junit $BDJUNITOUT/CTEST_DefaultLogger.junit.xml'
+          }
+        }
+        stage('CTEST_LibraryRealLogger') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "CTEST_LibraryRealLogger\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_LibraryRealLogger.junit.xml'
           }
         }
       }
       post { always { junit "$BUILDDIR/$BDJUNITOUT/CTEST_*.xml" } }
     }
-    
+
+    stage('Integration Tests') {
+      parallel {
+        stage('ITEST_many_libs') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "ITEST_many_libs\\." --output-on-failure --output-junit $BDJUNITOUT/ITEST_many_libs.junit.xml'
+          }
+        }
+      }
+      post { always { junit "$BUILDDIR/$BDJUNITOUT/ITEST_*.xml" } }
+    }
+
     stage('Debug configure (clang-tidy)') {
       steps {
         sh 'rm -fr $BUILDDIR'
@@ -421,7 +438,10 @@ pipeline {
     stage('Template: every declared test is registered in the pipeline') {
       steps {
         sh '''
-          declared="$(grep -rA3 "gtest_add_tests" --include=CMakeLists.txt src | grep -oE "TARGET[[:space:]]+[A-Za-z0-9_]+" | awk '{print $2}' | sort -u)"
+          declared="$( {
+            grep -rA3 "gtest_add_tests" --include=CMakeLists.txt src | grep -oE "TARGET[[:space:]]+[A-Za-z0-9_]+" | awk '{print $2}'
+            grep -rA1 "add_test(" --include=CMakeLists.txt src | grep -oE "NAME[[:space:]]+[A-Za-z0-9_]+" | awk '{print $2}'
+          } | sort -u)"
           status=0
           for t in $declared; do
             if ! grep -qF "$t" misc/Jenkinsfile; then

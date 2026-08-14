@@ -5,8 +5,9 @@
 
 #include "ILib.h"
 #include "LibraryContext.h"
+#include "project-lib-decls.h"
 
-namespace lib0impl
+namespace TEMPLATE_LIB_IMPL_NAMESPACE
 {
 
 /**
@@ -18,9 +19,9 @@ class LibFactory
 {
  public:
   using LibFactoryPtr = std::shared_ptr<LibFactory>;
-  using ILibPtr = templatelib0::ILibPtr;
-  using LibraryContextPtr = templatelib0::LibraryContextPtr;
-  using LibraryContext = templatelib0::LibraryContext;
+  using ILibPtr = TEMPLATE_LIB_NAMESPACE::ILibPtr;
+  using LibraryContextPtr = TEMPLATE_LIB_NAMESPACE::LibraryContextPtr;
+  using LibraryContext = TEMPLATE_LIB_NAMESPACE::LibraryContext;
 
   virtual ~LibFactory() = default;
   LibFactory() = default;
@@ -57,6 +58,6 @@ class LibFactory
 
 using LibFactoryPtr = LibFactory::LibFactoryPtr;
 
-}  // namespace lib0impl
+}  // namespace TEMPLATE_LIB_IMPL_NAMESPACE
 
 #endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_LIBFACTORY_CLASS_H

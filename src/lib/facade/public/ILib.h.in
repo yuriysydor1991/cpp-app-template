@@ -1,5 +1,5 @@
-#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_ILIB_CLASS_H
-#define YOUR_CPP_APP_TEMPLATE_PROJECT_ILIB_CLASS_H
+#ifndef @PROJECT_LIB_NAMESPACE@_ILIB_CLASS_H
+#define @PROJECT_LIB_NAMESPACE@_ILIB_CLASS_H
 
 #include <memory>
 
@@ -9,7 +9,7 @@
  * @brief The implementation part of the application library.
  * Hides all the guts of particular implementation code.
  */
-namespace templatelib0
+namespace @PROJECT_LIB_NAMESPACE@
 {
 
 /**
@@ -44,6 +44,6 @@ class ILib
 
 using ILibPtr = ILib::ILibPtr;
 
-}  // namespace templatelib0
+}  // namespace @PROJECT_LIB_NAMESPACE@
 
-#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_ILIB_CLASS_H
+#endif  // @PROJECT_LIB_NAMESPACE@_ILIB_CLASS_H

@@ -13,6 +13,7 @@ include(template-project-enabler-function)
 include(template-project-git-enabler)
 
 include(template-project-GTest-enabler)
+include(template-project-integration-tests-enabler)
 include(template-project-clang-format-target)
 
 # packagers

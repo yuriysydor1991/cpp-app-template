@@ -109,7 +109,7 @@ pipeline {
       parallel {
         stage('CTEST_DefaultLogger') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_DefaultLogger\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_DefaultLogger.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_DefaultLogger" --output-on-failure --output-junit $BDJUNITOUT/CTEST_DefaultLogger.junit.xml'
           }
         }
         stage('CTEST_log') {

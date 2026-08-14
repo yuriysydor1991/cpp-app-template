@@ -385,7 +385,17 @@ pipeline {
             # Some servers reject or mishandle HEAD - retry the URL with a GET.
             code=$(curl $CURLOPTS --request GET --write-out '%{http_code}' "$url" 2>/dev/null) || true
             case "$code" in
-              2*|3*) echo "  OK      $url ($code on GET)" ;;
+              2*|3*) echo "  OK      $url ($code on GET)" ; continue ;;
+            esac
+
+            # A git over HTTPS clone URL serves no browsable page, so the last
+            # chance for an http(s) one is to reach it as a git remote.
+            if git ls-remote "$url" > /dev/null 2>&1; then
+              echo "  OK      $url (reachable as a git remote)"
+              continue
+            fi
+
+            case "$code" in
               401|403|418|429)
                 echo "  WARN    $url ($code - the server refuses the automated requests)"
                 echo "$url $code" >> "$WARNLIST"

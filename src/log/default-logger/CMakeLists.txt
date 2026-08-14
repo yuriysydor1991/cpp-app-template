@@ -18,4 +18,5 @@ target_link_libraries(
   TemplateProjectDefaultLoggerObj
 )
 
+add_subdirectory(real-default-logger)
 add_subdirectory(tests)

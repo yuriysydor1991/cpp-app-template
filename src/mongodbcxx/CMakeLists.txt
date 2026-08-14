@@ -23,10 +23,14 @@ target_include_directories(
     ${BSONCXX_INCLUDE_DIRS}
 )
 
+# The imported targets are linked and not the plain mongocxx and bsoncxx
+# library names, because since the C++ driver 4.4.0 the library file names
+# carry the ABI version number (libmongocxx1.so, libbsoncxx1.so) and the plain
+# names are not resolvable by the linker anymore.
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
   TemplateMongoDBCppConnObj
-  mongocxx bsoncxx
+  mongo::mongocxx_shared mongo::bsoncxx_shared
 )
 
 add_subdirectory(helpers)

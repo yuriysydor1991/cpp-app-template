@@ -19,6 +19,46 @@
 #define LOG_INIT_DEFAULTS() default_logger::DefaultLogger::init();
 #endif  // LOG_INIT_DEFAULTS
 
+#ifndef LOG_REAL_LOGGER
+/**
+ * @brief Returns the logger::ILoggerPtr real logger instance which stands
+ * behind all the logging macroses. Pass it into a `lib`-style project through
+ * it's LOG_INIT_REAL_LOGGER macro to make the whole binary log into the very
+ * same logger instance.
+ */
+#define LOG_REAL_LOGGER() default_logger::DefaultLogger::real_logger()
+#endif  // LOG_REAL_LOGGER
+
+#ifndef LOG_INIT_REAL_LOGGER
+/**
+ * @brief The logging init macro which adopts the already existing real logger
+ * instance instead of creating an own one. Use it in a `lib`-style project
+ * initialization routine to accept the LOG_REAL_LOGGER value of the project
+ * which uses that library.
+ *
+ * It accepts any logger::ILogger implementation, so it is also the place to
+ * hand an own logging library wrapper over to the logging macroses.
+ */
+#define LOG_INIT_REAL_LOGGER(realLogger) \
+  default_logger::DefaultLogger::real_logger(realLogger);
+#endif  // LOG_INIT_REAL_LOGGER
+
+#ifndef LOG_INIT_DEFAULTS_IF_OWN
+/**
+ * @brief The logging init macro which applies the default logging settings
+ * only while no real logger instance was adopted through the
+ * LOG_INIT_REAL_LOGGER macro. Use it instead of the LOG_INIT_DEFAULTS in a
+ * `lib`-style project initialization routine to keep the log file, level and
+ * printing settings of the adopted logger instance untouched.
+ */
+#define LOG_INIT_DEFAULTS_IF_OWN()                               \
+  {                                                              \
+    if (!default_logger::DefaultLogger::real_logger_adopted()) { \
+      LOG_INIT_DEFAULTS();                                       \
+    }                                                            \
+  }
+#endif  // LOG_INIT_DEFAULTS_IF_OWN
+
 #ifndef LOG_BODY
 /**
  * @brief The internal logger macro to define the general logging code body.

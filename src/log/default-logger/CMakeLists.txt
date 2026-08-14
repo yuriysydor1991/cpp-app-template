@@ -6,10 +6,16 @@ add_library(
 )
 
 target_include_directories(
-  TemplateProjectDefaultLoggerObj 
+  TemplateProjectDefaultLoggerObj
   PRIVATE
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
+)
+
+# The objects become a part of the project shared library as well.
+set_target_properties(
+  TemplateProjectDefaultLoggerObj
+  PROPERTIES POSITION_INDEPENDENT_CODE ON
 )
 
 target_link_libraries(

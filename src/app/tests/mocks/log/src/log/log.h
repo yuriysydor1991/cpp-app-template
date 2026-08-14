@@ -3,6 +3,10 @@
 
 #include <gmock/gmock.h>
 
+#include <memory>
+
+#include "src/log/ILogger.h"
+
 class logMock
 {
  public:
@@ -13,6 +17,11 @@ class logMock
   inline static testing::MockFunction<void()> LOG_INIT_DEFAULTS;
   inline static testing::MockFunction<void(const std::string& filepath)>
       LOG_INIT_PATH;
+
+  // The real logger getter is a plain value and not a mock function, because
+  // the mocks live as long as the whole test process does and a gmock object
+  // which outlives the gmock internals crashes during the process exit.
+  inline static logger::ILoggerPtr realLogger;
 
   inline static testing::MockFunction<void(const std::string&)> LOGE;
   inline static testing::MockFunction<void(const std::string&)> LOGI;
@@ -26,6 +35,7 @@ class logMock
 #define LOG_INIT_DEFAULTS() logMock::LOG_INIT_DEFAULTS.AsStdFunction()();
 #define LOG_INIT_PATH(filepath) \
   logMock::LOG_INIT_PATH.AsStdFunction()(filepath);
+#define LOG_REAL_LOGGER() logMock::realLogger
 
 #define LOGE(msg)                                             \
   {                                                           \

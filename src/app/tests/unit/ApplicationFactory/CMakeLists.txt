@@ -14,9 +14,12 @@ target_include_directories(
   PRIVATE ${APP_MOCKS_ROOT}/ApplicationHelpPrinter
   PRIVATE ${APP_MOCKS_ROOT}/ApplicationVersionPrinter
   PRIVATE ${APP_MOCKS_ROOT}/CommandLineParser
+  PRIVATE ${APP_MOCKS_ROOT}/LibraryFacade
   PRIVATE ${APP_MOCKS_ROOT}/project-global-decls
+  PRIVATE ${GENERAL_MOCKS_ROOT}/LibraryContext
   PRIVATE ${GENERAL_MOCKS_ROOT}/log
   PRIVATE ${CMAKE_SOURCE_DIR}
+  PRIVATE ${CMAKE_SOURCE_DIR}/src/lib/facade/public
 )
 
 target_link_libraries(

@@ -3,6 +3,7 @@
 #include <cassert>
 #include <memory>
 
+#include "LibraryFacade.h"
 #include "src/app/Application.h"
 #include "src/app/ApplicationContext.h"
 #include "src/app/ApplicationHelpPrinter.h"
@@ -102,6 +103,12 @@ int ApplicationFactory::run(int& gargc, char**& gargv)
   } else {
     LOG_INIT_PATH(custom_log);
   }
+
+  // The library part carries an own copy of the logging subsystem, so the just
+  // initialized application logger instance is handed over to it. Without that
+  // call the library would log into an own default log file instead of the one
+  // chosen here and the project logs would be split in two.
+  templatelib0::LibraryFacade::init_logger(LOG_REAL_LOGGER());
 
   std::shared_ptr<ApplicationContext> ctx = create_context(gargc, gargv);
 

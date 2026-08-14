@@ -4,7 +4,10 @@
 #include <memory>
 #include <string>
 
-#include "src/log/severity-macro-consts.h"
+// The header is installed together with the library public ones, so the
+// severities are included by the neighbour file name and not by the project
+// source root relative path which exists during the build only.
+#include "severity-macro-consts.h"
 
 /**
  * @brief The implementation independent part of the logging subsystem

@@ -7,13 +7,30 @@ add_library(
   SHARED
 )
 
+# The public LibraryFacade.h header declares the logger instance adoption, so
+# the logging interface headers are a part of the library public ones. They sit
+# in the src/log directory during the build and land next to the facade ones
+# after the installation.
 target_include_directories(
   ${PROJECT_LIBRARY_NAME}
   PRIVATE ${CMAKE_SOURCE_DIR}
   PRIVATE ${CMAKE_BINARY_DIR}
   PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/facade/public>
+    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src/log>
     $<INSTALL_INTERFACE:include/${PROJECT_LIBRARY_NAME}>
+)
+
+# The whole logging implementation is a part of the library itself. Without it
+# the installed library carries unresolved default_logger symbols and can not
+# be linked by the application which uses it. The objects are taken directly
+# instead of being linked, so the internal logger targets stay out of the
+# installed library export set.
+target_sources(
+  ${PROJECT_LIBRARY_NAME}
+  PRIVATE
+    $<TARGET_OBJECTS:TemplateProjectDefaultLoggerObj>
+    $<TARGET_OBJECTS:TemplateProjectRealDefaultLoggerObj>
 )
 
 set_target_properties(
@@ -33,6 +50,7 @@ install(
 
 add_subdirectory(facade)
 add_subdirectory(libmain)
+add_subdirectory(tests)
 
 include(lib-cmake-module-gen)
 

@@ -49,10 +49,10 @@ void FreeGlutIniter::init()
 
 int FreeGlutIniter::run(std::shared_ptr<app::ApplicationContext> ctx)
 {
-  glutInit(&ctx->argc, ctx->argv);
+  glutInit(&ctx->get_argc(), ctx->get_argv());
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
   glutInitWindowSize(W_DEFAULT_WIDTH, W_DEFAULT_HEIGHT);
-  glutCreateWindow(ctx->argv[0]);
+  glutCreateWindow(ctx->get_argv()[0]);
 
   init();
 

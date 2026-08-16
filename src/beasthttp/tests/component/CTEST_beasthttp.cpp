@@ -67,7 +67,7 @@ TEST_F(CTEST_beasthttp, bootstrap_success)
   actx->set_http_address(tests_address);
   actx->set_http_port(used_http_port);
 
-  EXPECT_CALL(*actx, stop()).Times(1).WillOnce(Return(true));
+  EXPECT_CALL(*actx, get_stop()).Times(1).WillOnce(Return(true));
 
   std::thread httpThread{[this, actx]() { EXPECT_TRUE(http->serve(actx)); }};
 
@@ -86,12 +86,12 @@ TEST_F(CTEST_beasthttp, accept_wait_success)
   actx->set_http_address(tests_address);
   actx->set_http_port(used_http_port);
 
-  EXPECT_CALL(*actx, stop()).Times(1).WillOnce(Invoke([&]() -> bool {
-    EXPECT_CALL(*actx, stop()).Times(1).WillOnce(Return(true));
+  EXPECT_CALL(*actx, get_stop()).Times(1).WillOnce(Invoke([&]() -> bool {
+    EXPECT_CALL(*actx, get_stop()).Times(1).WillOnce(Return(true));
     signal_ready();
     return false;
   }));
-  EXPECT_CALL(*actx, stop(_)).Times(0);
+  EXPECT_CALL(*actx, set_stop(_)).Times(0);
 
   std::thread httpThread{[this, actx]() { EXPECT_TRUE(http->serve(actx)); }};
 
@@ -121,13 +121,13 @@ TEST_F(CTEST_beasthttp, multithread_accept_wait_success)
   actx->set_http_address(tests_address);
   actx->set_http_port(used_http_port);
 
-  EXPECT_CALL(*actx, stop())
+  EXPECT_CALL(*actx, get_stop())
       .Times(expected_reps)
       .WillRepeatedly(Invoke([&]() -> bool {
         signal_ready();
         return false;
       }));
-  EXPECT_CALL(*actx, stop(_)).Times(0);
+  EXPECT_CALL(*actx, set_stop(_)).Times(0);
 
   std::thread httpThread{[this, actx]() { EXPECT_TRUE(http->serve(actx)); }};
 
@@ -153,7 +153,7 @@ TEST_F(CTEST_beasthttp, multithread_accept_wait_success)
 
   requestersThs.clear();
 
-  EXPECT_CALL(*actx, stop()).Times(1).WillRepeatedly(Return(true));
+  EXPECT_CALL(*actx, get_stop()).Times(1).WillRepeatedly(Return(true));
 
   auto response = http_request(used_http_port);
 

@@ -3,7 +3,6 @@
 
 #include <gmock/gmock.h>
 
-#include <atomic>
 #include <string>
 #include <vector>
 
@@ -34,8 +33,8 @@ class ApplicationContext
 
   const std::vector<std::string>& get_errors() const { return merrors; }
 
-  bool get_stop() const { return mstop.load(); }
-  void set_stop(const bool newValue) { mstop.store(newValue); }
+  MOCK_METHOD(bool, get_stop, (), (const));
+  MOCK_METHOD(void, set_stop, (const bool newValue));
 
   const std::string& get_http_address() const { return mhttp_address; }
   void set_http_address(const std::string& newValue)
@@ -59,7 +58,6 @@ class ApplicationContext
   bool mprint_help_and_exit{false};
   bool mprint_version_and_exit{false};
   std::vector<std::string> merrors;
-  std::atomic_bool mstop{false};
   std::string mhttp_address;
   unsigned short mhttp_port;
 };

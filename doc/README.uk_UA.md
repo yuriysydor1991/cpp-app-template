@@ -88,6 +88,7 @@
 ## Штучний інтелект / LLM
 
 - гілка `appCURLClaude` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appCURLClaude), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appCURLClaude)] яка містить загальні інфраструктурні класи програми для генераці одинарного бінарного виконуваного файлу, що ставить [Claude](https://www.claude.com/) задане у командному рядку питання через [Anthropic API](https://platform.claude.com/docs/en/api/overview) і виводить отриману відповідь. Anthropic не постачає офіційного SDK для C++, тому гілка звертається до API напряму за допомогою бібліотек [libcurl](https://curl.se/libcurl/) та [nlohmann JSON](https://github.com/nlohmann/json) і не містить жодної сторонньої обгортки API.
+- гілка `appCURLChatGPT` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appCURLChatGPT), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appCURLChatGPT)] яка містить загальні інфраструктурні класи програми для генерації одинарного бінарного виконуваного файлу, що ставить [ChatGPT](https://chatgpt.com/) задане у командному рядку питання через точку доступу responses [OpenAI API](https://developers.openai.com/api/docs) і виводить отриману відповідь. OpenAI не постачає офіційного SDK для C++, тому гілка звертається до API напряму за допомогою бібліотек [libcurl](https://curl.se/libcurl/) та [nlohmann JSON](https://github.com/nlohmann/json) і не містить жодної сторонньої обгортки API.
 
 ## System / DBus
 

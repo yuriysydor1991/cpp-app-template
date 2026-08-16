@@ -21,7 +21,7 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  if (ctx->openai_question.empty()) {
+  if (ctx->get_openai_question().empty()) {
     LOGI("No question provided");
 
     std::cout << "Ask the ChatGPT about something by providing a question "
@@ -36,9 +36,9 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
 
   assert(controller != nullptr);
 
-  const bool tokenIsSet = ctx->openai_token.empty()
+  const bool tokenIsSet = ctx->get_openai_token().empty()
                               ? controller->set_token_from_env()
-                              : controller->set_token(ctx->openai_token);
+                              : controller->set_token(ctx->get_openai_token());
 
   if (!tokenIsSet) {
     ctx->push_error("No valid OpenAI API token provided. Give it with the " +
@@ -52,7 +52,7 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
   }
 
   const std::string answer =
-      controller->ask(ctx->openai_question, ctx->openai_model);
+      controller->ask(ctx->get_openai_question(), ctx->get_openai_model());
 
   if (answer.empty()) {
     ctx->push_error("No answer received from the ChatGPT.");

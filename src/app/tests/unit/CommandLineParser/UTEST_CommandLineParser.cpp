@@ -83,9 +83,9 @@ TEST_F(UTEST_CommandLineParser, help_short)
 
   EXPECT_TRUE(parser->parse_args(appctx));
 
-  EXPECT_TRUE(appctx->print_help_and_exit);
-  EXPECT_FALSE(appctx->print_version_and_exit);
-  EXPECT_TRUE(appctx->errors.empty());
+  EXPECT_TRUE(appctx->get_print_help_and_exit());
+  EXPECT_FALSE(appctx->get_print_version_and_exit());
+  EXPECT_TRUE(appctx->get_errors().empty());
 }
 
 TEST_F(UTEST_CommandLineParser, help_long)
@@ -96,9 +96,9 @@ TEST_F(UTEST_CommandLineParser, help_long)
 
   EXPECT_TRUE(parser->parse_args(appctx));
 
-  EXPECT_TRUE(appctx->print_help_and_exit);
-  EXPECT_FALSE(appctx->print_version_and_exit);
-  EXPECT_TRUE(appctx->errors.empty());
+  EXPECT_TRUE(appctx->get_print_help_and_exit());
+  EXPECT_FALSE(appctx->get_print_version_and_exit());
+  EXPECT_TRUE(appctx->get_errors().empty());
 }
 
 TEST_F(UTEST_CommandLineParser, version_short)
@@ -109,9 +109,9 @@ TEST_F(UTEST_CommandLineParser, version_short)
 
   EXPECT_TRUE(parser->parse_args(appctx));
 
-  EXPECT_FALSE(appctx->print_help_and_exit);
-  EXPECT_TRUE(appctx->print_version_and_exit);
-  EXPECT_TRUE(appctx->errors.empty());
+  EXPECT_FALSE(appctx->get_print_help_and_exit());
+  EXPECT_TRUE(appctx->get_print_version_and_exit());
+  EXPECT_TRUE(appctx->get_errors().empty());
 }
 
 TEST_F(UTEST_CommandLineParser, version_long)
@@ -122,9 +122,9 @@ TEST_F(UTEST_CommandLineParser, version_long)
 
   EXPECT_TRUE(parser->parse_args(appctx));
 
-  EXPECT_FALSE(appctx->print_help_and_exit);
-  EXPECT_TRUE(appctx->print_version_and_exit);
-  EXPECT_TRUE(appctx->errors.empty());
+  EXPECT_FALSE(appctx->get_print_help_and_exit());
+  EXPECT_TRUE(appctx->get_print_version_and_exit());
+  EXPECT_TRUE(appctx->get_errors().empty());
 }
 
 TEST_F(UTEST_CommandLineParser, unknown_flag)
@@ -140,9 +140,9 @@ TEST_F(UTEST_CommandLineParser, unknown_flag)
 
   EXPECT_FALSE(parser->parse_args(appctx));
 
-  EXPECT_TRUE(appctx->print_help_and_exit);
-  EXPECT_FALSE(appctx->print_version_and_exit);
-  EXPECT_TRUE(appctx->errors.empty());
+  EXPECT_TRUE(appctx->get_print_help_and_exit());
+  EXPECT_FALSE(appctx->get_print_version_and_exit());
+  EXPECT_TRUE(appctx->get_errors().empty());
 }
 
 TEST_F(UTEST_CommandLineParser, token_long)
@@ -155,10 +155,10 @@ TEST_F(UTEST_CommandLineParser, token_long)
 
   EXPECT_TRUE(parser->parse_args(appctx));
 
-  EXPECT_EQ(appctx->openai_token, token);
-  EXPECT_TRUE(appctx->openai_question.empty());
-  EXPECT_FALSE(appctx->print_help_and_exit);
-  EXPECT_FALSE(appctx->print_version_and_exit);
+  EXPECT_EQ(appctx->get_openai_token(), token);
+  EXPECT_TRUE(appctx->get_openai_question().empty());
+  EXPECT_FALSE(appctx->get_print_help_and_exit());
+  EXPECT_FALSE(appctx->get_print_version_and_exit());
 }
 
 TEST_F(UTEST_CommandLineParser, token_short)
@@ -171,7 +171,7 @@ TEST_F(UTEST_CommandLineParser, token_short)
 
   EXPECT_TRUE(parser->parse_args(appctx));
 
-  EXPECT_EQ(appctx->openai_token, token);
+  EXPECT_EQ(appctx->get_openai_token(), token);
 }
 
 TEST_F(UTEST_CommandLineParser, question_long)
@@ -184,8 +184,8 @@ TEST_F(UTEST_CommandLineParser, question_long)
 
   EXPECT_TRUE(parser->parse_args(appctx));
 
-  EXPECT_EQ(appctx->openai_question, question);
-  EXPECT_TRUE(appctx->openai_token.empty());
+  EXPECT_EQ(appctx->get_openai_question(), question);
+  EXPECT_TRUE(appctx->get_openai_token().empty());
 }
 
 TEST_F(UTEST_CommandLineParser, question_short)
@@ -198,7 +198,7 @@ TEST_F(UTEST_CommandLineParser, question_short)
 
   EXPECT_TRUE(parser->parse_args(appctx));
 
-  EXPECT_EQ(appctx->openai_question, question);
+  EXPECT_EQ(appctx->get_openai_question(), question);
 }
 
 TEST_F(UTEST_CommandLineParser, model_long)
@@ -211,7 +211,7 @@ TEST_F(UTEST_CommandLineParser, model_long)
 
   EXPECT_TRUE(parser->parse_args(appctx));
 
-  EXPECT_EQ(appctx->openai_model, model);
+  EXPECT_EQ(appctx->get_openai_model(), model);
 }
 
 TEST_F(UTEST_CommandLineParser, model_short)
@@ -224,7 +224,7 @@ TEST_F(UTEST_CommandLineParser, model_short)
 
   EXPECT_TRUE(parser->parse_args(appctx));
 
-  EXPECT_EQ(appctx->openai_model, model);
+  EXPECT_EQ(appctx->get_openai_model(), model);
 }
 
 TEST_F(UTEST_CommandLineParser, token_without_data)
@@ -238,7 +238,7 @@ TEST_F(UTEST_CommandLineParser, token_without_data)
 
   EXPECT_FALSE(parser->parse_args(appctx));
 
-  EXPECT_TRUE(appctx->openai_token.empty());
+  EXPECT_TRUE(appctx->get_openai_token().empty());
 }
 
 TEST_F(UTEST_CommandLineParser, question_without_data)
@@ -252,5 +252,5 @@ TEST_F(UTEST_CommandLineParser, question_without_data)
 
   EXPECT_FALSE(parser->parse_args(appctx));
 
-  EXPECT_TRUE(appctx->openai_question.empty());
+  EXPECT_TRUE(appctx->get_openai_question().empty());
 }

@@ -23,7 +23,7 @@ int WxWidgetsIniter::run(std::shared_ptr<app::ApplicationContext> nactx)
 
   LOGD("Starting the wxWidgets application");
 
-  return launch(actx->argc, actx->argv);
+  return launch(actx->get_argc(), actx->get_argv());
 }
 
 int WxWidgetsIniter::launch(int& argc, char**& argv)

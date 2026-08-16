@@ -81,7 +81,7 @@ void SDL2Initer::event_loop()
     return;
   }
 
-  while (!sdl2Context->appCtx->stop()) {
+  while (!sdl2Context->appCtx->get_stop()) {
     events->handle(sdl2Context);
 
     painter3d->paint(sdl2Context);

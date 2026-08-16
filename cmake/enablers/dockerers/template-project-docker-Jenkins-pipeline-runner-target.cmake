@@ -49,7 +49,7 @@ set(
 
 set(
   JENKINS_PIPELINE_DOCKER_MAX_CORES
-  4
+  10
   CACHE STRING 
   "The Jenkins pipeline docker containers max allowed CPU cores"
 )

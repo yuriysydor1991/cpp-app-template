@@ -8,7 +8,7 @@
 namespace app
 {
 
-struct ApplicationContext;
+class ApplicationContext;
 
 /**
  * @brief Class interface to interface the db connection methods.

@@ -4,7 +4,11 @@ if (NOT ENABLE_COMPONENT_TESTS)
   return()
 endif()
 
-find_package(Boost REQUIRED COMPONENTS system thread)
+# Boost.System is header only since the 1.69 release, so the modern Boost
+# packages ship no CMake target of it's own for it, while the older ones
+# still need it linked. Hence the optional request and the guarded link
+# below.
+find_package(Boost REQUIRED COMPONENTS thread OPTIONAL_COMPONENTS system)
 
 add_executable(
   CTEST_beasthttp  
@@ -35,8 +39,12 @@ target_include_directories(
 target_link_libraries(
   CTEST_beasthttp
   GTest::gtest_main GTest::gmock
-  Boost::system Boost::thread
+  Boost::thread
 )
+
+if (TARGET Boost::system)
+  target_link_libraries(CTEST_beasthttp Boost::system)
+endif()
 
 include(GoogleTest)
 

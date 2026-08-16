@@ -21,12 +21,22 @@ package Applications-hierarchy {
 }
 
 class ApplicationContext {
-  +int& argc
-  +char**& argv
-  +bool print_help_and_exit{false}
-  +bool print_version_and_exit{false}
-  +std::vector<std::string> errors
+  -int& margc
+  -char**& margv
+  -bool mprint_help_and_exit{false}
+  -bool mprint_version_and_exit{false}
+  -std::vector<std::string> merrors
+  -std::atomic_bool mstop{false}
+  +int& get_argc() const
+  +char**& get_argv() const
+  +bool get_print_help_and_exit() const
+  +void set_print_help_and_exit(const bool newValue)
+  +bool get_print_version_and_exit() const
+  +void set_print_version_and_exit(const bool newValue)
+  +const std::vector<std::string>& get_errors() const
   +void push_error(const std::string& errorDescription)
+  +bool get_stop() const
+  +void set_stop(const bool newValue)
 }
 
 package Facade {

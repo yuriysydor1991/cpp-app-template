@@ -66,7 +66,7 @@ TEST_F(CTEST_WinUI3, run_launches_app_and_forwards_arguments)
 
 TEST_F(CTEST_WinUI3, run_forwards_the_current_argument_count)
 {
-  argc = 1;  // ctx->argc is a reference to this fixture member
+  argc = 1;  // ctx->get_argc() is a reference to this fixture member
 
   EXPECT_EQ(initer.run(ctx), 0);
 

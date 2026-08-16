@@ -21,9 +21,15 @@ class CURLController
 
   MOCK_METHOD(download_buffer, download, (const std::string& url));
 
+  MOCK_METHOD(download_buffer, download,
+              (const std::string& url,
+               const std::vector<std::string>& headers));
+
   MOCK_METHOD(download_buffer, post,
               (const std::string& url, const std::string& body,
                const std::vector<std::string>& headers));
+
+  MOCK_METHOD(bool, is_url_alive, (const std::string& url));
 
   MOCK_METHOD(bool, last_response_successfull, (), (const));
 

@@ -32,7 +32,7 @@ int Qt6Initer::run(std::shared_ptr<app::ApplicationContext> actx)
 
   // QVulkanInstance (Qt6::Gui) obtains the platform Vulkan instance through the
   // platform integration, which requires a living Q(Gui)Application.
-  QApplication app(actx->argc, actx->argv);
+  QApplication app(actx->get_argc(), actx->get_argv());
 
   qtvulkani::QtVulkanControllerPtr vulkan =
       qtvulkani::QtVulkanController::create();

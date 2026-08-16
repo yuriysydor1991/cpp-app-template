@@ -105,10 +105,23 @@ CURLController::download_buffer& CURLController::get() { return cbuff; }
 
 long CURLController::last_response_code() const { return responseCode; }
 
+bool CURLController::last_response_successfull() const
+{
+  if (!responseReceived) {
+    return false;
+  }
+
+  // A protocol that carries no statuses (the file one, for example) reports a
+  // zero code, so a received answer is the success proof by itself.
+  return responseCode == 0L || (responseCode >= HTTP_FIRST_SUCCESS_STATUS &&
+                                responseCode <= HTTP_LAST_SUCCESS_STATUS);
+}
+
 bool CURLController::prepare(const std::string& url)
 {
   cbuff.clear();
   responseCode = 0L;
+  responseReceived = false;
 
   assert(!url.empty());
 
@@ -143,6 +156,8 @@ CURLcode CURLController::perform()
     cbuff.clear();
     return res;
   }
+
+  responseReceived = true;
 
   curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &responseCode);
 

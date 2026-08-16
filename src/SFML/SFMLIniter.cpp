@@ -63,7 +63,7 @@ void SFMLIniter::event_loop()
     throw std::runtime_error("No event handler given");
   }
 
-  while (!sfmlContext->appCtx->stop() && sfmlContext->window->isOpen()) {
+  while (!sfmlContext->appCtx->get_stop() && sfmlContext->window->isOpen()) {
     events->handle(sfmlContext);
 
     painter2d->paint(sfmlContext);

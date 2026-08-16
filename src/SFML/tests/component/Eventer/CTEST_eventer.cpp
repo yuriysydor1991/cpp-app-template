@@ -49,11 +49,11 @@ TEST_F(CTEST_eventer, closed_event_routed_to_closed_handler_stops_loop)
 
   EXPECT_NE(handler, nullptr);
 
-  EXPECT_FALSE(appCtx->stop());
+  EXPECT_FALSE(appCtx->get_stop());
 
   EXPECT_TRUE(handler->handle(event, sfmlCtx));
 
-  EXPECT_TRUE(appCtx->stop());
+  EXPECT_TRUE(appCtx->get_stop());
 }
 
 TEST_F(CTEST_eventer, unhandled_event_does_not_alter_stop_flag)
@@ -64,7 +64,7 @@ TEST_F(CTEST_eventer, unhandled_event_does_not_alter_stop_flag)
   std::shared_ptr<IEventHandler> handler = factory->create(event, sfmlCtx);
 
   EXPECT_EQ(handler, nullptr);
-  EXPECT_FALSE(appCtx->stop());
+  EXPECT_FALSE(appCtx->get_stop());
 }
 
 TEST_F(CTEST_eventer, multiple_closed_events_keep_stop_flag_set)
@@ -79,5 +79,5 @@ TEST_F(CTEST_eventer, multiple_closed_events_keep_stop_flag_set)
     EXPECT_TRUE(handler->handle(event, sfmlCtx));
   }
 
-  EXPECT_TRUE(appCtx->stop());
+  EXPECT_TRUE(appCtx->get_stop());
 }

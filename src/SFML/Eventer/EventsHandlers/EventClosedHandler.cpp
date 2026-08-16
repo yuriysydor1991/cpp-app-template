@@ -18,7 +18,7 @@ bool EventClosedHandler::handle([[maybe_unused]] sf::Event& event,
     return false;
   }
 
-  sfmlContext->appCtx->stop(true);
+  sfmlContext->appCtx->set_stop(true);
 
   return true;
 }

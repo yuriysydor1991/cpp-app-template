@@ -3,25 +3,47 @@
 
 #include <gmock/gmock.h>
 
+#include <atomic>
 #include <string>
 #include <vector>
 
 namespace app
 {
 
-struct ApplicationContext
+class ApplicationContext
 {
  public:
-  int& argc;
-  char**& argv;
-
   ApplicationContext(int& gargc, char**& gargv);
 
-  bool print_help_and_exit{false};
-  bool print_version_and_exit{false};
-  std::vector<std::string> errors;
+  int& get_argc() const { return margc; }
+  char**& get_argv() const { return margv; }
+
+  bool get_print_help_and_exit() const { return mprint_help_and_exit; }
+  void set_print_help_and_exit(const bool newValue)
+  {
+    mprint_help_and_exit = newValue;
+  }
+
+  bool get_print_version_and_exit() const { return mprint_version_and_exit; }
+  void set_print_version_and_exit(const bool newValue)
+  {
+    mprint_version_and_exit = newValue;
+  }
+
+  const std::vector<std::string>& get_errors() const { return merrors; }
+
+  bool get_stop() const { return mstop.load(); }
+  void set_stop(const bool newValue) { mstop.store(newValue); }
 
   MOCK_METHOD(void, push_error, (const std::string& errorDescription));
+
+ private:
+  int& margc;
+  char**& margv;
+  bool mprint_help_and_exit{false};
+  bool mprint_version_and_exit{false};
+  std::vector<std::string> merrors;
+  std::atomic_bool mstop{false};
 };
 
 }  // namespace app

@@ -132,14 +132,16 @@ class CURLController
 
   inline static constexpr const download_buffer::size_type
       DEFAULT_BUFF_RESERVE = 10240U;
-  inline static unsigned long long DEFAULT_TIMEOUT = 30L;
-  inline static unsigned long long DEFAULT_CONNECTTIMEOUT = 10L;
-  inline static unsigned long long DEFAULT_LOWSPEEDSECS = 10L;
-  inline static unsigned long long DEFAULT_LOWSPEEDLIMIT = 1L;
+  /// @brief The libcurl reads every option below as a long one, so the
+  /// constants carry that very type and no other.
+  inline static constexpr const long DEFAULT_TIMEOUT = 30L;
+  inline static constexpr const long DEFAULT_CONNECTTIMEOUT = 10L;
+  inline static constexpr const long DEFAULT_LOWSPEEDSECS = 10L;
+  inline static constexpr const long DEFAULT_LOWSPEEDLIMIT = 1L;
 
   /// @brief A POST request may wait way longer than a plain download, because
   /// a server generating an answer keeps the connection silent meanwhile.
-  inline static unsigned long long DEFAULT_POST_TIMEOUT = 300L;
+  inline static constexpr const long DEFAULT_POST_TIMEOUT = 300L;
 
   /// @brief The lowest HTTP status code that reports a failure, so every
   /// status below it means a reachable URL.

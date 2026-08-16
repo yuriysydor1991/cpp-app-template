@@ -20,9 +20,12 @@ class CommandLineParser
   CommandLineParser() = default;
 
   /**
-   * @brief Parses given argc and argv fields of a given application context.
-   * In case of any error tries to store it's description into the ctx context
-   * and sets value of the print_help_and_exit field of the ctx into true.
+   * @brief Parses the command line arguments provided by the given application
+   * context ApplicationContext::get_argc and ApplicationContext::get_argv
+   * accessors. In case of any error tries to store it's description into the
+   * ctx context through the ApplicationContext::push_error method and raises
+   * the ctx help printing flag with the
+   * ApplicationContext::set_print_help_and_exit setter.
    *
    * @param ctx The application context that needs to be parsed.
    *

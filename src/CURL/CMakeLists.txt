@@ -18,3 +18,5 @@ target_link_libraries(
   TemplateProjectCURLControllerObj
   CURL::libcurl
 )
+
+add_subdirectory(tests)

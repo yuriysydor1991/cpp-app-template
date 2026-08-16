@@ -1,6 +1,7 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATIONCONTEXT_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATIONCONTEXT_CLASS_H
 
+#include <atomic>
 #include <string>
 #include <vector>
 
@@ -19,60 +20,133 @@ namespace app
  * The ApplicationHelpPrinter class instance is printing command line help
  * for available command line parameters that may be stored in
  * the current class instance (if registered properly).
+ *
+ * All the data members are private ones, so the held data is reachable through
+ * the appropriate access methods only.
  */
-struct ApplicationContext
+class ApplicationContext
 {
-  /// @brief Command line arguments count passed by the OS through the main
-  /// executable function.
-  int& argc;
-
-  /// @brief The command line arguments array passed by the OS through
-  /// the main executable function.
-  char**& argv;
-
+ public:
   /**
    * @brief An ApplicationContext constructor.
    *
    * @param gargc Command line arguments count passed by the OS through the main
-   * executable function that will be referenced in the argc member field.
+   * executable function that will be referenced in the margc member field.
    * @param gargv  The command line arguments array passed by the OS through
-   * the main executable function that will be referenced in the argv member
+   * the main executable function that will be referenced in the margv member
    * field.
    */
   ApplicationContext(int& gargc, char**& gargv);
 
-  /**
-   * @brief Set up this flag to true so the ApplicationFactory will create
-   * a ApplicationHelpPrinter instance during the application execution.
-   * All other classes are ignoring this flag.
-   */
-  bool print_help_and_exit{false};
+  /// @brief Provides the referenced command line arguments count. The
+  /// reference is modifiable, since toolkits like Gtk::Application::create and
+  /// glutInit consume argc/argv through a non constant one.
+  int& get_argc() const;
 
-  /**
-   * @brief Set up this flag value to a true in order to ApplicationFactory
-   * to create ApplicationVersionPrinter and execute it.
-   */
-  bool print_version_and_exit{false};
+  /// @brief Provides the referenced command line arguments array. Modifiable
+  /// for the same reason as ApplicationContext::get_argc.
+  char**& get_argv() const;
 
-  /**
-   * @brief Errors description.
-   */
-  std::vector<std::string> errors;
+  /// @brief Tells if the ApplicationFactory should create and run an
+  /// ApplicationHelpPrinter instance.
+  bool get_print_help_and_exit() const;
 
-  /**
-   * @brief Pushes a new error description into the errors field;
-   *
-   * @param errorDescription The application error description.
-   */
+  /// @brief Sets the help printing flag. Only the ApplicationFactory reads it.
+  void set_print_help_and_exit(const bool newValue);
+
+  /// @brief Tells if the ApplicationFactory should create and run an
+  /// ApplicationVersionPrinter instance.
+  bool get_print_version_and_exit() const;
+
+  /// @brief Sets the version printing flag. Only the ApplicationFactory reads
+  /// it.
+  void set_print_version_and_exit(const bool newValue);
+
+  /// @brief Provides the accumulated errors descriptions.
+  const std::vector<std::string>& get_errors() const;
+
+  /// @brief Pushes a new error description into the merrors field.
   void push_error(const std::string& errorDescription);
 
-  std::string db_name;
-  std::string db_username;
-  std::string db_password;
-  std::string db_host;
-  std::string db_port;
+  /// @brief Tells if the application was asked to stop. Atomic, so it is safe
+  /// to poll it from any thread.
+  bool get_stop() const;
 
-  std::shared_ptr<IDBConnection> db_connection;
+  /// @brief Sets the application stop flag. Raise it to ask the running
+  /// routines to return from IApplication::run.
+  void set_stop(const bool newValue);
+
+  /// @brief The db name value.
+  const std::string& get_db_name() const;
+
+  /// @brief Sets the the db name value.
+  void set_db_name(const std::string& newValue);
+
+  /// @brief The db username value.
+  const std::string& get_db_username() const;
+
+  /// @brief Sets the the db username value.
+  void set_db_username(const std::string& newValue);
+
+  /// @brief The db password value.
+  const std::string& get_db_password() const;
+
+  /// @brief Sets the the db password value.
+  void set_db_password(const std::string& newValue);
+
+  /// @brief The db host value.
+  const std::string& get_db_host() const;
+
+  /// @brief Sets the the db host value.
+  void set_db_host(const std::string& newValue);
+
+  /// @brief The db port value.
+  const std::string& get_db_port() const;
+
+  /// @brief Sets the the db port value.
+  void set_db_port(const std::string& newValue);
+
+  /// @brief The db connection value.
+  const std::shared_ptr<IDBConnection>& get_db_connection() const;
+
+  /// @brief Sets the the db connection value.
+  void set_db_connection(const std::shared_ptr<IDBConnection>& newValue);
+
+ private:
+  /// @brief Command line arguments count passed by the OS through the main
+  /// executable function.
+  int& margc;
+
+  /// @brief The command line arguments array passed by the OS through
+  /// the main executable function.
+  char**& margv;
+
+  /// @brief The help printing flag. See the
+  /// ApplicationContext::set_print_help_and_exit setter.
+  bool mprint_help_and_exit{false};
+
+  /// @brief The version printing flag. See the
+  /// ApplicationContext::set_print_version_and_exit setter.
+  bool mprint_version_and_exit{false};
+
+  /// @brief Errors description.
+  std::vector<std::string> merrors;
+
+  /// @brief The thread safe application stop flag. See the
+  /// ApplicationContext::set_stop setter.
+  std::atomic_bool mstop{false};
+
+  std::string mdb_name;
+
+  std::string mdb_username;
+
+  std::string mdb_password;
+
+  std::string mdb_host;
+
+  std::string mdb_port;
+
+  std::shared_ptr<IDBConnection> mdb_connection;
 };
 
 }  // namespace app

@@ -17,16 +17,17 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  ctx->db_connection = create_db_controller();
+  ctx->set_db_connection(create_db_controller());
 
-  assert(ctx->db_connection != nullptr);
+  assert(ctx->get_db_connection() != nullptr);
 
-  if (ctx->db_connection == nullptr || !ctx->db_connection->connect(ctx)) {
+  if (ctx->get_db_connection() == nullptr ||
+      !ctx->get_db_connection()->connect(ctx)) {
     LOGE("Fail to create a new db connection");
     return INVALID;
   }
 
-  const std::string mongoDBDate = ctx->db_connection->get_current_date();
+  const std::string mongoDBDate = ctx->get_db_connection()->get_current_date();
 
   if (mongoDBDate.empty()) {
     LOGE("Empty current date retrieved");

@@ -25,9 +25,9 @@ std::string MongoDBConnStringMaker::make_conn_string(
     return mongodbStarter + mongodbDefault;
   }
 
-  connUrl += actx->db_username + ":" + actx->db_password;
-  connUrl += "@" + actx->db_host + ":" + actx->db_port;
-  connUrl += "/" + actx->db_name;
+  connUrl += actx->get_db_username() + ":" + actx->get_db_password();
+  connUrl += "@" + actx->get_db_host() + ":" + actx->get_db_port();
+  connUrl += "/" + actx->get_db_name();
   connUrl += "?";
   connUrl += "tls=true";
 
@@ -37,10 +37,10 @@ std::string MongoDBConnStringMaker::make_conn_string(
 bool MongoDBConnStringMaker::filledConns(
     std::shared_ptr<app::ApplicationContext> actx)
 {
-  return actx != nullptr && !actx->db_username.empty() &&
-         !actx->db_username.empty() && !actx->db_password.empty() &&
-         !actx->db_host.empty() && !actx->db_port.empty() &&
-         !actx->db_name.empty();
+  return actx != nullptr && !actx->get_db_username().empty() &&
+         !actx->get_db_username().empty() && !actx->get_db_password().empty() &&
+         !actx->get_db_host().empty() && !actx->get_db_port().empty() &&
+         !actx->get_db_name().empty();
 }
 
 }  // namespace mongodbcxxi::helpers

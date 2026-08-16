@@ -24,7 +24,7 @@ int GtkmmIniter::run(std::shared_ptr<app::ApplicationContext> nactx)
 
   LOGD("Trying to create the GTKmm3 app instance");
 
-  auto app = Gtk::Application::create(actx->argc, actx->argv,
+  auto app = Gtk::Application::create(actx->get_argc(), actx->get_argv(),
                                       project_decls::PROJECT_FLATPAK_URL);
 
   if (!init_main_window()) {

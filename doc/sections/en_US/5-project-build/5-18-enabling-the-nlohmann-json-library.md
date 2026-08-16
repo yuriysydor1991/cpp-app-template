@@ -7,3 +7,5 @@ In order to enable [nlohmann](https://github.com/nlohmann/json.git) JSON library
 
 cmake -S . -B build -DENABLE_NLOHMANN_JSON=ON
 ```
+
+The option is `ON` by default on this branch, because the [ChatGPT client](/doc/sections/en_US/5-project-build/ai/5-37-connecting-to-the-openai-servers.md) reads the API answers with that library and the CMake configure step fails with an explanatory message when the option is turned off.

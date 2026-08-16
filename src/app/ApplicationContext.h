@@ -74,6 +74,32 @@ class ApplicationContext
   /// routines to return from IApplication::run.
   void set_stop(const bool newValue);
 
+  /// @brief The OpenAI API token to authorize the ChatGPT calls with. When
+  /// empty the ChatGPTController takes the token from the environment variable
+  /// named in it's TOKEN_ENV_VAR field.
+  const std::string& get_chatgpt_token() const;
+
+  /// @brief Sets the the OpenAI API token to authorize the ChatGPT calls
+  /// with. When empty the ChatGPTController takes the token from the
+  /// environment variable named in it's TOKEN_ENV_VAR field.
+  void set_chatgpt_token(const std::string& newValue);
+
+  /// @brief The question to ask the ChatGPT model about. When empty the
+  /// Application::run only prints the hint on how to provide one.
+  const std::string& get_chatgpt_question() const;
+
+  /// @brief Sets the the question to ask the ChatGPT model about. When empty
+  /// the Application::run only prints the hint on how to provide one.
+  void set_chatgpt_question(const std::string& newValue);
+
+  /// @brief An optional model override. When empty the ChatGPTController asks
+  /// it's DEFAULT_MODEL one.
+  const std::string& get_chatgpt_model() const;
+
+  /// @brief Sets the an optional model override. When empty the
+  /// ChatGPTController asks it's DEFAULT_MODEL one.
+  void set_chatgpt_model(const std::string& newValue);
+
  private:
   /// @brief Command line arguments count passed by the OS through the main
   /// executable function.
@@ -97,6 +123,25 @@ class ApplicationContext
   /// @brief The thread safe application stop flag. See the
   /// ApplicationContext::set_stop setter.
   std::atomic_bool mstop{false};
+
+  /**
+   * @brief The OpenAI API token to authorize the ChatGPT calls with. When
+   * empty the ChatGPTController takes the token from the environment variable
+   * named in it's TOKEN_ENV_VAR field.
+   */
+  std::string mchatgpt_token;
+
+  /**
+   * @brief The question to ask the ChatGPT model about. When empty the
+   * Application::run only prints the hint on how to provide one.
+   */
+  std::string mchatgpt_question;
+
+  /**
+   * @brief An optional model override. When empty the ChatGPTController asks
+   * it's DEFAULT_MODEL one.
+   */
+  std::string mchatgpt_model;
 };
 
 }  // namespace app

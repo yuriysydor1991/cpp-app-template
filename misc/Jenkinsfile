@@ -29,7 +29,7 @@ pipeline {
       }
       
       steps {
-        git branch: 'appCURL',
+        git branch: 'appCURLChatGPT',
             url: 'https://github.com/yuriysydor1991/cpp-app-template.git'
       }
     }
@@ -130,6 +130,11 @@ pipeline {
         stage('UTEST_CURLController') {
           steps {
             sh 'cd $BUILDDIR && ctest -R "UTEST_CURLController\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_CURLController.junit.xml'
+          }
+        }
+        stage('UTEST_ChatGPTController') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_ChatGPTController\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ChatGPTController.junit.xml'
           }
         }
       }

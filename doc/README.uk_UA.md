@@ -58,7 +58,7 @@
 
 - гілка `appWt4` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appWt4), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appWt4)] шаблон з інфраструктурою для швидкого старту реалізації Web-програми на основі [Wt C++](https://www.webtoolkit.eu/wt) фулстек фреймворку.
 - гілка `appBoostBeast` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appBoostBeast), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appBoostBeast)] котра містить інфраструктуру для швидкого старту розробки Web-програми з використанням швидкого HTTP сервера [Beast](https://www.boost.org/libs/beast) від Boost.
-- гілка `appCURL` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appCURL), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appCURL)] (**поточна**) котра містить інфраструктуру для швидкого старту розробки застосунку з використанням бібліотеки-клієнта [CURL](https://en.wikipedia.org/wiki/CURL) для завантажень даних з мережі і яка підтримує багато протоколів (включаючи HTTP).
+- гілка `appCURL` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appCURL), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appCURL)] котра містить інфраструктуру для швидкого старту розробки застосунку з використанням бібліотеки-клієнта [CURL](https://en.wikipedia.org/wiki/CURL) для завантажень даних з мережі і яка підтримує багато протоколів (включаючи HTTP).
 
 ## Системи керування базами даних (СУБД) / SQL / NoSQL
 
@@ -89,6 +89,7 @@
 ## Штучний інтелект / LLM
 
 - гілка `appCURLClaude` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appCURLClaude), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appCURLClaude)] яка містить загальні інфраструктурні класи програми для генераці одинарного бінарного виконуваного файлу, що ставить [Claude](https://www.claude.com/) задане у командному рядку питання через [Anthropic API](https://platform.claude.com/docs/en/api/overview) і виводить отриману відповідь. Anthropic не постачає офіційного SDK для C++, тому гілка звертається до API напряму за допомогою бібліотек [libcurl](https://curl.se/libcurl/) та [nlohmann JSON](https://github.com/nlohmann/json) і не містить жодної сторонньої обгортки API.
+- гілка `appCURLChatGPT` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appCURLChatGPT), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appCURLChatGPT)] (**поточна**) яка містить загальні інфраструктурні класи програми для генерації одинарного бінарного виконуваного файлу, що ставить [ChatGPT](https://chatgpt.com/) задане у командному рядку питання через точку доступу responses [OpenAI API](https://developers.openai.com/api/docs) і виводить отриману відповідь. OpenAI не постачає офіційного SDK для C++, тому гілка звертається до API напряму за допомогою бібліотек [libcurl](https://curl.se/libcurl/) та [nlohmann JSON](https://github.com/nlohmann/json) і не містить жодної сторонньої обгортки API.
 
 ## System / DBus
 
@@ -124,6 +125,7 @@
     1. [Необов'язковий програми для генерації пакету flatpak](/doc/sections/uk_UA/3-requirements/3-9-optional-for-the-flatpak-packager.md)
     1. [Необов'язкові пакети для запуску контейнера Docker](/doc/sections/uk_UA/3-requirements/3-10-optional-for-docker-container-runs.md)
     1. [Необов'язкові пакети для snap пакувальника](/doc/sections/uk_UA/3-requirements/3-11-optional-for-snap-packager.md)
+    1. [Необхідні пакети для клієнта ChatGPT](/doc/sections/uk_UA/3-requirements/3-12-required-packages-for-the-chatgpt-client.md)
 1. [Структура проекту](/doc/sections/uk_UA/4-project-structure/4-project-structure.md)
     1. [Діаграми проекту](/doc/sections/uk_UA/4-project-structure/4-0-project-diagrams.md)
     1. [Реалізуй код одразу!](/doc/sections/uk_UA/4-project-structure/4-1-implement-code-straight-away.md)
@@ -163,6 +165,8 @@
         1. [Вмикання підтримки генерування пакунків FreeBSD pkg з cpack](/doc/sections/uk_UA/5-project-build/packagers/5-20-enabling-FreeBSD-pkg-package-generation-with-cpack.md)
         1. [Вмикання підтримки генерування WIX MSI-пакетів з cpack](/doc/sections/uk_UA/5-project-build/packagers/5-21-enabling-WIX-MSI-package-generation-with-cpack.md)
         1. [Вмикання підтримки генерування RPM-пакунків з cpack](/doc/sections/uk_UA/5-project-build/packagers/5-22-enabling-RPM-package-generation-with-cpack.md)
+    1. Штучний інтелект
+        1. [Підключення до серверів OpenAI](/doc/sections/uk_UA/5-project-build/ai/5-37-connecting-to-the-openai-servers.md)
     1. Бібліотеки
         1. [Вмикання інтеграції libcurl](/doc/sections/uk_UA/5-project-build/5-14-enabling-libcurl.md)
         1. [Вмикання інтеграції бібліотеки nlohmann JSON](/doc/sections/uk_UA/5-project-build/5-18-enabling-the-nlohmann-json-library.md)

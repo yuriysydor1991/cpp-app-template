@@ -12,3 +12,5 @@ This section contains list of required packages and/or tools that must be presen
 1. [Optional for the memory check with Valgrind](/doc/sections/en_US/3-requirements/3-8-optional-for-the-memory-checkwith-Valgrind.md)
 1. [Optional for the flatpak packager](/doc/sections/en_US/3-requirements/3-9-optional-for-the-flatpak-packager.md)
 1. [Optional for the Docker container runs](/doc/sections/en_US/3-requirements/3-10-optional-for-docker-container-runs.md)
+1. [Optional for the snap packager](/doc/sections/en_US/3-requirements/3-11-optional-for-snap-packager.md)
+1. [Required packages for the ChatGPT client](/doc/sections/en_US/3-requirements/3-12-required-packages-for-the-chatgpt-client.md)

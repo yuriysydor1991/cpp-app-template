@@ -7,3 +7,5 @@
 
 cmake -S . -B build -DENABLE_NLOHMANN_JSON=ON
 ```
+
+На цій гілці опція має значення `ON` за замовчуванням, бо [клієнт ChatGPT](/doc/sections/uk_UA/5-project-build/ai/5-37-connecting-to-the-openai-servers.md) розбирає відповіді API саме цією бібліотекою, і крок конфігурування CMake завершується з пояснювальним повідомленням, якщо опцію вимкнути.

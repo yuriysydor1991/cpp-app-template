@@ -52,4 +52,34 @@ void ApplicationContext::set_stop(const bool newValue)
   mstop.store(newValue);
 }
 
+const std::string& ApplicationContext::get_chatgpt_token() const
+{
+  return mchatgpt_token;
+}
+
+void ApplicationContext::set_chatgpt_token(const std::string& newValue)
+{
+  mchatgpt_token = newValue;
+}
+
+const std::string& ApplicationContext::get_chatgpt_question() const
+{
+  return mchatgpt_question;
+}
+
+void ApplicationContext::set_chatgpt_question(const std::string& newValue)
+{
+  mchatgpt_question = newValue;
+}
+
+const std::string& ApplicationContext::get_chatgpt_model() const
+{
+  return mchatgpt_model;
+}
+
+void ApplicationContext::set_chatgpt_model(const std::string& newValue)
+{
+  mchatgpt_model = newValue;
+}
+
 }  // namespace app

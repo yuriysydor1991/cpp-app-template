@@ -4,7 +4,25 @@
   "runtime-version": "24.08",
   "sdk": "org.freedesktop.Sdk",
   "command": "${PROJECT_BINARY_NAME}",
+  "finish-args": [
+    "--share=network"
+  ],
   "modules": [
+    {
+      "name": "nlohmann-json",
+      "buildsystem": "cmake",
+      "builddir": true,
+      "sources": [
+        {
+          "type": "git",
+          "url": "${TEMPLATE_APP_NLOHMANN_GIT}",
+          "tag": "${TEMPLATE_APP_NLOHMANN_GIT_TAG}"
+        }
+      ],
+      "config-opts": [
+        "-DJSON_BuildTests=OFF"
+      ]
+    },
     {
       "name": "${CMAKE_PROJECT_NAME}",
       "buildsystem": "cmake",

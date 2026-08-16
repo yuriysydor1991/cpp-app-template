@@ -12,7 +12,7 @@ target_include_directories(
   PRIVATE ${GLOBAL_MOCKS_ROOT}/ApplicationContext
   PRIVATE ${APP_MOCKS_ROOT}/HttpController
   PRIVATE ${APP_MOCKS_ROOT}/project-global-decls
-  PRIVATE ${APP_MOCKS_ROOT}/log
+  PRIVATE ${GLOBAL_MOCKS_ROOT}/log
   PRIVATE ${CMAKE_SOURCE_DIR}
 )
 

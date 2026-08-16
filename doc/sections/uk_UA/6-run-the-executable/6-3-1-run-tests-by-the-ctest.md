@@ -21,5 +21,3 @@ ctest --tests-dir /шлях/до/директорії/побудови/прое�
 
 ctest -R UTEST_ApplicationFactory
 ```
-
-

@@ -5,4 +5,3 @@ if (NOT ENABLE_COMPONENT_TESTS)
 endif()
 
 add_subdirectory(DefaultLogger)
-

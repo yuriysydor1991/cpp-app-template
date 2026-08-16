@@ -24,15 +24,49 @@ class CTEST_CURLController : public Test
  public:
   CTEST_CURLController() : controller{CURLController::create()} {}
 
+  /// @brief Percent encodes everything but the characters a URL path carries
+  /// as is, so a build directory holding a space (the workspace of a CI job
+  /// whose name has one, for example) still composes a valid URL. The path
+  /// separator and the drive letter colon are left alone on purpose.
+  static std::string encode_path(const std::string& path)
+  {
+    static constexpr const char* const hexDigits = "0123456789ABCDEF";
+
+    std::string encoded;
+
+    for (const char rawSymbol : path) {
+      const auto symbol = static_cast<unsigned char>(rawSymbol);
+
+      const bool asIs = (symbol >= 'a' && symbol <= 'z') ||
+                        (symbol >= 'A' && symbol <= 'Z') ||
+                        (symbol >= '0' && symbol <= '9') || symbol == '-' ||
+                        symbol == '_' || symbol == '.' || symbol == '~' ||
+                        symbol == '/' || symbol == ':';
+
+      if (asIs) {
+        encoded += static_cast<char>(symbol);
+        continue;
+      }
+
+      encoded += '%';
+      encoded += hexDigits[(symbol >> 4U) & 0x0FU];
+      encoded += hexDigits[symbol & 0x0FU];
+    }
+
+    return encoded;
+  }
+
   /// @brief Composes the file protocol URL of the given path. The leading
   /// slash is the one that the drive letter platforms lack.
   static std::string file_url(const std::string& path)
   {
-    if (!path.empty() && path.front() == '/') {
-      return "file://" + path;
+    const std::string encoded = encode_path(path);
+
+    if (!encoded.empty() && encoded.front() == '/') {
+      return "file://" + encoded;
     }
 
-    return "file:///" + path;
+    return "file:///" + encoded;
   }
 
   /// @brief Writes the given contents into the named test data file and gives

@@ -29,7 +29,7 @@ int Qt6Initer::run(std::shared_ptr<app::ApplicationContext> actx)
 
   QtWebEngineQuick::initialize();
 
-  QGuiApplication app(actx->argc, actx->argv);
+  QGuiApplication app(actx->get_argc(), actx->get_argv());
   QQmlApplicationEngine engine;
 
   LOGI("Trying to load " << QMLRes::get_url_main().toStdString());

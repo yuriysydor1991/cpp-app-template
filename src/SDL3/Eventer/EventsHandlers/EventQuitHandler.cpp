@@ -19,7 +19,7 @@ bool EventQuitHandler::handle([[maybe_unused]] SDL_Event& event,
     return false;
   }
 
-  sdl3Context->appCtx->stop(true);
+  sdl3Context->appCtx->set_stop(true);
 
   return true;
 }

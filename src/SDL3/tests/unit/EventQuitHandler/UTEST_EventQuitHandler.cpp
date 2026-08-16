@@ -36,11 +36,11 @@ class UTEST_EventQuitHandler : public Test
 
 TEST_F(UTEST_EventQuitHandler, quit_event_sets_stop_flag)
 {
-  EXPECT_FALSE(appCtx->stop());
+  EXPECT_FALSE(appCtx->get_stop());
 
   EXPECT_TRUE(handler->handle(quitEvent, sdlCtx));
 
-  EXPECT_TRUE(appCtx->stop());
+  EXPECT_TRUE(appCtx->get_stop());
 }
 
 TEST_F(UTEST_EventQuitHandler, null_sdl_context_returns_false)
@@ -60,8 +60,8 @@ TEST_F(UTEST_EventQuitHandler, null_app_context_returns_false)
 TEST_F(UTEST_EventQuitHandler, repeated_handle_keeps_stop_flag_set)
 {
   EXPECT_TRUE(handler->handle(quitEvent, sdlCtx));
-  EXPECT_TRUE(appCtx->stop());
+  EXPECT_TRUE(appCtx->get_stop());
 
   EXPECT_TRUE(handler->handle(quitEvent, sdlCtx));
-  EXPECT_TRUE(appCtx->stop());
+  EXPECT_TRUE(appCtx->get_stop());
 }

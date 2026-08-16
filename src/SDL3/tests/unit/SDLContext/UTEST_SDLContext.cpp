@@ -45,5 +45,5 @@ TEST_F(UTEST_SDLContext, fresh_context_does_not_request_stop)
 {
   SDL3Context ctx{appCtx};
 
-  EXPECT_FALSE(ctx.appCtx->stop());
+  EXPECT_FALSE(ctx.appCtx->get_stop());
 }

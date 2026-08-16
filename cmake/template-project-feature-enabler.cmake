@@ -13,6 +13,11 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/enablers/images")
 include(template-project-enabler-function)
 include(template-project-git-enabler)
 
+# The Wt4 framework is enabled here and not in the post enabler file, because
+# the src/wt4 component compiles against it and the whole src subdirectory is
+# added after this file is included.
+include(template-project-Wt4-enabler)
+
 include(template-project-GTest-enabler)
 include(template-project-clang-format-target)
 include(template-project-valgrind-target)

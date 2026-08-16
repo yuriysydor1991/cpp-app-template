@@ -88,6 +88,7 @@ Examine available branches to find your most applicable variant of the template 
 ## Artificial intelligence / LLM
 
 - `appCURLClaude` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appCURLClaude), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appCURLClaude)] with general application related classes to generate a single binary executable that asks [Claude](https://www.claude.com/) a question given in the command line over the [Anthropic API](https://platform.claude.com/docs/en/api/overview) and prints the received answer. Anthropic ships no official C++ SDK, so the branch talks to the API directly with the [libcurl](https://curl.se/libcurl/) and the [nlohmann JSON](https://github.com/nlohmann/json) libraries and carries no third party API wrapper.
+- `appCURLChatGPT` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appCURLChatGPT), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appCURLChatGPT)] with general application related classes to generate a single binary executable that asks [ChatGPT](https://chatgpt.com/) a question given in the command line over the [OpenAI API](https://developers.openai.com/api/docs) responses endpoint and prints the received answer. OpenAI ships no official C++ SDK, so the branch talks to the API directly with the [libcurl](https://curl.se/libcurl/) and the [nlohmann JSON](https://github.com/nlohmann/json) libraries and carries no third party API wrapper.
 
 ## System / DBus
 

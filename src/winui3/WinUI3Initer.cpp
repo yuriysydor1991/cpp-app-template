@@ -23,7 +23,7 @@ int WinUI3Initer::run(std::shared_ptr<app::ApplicationContext> nactx)
 
   LOGD("Starting the WinUI 3 application");
 
-  return launch(actx->argc, actx->argv);
+  return launch(actx->get_argc(), actx->get_argv());
 }
 
 int WinUI3Initer::launch(int& argc, char**& argv)

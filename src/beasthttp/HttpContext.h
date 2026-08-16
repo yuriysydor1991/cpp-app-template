@@ -36,7 +36,7 @@ class HttpContext
    *
    * @return Returns HTTP server desired port number.
    */
-  const unsigned short& http_port() const;
+  unsigned short http_port() const;
 
  protected:
   std::shared_ptr<app::ApplicationContext> actx;

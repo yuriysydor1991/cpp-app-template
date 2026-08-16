@@ -18,14 +18,14 @@ bool HttpContext::stop()
 {
   assert(actx != nullptr);
 
-  return actx == nullptr || actx->stop();
+  return actx == nullptr || actx->get_stop();
 }
 
 const std::string& HttpContext::http_address() const
 {
-  return actx->http_address;
+  return actx->get_http_address();
 }
 
-const unsigned short& HttpContext::http_port() const { return actx->http_port; }
+unsigned short HttpContext::http_port() const { return actx->get_http_port(); }
 
 }  // namespace beasthttp

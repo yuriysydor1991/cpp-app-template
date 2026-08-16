@@ -64,8 +64,8 @@ TEST_F(CTEST_beasthttp, bootstrap_success)
 
   auto actx = std::make_shared<ApplicationContext>(argc, argv);
 
-  actx->http_address = tests_address;
-  actx->http_port = used_http_port;
+  actx->set_http_address(tests_address);
+  actx->set_http_port(used_http_port);
 
   EXPECT_CALL(*actx, stop()).Times(1).WillOnce(Return(true));
 
@@ -83,8 +83,8 @@ TEST_F(CTEST_beasthttp, accept_wait_success)
 
   auto actx = std::make_shared<ApplicationContext>(argc, argv);
 
-  actx->http_address = tests_address;
-  actx->http_port = used_http_port;
+  actx->set_http_address(tests_address);
+  actx->set_http_port(used_http_port);
 
   EXPECT_CALL(*actx, stop()).Times(1).WillOnce(Invoke([&]() -> bool {
     EXPECT_CALL(*actx, stop()).Times(1).WillOnce(Return(true));
@@ -118,8 +118,8 @@ TEST_F(CTEST_beasthttp, multithread_accept_wait_success)
 
   auto actx = std::make_shared<ApplicationContext>(argc, argv);
 
-  actx->http_address = tests_address;
-  actx->http_port = used_http_port;
+  actx->set_http_address(tests_address);
+  actx->set_http_port(used_http_port);
 
   EXPECT_CALL(*actx, stop())
       .Times(expected_reps)

@@ -4,7 +4,7 @@ namespace app
 {
 
 ApplicationContext::ApplicationContext(int& gargc, char**& gargv)
-    : argc{gargc}, argv{gargv}, http_port{0}
+    : margc{gargc}, margv{gargv}, mhttp_port{0}
 {
 }
 

@@ -20,9 +20,9 @@ Wt4Server::Wt4Server(const Wt::WEnvironment& env,
 
 int Wt4Server::run(std::shared_ptr<app::ApplicationContext> ctx)
 {
-  return Wt::WRun(ctx->argc, ctx->argv, [ctx](const Wt::WEnvironment& env) {
-    return build_server(env, ctx);
-  });
+  return Wt::WRun(
+      ctx->get_argc(), ctx->get_argv(),
+      [ctx](const Wt::WEnvironment& env) { return build_server(env, ctx); });
 }
 
 std::unique_ptr<Wt4Server> Wt4Server::build_server(

@@ -47,10 +47,10 @@ TEST_F(UTEST_Application, normal_exit)
 
   EXPECT_EQ(app->run(appCtx), 0);
 
-  EXPECT_TRUE(appCtx->errors.empty());
+  EXPECT_TRUE(appCtx->get_errors().empty());
 
-  EXPECT_FALSE(appCtx->print_help_and_exit);
-  EXPECT_FALSE(appCtx->print_version_and_exit);
+  EXPECT_FALSE(appCtx->get_print_help_and_exit());
+  EXPECT_FALSE(appCtx->get_print_version_and_exit());
 }
 
 TEST_F(UTEST_Application, error_exit)
@@ -65,8 +65,8 @@ TEST_F(UTEST_Application, error_exit)
 
   EXPECT_EQ(app->run(appCtx), 1);
 
-  EXPECT_TRUE(appCtx->errors.empty());
+  EXPECT_TRUE(appCtx->get_errors().empty());
 
-  EXPECT_FALSE(appCtx->print_help_and_exit);
-  EXPECT_FALSE(appCtx->print_version_and_exit);
+  EXPECT_FALSE(appCtx->get_print_help_and_exit());
+  EXPECT_FALSE(appCtx->get_print_version_and_exit());
 }

@@ -62,9 +62,9 @@ TEST_F(UTEST_CommandLineParser, help_short)
 
   EXPECT_TRUE(parser->parse_args(appctx));
 
-  EXPECT_TRUE(appctx->print_help_and_exit);
-  EXPECT_FALSE(appctx->print_version_and_exit);
-  EXPECT_TRUE(appctx->errors.empty());
+  EXPECT_TRUE(appctx->get_print_help_and_exit());
+  EXPECT_FALSE(appctx->get_print_version_and_exit());
+  EXPECT_TRUE(appctx->get_errors().empty());
 }
 
 TEST_F(UTEST_CommandLineParser, help_long)
@@ -75,9 +75,9 @@ TEST_F(UTEST_CommandLineParser, help_long)
 
   EXPECT_TRUE(parser->parse_args(appctx));
 
-  EXPECT_TRUE(appctx->print_help_and_exit);
-  EXPECT_FALSE(appctx->print_version_and_exit);
-  EXPECT_TRUE(appctx->errors.empty());
+  EXPECT_TRUE(appctx->get_print_help_and_exit());
+  EXPECT_FALSE(appctx->get_print_version_and_exit());
+  EXPECT_TRUE(appctx->get_errors().empty());
 }
 
 TEST_F(UTEST_CommandLineParser, version_short)
@@ -88,9 +88,9 @@ TEST_F(UTEST_CommandLineParser, version_short)
 
   EXPECT_TRUE(parser->parse_args(appctx));
 
-  EXPECT_FALSE(appctx->print_help_and_exit);
-  EXPECT_TRUE(appctx->print_version_and_exit);
-  EXPECT_TRUE(appctx->errors.empty());
+  EXPECT_FALSE(appctx->get_print_help_and_exit());
+  EXPECT_TRUE(appctx->get_print_version_and_exit());
+  EXPECT_TRUE(appctx->get_errors().empty());
 }
 
 TEST_F(UTEST_CommandLineParser, version_long)
@@ -101,9 +101,9 @@ TEST_F(UTEST_CommandLineParser, version_long)
 
   EXPECT_TRUE(parser->parse_args(appctx));
 
-  EXPECT_FALSE(appctx->print_help_and_exit);
-  EXPECT_TRUE(appctx->print_version_and_exit);
-  EXPECT_TRUE(appctx->errors.empty());
+  EXPECT_FALSE(appctx->get_print_help_and_exit());
+  EXPECT_TRUE(appctx->get_print_version_and_exit());
+  EXPECT_TRUE(appctx->get_errors().empty());
 }
 
 TEST_F(UTEST_CommandLineParser, unknown_flag)
@@ -118,7 +118,7 @@ TEST_F(UTEST_CommandLineParser, unknown_flag)
 
   EXPECT_TRUE(parser->parse_args(appctx));
 
-  EXPECT_FALSE(appctx->print_help_and_exit);
-  EXPECT_FALSE(appctx->print_version_and_exit);
-  EXPECT_TRUE(appctx->errors.empty());
+  EXPECT_FALSE(appctx->get_print_help_and_exit());
+  EXPECT_FALSE(appctx->get_print_version_and_exit());
+  EXPECT_TRUE(appctx->get_errors().empty());
 }

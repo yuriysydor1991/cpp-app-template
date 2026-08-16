@@ -99,42 +99,42 @@ pipeline {
       parallel {
         stage('UTEST_Application') { 
           steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_Application\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_Application.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_Application\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_Application.junit.xml'
           }
         }
         stage('UTEST_ApplicationContext') { 
           steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationContext\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationContext.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationContext\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationContext.junit.xml'
           }
         }
         stage('UTEST_ApplicationFactory') { 
           steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationFactory\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationFactory.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationFactory\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationFactory.junit.xml'
           }
         }
         stage('UTEST_ApplicationHelpPrinter') { 
           steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationHelpPrinter\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationHelpPrinter.junit.xml' 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationHelpPrinter\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationHelpPrinter.junit.xml' 
           }
         }
         stage('UTEST_ApplicationVersionPrinter') { 
           steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationVersionPrinter\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationVersionPrinter.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationVersionPrinter\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationVersionPrinter.junit.xml'
           }
         }
         stage('UTEST_CommandLineParser') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_CommandLineParser\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_CommandLineParser.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_CommandLineParser\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_CommandLineParser.junit.xml'
           }
         }
         stage('UTEST_CURLController') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_CURLController\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_CURLController.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_CURLController\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_CURLController.junit.xml'
           }
         }
         stage('UTEST_ClaudeController') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_ClaudeController\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ClaudeController.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_ClaudeController\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_ClaudeController.junit.xml'
           }
         }
       }
@@ -145,22 +145,22 @@ pipeline {
       parallel {
         stage('CTEST_DefaultLogger') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_DefaultLogger" --output-on-failure --output-junit $BDJUNITOUT/CTEST_DefaultLogger.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_DefaultLogger" --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_DefaultLogger.junit.xml'
           }
         }
         stage('CTEST_log') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_log\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_log.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_log\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_log.junit.xml'
           }
         }
         stage('CTEST_app') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_app\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_app.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_app\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_app.junit.xml'
           }
         }
         stage('CTEST_CURLController') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_CURLController\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_CURLController.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_CURLController\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_CURLController.junit.xml'
           }
         }
       }

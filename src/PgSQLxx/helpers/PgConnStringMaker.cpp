@@ -22,11 +22,11 @@ std::string PgConnStringMaker::make_conn_string(
 
   // "dbname=test user=postgres password=secret host=localhost port=5432"
 
-  append("dbname", actx->pg_dbname, connStr);
-  append("user", actx->pg_user, connStr);
-  append("password", actx->pg_password, connStr);
-  append("host", actx->pg_host, connStr);
-  append("port", actx->pg_port, connStr);
+  append("dbname", actx->get_pg_dbname(), connStr);
+  append("user", actx->get_pg_user(), connStr);
+  append("password", actx->get_pg_password(), connStr);
+  append("host", actx->get_pg_host(), connStr);
+  append("port", actx->get_pg_port(), connStr);
 
   return connStr;
 }

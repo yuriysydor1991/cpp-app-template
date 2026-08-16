@@ -25,9 +25,9 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  assert(actx->pg_connection != nullptr);
+  assert(actx->get_pg_connection() != nullptr);
 
-  const std::string pgsqlDate = actx->pg_connection->get_current_date();
+  const std::string pgsqlDate = actx->get_pg_connection()->get_current_date();
 
   LOGI("PostgreSQL' current date: " << pgsqlDate);
 
@@ -50,9 +50,10 @@ bool Application::connect()
 {
   assert(actx != nullptr);
 
-  actx->pg_connection = create_pg_conn();
+  actx->set_pg_connection(create_pg_conn());
 
-  return actx->pg_connection != nullptr && actx->pg_connection->connect(actx);
+  return actx->get_pg_connection() != nullptr &&
+         actx->get_pg_connection()->connect(actx);
 }
 
 }  // namespace app

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
 add_executable(
-  UTEST_ApplicationContext  
+  UTEST_ApplicationContext
   UTEST_ApplicationContext.cpp
   ${CMAKE_SOURCE_DIR}/src/app/ApplicationContext.cpp
 )

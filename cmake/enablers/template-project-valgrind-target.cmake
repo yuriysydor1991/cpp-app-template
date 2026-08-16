@@ -29,8 +29,8 @@ message(STATUS "valgrind: ${VALGRIND_EXECUTABLE}")
 add_custom_target(
   valgrind
   COMMAND ${VALGRIND_EXECUTABLE} --leak-check=full
-    --error-exitcode=1 
-    --show-leak-kinds=all 
+    --error-exitcode=1
+    --show-leak-kinds=all
     $<TARGET_FILE:${PROJECT_BINARY_NAME}>
   COMMENT "Executing valgrind command for the project main binary file. Output all findings into the stdout."
   DEPENDS ${PROJECT_BINARY_NAME}

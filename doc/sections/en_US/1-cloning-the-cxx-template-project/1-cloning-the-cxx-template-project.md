@@ -6,7 +6,7 @@ In order to fast-start implementing a new application clone this project into yo
 git clone --branch app https://github.com/yuriysydor1991/cpp-app-template.git
 ```
 
-or 
+or
 
 ```
 git clone --branch app https://gitlab.com/yuriysydor1991/cpp-app-template.git

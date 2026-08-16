@@ -13,7 +13,7 @@ After that there should be available the Docker build and run CMake target `dock
 ```
 # inside the project root directory
 
-cmake --build build --target docker-single-run 
+cmake --build build --target docker-single-run
 ```
 
 Examine the `cmake/enablers/dockerers/template-project-docker-single-runner-target.cmake` file for the `docker-single-run` target details.

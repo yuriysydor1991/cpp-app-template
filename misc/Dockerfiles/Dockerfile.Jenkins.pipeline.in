@@ -1,6 +1,6 @@
 FROM jenkins/jenkins:lts
 
-USER root 
+USER root
 
 RUN apt update
 RUN apt install -y libstdc++6 build-essential git cmake g++

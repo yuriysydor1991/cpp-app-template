@@ -2,9 +2,9 @@ cmake_minimum_required(VERSION 3.13)
 
 set(
   DOCKER_SINGLE_BUILD_CMD
-    DOCKER_HOST=${DOCKER_HOST_STR} DOCKER_BUILDKIT=1 ${DOCKER_EXEC} build 
-      --build-context project=${CMAKE_SOURCE_DIR} 
-      --build-arg CACHEBUST="${PROJECT_CONFIGURE_DATE}" 
+    DOCKER_HOST=${DOCKER_HOST_STR} DOCKER_BUILDKIT=1 ${DOCKER_EXEC} build
+      --build-context project=${CMAKE_SOURCE_DIR}
+      --build-arg CACHEBUST="${PROJECT_CONFIGURE_DATE}"
       -t ${DOCKER_SINGLE_RUN_NAME} .
 )
 

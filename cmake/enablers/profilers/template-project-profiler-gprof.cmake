@@ -37,8 +37,8 @@ message(STATUS "gprof analyze dst: ${GPROF_ANALYZE_TXT_DST}")
 
 add_custom_target(
   gprof-analyze
-  COMMAND $<TARGET_FILE:${PROJECT_BINARY_NAME}> 
-    && ${GPROF_EXEC} -I${CMAKE_SOURCE_DIR} $<TARGET_FILE:${PROJECT_BINARY_NAME}> 
+  COMMAND $<TARGET_FILE:${PROJECT_BINARY_NAME}>
+    && ${GPROF_EXEC} -I${CMAKE_SOURCE_DIR} $<TARGET_FILE:${PROJECT_BINARY_NAME}>
        ${CMAKE_BINARY_DIR}/gmon.out > ${GPROF_ANALYZE_TXT_DST}
   COMMENT "Executing gprof command for the project main binary file. Outputs into the ${GPROF_ANALYZE_TXT_DST}."
   DEPENDS ${PROJECT_BINARY_NAME}

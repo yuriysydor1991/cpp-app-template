@@ -1,4 +1,4 @@
-### Disabling system GTest probe 
+### Disabling system GTest probe
 
 To disable the system available GTest framework assets usage set appropriate value to the `GTEST_TRY_SYSTEM_PROBE` CMake variable by executing command like (GNU/Linux based):
 

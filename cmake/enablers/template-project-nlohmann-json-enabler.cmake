@@ -14,7 +14,7 @@ set(TEMPLATE_APP_NLOHMANN_GIT "https://github.com/nlohmann/json.git" CACHE STRIN
 set(TEMPLATE_APP_NLOHMANN_GIT_TAG "master" CACHE STRING "The Nlohmann JSON project git repository tag of interest")
 
 template_project_default_3rdparty_enabler(
-  NAME nlohmann_json 
+  NAME nlohmann_json
   GIT_REPOSITORY ${TEMPLATE_APP_NLOHMANN_GIT}
   GIT_TAG ${TEMPLATE_APP_NLOHMANN_GIT_TAG}
 )

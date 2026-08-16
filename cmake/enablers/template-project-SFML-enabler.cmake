@@ -18,7 +18,7 @@ set(TEMPLATE_APP_SFML_GIT_TAG "2.6.2" CACHE STRING "The SFML library git source 
 
 # COMPONENTS graphics window system
 template_project_default_3rdparty_enabler(
-  NAME SFML 
+  NAME SFML
   GIT_REPOSITORY ${TEMPLATE_APP_SFML_GIT}
   GIT_TAG        ${TEMPLATE_APP_SFML_GIT_TAG}
   COMPONENTS     graphics window system

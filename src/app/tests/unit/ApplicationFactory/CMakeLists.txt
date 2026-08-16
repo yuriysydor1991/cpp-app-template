@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
 add_executable(
-  UTEST_ApplicationFactory  
+  UTEST_ApplicationFactory
   UTEST_ApplicationFactory.cpp
   ${CMAKE_SOURCE_DIR}/src/app/ApplicationFactory.cpp
   ${APP_MOCKS_ROOT}/ApplicationContext/src/app/ApplicationContext.cpp

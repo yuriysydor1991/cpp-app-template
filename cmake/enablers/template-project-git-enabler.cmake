@@ -15,9 +15,9 @@ execute_process(
 )
 
 file(
-  GLOB_RECURSE 
-  ALLSOURCES 
-  LIST_DIRECTORIES false 
+  GLOB_RECURSE
+  ALLSOURCES
+  LIST_DIRECTORIES false
   CONFIGURE_DEPENDS
   "src/*.h" "src/*.cpp"
 )

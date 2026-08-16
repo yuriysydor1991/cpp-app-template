@@ -3,7 +3,7 @@
 In order to make the cppcheck target available for the execution, configure project with enabled `ENABLE_CPPCHECK` variable:
 
 ```
-# inside the project root directory 
+# inside the project root directory
 
 cmake -B build -S . -DENABLE_CPPCHECK=ON
 ```

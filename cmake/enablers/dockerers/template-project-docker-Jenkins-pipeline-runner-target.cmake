@@ -15,14 +15,14 @@ option(
 set(
   JENKINS_PIPELINE_DOCKER_IMAGE_NAME
   "${PROJECT_BINARY_NAME_lower}-jenkins-pipeline-image"
-  CACHE STRING 
+  CACHE STRING
   "The Jenkins pipeline Dockerfile image name"
 )
 
 set(
   JENKINS_PIPELINE_DOCKER_CONTAINER_NAME
   "${PROJECT_BINARY_NAME_lower}-jenkins-pipeline-run-container"
-  CACHE STRING 
+  CACHE STRING
   "The Jenkins pipeline Dockerfile container name"
 )
 
@@ -34,16 +34,16 @@ set(
 )
 
 set(
-  JENKINS_PIPELINE_DOCKERFILE_SRC 
-  "${CMAKE_SOURCE_DIR}/misc/Dockerfiles/Dockerfile.Jenkins.pipeline.in" 
-  CACHE STRING 
+  JENKINS_PIPELINE_DOCKERFILE_SRC
+  "${CMAKE_SOURCE_DIR}/misc/Dockerfiles/Dockerfile.Jenkins.pipeline.in"
+  CACHE STRING
   "The Jenkins pipeline Dockerfile full path"
 )
 
 set(
   JENKINS_PIPELINE_DOCKERFILE_DST
   "Dockerfile.Jenkins.pipeline"
-  CACHE STRING 
+  CACHE STRING
   "The Jenkins pipeline Dockerfile destination name"
 )
 
@@ -67,7 +67,7 @@ execute_process(
   OUTPUT_STRIP_TRAILING_WHITESPACE
 )
 
-if (JENKINS_PIPELINE_FORCE_REBUILD)  
+if (JENKINS_PIPELINE_FORCE_REBUILD)
   if (NOT JENKINS_PIPELINE_DOCKER_CONTAINER_PRESENT STREQUAL "")
     message(STATUS "Stopping and erasing the ${JENKINS_PIPELINE_DOCKER_CONTAINER_NAME} container")
     set(JENKINS_PIPELINE_DOCKER_CONTAINER_PRESENT "")
@@ -78,7 +78,7 @@ if (JENKINS_PIPELINE_FORCE_REBUILD)
       COMMAND DOCKER_HOST=${DOCKER_HOST_STR} ${DOCKER_EXEC} container rm ${JENKINS_PIPELINE_DOCKER_CONTAINER_NAME}
     )
   endif()
-  
+
   if (NOT JENKINS_PIPELINE_DOCKER_IMAGE_NAME_PRESENT STREQUAL "")
     message(STATUS "Erasing the ${JENKINS_PIPELINE_DOCKER_IMAGE_NAME} image")
     set(JENKINS_PIPELINE_DOCKER_IMAGE_NAME_PRESENT "")
@@ -93,8 +93,8 @@ if (JENKINS_PIPELINE_DOCKER_IMAGE_NAME_PRESENT STREQUAL "")
     JENKINS_PIPELINE_DOCKER_BUILD_CMD
       DOCKER_HOST=${DOCKER_HOST_STR} DOCKER_BUILDKIT=1 ${DOCKER_EXEC} build
         -f "${JENKINS_PIPELINE_DOCKERFILE_DST}"
-        --build-context project=${CMAKE_SOURCE_DIR} 
-        --build-arg CACHEBUST="${PROJECT_CONFIGURE_DATE}" 
+        --build-context project=${CMAKE_SOURCE_DIR}
+        --build-arg CACHEBUST="${PROJECT_CONFIGURE_DATE}"
         -t ${JENKINS_PIPELINE_DOCKER_IMAGE_NAME} .
   )
 else()
@@ -117,7 +117,7 @@ if (JENKINS_PIPELINE_DOCKER_CONTAINER_PRESENT STREQUAL "")
 else()
   set(
     JENKINS_PIPELINE_DOCKER_RUN_CMD
-      DOCKER_HOST=${DOCKER_HOST_STR} ${DOCKER_EXEC} container start 
+      DOCKER_HOST=${DOCKER_HOST_STR} ${DOCKER_EXEC} container start
         -ia ${JENKINS_PIPELINE_DOCKER_CONTAINER_NAME}
   )
 endif()

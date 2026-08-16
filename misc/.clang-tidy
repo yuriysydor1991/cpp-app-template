@@ -3,7 +3,7 @@ Checks:          'clang-diagnostic-*,clang-analyzer-*,bugprone-*,performance-*,p
 WarningsAsErrors: 'clang-diagnostic-*,clang-analyzer-*'
 HeaderFilterRegex: '.*/(src|build)/.*'
 # newer clang-tidy reports about unrecognizable param
-# AnalyzeTemporaryDtors: false 
+# AnalyzeTemporaryDtors: false
 FormatStyle:     none
 User:            cc
 CheckOptions:

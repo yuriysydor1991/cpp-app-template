@@ -14,7 +14,7 @@ set(TEMPLATE_APP_PLOTGENCPP_GIT "https://github.com/skhelladi/PlotGenCpp.git" CA
 set(TEMPLATE_APP_PLOTGENCPP_GIT_TAG "main" CACHE STRING "The PlotGenCpp library git source repository tag")
 
 template_project_default_3rdparty_enabler(
-  NAME PlotGenCpp 
+  NAME PlotGenCpp
   GIT_REPOSITORY ${TEMPLATE_APP_PLOTGENCPP_GIT}
   GIT_TAG        ${TEMPLATE_APP_PLOTGENCPP_GIT_TAG}
 )

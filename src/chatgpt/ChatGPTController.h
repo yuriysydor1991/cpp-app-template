@@ -80,9 +80,6 @@ class ChatGPTController
   static ChatGPTControllerPtr create(curli::CURLControllerPtr curlController);
 
  private:
-  /// @brief The HTTP status code of a successfully answered request.
-  inline static constexpr const long HTTP_OK{200L};
-
   /**
    * @brief Builds the responses endpoint request body.
    *

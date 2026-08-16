@@ -43,6 +43,7 @@ TEST_F(UTEST_CURLController, no_request_gives_no_data_and_no_status)
 {
   EXPECT_TRUE(controller->get().empty());
   EXPECT_EQ(controller->last_response_code(), 0L);
+  EXPECT_FALSE(controller->last_response_successfull());
 }
 
 TEST_F(UTEST_CURLController, empty_url_downloads_nothing)
@@ -50,12 +51,14 @@ TEST_F(UTEST_CURLController, empty_url_downloads_nothing)
   EXPECT_TRUE(controller->download({}).empty());
   EXPECT_TRUE(controller->download({}, {"X-Some-Header: a value"}).empty());
   EXPECT_EQ(controller->last_response_code(), 0L);
+  EXPECT_FALSE(controller->last_response_successfull());
 }
 
 TEST_F(UTEST_CURLController, empty_url_posts_nothing)
 {
   EXPECT_TRUE(controller->post({}, "a request body", {}).empty());
   EXPECT_EQ(controller->last_response_code(), 0L);
+  EXPECT_FALSE(controller->last_response_successfull());
 }
 
 TEST_F(UTEST_CURLController, empty_url_is_not_alive)
@@ -67,6 +70,7 @@ TEST_F(UTEST_CURLController, unsupported_protocol_downloads_nothing)
 {
   EXPECT_TRUE(controller->download(unsupportedURL).empty());
   EXPECT_EQ(controller->last_response_code(), 0L);
+  EXPECT_FALSE(controller->last_response_successfull());
 }
 
 TEST_F(UTEST_CURLController, unsupported_protocol_posts_nothing)
@@ -75,6 +79,7 @@ TEST_F(UTEST_CURLController, unsupported_protocol_posts_nothing)
       controller->post(unsupportedURL, "a request body", {"X-Some: value"})
           .empty());
   EXPECT_EQ(controller->last_response_code(), 0L);
+  EXPECT_FALSE(controller->last_response_successfull());
 }
 
 TEST_F(UTEST_CURLController, unsupported_protocol_is_not_alive)

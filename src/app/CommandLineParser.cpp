@@ -22,12 +22,13 @@ bool CommandLineParser::parse_args(std::shared_ptr<ApplicationContext> ctx)
     return false;
   }
 
-  for (int iter = 1; iter < ctx->argc; ++iter) {
+  for (int iter = 1; iter < ctx->get_argc(); ++iter) {
     const int nextIter = iter + 1;
-    const bool hasNext = nextIter < ctx->argc;
+    const bool hasNext = nextIter < ctx->get_argc();
 
-    const std::string param = ctx->argv[iter];
-    const std::string nextParam = hasNext ? ctx->argv[nextIter] : std::string{};
+    const std::string param = ctx->get_argv()[iter];
+    const std::string nextParam =
+        hasNext ? ctx->get_argv()[nextIter] : std::string{};
 
     if (!parse_arg(ctx, param, hasNext, nextParam, iter)) {
       LOGE("Failure to parse arg: " << param);
@@ -53,7 +54,7 @@ bool CommandLineParser::check_4_data(std::shared_ptr<ApplicationContext> ctx,
   const bool requiresData = requires_data(param);
 
   if (requiresData && !hasNext) {
-    ctx->print_version_and_exit = true;
+    ctx->set_print_version_and_exit(true);
     ctx->push_error("Parameter " + param + " requires the data next to it.");
     LOGE("Parameter " << param << " requires the data next to it.");
     return false;
@@ -77,17 +78,17 @@ bool CommandLineParser::parse_arg(std::shared_ptr<ApplicationContext> ctx,
   // Also register new command line parameters in the ApplicationhelpPrinter's
   // help.
   if (param == CMDParamNames::HELPW || param == CMDParamNames::HELP) {
-    ctx->print_help_and_exit = true;
+    ctx->set_print_help_and_exit(true);
   } else if (param == CMDParamNames::VERSIONW ||
              param == CMDParamNames::VERSION) {
-    ctx->print_version_and_exit = true;
+    ctx->set_print_version_and_exit(true);
   } else if (param == CMDParamNames::LOGPATHW ||
              param == CMDParamNames::LOGPATH) {
     // skipping already parsed cmd params
     paramIndex++;
     return true;
   } else {
-    ctx->print_help_and_exit = true;
+    ctx->set_print_help_and_exit(true);
     ctx->push_error("Unknown parameter: " + param);
     LOGE("Unknown parameter: " << param);
     return false;

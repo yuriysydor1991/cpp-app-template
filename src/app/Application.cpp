@@ -21,7 +21,7 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  if (ctx->claude_question.empty()) {
+  if (ctx->get_claude_question().empty()) {
     LOGI("No question provided");
 
     std::cout << "Ask the Claude model about something by providing a question "
@@ -36,9 +36,9 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
 
   assert(controller != nullptr);
 
-  const bool tokenIsSet = ctx->claude_token.empty()
+  const bool tokenIsSet = ctx->get_claude_token().empty()
                               ? controller->set_token_from_env()
-                              : controller->set_token(ctx->claude_token);
+                              : controller->set_token(ctx->get_claude_token());
 
   if (!tokenIsSet) {
     ctx->push_error("No valid Anthropic API token provided. Give it with the " +
@@ -52,7 +52,7 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
   }
 
   const std::string answer =
-      controller->ask(ctx->claude_question, ctx->claude_model);
+      controller->ask(ctx->get_claude_question(), ctx->get_claude_model());
 
   if (answer.empty()) {
     ctx->push_error("No answer received from the Claude model.");

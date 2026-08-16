@@ -43,15 +43,15 @@ TEST_F(UTEST_Application, normal_exit)
 
   EXPECT_EQ(app->run(appCtx), 0);
 
-  EXPECT_TRUE(appCtx->errors.empty());
+  EXPECT_TRUE(appCtx->get_errors().empty());
 
-  EXPECT_FALSE(appCtx->print_help_and_exit);
-  EXPECT_FALSE(appCtx->print_version_and_exit);
+  EXPECT_FALSE(appCtx->get_print_help_and_exit());
+  EXPECT_FALSE(appCtx->get_print_version_and_exit());
 }
 
 TEST_F(UTEST_Application, token_from_env_when_no_token_given)
 {
-  appCtx->claude_question = question;
+  appCtx->set_claude_question(question);
 
   EXPECT_CALL(claude(), set_token(_)).Times(0);
   EXPECT_CALL(claude(), set_token_from_env()).WillOnce(Return(true));
@@ -67,9 +67,9 @@ TEST_F(UTEST_Application, given_token_and_model_are_asked_with)
 {
   static const std::string model{"claude-sonnet-5"};
 
-  appCtx->claude_question = question;
-  appCtx->claude_token = token;
-  appCtx->claude_model = model;
+  appCtx->set_claude_question(question);
+  appCtx->set_claude_token(token);
+  appCtx->set_claude_model(model);
 
   EXPECT_CALL(claude(), set_token_from_env()).Times(0);
   EXPECT_CALL(claude(), set_token(std::string{token})).WillOnce(Return(true));
@@ -83,8 +83,8 @@ TEST_F(UTEST_Application, given_token_and_model_are_asked_with)
 
 TEST_F(UTEST_Application, rejected_token_error)
 {
-  appCtx->claude_question = question;
-  appCtx->claude_token = token;
+  appCtx->set_claude_question(question);
+  appCtx->set_claude_token(token);
 
   EXPECT_CALL(claude(), set_token(_)).WillOnce(Return(false));
   EXPECT_CALL(claude(), ask(_, _)).Times(0);
@@ -96,8 +96,8 @@ TEST_F(UTEST_Application, rejected_token_error)
 
 TEST_F(UTEST_Application, empty_answer_error)
 {
-  appCtx->claude_question = question;
-  appCtx->claude_token = token;
+  appCtx->set_claude_question(question);
+  appCtx->set_claude_token(token);
 
   EXPECT_CALL(claude(), set_token(_)).WillOnce(Return(true));
   EXPECT_CALL(claude(), ask(_, _)).WillOnce(Return(std::string{}));

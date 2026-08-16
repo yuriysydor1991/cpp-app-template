@@ -23,7 +23,7 @@ int Qt6Initer::run(std::shared_ptr<app::ApplicationContext> actx)
   // No event loop (app.exec()) is required: the controller performs synchronous
   // (blocking) property reads, logs the obtained system information through the
   // LOGI calls in the query handler and returns.
-  QCoreApplication app(actx->argc, actx->argv);
+  QCoreApplication app(actx->get_argc(), actx->get_argv());
 
   qtdbusi::QtDBusControllerPtr dbus = qtdbusi::QtDBusController::create();
 

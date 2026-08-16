@@ -25,17 +25,17 @@ std::string FbConnStringMaker::make_conn_string(
 
   std::string connStr;
 
-  if (!actx->fb_host.empty()) {
-    connStr += actx->fb_host;
+  if (!actx->get_fb_host().empty()) {
+    connStr += actx->get_fb_host();
 
-    if (!actx->fb_port.empty()) {
-      connStr += "/" + actx->fb_port;
+    if (!actx->get_fb_port().empty()) {
+      connStr += "/" + actx->get_fb_port();
     }
 
     connStr += ":";
   }
 
-  connStr += actx->fb_dbname;
+  connStr += actx->get_fb_dbname();
 
   return connStr;
 }

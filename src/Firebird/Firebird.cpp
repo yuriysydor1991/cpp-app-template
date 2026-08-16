@@ -33,7 +33,8 @@ bool Firebird::connect(std::shared_ptr<app::ApplicationContext> nctx)
     return false;
   }
 
-  return client->attach(make_conn_string(), actx->fb_user, actx->fb_password);
+  return client->attach(make_conn_string(), actx->get_fb_user(),
+                        actx->get_fb_password());
 }
 
 std::shared_ptr<IFbClient> Firebird::create_client()

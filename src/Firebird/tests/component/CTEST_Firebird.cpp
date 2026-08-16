@@ -85,11 +85,11 @@ class CTEST_Firebird : public Test
         fb{std::make_shared<ComponentFirebird>(fake)},
         ctx{std::make_shared<ApplicationContext>(argc, argv)}
   {
-    ctx->fb_host = "localhost";
-    ctx->fb_port = "3050";
-    ctx->fb_dbname = "employee";
-    ctx->fb_user = "SYSDBA";
-    ctx->fb_password = "masterkey";
+    ctx->set_fb_host("localhost");
+    ctx->set_fb_port("3050");
+    ctx->set_fb_dbname("employee");
+    ctx->set_fb_user("SYSDBA");
+    ctx->set_fb_password("masterkey");
   }
 
   int argc{0};

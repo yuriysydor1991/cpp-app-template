@@ -17,9 +17,9 @@ class UTEST_FbConnStringMaker : public Test
       : maker{std::make_shared<FbConnStringMaker>()},
         ctx{std::make_shared<ApplicationContext>(argc, argv)}
   {
-    ctx->fb_dbname = "employee";
-    ctx->fb_host.clear();
-    ctx->fb_port.clear();
+    ctx->set_fb_dbname("employee");
+    ctx->set_fb_host({});
+    ctx->set_fb_port({});
   }
 
   int argc{0};
@@ -41,22 +41,22 @@ TEST_F(UTEST_FbConnStringMaker, local_database_only)
 
 TEST_F(UTEST_FbConnStringMaker, remote_host_default_port)
 {
-  ctx->fb_host = "localhost";
+  ctx->set_fb_host("localhost");
 
   EXPECT_EQ(maker->make_conn_string(ctx), "localhost:employee");
 }
 
 TEST_F(UTEST_FbConnStringMaker, remote_host_explicit_port)
 {
-  ctx->fb_host = "localhost";
-  ctx->fb_port = "3050";
+  ctx->set_fb_host("localhost");
+  ctx->set_fb_port("3050");
 
   EXPECT_EQ(maker->make_conn_string(ctx), "localhost/3050:employee");
 }
 
 TEST_F(UTEST_FbConnStringMaker, port_without_host_is_ignored)
 {
-  ctx->fb_port = "3050";
+  ctx->set_fb_port("3050");
 
   EXPECT_EQ(maker->make_conn_string(ctx), "employee");
 }

@@ -67,8 +67,8 @@ TEST_F(UTEST_Firebird, connect_no_context_fails)
 
 TEST_F(UTEST_Firebird, connect_passes_credentials_and_succeeds)
 {
-  ctx->fb_user = "SYSDBA";
-  ctx->fb_password = "masterkey";
+  ctx->set_fb_user("SYSDBA");
+  ctx->set_fb_password("masterkey");
 
   EXPECT_CALL(*client, attach(_, "SYSDBA", "masterkey"))
       .Times(1)

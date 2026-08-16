@@ -25,9 +25,10 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  assert(actx->db_connection != nullptr);
+  assert(actx->get_db_connection() != nullptr);
 
-  const std::string firebirdDate = actx->db_connection->get_current_date();
+  const std::string firebirdDate =
+      actx->get_db_connection()->get_current_date();
 
   LOGI("Firebird' current date: " << firebirdDate);
 
@@ -50,9 +51,10 @@ bool Application::connect()
 {
   assert(actx != nullptr);
 
-  actx->db_connection = create_db_conn();
+  actx->set_db_connection(create_db_conn());
 
-  return actx->db_connection != nullptr && actx->db_connection->connect(actx);
+  return actx->get_db_connection() != nullptr &&
+         actx->get_db_connection()->connect(actx);
 }
 
 }  // namespace app

@@ -18,14 +18,14 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  ctx->dbconn = create_db_controller(ctx);
+  ctx->set_dbconn(create_db_controller(ctx));
 
-  if (!ctx->dbconn->connect(ctx)) {
+  if (!ctx->get_dbconn()->connect(ctx)) {
     LOGE("Fail to connect to the SQLite database");
     return INVALID;
   }
 
-  LOGI("SQLite3Cpp date: " << ctx->dbconn->get_current_date());
+  LOGI("SQLite3Cpp date: " << ctx->get_dbconn()->get_current_date());
 
   return 0;
 }

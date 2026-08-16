@@ -28,7 +28,7 @@ bool SQLiteController::connect(std::shared_ptr<app::ApplicationContext> nctx)
 
   try {
     db = std::make_shared<SQLite::Database>(
-        nctx->db_dbname, SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
+        nctx->get_db_dbname(), SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
   }
   catch (const std::exception& e) {
     LOGE("SQLite exception: " << e.what());

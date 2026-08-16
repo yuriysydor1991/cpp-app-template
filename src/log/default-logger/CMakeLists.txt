@@ -18,3 +18,4 @@ target_link_libraries(
 )
 
 add_subdirectory(real-default-logger)
+add_subdirectory(tests)

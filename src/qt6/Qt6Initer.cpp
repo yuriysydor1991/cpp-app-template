@@ -37,7 +37,7 @@ int Qt6Initer::run(std::shared_ptr<app::ApplicationContext> actx)
   QCoreApplication::setOrganizationName(
       QString::fromStdString(project_decls::PROJECT_NAME));
 
-  QGuiApplication app(actx->argc, actx->argv);
+  QGuiApplication app(actx->get_argc(), actx->get_argv());
 
   // Every C++ implemented QML type has to be registered before the QML files
   // referencing it are loaded.

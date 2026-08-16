@@ -91,8 +91,8 @@ TEST_F(UTEST_ApplicationFactory, create_context)
         EXPECT_CALL(instance, parse_args(_))
             .Times(1)
             .WillOnce(Invoke([&](std::shared_ptr<ApplicationContext> ctx) {
-              EXPECT_EQ(&ctx->argc, &customArgc);
-              EXPECT_EQ(&ctx->argv, &customArgv);
+              EXPECT_EQ(&ctx->get_argc(), &customArgc);
+              EXPECT_EQ(&ctx->get_argv(), &customArgv);
               return true;
             }));
       }));
@@ -128,7 +128,7 @@ TEST_F(UTEST_ApplicationFactory, create_application_help_printer)
   std::shared_ptr<ApplicationContext> ctx =
       create_context(customArgc, customArgv);
 
-  ctx->print_help_and_exit = true;
+  ctx->set_print_help_and_exit(true);
 
   std::shared_ptr<IApplication> app = factory->create_application(ctx);
 
@@ -141,7 +141,7 @@ TEST_F(UTEST_ApplicationFactory, create_application_version_printer)
   std::shared_ptr<ApplicationContext> ctx =
       create_context(customArgc, customArgv);
 
-  ctx->print_version_and_exit = true;
+  ctx->set_print_version_and_exit(true);
 
   std::shared_ptr<IApplication> app = factory->create_application(ctx);
 
@@ -160,8 +160,8 @@ TEST_F(UTEST_ApplicationFactory, factory_run_default_app)
         EXPECT_CALL(instance, parse_args(_))
             .Times(1)
             .WillOnce(Invoke([&](std::shared_ptr<ApplicationContext> ctx) {
-              EXPECT_EQ(&ctx->argc, &customArgc);
-              EXPECT_EQ(&ctx->argv, &customArgv);
+              EXPECT_EQ(&ctx->get_argc(), &customArgc);
+              EXPECT_EQ(&ctx->get_argv(), &customArgv);
               return true;
             }));
       }));
@@ -189,9 +189,9 @@ TEST_F(UTEST_ApplicationFactory, factory_run_help_app)
         EXPECT_CALL(instance, parse_args(_))
             .Times(1)
             .WillOnce(Invoke([&](std::shared_ptr<ApplicationContext> ctx) {
-              EXPECT_EQ(&ctx->argc, &customArgc);
-              EXPECT_EQ(&ctx->argv, &customArgv);
-              ctx->print_help_and_exit = true;
+              EXPECT_EQ(&ctx->get_argc(), &customArgc);
+              EXPECT_EQ(&ctx->get_argv(), &customArgv);
+              ctx->set_print_help_and_exit(true);
               return true;
             }));
       }));
@@ -220,9 +220,9 @@ TEST_F(UTEST_ApplicationFactory, factory_run_version_app)
         EXPECT_CALL(instance, parse_args(_))
             .Times(1)
             .WillOnce(Invoke([&](std::shared_ptr<ApplicationContext> ctx) {
-              EXPECT_EQ(&ctx->argc, &customArgc);
-              EXPECT_EQ(&ctx->argv, &customArgv);
-              ctx->print_version_and_exit = true;
+              EXPECT_EQ(&ctx->get_argc(), &customArgc);
+              EXPECT_EQ(&ctx->get_argv(), &customArgv);
+              ctx->set_print_version_and_exit(true);
               return true;
             }));
       }));
@@ -251,8 +251,8 @@ TEST_F(UTEST_ApplicationFactory, factory_execute_default_app)
         EXPECT_CALL(instance, parse_args(_))
             .Times(1)
             .WillOnce(Invoke([&](std::shared_ptr<ApplicationContext> ctx) {
-              EXPECT_EQ(&ctx->argc, &customArgc);
-              EXPECT_EQ(&ctx->argv, &customArgv);
+              EXPECT_EQ(&ctx->get_argc(), &customArgc);
+              EXPECT_EQ(&ctx->get_argv(), &customArgv);
               return true;
             }));
       }));

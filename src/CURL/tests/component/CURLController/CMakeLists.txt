@@ -15,7 +15,6 @@ target_include_directories(
   CTEST_CURLController
   PRIVATE ${CURL_MOCKS_ROOT}/log
   PRIVATE ${CMAKE_SOURCE_DIR}
-  PRIVATE ${CURL_INCLUDE_DIRS}
 )
 
 target_link_libraries(

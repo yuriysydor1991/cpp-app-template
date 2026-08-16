@@ -77,12 +77,12 @@ std::shared_ptr<IApplication> ApplicationFactory::create_application(
     return {};
   }
 
-  if (ctx->print_help_and_exit) {
+  if (ctx->get_print_help_and_exit()) {
     LOGD("Creating the help printer application");
     return create_help_printer();
   }
 
-  if (ctx->print_version_and_exit) {
+  if (ctx->get_print_version_and_exit()) {
     LOGD("Creating the version printer application");
     return create_version_printer();
   }

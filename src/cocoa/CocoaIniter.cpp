@@ -23,7 +23,7 @@ int CocoaIniter::run(std::shared_ptr<app::ApplicationContext> nactx)
 
   LOGD("Starting the Cocoa application");
 
-  return launch(actx->argc, actx->argv);
+  return launch(actx->get_argc(), actx->get_argv());
 }
 
 int CocoaIniter::launch(int& argc, char**& argv)

@@ -123,7 +123,7 @@ bool OpenCVController::face_recognition_example(appctx ctx)
     return false;
   }
 
-  if (!load_cascade(ctx->cascade_path)) {
+  if (!load_cascade(ctx->get_cascade_path())) {
     LOGE(
         "Failed to load the pre-installed Haar cascade. Provide the path "
         "explicitly with --face-cascade "
@@ -133,16 +133,16 @@ bool OpenCVController::face_recognition_example(appctx ctx)
 
   LOGI("OpenCV face cascade loaded from " << get_cascade_path());
 
-  if (ctx->image_path.empty()) {
+  if (ctx->get_image_path().empty()) {
     LOGI(
         "No --image was provided, nothing to scan. The OpenCV face detection "
         "stack is initialised and ready.");
     return true;
   }
 
-  const auto faces = detect(ctx->image_path);
+  const auto faces = detect(ctx->get_image_path());
 
-  LOGI("Detected " << faces.size() << " face(s) in " << ctx->image_path);
+  LOGI("Detected " << faces.size() << " face(s) in " << ctx->get_image_path());
 
   return true;
 }

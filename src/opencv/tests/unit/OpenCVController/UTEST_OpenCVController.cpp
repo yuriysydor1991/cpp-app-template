@@ -101,14 +101,14 @@ TEST_F(UTEST_OpenCVController,
 TEST_F(UTEST_OpenCVController,
        face_recognition_example_fails_on_missing_cascade)
 {
-  ctx->cascade_path = "/tmp/this/path/does/not/exist.xml";
+  ctx->set_cascade_path("/tmp/this/path/does/not/exist.xml");
 
   EXPECT_FALSE(controller->face_recognition_example(ctx));
 }
 
 TEST_F(UTEST_OpenCVController, run_fails_on_missing_cascade)
 {
-  ctx->cascade_path = "/tmp/this/path/does/not/exist.xml";
+  ctx->set_cascade_path("/tmp/this/path/does/not/exist.xml");
 
   EXPECT_FALSE(controller->run(ctx));
 }

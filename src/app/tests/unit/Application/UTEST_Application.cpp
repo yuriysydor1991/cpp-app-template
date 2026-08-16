@@ -51,7 +51,7 @@ TEST_F(UTEST_Application, delegates_to_opencv_controller_run)
   EXPECT_CALL(*appCtx, push_error(_)).Times(0);
 
   EXPECT_EQ(app->run(appCtx), 0);
-  EXPECT_TRUE(appCtx->errors.empty());
+  EXPECT_TRUE(appCtx->get_errors().empty());
 }
 
 TEST_F(UTEST_Application, opencv_controller_run_failure_returns_invalid)

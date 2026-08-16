@@ -98,7 +98,7 @@ TEST_F(CTEST_opencv, run_loads_cascade_and_scans_image)
     GTEST_SKIP() << "No preinstalled OpenCV Haar cascade was found on the host";
   }
 
-  ctx->image_path = make_blank_fixture("opencv-run-blank-fixture.png");
+  ctx->set_image_path(make_blank_fixture("opencv-run-blank-fixture.png"));
 
   EXPECT_TRUE(controller->run(ctx));
   EXPECT_FALSE(controller->get_cascade_path().empty());

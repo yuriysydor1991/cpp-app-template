@@ -81,9 +81,9 @@ TEST_F(UTEST_CommandLineParser, help_short)
 
   EXPECT_TRUE(parser->parse_args(appctx));
 
-  EXPECT_TRUE(appctx->print_help_and_exit);
-  EXPECT_FALSE(appctx->print_version_and_exit);
-  EXPECT_TRUE(appctx->errors.empty());
+  EXPECT_TRUE(appctx->get_print_help_and_exit());
+  EXPECT_FALSE(appctx->get_print_version_and_exit());
+  EXPECT_TRUE(appctx->get_errors().empty());
 }
 
 TEST_F(UTEST_CommandLineParser, help_long)
@@ -94,9 +94,9 @@ TEST_F(UTEST_CommandLineParser, help_long)
 
   EXPECT_TRUE(parser->parse_args(appctx));
 
-  EXPECT_TRUE(appctx->print_help_and_exit);
-  EXPECT_FALSE(appctx->print_version_and_exit);
-  EXPECT_TRUE(appctx->errors.empty());
+  EXPECT_TRUE(appctx->get_print_help_and_exit());
+  EXPECT_FALSE(appctx->get_print_version_and_exit());
+  EXPECT_TRUE(appctx->get_errors().empty());
 }
 
 TEST_F(UTEST_CommandLineParser, version_short)
@@ -107,9 +107,9 @@ TEST_F(UTEST_CommandLineParser, version_short)
 
   EXPECT_TRUE(parser->parse_args(appctx));
 
-  EXPECT_FALSE(appctx->print_help_and_exit);
-  EXPECT_TRUE(appctx->print_version_and_exit);
-  EXPECT_TRUE(appctx->errors.empty());
+  EXPECT_FALSE(appctx->get_print_help_and_exit());
+  EXPECT_TRUE(appctx->get_print_version_and_exit());
+  EXPECT_TRUE(appctx->get_errors().empty());
 }
 
 TEST_F(UTEST_CommandLineParser, version_long)
@@ -120,9 +120,9 @@ TEST_F(UTEST_CommandLineParser, version_long)
 
   EXPECT_TRUE(parser->parse_args(appctx));
 
-  EXPECT_FALSE(appctx->print_help_and_exit);
-  EXPECT_TRUE(appctx->print_version_and_exit);
-  EXPECT_TRUE(appctx->errors.empty());
+  EXPECT_FALSE(appctx->get_print_help_and_exit());
+  EXPECT_TRUE(appctx->get_print_version_and_exit());
+  EXPECT_TRUE(appctx->get_errors().empty());
 }
 
 TEST_F(UTEST_CommandLineParser, image_short_stores_path)
@@ -135,9 +135,9 @@ TEST_F(UTEST_CommandLineParser, image_short_stores_path)
 
   EXPECT_TRUE(parser->parse_args(appctx));
 
-  EXPECT_EQ(appctx->image_path, std::string{expectedPath});
-  EXPECT_FALSE(appctx->print_help_and_exit);
-  EXPECT_FALSE(appctx->print_version_and_exit);
+  EXPECT_EQ(appctx->get_image_path(), std::string{expectedPath});
+  EXPECT_FALSE(appctx->get_print_help_and_exit());
+  EXPECT_FALSE(appctx->get_print_version_and_exit());
 }
 
 TEST_F(UTEST_CommandLineParser, image_long_stores_path)
@@ -150,7 +150,7 @@ TEST_F(UTEST_CommandLineParser, image_long_stores_path)
 
   EXPECT_TRUE(parser->parse_args(appctx));
 
-  EXPECT_EQ(appctx->image_path, std::string{expectedPath});
+  EXPECT_EQ(appctx->get_image_path(), std::string{expectedPath});
 }
 
 TEST_F(UTEST_CommandLineParser, image_without_value_pushes_error)
@@ -161,7 +161,7 @@ TEST_F(UTEST_CommandLineParser, image_without_value_pushes_error)
 
   EXPECT_FALSE(parser->parse_args(appctx));
 
-  EXPECT_TRUE(appctx->image_path.empty());
+  EXPECT_TRUE(appctx->get_image_path().empty());
 }
 
 TEST_F(UTEST_CommandLineParser, face_cascade_stores_path)
@@ -174,7 +174,7 @@ TEST_F(UTEST_CommandLineParser, face_cascade_stores_path)
 
   EXPECT_TRUE(parser->parse_args(appctx));
 
-  EXPECT_EQ(appctx->cascade_path, std::string{expectedPath});
+  EXPECT_EQ(appctx->get_cascade_path(), std::string{expectedPath});
 }
 
 TEST_F(UTEST_CommandLineParser, unknown_flag)
@@ -190,7 +190,7 @@ TEST_F(UTEST_CommandLineParser, unknown_flag)
 
   EXPECT_FALSE(parser->parse_args(appctx));
 
-  EXPECT_TRUE(appctx->print_help_and_exit);
-  EXPECT_FALSE(appctx->print_version_and_exit);
-  EXPECT_TRUE(appctx->errors.empty());
+  EXPECT_TRUE(appctx->get_print_help_and_exit());
+  EXPECT_FALSE(appctx->get_print_version_and_exit());
+  EXPECT_TRUE(appctx->get_errors().empty());
 }

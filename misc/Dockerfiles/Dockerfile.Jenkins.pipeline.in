@@ -26,4 +26,3 @@ RUN apt install -y qml6-module-qtquick-controls
 USER jenkins
 
 CMD ["jenkins.sh"]
-

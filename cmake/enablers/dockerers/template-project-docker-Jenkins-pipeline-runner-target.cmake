@@ -138,4 +138,3 @@ add_custom_target(
   DEPENDS jenkins-pipeline-docker-build
   COMMENT "Running the Jenkins pipeline inside docker run instance"
 )
-

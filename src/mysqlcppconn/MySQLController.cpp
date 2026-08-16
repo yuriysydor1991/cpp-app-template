@@ -30,8 +30,9 @@ bool MySQLController::connect(std::shared_ptr<app::ApplicationContext> nctx)
 
     auto connmaker = std::make_shared<helpers::MySQLConnStrMaker>();
 
-    auto* cptr = driver.connect(connmaker->make_conn_string(nctx),
-                                nctx->mysql_user, nctx->mysql_password);
+    auto* cptr =
+        driver.connect(connmaker->make_conn_string(nctx),
+                       nctx->get_mysql_user(), nctx->get_mysql_password());
 
     assert(cptr != nullptr);
 
@@ -41,8 +42,8 @@ bool MySQLController::connect(std::shared_ptr<app::ApplicationContext> nctx)
 
     conn = std::unique_ptr<sql::Connection>(cptr);
 
-    if (!nctx->mysql_dbname.empty()) {
-      conn->setSchema(nctx->mysql_dbname);
+    if (!nctx->get_mysql_dbname().empty()) {
+      conn->setSchema(nctx->get_mysql_dbname());
     }
   }
   catch (sql::SQLException& e) {

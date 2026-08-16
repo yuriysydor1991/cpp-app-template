@@ -18,10 +18,10 @@ std::string MySQLConnStrMaker::make_conn_string(
     return {};
   }
 
-  std::string cstr = actx->mysql_host;
+  std::string cstr = actx->get_mysql_host();
 
-  if (!actx->mysql_port.empty()) {
-    cstr += ":" + actx->mysql_port;
+  if (!actx->get_mysql_port().empty()) {
+    cstr += ":" + actx->get_mysql_port();
   }
 
   return cstr;

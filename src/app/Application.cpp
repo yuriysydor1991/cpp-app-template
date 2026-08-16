@@ -25,7 +25,7 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  LOGI("MySQL' current date: " << actx->mysqlconn->get_current_date());
+  LOGI("MySQL' current date: " << actx->get_mysqlconn()->get_current_date());
 
   return 0;
 }
@@ -39,11 +39,12 @@ bool Application::connect()
     return false;
   }
 
-  actx->mysqlconn = create_db_controller();
+  actx->set_mysqlconn(create_db_controller());
 
-  assert(actx->mysqlconn != nullptr);
+  assert(actx->get_mysqlconn() != nullptr);
 
-  return actx->mysqlconn != nullptr && actx->mysqlconn->connect(actx);
+  return actx->get_mysqlconn() != nullptr &&
+         actx->get_mysqlconn()->connect(actx);
 }
 
 std::shared_ptr<mysqli::MySQLController> Application::create_db_controller()

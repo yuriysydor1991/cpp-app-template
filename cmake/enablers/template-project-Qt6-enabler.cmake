@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
 option(
-  ENABLE_QT6 
+  ENABLE_QT6
   "If to enable the Qt6 library (no FetchContent available)"
   ON
 )

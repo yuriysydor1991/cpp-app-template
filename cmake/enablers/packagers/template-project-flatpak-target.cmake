@@ -18,8 +18,8 @@ set(FLATPAK_REPO ${PROJECT_BINARY_NAME}-repo)
 set(FLATPAK_DST_NAME ${PROJECT_BINARY_NAME}-${CMAKE_PROJECT_VERSION}.flatpak)
 set(flatpakConfDst ${CMAKE_BINARY_DIR}/flatpak.conf.json)
 set(
-  FLATPAK_CONF_SRC 
-  ${CMAKE_SOURCE_DIR}/misc/packagers/flatpak.conf.json.in 
+  FLATPAK_CONF_SRC
+  ${CMAKE_SOURCE_DIR}/misc/packagers/flatpak.conf.json.in
   CACHE STRING "The flatpak json conf source file cmake configured"
 )
 
@@ -31,7 +31,7 @@ message(STATUS "flatpak json conf src: ${FLATPAK_CONF_SRC}")
 
 add_custom_target(
   flatpak
-  COMMAND 
+  COMMAND
     ${FLATPAKB_EXEC} --repo=${FLATPAK_REPO} "${CMAKE_BINARY_DIR}/flatpak-build" ${flatpakConfDst} &&
     ${FLATPAK_EXEC} build-bundle ${FLATPAK_REPO} ${FLATPAK_DST_NAME} ${FLATPAK_PROJECT_URL}
   WORKING_DIRECTORY ${CMAKE_BINARY_DIR}

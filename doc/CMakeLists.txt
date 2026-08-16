@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
 option(
-  ENABLE_DOC_DOXYGEN 
+  ENABLE_DOC_DOXYGEN
   "Set to ON value if Doxygen documentation generation should be available"
   OFF
 )
@@ -24,7 +24,7 @@ set(
 option(
   DOXYGEN_DO_INSTALL
   "Set to on if CMake should install the generated documentation during install command executed."
-  OFF 
+  OFF
 )
 
 set(
@@ -51,7 +51,7 @@ if (DOXYGEN_OUTPUT_LANGUAGE STREQUAL "Ukrainian")
 endif()
 
 configure_file(
-  ${DOXYGEN_IN} 
+  ${DOXYGEN_IN}
   ${DOXYGEN_OUT}
 )
 

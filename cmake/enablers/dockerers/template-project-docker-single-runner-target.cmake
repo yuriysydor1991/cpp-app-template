@@ -2,16 +2,16 @@ cmake_minimum_required(VERSION 3.13)
 
 set(
   DOCKER_SINGLE_BUILD_CMD
-    DOCKER_HOST=${DOCKER_HOST_STR} DOCKER_BUILDKIT=1 ${DOCKER_EXEC} build 
-      --build-context project=${CMAKE_SOURCE_DIR} 
-      --build-arg CACHEBUST="${PROJECT_CONFIGURE_DATE}" 
+    DOCKER_HOST=${DOCKER_HOST_STR} DOCKER_BUILDKIT=1 ${DOCKER_EXEC} build
+      --build-context project=${CMAKE_SOURCE_DIR}
+      --build-arg CACHEBUST="${PROJECT_CONFIGURE_DATE}"
       -t ${DOCKER_SINGLE_RUN_NAME} .
 )
 
 set(
   DOCKER_SINGLE_RUN_CMD
-    xhost +local: && 
-    DOCKER_HOST=${DOCKER_HOST_STR} ${DOCKER_EXEC} run --rm 
+    xhost +local: &&
+    DOCKER_HOST=${DOCKER_HOST_STR} ${DOCKER_EXEC} run --rm
     --env DISPLAY=$$DISPLAY
     --env QT_X11_NO_MITSHM=1
     --volume /tmp/.X11-unix:/tmp/.X11-unix

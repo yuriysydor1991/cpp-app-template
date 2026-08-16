@@ -5,7 +5,7 @@ Currently it's possible to auto-generate the project documentation by the Doxyge
 To enable Doxygen documentation CMake-target during the project configure process call a command that sets the `ENABLE_DOC_DOXYGEN` CMake variable to the `ON` value (GNU/Linux based):
 
 ```
-# inside the project root directory 
+# inside the project root directory
 
 cmake -B build -S . -DENABLE_DOC_DOXYGEN=ON
 ```

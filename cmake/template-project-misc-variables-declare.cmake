@@ -31,19 +31,19 @@ set(
 
 set(
   MAX_LOG_LEVEL "3"
-  CACHE STRING 
+  CACHE STRING
   "Sets the maximum severity of the compiled log messages. Error=0. Trace=5. By default Info=3"
 )
 
 set(
   PROJECT_BINARY_INSTALLATION_DIR "bin"
-  CACHE STRING 
+  CACHE STRING
   "Sets the project main binary installation directory"
 )
 
 set(
   DEFAULT_LOG_FILE_PATH ""
-  CACHE STRING 
+  CACHE STRING
   "Sets the default log file path"
 )
 

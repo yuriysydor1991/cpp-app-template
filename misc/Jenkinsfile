@@ -1,6 +1,6 @@
 pipeline {
   agent any
-  
+
   environment {
     BUILDDIR="build/Jenkins-pipeline"
     BDJUNITOUT="junit-out"
@@ -28,13 +28,13 @@ pipeline {
           return files == ""
         }
       }
-      
+
       steps {
         git branch: 'appQt6ChartView',
             url: 'https://github.com/yuriysydor1991/cpp-app-template.git'
       }
     }
-    
+
     stage('Code format configure') {
       steps {
         sh '''
@@ -42,7 +42,7 @@ pipeline {
         '''
       }
     }
-    
+
     stage('Code format build (clang-format)') {
       steps {
         sh '''
@@ -55,7 +55,7 @@ pipeline {
           }
         }
       }
-      
+
       post {
         success {
           echo 'No files changed - OK'
@@ -76,7 +76,7 @@ pipeline {
         '''
       }
     }
-    
+
     stage('Debug build') {
       steps {
         sh '''
@@ -84,7 +84,7 @@ pipeline {
         '''
       }
     }
-    
+
     stage('cppcheck') {
       when {
         expression { params.RUN_CPPCHECK }
@@ -95,43 +95,43 @@ pipeline {
         '''
       }
     }
-    
+
     stage('Unit Tests') {
       parallel {
-        stage('UTEST_Application') { 
-          steps { 
+        stage('UTEST_Application') {
+          steps {
             sh 'cd $BUILDDIR && ctest -R "UTEST_Application\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_Application.junit.xml'
           }
         }
-        stage('UTEST_ApplicationContext') { 
-          steps { 
+        stage('UTEST_ApplicationContext') {
+          steps {
             sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationContext\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationContext.junit.xml'
           }
         }
-        stage('UTEST_ApplicationFactory') { 
-          steps { 
+        stage('UTEST_ApplicationFactory') {
+          steps {
             sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationFactory\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationFactory.junit.xml'
           }
         }
-        stage('UTEST_ApplicationHelpPrinter') { 
-          steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationHelpPrinter\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationHelpPrinter.junit.xml' 
+        stage('UTEST_ApplicationHelpPrinter') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationHelpPrinter\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationHelpPrinter.junit.xml'
           }
         }
-        stage('UTEST_ApplicationVersionPrinter') { 
-          steps { 
+        stage('UTEST_ApplicationVersionPrinter') {
+          steps {
             sh 'cd $BUILDDIR && ctest -R "UTEST_ApplicationVersionPrinter\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ApplicationVersionPrinter.junit.xml'
           }
         }
-        stage('UTEST_CommandLineParser') { 
-          steps { 
+        stage('UTEST_CommandLineParser') {
+          steps {
             sh 'cd $BUILDDIR && ctest -R "UTEST_CommandLineParser\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_CommandLineParser.junit.xml'
           }
         }
       }
       post { always { junit "$BUILDDIR/$BDJUNITOUT/UTEST_*.xml" } }
     }
-    
+
     stage('Component Tests') {
       parallel {
         stage('CTEST_DefaultLogger') {
@@ -144,15 +144,15 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "CTEST_log\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_log.junit.xml'
           }
         }
-        stage('CTEST_app') { 
-          steps { 
+        stage('CTEST_app') {
+          steps {
             sh 'cd $BUILDDIR && ctest -R "CTEST_app\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_app.junit.xml'
           }
         }
       }
       post { always { junit "$BUILDDIR/$BDJUNITOUT/CTEST_*.xml" } }
     }
-    
+
     stage('Debug configure (clang-tidy)') {
       when {
         expression { params.RUN_CLANGTIDY }
@@ -165,7 +165,7 @@ pipeline {
         '''
       }
     }
-    
+
     stage('Debug build (clang-tidy)') {
       steps {
         sh '''
@@ -173,7 +173,7 @@ pipeline {
         '''
       }
     }
-    
+
     stage('Release configure') {
       steps {
         sh 'rm -fr $BUILDDIR'
@@ -182,7 +182,7 @@ pipeline {
         '''
       }
     }
-    
+
     stage('Release build') {
       steps {
         sh '''
@@ -190,7 +190,7 @@ pipeline {
         '''
       }
     }
-    
+
     stage('Release install') {
       steps {
         sh '''

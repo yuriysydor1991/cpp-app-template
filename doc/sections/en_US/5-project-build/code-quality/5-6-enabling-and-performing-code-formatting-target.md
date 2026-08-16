@@ -3,7 +3,7 @@
 In order to make `clang-format` target available set the `ENABLE_CLANGFORMAT` variable value to `ON` during the project configuration stage (GNU/Linux based):
 
 ```
-# inside the project root directory 
+# inside the project root directory
 
 cmake -B build -S . -DENABLE_CLANGFORMAT=ON
 ```

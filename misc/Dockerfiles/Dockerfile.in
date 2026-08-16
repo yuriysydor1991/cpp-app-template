@@ -16,7 +16,7 @@ RUN apt install -y qml6-module-qtquick-controls
 
 ARG BUILDDIR=/src/${PROJECT_BINARY_NAME}-build-docker-singlerun
 
-RUN --mount=from=project,target=/src/${PROJECT_BINARY_NAME} \ 
+RUN --mount=from=project,target=/src/${PROJECT_BINARY_NAME} \
  cd /src/${PROJECT_BINARY_NAME} && \
  mkdir -vp $BUILDDIR && \
  cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Release &&  \

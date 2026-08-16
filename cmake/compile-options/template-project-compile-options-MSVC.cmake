@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.13)
 
-set(EXTRA_COMPILE_OPTIONS 
+set(EXTRA_COMPILE_OPTIONS
   ${EXTRA_COMPILE_OPTIONS} /W4 /Wall /permissive- /w44242 /w44266 /w44062 /w44065 /w44296 /w44064
 )
 

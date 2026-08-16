@@ -3,7 +3,7 @@
 In order to make the `valgrind` target available for the execution, configure project with the enabled `ENABLE_VALGRIND` variable like:
 
 ```
-# inside the project root directory 
+# inside the project root directory
 
 cmake -B build -S . -DENABLE_VALGRIND=ON
 ```

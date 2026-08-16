@@ -3,7 +3,7 @@
 In order to be able to generate the FreeBSD `.pkg` binary package file configure the project to support the `cpack` command feature with the `ENABLE_FREEBSD_PKG` variable enabled:
 
 ```
-# inside the project root directory 
+# inside the project root directory
 
 cmake -B build -S . -DENABLE_FREEBSD_PKG=ON
 ```

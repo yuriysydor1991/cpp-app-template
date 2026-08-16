@@ -5,7 +5,7 @@ import components
 
 ApplicationWindow {
   visible: true
-  
+
   width: 500
   height: 300
   minimumWidth: 400

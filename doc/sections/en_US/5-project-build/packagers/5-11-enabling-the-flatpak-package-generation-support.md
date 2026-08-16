@@ -3,7 +3,7 @@
 In order to enable the flatpak generation of the redistribution package on the template project configure it with enabled option `ENABLE_FLATPAK` (GNU/Linux and alike):
 
 ```
-# inside the project root directory 
+# inside the project root directory
 
 cmake -B build -S . -DENABLE_FLATPAK=ON
 ```
@@ -13,7 +13,7 @@ Which in order will enable the `flatpak` target.
 And finally to generate the flatpak package run the `flatpak` target for the build:
 
 ```
-# inside the project root directory 
+# inside the project root directory
 
 cmake --build build --target flatpak
 ```

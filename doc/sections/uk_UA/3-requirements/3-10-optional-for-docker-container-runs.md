@@ -9,7 +9,7 @@ sudo apt install -y docker.io docker-buildx
 Наступним кроком являється конфігурування сервісу Docker для прослуховування на локальному інтерфейсі для TCP підключень:
 
 ```
-sudo systemctl edit docker 
+sudo systemctl edit docker
 ```
 
 Після відкриття конфігураційного файлу сервісу Docker необхідно вставити в його кінець наступні рядки:

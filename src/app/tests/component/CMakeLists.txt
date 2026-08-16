@@ -5,7 +5,7 @@ if (NOT ENABLE_COMPONENT_TESTS)
 endif()
 
 add_executable(
-  CTEST_app  
+  CTEST_app
   CTEST_app.cpp
   ${CMAKE_SOURCE_DIR}/src/app/Application.cpp
   ${CMAKE_SOURCE_DIR}/src/app/ApplicationContext.cpp

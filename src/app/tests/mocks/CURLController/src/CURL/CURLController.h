@@ -25,6 +25,8 @@ class CURLController
               (const std::string& url, const std::string& body,
                const std::vector<std::string>& headers));
 
+  MOCK_METHOD(bool, last_response_successfull, (), (const));
+
   MOCK_METHOD(long, last_response_code, (), (const));
 
   MOCK_METHOD(download_buffer, get, ());

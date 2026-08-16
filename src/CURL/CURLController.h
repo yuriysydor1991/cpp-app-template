@@ -44,10 +44,25 @@ class CURLController
                                 const std::vector<std::string>& headers);
 
   /**
+   * @brief Tells whether the last performed request has been answered with a
+   * success status.
+   *
+   * Preferred over comparing the last_response_code value with a status of
+   * it's own, so the calling code keeps no HTTP status constants at all.
+   *
+   * @return Returns true when the answer carries a success status or arrives
+   * over a protocol that carries no statuses (the file one, for example),
+   * false when the request has failed or the status reports anything but a
+   * success, a redirect included.
+   */
+  virtual bool last_response_successfull() const;
+
+  /**
    * @brief Gives the HTTP status code of the last performed request.
    *
    * @return Returns the HTTP status code or zero when no response has been
-   * received at all.
+   * received at all or the protocol used carries no statuses (the file one,
+   * for example).
    */
   virtual long last_response_code() const;
 
@@ -84,9 +99,19 @@ class CURLController
   /// a server generating an answer keeps the connection silent meanwhile.
   inline static unsigned long long DEFAULT_POST_TIMEOUT = 300L;
 
+  /// @brief The HTTP status codes range that reports a successfully answered
+  /// request, so a redirect stays out of it.
+  inline static constexpr const long HTTP_FIRST_SUCCESS_STATUS = 200L;
+  inline static constexpr const long HTTP_LAST_SUCCESS_STATUS = 299L;
+
   download_buffer cbuff;
   CURL* curl{nullptr};
   long responseCode{0L};
+
+  /// @brief Tells whether the last request has been performed at all, which
+  /// separates the zero code of a protocol carrying no statuses from the one
+  /// of a request that never reached a server.
+  bool responseReceived{false};
 };
 
 using CURLControllerPtr = CURLController::CURLControllerPtr;

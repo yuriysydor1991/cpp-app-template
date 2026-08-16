@@ -48,6 +48,6 @@ Three details of that endpoint are worth keeping in mind when extending the clas
 
 ### The subsystem structure
 
-The `curli::CURLController` class gained a `post` method that sends a body with a set of headers and keeps the HTTP status code of the answer available through the `last_response_code` method. Unlike it's `download` method, the `post` one applies no low speed abort and waits far longer, because a model composing an answer sends nothing over the connection meanwhile.
+The `curli::CURLController` class gained a `post` method that sends a body with a set of headers, tells whether the answer carries a success status through the `last_response_successfull` method and keeps the code itself available through the `last_response_code` one. Asking the first of them keeps the HTTP statuses inside the transport, so the client class holds no status constant of it's own. Unlike it's `download` method, the `post` one applies no low speed abort and waits far longer, because a model composing an answer sends nothing over the connection meanwhile.
 
 The `claudei::ClaudeController` class takes that controller as a constructor argument, which lets the `UTEST_ClaudeController` unit test verify the built request and the parsed answer against a mocked transport with no network access at all. The `app::Application` class drives the controller with the values the `app::CommandLineParser` places into the `app::ApplicationContext` instance.

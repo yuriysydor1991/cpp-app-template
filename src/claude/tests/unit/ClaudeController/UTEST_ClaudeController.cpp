@@ -48,7 +48,8 @@ class UTEST_ClaudeController : public Test
         .WillOnce(DoAll(SaveArg<1>(&sentBody), SaveArg<2>(&sentHeaders),
                         Return(as_buffer(response))));
 
-    EXPECT_CALL(*curl, last_response_code()).WillRepeatedly(Return(200L));
+    EXPECT_CALL(*curl, last_response_successfull())
+        .WillRepeatedly(Return(true));
   }
 
   static constexpr const char* const question = "What is the point of taxes?";
@@ -165,6 +166,7 @@ TEST_F(UTEST_ClaudeController, reported_api_error_gives_no_answer)
           as_buffer(R"({"type":"error","error":{"type":"authentication_error",)"
                     R"("message":"invalid x-api-key"}})")));
 
+  EXPECT_CALL(*curl, last_response_successfull()).WillRepeatedly(Return(false));
   EXPECT_CALL(*curl, last_response_code()).WillRepeatedly(Return(401L));
 
   EXPECT_TRUE(controller->ask(question, {}).empty());

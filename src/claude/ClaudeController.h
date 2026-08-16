@@ -88,9 +88,6 @@ class ClaudeController
   static ClaudeControllerPtr create(curli::CURLControllerPtr curlController);
 
  private:
-  /// @brief The HTTP status code of a successfully answered request.
-  inline static constexpr const long HTTP_OK{200L};
-
   /**
    * @brief Builds the messages endpoint request body.
    *

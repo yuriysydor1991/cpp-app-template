@@ -5,6 +5,193 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appSDL20.8.0] - 2026-08-17
+
+- aaa2e38 Introducing the InsertNewlineAtEOF clang-format option
+- 5bf1ed6 Introducing the appCURLChatGPT branch info into the READMEs
+- 997c240 Hiding the ApplicationContext fields and adding the atomic stop flag
+- 51cb0a7 Moving the linker hardening options out of the compile options
+- 91dc8ca Split the DefaultLogger into a static proxy and a real logger instance
+- c88d519 Introducing the appCURLClaude branch info into the READMEs
+- 965473d Introducing the external documentation URLs check into the Jenkins pipeline
+- 026e264 Correcting the docker modules path of the documentation
+- 57061cd Introducing the quick build and the docker starter scripts
+- a3acb68 Introducing the quick build and the docker starter scripts
+- 1517c06 Making the docker containers run under unprivileged users
+- c9512bc Formatting the sources with the clang-format
+- 1c3d128 Repairing the pipeline code check stages
+- b68a39e Introducing the appPGPLOT branch info into the READMEs
+- 28e9ed7 Fixing the Jenkinsfile
+- 0ceecb7 Fix broken cppcheck link in section 5 index
+- 5435456 Fix Groovy escape sequences in markdown link checker stage
+- 3a1a6bd Rework markdown link checker stage to pure bash
+- 5043a87 Add Jenkinsfile stage to detect broken markdown links; fix pre-existing broken links
+- 9496142 Reorganize doc/sections into section dirs with category grouping
+- 1b84e37 Add an OpenSSL cmake enabler module with SHA-256, HMAC-SHA256 and HTTPS/TLS client code samples
+- 6e2df61 Group the enabler documentation under subsections in the READMEs
+- 3e9fd00 Group the compression branches under a dedicated README section
+- 790f680 Introducing the appLZMA branch info into the READMEs
+- e0560e2 Add a liblzma (XZ Utils) compression library enabler module
+- 4924762 Introducing the appZlib branch info into the READMEs
+- fe15584 Add zlib compression usage examples to its enabler documentation
+- 341a4a4 Replace the redundant PROJECT_NAME CMake variable with CMAKE_PROJECT_NAME
+- b5120fb Introducing the appGtkmm4Vulkan branch info into the READMEs
+- 96e0d9a Removing the appGtkmm4Vulkan branch info from the READMEs
+- da0e12a Introducing the appQt6Vulkan and appGtkmm4Vulkan branches info into the READMEs
+- aa5efe8 Simplifying root CMakeLists.txt
+- 910455b Introducing the appFirebird branch info into the READMEs
+- 83b01e9 Introducing the appGtkmm4GDBusClient branch info into the READMEs
+- 90f3602 Introducing the appQt6GLArea branch info into the READMEs
+- e79f02a Introducing the appGtkmm4GLArea branch info into the READMEs
+- 2a1fc8e Splitting the Data Visualization README category into Plots/Graphs and Maps
+- b2232ad Introducing the applibMeson branch info into the READMEs
+- 9c717e7 Introducing the zlib and image format cmake enablers with docs
+- cdf0a0a Introducing the appSFML branch info into the READMEs
+- 4f096b5 Introducing the appwxWidgets branch info into the READMEs
+- 16636b6 Introducing the appQt6QtDBusClient branch info into the READMEs
+- 2c1ec37 Introducing the appQt6QtLocation branch info into the READMEs
+- 82efaf5 Introducing the appQt6ChartView branch into the READMEs
+- dc30d70 Introducing the appGtkmm4LeafLet and appQt6LeafLet branches info into the READMEs
+- 8dd3ea1 Introducing the COMPONENTS arg for template_project_default_3rdparty_enabler
+- e746803 Refining the SDL2 enabler
+- 429dfd6 Introducing information about the SDL3 branch in the READMEs
+- 3fa0d58 Registering missing tests in the Jenkinsfile
+- 40a447e Replacing faulty SimpleLogger mention with the DefaultLogger
+- 8c402eb Rename the simple logger to DefaultLogger and add top-level log.h tests
+- 4c6c6f3 Removing faulty simple_logger mention in the log.h
+- 7dd0ef2 Add template-specific packager, documentation and registration checks
+- b0f312d Introducing the appSDBusCxxClient and appSDBusCxxServer branches info into the READMEs
+- c81b1b1 Moving Dockerfiles and packagers files into separate subdirs in the misc
+- fbd5fbc Adding .claude dir to .gitignore
+- 7ec3a3b Introducing project structure section Будь ласка, зверніться до адміністратора subsection
+- 468c6be Extracting the SDL2 setup into a dedicated cmake enabler
+- a7a8a0c Fixing flatpak build, extracting SDL2 packages doc and adding SDL2 tests
+- 2446f0c Introducing the libMeson branch info into the READMEs
+- bdc8403 Introducing info about newly created branch appOpenCV into READMEs with it's cmake enabler.
+- 653aee4 Introducing the CPack's RPM package generator integration
+- de2aff4 Removing unmerged lines in the doc/README.uk_UA.md
+- 08e24f8 Introducing the MS Windows WIX package generation through CPack integration
+- 47e4c53 Introducing the project's FreeBSD pkg package generation support through CPack. Works only on FreeBSD.
+- 05ef866 Deleting REQUIRED marking from the snapcraft's find_program
+- 69a2b28 By default disabling the snap package manager
+- 61abe38 Introducing the snap packager integration with documentation
+- e2bc76b Introducing and migrating to the template_project_default_3rdparty_enabler cmake function. Making enablers git sources variables modifiable.
+- 4c90c44 Moving all CMake variables declarations into their respectful enablers.
+- 5220971 Moving Doxygen related CMake variables into doc/CMakeLists.txt file
+- 1dde36c Introducing the libxml2 enabler cmake module
+- d036756 Enhancing the cmake files fs structure
+- 10fd3be Making docker base image configurable through CMake variables
+- 7faa909 Introducing the appPLplot branch info into the READMEs
+- e4d79ba Introducing the MatPlot++ appMatPlotxx branch into the READMEs
+- b1b7032 Making the clang-tidy Jenkinsfile stage optional for the pipeline
+- f492d06 Making the cppcheck stage optional due to unstable results
+- 105cc3d Fixing clang-tidy conf misspell
+- 217ba78 Switching off the clang-tydy's unrecognizable AnalyzeTemporaryDtors config param
+- d60885e Loggging README's misspell refine
+- 67aa477 Grouping and categorising available template flavors links in the READMEs
+- 6b5a160 Renaming properly Nlohmann JSON library CMake enabler file
+- 1e3ab09 Introducing the forgottent Nlohmann JSON library enabler info into the READMEs
+- 7184b1a Decomposing READMEs
+- b56bdf9 Introducing the ENABLE_LOGS_MICROSECONDS_TIME CMake option in order to be able to disable microseconds in the log messages.
+- 6cd3da1  Introducing the --branch cmd line flag for git clone command in the READMEs
+- 9fc23bd Introducing explicit template altering notice in the READMEs headers
+- 2ab3862 Optimizing some CMake commands in the README.md
+- 7c97331 Introducing the appGtkmm4 branch info into the READMEs
+- 828fb72 Introducing the PlantUML app component diagram into the READMEs
+- ec4f3b2 Fixing app CT
+- 5eb027f Enabling GTest during for CTs
+- 9dd66b5 Pointing Jenkins configurable port into standart in-container 8080
+- 48af5ff Making the Jenkins pipeline container and image names configurable
+- 7e68903 Introducing basic app CTs samples
+- 44240f4 Introducing basic SimpleLogger CTs with CMake and Jenkins integration
+- e1e7bcf Refining the branches link in the READMEs, introducing gitlab links also
+- 6ca94dd Specifying the Jenkins container run target in the READMEs
+- 3f5bc71 Introducing basic Jenkins pipeline CMake target and Jenkinsfile conf
+- 3221fcf Fixing typo in the README.md
+- 8fddf95 Introducing the valgrind callgrind profiler target for the project
+- 978572d Introducing the gprof profiling target
+- e66064f Adding money emoji to donation notice in the READMEs
+- 62081ab Introducing the appCURL branch info into the READMEs
+- 38d9413 Introducing the enabling libcurl section into the READMEs
+- 07a770f Introducing the libcurl cmake enabler script
+- c954a44 Moving the DEFAULT_LOG_FILE_PATH macro declaration into severity-macro-consts.h
+- 5e6b753 Refining unit tests to match the new log code
+- c16b303 Introducing a custom log file cmd param for the executable
+- 0fb0e6e Introducing the DEFAULT_LOG_FILE_PATH cmake var and cpp macro to specify default dst log file location
+- e844b7f Introducing the CMDParamNames class to encapsulate CMD params names
+- 1937295 Introducing some marketing sentences in the README's goal section
+- 2219cc4 Introducing the cmake/enablers subdirectory to locate the 3rd-party dependencies
+- 24892b2 Renaming emplate-project-make-GTest-available - template-project-GTest-enabler
+- 337160d Introducing the NLohmann JSON library enabler cmake module
+- fc71032 Fixing the sanitizers cmake file in the READMEs
+- 7d9414f Avoiding unnecessary badly portable localtime_r usage
+- 7802f20 Introducing the thread id into simple logger
+- 7ac182f Avoiding backward time in the simple logs
+- e857259 Avoiding final log multiple str fetches
+- 63f6147 Refining the log current timestamp method, increasing thread safety
+- b16b987 Introducing the CMake configurable log severity messages compilation switch
+- fb592a0 Introducing the appBoostLog branch info into the READMEs
+- 30135d1 Hiding the compile options cmake files under separate directory
+- cbebdc3 Enhancing sanitizers combinations and new cmake dir for ones
+- bb97629 Introducing the sanitizers enabling info into the READMEs
+- 4cf71cf Removing redundant cmake traces messages
+- 00758d2 Introducing the GCC compiler sanitizers
+- 6a19647 Refined issues in the Docker READMEs doc
+- d60de04 Refining the Docker target for the SDL2
+- e638e87 Separating the Docker single container build and run targets
+- ae2a35d Introducing the Docker single run container target.
+- 0ce70bf Adding project neatness to the READMEs
+- 351628d Introducing the appLog4Cpp5 branch info into the READMEs
+- 62a1e86 Implementing the logging macros and a simple logger to perform log messaging
+- d7dc0ff Introducing the appMongoDBCpp4 branch info into the READMEs
+- 370c5f4 Fixing the cppcheck non explicit constructor warning
+- 02de04e Introducing misc/.cppcheck-suppress file to list cppcheck suppressions of the false positives
+- c489308 Reparing the cppcheck virtual call in the constructor warning
+- 109c905 Refining the flatpak reverse URL for SDL2
+- 48859d8 Making the flatpak source json conf file configurable during cmake conf stage
+- c2bc499 Introducing the SDL2 dependencies into the deb variables for the cpack
+- 4e3b9bc Refining the deb cmake info for cpack
+- 9c7e00b Introducing the appSQLiteCpp3 branch info into the READMEs
+- c3951d2 Refining the ApplicationContext mock
+- 18ca64e Introducing the gitlab mirror into the READMEs
+- 2f6d937 Introducing the appMySQLCppConn branch info into the READMEs
+- 6230269 Introducing the appBoostBeast branch info into the READMEs
+- 3b71ee7 Explicitly specifying the combining of the template branches
+- 826f284 introducing the appPgSQLxx branch into the READMEs
+- 1e11040 Introducing a new appWt4 branch info into the READMEs
+- 7879110 Moving the SDL_Init call to the SDL2Initer
+- 610b0ee Decomposing and introducing the OpenGLIniter class
+- dea82d3 Introducing the SDL2ContextBuilder and decomposing SDL2Initer
+- 1758d09 clang-format applied
+- e852e67 Introducing the SDL2Context and eventing subsystem decomposed
+- 221ab38 Applying clang-format
+- 271f853 Decomposing drawing routine into separate component and class Painter
+- 4f46ddb Introducing the error exit code for a cppcheck target
+- 782c533 Refinining the cppcheck target
+- 1a98688 Introducing the donation notice into the READMEs
+- bf88cc6 Adding a screen sharing for the flatpak target install
+- 4d54662 Refining the flatpak target
+- c744985 Refining Application UTs
+- 7dbd0ba Introducing the appMeson branch info into the READMEs
+- ae8fa5c Refining the top branch info in the READMEs
+- 1ccd451 Introducing the flatpak sections into the READMEs
+- bf321cd Introducing the flatpak package creation from the template source.
+- c57728a Erasing the /analyze from the default MSVC compile options
+- a15b724 Introducing the DEB package gen info in the READMEs
+- baaca18 Introducing the cpack configuration for the deb package generation
+- 4f260e6 Introducing the LICENSE file with free of use license and notice
+- 376a662 Introducing clang-tidy
+- 7f6ef31 Marging the appSDL2 as current branch in the READMEs
+- 9ae8967 Introducing the SDL2 required packages into the READMEs
+- d89a71c Introducing the appSDL2 branch into the READMEs
+- f976432 Changing the SDL context and window destroy order
+- 17f89e9 Decomposing SDL2 event handler into separate method.
+- c285c6e Introducing the SDL2Initer class
+- 29532bc Erasing redundat libraries installation info
+- 41450f5 Introducing the FreeGlut/OpenGL appFreeGlut branch info into READMEs
+- 6cdefed Incrementing version to 0.8.0
+- b2ae262 Release app0.7.0 2025-03-17
+
 ## [app0.7.0] - 2025-03-17
 
 - 4f45e8d Introducing MS Windows tools install description into READMEs

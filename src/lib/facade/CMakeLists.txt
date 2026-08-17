@@ -20,6 +20,24 @@ foreach(header ${PROJECT_LIB_PUBLIC_HEADERS})
   )
 endforeach()
 
+# The public LibraryFacade.h declares the logger instance adoption, so the
+# logging interface is a public header too. It keeps living in the src/log
+# subsystem directory, which the whole template branch family shares, and is
+# copied next to the facade headers instead of being moved: only the install
+# rule and the LibraryFacade.h include make it public. Unlike the facade
+# headers it is not configured, because it carries no project unique namespace
+# on purpose - see the logger::ILogger documentation. The severity constants
+# come along, because the interface LVL_* values are defined through them.
+set(PROJECT_LIB_PUBLIC_LOG_HEADERS ILogger.h severity-macro-consts.h)
+
+foreach(header ${PROJECT_LIB_PUBLIC_LOG_HEADERS})
+  configure_file(
+    ${CMAKE_SOURCE_DIR}/src/log/${header}
+    ${PROJECT_LIB_PUBLIC_INCLUDE_DIR}/${PROJECT_LIBRARY_NAME}/${header}
+    COPYONLY
+  )
+endforeach()
+
 install(
   DIRECTORY ${PROJECT_LIB_PUBLIC_INCLUDE_DIR}/${PROJECT_LIBRARY_NAME}
   DESTINATION include

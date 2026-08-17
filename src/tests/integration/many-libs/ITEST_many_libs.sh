@@ -19,6 +19,13 @@
 # The test also asserts that no library opens a log file of its own: the
 # logging destination belongs to the application which uses the libraries, not
 # to the libraries themselves.
+#
+# The logging destination is handed over the only way a library user really has
+# it - through the installed public LibraryFacade::init_logger of every library.
+# The application implements the installed logger::ILogger once and every
+# library must answer into that single instance, so the test covers the
+# installed header surface and not the build tree one: an interface which is
+# not installed alongside the library can not be implemented by its user at all.
 
 set -euo pipefail
 
@@ -218,6 +225,8 @@ generate_application()
     echo '#include <cstddef>'
     echo '#include <functional>'
     echo '#include <iostream>'
+    echo '#include <memory>'
+    echo '#include <string>'
     echo '#include <vector>'
     echo
 
@@ -229,7 +238,58 @@ generate_application()
     echo "namespace"
     echo "{"
     echo
+    echo "// The application owned logger. It arrives at every library through"
+    echo "// the public LibraryFacade::init_logger, and the logger::ILogger"
+    echo "// interface it implements arrives through the installed public"
+    echo "// headers of those very libraries."
+    echo "class AppLogger : public logger::ILogger"
+    echo "{"
+    echo " public:"
+    echo "  inline static const std::string lvlRepr{\"APP\"};"
+    echo
+    echo "  void log(const unsigned short& loglvl, const std::string& msg) override"
+    echo "  {"
+    echo "    lvls.push_back(loglvl);"
+    echo "    msgs.push_back(msg);"
+    echo "  }"
+    echo
+    echo "  void log(const unsigned short& loglvl, const char* const filePath,"
+    echo "           const int& fileLine, const std::string& msg) override"
+    echo "  {"
+    echo "    log(loglvl,"
+    echo "        std::string{filePath} + \":\" + std::to_string(fileLine) + \" : \" + msg);"
+    echo "  }"
+    echo
+    echo "  void logfile(const std::string&) override {}"
+    echo "  void print(const bool) override {}"
+    echo "  void level(const unsigned short&) override {}"
+    echo "  const std::string& lvl_repr(const unsigned short&) override"
+    echo "  {"
+    echo "    return lvlRepr;"
+    echo "  }"
+    echo "  void init(const std::string&, const unsigned short&, const bool) override {}"
+    echo
+    echo "  std::vector<unsigned short> lvls;"
+    echo "  std::vector<std::string> msgs;"
+    echo "};"
+    echo
     echo "using LibCall = std::function<bool(int, int&)>;"
+    echo "using LoggerInit = std::function<void(const logger::ILoggerPtr&)>;"
+    echo
+    echo "std::vector<LoggerInit> all_logger_inits()"
+    echo "{"
+    echo "  std::vector<LoggerInit> inits;"
+    echo
+
+    for ((index = 0; index < LIBS_COUNT; ++index)); do
+      ns="$(lib_namespace "${index}")"
+
+      echo "  inits.push_back(&${ns}::LibraryFacade::init_logger);"
+    done
+
+    echo
+    echo "  return inits;"
+    echo "}"
     echo
     echo "std::vector<LibCall> all_libcalls()"
     echo "{"
@@ -262,6 +322,13 @@ generate_application()
     echo
     echo "int main()"
     echo "{"
+    echo "  const auto appLogger = std::make_shared<AppLogger>();"
+    echo
+    echo "  // Every library adopts the very same application logger instance."
+    echo "  for (const auto& initLogger : all_logger_inits()) {"
+    echo "    initLogger(appLogger);"
+    echo "  }"
+    echo
     echo "  const auto libcalls = all_libcalls();"
     echo "  int failures = 0;"
     echo
@@ -282,7 +349,30 @@ generate_application()
     echo "    }"
     echo "  }"
     echo
+    echo "  // Every library must have logged into the application logger. A"
+    echo "  // library which stays silent here kept an own logger instance"
+    echo "  // instead of the adopted one."
+    echo "  for (std::size_t iter = 0U; iter < libcalls.size(); ++iter) {"
+    echo "    const std::string expect ="
+    echo "        \"The library \" + std::to_string(iter) + \" libcall\";"
+    echo "    bool found = false;"
+    echo
+    echo "    for (const auto& msg : appLogger->msgs) {"
+    echo "      if (msg.find(expect) != std::string::npos) {"
+    echo "        found = true;"
+    echo "        break;"
+    echo "      }"
+    echo "    }"
+    echo
+    echo "    if (!found) {"
+    echo "      std::cerr << \"library \" << iter"
+    echo "                << \" never logged into the application logger\\n\";"
+    echo "      ++failures;"
+    echo "    }"
+    echo "  }"
+    echo
     echo "  std::cout << \"libraries called: \" << libcalls.size()"
+    echo "            << \", log messages received: \" << appLogger->msgs.size()"
     echo "            << \", failures: \" << failures << '\\n';"
     echo
     echo "  return failures == 0 ? 0 : 1;"
@@ -344,7 +434,7 @@ run_application()
   cat "${out}"
 
   [ "${status}" -eq 0 ] || \
-    fail "the libraries do not answer with their own generation index"
+    fail "the libraries do not answer with their own generation index, or do not log into the application logger"
 }
 
 check_no_library_log_files()

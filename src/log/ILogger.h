@@ -4,7 +4,7 @@
 #include <memory>
 #include <string>
 
-#include "src/log/severity-macro-consts.h"
+#include "severity-macro-consts.h"
 
 /**
  * @brief The implementation independent part of the logging subsystem
@@ -24,6 +24,23 @@ namespace logger
  * deriving from the default_logger::RealDefaultLogger. Hand a new instance over
  * to the default_logger::DefaultLogger::real_logger setter, or through the
  * LOG_INIT_REAL_LOGGER macro, to make the whole binary log through it.
+ *
+ * Current file is a target for the library header installation: the public
+ * LibraryFacade::init_logger accepts this interface, so the library user
+ * implements it. Unlike the rest of the installed headers it deliberately
+ * carries neither the project unique namespace nor the project unique include
+ * guard. It is the single logging contract every library derived from this
+ * template accepts, so one application logger implementation serves all of the
+ * derived libraries an application depends on at once, and the first installed
+ * copy of this header which an application includes stands for all of them.
+ *
+ * That makes the class layout a shared binary interface between an application
+ * and every derived library it loads. Extend it by appending new methods after
+ * the existing ones only: inserting a method, reordering the existing ones or
+ * changing a signature shifts the virtual table slots, and an application built
+ * against one revision of this file then silently calls the wrong method of a
+ * library built against another one. The LVL_* values cross that boundary the
+ * very same way, so treat them as a part of the contract too.
  */
 class ILogger
 {

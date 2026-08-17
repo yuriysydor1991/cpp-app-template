@@ -5,6 +5,119 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appSFML0.11.0] - 2026-08-17
+
+- 0f65aad Introducing the InsertNewlineAtEOF clang-format option
+- 3c63ebe Introducing the appCURLChatGPT branch info into the READMEs
+- 7879c9a Hiding the ApplicationContext fields and adding the atomic stop flag
+- f744c6f Moving the linker hardening options out of the compile options
+- 32c0a19 Split the DefaultLogger into a static proxy and a real logger instance
+- f847f93 Introducing the appCURLClaude branch info into the READMEs
+- 8aae380 Introducing the external documentation URLs check into the Jenkins pipeline
+- 3d86a69 Correcting the docker modules path of the documentation
+- 2298ee8 Introducing the quick build and the docker starter scripts
+- ff23b4f Introducing the quick build and the docker starter scripts
+- 3eba3e0 Making the docker containers run under unprivileged users
+- 160ae4e Formatting the sources with the clang-format
+- c921e73 Repairing the pipeline code check stages
+- 8fb59bf Introducing the appPGPLOT branch info into the READMEs
+- 4e22179 Fixing the Jenkinsfile
+- a10a7c4 Fix broken cppcheck link in section 5 index
+- 88e3870 Fix Groovy escape sequences in markdown link checker stage
+- c942d96 Rework markdown link checker stage to pure bash
+- 40a8e78 Add Jenkinsfile stage to detect broken markdown links; fix pre-existing broken links
+- 8d25ac3 Reorganize doc/sections into section dirs with category grouping
+- 303c59e Add an OpenSSL cmake enabler module with SHA-256, HMAC-SHA256 and HTTPS/TLS client code samples
+- fece2e2 Group the enabler documentation under subsections in the READMEs
+- 7ac3ff7 Group the compression branches under a dedicated README section
+- fd20b04 Introducing the appLZMA branch info into the READMEs
+- 82b9f0e Add a liblzma (XZ Utils) compression library enabler module
+- b9d048c Introducing the appZlib branch info into the READMEs
+- b275188 Add zlib compression usage examples to its enabler documentation
+- 6374d6f Replace the redundant PROJECT_NAME CMake variable with CMAKE_PROJECT_NAME
+- 0c6342a Introducing the appGtkmm4Vulkan branch info into the READMEs
+- c8a13ab Removing the appGtkmm4Vulkan branch info from the READMEs
+- dc1da24 Introducing the appQt6Vulkan and appGtkmm4Vulkan branches info into the READMEs
+- 6a59ad1 Simplifying root CMakeLists.txt
+- c5d913c Introducing the appFirebird branch info into the READMEs
+- 7af5db9 Introducing the appGtkmm4GDBusClient branch info into the READMEs
+- 22eb317 Introducing the appQt6GLArea branch info into the READMEs
+- 067728f Introducing the appGtkmm4GLArea branch info into the READMEs
+- 42014c5 Splitting the Data Visualization README category into Plots/Graphs and Maps
+- 0fea4de Introducing the applibMeson branch info into the READMEs
+- 1711b3f Introducing the zlib and image format cmake enablers with docs
+- c6661bd Introducing the SFML component, enabler, tests and packagers
+- 17c3860 Introducing the appwxWidgets branch info into the READMEs
+- 0a78d4c Introducing the appQt6QtDBusClient branch info into the READMEs
+- d7805a9 Introducing the appQt6QtLocation branch info into the READMEs
+- 21e2b90 Introducing the appQt6ChartView branch into the READMEs
+- 15d6faf Introducing the appGtkmm4LeafLet and appQt6LeafLet branches info into the READMEs
+- bc63397 Introducing the COMPONENTS arg for template_project_default_3rdparty_enabler
+- ae04e6c Removing the SDL3 current marking
+- f6e79ab Introducing information about the SDL3 branch in the READMEs
+- d34a187 Replacing faulty SimpleLogger mention with the DefaultLogger
+- b92df71 Removing faulty simple_logger mention in the log.h
+- ecd1d16 Rename the simple logger to DefaultLogger and add top-level log.h tests
+- a2e93cb Add template-specific packager, documentation and registration checks
+- 451c989 Introducing the appSDBusCxxClient and appSDBusCxxServer branches info into the READMEs
+- d118ec1 Moving Dockerfiles and packagers files into separate subdirs in the misc
+- 75319c6 Adding .claude dir to .gitignore
+- 422ca40 Introducing the GitHub Actions CI pipeline mirroring the Jenkinsfile
+- 1505bb3 Introducing project structure section Будь ласка, зверніться до адміністратора subsection
+- bd89e4d Introducing the libMeson branch info into the READMEs
+- 6e8584a Introducing info about newly created branch appOpenCV into READMEs with it's cmake enabler.
+- cfa55af Introducing the CPack's RPM package generator integration
+- 860c012 Removing unmerged lines in the doc/README.uk_UA.md
+- 0cb37b3 Introducing the MS Windows WIX package generation through CPack integration
+- 16bff16 Introducing the project's FreeBSD pkg package generation support through CPack. Works only on FreeBSD.
+- cdad20f Deleting REQUIRED marking from the snapcraft's find_program
+- e42f7a3 By default disabling the snap package manager
+- cede1e2 Introducing the snap packager integration with documentation
+- 5c2fa86 Introducing and migrating to the template_project_default_3rdparty_enabler cmake function. Making enablers git sources variables modifiable.
+- f28c334 Moving all CMake variables declarations into their respectful enablers.
+- ace9351 Moving Doxygen related CMake variables into doc/CMakeLists.txt file
+- 0d38e5b Introducing the libxml2 enabler cmake module
+- 0d8c898 Enhancing the cmake files fs structure
+- 3ec8d38 Making docker base image configurable through CMake variables
+- 43763b8 Introducing the appPLplot branch info into the READMEs
+- 938e0a1 Introducing the MatPlot++ appMatPlotxx branch into the READMEs
+- a7bbedd Fixing clang-tidy conf misspell
+- 80d533c Switching off the clang-tydy's unrecognizable AnalyzeTemporaryDtors config param
+- 052cebf Making the cppcheck stage optional due to unstable results
+- f849981 Supressing the cppcheck's missingIncludeSystem and unusedStructMember warnings.
+- 9eb94c6 Loggging README's misspell refine
+- accda7f Missing newlines in the READMEs
+- ab6f8b1 Grouping and categorising available template flavors links in the READMEs
+- 9aa88c6 Renaming properly Nlohmann JSON library CMake enabler file
+- c6c323d Introducing the forgottent Nlohmann JSON library enabler info into the READMEs
+- c958ff8 Refining branch name in the READMEs project cloning commands.
+- d6bc1a8 Decomposing READMEs
+- 893a961 Introducing the ENABLE_LOGS_MICROSECONDS_TIME CMake option in order to be able to disable microseconds in the log messages.
+- 1cefe87 Introducing the --branch cmd line flag for git clone command in the READMEs
+- 2e81c79 Introducing explicit template altering notice in the READMEs headers
+- 07c06d3 Optimizing some CMake commands in the README.md
+- 83d424b Introducing the appGtkmm4 branch info into the READMEs
+- f819f25 Introducing the PlantUML app component diagram into the READMEs
+- ccac56a Enabling GTest during for CTs
+- 8d7481c Pointing Jenkins configurable port into standart in-container 8080
+- 385398a Making the Jenkins pipeline container and image names configurable
+- 7c1ee70 Including lost SimpleLogger CTs
+- e209c5b Introducing basic app CTs samples
+- 86d9278 Introducing basic SimpleLogger CTs with CMake and Jenkins integration
+- 7ab160b Refining the branches link in the READMEs, introducing gitlab links also
+- eb731ef Specifying the Jenkins container run target in the READMEs
+- e6e6e61 Erasing redundant project copy for Jenkins pipeline docker, renaming jenkins CMake file
+- 1b1ddc2 Refining clang-format stage
+- 3c652ba Introducing the release install try Jenkins pipeline stage
+- c4f0c77 Erasing redundant clang-tidy enable from tests pipeline stages
+- 9bf1c0d Splitting debug tests and cppcheck from clang-tidy build
+- 3b6a5f0 Introducing the Jenkins pipeline docker force rebuild option
+- 98ce4a0 Returning a Jenkins Docker file configure, erasing redundant Jenkinsfile configuration
+- 6ac3d4f Refining Jenkins pipeline target
+- 836d98d Introducing basic Jenkins pipeline CMake target and Jenkinsfile conf
+- 51fe32f Incrementing version to 0.11.0
+- bd88653 Release app0.10.0 at 2025-09-08
+
 ## [appSFML0.1.0] - 2026-05-28
 
 - Branch out from the `app` template branch into the `appSFML` SFML variant.

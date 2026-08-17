@@ -4,7 +4,7 @@
 `include/<name>/` для публічних заголовків, файл pkg-config і директорія CMake
 package з простором імен імпортованої цілі) виводиться з трьох опціональних
 Meson-опцій. Вони дозволяють паралельним встановленням різних версій бібліотеки
-співіснувати у системі - наприклад `include/CppAppTemplate-0.10.0-dev/` поруч з
+співіснувати у системі - наприклад `include/CppAppTemplate-0.11.0-dev/` поруч з
 `include/CppAppTemplate-0/`.
 
 | Опція | За замовчуванням | Ефект |
@@ -13,15 +13,15 @@ Meson-опцій. Вони дозволяють паралельним вста�
 | `-DLIB_INCLUDE_MICRO_IN_NAME=true` | `false` | Додає `.<micro>` (вмикає прапорець minor неявно) |
 | `-DLIB_NAME_SUFFIX='-dev'` | `''` | Додає довільний завершальний суфікс |
 
-Приклади імен бібліотеки для проекту `0.10.0`:
+Приклади імен бібліотеки для проекту `0.11.0`:
 
 | Прапорці конфігурації | Імʼя бібліотеки |
 |---|---|
 | (немає) | `CppAppTemplate-0` |
 | `-DLIB_INCLUDE_MINOR_IN_NAME=true` | `CppAppTemplate-0.10` |
-| `-DLIB_INCLUDE_MINOR_IN_NAME=true -DLIB_INCLUDE_MICRO_IN_NAME=true` | `CppAppTemplate-0.10.0` |
+| `-DLIB_INCLUDE_MINOR_IN_NAME=true -DLIB_INCLUDE_MICRO_IN_NAME=true` | `CppAppTemplate-0.11.0` |
 | `-DLIB_NAME_SUFFIX='-dev'` | `CppAppTemplate-0-dev` |
-| `-DLIB_INCLUDE_MINOR_IN_NAME=true -DLIB_INCLUDE_MICRO_IN_NAME=true -DLIB_NAME_SUFFIX='-dev'` | `CppAppTemplate-0.10.0-dev` |
+| `-DLIB_INCLUDE_MINOR_IN_NAME=true -DLIB_INCLUDE_MICRO_IN_NAME=true -DLIB_NAME_SUFFIX='-dev'` | `CppAppTemplate-0.11.0-dev` |
 
 Однакове імʼя послідовно використовується для кожного встановлюваного артефакту:
 

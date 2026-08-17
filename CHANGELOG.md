@@ -5,6 +5,62 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [main0.13.0] - 2026-08-17
+
+- 9d9b99f Introducing the InsertNewlineAtEOF clang-format option
+- 95c7ddf Introducing the appCURLChatGPT branch info into the READMEs
+- bb93045 Moving the linker hardening options out of the compile options
+- c90b023 Split the DefaultLogger into a static proxy and a real logger instance
+- bde314e Introducing the appCURLClaude branch info into the READMEs
+- 3fdeb62 Introducing the external documentation URLs check into the Jenkins pipeline
+- 76c6cbe Correcting the docker modules path of the documentation
+- 6768364 Introducing the quick build and the docker starter scripts
+- fbd8313 Making the docker containers run under unprivileged users
+- 1fa5cd5 Formatting the sources with the clang-format
+- 858e352 Repairing the pipeline code check stages
+- 1547324 Introducing the appPGPLOT branch info into the READMEs
+- 8d9a7ce Fixing the Jenkinsfile
+- 1aee560 Register CTEST_SimpleLogger in the Component Tests pipeline stage
+- 4d3890e Fix Groovy escape sequences in markdown link checker stage
+- 360367b Rework markdown link checker stage to pure bash
+- fa2d0cf Add Jenkinsfile stage to detect broken markdown links; fix pre-existing broken links
+- 0776705 Reorganize doc/sections into section dirs with category grouping
+- 1b8fdd3 Add an OpenSSL cmake enabler module with SHA-256, HMAC-SHA256 and HTTPS/TLS client code samples
+- 38eed5c Group the enabler documentation under subsections in the READMEs
+- 677d072 Group the compression branches under a dedicated README section
+- 87fde9b Introducing the appLZMA branch info into the READMEs
+- afcfdf6 Add a liblzma (XZ Utils) compression library enabler module
+- 6122d0a Introducing the appZlib branch info into the READMEs
+- fe861df Add zlib compression usage examples to its enabler documentation
+- 6539a96 Replace the redundant PROJECT_NAME CMake variable with CMAKE_PROJECT_NAME
+- 761f4c5 Introducing the appGtkmm4Vulkan branch info into the READMEs
+- c2d60da Removing the appGtkmm4Vulkan branch info from the READMEs
+- d27aea6 Introducing the appQt6Vulkan and appGtkmm4Vulkan branches info into the READMEs
+- 670c2ed Simplifying root CMakeLists.txt
+- 82f50a3 Introducing the appFirebird branch info into the READMEs
+- 451ec95 Introducing the appGtkmm4GDBusClient branch info into the READMEs
+- d45c3d4 Introducing the appQt6GLArea branch info into the READMEs
+- 76c21d4 Introducing the appGtkmm4GLArea branch info into the READMEs
+- 3f8009e Splitting the Data Visualization README category into Plots/Graphs and Maps
+- 4214b96 Introducing the applibMeson branch info into the READMEs
+- c56e41d Introducing the zlib and image format cmake enablers with docs
+- 72f8f63 Introducing the appSFML branch info into the READMEs
+- 7e43854 Introducing the appwxWidgets branch info into the READMEs
+- 2fe2024 Introducing the appQt6QtDBusClient branch info into the READMEs
+- 8db7985 Introducing the appQt6QtLocation branch info into the READMEs
+- b135264 Erasing current marking from the appQt6ChartView branch
+- 5681172 Introducing the appQt6ChartView branch into the READMEs
+- 09d39ea Introducing the appGtkmm4LeafLet and appQt6LeafLet branches info into the READMEs
+- 91bf5a8 Introducing the COMPONENTS arg for template_project_default_3rdparty_enabler
+- a62e86a Introducing information about the SDL3 branch in the READMEs
+- acdffb6 Refine template pipeline checks: conflict markers and opt-in sequential packagers
+- e2fe9b4 Add template-specific packager, documentation and registration checks
+- bbb2b81 Rename the simple logger to DefaultLogger and add top-level log.h tests
+- 1dd1230 Introducing the appSDBusCxxClient and appSDBusCxxServer branches info into the READMEs
+- aee14a2 Moving Dockerfiles and packagers files into separate subdirs in the misc
+- 877bb82 Incrementing version to main0.13.0
+- dfb212e Release main0.12.0 2026-05-22
+
 
 ## [main0.12.0] - 2026-05-22
 

@@ -5,6 +5,99 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appGtkmm30.11.0] - 2026-08-17
+
+- d9ed60f Introducing the InsertNewlineAtEOF clang-format option
+- dcc243b Introducing the appCURLChatGPT branch info into the READMEs
+- f236678 Hiding the ApplicationContext fields and adding the atomic stop flag
+- 4fe416b Moving the linker hardening options out of the compile options
+- 74b916a Split the DefaultLogger into a static proxy and a real logger instance
+- 8e222bc Introducing the appCURLClaude branch info into the READMEs
+- d7069c3 Introducing the external documentation URLs check into the Jenkins pipeline
+- ea603a5 Correcting the docker modules path of the documentation
+- 2c968c1 Introducing the quick build and the docker starter scripts
+- be352c2 Introducing the quick build and the docker starter scripts
+- 76f80a2 Making the docker containers run under unprivileged users
+- 7ad3112 Formatting the sources with the clang-format
+- ffb6dd4 Repairing the pipeline code check stages
+- 93d493e Introducing the appPGPLOT branch info into the READMEs
+- b8abb44 Fixing the Jenkinsfile
+- 1ec2bdb Fix broken cppcheck link in section 5 index
+- 068dbcb Fix Groovy escape sequences in markdown link checker stage
+- 7624354 Rework markdown link checker stage to pure bash
+- c058fd9 Add Jenkinsfile stage to detect broken markdown links; fix pre-existing broken links
+- 3b3ef79 Reorganize doc/sections into section dirs with category grouping
+- 555b1f8 Add an OpenSSL cmake enabler module with SHA-256, HMAC-SHA256 and HTTPS/TLS client code samples
+- c636d55 Group the enabler documentation under subsections in the READMEs
+- 2ebddbc Group the compression branches under a dedicated README section
+- 2a9f55a Introducing the appLZMA branch info into the READMEs
+- ab233a3 Add a liblzma (XZ Utils) compression library enabler module
+- 8ffe297 Introducing the appZlib branch info into the READMEs
+- 92ec6bf Add zlib compression usage examples to its enabler documentation
+- 587ef32 Replace the redundant PROJECT_NAME CMake variable with CMAKE_PROJECT_NAME
+- 9da445a Introducing the appGtkmm4Vulkan branch info into the READMEs
+- c4cb9ce Removing the appGtkmm4Vulkan branch info from the READMEs
+- a665b67 Introducing the appQt6Vulkan and appGtkmm4Vulkan branches info into the READMEs
+- ea01496 Simplifying root CMakeLists.txt
+- 21adc57 Introducing the appFirebird branch info into the READMEs
+- 2b3588b Introducing the appGtkmm4GDBusClient branch info into the READMEs
+- 7640059 Introducing the appQt6GLArea branch info into the READMEs
+- 180d397 Introducing the appGtkmm4GLArea branch info into the READMEs
+- e72b37d Splitting the Data Visualization README category into Plots/Graphs and Maps
+- 3f36459 Introducing the applibMeson branch info into the READMEs
+- b76b227 Introducing the zlib and image format cmake enablers with docs
+- 6bd8c55 Introducing the appSFML branch info into the READMEs
+- fc0921b Introducing the appwxWidgets branch info into the READMEs
+- e5dd28c Introducing the appQt6QtDBusClient branch info into the READMEs
+- bbd56ad Introducing the appQt6QtLocation branch info into the READMEs
+- d97251f Introducing the appQt6ChartView branch into the READMEs
+- 9ffceb8 Introducing the appGtkmm4LeafLet and appQt6LeafLet branches info into the READMEs
+- 0605c6b Introducing the COMPONENTS arg for template_project_default_3rdparty_enabler
+- 44d545f Removing the SDL3 current marking
+- a417368 Introducing information about the SDL3 branch in the READMEs
+- cf47e39 Replacing faulty SimpleLogger mention with the DefaultLogger
+- 3ffd982 Rename the simple logger to DefaultLogger and add top-level log.h tests
+- f23212e Removing faulty simple_logger mention in the log.h
+- 09a598b Add template-specific packager, documentation and registration checks
+- 318af9e Introducing the appSDBusCxxClient and appSDBusCxxServer branches info into the READMEs
+- 91e99ed Moving Dockerfiles and packagers files into separate subdirs in the misc
+- 7a0eeb8 Adding .claude dir to .gitignore
+- 2fef745 Introducing project structure section Будь ласка, зверніться до адміністратора subsection
+- e9ca811 Introducing the libMeson branch info into the READMEs
+- 42a9bb9 Introducing info about newly created branch appOpenCV into READMEs with it's cmake enabler.
+- 74fd29f Introducing the CPack's RPM package generator integration
+- 4852e33 Removing unmerged lines in the doc/README.uk_UA.md
+- 711f32f Introducing the MS Windows WIX package generation through CPack integration
+- 907674f Introducing the project's FreeBSD pkg package generation support through CPack. Works only on FreeBSD.
+- bbeb441 Deleting REQUIRED marking from the snapcraft's find_program
+- 05592e7 By default disabling the snap package manager
+- eeeacd2 Introducing the snap packager integration with documentation
+- ff126ad Moving Gtkmm3 integration cmake code into separate cmake file. To enable it for possible multiple components of interest.
+- 229488e Introducing and migrating to the template_project_default_3rdparty_enabler cmake function. Making enablers git sources variables modifiable.
+- bd21299 Moving all CMake variables declarations into their respectful enablers.
+- 76878ed Moving Doxygen related CMake variables into doc/CMakeLists.txt file
+- 8423c8f Introducing the libxml2 enabler cmake module
+- 172733c Enhancing the cmake files fs structure
+- 6064462 Making docker base image configurable through CMake variables
+- 9cf502f Introducing the appPLplot branch info into the READMEs
+- 7473325 Introducing the MatPlot++ appMatPlotxx branch into the READMEs
+- ca28a9c Making the cppcheck stage optional due to unstable results
+- ba836b5 Fixing clang-tidy conf misspell
+- e0f51ea Switching off the clang-tydy's unrecognizable AnalyzeTemporaryDtors config param
+- c8e4d78 Loggging README's misspell refine
+- c4a8f9e Grouping and categorising available template flavors links in the READMEs
+- 6cb8ef4 Renaming properly Nlohmann JSON library CMake enabler file
+- 8c422da Introducing the forgottent Nlohmann JSON library enabler info into the READMEs
+- 45582b5 Decomposing READMEs
+- a095713 Introducing the ENABLE_LOGS_MICROSECONDS_TIME CMake option in order to be able to disable microseconds in the log messages.
+- 599dd3b  Introducing the --branch cmd line flag for git clone command in the READMEs
+- 13b3de4 Introducing explicit template altering notice in the READMEs headers
+- 2a5d4be Optimizing some CMake commands in the README.md
+- f0bca64 Making the template.gresource.xml file CMake-configurable template.gresource.xml.in
+- 15351fc Introducing the appGtkmm4 branch info into the READMEs
+- d9e7bff Incrementing version to 0.11.0
+- ae14444 Release appGtkmm30.10.0 at 2025-09-29
+
 ## [appGtkmm30.10.0] - 2025-09-29
 
 - 2540ec4 Integrating log into the GtkmmIniter, moving GtkmmWindow into separate sub component

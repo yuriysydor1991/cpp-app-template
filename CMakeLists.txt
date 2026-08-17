@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.13)
 
 project(
   CppAppTemplate
-  VERSION 0.11.0
+  VERSION 0.12.0
   DESCRIPTION "A C++ Template project with GTKmm3 and Glade for you!"
   HOMEPAGE_URL "http://www.kytok.org.ua/"
   LANGUAGES CXX C

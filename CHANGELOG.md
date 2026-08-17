@@ -5,6 +5,123 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appQt6QtDBusClient0.10.0] - 2026-08-17
+
+- 665e4b3 Introducing the InsertNewlineAtEOF clang-format option
+- ef1383f Introducing the appCURLChatGPT branch info into the READMEs
+- 9ac480b Adding the missing PRIVATE keyword into the real default logger linking
+- f0db512 Hiding the ApplicationContext fields and adding the atomic stop flag
+- 1714c02 Moving the linker hardening options out of the compile options
+- e18c97e Split the DefaultLogger into a static proxy and a real logger instance
+- 220b809 Introducing the appCURLClaude branch info into the READMEs
+- b141fc6 Introducing the external documentation URLs check into the Jenkins pipeline
+- 55fcb8a Correcting the docker modules path of the documentation
+- eee8755 Introducing the quick build and the docker starter scripts
+- 739bc40 Introducing the quick build and the docker starter scripts
+- c3b2a37 Making the docker containers run under unprivileged users
+- 282d74c Formatting the sources with the clang-format
+- b0ae5d2 Repairing the pipeline code check stages
+- 68d1805 Introducing the appPGPLOT branch info into the READMEs
+- c3699f8 Fixing the Jenkinsfile
+- 2a84400 Fix broken cppcheck link in section 5 index
+- 44fbc97 Fix Groovy escape sequences in markdown link checker stage
+- f0099bd Rework markdown link checker stage to pure bash
+- d691d63 Add Jenkinsfile stage to detect broken markdown links; fix pre-existing broken links
+- 4930fe0 Reorganize doc/sections into section dirs with category grouping
+- dc8bdfb Add an OpenSSL cmake enabler module with SHA-256, HMAC-SHA256 and HTTPS/TLS client code samples
+- a46664a Register the missing tests in the misc/Jenkinsfile
+- 648366d Group the enabler documentation under subsections in the READMEs
+- 9ef2bd6 Group the compression branches under a dedicated README section
+- 783be05 Fix the misc/Jenkinsfile checkout branch to the appQt6QtDBusClient branch name
+- 9405146 Introducing the appLZMA branch info into the READMEs
+- 045ec53 Add a liblzma (XZ Utils) compression library enabler module
+- 9070ce4 Introducing the appZlib branch info into the READMEs
+- 3b4f567 Add zlib compression usage examples to its enabler documentation
+- 6e2f6d0 Replace the redundant PROJECT_NAME CMake variable with CMAKE_PROJECT_NAME
+- 709de20 Introducing the appGtkmm4Vulkan branch info into the READMEs
+- 1ed47cf Removing the appGtkmm4Vulkan branch info from the READMEs
+- 5c4b45b Introducing the appQt6Vulkan and appGtkmm4Vulkan branches info into the READMEs
+- ecf2908 Simplifying root CMakeLists.txt
+- 6978d85 Introducing the appFirebird branch info into the READMEs
+- df748f0 Introducing the appGtkmm4GDBusClient branch info into the READMEs
+- c4fc625 Introducing the appQt6GLArea branch info into the READMEs
+- 823212e Introducing the appGtkmm4GLArea branch info into the READMEs
+- e2e9f42 Splitting the Data Visualization README category into Plots/Graphs and Maps
+- 5d037f9 Introducing the applibMeson branch info into the READMEs
+- 751700d Introducing the zlib and image format cmake enablers with docs
+- fad8abb Introducing the appSFML branch info into the READMEs
+- a120867 Introducing the appwxWidgets branch info into the READMEs
+- d3a46ae Drop the QML GUI from appQt6QtDBusClient; log the D-Bus system info instead
+- fd55e7e Introducing the appQt6QtDBusClient branch with a native QtDBus system info client
+- c3cf260 Introducing the appQt6QtLocation branch info into the READMEs
+- 7d6c756 Introducing the appQt6ChartView branch into the READMEs
+- 82249dc Introducing the appGtkmm4LeafLet and appQt6LeafLet branches info into the READMEs
+- 083286b Introducing the COMPONENTS arg for template_project_default_3rdparty_enabler
+- cb13509 Removing the SDL3 current marking
+- 164edbd Introducing information about the SDL3 branch in the READMEs
+- 24f7d12 Fixing unmerged Jenkinsfile
+- 7cdf985 Rename the simple logger to DefaultLogger and add top-level log.h tests
+- e8c917a Removing faulty simple_logger mention in the log.h
+- 885410a Add template-specific packager, documentation and registration checks
+- 86b0d92 Introducing the appSDBusCxxClient and appSDBusCxxServer branches info into the READMEs
+- 615eab3 Moving Dockerfiles and packagers files into separate subdirs in the misc
+- 4f7dafb Adding .claude dir to .gitignore
+- 7c57624 Introducing project structure section Будь ласка, зверніться до адміністратора subsection
+- 6a22fde Introducing the libMeson branch info into the READMEs
+- 434993a Introducing info about newly created branch appOpenCV into READMEs with it's cmake enabler.
+- 0524881 Introducing the CPack's RPM package generator integration
+- 2ae943f Removing unmerged lines in the doc/README.uk_UA.md
+- d369525 Introducing the MS Windows WIX package generation through CPack integration
+- ef8b594 Introducing the project's FreeBSD pkg package generation support through CPack. Works only on FreeBSD.
+- 2a293f8 Deleting REQUIRED marking from the snapcraft's find_program
+- 20e2cfc By default disabling the snap package manager
+- 4362a0c Introducing the snap packager integration with documentation
+- 026f65b Introducing the Qt6 enabler file to allow it's usage across multiple components of interest
+- b11021c Introducing and migrating to the template_project_default_3rdparty_enabler cmake function. Making enablers git sources variables modifiable.
+- 16986ed Moving all CMake variables declarations into their respectful enablers.
+- 847696a Moving Doxygen related CMake variables into doc/CMakeLists.txt file
+- 4c3d61e Introducing the libxml2 enabler cmake module
+- 7fcb19f Enhancing the cmake files fs structure
+- d366d02 Making docker base image configurable through CMake variables
+- 7394e3e Introducing the appPLplot branch info into the READMEs
+- 3e6e9b0 Introducing the MatPlot++ appMatPlotxx branch into the READMEs
+- 324ab4c Making the clang-tidy Jenkinsfile stage optional for the pipeline
+- fa82874 root src dir try for clan-tidy II
+- ccdcb1e root src dir try for clan-tidy
+- 72be2d6 Excluding the build directory from clang-tidy analysis.
+- cad827f Making the cppcheck stage optional due to unstable results
+- 3f2751e Fixing clang-tidy conf misspell
+- 1a8b05d Switching off the clang-tydy's unrecognizable AnalyzeTemporaryDtors config param
+- 954f171 Loggging README's misspell refine
+- e614051 Grouping and categorising available template flavors links in the READMEs
+- 8cd3c6c Renaming properly Nlohmann JSON library CMake enabler file
+- cc69ec1 Introducing the forgottent Nlohmann JSON library enabler info into the READMEs
+- 6aa5192 Removed duplicated requirements.
+- 06f660f Introducing the required Qt6 packages in the READMEs.
+- 2e4041e Returning the Qt6 required packages list
+- d0ff6d1 Decomposing READMEs
+- a717d78 Refining the QML build system with separate qt_add_qml_module modules declaration.
+- 9f445c1 Adding missing Qt6 QML packages to READMEs
+- c8f0965 Introducing the ENABLE_LOGS_MICROSECONDS_TIME CMake option in order to be able to disable microseconds in the log messages.
+- a615cb6  Introducing the --branch cmd line flag for git clone command in the READMEs
+- 90d2ee9 Introducing explicit template altering notice in the READMEs headers
+- 12892cd Optimizing some CMake commands in the README.md
+- e22e7d0 Introducing the appGtkmm4 branch info into the READMEs
+- 18fe599 Introducing the PlantUML app component diagram into the READMEs
+- a151b0a Enabling GTest during for CTs
+- 418be7f Adding Qt6Initer mock to the app CTs
+- a50c9eb Pointing Jenkins configurable port into standart in-container 8080
+- 6be4c06 Making the Jenkins pipeline container and image names configurable
+- 24d016a Introducing basic app CTs samples
+- c183ecd Introducing basic SimpleLogger CTs with CMake and Jenkins integration
+- 0064d7e Refining the branches link in the READMEs, introducing gitlab links also
+- 29e225f Introducing the basic DefaultWelcome component sample
+- 5cc9104 Replacing wrong freeglut mention in the README.ua_UA.md with a Qt6 packages
+- fc98b93 Specifying the Jenkins container run target in the READMEs
+- 02a174a Introducing basic Jenkins pipeline CMake target and Jenkinsfile conf
+- bf6fbfa Incrementing version to 0.10.0
+- 183594c Release appQt60.9.0 at 2025-09-08
+
 ## [appQt60.9.0] - 2025-09-08
 
 - 141985f Fixing typo in the README.md

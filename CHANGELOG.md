@@ -5,6 +5,183 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appMySQLCppConn0.9.0] - 2026-08-17
+
+- a49dd44 Introducing the InsertNewlineAtEOF clang-format option
+- 0432ee5 Repairing the mismatched ApplicationContext forward declaration tag
+- 746dd02 Introducing the appCURLChatGPT branch info into the READMEs
+- 2d4baec Hiding the ApplicationContext fields and adding the atomic stop flag
+- ba2ef08 Moving the linker hardening options out of the compile options
+- 4cd48ca Split the DefaultLogger into a static proxy and a real logger instance
+- efca4a1 Introducing the appCURLClaude branch info into the READMEs
+- dbafd66 Introducing the external documentation URLs check into the Jenkins pipeline
+- adb5515 Correcting the docker modules path of the documentation
+- 5059ab2 Introducing the quick build and the docker starter scripts
+- a5ae049 Introducing the quick build and the docker starter scripts
+- e9c1902 Making the docker containers run under unprivileged users
+- 5c7b74b Formatting the sources with the clang-format
+- 575b8e5 Repairing the pipeline code check stages
+- 4ea3964 Introducing the appPGPLOT branch info into the READMEs
+- 027d353 Fixing the Jenkisfile
+- 354aa16 Fix broken cppcheck link in section 5 index
+- 1441e13 Fix Groovy escape sequences in markdown link checker stage
+- 94d4a94 Rework markdown link checker stage to pure bash
+- bf96a64 Add Jenkinsfile stage to detect broken markdown links; fix pre-existing broken links
+- 0c18c55 Reorganize doc/sections into section dirs with category grouping
+- 1f7bb61 Add an OpenSSL cmake enabler module with SHA-256, HMAC-SHA256 and HTTPS/TLS client code samples
+- 7bc60bf Group the enabler documentation under subsections in the READMEs
+- d6bbaa3 Group the compression branches under a dedicated README section
+- 3d4a8f5 Introducing the appLZMA branch info into the READMEs
+- 937e04f Add a liblzma (XZ Utils) compression library enabler module
+- 6ff1fd5 Introducing the appZlib branch info into the READMEs
+- 302093a Add zlib compression usage examples to its enabler documentation
+- 3621f99 Replace the redundant PROJECT_NAME CMake variable with CMAKE_PROJECT_NAME
+- 643dac1 Introducing the appGtkmm4Vulkan branch info into the READMEs
+- 0761017 Removing the appGtkmm4Vulkan branch info from the READMEs
+- 36fcc5d Introducing the appQt6Vulkan and appGtkmm4Vulkan branches info into the READMEs
+- 7abccf9 Simplifying root CMakeLists.txt
+- a190205 Introducing the appFirebird branch info into the READMEs
+- d8995a0 Introducing the appGtkmm4GDBusClient branch info into the READMEs
+- 20b6a93 Introducing the appQt6GLArea branch info into the READMEs
+- b4f6f3d Introducing the appGtkmm4GLArea branch info into the READMEs
+- 76b10dd Splitting the Data Visualization README category into Plots/Graphs and Maps
+- e2920cf Introducing the applibMeson branch info into the READMEs
+- 93d4570 Introducing the zlib and image format cmake enablers with docs
+- f64b8f0 Introducing the appSFML branch info into the READMEs
+- e5fabe3 Introducing the appwxWidgets branch info into the READMEs
+- acafc8b Introducing the appQt6QtDBusClient branch info into the READMEs
+- cf23cd5 Introducing the appQt6QtLocation branch info into the READMEs
+- ee8c2e5 Introducing the appQt6ChartView branch into the READMEs
+- 394e40c Introducing the appGtkmm4LeafLet and appQt6LeafLet branches info into the READMEs
+- cbabee6 Introducing the COMPONENTS arg for template_project_default_3rdparty_enabler
+- dbb2af6 Removing the SDL3 current marking
+- 6acdb0a Introducing information about the SDL3 branch in the READMEs
+- d1d7313 Replacing faulty SimpleLogger mention with the DefaultLogger
+- b85e3a9 Rename the simple logger to DefaultLogger and add top-level log.h tests
+- 3f68777 Removing faulty simple_logger mention in the log.h
+- fa9fd19 Add template-specific packager, documentation and registration checks
+- 682045c Introducing the appSDBusCxxClient and appSDBusCxxServer branches info into the READMEs
+- 1ab5f3b Moving Dockerfiles and packagers files into separate subdirs in the misc
+- 812db1c Adding .claude dir to .gitignore
+- d87047a Introducing project structure section Будь ласка, зверніться до адміністратора subsection
+- f8ea775 Introducing the libMeson branch info into the READMEs
+- 70de7ea Introducing info about newly created branch appOpenCV into READMEs with it's cmake enabler.
+- fb7c680 Introducing the CPack's RPM package generator integration
+- f9d8f47 Removing unmerged lines in the doc/README.uk_UA.md
+- c6361af Introducing the MS Windows WIX package generation through CPack integration
+- 6dcf0f6 Introducing the project's FreeBSD pkg package generation support through CPack. Works only on FreeBSD.
+- b247093 Deleting REQUIRED marking from the snapcraft's find_program
+- ea34ec5 By default disabling the snap package manager
+- 63c0784 Introducing the snap packager integration with documentation
+- 665fb56 Introducing and migrating to the template_project_default_3rdparty_enabler cmake function. Making enablers git sources variables modifiable.
+- bd00c5f Moving all CMake variables declarations into their respectful enablers.
+- 2249c70 Moving Doxygen related CMake variables into doc/CMakeLists.txt file
+- f1b1272 Introducing the libxml2 enabler cmake module
+- 659aa6e Enhancing the cmake files fs structure
+- 35f95bd Making docker base image configurable through CMake variables
+- ecb4302 Introducing the appPLplot branch info into the READMEs
+- 79833d6 Introducing the MatPlot++ appMatPlotxx branch into the READMEs
+- 0e2b355 Making the cppcheck stage optional due to unstable results
+- 74a4609 Fixing clang-tidy conf misspell
+- ebec234 Switching off the clang-tydy's unrecognizable AnalyzeTemporaryDtors config param
+- ef7f421 Loggging README's misspell refine
+- 0aaea79 Grouping and categorising available template flavors links in the READMEs
+- fac6f91 Renaming properly Nlohmann JSON library CMake enabler file
+- 5369fb2 Introducing the forgottent Nlohmann JSON library enabler info into the READMEs
+- a4c9e25 Translating required MySQL packages README.us_UA.md section.
+- 0874464 Decomposing READMEs
+- e17eead Introducing the ENABLE_LOGS_MICROSECONDS_TIME CMake option in order to be able to disable microseconds in the log messages.
+- cb1e83b  Introducing the --branch cmd line flag for git clone command in the READMEs
+- 6a677cc Introducing explicit template altering notice in the READMEs headers
+- d218374 Optimizing some CMake commands in the README.md
+- 90a7681 Introducing the appGtkmm4 branch info into the READMEs
+- c439a46 Introducing the PlantUML app component diagram into the READMEs
+- 03c79b4 Code formatting applied
+- e3a3f46 Introducing new app CT for MySQLController
+- 0536fec Fixing app CTs
+- 4d2fbb1 Enabling GTest during for CTs
+- fd0d362 Pointing Jenkins configurable port into standart in-container 8080
+- 8afa6f5 Making the Jenkins pipeline container and image names configurable
+- bba4c3f Introducing basic app CTs samples
+- de216c1 Introducing basic SimpleLogger CTs with CMake and Jenkins integration
+- 71cf73c Refining the branches link in the READMEs, introducing gitlab links also
+- bd4524c Specifying the Jenkins container run target in the READMEs
+- 0073b1e Introducing basic Jenkins pipeline CMake target and Jenkinsfile conf
+- 1d4002d Fixing typo in the README.md
+- 82087f6 Introducing the valgrind callgrind profiler target for the project
+- 6ca40f5 Introducing the gprof profiling target
+- 0388d9b Adding money emoji to donation notice in the READMEs
+- 3fd3ea5 Introducing the appCURL branch info into the READMEs
+- 1613279 Introducing the enabling libcurl section into the READMEs
+- 1fa0d97 Introducing the libcurl cmake enabler script
+- b8f0694 Moving the DEFAULT_LOG_FILE_PATH macro declaration into severity-macro-consts.h
+- accdc58 Refining unit tests to match the new log code
+- 4f9ec7a Introducing a custom log file cmd param for the executable
+- a35e9db Introducing the DEFAULT_LOG_FILE_PATH cmake var and cpp macro to specify default dst log file location
+- 1427bf6 Introducing the CMDParamNames class to encapsulate CMD params names
+- db1d355 Introducing some marketing sentences in the README's goal section
+- 8e357e6 Introducing the cmake/enablers subdirectory to locate the 3rd-party dependencies
+- 238cc60 Renaming emplate-project-make-GTest-available - template-project-GTest-enabler
+- 636e6c1 Introducing the NLohmann JSON library enabler cmake module
+- a988124 Fixing the sanitizers cmake file in the READMEs
+- 7117aed Avoiding unnecessary badly portable localtime_r usage
+- 7b229ea Introducing the thread id into simple logger
+- 51e6f4d Avoiding backward time in the simple logs
+- bca668f Avoiding final log multiple str fetches
+- 9cdf216 Refining the log current timestamp method, increasing thread safety
+- 8de6aeb Introducing the CMake configurable log severity messages compilation switch
+- 6cfe386 Introducing the appBoostLog branch info into the READMEs
+- 37e2fce Hiding the compile options cmake files under separate directory
+- d151cf6 Enhancing sanitizers combinations and new cmake dir for ones
+- ebabe1c Introducing the sanitizers enabling info into the READMEs
+- 2567ce9 Removing redundant cmake traces messages
+- 258124a Introducing the GCC compiler sanitizers
+- bfbb30e Refined issues in the Docker READMEs doc
+- 07d9da1 Refining the Docker target for the MySQLCppConn
+- a2eb6ec Separating the Docker single container build and run targets
+- 03ab315 Introducing the Docker single run container target.
+- 35da5f2 Adding project neatness to the READMEs
+- 902279f Introducing the appLog4Cpp5 branch info into the READMEs
+- 2b6dc5f Enabling multithreading in the flatpak boost build
+- d20b809 Implementing the logging macros and a simple logger to perform log messaging
+- df6d4d9 Introducing the appMongoDBCpp4 branch info into the READMEs
+- 28fd073 Making the flatpak source json conf file configurable during cmake conf stage
+- ccd02ce Introducing the libmysqlcppconn7v5 into the dev variables dependencies
+- 642cab9 Refining the deb cmake info for cpack
+- 84b7370 Introducing the appSQLiteCpp3 branch info into the READMEs
+- d124c76 Refining the flatpak target final
+- cc8c53e Refining the flatpak target workflow second
+- 1a4d137 Refining the flatpak target workflow
+- 3f57339 Refining the cppcheck code warnings
+- 3cc86ec Refining Application UTs
+- f173c54 Refining the ApplicationContext mock
+- d7ad68b Introducing the gitlab mirror into the READMEs
+- 1ebc3d7 Marking the appMySQLCppConn as the current branch
+- 3414a0f Introducing the appMySQLCppConn branch info into the READMEs
+- c5dc4c4 Introducing the donation notice into the READMEs
+- def876a Extracting and introducing the QueryMaker class for assembling the SQL queries.
+- 2b879f7 Extracting the query execution method into execute_query method
+- 1116e12 Implementing the connection routine with a simple date string fetcher query
+- db72f93 Introducing the basic MySQLController class hierarchy and it's integration
+- 7ac2b51 Altering the ApplicationContext
+- 83a5a81 Transferring the ApplicationContext with DB extra fields from appPgSQLxx branch
+- 43b121f Introducing the libmysqlcppconn-dev as required package into the README.md
+- a51e4a6 Transfering the IDBConnection class from appPgSQLxx
+- 8e577ce Introducing the appBoostBeast branch info into the READMEs
+- 7ec125a Explicitly specifying the combining of the template branches
+- c793831 introducing the appPgSQLxx branch into the READMEs
+- 59a3f26 Introducing a new appWt4 branch info into the READMEs
+- ae60d2a Introducing the error exit code for a cppcheck target
+- 38256c1 Refinining the cppcheck target
+- 9bf6620 Introducing the appMeson branch info into the READMEs
+- 97a6442 Refining READMEs
+- 05af0e5 Refining branches info
+- c8de777 Introducing the flatpak sections into the READMEs
+- 69ffe40 Introducing the flatpak package creation from the template source.
+- 4b00b9f Inserting the release tag link
+- 8bd91be Incrementing version to 0.8.0
+- dfff631 Release app0.8.0 2025-03-20
+
 ## [app0.8.0] - 2025-03-20
 
 - c2d08e9 Replacing int flag with a bool for the CommandLineParser

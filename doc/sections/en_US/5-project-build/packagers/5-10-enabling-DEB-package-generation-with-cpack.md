@@ -24,6 +24,6 @@ Finally, execute the `cpack` command inside the template project build directory
 cpack
 ```
 
-The package file should be generated inside the project build root directory. For example, if project name was't change and it's version is 0.8.0 so the package name may look like `CppAppTemplate-0.8.0-Linux.deb`.
+The package file should be generated inside the project build root directory. For example, if project name was't change and it's version is 0.9.0 so the package name may look like `CppAppTemplate-0.9.0-Linux.deb`.
 
 In order to examine details of the `deb` package configuration visit the `cmake/template-project-deb-enabler.cmake` file.

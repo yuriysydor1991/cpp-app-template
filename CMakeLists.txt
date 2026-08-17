@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.13)
 
 project(
   CppAppTemplate
-  VERSION 0.13.0
+  VERSION 0.14.0
   DESCRIPTION "A C++ Template project for you!"
   HOMEPAGE_URL "http://www.kytok.org.ua/"
   LANGUAGES CXX

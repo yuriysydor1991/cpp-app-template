@@ -14,7 +14,7 @@
 #include "src/log/default-logger/real-default-logger/RealDefaultLogger.h"
 
 using namespace testing;
-using namespace default_logger;
+using namespace TEMPLATE_DEFAULT_LOG_NAMESPACE;
 
 class CTEST_DefaultLogger : public Test
 {

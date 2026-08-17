@@ -19,4 +19,12 @@
  */
 #define TEMPLATE_LIB_IMPL_NAMESPACE @PROJECT_LIB_NAMESPACE@impl
 
+/*
+ * The logging subsystem owns a third project unique namespace,
+ * TEMPLATE_DEFAULT_LOG_NAMESPACE. It is not declared here, because the
+ * subsystem is shared with the projects which declare no library at all and
+ * therefore generate no current header: CMake hands it over as a compile
+ * definition instead. See src/log/default-logger/default-logger-decls.h.
+ */
+
 #endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_LIB_DECLS_H

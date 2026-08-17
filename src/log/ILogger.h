@@ -18,12 +18,16 @@ namespace logger
  * implementation variants. Implement it to replace the logging behaviour
  * without touching the src/log/log.h logging macroses.
  *
- * The default_logger::DefaultLogger static proxy holds a pointer to this
- * interface and not to a particular logger class, so an implementation is free
- * to wrap the log4cpp, the boost::log or any other logging library instead of
- * deriving from the default_logger::RealDefaultLogger. Hand a new instance over
- * to the default_logger::DefaultLogger::real_logger setter, or through the
- * LOG_INIT_REAL_LOGGER macro, to make the whole binary log through it.
+ * The default logger static proxy holds a pointer to this interface and not to
+ * a particular logger class, so an implementation is free to wrap the log4cpp,
+ * the boost::log or any other logging library instead of deriving from the
+ * default real logger. Hand a new instance over through the
+ * LOG_INIT_REAL_LOGGER macro to make the whole binary log through it. The proxy
+ * itself lives in the project unique TEMPLATE_DEFAULT_LOG_NAMESPACE namespace
+ * and is not installed, because every derived library owns a copy of it, while
+ * this interface is shared - so the macro, and the public
+ * LibraryFacade::init_logger behind it, are the only names a library user
+ * needs.
  *
  * Current file is a target for the library header installation: the public
  * LibraryFacade::init_logger accepts this interface, so the library user

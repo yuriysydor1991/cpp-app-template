@@ -5,13 +5,14 @@
 #include <string>
 
 #include "src/log/ILogger.h"
+#include "src/log/default-logger/default-logger-decls.h"
 #include "src/log/default-logger/real-default-logger/RealDefaultLogger.h"
 #include "src/log/severity-macro-consts.h"
 
 /**
  * @brief The default logger quick implementation encapsulation namespace.
  */
-namespace default_logger
+namespace TEMPLATE_DEFAULT_LOG_NAMESPACE
 {
 
 /**
@@ -22,8 +23,8 @@ namespace default_logger
  * The instance is held by the abstract logger::ILogger interface pointer and
  * not by a particular logger class one, so any implementation of that interface
  * is accepted by the DefaultLogger::real_logger setter. The
- * default_logger::RealDefaultLogger implementation is created only as the
- * default one.
+ * TEMPLATE_DEFAULT_LOG_NAMESPACE::RealDefaultLogger implementation is created
+ * only as the default one.
  */
 class DefaultLogger
 {
@@ -131,7 +132,7 @@ class DefaultLogger
   /**
    * @brief Returns the real logger instance which stands behind all the
    * DefaultLogger static methods. The very first call creates the default
-   * default_logger::RealDefaultLogger one.
+   * TEMPLATE_DEFAULT_LOG_NAMESPACE::RealDefaultLogger one.
    *
    * Pass the returned instance into the `lib`-style projects through their
    * logging initializer macroses to make them log into the very same logger
@@ -178,6 +179,6 @@ class DefaultLogger
   inline static bool adopted{false};
 };
 
-}  // namespace default_logger
+}  // namespace TEMPLATE_DEFAULT_LOG_NAMESPACE
 
 #endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_DEFAULT_LOGGER_IMPLEMENTATION_CLASS_H

@@ -16,7 +16,7 @@
 
 using namespace testing;
 using namespace TEMPLATE_LIB_NAMESPACE;
-using namespace default_logger;
+using namespace TEMPLATE_DEFAULT_LOG_NAMESPACE;
 
 namespace
 {

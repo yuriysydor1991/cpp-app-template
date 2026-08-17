@@ -69,6 +69,21 @@ unset(_lib_namespace)
 
 message(STATUS "PROJECT_LIB_NAMESPACE: ${PROJECT_LIB_NAMESPACE}")
 
+# The default logger implementation C++ namespace. Every derived library
+# carries an own copy of the logging subsystem, so the copies must not share
+# their symbols either: two libraries with a single logger namespace share the
+# real logger instance holder too, and the loader then binds the logging calls
+# of both of them into whichever library it resolved first. The logger::ILogger
+# interface stays out of it on purpose - see its own documentation.
+set(
+  PROJECT_DEFAULT_LOG_NAMESPACE "${PROJECT_LIB_NAMESPACE}_default_logger"
+  CACHE STRING
+  "The default logger implementation C++ namespace, unique per derived project"
+  FORCE
+)
+
+message(STATUS "PROJECT_DEFAULT_LOG_NAMESPACE: ${PROJECT_DEFAULT_LOG_NAMESPACE}")
+
 # The directory the public headers are generated into. It is declared here and
 # not in the src/lib subdirectory, because the analyzer targets are created
 # before that subdirectory is added and have to reach those headers too.

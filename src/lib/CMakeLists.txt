@@ -22,7 +22,7 @@ target_include_directories(
 )
 
 # The whole logging implementation is a part of the library itself. Without it
-# the installed library carries unresolved default_logger symbols and can not
+# the installed library carries unresolved default logger symbols and can not
 # be linked by the application which uses it. The objects are taken directly
 # instead of being linked, so the internal logger targets stay out of the
 # installed library export set.

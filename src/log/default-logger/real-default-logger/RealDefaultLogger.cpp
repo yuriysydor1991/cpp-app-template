@@ -12,7 +12,7 @@
 #include <string>
 #include <thread>
 
-namespace default_logger
+namespace TEMPLATE_DEFAULT_LOG_NAMESPACE
 {
 
 void RealDefaultLogger::log(const unsigned short& loglvl,
@@ -152,4 +152,4 @@ std::string RealDefaultLogger::get_default_full_log_path()
   return get_full_log_path(default_log_name);
 }
 
-}  // namespace default_logger
+}  // namespace TEMPLATE_DEFAULT_LOG_NAMESPACE

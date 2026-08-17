@@ -26,6 +26,13 @@
 # library must answer into that single instance, so the test covers the
 # installed header surface and not the build tree one: an interface which is
 # not installed alongside the library can not be implemented by its user at all.
+#
+# The test then hands every library a logger of its OWN and asserts that none of
+# them receives the messages of another. Every derived library carries a copy of
+# the whole logging subsystem, so the copies have to keep their real logger
+# instance holders apart: libraries which share that holder let a single logger
+# collect everything while the rest stay silent, and the logger one library
+# adopted silently serves the others too.
 
 set -euo pipefail
 
@@ -323,9 +330,10 @@ generate_application()
     echo "int main()"
     echo "{"
     echo "  const auto appLogger = std::make_shared<AppLogger>();"
+    echo "  const auto loggerInits = all_logger_inits();"
     echo
     echo "  // Every library adopts the very same application logger instance."
-    echo "  for (const auto& initLogger : all_logger_inits()) {"
+    echo "  for (const auto& initLogger : loggerInits) {"
     echo "    initLogger(appLogger);"
     echo "  }"
     echo
@@ -367,6 +375,43 @@ generate_application()
     echo "    if (!found) {"
     echo "      std::cerr << \"library \" << iter"
     echo "                << \" never logged into the application logger\\n\";"
+    echo "      ++failures;"
+    echo "    }"
+    echo "  }"
+    echo
+    echo "  // Every library must hold an OWN adopted logger instance. Give each"
+    echo "  // of them a logger of its own and let none of them receive the"
+    echo "  // messages of another: a shared logger holder makes a single logger"
+    echo "  // collect everything while the rest stay empty."
+    echo "  std::vector<std::shared_ptr<AppLogger>> ownLoggers;"
+    echo
+    echo "  for (const auto& initLogger : loggerInits) {"
+    echo "    ownLoggers.push_back(std::make_shared<AppLogger>());"
+    echo "    initLogger(ownLoggers.back());"
+    echo "  }"
+    echo
+    echo "  for (std::size_t iter = 0U; iter < libcalls.size(); ++iter) {"
+    echo "    int result = 0;"
+    echo "    libcalls[iter](${BASE_NUMBER}, result);"
+    echo "  }"
+    echo
+    echo "  for (std::size_t iter = 0U; iter < ownLoggers.size(); ++iter) {"
+    echo "    const std::string expect ="
+    echo "        \"The library \" + std::to_string(iter) + \" libcall\";"
+    echo
+    echo "    if (ownLoggers[iter]->msgs.size() != 1U) {"
+    echo "      std::cerr << \"library \" << iter << \" own logger received \""
+    echo "                << ownLoggers[iter]->msgs.size()"
+    echo "                << \" messages instead of exactly 1 - the libraries \""
+    echo "                << \"share a single logger holder\\n\";"
+    echo "      ++failures;"
+    echo "      continue;"
+    echo "    }"
+    echo
+    echo "    if (ownLoggers[iter]->msgs.front().find(expect) == std::string::npos) {"
+    echo "      std::cerr << \"library \" << iter"
+    echo "                << \" own logger received a message of another \""
+    echo "                << \"library: \" << ownLoggers[iter]->msgs.front() << '\\n';"
     echo "      ++failures;"
     echo "    }"
     echo "  }"

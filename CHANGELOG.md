@@ -5,6 +5,77 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appMeson0.10.0] - 2026-08-17
+
+- 91198d9 Introducing the InsertNewlineAtEOF clang-format option
+- 0b8c7a5 Repairing the dead snapcraft installation documentation URL
+- 30b9b72 Introducing the appCURLChatGPT branch info into the READMEs
+- b3d9a90 Hiding the ApplicationContext fields and adding the atomic stop flag
+- 80cf589 Introducing the appCURLClaude branch info into the READMEs
+- f88cf2b Introducing the external documentation URLs check into the Jenkins pipeline
+- 811f8e7 Making the docker containers run under unprivileged users
+- 43a6ace Renaming the SimpleLogger component into the DefaultLogger
+- f2b7fd8 Build the test argv array after the argument string is assigned
+- ab6d94f Mark the application destructors with the override specifier
+- 79a7dbb Give cppcheck the project header directories
+- 23b0fd8 Suppress the cppcheck missingIncludeSystem and unusedStructMember warnings
+- 2ae2dd0 Fix the clang-tidy pipeline stage of the Meson build
+- b1fd790 Resolve the leftover .gitignore merge conflict markers
+- 1fe1b2c Introducing the appPGPLOT branch info into the READMEs
+- e99b693 Group the enabler documentation under subsections in the READMEs
+- e2e9102 Group the compression branches under a dedicated README section
+- 799ba1b Introducing the appLZMA branch info into the READMEs
+- 3da1200 Introducing the appZlib branch info into the READMEs
+- abdf034 Introducing the appGtkmm4Vulkan branch info into the READMEs
+- 6848c83 Removing the appGtkmm4Vulkan branch info from the READMEs
+- faa7073 Introducing the appQt6Vulkan and appGtkmm4Vulkan branches info into the READMEs
+- 6af30ed Introducing the appFirebird branch info into the READMEs
+- 748e6d0 Introducing the appGtkmm4GDBusClient branch info into the READMEs
+- 9ef3b5d Introducing the appQt6GLArea branch info into the READMEs
+- 250fe09 Introducing the appGtkmm4GLArea branch info into the READMEs
+- 1cc14f7 Splitting the Data Visualization README category into Plots/Graphs and Maps
+- a64e517 Introducing the applibMeson branch info into the READMEs
+- b89b900 Introducing the appSFML branch info into the READMEs
+- 5de7fe9 Introducing the appwxWidgets branch info into the READMEs
+- 52e7257 Introducing the appQt6QtDBusClient branch info into the READMEs
+- 4ba9097 Introducing the appQt6QtLocation branch info into the READMEs
+- 6e70019 Introducing the appQt6ChartView branch into the READMEs
+- 9899417 Introducing the appGtkmm4LeafLet and appQt6LeafLet branches info into the READMEs
+- 932e098 Introducing the Meson-based Jenkins pipeline for the appMeson branch
+- 5dca5e7 Introducing the appSDBusCxxClient and appSDBusCxxServer branches info into the READMEs
+- 297fb27 Adding .claude dir to .gitignore
+- 7238278 Introducing project structure section Будь ласка, зверніться до адміністратора subsection
+- 3398bdc Introducing the libMeson branch info into the READMEs
+- 29370ad Decomposing the Meson extra features doc and migrating CMake commands to Meson
+- 5b1fc2a Bringing the appMeson branch up to date with the app branch integrations
+- c58909c Introducing info about newly created branch appOpenCV into READMEs.
+- 1a46864 Introducing the appPLplot branch info into the READMEs
+- 32393dc Introducing the MatPlot++ appMatPlotxx branch into the READMEs
+- 241cabc Switching off the clang-tydy's unrecognizable AnalyzeTemporaryDtors config param
+- 49c44a3 Loggging README's misspell refine
+- 174891a Grouping and categorising available template flavors links in the READMEs
+- 18f9987 Decomposing READMEs
+- f6e77d5  Introducing the --branch cmd line flag for git clone command in the READMEs
+- 2ded3d8 Introducing explicit template altering notice in the READMEs headers
+- 170855c Introducing the appGtkmm4 branch info into the READMEs
+- 0e5821f Introducing the PlantUML app component diagram into the READMEs
+- cf92227 Refining the branches link in the READMEs, introducing gitlab links also
+- 63cb3d3 Adding money emoji to donation notice in the READMEs
+- 4f8b42b Introducing the appCURL branch info into the READMEs
+- 25e6149 Removing redundant cpp-check suppression
+- 3d4ec3f Refining unit tests to match the new log code
+- b1e8b09 Introducing a custom log file cmd param for the executable
+- 3a12a53 Introducing the CMDParamNames class to encapsulate CMD params names
+- 3c9819d Introducing some marketing sentences in the README's goal section
+- 071fc8e Avoiding unnecessary badly portable localtime_r usage
+- ebb48c7 Introducing the thread id into simple logger
+- c4d82e5 Avoiding backward time in the simple logs
+- cbc3044 Avoiding final log multiple str fetches
+- 095957b Refining the log current timestamp method, increasing thread safety
+- fab155f Adding *.log files to the .gitignore file
+- f92f9a5 Incrementing version to 0.10.0
+- f3f688c Release appMeson0.9.0 2025-06-06
+
 ## [appMeson0.9.0] - 2025-06-06
 
 - d7e1b19 Introducing the Docker optional packages into the READMEs

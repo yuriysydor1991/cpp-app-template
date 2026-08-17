@@ -5,7 +5,7 @@
 імен імпортованої цілі що експортується через `install(EXPORT ...)`) виводиться
 з трьох опціональних CMake-опцій. Вони дозволяють паралельним встановленням
 різних версій бібліотеки співіснувати у системі - наприклад
-`include/CppAppTemplate-0.11.0-dev/` поруч з `include/CppAppTemplate-0/`.
+`include/CppAppTemplate-0.12.0-dev/` поруч з `include/CppAppTemplate-0/`.
 
 | Опція | За замовчуванням | Ефект |
 |---|---|---|
@@ -13,15 +13,15 @@
 | `-DLIB_INCLUDE_MICRO_IN_NAME=ON` | `OFF` | Додає `.<micro>` (вмикає прапорець minor неявно) |
 | `-DLIB_NAME_SUFFIX=-dev` | `""` | Додає довільний завершальний суфікс |
 
-Приклади імен бібліотеки для проекту `0.11.0`:
+Приклади імен бібліотеки для проекту `0.12.0`:
 
 | Прапорці конфігурації | Імʼя бібліотеки |
 |---|---|
 | (немає) | `CppAppTemplate-0` |
 | `-DLIB_INCLUDE_MINOR_IN_NAME=ON` | `CppAppTemplate-0.11` |
-| `-DLIB_INCLUDE_MINOR_IN_NAME=ON -DLIB_INCLUDE_MICRO_IN_NAME=ON` | `CppAppTemplate-0.11.0` |
+| `-DLIB_INCLUDE_MINOR_IN_NAME=ON -DLIB_INCLUDE_MICRO_IN_NAME=ON` | `CppAppTemplate-0.12.0` |
 | `-DLIB_NAME_SUFFIX=-dev` | `CppAppTemplate-0-dev` |
-| `-DLIB_INCLUDE_MINOR_IN_NAME=ON -DLIB_INCLUDE_MICRO_IN_NAME=ON -DLIB_NAME_SUFFIX=-dev` | `CppAppTemplate-0.11.0-dev` |
+| `-DLIB_INCLUDE_MINOR_IN_NAME=ON -DLIB_INCLUDE_MICRO_IN_NAME=ON -DLIB_NAME_SUFFIX=-dev` | `CppAppTemplate-0.12.0-dev` |
 
 Приклад поєднаної конфігурації:
 

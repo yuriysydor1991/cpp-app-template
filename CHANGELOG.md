@@ -5,6 +5,120 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appOpenCV0.11.0] - 2026-08-17
+
+- 70e4f27 Introducing the InsertNewlineAtEOF clang-format option
+- 23147c5 Introducing the appCURLChatGPT branch info into the READMEs
+- e20fde1 Hiding the ApplicationContext fields and adding the atomic stop flag
+- 6a3b515 Moving the linker hardening options out of the compile options
+- 678ffc7 Split the DefaultLogger into a static proxy and a real logger instance
+- 071a445 Introducing the appCURLClaude branch info into the READMEs
+- 1565c45 Introducing the external documentation URLs check into the Jenkins pipeline
+- 1ee5596 Correcting the docker modules path of the documentation
+- 17702dc Introducing the quick build and the docker starter scripts
+- 5ce2e01 Introducing the quick build and the docker starter scripts
+- b01ce6e Making the docker containers run under unprivileged users
+- e907f1f Formatting the sources with the clang-format
+- ecfa2f8 Repairing the pipeline code check stages
+- 13b9af3 Introducing the appPGPLOT branch info into the READMEs
+- d0c4238 Fixing the Jenkisfile
+- 97653fb Fix broken cppcheck link in section 5 index
+- 84a0c1d Fix Groovy escape sequences in markdown link checker stage
+- 14ae633 Rework markdown link checker stage to pure bash
+- f4d57f1 Add Jenkinsfile stage to detect broken markdown links; fix pre-existing broken links
+- fa9ec2a Reorganize doc/sections into section dirs with category grouping
+- 0e8d517 Add an OpenSSL cmake enabler module with SHA-256, HMAC-SHA256 and HTTPS/TLS client code samples Add OpenSSL README Security section to appOpenCV branch
+- 4d3a040 Group the enabler documentation under subsections in the READMEs
+- 2f75c91 Group the compression branches under a dedicated README section
+- 4d2362a Introducing the appLZMA branch info into the READMEs
+- 36ecc9a Add a liblzma (XZ Utils) compression library enabler module
+- 2486039 Introducing the appZlib branch info into the READMEs
+- 99a3030 Add zlib compression usage examples to its enabler documentation
+- be120f9 Replace the redundant PROJECT_NAME CMake variable with CMAKE_PROJECT_NAME
+- ea29138 Introducing the appGtkmm4Vulkan branch info into the READMEs
+- 4f89bb1 Removing the appGtkmm4Vulkan branch info from the READMEs
+- b582977 Introducing the appQt6Vulkan and appGtkmm4Vulkan branches info into the READMEs
+- 1304763 Simplifying root CMakeLists.txt
+- 95d0f6c Making Jenkinsfile' clang-tidy build optional due to OpenCV include file errors
+- a307b46 Introducing the appFirebird branch info into the READMEs
+- bbb7a2d Introducing the appGtkmm4GDBusClient branch info into the READMEs
+- 06ba5a4 Introducing the appQt6GLArea branch info into the READMEs
+- 5b33713 Introducing the appGtkmm4GLArea branch info into the READMEs
+- d6b4409 Splitting the Data Visualization README category into Plots/Graphs and Maps
+- 48c180f Introducing the applibMeson branch info into the READMEs
+- 938f477 Introducing the zlib and image format cmake enablers with docs
+- c6e7db1 Introducing the appSFML branch info into the READMEs
+- 4985349 Introducing the appwxWidgets branch info into the READMEs
+- dd0be6b Introducing the appQt6QtDBusClient branch info into the READMEs
+- 016022f Introducing the appQt6QtLocation branch info into the READMEs
+- 555c499 Introducing the appQt6ChartView branch into the READMEs
+- 2cf3663 Introducing the appGtkmm4LeafLet and appQt6LeafLet branches info into the READMEs
+- 8c4b7a7 Introducing the COMPONENTS arg for template_project_default_3rdparty_enabler
+- 8cb1889 Removing the SDL3 current marking
+- 148178d Introducing information about the SDL3 branch in the READMEs
+- 0fc803a Replacing faulty SimpleLogger mention with the DefaultLogger
+- 58bd509 Rename the simple logger to DefaultLogger and add top-level log.h tests
+- ea54bac Removing faulty simple_logger mention in the log.h
+- 8bbe86f Add template-specific packager, documentation and registration checks
+- 018623e Introducing the appSDBusCxxClient and appSDBusCxxServer branches info into the READMEs
+- 563ea73 Moving Dockerfiles and packagers files into separate subdirs in the misc
+- 658f6e1 Adding .claude dir to .gitignore
+- 282dd48 Introducing project structure section Будь ласка, зверніться до адміністратора subsection
+- b00aa0e Introducing the libMeson branch info into the READMEs
+- 53b60e9 Extracting the OpenCV example loading and recognition from App::run into the OpenCVController::run dispatcher
+- 7a97551 Introducing the OpenCV integration with the preinstalled Haar face cascade
+- cfa55af Introducing the CPack's RPM package generator integration
+- 860c012 Removing unmerged lines in the doc/README.uk_UA.md
+- 0cb37b3 Introducing the MS Windows WIX package generation through CPack integration
+- 16bff16 Introducing the project's FreeBSD pkg package generation support through CPack. Works only on FreeBSD.
+- cdad20f Deleting REQUIRED marking from the snapcraft's find_program
+- e42f7a3 By default disabling the snap package manager
+- cede1e2 Introducing the snap packager integration with documentation
+- 5c2fa86 Introducing and migrating to the template_project_default_3rdparty_enabler cmake function. Making enablers git sources variables modifiable.
+- f28c334 Moving all CMake variables declarations into their respectful enablers.
+- ace9351 Moving Doxygen related CMake variables into doc/CMakeLists.txt file
+- 0d38e5b Introducing the libxml2 enabler cmake module
+- 0d8c898 Enhancing the cmake files fs structure
+- 3ec8d38 Making docker base image configurable through CMake variables
+- 43763b8 Introducing the appPLplot branch info into the READMEs
+- 938e0a1 Introducing the MatPlot++ appMatPlotxx branch into the READMEs
+- a7bbedd Fixing clang-tidy conf misspell
+- 80d533c Switching off the clang-tydy's unrecognizable AnalyzeTemporaryDtors config param
+- 052cebf Making the cppcheck stage optional due to unstable results
+- f849981 Supressing the cppcheck's missingIncludeSystem and unusedStructMember warnings.
+- 9eb94c6 Loggging README's misspell refine
+- accda7f Missing newlines in the READMEs
+- ab6f8b1 Grouping and categorising available template flavors links in the READMEs
+- 9aa88c6 Renaming properly Nlohmann JSON library CMake enabler file
+- c6c323d Introducing the forgottent Nlohmann JSON library enabler info into the READMEs
+- c958ff8 Refining branch name in the READMEs project cloning commands.
+- d6bc1a8 Decomposing READMEs
+- 893a961 Introducing the ENABLE_LOGS_MICROSECONDS_TIME CMake option in order to be able to disable microseconds in the log messages.
+- 1cefe87 Introducing the --branch cmd line flag for git clone command in the READMEs
+- 2e81c79 Introducing explicit template altering notice in the READMEs headers
+- 07c06d3 Optimizing some CMake commands in the README.md
+- 83d424b Introducing the appGtkmm4 branch info into the READMEs
+- f819f25 Introducing the PlantUML app component diagram into the READMEs
+- ccac56a Enabling GTest during for CTs
+- 8d7481c Pointing Jenkins configurable port into standart in-container 8080
+- 385398a Making the Jenkins pipeline container and image names configurable
+- 7c1ee70 Including lost SimpleLogger CTs
+- e209c5b Introducing basic app CTs samples
+- 86d9278 Introducing basic SimpleLogger CTs with CMake and Jenkins integration
+- 7ab160b Refining the branches link in the READMEs, introducing gitlab links also
+- eb731ef Specifying the Jenkins container run target in the READMEs
+- e6e6e61 Erasing redundant project copy for Jenkins pipeline docker, renaming jenkins CMake file
+- 1b1ddc2 Refining clang-format stage
+- 3c652ba Introducing the release install try Jenkins pipeline stage
+- c4f0c77 Erasing redundant clang-tidy enable from tests pipeline stages
+- 9bf1c0d Splitting debug tests and cppcheck from clang-tidy build
+- 3b6a5f0 Introducing the Jenkins pipeline docker force rebuild option
+- 98ce4a0 Returning a Jenkins Docker file configure, erasing redundant Jenkinsfile configuration
+- 6ac3d4f Refining Jenkins pipeline target
+- 836d98d Introducing basic Jenkins pipeline CMake target and Jenkinsfile conf
+- 51fe32f Incrementing version to 0.11.0
+- bd88653 Release app0.10.0 at 2025-09-08
+
 ## [app0.10.0] - 2025-09-08
 
 - 5e10927 Fixing typo in the README.md

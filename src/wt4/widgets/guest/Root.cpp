@@ -1,10 +1,9 @@
 #include "src/wt4/widgets/guest/Root.h"
 
-#include <Wt/WText.h>
-
 #include <memory>
 
 #include "src/wt4/Wt4Context.h"
+#include "src/wt4/wt4-includes.h"
 
 namespace wt4server::widgets::guest
 {

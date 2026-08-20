@@ -1,14 +1,13 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_WT4SERVER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_WT4SERVER_CLASS_H
 
-#include <Wt/WApplication.h>
-
 #include <memory>
 
 #include "src/app/ApplicationContext.h"
 #include "src/app/IApplication.h"
 #include "src/wt4/Wt4Context.h"
 #include "src/wt4/widgets/WidgetsFactory.h"
+#include "src/wt4/wt4-includes.h"
 
 /**
  * @brief The Wt4 implementation namespace for the template project.

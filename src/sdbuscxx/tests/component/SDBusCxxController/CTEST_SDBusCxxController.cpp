@@ -1,12 +1,12 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-#include <sdbus-c++/sdbus-c++.h>
 
 #include <memory>
 #include <string>
 
 #include "src/app/ApplicationContext.h"
 #include "src/sdbuscxx/SDBusCxxController.h"
+#include "src/sdbuscxx/sdbuscxx-includes.h"
 
 using namespace testing;
 using namespace sdbuscxxi;

@@ -1,11 +1,10 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_SDBUSCXXCONTROLLER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_SDBUSCXXCONTROLLER_CLASS_H
 
-#include <sdbus-c++/sdbus-c++.h>
-
 #include <memory>
 
 #include "src/app/ApplicationContext.h"
+#include "src/sdbuscxx/sdbuscxx-includes.h"
 
 namespace sdbuscxxi
 {

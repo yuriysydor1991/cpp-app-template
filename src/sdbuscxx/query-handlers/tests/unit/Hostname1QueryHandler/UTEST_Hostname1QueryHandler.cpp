@@ -1,11 +1,11 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-#include <sdbus-c++/sdbus-c++.h>
 
 #include <functional>
 #include <string>
 
 #include "src/sdbuscxx/query-handlers/Hostname1QueryHandler.h"
+#include "src/sdbuscxx/sdbuscxx-includes.h"
 
 using namespace testing;
 using namespace sdbuscxxi;

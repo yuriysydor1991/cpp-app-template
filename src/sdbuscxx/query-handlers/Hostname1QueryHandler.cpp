@@ -1,12 +1,11 @@
 #include "src/sdbuscxx/query-handlers/Hostname1QueryHandler.h"
 
-#include <sdbus-c++/sdbus-c++.h>
-
 #include <cassert>
 #include <memory>
 #include <string>
 
 #include "src/log/log.h"
+#include "src/sdbuscxx/sdbuscxx-includes.h"
 
 namespace sdbuscxxi
 {

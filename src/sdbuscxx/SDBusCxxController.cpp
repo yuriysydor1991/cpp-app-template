@@ -1,7 +1,5 @@
 #include "SDBusCxxController.h"
 
-#include <sdbus-c++/sdbus-c++.h>
-
 #include <cassert>
 #include <exception>
 #include <memory>
@@ -9,6 +7,7 @@
 #include "src/log/log.h"
 #include "src/sdbuscxx/query-handlers/DBusQueryHandlerFactory.h"
 #include "src/sdbuscxx/query-handlers/IDBusQueryHandler.h"
+#include "src/sdbuscxx/sdbuscxx-includes.h"
 
 namespace sdbuscxxi
 {

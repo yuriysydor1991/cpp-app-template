@@ -1,7 +1,5 @@
 #include "src/sqlite3cpp/SQLiteController.h"
 
-#include <SQLiteCpp/SQLiteCpp.h>
-
 #include <cassert>
 #include <iostream>
 #include <memory>
@@ -9,6 +7,7 @@
 #include "src/app/ApplicationContext.h"
 #include "src/app/IDBConnection.h"
 #include "src/log/log.h"
+#include "src/sqlite3cpp/sqlitecpp-includes.h"
 
 namespace sqlite3i
 {

@@ -1,13 +1,12 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_SQLITECONTROLLER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_SQLITECONTROLLER_CLASS_H
 
-#include <SQLiteCpp/SQLiteCpp.h>
-
 #include <memory>
 #include <string>
 
 #include "src/app/ApplicationContext.h"
 #include "src/app/IDBConnection.h"
+#include "src/sqlite3cpp/sqlitecpp-includes.h"
 #include "src/sqlite3cpp/sqlmaker/QueryMaker.h"
 
 namespace sqlite3i

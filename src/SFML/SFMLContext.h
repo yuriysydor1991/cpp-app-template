@@ -1,9 +1,9 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_SFMLCONTEXT_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_SFMLCONTEXT_CLASS_H
 
-#include <SFML/Graphics/RenderWindow.hpp>
 #include <memory>
 
+#include "src/SFML/sfml-includes.h"
 #include "src/app/ApplicationContext.h"
 
 namespace templateSFML

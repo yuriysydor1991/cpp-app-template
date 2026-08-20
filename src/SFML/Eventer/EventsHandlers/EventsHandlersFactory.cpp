@@ -1,12 +1,12 @@
 #include "src/SFML/Eventer/EventsHandlers/EventsHandlersFactory.h"
 
-#include <SFML/Window/Event.hpp>
 #include <cassert>
 #include <memory>
 
 #include "src/SFML/Eventer/EventsHandlers/EventClosedHandler.h"
 #include "src/SFML/Eventer/EventsHandlers/IEventHandler.h"
 #include "src/SFML/SFMLContext.h"
+#include "src/SFML/sfml-includes.h"
 
 namespace templateSFML::events::eventsHandlers
 {

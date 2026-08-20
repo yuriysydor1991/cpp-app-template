@@ -1,13 +1,11 @@
 #include "src/SFML/SFMLContextBuilder.h"
 
-#include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/Window/VideoMode.hpp>
-#include <SFML/Window/WindowStyle.hpp>
 #include <cassert>
 #include <memory>
 
 #include "project-global-decls.h"
 #include "src/SFML/SFMLContext.h"
+#include "src/SFML/sfml-includes.h"
 #include "src/app/ApplicationContext.h"
 #include "src/log/log.h"
 

@@ -1,10 +1,10 @@
 #include "src/SFML/Eventer/EventsController.h"
 
-#include <SFML/Window/Event.hpp>
 #include <cassert>
 #include <memory>
 
 #include "src/SFML/SFMLContext.h"
+#include "src/SFML/sfml-includes.h"
 
 namespace templateSFML::events
 {

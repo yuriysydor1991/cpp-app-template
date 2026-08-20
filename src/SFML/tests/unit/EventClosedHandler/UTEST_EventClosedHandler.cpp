@@ -1,11 +1,11 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include <SFML/Window/Event.hpp>
 #include <memory>
 
 #include "src/SFML/Eventer/EventsHandlers/EventClosedHandler.h"
 #include "src/SFML/SFMLContext.h"
+#include "src/SFML/sfml-includes.h"
 #include "src/app/ApplicationContext.h"
 
 using namespace app;

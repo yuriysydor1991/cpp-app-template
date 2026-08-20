@@ -1,11 +1,11 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_SFML_EVENTSHANDLERSFACTORY_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_SFML_EVENTSHANDLERSFACTORY_CLASS_H
 
-#include <SFML/Window/Event.hpp>
 #include <memory>
 
 #include "src/SFML/Eventer/EventsHandlers/IEventHandler.h"
 #include "src/SFML/SFMLContext.h"
+#include "src/SFML/sfml-includes.h"
 
 namespace templateSFML::events::eventsHandlers
 {

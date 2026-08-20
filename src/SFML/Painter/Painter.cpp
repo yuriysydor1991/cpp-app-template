@@ -1,10 +1,9 @@
 #include "Painter.h"
 
-#include <SFML/Graphics/CircleShape.hpp>
-#include <SFML/Graphics/Color.hpp>
-#include <SFML/Graphics/RenderWindow.hpp>
 #include <cassert>
 #include <memory>
+
+#include "src/SFML/sfml-includes.h"
 
 namespace templateSFML::painter
 {

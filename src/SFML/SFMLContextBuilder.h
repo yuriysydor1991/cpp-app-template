@@ -1,11 +1,11 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_SFMLCONTEXTBUILDER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_SFMLCONTEXTBUILDER_CLASS_H
 
-#include <SFML/Graphics/RenderWindow.hpp>
 #include <memory>
 #include <string>
 
 #include "src/SFML/SFMLContext.h"
+#include "src/SFML/sfml-includes.h"
 #include "src/app/ApplicationContext.h"
 
 namespace templateSFML

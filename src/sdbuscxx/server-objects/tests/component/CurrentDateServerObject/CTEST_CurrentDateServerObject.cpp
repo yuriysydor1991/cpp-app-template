@@ -1,12 +1,12 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-#include <sdbus-c++/sdbus-c++.h>
 
 #include <cctype>
 #include <cstddef>
 #include <memory>
 #include <string>
 
+#include "src/sdbuscxx/sdbuscxx-includes.h"
 #include "src/sdbuscxx/server-objects/CurrentDateServerObject.h"
 #include "src/sdbuscxx/server-objects/DBusServerObjectFactory.h"
 #include "src/sdbuscxx/server-objects/IDBusServerObject.h"

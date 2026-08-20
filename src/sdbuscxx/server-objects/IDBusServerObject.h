@@ -1,9 +1,9 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_IDBUSSERVEROBJECT_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_IDBUSSERVEROBJECT_CLASS_H
 
-#include <sdbus-c++/sdbus-c++.h>
-
 #include <memory>
+
+#include "src/sdbuscxx/sdbuscxx-includes.h"
 
 /**
  * @brief The namespace to contain all the entities related to the sdbus-c++

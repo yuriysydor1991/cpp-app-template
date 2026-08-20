@@ -2,9 +2,10 @@
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_IDBUSSERVEROBJECT_CLASS_H
 
 #include <gmock/gmock.h>
-#include <sdbus-c++/sdbus-c++.h>
 
 #include <memory>
+
+#include "src/sdbuscxx/sdbuscxx-includes.h"
 
 namespace sdbuscxxi
 {

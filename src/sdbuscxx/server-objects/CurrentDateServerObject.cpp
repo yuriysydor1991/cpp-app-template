@@ -1,9 +1,9 @@
 #include "src/sdbuscxx/server-objects/CurrentDateServerObject.h"
 
-#include <sdbus-c++/sdbus-c++.h>
-
 #include <ctime>
 #include <string>
+
+#include "src/sdbuscxx/sdbuscxx-includes.h"
 
 namespace sdbuscxxi
 {

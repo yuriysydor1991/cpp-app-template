@@ -1,11 +1,11 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-#include <sdbus-c++/sdbus-c++.h>
 
 #include <memory>
 
 #include "src/app/ApplicationContext.h"
 #include "src/sdbuscxx/SDBusCxxController.h"
+#include "src/sdbuscxx/sdbuscxx-includes.h"
 #include "src/sdbuscxx/server-objects/DBusServerObjectFactory.h"
 #include "src/sdbuscxx/server-objects/IDBusServerObject.h"
 

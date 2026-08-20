@@ -1,12 +1,11 @@
 #include "SDBusCxxController.h"
 
-#include <sdbus-c++/sdbus-c++.h>
-
 #include <cassert>
 #include <exception>
 #include <memory>
 
 #include "src/log/log.h"
+#include "src/sdbuscxx/sdbuscxx-includes.h"
 #include "src/sdbuscxx/server-objects/DBusServerObjectFactory.h"
 #include "src/sdbuscxx/server-objects/IDBusServerObject.h"
 

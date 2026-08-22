@@ -1,7 +1,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "src/app/Application.h"
+#include "src/app/applications/Application.h"
 #include "src/winui3/WinUI3Initer.h"
 
 using namespace app;

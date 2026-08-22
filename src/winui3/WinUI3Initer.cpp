@@ -3,7 +3,7 @@
 #include <cassert>
 #include <memory>
 
-#include "src/app/IApplication.h"
+#include "src/app/applications/IApplication.h"
 #include "src/log/log.h"
 #include "src/winui3/WinUI3Launcher.h"
 

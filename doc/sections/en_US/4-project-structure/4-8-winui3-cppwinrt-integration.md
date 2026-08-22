@@ -10,7 +10,7 @@ This branch fast-starts a [Microsoft WinUI 3](https://learn.microsoft.com/window
 - `src/winui3/app/WinUI3AppStub.cpp` - a non-Windows definition of `run_winui_application()` so the executable still builds, links and runs (printing a notice) off Windows. The real WinUI 3 window only opens on Windows.
 - `src/winui3/main-window/WinUI3MainWindow.{h,cpp}` - the WinUI 3 window, built programmatically (no XAML file) from `WindowConfig`. **Windows only.**
 
-`Application::run()` (`src/app/Application.cpp`) creates a `WinUI3Initer` and delegates to it, exactly like the other GUI branches delegate to their initer.
+`Application::run()` (`src/app/applications/Application.cpp`) creates a `WinUI3Initer` and delegates to it, exactly like the other GUI branches delegate to their initer.
 
 ### Building it
 

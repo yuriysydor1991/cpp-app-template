@@ -10,7 +10,7 @@
 - `src/winui3/app/WinUI3AppStub.cpp` - визначення `run_winui_application()` для не-Windows, щоб виконуваний файл усе одно збирався, лінкувався і запускався (друкуючи повідомлення) поза Windows. Справжнє вікно WinUI 3 відкривається лише на Windows.
 - `src/winui3/main-window/WinUI3MainWindow.{h,cpp}` - вікно WinUI 3, побудоване програмно (без XAML-файлу) з `WindowConfig`. **Лише Windows.**
 
-`Application::run()` (`src/app/Application.cpp`) створює `WinUI3Initer` і делегує йому, так само як інші GUI-гілки делегують своєму initer.
+`Application::run()` (`src/app/applications/Application.cpp`) створює `WinUI3Initer` і делегує йому, так само як інші GUI-гілки делегують своєму initer.
 
 ### Збирання
 

@@ -3,7 +3,7 @@
 
 #include <memory>
 
-#include "src/app/Application.h"
+#include "src/app/applications/Application.h"
 #include "src/sdbuscxx/SDBusCxxController.h"
 
 using namespace app;

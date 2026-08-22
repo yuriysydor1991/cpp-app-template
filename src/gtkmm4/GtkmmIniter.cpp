@@ -4,7 +4,7 @@
 
 #include <cassert>
 
-#include "src/app/IApplication.h"
+#include "src/app/applications/IApplication.h"
 #include "src/gdbus/GDBusController.h"
 #include "src/log/log.h"
 

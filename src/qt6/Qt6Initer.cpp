@@ -5,7 +5,7 @@
 #include <QQmlEngine>
 #include <QString>
 
-#include "src/app/IApplication.h"
+#include "src/app/applications/IApplication.h"
 #include "src/log/log.h"
 #include "src/qt6/QMLRes.h"
 #include "src/qt6/gl-area/GLTriangleItem.h"

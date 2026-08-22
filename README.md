@@ -43,6 +43,10 @@ Examine available branches to find your most applicable variant of the template 
 - `appGtkmm4` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appGtkmm4), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appGtkmm4)] for the application general classes with additional defined structure for the [Gtkmm-4](https://gtkmm.gnome.org/en/index.html) with C++ window application development.
 - `appwxWidgets` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appwxWidgets), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appwxWidgets)] for the application general classes with additional defined structure for the [wxWidgets](https://www.wxwidgets.org/) cross-platform C++ window application development, provided through CMake FetchContent.
 
+## Icons / Resources
+
+- `appFontAwesome` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appFontAwesome), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appFontAwesome)] with general application related classes to generate a single binary executable that keeps the whole [Font Awesome](https://fontawesome.com/) Free icon set checked out and intact, makes every icon of every style reachable from the C++ code and writes the Qt ([.qrc](https://doc.qt.io/qt-6/resources.html)) and the Gtkmm ([GResource](https://docs.gtk.org/gio/struct.Resource.html)) manifests that embed the selected icons into the application binary.
+
 ## 3D / OpenGL / Vulkan
 
 - `appSDL3` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSDL3), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSDL3)] (**current**) with just general application related classes to generate a single binary executable with a [SDL3](https://wiki.libsdl.org/SDL3/FrontPage) library for the [OpenGL](https://www.opengl.org/) 3D development and more!

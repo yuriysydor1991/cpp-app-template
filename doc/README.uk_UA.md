@@ -43,6 +43,10 @@
 - гілка `appGtkmm4` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appGtkmm4), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appGtkmm4)] яка містить загальні класи для генерації бінарного виконуваного файлу разом з структурою заданою для розробки віконної програми на базі [Gtkmm-4](https://gtkmm.gnome.org/en/index.html) з C++.
 - гілка `appwxWidgets` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appwxWidgets), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appwxWidgets)] яка містить загальні класи для генерації бінарного виконуваного файлу разом з структурою заданою для розробки кросплатформної віконної програми на базі [wxWidgets](https://www.wxwidgets.org/) з C++, що надається через CMake FetchContent.
 
+## Іконки / Ресурси
+
+- гілка `appFontAwesome` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appFontAwesome), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appFontAwesome)] яка містить загальні класи для генерації бінарного виконуваного файлу, що тримає цілий набір іконок [Font Awesome](https://fontawesome.com/) Free викачаним та недоторканим, робить кожну іконку кожного стилю доступною з коду C++ та записує маніфести Qt ([.qrc](https://doc.qt.io/qt-6/resources.html)) і Gtkmm ([GResource](https://docs.gtk.org/gio/struct.Resource.html)), які вбудовують обрані іконки у двійковий файл програми.
+
 ## 3D / OpenGL / Vulkan
 
 - гілка `appSDL3` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSDL3), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSDL3)] - яка містить загальні класи для генераці одинарного бінарного виконуваного файлу разом з початковою інфраструктурою для розробки у [OpenGL](https://www.opengl.org/) 3D разом з [SDL3](https://wiki.libsdl.org/SDL3/FrontPage) і набагато більше!

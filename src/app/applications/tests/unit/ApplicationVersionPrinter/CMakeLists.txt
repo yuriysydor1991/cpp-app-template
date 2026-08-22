@@ -1,30 +1,29 @@
 cmake_minimum_required(VERSION 3.13)
 
 add_executable(
-  UTEST_ApplicationHelpPrinter  
-  UTEST_ApplicationHelpPrinter.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/ApplicationHelpPrinter.cpp
+  UTEST_ApplicationVersionPrinter 
+  UTEST_ApplicationVersionPrinter.cpp
+  ${CMAKE_SOURCE_DIR}/src/app/applications/ApplicationVersionPrinter.cpp
   ${APP_MOCKS_ROOT}/ApplicationContext/src/app/ApplicationContext.cpp
 )
 
 target_include_directories(
-  UTEST_ApplicationHelpPrinter
+  UTEST_ApplicationVersionPrinter
   PRIVATE ${APP_MOCKS_ROOT}/ApplicationContext
   PRIVATE ${APP_MOCKS_ROOT}/project-global-decls
   PRIVATE ${APP_MOCKS_ROOT}/log
-  PRIVATE ${APP_MOCKS_ROOT}/ClaudeController
   PRIVATE ${CMAKE_SOURCE_DIR}
 )
 
 target_link_libraries(
-  UTEST_ApplicationHelpPrinter
+  UTEST_ApplicationVersionPrinter
   GTest::gtest_main GTest::gmock
 )
 
 include(GoogleTest)
 
 gtest_add_tests(
-  TARGET UTEST_ApplicationHelpPrinter
+  TARGET UTEST_ApplicationVersionPrinter
   TEST_SUFFIX .noArgs
   TEST_LIST noArgsTests
 )

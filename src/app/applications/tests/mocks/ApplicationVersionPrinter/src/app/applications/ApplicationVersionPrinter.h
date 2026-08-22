@@ -5,7 +5,7 @@
 
 #include <memory>
 
-#include "src/app/IApplication.h"
+#include "src/app/applications/IApplication.h"
 
 namespace app
 {

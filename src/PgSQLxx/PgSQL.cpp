@@ -4,7 +4,7 @@
 #include <memory>
 
 #include "src/PgSQLxx/helpers/PgConnStringMaker.h"
-#include "src/app/IApplication.h"
+#include "src/app/applications/IApplication.h"
 #include "src/log/log.h"
 
 namespace pgsqli

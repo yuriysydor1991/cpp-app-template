@@ -3,13 +3,13 @@
 #include <cassert>
 #include <memory>
 
-#include "src/app/Application.h"
 #include "src/app/ApplicationContext.h"
-#include "src/app/ApplicationHelpPrinter.h"
-#include "src/app/ApplicationVersionPrinter.h"
 #include "src/app/CMDParamNames.h"
 #include "src/app/CommandLineParser.h"
-#include "src/app/IApplication.h"
+#include "src/app/applications/Application.h"
+#include "src/app/applications/ApplicationHelpPrinter.h"
+#include "src/app/applications/ApplicationVersionPrinter.h"
+#include "src/app/applications/IApplication.h"
 #include "src/log/log.h"
 
 namespace app

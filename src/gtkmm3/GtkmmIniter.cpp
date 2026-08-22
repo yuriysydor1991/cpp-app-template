@@ -3,7 +3,7 @@
 #include <cassert>
 
 #include "project-global-decls.h"
-#include "src/app/IApplication.h"
+#include "src/app/applications/IApplication.h"
 #include "src/gtkmm3/gtkmm_includes.h"
 #include "src/gtkmm3/main-window/GtkmmWindow.h"
 #include "src/log/log.h"

@@ -5,6 +5,7 @@ add_executable(
   UTEST_Application.cpp
   ${CMAKE_SOURCE_DIR}/src/app/Application.cpp
   ${APP_MOCKS_ROOT}/ApplicationContext/src/app/ApplicationContext.cpp
+  ${FONTAWESOME_SUBSYSTEM_SOURCES}
 )
 
 target_include_directories(
@@ -12,6 +13,8 @@ target_include_directories(
   PRIVATE ${APP_MOCKS_ROOT}/ApplicationContext
   PRIVATE ${APP_MOCKS_ROOT}/project-global-decls
   PRIVATE ${APP_MOCKS_ROOT}/log
+  PRIVATE ${APP_MOCKS_ROOT}/FontAwesomeGeneratedIcons
+  PRIVATE ${APP_MOCKS_ROOT}/fontawesome-decls
   PRIVATE ${CMAKE_SOURCE_DIR}
 )
 

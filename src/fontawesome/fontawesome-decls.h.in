@@ -1,0 +1,26 @@
+#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_FONTAWESOME_DECLS_H
+#define YOUR_CPP_APP_TEMPLATE_PROJECT_FONTAWESOME_DECLS_H
+
+#include <string>
+
+/// @brief Compile-time declarations of the Font Awesome checkout in use
+namespace fontawesome_decls {
+
+/// @brief The Font Awesome Free release the checkout carries
+const std::string FONTAWESOME_VERSION = "${FONTAWESOME_VERSION}" ;
+/// @brief The Font Awesome checkout root directory
+const std::string FONTAWESOME_ROOT_DIR = "${FONTAWESOME_ROOT_DIR}" ;
+/// @brief The per style individual SVG icon files directory
+const std::string FONTAWESOME_SVGS_DIR = "${FONTAWESOME_SVGS_DIR}" ;
+/// @brief The webfont files directory
+const std::string FONTAWESOME_WEBFONTS_DIR = "${FONTAWESOME_WEBFONTS_DIR}" ;
+/// @brief The Font Awesome Free license file
+const std::string FONTAWESOME_LICENSE_FILE = "${FONTAWESOME_LICENSE_FILE}" ;
+/// @brief The Qt resource system prefix the generated .qrc manifests use
+const std::string FONTAWESOME_QT_RESOURCE_PREFIX = "${FONTAWESOME_QT_RESOURCE_PREFIX}" ;
+/// @brief The GResource prefix the generated .gresource.xml manifests use
+const std::string FONTAWESOME_GRESOURCE_PREFIX = "${FONTAWESOME_GRESOURCE_PREFIX}" ;
+
+} // namespace fontawesome_decls
+
+#endif // YOUR_CPP_APP_TEMPLATE_PROJECT_FONTAWESOME_DECLS_H

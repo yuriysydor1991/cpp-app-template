@@ -2,6 +2,7 @@
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATION_CLASS_H
 
 #include <memory>
+#include <string>
 
 #include "src/app/ApplicationContext.h"
 #include "src/app/IApplication.h"
@@ -28,6 +29,13 @@ class Application : public IApplication
    * and other value otherwise.
    */
   virtual int run(std::shared_ptr<ApplicationContext> ctx) override;
+
+ private:
+  /// @brief The Font Awesome icon the run implementation resolves to show the
+  /// whole icon set reachable from the code. Every Font Awesome Free release
+  /// ships this one.
+  inline static const std::string DEMO_ICON_STYLE = "solid";
+  inline static const std::string DEMO_ICON_NAME = "folder-open";
 };
 
 }  // namespace app

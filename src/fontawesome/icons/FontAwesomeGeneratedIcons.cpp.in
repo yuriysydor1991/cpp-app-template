@@ -1,0 +1,37 @@
+// Generated out of the Font Awesome checkout in use by the CMake module
+// cmake/enablers/icons/template-project-fontawesome-index-generator.cmake.
+//
+// Every configure run overwrites this file, so edit the module above and not
+// the generated result.
+
+#include "src/fontawesome/icons/FontAwesomeGeneratedIcons.h"
+
+#include <map>
+#include <string>
+
+namespace fontawesome
+{
+
+namespace
+{
+
+const FontAwesomeGeneratedIcons::NamesList NO_NAMES;
+
+const std::map<std::string, FontAwesomeGeneratedIcons::NamesList> ICON_NAMES = {
+@FONTAWESOME_GENERATED_ICONS@};
+
+}  // namespace
+
+const FontAwesomeGeneratedIcons::NamesList& FontAwesomeGeneratedIcons::names(
+    const std::string& styleName)
+{
+  const auto found = ICON_NAMES.find(styleName);
+
+  if (found == ICON_NAMES.cend()) {
+    return NO_NAMES;
+  }
+
+  return found->second;
+}
+
+}  // namespace fontawesome

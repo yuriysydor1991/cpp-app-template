@@ -13,6 +13,8 @@ add_executable(
   ${CMAKE_SOURCE_DIR}/src/app/ApplicationHelpPrinter.cpp
   ${CMAKE_SOURCE_DIR}/src/app/CommandLineParser.cpp
   ${CMAKE_SOURCE_DIR}/src/app/ApplicationVersionPrinter.cpp
+  ${FONTAWESOME_SUBSYSTEM_SOURCES}
+  ${FONTAWESOME_GENERATED_ICONS_SOURCE}
 )
 
 target_include_directories(

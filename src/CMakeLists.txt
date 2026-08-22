@@ -26,5 +26,27 @@ configure_file(
   ${CMAKE_BINARY_DIR}/project-global-decls.h
 )
 
+# The Font Awesome subsystem sources, gathered before the subdirectories below
+# so every test executable linking a part of it (the app ones included) builds
+# the very same set.
+set(
+  FONTAWESOME_STYLES_SOURCES
+  ${CMAKE_CURRENT_SOURCE_DIR}/fontawesome/styles/FontAwesomeSolidStyle.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/fontawesome/styles/FontAwesomeRegularStyle.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/fontawesome/styles/FontAwesomeBrandsStyle.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/fontawesome/styles/FontAwesomeStyles.cpp
+)
+
+set(
+  FONTAWESOME_SUBSYSTEM_SOURCES
+  ${CMAKE_CURRENT_SOURCE_DIR}/fontawesome/FontAwesomeIcon.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/fontawesome/icons/FontAwesomeIcons.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/fontawesome/resources/FontAwesomeResourcePath.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/fontawesome/resources/FontAwesomeQtResourcePath.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/fontawesome/resources/FontAwesomeGResourcePath.cpp
+  ${FONTAWESOME_STYLES_SOURCES}
+)
+
 add_subdirectory(app)
 add_subdirectory(log)
+add_subdirectory(fontawesome)

@@ -29,7 +29,7 @@ pipeline {
       }
       
       steps {
-        git branch: 'app',
+        git branch: 'appFontAwesome',
             url: 'https://github.com/yuriysydor1991/cpp-app-template.git'
       }
     }
@@ -127,6 +127,26 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "UTEST_CommandLineParser\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_CommandLineParser.junit.xml'
           }
         }
+        stage('UTEST_FontAwesomeStyles') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_FontAwesomeStyles\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_FontAwesomeStyles.junit.xml'
+          }
+        }
+        stage('UTEST_FontAwesomeIcon') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_FontAwesomeIcon\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_FontAwesomeIcon.junit.xml'
+          }
+        }
+        stage('UTEST_FontAwesomeIcons') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_FontAwesomeIcons\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_FontAwesomeIcons.junit.xml'
+          }
+        }
+        stage('UTEST_FontAwesomeResourcePath') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_FontAwesomeResourcePath\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_FontAwesomeResourcePath.junit.xml'
+          }
+        }
       }
       post { always { junit "$BUILDDIR/$BDJUNITOUT/UTEST_*.xml" } }
     }
@@ -146,6 +166,11 @@ pipeline {
         stage('CTEST_app') { 
           steps { 
             sh 'cd $BUILDDIR && ctest -R "CTEST_app\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_app.junit.xml'
+          }
+        }
+        stage('CTEST_FontAwesomeIcons') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "CTEST_FontAwesomeIcons\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_FontAwesomeIcons.junit.xml'
           }
         }
       }

@@ -1,4 +1,4 @@
-#include "src/app/ApplicationHelpPrinter.h"
+#include "src/app/applications/ApplicationHelpPrinter.h"
 
 #include <cassert>
 #include <iostream>

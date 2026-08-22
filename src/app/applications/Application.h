@@ -5,7 +5,7 @@
 #include <string>
 
 #include "src/app/ApplicationContext.h"
-#include "src/app/IApplication.h"
+#include "src/app/applications/IApplication.h"
 
 namespace app
 {

@@ -1,7 +1,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "src/app/ApplicationVersionPrinter.h"
+#include "src/app/applications/ApplicationVersionPrinter.h"
 
 using namespace app;
 using namespace testing;

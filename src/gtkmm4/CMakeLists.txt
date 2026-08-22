@@ -9,18 +9,19 @@ target_include_directories(
   ${GTKMM_OBJECT_NAME}
   PUBLIC 
     ${GTKMM_INCLUDE_DIRS}
+    ${ADWAITA_INCLUDE_DIRS}
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
 )
 
 target_link_directories(
   ${GTKMM_OBJECT_NAME}
-  PUBLIC ${GTKMM_LIBRARY_DIRS}
+  PUBLIC ${GTKMM_LIBRARY_DIRS} ${ADWAITA_LIBRARY_DIRS}
 )
 
 target_link_libraries(
   ${GTKMM_OBJECT_NAME}
-  PUBLIC ${GTKMM_LIBRARIES}
+  PUBLIC ${GTKMM_LIBRARIES} ${ADWAITA_LIBRARIES}
 )
 
 target_link_libraries(

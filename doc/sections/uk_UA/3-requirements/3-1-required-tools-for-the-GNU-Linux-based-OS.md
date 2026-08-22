@@ -9,7 +9,7 @@ sudo apt install -y git g++ cmake
 Щоб встановити усі необхідні пакунки розробника GTKmm-4.0 необхідно виконати команду:
 
 ```
-sudo apt install -y pkg-config libgtkmm-4.0-dev libglib2.0-dev-bin
+sudo apt install -y pkg-config libgtkmm-4.0-dev libglib2.0-dev-bin libadwaita-1-dev
 ```
 
 

@@ -149,6 +149,11 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "CTEST_app\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_app.junit.xml'
           }
         }
+        stage('CTEST_AdwaitaWindow') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "CTEST_AdwaitaWindow\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_AdwaitaWindow.junit.xml'
+          }
+        }
       }
       post { always { junit "$BUILDDIR/$BDJUNITOUT/CTEST_*.xml" } }
     }

@@ -211,6 +211,13 @@ option(
 )
 
 option(
+  'LIB_INSTALL_DEV_FILES',
+  type: 'boolean',
+  value: true,
+  description: 'Set to false to install the runtime library only, without the development files (public headers, pkg-config file, CMake package files and the debug symbols, if any)'
+)
+
+option(
   'PROJECT_MAINTAINER',
   type: 'string',
   value: 'Your Name',

@@ -184,6 +184,7 @@
         1. [Вмикання інтеграції OpenCV](/doc/sections/uk_UA/5-21-enabling-OpenCV.md)
     1. [Опції супровідника проекту](/doc/sections/uk_UA/5-28-project-maintainer-options.md)
     1. [Налаштування складових імені встановлюваної бібліотеки](/doc/sections/uk_UA/5-29-customizing-library-name-segments.md)
+    1. [Встановлення файлів розробки бібліотеки](/doc/sections/uk_UA/5-30-installing-the-library-development-files.md)
 1. [Запуск головного виконуваного файлу](/doc/sections/uk_UA/6-run-the-executable.md)
     1. [Запуск через IDE](/doc/sections/uk_UA/6-1-IDE-run.md)
     1. Запуск з терміналу

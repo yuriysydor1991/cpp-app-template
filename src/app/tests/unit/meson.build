@@ -1,6 +1,3 @@
-subdir('Application')
 subdir('ApplicationContext')
 subdir('ApplicationFactory')
-subdir('ApplicationHelpPrinter')
-subdir('ApplicationVersionPrinter')
 subdir('CommandLineParser')

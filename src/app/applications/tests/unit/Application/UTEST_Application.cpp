@@ -1,7 +1,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "src/app/Application.h"
+#include "src/app/applications/Application.h"
 #include "src/wt4/Wt4Server.h"
 
 using namespace app;

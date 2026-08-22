@@ -4,7 +4,7 @@
 #include <memory>
 
 #include "src/app/ApplicationContext.h"
-#include "src/app/IApplication.h"
+#include "src/app/applications/IApplication.h"
 #include "src/wt4/Wt4Context.h"
 #include "src/wt4/widgets/WidgetsFactory.h"
 #include "src/wt4/wt4-includes.h"

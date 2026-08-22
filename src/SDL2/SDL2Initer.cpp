@@ -7,7 +7,7 @@
 #include <stdexcept>
 
 #include "project-global-decls.h"
-#include "src/app/IApplication.h"
+#include "src/app/applications/IApplication.h"
 #include "src/log/log.h"
 
 namespace templateSDL2

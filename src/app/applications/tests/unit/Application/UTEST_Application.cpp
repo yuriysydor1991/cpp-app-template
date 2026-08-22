@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 
 #include "src/SDL2/SDL2Initer.h"
-#include "src/app/Application.h"
+#include "src/app/applications/Application.h"
 
 using namespace app;
 using namespace templateSDL2;

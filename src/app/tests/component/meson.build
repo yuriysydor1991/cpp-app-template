@@ -1,11 +1,11 @@
 CTEST_app_files = files(
   'CTEST_app.cpp',
-  join_paths(project_include_root, 'src', 'app', 'Application.cpp'),
+  join_paths(project_include_root, 'src', 'app', 'applications', 'Application.cpp'),
   join_paths(project_include_root, 'src', 'app', 'ApplicationContext.cpp'),
   join_paths(project_include_root, 'src', 'app', 'ApplicationFactory.cpp'),
-  join_paths(project_include_root, 'src', 'app', 'ApplicationHelpPrinter.cpp'),
+  join_paths(project_include_root, 'src', 'app', 'applications', 'ApplicationHelpPrinter.cpp'),
   join_paths(project_include_root, 'src', 'app', 'CommandLineParser.cpp'),
-  join_paths(project_include_root, 'src', 'app', 'ApplicationVersionPrinter.cpp')
+  join_paths(project_include_root, 'src', 'app', 'applications', 'ApplicationVersionPrinter.cpp')
 )
 
 CTEST_app = executable(

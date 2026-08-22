@@ -1,12 +1,12 @@
+subdir('applications')
+
 applib = static_library(
   'applib',
   [
     'CommandLineParser.cpp',
-    'ApplicationVersionPrinter.cpp',
     'ApplicationFactory.cpp',
-    'ApplicationHelpPrinter.cpp',
-    'Application.cpp',
-    'ApplicationContext.cpp'
+    'ApplicationContext.cpp',
+    applications_sources
   ],
   include_directories: configuration_inc,
   dependencies: template_project_extra_deps,
@@ -15,4 +15,5 @@ applib = static_library(
 
 if get_option('ENABLE_UNIT_TESTS') or get_option('ENABLE_COMPONENT_TESTS')
   subdir('tests')
+  subdir('applications/tests')
 endif

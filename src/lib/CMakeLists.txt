@@ -40,17 +40,35 @@ set_target_properties(
   SOVERSION ${PROJECT_VERSION_MAJOR}
 )
 
-install(
-  TARGETS ${PROJECT_LIBRARY_NAME}
-  LIBRARY
-    DESTINATION lib
-    COMPONENT Runtime
-    NAMELINK_COMPONENT Development
-)
+if(LIB_INSTALL_DEV_FILES)
+  install(
+    TARGETS ${PROJECT_LIBRARY_NAME}
+    LIBRARY
+      DESTINATION lib
+      COMPONENT Runtime
+      NAMELINK_COMPONENT Development
+  )
+else()
+  # NAMELINK_SKIP drops the unversioned lib<name>.so symlink, which only a
+  # linker looking for -l<name> needs. The versioned SONAME file the loader
+  # resolves at run time is still installed.
+  install(
+    TARGETS ${PROJECT_LIBRARY_NAME}
+    LIBRARY
+      DESTINATION lib
+      COMPONENT Runtime
+      NAMELINK_SKIP
+  )
+endif()
 
 add_subdirectory(facade)
 add_subdirectory(libmain)
 add_subdirectory(tests)
 
-include(lib-cmake-module-gen)
+# Generates and installs the CMake package integration files, so it is a
+# development files producer as a whole. The library binary itself is installed
+# by the rule above and stays unaffected.
+if(LIB_INSTALL_DEV_FILES)
+  include(lib-cmake-module-gen)
+endif()
 

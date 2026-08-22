@@ -38,9 +38,13 @@ foreach(header ${PROJECT_LIB_PUBLIC_LOG_HEADERS})
   )
 endforeach()
 
-install(
-  DIRECTORY ${PROJECT_LIB_PUBLIC_INCLUDE_DIR}/${PROJECT_LIBRARY_NAME}
-  DESTINATION include
-)
+# The headers are generated unconditionally, because the library itself is
+# built against them. Only their installation is a development files matter.
+if(LIB_INSTALL_DEV_FILES)
+  install(
+    DIRECTORY ${PROJECT_LIB_PUBLIC_INCLUDE_DIR}/${PROJECT_LIBRARY_NAME}
+    DESTINATION include
+  )
+endif()
 
 add_subdirectory(tests)

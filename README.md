@@ -143,6 +143,7 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
     1. [Documentation build](/doc/sections/en_US/5-project-build/documentation/5-4-documentation-build.md)
     1. [Configuring the documentation install support](/doc/sections/en_US/5-project-build/documentation/5-5-configuring-the-documentation-install-support.md)
     1. [Customizing the installable library name segments](/doc/sections/en_US/5-project-build/compression/5-23-customizing-library-name-segments.md)
+    1. [Installing the library development files](/doc/sections/en_US/5-project-build/5-37-installing-the-library-development-files.md)
     1. Code quality & sanitizers
         1. [Enabling and performing code formatting target](/doc/sections/en_US/5-project-build/code-quality/5-6-enabling-and-performing-code-formatting-target.md)
         1. [Enabling the static code analyzer target with cppcheck](/doc/sections/en_US/5-project-build/code-quality/5-7-enabling-the-static-code-analyzer-target-with-cppcheck.md)

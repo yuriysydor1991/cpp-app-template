@@ -3,6 +3,7 @@
 
 #include <fstream>
 #include <functional>
+#include <locale>
 #include <memory>
 #include <set>
 #include <string>
@@ -461,4 +462,70 @@ TEST_F(CTEST_DefaultLogger, multithread_logs)
 
     EXPECT_THAT(line, ContainsRegex(" Concurency thread log msg #[0-9]{1,3}$"));
   }
+}
+
+/**
+ * @brief A numpunct facet which groups the digits by three, like most of the
+ * real world locales do. Imbuing it globally is what an application does
+ * implicitly by calling std::locale::global(std::locale("")) on a host
+ * configured with such a locale.
+ */
+class GroupingNumpunct : public std::numpunct<char>
+{
+ protected:
+  char do_thousands_sep() const override { return ','; }
+  std::string do_grouping() const override { return "\3"; }
+};
+
+/**
+ * @brief Restores the previously installed global locale, so a single test can
+ * not leak its locale into the rest of the test binary.
+ */
+class GlobalLocaleGuard
+{
+ public:
+  explicit GlobalLocaleGuard(const std::locale& newGlobal)
+      : previous{std::locale::global(newGlobal)}
+  {
+  }
+
+  ~GlobalLocaleGuard() { std::locale::global(previous); }
+
+ private:
+  std::locale previous;
+};
+
+TEST_F(CTEST_DefaultLogger, log_fields_ignore_the_application_global_locale)
+{
+  const GlobalLocaleGuard localeGuard{
+      std::locale{std::locale::classic(), new GroupingNumpunct}};
+
+  default_log_init();
+
+  // The error level is flushed into the log file straight away.
+  DefaultLogger::log(DefaultLogger::LVL_ERROR, "the message");
+
+  const auto logs = get_default_log_file_contents();
+
+  EXPECT_FALSE(logs.empty());
+
+  // The thread id and the microseconds are the logger own numeric fields. They
+  // must never carry the digit group separators of the application locale.
+  EXPECT_THAT(logs, Not(HasSubstr(",")));
+  EXPECT_THAT(logs, ContainsRegex(" ERR [0-9]+ the message"));
+}
+
+TEST_F(CTEST_DefaultLogger, log_message_stream_fill_is_not_sticky)
+{
+  default_log_init();
+
+  DefaultLogger::log(DefaultLogger::LVL_ERROR, "the message");
+
+  const auto logs = get_default_log_file_contents();
+
+  EXPECT_FALSE(logs.empty());
+
+  // The timestamp sets a zero fill character for its microseconds field. It
+  // must not stay behind and pad any later field of the very same message.
+  EXPECT_THAT(logs, Not(ContainsRegex("ERR 0+[0-9]* the message")));
 }

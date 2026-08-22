@@ -27,6 +27,18 @@ set(
   "Optional trailing suffix appended to the installable library name (e.g. '-dev')."
 )
 
+# The development files are everything an installation needs in order to build
+# *against* the library rather than to *run* something linked with it: the
+# public headers, the CMake package integration files, the unversioned .so
+# namelink and any debug symbols the project decides to install. Turning this
+# off produces a runtime only installation - the kind a distribution ships in
+# its non -dev package.
+option(
+  LIB_INSTALL_DEV_FILES
+  "Set to OFF to install the runtime library only, without the development files (public headers, CMake package files, the .so namelink and the debug symbols, if any)"
+  ON
+)
+
 set(_lib_name "${PROJECT_NAME}-${CMAKE_PROJECT_VERSION_MAJOR}")
 
 if(LIB_INCLUDE_MICRO_IN_NAME AND NOT LIB_INCLUDE_MINOR_IN_NAME)

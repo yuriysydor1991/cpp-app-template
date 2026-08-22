@@ -7,6 +7,7 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
+#include <locale>
 #include <mutex>
 #include <sstream>
 #include <string>
@@ -25,6 +26,18 @@ void RealDefaultLogger::log(const unsigned short& loglvl,
   std::lock_guard<std::mutex> alogfile_m_guard{alogfile_m};
 
   std::ostringstream finalLog;
+
+  // A freshly constructed stream adopts the global locale, which the
+  // application is free to replace with one that groups the digits - that is
+  // what std::locale::global(std::locale("")) does on most of the hosts. Such
+  // a locale splits the logger own numeric fields with the group separators,
+  // turning a thread id into 135,429,793,650,560, and it even eats the
+  // microseconds zero padding, because the separators count towards the field
+  // width. The log line layout is the logger own business and must not depend
+  // on the application locale, so the message stream is pinned to the classic
+  // one. The application message itself is formatted by the LOG_BODY macro
+  // stream and keeps honouring the application locale.
+  finalLog.imbue(std::locale::classic());
 
   insert_current_timestamp(finalLog);
 
@@ -116,8 +129,13 @@ inline void RealDefaultLogger::insert_current_timestamp(std::ostringstream& oss)
   auto microseconds =
       duration_cast<std::chrono::microseconds>(timeSinceEpoch - seconds);
 
+  // The fill character is sticky, unlike the width, so it is restored right
+  // after the padded field. Otherwise it stays behind and pads whatever field
+  // is appended to the very same message later on.
+  const char previousFill = oss.fill();
+
   oss << '.' << std::setfill(microsecFiller) << std::setw(microsecWidth)
-      << microseconds.count();
+      << microseconds.count() << std::setfill(previousFill);
 #endif  // ENABLE_LOGS_MICROSECONDS_TIME
 }
 

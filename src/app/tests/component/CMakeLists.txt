@@ -10,13 +10,13 @@ add_compile_options(-DNDEBUG=1)
 add_executable(
   CTEST_app  
   CTEST_app.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/Application.cpp
+  ${CMAKE_SOURCE_DIR}/src/app/applications/Application.cpp
   ${CMAKE_SOURCE_DIR}/src/app/ApplicationContext.cpp
   ${CMAKE_SOURCE_DIR}/src/app/ApplicationFactory.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/ApplicationHelpPrinter.cpp
+  ${CMAKE_SOURCE_DIR}/src/app/applications/ApplicationHelpPrinter.cpp
   ${CMAKE_SOURCE_DIR}/src/app/CommandLineParser.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/ApplicationVersionPrinter.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/ApplicationVersionPrinter.cpp
+  ${CMAKE_SOURCE_DIR}/src/app/applications/ApplicationVersionPrinter.cpp
+  ${CMAKE_SOURCE_DIR}/src/app/applications/ApplicationVersionPrinter.cpp
 )
 
 target_include_directories(

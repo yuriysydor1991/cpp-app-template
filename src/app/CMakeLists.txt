@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 3.13)
 
+set(APP_MOCKS_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/tests/mocks")
+set(APPLICATIONS_MOCKS_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/applications/tests/mocks")
+
 target_sources(
   ${PROJECT_BINARY_NAME}
   PRIVATE ApplicationContext.cpp
-  PRIVATE Application.cpp
   PRIVATE ApplicationFactory.cpp
-  PRIVATE ApplicationHelpPrinter.cpp
   PRIVATE CommandLineParser.cpp
-  PRIVATE ApplicationVersionPrinter.cpp
 )
 
 target_link_libraries(
@@ -15,4 +15,5 @@ target_link_libraries(
   ${PROJECT_LIBRARY_NAME}
 )
 
+add_subdirectory(applications)
 add_subdirectory(tests)

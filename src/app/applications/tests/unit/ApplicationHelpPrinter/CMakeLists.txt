@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   UTEST_ApplicationHelpPrinter  
   UTEST_ApplicationHelpPrinter.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/ApplicationHelpPrinter.cpp
+  ${CMAKE_SOURCE_DIR}/src/app/applications/ApplicationHelpPrinter.cpp
   ${GENERAL_MOCKS_ROOT}/ApplicationContext/src/app/ApplicationContext.cpp
 )
 

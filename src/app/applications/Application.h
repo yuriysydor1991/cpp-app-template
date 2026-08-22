@@ -6,7 +6,7 @@
 #include "LibraryContext.h"
 #include "LibraryFacade.h"
 #include "src/app/ApplicationContext.h"
-#include "src/app/IApplication.h"
+#include "src/app/applications/IApplication.h"
 #include "src/converters/ApplicationContext2LibraryContext.h"
 
 namespace app

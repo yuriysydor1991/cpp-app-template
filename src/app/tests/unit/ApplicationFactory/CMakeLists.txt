@@ -10,9 +10,9 @@ add_executable(
 target_include_directories(
   UTEST_ApplicationFactory
   PRIVATE ${GENERAL_MOCKS_ROOT}/ApplicationContext
-  PRIVATE ${APP_MOCKS_ROOT}/Application
-  PRIVATE ${APP_MOCKS_ROOT}/ApplicationHelpPrinter
-  PRIVATE ${APP_MOCKS_ROOT}/ApplicationVersionPrinter
+  PRIVATE ${APPLICATIONS_MOCKS_ROOT}/Application
+  PRIVATE ${APPLICATIONS_MOCKS_ROOT}/ApplicationHelpPrinter
+  PRIVATE ${APPLICATIONS_MOCKS_ROOT}/ApplicationVersionPrinter
   PRIVATE ${APP_MOCKS_ROOT}/CommandLineParser
   PRIVATE ${APP_MOCKS_ROOT}/LibraryFacade
   PRIVATE ${APP_MOCKS_ROOT}/project-global-decls

@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 
 #include "LibraryFacade.h"
-#include "src/app/Application.h"
+#include "src/app/applications/Application.h"
 #include "src/lib/libmain/LibMain.h"
 
 using namespace app;

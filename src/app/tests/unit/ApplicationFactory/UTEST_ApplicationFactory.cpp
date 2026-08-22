@@ -3,10 +3,10 @@
 
 #include <memory>
 
-#include "src/app/Application.h"
 #include "src/app/ApplicationFactory.h"
-#include "src/app/ApplicationHelpPrinter.h"
-#include "src/app/ApplicationVersionPrinter.h"
+#include "src/app/applications/Application.h"
+#include "src/app/applications/ApplicationHelpPrinter.h"
+#include "src/app/applications/ApplicationVersionPrinter.h"
 
 using namespace app;
 using namespace testing;

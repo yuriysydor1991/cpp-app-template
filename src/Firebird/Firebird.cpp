@@ -6,7 +6,7 @@
 
 #include "src/Firebird/driver/FbClient.h"
 #include "src/Firebird/helpers/FbConnStringMaker.h"
-#include "src/app/IApplication.h"
+#include "src/app/applications/IApplication.h"
 #include "src/log/log.h"
 
 namespace firebirdi

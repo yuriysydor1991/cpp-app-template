@@ -14,7 +14,7 @@ A macOS host with the Xcode command line tools (`xcode-select --install`) provid
 - `src/cocoa/app/CocoaAppStub.cpp` - a non-Apple definition of `run_cocoa_application()` so the executable still builds, links and runs (printing a notice) off macOS. The real Cocoa window only opens on macOS.
 - `src/cocoa/main-window/CocoaMainWindow.{h,mm}` - the AppKit `NSWindow`, built programmatically (no .xib/.nib file) from `WindowConfig`. **macOS only.**
 
-`Application::run()` (`src/app/Application.cpp`) creates a `CocoaIniter` and delegates to it, exactly like the other GUI branches delegate to their initer.
+`Application::run()` (`src/app/applications/Application.cpp`) creates a `CocoaIniter` and delegates to it, exactly like the other GUI branches delegate to their initer.
 
 ### Building it
 

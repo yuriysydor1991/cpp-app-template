@@ -14,7 +14,7 @@
 - `src/cocoa/app/CocoaAppStub.cpp` - визначення `run_cocoa_application()` для не-Apple, щоб виконуваний файл усе одно збирався, лінкувався і запускався (друкуючи повідомлення) поза macOS. Справжнє вікно Cocoa відкривається лише на macOS.
 - `src/cocoa/main-window/CocoaMainWindow.{h,mm}` - вікно AppKit `NSWindow`, побудоване програмно (без файлу .xib/.nib) з `WindowConfig`. **Лише macOS.**
 
-`Application::run()` (`src/app/Application.cpp`) створює `CocoaIniter` і делегує йому, так само як інші GUI-гілки делегують своєму initer.
+`Application::run()` (`src/app/applications/Application.cpp`) створює `CocoaIniter` і делегує йому, так само як інші GUI-гілки делегують своєму initer.
 
 ### Збирання
 

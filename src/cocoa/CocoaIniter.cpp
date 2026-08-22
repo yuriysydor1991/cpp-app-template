@@ -3,7 +3,7 @@
 #include <cassert>
 #include <memory>
 
-#include "src/app/IApplication.h"
+#include "src/app/applications/IApplication.h"
 #include "src/cocoa/CocoaLauncher.h"
 #include "src/log/log.h"
 

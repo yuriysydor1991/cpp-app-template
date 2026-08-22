@@ -1,4 +1,4 @@
-#include "src/app/ApplicationVersionPrinter.h"
+#include "src/app/applications/ApplicationVersionPrinter.h"
 
 #include <cassert>
 #include <iostream>

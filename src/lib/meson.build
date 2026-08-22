@@ -22,6 +22,12 @@ template_project_main_library = library(
   install: true,
 )
 
+# Everything below installs development files - the public headers, the
+# pkg-config file and the CMake package integration files. The library binary
+# itself is installed by the library() call above and stays unaffected, so
+# turning the option off leaves a runtime only installation behind.
+if get_option('LIB_INSTALL_DEV_FILES')
+
 install_subdir(
   'facade/public',
   install_dir: join_paths(get_option('includedir'), PROJECT_LIBRARY_NAME),
@@ -81,6 +87,8 @@ configure_file(
   install: true,
   install_dir: cmake_config_install_subdir,
 )
+
+endif
 
 subdir('facade')
 subdir('libmain')

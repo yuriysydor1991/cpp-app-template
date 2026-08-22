@@ -166,6 +166,7 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
         1. [Enabling the OpenCV](/doc/sections/en_US/5-21-enabling-OpenCV.md)
     1. [Project maintainer options](/doc/sections/en_US/5-28-project-maintainer-options.md)
     1. [Customizing the installable library name segments](/doc/sections/en_US/5-29-customizing-library-name-segments.md)
+    1. [Installing the library development files](/doc/sections/en_US/5-30-installing-the-library-development-files.md)
 1. [Run the available executables](/doc/sections/en_US/6-run-the-executable.md)
     1. Tests run
         1. [Run tests by the meson test](/doc/sections/en_US/6-3-1-run-tests-by-the-ctest.md)

@@ -1,23 +1,22 @@
-#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATION_CLASS_H
-#define YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATION_CLASS_H
+#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATIONVERSIONPRINTER_CLASS_H
+#define YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATIONVERSIONPRINTER_CLASS_H
 
 #include <memory>
 
 #include "src/app/ApplicationContext.h"
-#include "src/app/IApplication.h"
+#include "src/app/applications/IApplication.h"
 
 namespace app
 {
 
 /**
- * @brief The default application implementation should be placed into
- * into current class.
+ * @brief A version message printer application class.
  */
-class Application : public IApplication
+class ApplicationVersionPrinter : public IApplication
 {
  public:
-  ~Application() override = default;
-  Application() = default;
+  ~ApplicationVersionPrinter() override = default;
+  ApplicationVersionPrinter() = default;
 
   /**
    * @brief Implemented default application. See IApplication interface.
@@ -32,4 +31,4 @@ class Application : public IApplication
 
 }  // namespace app
 
-#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATION_CLASS_H
+#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATIONVERSIONPRINTER_CLASS_H

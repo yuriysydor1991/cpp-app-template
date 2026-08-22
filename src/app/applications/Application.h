@@ -4,7 +4,7 @@
 #include <memory>
 
 #include "src/app/ApplicationContext.h"
-#include "src/app/IApplication.h"
+#include "src/app/applications/IApplication.h"
 #include "src/wxwidgets/WxWidgetsIniter.h"
 
 namespace app

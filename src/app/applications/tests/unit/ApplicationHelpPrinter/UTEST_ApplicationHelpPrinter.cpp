@@ -1,16 +1,16 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "src/app/ApplicationVersionPrinter.h"
+#include "src/app/applications/ApplicationHelpPrinter.h"
 
 using namespace app;
 using namespace testing;
 
-class UTEST_ApplicationVersionPrinter : public Test
+class UTEST_ApplicationHelpPrinter : public Test
 {
  public:
-  UTEST_ApplicationVersionPrinter()
-      : app{std::make_shared<ApplicationVersionPrinter>()},
+  UTEST_ApplicationHelpPrinter()
+      : app{std::make_shared<ApplicationHelpPrinter>()},
         appCtx{std::make_shared<ApplicationContext>(argc, argv)}
   {
   }
@@ -18,16 +18,16 @@ class UTEST_ApplicationVersionPrinter : public Test
   int argc{0};
   char** argv{nullptr};
 
-  std::shared_ptr<ApplicationVersionPrinter> app;
+  std::shared_ptr<ApplicationHelpPrinter> app;
   std::shared_ptr<ApplicationContext> appCtx;
 };
 
-TEST_F(UTEST_ApplicationVersionPrinter, no_context_error)
+TEST_F(UTEST_ApplicationHelpPrinter, no_context_error)
 {
   EXPECT_NE(app->run({}), 0);
 }
 
-TEST_F(UTEST_ApplicationVersionPrinter, normal_exit)
+TEST_F(UTEST_ApplicationHelpPrinter, normal_exit)
 {
   EXPECT_CALL(*appCtx, push_error(_)).Times(0);
 

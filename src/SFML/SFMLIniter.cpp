@@ -5,7 +5,7 @@
 #include <stdexcept>
 
 #include "src/SFML/SFMLContext.h"
-#include "src/app/IApplication.h"
+#include "src/app/applications/IApplication.h"
 #include "src/log/log.h"
 
 namespace templateSFML

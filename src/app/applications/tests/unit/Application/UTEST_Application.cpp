@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 
 #include "src/SFML/SFMLIniter.h"
-#include "src/app/Application.h"
+#include "src/app/applications/Application.h"
 
 using namespace app;
 using namespace templateSFML;

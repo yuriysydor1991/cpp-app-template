@@ -41,8 +41,7 @@ Gtk::Window* AdwaitaWindow::build(const Glib::RefPtr<Gtk::Application>& app)
 
   adw_toolbar_view_add_top_bar(ADW_TOOLBAR_VIEW(toolbarView),
                                create_header_bar());
-  adw_toolbar_view_set_content(ADW_TOOLBAR_VIEW(toolbarView),
-                               create_status_page());
+  adw_toolbar_view_set_content(ADW_TOOLBAR_VIEW(toolbarView), create_content());
 
   adw_application_window_set_content(window, toolbarView);
 
@@ -69,24 +68,74 @@ GtkWidget* AdwaitaWindow::create_header_bar()
   return headerBar;
 }
 
-GtkWidget* AdwaitaWindow::create_status_page()
+GtkWidget* AdwaitaWindow::create_content()
 {
-  GtkWidget* statusPage = adw_status_page_new();
+  GtkWidget* content = gtk_box_new(GTK_ORIENTATION_VERTICAL, content_spacing);
 
-  adw_status_page_set_title(ADW_STATUS_PAGE(statusPage),
-                            get_default_title().c_str());
-  adw_status_page_set_description(ADW_STATUS_PAGE(statusPage),
-                                  get_default_description().c_str());
+  // Neither label expands, so the box hands them their natural height at the
+  // very top and leaves everything below to the logo, which does expand.
+  gtk_box_append(GTK_BOX(content), create_title_label());
+  gtk_box_append(GTK_BOX(content), create_description_label());
+  gtk_box_append(GTK_BOX(content), create_logo_picture());
 
-  // The logo comes from the very same GResource bundle the plain gtkmm4 branch
-  // uses, so the resource wiring stays untouched by the libadwaita switch.
-  GtkWidget* logo = gtk_image_new_from_resource(logo_res_path);
+  return content;
+}
 
-  gtk_image_set_pixel_size(GTK_IMAGE(logo), 128);
+GtkWidget* AdwaitaWindow::create_title_label()
+{
+  GtkWidget* title = gtk_label_new(get_default_title().c_str());
 
-  adw_status_page_set_child(ADW_STATUS_PAGE(statusPage), logo);
+  gtk_widget_add_css_class(title, title_style_class);
 
-  return statusPage;
+  gtk_label_set_wrap(GTK_LABEL(title), TRUE);
+  gtk_label_set_justify(GTK_LABEL(title), GTK_JUSTIFY_CENTER);
+
+  gtk_widget_set_valign(title, GTK_ALIGN_START);
+  gtk_widget_set_margin_top(title, content_margin);
+  gtk_widget_set_margin_start(title, content_margin);
+  gtk_widget_set_margin_end(title, content_margin);
+
+  return title;
+}
+
+GtkWidget* AdwaitaWindow::create_description_label()
+{
+  GtkWidget* description = gtk_label_new(get_default_description().c_str());
+
+  gtk_widget_add_css_class(description, description_style_class);
+  gtk_widget_add_css_class(description, dim_style_class);
+
+  gtk_label_set_wrap(GTK_LABEL(description), TRUE);
+  gtk_label_set_justify(GTK_LABEL(description), GTK_JUSTIFY_CENTER);
+
+  gtk_widget_set_valign(description, GTK_ALIGN_START);
+  gtk_widget_set_margin_start(description, content_margin);
+  gtk_widget_set_margin_end(description, content_margin);
+  gtk_widget_set_margin_bottom(description, content_margin);
+
+  return description;
+}
+
+GtkWidget* AdwaitaWindow::create_logo_picture()
+{
+  // A GtkPicture and not a GtkImage: an image draws its texture at a fixed
+  // pixel size, while a picture scales the very same texture into whatever
+  // allocation it gets. That is what grows the logo over all the height the
+  // labels leave free, with the content fit deciding that its width stays
+  // proportional to that height instead of being stretched over the whole
+  // width.
+  GtkWidget* logo = gtk_picture_new_for_resource(logo_res_path);
+
+  gtk_picture_set_content_fit(GTK_PICTURE(logo), logo_content_fit);
+
+  // Without the shrinking the logo would push the window minimal size up to
+  // its own pixel one and break the adaptive layout.
+  gtk_picture_set_can_shrink(GTK_PICTURE(logo), TRUE);
+
+  gtk_widget_set_vexpand(logo, TRUE);
+  gtk_widget_set_hexpand(logo, TRUE);
+
+  return logo;
 }
 
 void AdwaitaWindow::prepare_css()
@@ -124,8 +173,8 @@ const std::string& AdwaitaWindow::get_default_title()
 const std::string& AdwaitaWindow::get_default_description()
 {
   static const std::string default_description =
-      "Replace the AdwStatusPage of the AdwaitaWindow class with the real "
-      "application widgets";
+      "Replace the content widgets of the AdwaitaWindow class with the real "
+      "application ones";
 
   return default_description;
 }

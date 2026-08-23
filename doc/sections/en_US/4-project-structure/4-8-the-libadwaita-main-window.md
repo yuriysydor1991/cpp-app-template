@@ -24,8 +24,11 @@ AdwApplicationWindow          <- the window, with the libadwaita rounded corners
 └── AdwToolbarView            <- puts the header bar inside the window content
     ├── AdwHeaderBar          <- the top bar
     │   └── AdwWindowTitle    <- the project name, version and the build commit
-    └── AdwStatusPage         <- the replaceable placeholder content
-        └── GtkImage          <- the logo, taken from the GResource bundle
+    └── GtkBox (vertical)     <- the replaceable placeholder content
+        ├── GtkLabel          <- the heading, enlarged by the title-1 class
+        ├── GtkLabel          <- the smaller description, body and dim-label
+        └── GtkPicture        <- the logo from the GResource bundle, grown over
+                                 all the free height with a proportional width
 ```
 
 An `AdwApplicationWindow` with an `AdwToolbarView` is the recommended
@@ -33,16 +36,37 @@ libadwaita window composition. Unlike a plain `Gtk::Window` with a title bar, it
 keeps the header bar inside the window content, which is what enables the
 adaptive libadwaita behaviour and the correct rounded window corners.
 
+The content itself is a plain vertical `GtkBox` and not an `AdwStatusPage`,
+because a status page centers its whole content vertically, while the texts here
+belong to the very top of the window. Neither label expands, so the box hands
+them their natural height first and leaves everything below to the
+`GtkPicture`, which does expand.
+
+The heading is enlarged by the `title-1` libadwaita typography style class - the
+H1 counterpart of the heading styles - and the description carries the smaller
+`body` one together with the `dim-label`. No custom CSS rule is involved, so the
+whole window follows the light and dark libadwaita palettes.
+
+A `GtkPicture` is used instead of a `GtkImage`, because an image draws its
+texture at a fixed pixel size, while a picture scales the very same texture into
+whatever allocation it gets. The `AdwaitaWindow::logo_content_fit` constant
+decides how it scales: the default `GTK_CONTENT_FIT_CONTAIN` grows the logo
+until it hits the free height and keeps its width proportional to it, so the
+logo never gets deformed. The `GTK_CONTENT_FIT_FILL` stretches it over the whole
+free area instead, and the `GTK_CONTENT_FIT_COVER` fills that area keeping the
+ratio but cropping whatever does not fit.
+
 `adw_init()` is called by the `Gtkmm4i::GtkmmIniter::run` from the application
 `activate` handler and not before the `Gtk::Application::run` call, because it
 needs the GTK display that the application opens for itself.
 
 ### Starting the development
 
-Replace the `AdwStatusPage` created by the `AdwaitaWindow::create_status_page`
-method with the real application widgets. The `create_header_bar` and the
-`create_status_page` methods are virtual, so a descendant class may replace
-either part without touching the window assembly itself.
+Replace the widgets created by the `AdwaitaWindow::create_content` method with
+the real application ones. The `create_header_bar`, `create_content`,
+`create_title_label`, `create_description_label` and `create_logo_picture`
+methods are all virtual, so a descendant class may replace any single part
+without touching the window assembly itself.
 
 The GResource bundle and the additional stylesheet stay exactly the same as on
 the plain `appGtkmm4` branch - see the [Resource embedding](/doc/sections/en_US/4-project-structure/4-6-gtkmm4-resource-embedding.md)
@@ -62,8 +86,9 @@ FetchContent fallback, exactly like for the gtkmm-4.0 itself.
 ### Tests
 
 The `CTEST_AdwaitaWindow` component test covers everything the window decides
-before it touches a display: the shown strings, the GResource paths, the
-requested geometry and the argument guard of the `build` method. It also asserts
+before it touches a display: the shown strings, the GResource paths, the style
+classes and the content fit of the layout, the requested geometry and the
+argument guard of the `build` method. It also asserts
 the libadwaita runtime version, which proves the enabler found the library and
 the binary really links against it.
 

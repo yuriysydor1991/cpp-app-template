@@ -5,6 +5,7 @@
 #include "project-global-decls.h"
 #include "src/app/applications/IApplication.h"
 #include "src/gtkmm4/gtkmm4_includes.h"
+#include "src/gtkmm4/log/GtkLogBridge.h"
 #include "src/gtkmm4/main-window/GtkmmWindow.h"
 #include "src/log/log.h"
 #include "src/vulkan/VulkanController.h"
@@ -14,6 +15,11 @@ namespace Gtkmm4i
 
 int GtkmmIniter::run(std::shared_ptr<app::ApplicationContext> nactx)
 {
+  // Every message the toolkit reports lands in the application log from here
+  // on. It is taken over before anything of the toolkit is touched, so the
+  // complaints of it's own start up are caught as well.
+  gtklog::GtkLogBridge::install();
+
   assert(nactx != nullptr);
 
   if (nactx == nullptr) {

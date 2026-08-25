@@ -138,6 +138,7 @@
     1. [Зміна назви проекту і головного виконуваного файлу](/doc/sections/uk_UA/4-project-structure/4-2-changing-the-project-and-executable-name.md)
     1. [Впровадження нових параметрів командного рядка](/doc/sections/uk_UA/4-project-structure/4-6-introduction-of-the-custom-command-line-parameters.md)
     1. [Реалізація власних нащадків IApplication](/doc/sections/uk_UA/4-project-structure/4-7-implementing-your-onw-IApplication-descendants.md)
+    1. [Повідомлення інструментарію](/doc/sections/uk_UA/4-project-structure/4-9-the-toolkit-messages.md)
     1. [Версіювання і інші параметри проекту](/doc/sections/uk_UA/4-project-structure/4-3-version-tracking-and-other-project-parameters.md)
     1. [Мінімально можливі версії](/doc/sections/uk_UA/4-project-structure/4-6-minimal-possible-versions.md)
     1. [Тести проекту](/doc/sections/uk_UA/4-project-structure/4-4-project-tests.md)

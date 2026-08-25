@@ -29,5 +29,6 @@ target_link_libraries(
   ${GTKMM_OBJECT_NAME}
 )
 
+add_subdirectory(log)
 add_subdirectory(ui)
 add_subdirectory(main-window)

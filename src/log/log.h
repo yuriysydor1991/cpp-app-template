@@ -87,7 +87,7 @@
 #endif  // LOGE
 
 #ifndef LOGI
-#if MAX_LOG_LEVEL >= MACRO_LOG_LEVEL_INFO
+#if MAX_LOG_LEVEL >= MACRO_LVL_INFO
 /**
  * @brief Perform the info logging.
  *
@@ -101,7 +101,7 @@
 #endif  // LOGI
 
 #ifndef LOGW
-#if MAX_LOG_LEVEL >= MACRO_LOG_LEVEL_WARNING
+#if MAX_LOG_LEVEL >= MACRO_LVL_WARNING
 /**
  * @brief Perform the warning logging.
  *
@@ -115,7 +115,7 @@
 #endif  // LOGW
 
 #ifndef LOGD
-#if MAX_LOG_LEVEL >= MACRO_LOG_LEVEL_DEBUG
+#if MAX_LOG_LEVEL >= MACRO_LVL_DEBUG
 /**
  * @brief Perform the debug logging.
  *
@@ -129,7 +129,7 @@
 #endif  // LOGD
 
 #ifndef LOGT
-#if MAX_LOG_LEVEL >= MACRO_LOG_LEVEL_TRACE
+#if MAX_LOG_LEVEL >= MACRO_LVL_TRACE
 /**
  * @brief Perform the trace logging.
  *

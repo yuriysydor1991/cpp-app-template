@@ -32,4 +32,5 @@ target_link_libraries(
 )
 
 add_subdirectory(gl-area)
+add_subdirectory(log)
 add_subdirectory(ui)

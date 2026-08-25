@@ -1,34 +1,31 @@
 cmake_minimum_required(VERSION 3.13)
 
 add_library(
-  ${GTKMM_OBJECT_NAME} OBJECT
-  GtkmmIniter.cpp
+  TemplateGtkmm4LogObj OBJECT
+  GtkLogBridge.cpp
 )
 
 target_include_directories(
-  ${GTKMM_OBJECT_NAME}
-  PUBLIC 
+  TemplateGtkmm4LogObj
+  PUBLIC
     ${GTKMM_INCLUDE_DIRS}
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
 )
 
 target_link_directories(
-  ${GTKMM_OBJECT_NAME}
+  TemplateGtkmm4LogObj
   PUBLIC ${GTKMM_LIBRARY_DIRS}
 )
 
 target_link_libraries(
-  ${GTKMM_OBJECT_NAME}
+  TemplateGtkmm4LogObj
   PUBLIC ${GTKMM_LIBRARIES}
 )
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  ${GTKMM_OBJECT_NAME}
+  TemplateGtkmm4LogObj
 )
 
-add_subdirectory(log)
-add_subdirectory(ui)
-add_subdirectory(gl-area)
-add_subdirectory(main-window)
+add_subdirectory(tests)

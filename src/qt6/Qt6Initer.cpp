@@ -9,6 +9,7 @@
 #include "src/app/applications/IApplication.h"
 #include "src/log/log.h"
 #include "src/qt6/QMLRes.h"
+#include "src/qt6/log/QtLogBridge.h"
 
 namespace Qt6i
 {
@@ -16,6 +17,11 @@ namespace Qt6i
 int Qt6Initer::run(std::shared_ptr<app::ApplicationContext> actx)
 {
   using QMLRes = qmlpaths::QMLRes;
+
+  // Every message the toolkit reports lands in the application log from here
+  // on. It is taken over before anything of the toolkit is touched, so the
+  // complaints of it's own start up are caught as well.
+  qtlog::QtLogBridge::install();
 
   assert(actx != nullptr);
 

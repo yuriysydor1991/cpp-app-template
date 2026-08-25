@@ -6,6 +6,7 @@
 
 #include "src/app/applications/IApplication.h"
 #include "src/gdbus/GDBusController.h"
+#include "src/gtkmm4/log/GtkLogBridge.h"
 #include "src/log/log.h"
 
 namespace Gtkmm4i
@@ -13,6 +14,11 @@ namespace Gtkmm4i
 
 int GtkmmIniter::run(std::shared_ptr<app::ApplicationContext> nactx)
 {
+  // Every message the toolkit reports lands in the application log from here
+  // on. It is taken over before anything of the toolkit is touched, so the
+  // complaints of it's own start up are caught as well.
+  gtklog::GtkLogBridge::install();
+
   assert(nactx != nullptr);
 
   if (nactx == nullptr) {

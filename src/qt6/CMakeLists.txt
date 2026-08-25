@@ -32,4 +32,5 @@ target_link_libraries(
     ${QT6_OBJECT_NAME}
 )
 
+add_subdirectory(log)
 add_subdirectory(ui)

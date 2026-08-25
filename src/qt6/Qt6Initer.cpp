@@ -9,6 +9,7 @@
 #include "project-global-decls.h"
 #include "src/app/applications/IApplication.h"
 #include "src/log/log.h"
+#include "src/qt6/log/QtLogBridge.h"
 #include "src/qtvulkan/QtVulkanController.h"
 #include "src/qtvulkan/window/BlankVulkanWindow.h"
 
@@ -23,6 +24,11 @@ constexpr const int W_DEFAULT_HEIGHT = 400;
 
 int Qt6Initer::run(std::shared_ptr<app::ApplicationContext> actx)
 {
+  // Every message the toolkit reports lands in the application log from here
+  // on. It is taken over before anything of the toolkit is touched, so the
+  // complaints of it's own start up are caught as well.
+  qtlog::QtLogBridge::install();
+
   assert(actx != nullptr);
 
   if (actx == nullptr) {

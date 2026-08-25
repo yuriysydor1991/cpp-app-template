@@ -27,3 +27,5 @@ target_link_libraries(
   PUBLIC
     ${QT6_OBJECT_NAME}
 )
+
+add_subdirectory(log)

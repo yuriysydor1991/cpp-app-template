@@ -130,6 +130,7 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
     1. [Changing the project and executable name](/doc/sections/en_US/4-project-structure/4-2-changing-the-project-and-executable-name.md)
     1. [Introducing custom command line parameters](/doc/sections/en_US/4-project-structure/4-6-introduction-of-the-custom-command-line-parameters.md)
     1. [Implement your own IApplication descendants](/doc/sections/en_US/4-project-structure/4-7-implementing-your-onw-IApplication-descendants.md)
+    1. [The toolkit messages](/doc/sections/en_US/4-project-structure/4-8-the-toolkit-messages.md)
     1. [Version tracking and other project parameters](/doc/sections/en_US/4-project-structure/4-3-version-tracking-and-other-project-parameters.md)
     1. [Minimal possible versions](/doc/sections/en_US/4-project-structure/4-6-minimal-possible-versions.md)
     1. [Project tests](/doc/sections/en_US/4-project-structure/4-4-project-tests.md)

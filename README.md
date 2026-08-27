@@ -89,6 +89,7 @@ Examine available branches to find your most applicable variant of the template 
 ## Computer Vision / Image Processing
 
 - `appOpenCV` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appOpenCV), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appOpenCV)] (**current**) the template infrastructure to fast start application development with the [OpenCV](https://opencv.org/) computer vision library and its preinstalled Haar cascade face detector (`haarcascade_frontalface_default.xml`).
+- `appCFITSIO` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appCFITSIO), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appCFITSIO)] with general application related classes to generate a single binary executable that wraps the [CFITSIO](https://heasarc.gsfc.nasa.gov/fitsio/) library in a small controller exposing the main FITS (the astronomy image format) calls - image create, open, read, write and the header keyword access - and reads the FITS image given by the `--image` command line parameter from the Application, reporting about it through the project logger. A separate component wraps the [WCSLIB](https://www.atnf.csiro.au/people/mcalabre/WCS/) library the same way, so the header of that image also tells where its centre points at in the sky.
 
 ## Artificial intelligence / LLM
 

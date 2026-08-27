@@ -18,10 +18,13 @@ The `curli::CURLController` class of the `src/CURL` directory keeps a single lib
 | `download(url, headers)` | the same GET request with the additional headers, each one in the `Name: value` form (an authorization one, for example) |
 | `post(url, body, headers)` | the POST request sending the given body with the additional headers |
 | `is_url_alive(url)` | the HEAD request checking the reachability of the URL without downloading it's body |
+| `last_response_successfull()` | tells whether the last performed request has been answered with a success status |
 | `last_response_code()` | the HTTP status code of the last performed request |
 | `get()` | the buffer holding the body received by the last request |
 
-Every call drops the body received by the previous one and resets the handle options, so a download performed after a post inherits neither it's method, nor it's body and headers. The received body is given back as a `std::vector<char>` reference, which stays empty in case of any error, and the protocols carrying no statuses (the file one, for example) report a zero response code:
+Every call drops the body received by the previous one and resets the handle options, so a download performed after a post inherits neither it's method, nor it's body and headers. The received body is given back as a `std::vector<char>` reference, which stays empty in case of any error.
+
+Ask the `last_response_successfull` method about the outcome rather than comparing the `last_response_code` value with a status constant of your own, which keeps the HTTP statuses inside the controller. The codeless protocols are the reason: a file transfer reports a zero response code both when it succeeds and when it fails, so the code alone tells the two apart in no way, while a redirect answer counts as no success either. The `last_response_code` value is left for the messages and for the calling code that really needs a status of it's own:
 
 ```cpp
 #include <string>
@@ -39,8 +42,9 @@ const auto& answer =
                {"content-type: application/json",
                 "authorization: Bearer a-token-of-yours"});
 
-if (curl->last_response_code() != 200L) {
-  // the request has failed or the server has reported an error
+if (!curl->last_response_successfull()) {
+  // the request has failed or the server has reported an error status,
+  // which the last_response_code method gives the exact value of
 }
 
 const std::string received{answer.begin(), answer.end()};

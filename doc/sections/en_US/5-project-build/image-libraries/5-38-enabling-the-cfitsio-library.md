@@ -53,4 +53,4 @@ const auto [width, height] = fits->get_image_size();
 
 The `read_header` call hands the whole header over as the keyrecords string the FITS WCS parsers take, so see [Enabling the WCSLIB library (FITS WCS)](/doc/sections/en_US/5-project-build/image-libraries/5-39-enabling-the-wcslib-library.md) for the component that maps those pixels onto the sky.
 
-The `app::Application::run` method of the [src/app/applications/Application.cpp](/src/app/applications/Application.cpp) file performs that very round-trip, so replace it's body with your own FITS handling code.
+The `app::Application::run` method of the [src/app/applications/Application.cpp](/src/app/applications/Application.cpp) file reads the FITS image the `--image` (or `-i`) command line parameter points at and reports about it through the project logger, so replace it's body with your own FITS handling code.

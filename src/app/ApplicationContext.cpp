@@ -45,6 +45,16 @@ void ApplicationContext::push_error(const std::string& errorDescription)
   merrors.emplace_back(errorDescription);
 }
 
+const std::string& ApplicationContext::get_image_path() const
+{
+  return mimage_path;
+}
+
+void ApplicationContext::set_image_path(const std::string& newValue)
+{
+  mimage_path = newValue;
+}
+
 bool ApplicationContext::get_stop() const { return mstop.load(); }
 
 void ApplicationContext::set_stop(const bool newValue)

@@ -38,6 +38,9 @@ int ApplicationHelpPrinter::run(std::shared_ptr<ApplicationContext> ctx)
             << CMDParamNames::VERSION
             << " - print application version, build git "
                "commit and configure date"
+            << std::endl
+            << "\t" << CMDParamNames::IMAGEW << " or " << CMDParamNames::IMAGE
+            << " <path> - read the given FITS image and report about it"
             << std::endl;
 
   return 0;

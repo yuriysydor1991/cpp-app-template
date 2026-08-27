@@ -66,6 +66,14 @@ class ApplicationContext
   /// @brief Pushes a new error description into the merrors field.
   void push_error(const std::string& errorDescription);
 
+  /// @brief Provides the path of the FITS image the Application reads. Empty
+  /// while the command line carries none.
+  const std::string& get_image_path() const;
+
+  /// @brief Sets the path of the FITS image for the Application to read. The
+  /// CommandLineParser fills it out of the command line.
+  void set_image_path(const std::string& newValue);
+
   /// @brief Tells if the application was asked to stop. Atomic, so it is safe
   /// to poll it from any thread.
   bool get_stop() const;
@@ -93,6 +101,10 @@ class ApplicationContext
 
   /// @brief Errors description.
   std::vector<std::string> merrors;
+
+  /// @brief The FITS image path to read. See the
+  /// ApplicationContext::set_image_path setter.
+  std::string mimage_path;
 
   /// @brief The thread safe application stop flag. See the
   /// ApplicationContext::set_stop setter.

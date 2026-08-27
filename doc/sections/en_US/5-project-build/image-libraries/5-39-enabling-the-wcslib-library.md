@@ -50,4 +50,4 @@ const auto pixel = wcs->to_pixel(world);
 
 A pixel coordinate counts from `1.0`, as the FITS standard does, and a world one carries degrees for the celestial axes. Both of them hold one value per axis of the selected representation, so `get_axes_count` tells how many.
 
-The `app::Application::run` method of the [src/app/applications/Application.cpp](/src/app/applications/Application.cpp) file writes a tangential projection image, reads it's header back and converts the reference pixel of it into the sky coordinates, so replace it's body with your own coordinate handling code.
+The `app::Application::run` method of the [src/app/applications/Application.cpp](/src/app/applications/Application.cpp) file reads the header of the FITS image the `--image` (or `-i`) command line parameter points at and reports where the centre of that image points at, so replace it's body with your own coordinate handling code. An image whose header carries no WCS keywords is reported about without the coordinates instead of failing.

@@ -32,6 +32,9 @@ class ApplicationContext
 
   const std::vector<std::string>& get_errors() const { return merrors; }
 
+  const std::string& get_image_path() const { return mimage_path; }
+  void set_image_path(const std::string& newValue) { mimage_path = newValue; }
+
   bool get_stop() const { return mstop.load(); }
   void set_stop(const bool newValue) { mstop.store(newValue); }
 
@@ -43,6 +46,7 @@ class ApplicationContext
   bool mprint_help_and_exit{false};
   bool mprint_version_and_exit{false};
   std::vector<std::string> merrors;
+  std::string mimage_path;
   std::atomic_bool mstop{false};
 };
 

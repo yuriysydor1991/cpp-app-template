@@ -29,6 +29,8 @@ class WCSLIBController
     ON_CALL(*this, is_ready()).WillByDefault(Return(true));
     ON_CALL(*this, get_axes_count())
         .WillByDefault(Return(static_cast<int>(CELESTIAL_AXES)));
+    ON_CALL(*this, get_axis_type(_))
+        .WillByDefault(Return(std::string{AXIS_TYPE}));
     ON_CALL(*this, to_world(_))
         .WillByDefault(Return(coordinates(CELESTIAL_AXES)));
     ON_CALL(*this, to_pixel(_))
@@ -62,8 +64,12 @@ class WCSLIBController
   }
 
  private:
+  /// @brief Any non empty axis type does, so the mocked representation reads
+  /// like a celestial one by default.
+  inline static constexpr const char* AXIS_TYPE = "RA---TAN";
+
   /// @brief The mocked conversions answer with a coordinate of the two
-  /// celestial axes, just as the sample image of the Application holds.
+  /// celestial axes, just as the image the Application reads holds.
   inline static constexpr const coordinates::size_type CELESTIAL_AXES = 2U;
 };
 

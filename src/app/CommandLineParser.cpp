@@ -87,6 +87,10 @@ bool CommandLineParser::parse_arg(std::shared_ptr<ApplicationContext> ctx,
     // skipping already parsed cmd params
     paramIndex++;
     return true;
+  } else if (param == CMDParamNames::IMAGEW || param == CMDParamNames::IMAGE) {
+    ctx->set_image_path(nextParam);
+    paramIndex++;
+    return true;
   } else {
     ctx->set_print_help_and_exit(true);
     ctx->push_error("Unknown parameter: " + param);
@@ -105,8 +109,9 @@ const std::set<std::string>& CommandLineParser::get_params_requiring_data()
 {
   // Place here command line parameters that are requiring
   // some data after it.
-  static const std::set<std::string> requireNext{CMDParamNames::LOGPATHW,
-                                                 CMDParamNames::LOGPATH};
+  static const std::set<std::string> requireNext{
+      CMDParamNames::LOGPATHW, CMDParamNames::LOGPATH, CMDParamNames::IMAGEW,
+      CMDParamNames::IMAGE};
 
   return requireNext;
 }

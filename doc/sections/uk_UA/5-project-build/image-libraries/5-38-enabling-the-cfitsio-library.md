@@ -31,7 +31,8 @@ target_link_libraries(${PROJECT_BINARY_NAME} CFITSIO::cfitsio)
 | `read` | `fits_read_img` |
 | `write` | `fits_write_img` |
 | `read_keyword` | `fits_read_key` |
-| `write_keyword` | `fits_update_key` |
+| `write_keyword` | `fits_update_key`, з рядковим і числовим перевантаженням |
+| `read_header` | `fits_hdr2str` |
 | `last_error` | `fits_get_errstatus` |
 
 Жоден з методів не кидає винятків: кожен повідомляє про результат через значення, що повертається, і залишає код стану CFITSIO виконаного виклику у методі доступу `last_status`.
@@ -49,5 +50,7 @@ fits->open("/tmp/image.fits");
 const auto pixels = fits->read();
 const auto [width, height] = fits->get_image_size();
 ```
+
+Виклик `read_header` повертає цілий заголовок у вигляді рядка ключових записів, який приймають аналізатори FITS WCS, тому дивись [Вмикання інтеграції WCSLIB (FITS WCS)](/doc/sections/uk_UA/5-project-build/image-libraries/5-39-enabling-the-wcslib-library.md) щодо компоненту, який відображає ці пікселі на небесну сферу.
 
 Метод `app::Application::run` з файлу [src/app/applications/Application.cpp](/src/app/applications/Application.cpp) виконує саме такий цикл запису і читання, тому заміни його тіло власним кодом обробки FITS.

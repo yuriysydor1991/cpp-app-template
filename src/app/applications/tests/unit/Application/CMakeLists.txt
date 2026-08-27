@@ -13,6 +13,7 @@ target_include_directories(
   PRIVATE ${APP_MOCKS_ROOT}/project-global-decls
   PRIVATE ${APP_MOCKS_ROOT}/log
   PRIVATE ${APP_MOCKS_ROOT}/CFITSIOController
+  PRIVATE ${APP_MOCKS_ROOT}/WCSLIBController
   PRIVATE ${CMAKE_SOURCE_DIR}
 )
 

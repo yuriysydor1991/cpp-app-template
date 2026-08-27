@@ -25,5 +25,7 @@ parts:
     build-packages:
       - pkg-config
       - libcfitsio-dev
+      - wcslib-dev
     stage-packages:
       - libcfitsio10t64
+      - libwcs8

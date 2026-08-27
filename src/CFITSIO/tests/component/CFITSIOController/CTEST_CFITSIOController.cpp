@@ -65,6 +65,8 @@ class CTEST_CFITSIOController : public Test
   static constexpr const long WIDTH = 8;
   static constexpr const long HEIGHT = 4;
   static constexpr const char* OBJECT = "Template project sample";
+  static constexpr const double REFERENCE = 10.5;
+  static constexpr const std::string::size_type KEYRECORD_LENGTH = 80U;
 
   CFITSIOControllerPtr controller;
 };
@@ -117,6 +119,33 @@ TEST_F(CTEST_CFITSIOController, readonly_image_rejects_a_keyword_write)
   EXPECT_TRUE(controller->write_keyword("OBJECT", "another object"));
   EXPECT_FALSE(controller->close());
   EXPECT_NE(controller->last_status(), 0);
+}
+
+TEST_F(CTEST_CFITSIOController, numeric_keyword_is_read_back)
+{
+  ASSERT_TRUE(controller->create_image(fits_path(), {WIDTH, HEIGHT}));
+
+  // The numeric overload writes an unquoted value, which is what tells it
+  // apart from the string one.
+  EXPECT_TRUE(controller->write_keyword("CRVAL1", REFERENCE, "the reference"));
+  EXPECT_EQ(std::stod(controller->read_keyword("CRVAL1")), REFERENCE);
+}
+
+TEST_F(CTEST_CFITSIOController, header_holds_the_written_keywords)
+{
+  ASSERT_TRUE(write_sample_image());
+  ASSERT_TRUE(controller->open(fits_path()));
+
+  const std::string header = controller->read_header();
+
+  // Every keyrecord is exactly that long and the last one is always the END.
+  ASSERT_FALSE(header.empty());
+  EXPECT_EQ(header.size() % KEYRECORD_LENGTH, 0U);
+  EXPECT_EQ(header.compare(header.size() - KEYRECORD_LENGTH, 3U, "END"), 0);
+
+  EXPECT_NE(header.find("OBJECT"), std::string::npos);
+  EXPECT_NE(header.find(OBJECT), std::string::npos);
+  EXPECT_NE(header.find("NAXIS1"), std::string::npos);
 }
 
 TEST_F(CTEST_CFITSIOController, missing_keyword_read_fails)

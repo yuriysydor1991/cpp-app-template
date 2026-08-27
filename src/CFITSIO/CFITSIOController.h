@@ -116,6 +116,30 @@ class CFITSIOController
                              const std::string& comment = {});
 
   /**
+   * @brief Writes a floating point header keyword into the open file,
+   * replacing the already present one of the same name. The string overload
+   * above quotes it's value instead, which the numeric keyword readers (the
+   * WCS parsers among them) reject.
+   *
+   * @param name The keyword name to write.
+   * @param value The keyword value to write.
+   * @param comment The optional keyword description.
+   *
+   * @return Returns true when the keyword has been written.
+   */
+  virtual bool write_keyword(const std::string& name, const double value,
+                             const std::string& comment = {});
+
+  /**
+   * @brief Reads the whole header of the open file as the FITS keyrecords
+   * string of exactly 80 characters per record, the very form the WCS parsers
+   * expect.
+   *
+   * @return Returns the header string, empty in case of any error.
+   */
+  virtual std::string read_header();
+
+  /**
    * @brief Gives the buffer holding the pixels fetched by the last read call.
    *
    * @note This is the internal buffer accessor and not an image reading call.

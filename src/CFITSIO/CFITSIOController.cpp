@@ -203,6 +203,50 @@ bool CFITSIOController::write_keyword(const std::string& name,
   return succeeded("write the " + name + " FITS keyword");
 }
 
+bool CFITSIOController::write_keyword(const std::string& name,
+                                      const double value,
+                                      const std::string& comment)
+{
+  assert(!name.empty());
+
+  if (!prepare() || name.empty()) {
+    return false;
+  }
+
+  double written = value;
+
+  fits_update_key(fits, TDOUBLE, name.c_str(), &written,
+                  comment.empty() ? nullptr : comment.c_str(), &status);
+
+  return succeeded("write the " + name + " FITS keyword");
+}
+
+std::string CFITSIOController::read_header()
+{
+  if (!prepare()) {
+    return {};
+  }
+
+  char* records = nullptr;
+  int recordsCount = 0;
+
+  fits_hdr2str(fits, 0, nullptr, 0, &records, &recordsCount, &status);
+
+  std::string header;
+
+  if (succeeded("read the FITS header") && records != nullptr) {
+    header = records;
+  }
+
+  // The CFITSIO allocates that buffer itself, so it releases it as well, and
+  // it skips the release for a non zero status left behind by the call above.
+  int releaseStatus = 0;
+
+  fits_free_memory(records, &releaseStatus);
+
+  return header;
+}
+
 CFITSIOController::pixels_buffer& CFITSIOController::get() { return pbuff; }
 
 int CFITSIOController::last_status() const { return status; }

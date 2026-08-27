@@ -132,6 +132,11 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "UTEST_CFITSIOController\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_CFITSIOController.junit.xml'
           }
         }
+        stage('UTEST_WCSLIBController') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_WCSLIBController\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_WCSLIBController.junit.xml'
+          }
+        }
       }
       post { always { junit "$BUILDDIR/$BDJUNITOUT/UTEST_*.xml" } }
     }
@@ -156,6 +161,11 @@ pipeline {
         stage('CTEST_CFITSIOController') {
           steps {
             sh 'cd $BUILDDIR && ctest -R "CTEST_CFITSIOController\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_CFITSIOController.junit.xml'
+          }
+        }
+        stage('CTEST_WCSLIBController') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "CTEST_WCSLIBController\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_WCSLIBController.junit.xml'
           }
         }
       }

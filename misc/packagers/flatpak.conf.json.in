@@ -23,6 +23,24 @@
       ]
     },
     {
+      "name": "wcslib",
+      "buildsystem": "autotools",
+      "config-opts": [
+        "--disable-flex",
+        "--disable-fortran",
+        "--disable-utils",
+        "--without-pgplot",
+        "--without-cfitsio"
+      ],
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://www.atnf.csiro.au/people/mcalabre/WCS/wcslib-releases/wcslib-8.9.tar.bz2",
+          "sha256": "82ac09ce5091b0bf06cec8f5cdeec1dabe1d06ba5dfb7ff2bdb0c1680488807b"
+        }
+      ]
+    },
+    {
       "name": "${CMAKE_PROJECT_NAME}",
       "buildsystem": "cmake",
       "config-opts": ["-DCMAKE_BUILD_TYPE=Release"],

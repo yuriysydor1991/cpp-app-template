@@ -31,7 +31,8 @@ The `cfitsioi::CFITSIOController` class of the [src/CFITSIO/CFITSIOController.h]
 | `read` | `fits_read_img` |
 | `write` | `fits_write_img` |
 | `read_keyword` | `fits_read_key` |
-| `write_keyword` | `fits_update_key` |
+| `write_keyword` | `fits_update_key`, with a string and a floating point overload |
+| `read_header` | `fits_hdr2str` |
 | `last_error` | `fits_get_errstatus` |
 
 Nothing throws: every method reports it's outcome through the return value and leaves the CFITSIO status code of the performed call in the `last_status` accessor.
@@ -49,5 +50,7 @@ fits->open("/tmp/image.fits");
 const auto pixels = fits->read();
 const auto [width, height] = fits->get_image_size();
 ```
+
+The `read_header` call hands the whole header over as the keyrecords string the FITS WCS parsers take, so see [Enabling the WCSLIB library (FITS WCS)](/doc/sections/en_US/5-project-build/image-libraries/5-39-enabling-the-wcslib-library.md) for the component that maps those pixels onto the sky.
 
 The `app::Application::run` method of the [src/app/applications/Application.cpp](/src/app/applications/Application.cpp) file performs that very round-trip, so replace it's body with your own FITS handling code.

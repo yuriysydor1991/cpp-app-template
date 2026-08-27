@@ -98,6 +98,12 @@ TEST_F(UTEST_CFITSIOController, read_keyword_without_open_is_empty)
 TEST_F(UTEST_CFITSIOController, write_keyword_without_open_fails)
 {
   EXPECT_FALSE(controller->write_keyword("OBJECT", "a value"));
+  EXPECT_FALSE(controller->write_keyword("CRVAL1", 10.0));
+}
+
+TEST_F(UTEST_CFITSIOController, read_header_without_open_is_empty)
+{
+  EXPECT_TRUE(controller->read_header().empty());
 }
 
 TEST_F(UTEST_CFITSIOController, keyword_with_empty_name_fails)

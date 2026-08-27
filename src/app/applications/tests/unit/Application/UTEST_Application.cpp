@@ -2,10 +2,12 @@
 #include <gtest/gtest.h>
 
 #include "src/CFITSIO/CFITSIOController.h"
+#include "src/WCSLIB/WCSLIBController.h"
 #include "src/app/applications/Application.h"
 
 using namespace app;
 using namespace cfitsioi;
+using namespace wcslibi;
 using namespace testing;
 
 class UTEST_Application : public Test
@@ -17,7 +19,15 @@ class UTEST_Application : public Test
   {
   }
 
-  ~UTEST_Application() override { CFITSIOController::onMockCreate = nullptr; }
+  ~UTEST_Application() override
+  {
+    CFITSIOController::onMockCreate = nullptr;
+    WCSLIBController::onMockCreate = nullptr;
+  }
+
+  /// @brief Any world coordinate of the two celestial axes the sample image
+  /// of the Application holds does, so these are just a readable pair.
+  inline static const WCSLIBController::coordinates SAMPLE_WORLD{10.0, 20.0};
 
   int argc{0};
   char** argv{nullptr};
@@ -52,12 +62,12 @@ TEST_F(UTEST_Application, performs_the_fits_round_trip)
 
         EXPECT_CALL(instance, create_image(_, _)).WillOnce(Return(true));
         EXPECT_CALL(instance, write(_)).WillOnce(Return(true));
-        EXPECT_CALL(instance, write_keyword(_, _, _)).WillOnce(Return(true));
         EXPECT_CALL(instance, close()).WillOnce(Return(true));
         EXPECT_CALL(instance, open(_, _)).WillOnce(Return(true));
         EXPECT_CALL(instance, read()).Times(1);
         EXPECT_CALL(instance, get_image_size()).Times(1);
         EXPECT_CALL(instance, read_keyword(_)).Times(1);
+        EXPECT_CALL(instance, read_header()).Times(1);
       }));
 
   CFITSIOController::onMockCreate = onMockCreateEnsurer.AsStdFunction();
@@ -65,7 +75,26 @@ TEST_F(UTEST_Application, performs_the_fits_round_trip)
   EXPECT_EQ(app->run(appCtx), 0);
 }
 
-TEST_F(UTEST_Application, controller_failure_returns_invalid)
+TEST_F(UTEST_Application, converts_the_reference_pixel_of_the_written_image)
+{
+  MockFunction<void(WCSLIBController&)> onMockCreateEnsurer;
+
+  EXPECT_CALL(onMockCreateEnsurer, Call(_))
+      .Times(1)
+      .WillOnce(Invoke([](WCSLIBController& instance) {
+        InSequence conversion;
+
+        EXPECT_CALL(instance, parse(_)).WillOnce(Return(true));
+        EXPECT_CALL(instance, to_world(_)).WillOnce(Return(SAMPLE_WORLD));
+        EXPECT_CALL(instance, get_axis_type(_)).Times(2);
+      }));
+
+  WCSLIBController::onMockCreate = onMockCreateEnsurer.AsStdFunction();
+
+  EXPECT_EQ(app->run(appCtx), 0);
+}
+
+TEST_F(UTEST_Application, fits_controller_failure_returns_invalid)
 {
   MockFunction<void(CFITSIOController&)> onMockCreateEnsurer;
 
@@ -77,6 +106,39 @@ TEST_F(UTEST_Application, controller_failure_returns_invalid)
       }));
 
   CFITSIOController::onMockCreate = onMockCreateEnsurer.AsStdFunction();
+
+  EXPECT_NE(app->run(appCtx), 0);
+}
+
+TEST_F(UTEST_Application, wcs_controller_failure_returns_invalid)
+{
+  MockFunction<void(WCSLIBController&)> onMockCreateEnsurer;
+
+  EXPECT_CALL(onMockCreateEnsurer, Call(_))
+      .Times(1)
+      .WillOnce(Invoke([](WCSLIBController& instance) {
+        EXPECT_CALL(instance, parse(_)).WillOnce(Return(false));
+        EXPECT_CALL(instance, to_world(_)).Times(0);
+      }));
+
+  WCSLIBController::onMockCreate = onMockCreateEnsurer.AsStdFunction();
+
+  EXPECT_NE(app->run(appCtx), 0);
+}
+
+TEST_F(UTEST_Application, unconvertible_reference_pixel_returns_invalid)
+{
+  MockFunction<void(WCSLIBController&)> onMockCreateEnsurer;
+
+  EXPECT_CALL(onMockCreateEnsurer, Call(_))
+      .Times(1)
+      .WillOnce(Invoke([](WCSLIBController& instance) {
+        EXPECT_CALL(instance, parse(_)).WillOnce(Return(true));
+        EXPECT_CALL(instance, to_world(_))
+            .WillOnce(Return(WCSLIBController::coordinates{}));
+      }));
+
+  WCSLIBController::onMockCreate = onMockCreateEnsurer.AsStdFunction();
 
   EXPECT_NE(app->run(appCtx), 0);
 }

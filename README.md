@@ -89,7 +89,7 @@ Examine available branches to find your most applicable variant of the template 
 ## Computer Vision / Image Processing
 
 - `appOpenCV` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appOpenCV), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appOpenCV)] the template infrastructure to fast start application development with the [OpenCV](https://opencv.org/) computer vision library.
-- `appCFITSIO` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appCFITSIO), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appCFITSIO)] (**current**) with general application related classes to generate a single binary executable that wraps the [CFITSIO](https://heasarc.gsfc.nasa.gov/fitsio/) library in a small controller exposing the main FITS (the astronomy image format) calls - image create, open, read, write and the header keyword access - and demonstrates a write + read back round-trip from the Application.
+- `appCFITSIO` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appCFITSIO), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appCFITSIO)] (**current**) with general application related classes to generate a single binary executable that wraps the [CFITSIO](https://heasarc.gsfc.nasa.gov/fitsio/) library in a small controller exposing the main FITS (the astronomy image format) calls - image create, open, read, write and the header keyword access - and demonstrates a write + read back round-trip from the Application. A separate component wraps the [WCSLIB](https://www.atnf.csiro.au/people/mcalabre/WCS/) library the same way, so the written image header maps its pixels onto the sky and back.
 
 ## Artificial intelligence / LLM
 
@@ -189,6 +189,7 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
         1. [Enabling the libavif library (AVIF)](/doc/sections/en_US/5-project-build/image-libraries/5-32-enabling-the-libavif-library.md)
         1. [Enabling the libheif library (HEIF/HEIC)](/doc/sections/en_US/5-project-build/image-libraries/5-33-enabling-the-libheif-library.md)
         1. [Enabling the CFITSIO library (FITS)](/doc/sections/en_US/5-project-build/image-libraries/5-38-enabling-the-cfitsio-library.md)
+        1. [Enabling the WCSLIB library (FITS WCS)](/doc/sections/en_US/5-project-build/image-libraries/5-39-enabling-the-wcslib-library.md)
 1. [Run the executable](/doc/sections/en_US/6-run-the-executable/6-run-the-executable.md)
     1. [IDE run](/doc/sections/en_US/6-run-the-executable/6-1-IDE-run.md)
     1. Command line run

@@ -20,6 +20,7 @@ target_include_directories(
   PRIVATE
     ${APP_MOCKS_ROOT}/log
     ${APP_MOCKS_ROOT}/CFITSIOController
+    ${APP_MOCKS_ROOT}/WCSLIBController
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
 )

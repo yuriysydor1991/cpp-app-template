@@ -43,3 +43,4 @@
     1. [Enabling the OpenJPEG library (JPEG 2000)](/doc/sections/en_US/5-project-build/image-libraries/5-31-enabling-the-openjpeg-library.md)
     1. [Enabling the libavif library (AVIF)](/doc/sections/en_US/5-project-build/image-libraries/5-32-enabling-the-libavif-library.md)
     1. [Enabling the libheif library (HEIF/HEIC)](/doc/sections/en_US/5-project-build/image-libraries/5-33-enabling-the-libheif-library.md)
+    1. [Enabling the CFITSIO library (FITS)](/doc/sections/en_US/5-project-build/image-libraries/5-38-enabling-the-cfitsio-library.md)

@@ -91,6 +91,7 @@
 ## Компʼютерний зір / Обробка зображень
 
 - гілка `appOpenCV` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appOpenCV), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appOpenCV)] котра містить інфраструктуру для швидкого старту розробки застосунку з використанням бібліотеки компʼютерного зору [OpenCV](https://opencv.org/).
+- гілка `appCFITSIO` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appCFITSIO), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appCFITSIO)] яка містить загальні класи для генерації одинарного бінарного виконуваного файлу, що загортає бібліотеку [CFITSIO](https://heasarc.gsfc.nasa.gov/fitsio/) у невеликий контролер з основними викликами формату FITS (астрономічний формат зображень) - створення, відкриття, читання і запис зображення та доступ до ключових слів заголовку - і зчитує у класі Application зображення FITS, задане параметром командного рядка `--image`, звітуючи про нього через журнал проекту. Окремий компонент так само загортає бібліотеку [WCSLIB](https://www.atnf.csiro.au/people/mcalabre/WCS/), тому заголовок цього зображення також повідомляє, куди вказує його центр на небесній сфері.
 
 ## Штучний інтелект / LLM
 

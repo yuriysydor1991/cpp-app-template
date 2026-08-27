@@ -30,8 +30,6 @@ class CTEST_WCSLIBController : public Test
 
   ~CTEST_WCSLIBController() override
   {
-    fits->close();
-
     std::error_code ec;
     std::filesystem::remove(fits_path(), ec);
   }
@@ -48,19 +46,30 @@ class CTEST_WCSLIBController : public Test
   bool write_wcs_image()
   {
     fctx->set_pixels(
-        cfitsioi::CFITSIOController::pixels_buffer(WIDTH * HEIGHT, 1.0));
+        cfitsioi::CFITSIOContext::pixels_buffer(WIDTH * HEIGHT, 1.0));
 
-    return fits->create_image(fctx) && fits->write(fctx) &&
-           fits->write_keyword("CTYPE1", "RA---TAN") &&
-           fits->write_keyword("CTYPE2", "DEC--TAN") &&
-           fits->write_keyword("CUNIT1", "deg") &&
-           fits->write_keyword("CUNIT2", "deg") &&
-           fits->write_keyword("CRPIX1", REFERENCE_X) &&
-           fits->write_keyword("CRPIX2", REFERENCE_Y) &&
-           fits->write_keyword("CRVAL1", REFERENCE_RA) &&
-           fits->write_keyword("CRVAL2", REFERENCE_DEC) &&
-           fits->write_keyword("CDELT1", -PIXEL_SCALE) &&
-           fits->write_keyword("CDELT2", PIXEL_SCALE) && fits->close();
+    fctx->set_keywords({{"CTYPE1", "RA---TAN"},
+                        {"CTYPE2", "DEC--TAN"},
+                        {"CUNIT1", "deg"},
+                        {"CUNIT2", "deg"}});
+
+    fctx->set_numeric_keywords({{"CRPIX1", REFERENCE_X},
+                                {"CRPIX2", REFERENCE_Y},
+                                {"CRVAL1", REFERENCE_RA},
+                                {"CRVAL2", REFERENCE_DEC},
+                                {"CDELT1", -PIXEL_SCALE},
+                                {"CDELT2", PIXEL_SCALE}});
+
+    return fits->write(fctx);
+  }
+
+  /// @brief Writes a plain image carrying no WCS keyword at all.
+  bool write_plain_image()
+  {
+    fctx->set_pixels(
+        cfitsioi::CFITSIOContext::pixels_buffer(WIDTH * HEIGHT, 1.0));
+
+    return fits->write(fctx);
   }
 
   static constexpr const long WIDTH = 8;
@@ -80,9 +89,7 @@ class CTEST_WCSLIBController : public Test
 TEST_F(CTEST_WCSLIBController, header_of_a_written_image_holds_whole_keyrecords)
 {
   ASSERT_TRUE(write_wcs_image());
-  ASSERT_TRUE(fits->open(fctx));
-
-  ASSERT_TRUE(fits->read_header(fctx));
+  ASSERT_TRUE(fits->read(fctx));
 
   EXPECT_FALSE(fctx->get_header().empty());
   EXPECT_EQ(fctx->get_header().size() % 80U, 0U);
@@ -91,9 +98,7 @@ TEST_F(CTEST_WCSLIBController, header_of_a_written_image_holds_whole_keyrecords)
 TEST_F(CTEST_WCSLIBController, header_of_a_written_image_gets_parsed)
 {
   ASSERT_TRUE(write_wcs_image());
-  ASSERT_TRUE(fits->open(fctx));
-
-  ASSERT_TRUE(fits->read_header(fctx));
+  ASSERT_TRUE(fits->read(fctx));
   ASSERT_TRUE(controller->parse(fctx));
 
   EXPECT_EQ(controller->get_representations_count(), 1);
@@ -106,8 +111,7 @@ TEST_F(CTEST_WCSLIBController, header_of_a_written_image_gets_parsed)
 TEST_F(CTEST_WCSLIBController, reference_pixel_of_a_written_image_converts)
 {
   ASSERT_TRUE(write_wcs_image());
-  ASSERT_TRUE(fits->open(fctx));
-  ASSERT_TRUE(fits->read_header(fctx));
+  ASSERT_TRUE(fits->read(fctx));
   ASSERT_TRUE(controller->parse(fctx));
 
   const auto world = controller->to_world({REFERENCE_X, REFERENCE_Y});
@@ -120,8 +124,7 @@ TEST_F(CTEST_WCSLIBController, reference_pixel_of_a_written_image_converts)
 TEST_F(CTEST_WCSLIBController, image_corner_of_a_written_image_round_trips)
 {
   ASSERT_TRUE(write_wcs_image());
-  ASSERT_TRUE(fits->open(fctx));
-  ASSERT_TRUE(fits->read_header(fctx));
+  ASSERT_TRUE(fits->read(fctx));
   ASSERT_TRUE(controller->parse(fctx));
 
   const WCSLIBController::coordinates corner{1.0, 1.0};
@@ -144,13 +147,11 @@ TEST_F(CTEST_WCSLIBController, image_corner_of_a_written_image_round_trips)
 TEST_F(CTEST_WCSLIBController,
        image_without_wcs_keywords_maps_pixels_onto_themselves)
 {
-  ASSERT_TRUE(fits->create_image(fctx));
-  ASSERT_TRUE(fits->close());
-  ASSERT_TRUE(fits->open(fctx));
+  ASSERT_TRUE(write_plain_image());
+  ASSERT_TRUE(fits->read(fctx));
 
   // The axes count alone is enough for the parser to build a default linear
   // representation, whose axes carry no type and convert into themselves.
-  ASSERT_TRUE(fits->read_header(fctx));
   ASSERT_TRUE(controller->parse(fctx));
 
   EXPECT_EQ(controller->get_axes_count(), 2);

@@ -77,17 +77,15 @@ TEST_F(UTEST_Application, reads_the_image_of_the_context)
   EXPECT_CALL(onMockCreateEnsurer, Call(_))
       .Times(1)
       .WillOnce(Invoke([](CFITSIOController& instance) {
-        EXPECT_CALL(instance, open(_, false)).Times(1).WillOnce(Return(true));
-        EXPECT_CALL(instance, create_image(_)).Times(0);
+        // A single call carrying the context alone is the whole reading, and
+        // nothing gets written along the way.
+        EXPECT_CALL(instance, read(_))
+            .Times(1)
+            .WillOnce(Invoke([](const CFITSIOController::context& ctx) {
+              EXPECT_EQ(ctx->get_path(), IMAGE_PATH);
+              return true;
+            }));
         EXPECT_CALL(instance, write(_)).Times(0);
-
-        // The size and the pixels come out of the context now, so neither of
-        // them gets asked of the controller a second time.
-        EXPECT_CALL(instance, get_image_size()).Times(0);
-        EXPECT_CALL(instance, get_hdu_count()).Times(1);
-        EXPECT_CALL(instance, read_keyword(_)).Times(1);
-        EXPECT_CALL(instance, read(_)).Times(1).WillOnce(Return(true));
-        EXPECT_CALL(instance, read_header(_)).Times(1).WillOnce(Return(true));
       }));
 
   CFITSIOController::onMockCreate = onMockCreateEnsurer.AsStdFunction();
@@ -106,9 +104,7 @@ TEST_F(UTEST_Application, unreadable_image_returns_invalid)
   EXPECT_CALL(onMockCreateEnsurer, Call(_))
       .Times(1)
       .WillOnce(Invoke([](CFITSIOController& instance) {
-        EXPECT_CALL(instance, open(_, _)).Times(1).WillOnce(Return(true));
         EXPECT_CALL(instance, read(_)).Times(1).WillOnce(Return(false));
-        EXPECT_CALL(instance, read_header(_)).Times(0);
       }));
 
   CFITSIOController::onMockCreate = onMockCreateEnsurer.AsStdFunction();
@@ -137,27 +133,6 @@ TEST_F(UTEST_Application, reports_the_coordinates_of_the_read_image)
   WCSLIBController::onMockCreate = onMockCreateEnsurer.AsStdFunction();
 
   EXPECT_EQ(app->run(appCtx), 0);
-}
-
-TEST_F(UTEST_Application, unopenable_image_returns_invalid)
-{
-  appCtx->set_image_path(IMAGE_PATH);
-
-  MockFunction<void(CFITSIOController&)> onMockCreateEnsurer;
-
-  EXPECT_CALL(onMockCreateEnsurer, Call(_))
-      .Times(1)
-      .WillOnce(Invoke([](CFITSIOController& instance) {
-        EXPECT_CALL(instance, open(_, _)).Times(1).WillOnce(Return(false));
-        EXPECT_CALL(instance, read(_)).Times(0);
-        EXPECT_CALL(instance, read_header(_)).Times(0);
-      }));
-
-  CFITSIOController::onMockCreate = onMockCreateEnsurer.AsStdFunction();
-
-  EXPECT_CALL(*appCtx, push_error(_)).Times(1);
-
-  EXPECT_NE(app->run(appCtx), 0);
 }
 
 TEST_F(UTEST_Application, image_without_the_coordinates_is_still_read)

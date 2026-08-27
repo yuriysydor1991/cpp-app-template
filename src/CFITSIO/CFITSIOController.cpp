@@ -12,19 +12,53 @@ namespace cfitsioi
 
 CFITSIOController::~CFITSIOController()
 {
-  // Not the close call: it is a virtual one, so a destructor gains nothing
-  // from it, while a failure has nobody left to report itself to anyway.
+  // A failure has nobody left to report itself to here, so the handle gets
+  // released and nothing else.
   if (fits != nullptr) {
     fits_close_file(fits, &status);
   }
 }
 
-bool CFITSIOController::open(const context& ctx, const bool writable)
+bool CFITSIOController::read(const context& ctx)
+{
+  if (!valid(ctx) || !open(ctx, false)) {
+    return false;
+  }
+
+  return release(read_header(ctx) &&
+                 (ctx->get_read_header_only() || read_image(ctx)));
+}
+
+bool CFITSIOController::write(const context& ctx)
 {
   if (!valid(ctx)) {
     return false;
   }
 
+  // The header only write updates an already existing file, while the whole
+  // one replaces it with a freshly created image.
+  const bool headerOnly = ctx->get_write_header_only();
+
+  if (!(headerOnly ? open(ctx, true) : create(ctx))) {
+    return false;
+  }
+
+  return release((headerOnly || write_image(ctx)) && write_keywords(ctx));
+}
+
+int CFITSIOController::last_status() const { return status; }
+
+std::string CFITSIOController::last_error() const
+{
+  char text[FLEN_ERRMSG] = {};
+
+  fits_get_errstatus(status, text);
+
+  return text;
+}
+
+bool CFITSIOController::open(const context& ctx, const bool writable)
+{
   const std::string path = ctx->get_path();
 
   assert(!path.empty());
@@ -34,8 +68,6 @@ bool CFITSIOController::open(const context& ctx, const bool writable)
     return false;
   }
 
-  close();
-
   status = 0;
 
   fits_open_file(&fits, path.c_str(), writable ? READWRITE : READONLY, &status);
@@ -43,12 +75,8 @@ bool CFITSIOController::open(const context& ctx, const bool writable)
   return succeeded("open the " + path + " FITS file");
 }
 
-bool CFITSIOController::create_image(const context& ctx)
+bool CFITSIOController::create(const context& ctx)
 {
-  if (!valid(ctx)) {
-    return false;
-  }
-
   const std::string path = ctx->get_path();
   const auto [width, height] = ctx->get_image_size();
 
@@ -59,8 +87,6 @@ bool CFITSIOController::create_image(const context& ctx)
                                            << height);
     return false;
   }
-
-  close();
 
   status = 0;
 
@@ -79,46 +105,14 @@ bool CFITSIOController::create_image(const context& ctx)
   return succeeded("create the image of the " + path + " FITS file");
 }
 
-bool CFITSIOController::close()
+bool CFITSIOController::read_header(const context& ctx)
 {
-  if (fits == nullptr) {
-    return true;
-  }
+  ctx->set_header({});
+  ctx->set_hdu_count(0);
+  ctx->get_keywords().clear();
 
-  status = 0;
-
-  fits_close_file(fits, &status);
-
-  fits = nullptr;
-
-  return succeeded("close the FITS file");
-}
-
-bool CFITSIOController::is_open() const { return fits != nullptr; }
-
-CFITSIOController::image_size CFITSIOController::get_image_size()
-{
   if (!prepare()) {
-    return {0, 0};
-  }
-
-  int bitpix = 0;
-  int naxis = 0;
-  long naxes[IMAGE_AXES] = {0, 0};
-
-  fits_get_img_param(fits, IMAGE_AXES, &bitpix, &naxis, naxes, &status);
-
-  if (!succeeded("read the FITS image parameters") || naxis != IMAGE_AXES) {
-    return {0, 0};
-  }
-
-  return {naxes[0], naxes[1]};
-}
-
-int CFITSIOController::get_hdu_count()
-{
-  if (!prepare()) {
-    return 0;
+    return false;
   }
 
   int hdus = 0;
@@ -126,86 +120,10 @@ int CFITSIOController::get_hdu_count()
   fits_get_num_hdus(fits, &hdus, &status);
 
   if (!succeeded("count the FITS file HDUs")) {
-    return 0;
-  }
-
-  return hdus;
-}
-
-bool CFITSIOController::read(const context& ctx)
-{
-  if (!valid(ctx)) {
     return false;
   }
 
-  auto& pixels = ctx->get_pixels();
-
-  pixels.clear();
-
-  const auto size = get_image_size();
-  const auto [width, height] = size;
-
-  ctx->set_image_size(size);
-
-  const LONGLONG count = static_cast<LONGLONG>(width) * height;
-
-  if (count <= 0) {
-    LOGE("No two dimensional FITS image to read");
-    return false;
-  }
-
-  pixels.resize(static_cast<pixels_buffer::size_type>(count));
-
-  // The null value and the null flag pointers are the optional ones and stay
-  // omitted here, which turns the undefined pixels check off.
-  fits_read_img(fits, TDOUBLE, 1, count, nullptr, pixels.data(), nullptr,
-                &status);
-
-  if (!succeeded("read the FITS image pixels")) {
-    pixels.clear();
-    return false;
-  }
-
-  return true;
-}
-
-bool CFITSIOController::write(const context& ctx)
-{
-  if (!valid(ctx)) {
-    return false;
-  }
-
-  const auto& pixels = ctx->get_pixels();
-
-  const auto [width, height] = get_image_size();
-  const LONGLONG expected = static_cast<LONGLONG>(width) * height;
-  const LONGLONG given = static_cast<LONGLONG>(pixels.size());
-
-  if (expected <= 0 || given != expected) {
-    LOGE("The context carries "
-         << given << " pixels while the open FITS image holds " << expected);
-    return false;
-  }
-
-  // The CFITSIO reads the pixels through a pointer of it's own, so the
-  // constness gets dropped right here and nowhere else.
-  fits_write_img(fits, TDOUBLE, 1, given, const_cast<double*>(pixels.data()),
-                 &status);
-
-  return succeeded("write the FITS image pixels");
-}
-
-bool CFITSIOController::read_header(const context& ctx)
-{
-  if (!valid(ctx)) {
-    return false;
-  }
-
-  ctx->set_header({});
-
-  if (!prepare()) {
-    return false;
-  }
+  ctx->set_hdu_count(hdus);
 
   char* records = nullptr;
   int recordsCount = 0;
@@ -224,71 +142,176 @@ bool CFITSIOController::read_header(const context& ctx)
 
   fits_free_memory(records, &releaseStatus);
 
-  return fetched;
+  return fetched && read_keywords(ctx);
 }
 
-std::string CFITSIOController::read_keyword(const std::string& name)
+bool CFITSIOController::read_keywords(const context& ctx)
 {
-  assert(!name.empty());
+  int count = 0;
 
-  if (!prepare() || name.empty()) {
-    return {};
-  }
+  fits_get_hdrspace(fits, &count, nullptr, &status);
 
-  char value[FLEN_VALUE] = {};
-
-  fits_read_key(fits, TSTRING, name.c_str(), value, nullptr, &status);
-
-  if (!succeeded("read the " + name + " FITS keyword")) {
-    return {};
-  }
-
-  return value;
-}
-
-bool CFITSIOController::write_keyword(const std::string& name,
-                                      const std::string& value,
-                                      const std::string& comment)
-{
-  assert(!name.empty());
-
-  if (!prepare() || name.empty()) {
+  if (!succeeded("count the FITS header keywords")) {
     return false;
   }
 
-  fits_update_key(fits, TSTRING, name.c_str(), const_cast<char*>(value.c_str()),
-                  comment.empty() ? nullptr : comment.c_str(), &status);
+  auto& keywords = ctx->get_keywords();
 
-  return succeeded("write the " + name + " FITS keyword");
+  for (int index = 1; index <= count; ++index) {
+    char name[FLEN_KEYWORD] = {};
+    char value[FLEN_VALUE] = {};
+
+    fits_read_keyn(fits, index, name, value, nullptr, &status);
+
+    if (!succeeded("read a FITS header keyword")) {
+      return false;
+    }
+
+    // A commentary keyword carries no value at all, so there is nothing of it
+    // to keep, and a text valued one arrives quoted, so it gets fetched once
+    // again by it's name, which is the call that unquotes it.
+    if (name[0] == '\0' || value[0] == '\0') {
+      continue;
+    }
+
+    if (value[0] == '\'') {
+      fits_read_key(fits, TSTRING, name, value, nullptr, &status);
+
+      if (!succeeded(std::string{"unquote the "} + name + " FITS keyword")) {
+        return false;
+      }
+    }
+
+    keywords[name] = value;
+  }
+
+  return true;
 }
 
-bool CFITSIOController::write_keyword(const std::string& name,
-                                      const double value,
-                                      const std::string& comment)
+bool CFITSIOController::read_image(const context& ctx)
 {
-  assert(!name.empty());
+  auto& pixels = ctx->get_pixels();
 
-  if (!prepare() || name.empty()) {
+  pixels.clear();
+  ctx->set_image_size({0, 0});
+
+  if (!prepare()) {
     return false;
   }
 
-  double written = value;
+  int bitpix = 0;
+  int naxis = 0;
+  long naxes[IMAGE_AXES] = {0, 0};
 
-  fits_update_key(fits, TDOUBLE, name.c_str(), &written,
-                  comment.empty() ? nullptr : comment.c_str(), &status);
+  fits_get_img_param(fits, IMAGE_AXES, &bitpix, &naxis, naxes, &status);
 
-  return succeeded("write the " + name + " FITS keyword");
+  if (!succeeded("read the FITS image parameters")) {
+    return false;
+  }
+
+  if (naxis != IMAGE_AXES) {
+    LOGE("The FITS file holds a " << naxis
+                                  << " axes image instead of a two "
+                                     "dimensional one");
+    return false;
+  }
+
+  ctx->set_image_size({naxes[0], naxes[1]});
+
+  const LONGLONG count = static_cast<LONGLONG>(naxes[0]) * naxes[1];
+
+  if (count <= 0) {
+    LOGE("The FITS image holds no pixel at all");
+    return false;
+  }
+
+  pixels.resize(static_cast<CFITSIOContext::pixels_buffer::size_type>(count));
+
+  // The null value and the null flag pointers are the optional ones and stay
+  // omitted here, which turns the undefined pixels check off.
+  fits_read_img(fits, TDOUBLE, 1, count, nullptr, pixels.data(), nullptr,
+                &status);
+
+  if (!succeeded("read the FITS image pixels")) {
+    pixels.clear();
+    return false;
+  }
+
+  return true;
 }
 
-int CFITSIOController::last_status() const { return status; }
-
-std::string CFITSIOController::last_error() const
+bool CFITSIOController::write_keywords(const context& ctx)
 {
-  char text[FLEN_ERRMSG] = {};
+  if (!prepare()) {
+    return false;
+  }
 
-  fits_get_errstatus(status, text);
+  for (const auto& [name, value] : ctx->get_keywords()) {
+    fits_update_key(fits, TSTRING, name.c_str(),
+                    const_cast<char*>(value.c_str()), nullptr, &status);
 
-  return text;
+    if (!succeeded("write the " + name + " FITS keyword")) {
+      return false;
+    }
+  }
+
+  for (const auto& [name, value] : ctx->get_numeric_keywords()) {
+    double written = value;
+
+    fits_update_key(fits, TDOUBLE, name.c_str(), &written, nullptr, &status);
+
+    if (!succeeded("write the " + name + " FITS keyword")) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+bool CFITSIOController::write_image(const context& ctx)
+{
+  if (!prepare()) {
+    return false;
+  }
+
+  const auto& pixels = ctx->get_pixels();
+  const auto [width, height] = ctx->get_image_size();
+
+  const LONGLONG expected = static_cast<LONGLONG>(width) * height;
+  const LONGLONG given = static_cast<LONGLONG>(pixels.size());
+
+  if (expected <= 0 || given != expected) {
+    LOGE("The context carries " << given << " pixels while it's image holds "
+                                << expected);
+    return false;
+  }
+
+  // The CFITSIO reads the pixels through a pointer of it's own, so the
+  // constness gets dropped right here and nowhere else.
+  fits_write_img(fits, TDOUBLE, 1, given, const_cast<double*>(pixels.data()),
+                 &status);
+
+  return succeeded("write the FITS image pixels");
+}
+
+bool CFITSIOController::release(const bool done)
+{
+  const int performed = status;
+
+  status = 0;
+
+  if (fits != nullptr) {
+    fits_close_file(fits, &status);
+    fits = nullptr;
+  }
+
+  const bool closed = succeeded("close the FITS file");
+
+  if (!done) {
+    status = performed;
+  }
+
+  return done && closed;
 }
 
 bool CFITSIOController::prepare()

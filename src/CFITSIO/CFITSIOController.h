@@ -17,20 +17,21 @@ namespace cfitsioi
 /**
  * @brief The CFITSIO two dimensional image reader and writer class.
  *
- * A single instance holds a single open FITS file at a time and carries no
- * data of it's own: it reads into the given CFITSIOContext and writes out of
- * it. Every call reports it's outcome through the return value and leaves the
- * CFITSIO status code of the performed call in the last_status accessor, so
- * nothing throws.
+ * The whole surface of it is a read and a write call, both of them taking a
+ * single CFITSIOContext and nothing else: every parameter of an operation and
+ * every result of it lives in that context. The file gets opened and closed
+ * inside a call, so an instance holds no data and no file of it's own between
+ * the calls.
+ *
+ * Nothing throws: both of the calls report their outcome through the return
+ * value and leave the CFITSIO status code of the failed call in the
+ * last_status accessor.
  */
 class CFITSIOController
 {
  public:
   /// @brief The context both of the custom components operate by.
   using context = CFITSIOContextPtr;
-
-  using pixels_buffer = CFITSIOContext::pixels_buffer;
-  using image_size = CFITSIOContext::image_size;
 
   using CFITSIOControllerPtr = std::shared_ptr<CFITSIOController>;
 
@@ -40,111 +41,31 @@ class CFITSIOController
   CFITSIOController(CFITSIOController&&) = delete;
 
   /**
-   * @brief Opens the already existing FITS file the context points at and
-   * moves onto it's first image.
+   * @brief Reads the FITS file the context points at into that very context:
+   * it's header keyrecords, it's keywords, it's HDUs count and, unless the
+   * context asks for the header alone, it's image size and pixels.
    *
-   * @param ctx The context carrying the file path. The whole CFITSIO extended
-   * file name syntax is welcome there, so an "image.fits[2]" alike image
-   * selector works too.
-   * @param writable Pass true to open the file for the writing as well.
+   * @param ctx The context carrying the file path and the
+   * CFITSIOContext::get_read_header_only flag.
    *
-   * @return Returns true when the file has been opened.
-   */
-  virtual bool open(const context& ctx, const bool writable = false);
-
-  /**
-   * @brief Creates a FITS file holding a single double precision image of the
-   * path and the size the context carries and leaves it open for the writing.
-   * An already existing file of the same path gets overwritten.
-   *
-   * @param ctx The context carrying the file path and the image size.
-   *
-   * @return Returns true when the file and it's image have been created.
-   */
-  virtual bool create_image(const context& ctx);
-
-  /// @brief Writes the pending changes out and closes the held file, if any.
-  virtual bool close();
-
-  virtual bool is_open() const;
-
-  /**
-   * @brief Gives the width and the height of the open image, both of them
-   * zeroed while no file is open or the open one holds no image.
-   */
-  virtual image_size get_image_size();
-
-  /// @brief Gives the count of the HDUs (the blocks a FITS file is built of)
-  /// of the open file, zero on any error.
-  virtual int get_hdu_count();
-
-  /**
-   * @brief Reads the whole open image into the pixels buffer of the context
-   * and refills the image size it carries.
-   *
-   * @param ctx The context to read into.
-   *
-   * @return Returns true when the pixels have been read.
+   * @return Returns true when everything asked for has been read.
    */
   virtual bool read(const context& ctx);
 
   /**
-   * @brief Writes the pixels the context carries over the whole open image.
+   * @brief Writes the context out into the FITS file it points at: it's
+   * keywords and, unless the context asks for the header alone, a freshly
+   * created image of it's size holding it's pixels.
    *
-   * @param ctx The context to write out of. It must carry as many pixels as
-   * the open image holds.
+   * An already existing file gets overwritten by a whole write and updated in
+   * place by a header only one.
    *
-   * @return Returns true when the pixels have been written.
+   * @param ctx The context carrying the file path, the data to write and the
+   * CFITSIOContext::get_write_header_only flag.
+   *
+   * @return Returns true when everything has been written.
    */
   virtual bool write(const context& ctx);
-
-  /**
-   * @brief Reads the whole header of the open file into the context as the
-   * FITS keyrecords string of exactly 80 characters per record, the very form
-   * the WCSLIBController takes.
-   *
-   * @param ctx The context to read into.
-   *
-   * @return Returns true when the header has been read.
-   */
-  virtual bool read_header(const context& ctx);
-
-  /**
-   * @brief Reads a header keyword of the open file as a string.
-   *
-   * @param name The keyword name, "OBJECT" or "BITPIX", for example.
-   *
-   * @return Returns the keyword value, empty in case of any error.
-   */
-  virtual std::string read_keyword(const std::string& name);
-
-  /**
-   * @brief Writes a header keyword into the open file, replacing the already
-   * present one of the same name.
-   *
-   * @param name The keyword name to write.
-   * @param value The keyword value to write.
-   * @param comment The optional keyword description.
-   *
-   * @return Returns true when the keyword has been written.
-   */
-  virtual bool write_keyword(const std::string& name, const std::string& value,
-                             const std::string& comment = {});
-
-  /**
-   * @brief Writes a floating point header keyword into the open file,
-   * replacing the already present one of the same name. The string overload
-   * above quotes it's value instead, which the numeric keyword readers (the
-   * WCS parsers among them) reject.
-   *
-   * @param name The keyword name to write.
-   * @param value The keyword value to write.
-   * @param comment The optional keyword description.
-   *
-   * @return Returns true when the keyword has been written.
-   */
-  virtual bool write_keyword(const std::string& name, const double value,
-                             const std::string& comment = {});
 
   /// @brief Gives the CFITSIO status code of the last performed call, where
   /// the zero one reports a success.
@@ -156,6 +77,39 @@ class CFITSIOController
   static CFITSIOControllerPtr create();
 
  private:
+  /// @brief Opens the file of the context, for the writing as well when asked.
+  bool open(const context& ctx, const bool writable);
+
+  /// @brief Creates the file of the context holding a double precision image
+  /// of the size it carries, overwriting an already existing one.
+  bool create(const context& ctx);
+
+  /// @brief Reads the header keyrecords, the keywords and the HDUs count.
+  bool read_header(const context& ctx);
+
+  /// @brief Reads the keywords carrying a value into the context, unquoting
+  /// the text ones.
+  bool read_keywords(const context& ctx);
+
+  /// @brief Reads the image size and it's pixels into the context.
+  bool read_image(const context& ctx);
+
+  /// @brief Writes the keywords of the context into the open header.
+  bool write_keywords(const context& ctx);
+
+  /// @brief Writes the pixels of the context over the open image.
+  bool write_image(const context& ctx);
+
+  /**
+   * @brief Closes the held file, keeping the status of the operation which
+   * has led here, since the closing one would hide it.
+   *
+   * @param done The outcome of that operation.
+   *
+   * @return Returns true when both the operation and the closing succeeded.
+   */
+  bool release(const bool done);
+
   /**
    * @brief Drops the status of the previous call and tells whether a file is
    * open, so every call above starts with a clean CFITSIO status.

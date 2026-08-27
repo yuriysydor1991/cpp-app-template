@@ -23,34 +23,35 @@ target_link_libraries(${PROJECT_BINARY_NAME} CFITSIO::cfitsio)
 
 | Поле | Що воно тримає |
 | --- | --- |
-| `path` | файл FITS, який контролер відкриває або створює |
+| `path` | файл FITS для читання або запису |
 | `image_size` | ширина і висота зображення, оновлюються при кожному читанні |
 | `pixels` | пікселі зображення, у які читають і з яких записують |
 | `header` | рядок ключових записів FITS для аналізатора WCS |
+| `keywords` | текстові ключові слова заголовку за їх іменами |
+| `numeric_keywords` | ключові слова, які запис вносить без лапок |
+| `hdu_count` | кількість блоків, з яких складається прочитаний файл |
+| `read_header_only` | підніми, щоб прочитати заголовок і пропустити зображення |
+| `write_header_only` | підніми, щоб оновити заголовок вже наявного файлу |
 
-Метод доступу `get_pixels` повертає змінюване посилання, тому контролер читає ціле зображення напряму у контекст і не копіює його по дорозі.
+Методи доступу `get_pixels` і `get_keywords` повертають змінюване посилання, тому контролер читає напряму у контекст і не копіює цілого зображення по дорозі.
+
+Читання заповнює лише `keywords`, оскільки ключове слово надходить з файлу як текст; `numeric_keywords` є записувальною половиною пари і тримають значення, які мають потрапити до заголовку без лапок, як того потребують аналізатори WCS.
 
 Екземпляр контексту подорожує від компоненту CFITSIO до компоненту WCSLIB, несучи самі лише дані, тому жоден з двох компонентів не посилається на інший.
 
 ### Контролер
 
-Клас `cfitsioi::CFITSIOController` з файлу [src/CFITSIO/CFITSIOController.h](/src/CFITSIO/CFITSIOController.h) загортає основні виклики CFITSIO для роботи із зображеннями, тримає один відкритий файл FITS на один екземпляр і не тримає власних даних: кожен виклик нижче або бере вхідні дані з наданого контексту, або записує свій результат у нього.
+Уся поверхня класу `cfitsioi::CFITSIOController` з файлу [src/CFITSIO/CFITSIOController.h](/src/CFITSIO/CFITSIOController.h) - це виклики `read` і `write`, кожен з яких приймає єдиний контекст і нічого більше: кожен параметр операції і кожен її результат живуть у цьому контексті.
 
-| Метод | Виклик CFITSIO за ним |
-| --- | --- |
-| `open` | `fits_open_file` |
-| `create_image` | `fits_create_file` та `fits_create_img` |
-| `close` | `fits_close_file` |
-| `get_image_size` | `fits_get_img_param` |
-| `get_hdu_count` | `fits_get_num_hdus` |
-| `read` | `fits_read_img` |
-| `write` | `fits_write_img` |
-| `read_keyword` | `fits_read_key` |
-| `write_keyword` | `fits_update_key`, з рядковим і числовим перевантаженням |
-| `read_header` | `fits_hdr2str` |
-| `last_error` | `fits_get_errstatus` |
+| Виклик | Що він робить | Виклики CFITSIO за ним |
+| --- | --- | --- |
+| `read` | заповнює контекст з файлу, на який той вказує | `fits_open_file`, `fits_get_num_hdus`, `fits_hdr2str`, `fits_get_hdrspace`, `fits_read_keyn`, `fits_read_key`, `fits_get_img_param`, `fits_read_img`, `fits_close_file` |
+| `write` | записує контекст у файл, на який той вказує | `fits_create_file`, `fits_create_img`, `fits_write_img`, `fits_update_key`, `fits_close_file` |
+| `last_error` | описує стан, який залишив невдалий виклик | `fits_get_errstatus` |
 
-Жоден з методів не кидає винятків: кожен повідомляє про результат через значення, що повертається, і залишає код стану CFITSIO виконаного виклику у методі доступу `last_status`.
+Файл відкривається і закривається всередині виклику, тому між викликами екземпляр не тримає ані даних, ані файлу. Повний запис створює зображення наново і перезаписує вже наявний файл, тоді як запис лише заголовку відкриває цей файл і оновлює його ключові слова на місці.
+
+Жоден з викликів не кидає винятків: обидва повідомляють про результат через значення, що повертається, і залишають код стану CFITSIO невдалого виклику у методі доступу `last_status`.
 
 ```
 auto ctx = cfitsioi::CFITSIOContext::create();
@@ -59,20 +60,22 @@ auto fits = cfitsioi::CFITSIOController::create();
 ctx->set_path("/tmp/image.fits");
 ctx->set_image_size({8, 4});
 ctx->set_pixels(cfitsioi::CFITSIOContext::pixels_buffer(8 * 4, 42.0));
+ctx->set_keywords({{"OBJECT", "M31"}});
+ctx->set_numeric_keywords({{"CRVAL1", 202.4695}});
 
-fits->create_image(ctx);
 fits->write(ctx);
-fits->write_keyword("OBJECT", "M31");
-fits->close();
 
-fits->open(ctx);
-fits->read(ctx);
-fits->read_header(ctx);
+auto reading = cfitsioi::CFITSIOContext::create();
 
-const auto& pixels = ctx->get_pixels();
-const auto [width, height] = ctx->get_image_size();
+reading->set_path("/tmp/image.fits");
+
+fits->read(reading);
+
+const auto& pixels = reading->get_pixels();
+const auto [width, height] = reading->get_image_size();
+const auto object = reading->get_keywords().at("OBJECT");
 ```
 
-Виклик `read_header` заповнює контекст цілим заголовком у вигляді рядка ключових записів, який приймають аналізатори FITS WCS, тому дивись [Вмикання інтеграції WCSLIB (FITS WCS)](/doc/sections/uk_UA/5-project-build/image-libraries/5-39-enabling-the-wcslib-library.md) щодо компоненту, який відображає ці пікселі на небесну сферу.
+Читання заповнює контекст цілим заголовком у вигляді рядка ключових записів, який приймають аналізатори FITS WCS, тому дивись [Вмикання інтеграції WCSLIB (FITS WCS)](/doc/sections/uk_UA/5-project-build/image-libraries/5-39-enabling-the-wcslib-library.md) щодо компоненту, який відображає ці пікселі на небесну сферу.
 
 Метод `app::Application::run` з файлу [src/app/applications/Application.cpp](/src/app/applications/Application.cpp) зчитує зображення FITS, на яке вказує параметр командного рядка `--image` (або `-i`), і звітує про нього через журнал проекту, тому заміни його тіло власним кодом обробки FITS.

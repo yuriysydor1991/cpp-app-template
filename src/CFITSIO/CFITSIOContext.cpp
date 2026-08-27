@@ -39,6 +39,56 @@ void CFITSIOContext::set_header(const std::string& newValue)
   mheader = newValue;
 }
 
+CFITSIOContext::keywords_map& CFITSIOContext::get_keywords()
+{
+  return mkeywords;
+}
+
+const CFITSIOContext::keywords_map& CFITSIOContext::get_keywords() const
+{
+  return mkeywords;
+}
+
+void CFITSIOContext::set_keywords(const keywords_map& newValue)
+{
+  mkeywords = newValue;
+}
+
+const CFITSIOContext::numeric_keywords_map&
+CFITSIOContext::get_numeric_keywords() const
+{
+  return mnumeric_keywords;
+}
+
+void CFITSIOContext::set_numeric_keywords(const numeric_keywords_map& newValue)
+{
+  mnumeric_keywords = newValue;
+}
+
+int CFITSIOContext::get_hdu_count() const { return mhdu_count; }
+
+void CFITSIOContext::set_hdu_count(const int newValue)
+{
+  mhdu_count = newValue;
+}
+
+bool CFITSIOContext::get_read_header_only() const { return mread_header_only; }
+
+void CFITSIOContext::set_read_header_only(const bool newValue)
+{
+  mread_header_only = newValue;
+}
+
+bool CFITSIOContext::get_write_header_only() const
+{
+  return mwrite_header_only;
+}
+
+void CFITSIOContext::set_write_header_only(const bool newValue)
+{
+  mwrite_header_only = newValue;
+}
+
 CFITSIOContextPtr CFITSIOContext::create()
 {
   return std::make_shared<CFITSIOContext>();

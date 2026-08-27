@@ -42,9 +42,9 @@ auto fits = cfitsioi::CFITSIOController::create();
 auto wcs = wcslibi::WCSLIBController::create();
 
 ctx->set_path("/tmp/image.fits");
+ctx->set_read_header_only(true);
 
-fits->open(ctx);
-fits->read_header(ctx);
+fits->read(ctx);
 
 wcs->parse(ctx);
 

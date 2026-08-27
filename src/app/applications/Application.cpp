@@ -21,18 +21,35 @@ namespace
 constexpr const wcslibi::WCSLIBController::coordinates::size_type
     CELESTIAL_AXES = 2U;
 
+/// @brief Gives the value of the given keyword the context carries, empty
+/// when the header holds no such one.
+std::string keyword_of(const cfitsioi::CFITSIOContextPtr& fctx,
+                       const std::string& name)
+{
+  const auto& keywords = fctx->get_keywords();
+  const auto found = keywords.find(name);
+
+  return found == keywords.cend() ? std::string{} : found->second;
+}
+
 /**
  * @brief Logs what the read image itself tells about it: the blocks the file
- * is built of, the image size, the pixel type and the range the pixels span.
+ * is built of, the image size, the pixel type, the object it shows and the
+ * range the pixels span.
  */
-void report_image(const cfitsioi::CFITSIOControllerPtr& fits,
-                  const cfitsioi::CFITSIOContextPtr& fctx)
+void report_image(const cfitsioi::CFITSIOContextPtr& fctx)
 {
   const auto [width, height] = fctx->get_image_size();
 
-  LOGI("It holds " << fits->get_hdu_count() << " HDU(s) and a " << width << "x"
-                   << height << " image of the " << fits->read_keyword("BITPIX")
+  LOGI("It holds " << fctx->get_hdu_count() << " HDU(s) and a " << width << "x"
+                   << height << " image of the " << keyword_of(fctx, "BITPIX")
                    << " BITPIX pixels");
+
+  const std::string object = keyword_of(fctx, "OBJECT");
+
+  if (!object.empty()) {
+    LOGI("It shows the '" << object << "' object");
+  }
 
   const auto& pixels = fctx->get_pixels();
 
@@ -122,21 +139,15 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
 
   fctx->set_path(path);
 
-  if (!fits->open(fctx)) {
-    LOGE("Fail to open the " << path << " FITS image: " << fits->last_error());
-    ctx->push_error("Fail to open the FITS image: " + path);
-    return INVALID;
-  }
-
   LOGI("Reading the " << path << " FITS image");
 
-  if (!fits->read(fctx) || !fits->read_header(fctx)) {
+  if (!fits->read(fctx)) {
     LOGE("Fail to read the " << path << " FITS image: " << fits->last_error());
     ctx->push_error("Fail to read the FITS image: " + path);
     return INVALID;
   }
 
-  report_image(fits, fctx);
+  report_image(fctx);
   report_coordinates(fctx);
 
   return 0;

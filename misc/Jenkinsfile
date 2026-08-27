@@ -127,6 +127,11 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "UTEST_CommandLineParser\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_CommandLineParser.junit.xml'
           }
         }
+        stage('UTEST_CFITSIOContext') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_CFITSIOContext\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_CFITSIOContext.junit.xml'
+          }
+        }
         stage('UTEST_CFITSIOController') {
           steps {
             sh 'cd $BUILDDIR && ctest -R "UTEST_CFITSIOController\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_CFITSIOController.junit.xml'

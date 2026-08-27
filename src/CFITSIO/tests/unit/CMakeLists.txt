@@ -7,4 +7,5 @@ endif()
 # disabling the asserts for the tests
 add_compile_options(-DNDEBUG=1)
 
+add_subdirectory(CFITSIOContext)
 add_subdirectory(CFITSIOController)

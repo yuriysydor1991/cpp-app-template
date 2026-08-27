@@ -17,9 +17,24 @@ cmake --build build --target all
 target_link_libraries(${PROJECT_BINARY_NAME} CFITSIO::cfitsio)
 ```
 
+### Контекст
+
+Обидва власні компоненти працюють через клас `cfitsioi::CFITSIOContext` з файлу [src/CFITSIO/CFITSIOContext.h](/src/CFITSIO/CFITSIOContext.h). Це звичайний тримач даних, оголошений так само, як і `app::ApplicationContext`: приватні поля, доступні виключно через пару методів доступу з префіксами `get_` і `set_`.
+
+| Поле | Що воно тримає |
+| --- | --- |
+| `path` | файл FITS, який контролер відкриває або створює |
+| `image_size` | ширина і висота зображення, оновлюються при кожному читанні |
+| `pixels` | пікселі зображення, у які читають і з яких записують |
+| `header` | рядок ключових записів FITS для аналізатора WCS |
+
+Метод доступу `get_pixels` повертає змінюване посилання, тому контролер читає ціле зображення напряму у контекст і не копіює його по дорозі.
+
+Екземпляр контексту подорожує від компоненту CFITSIO до компоненту WCSLIB, несучи самі лише дані, тому жоден з двох компонентів не посилається на інший.
+
 ### Контролер
 
-Клас `cfitsioi::CFITSIOController` з файлу [src/CFITSIO/CFITSIOController.h](/src/CFITSIO/CFITSIOController.h) загортає основні виклики CFITSIO для роботи із зображеннями і тримає один відкритий файл FITS на один екземпляр:
+Клас `cfitsioi::CFITSIOController` з файлу [src/CFITSIO/CFITSIOController.h](/src/CFITSIO/CFITSIOController.h) загортає основні виклики CFITSIO для роботи із зображеннями, тримає один відкритий файл FITS на один екземпляр і не тримає власних даних: кожен виклик нижче або бере вхідні дані з наданого контексту, або записує свій результат у нього.
 
 | Метод | Виклик CFITSIO за ним |
 | --- | --- |
@@ -38,19 +53,26 @@ target_link_libraries(${PROJECT_BINARY_NAME} CFITSIO::cfitsio)
 Жоден з методів не кидає винятків: кожен повідомляє про результат через значення, що повертається, і залишає код стану CFITSIO виконаного виклику у методі доступу `last_status`.
 
 ```
+auto ctx = cfitsioi::CFITSIOContext::create();
 auto fits = cfitsioi::CFITSIOController::create();
 
-fits->create_image("/tmp/image.fits", {8, 4});
-fits->write(cfitsioi::CFITSIOController::pixels_buffer(8 * 4, 42.0));
+ctx->set_path("/tmp/image.fits");
+ctx->set_image_size({8, 4});
+ctx->set_pixels(cfitsioi::CFITSIOContext::pixels_buffer(8 * 4, 42.0));
+
+fits->create_image(ctx);
+fits->write(ctx);
 fits->write_keyword("OBJECT", "M31");
 fits->close();
 
-fits->open("/tmp/image.fits");
+fits->open(ctx);
+fits->read(ctx);
+fits->read_header(ctx);
 
-const auto pixels = fits->read();
-const auto [width, height] = fits->get_image_size();
+const auto& pixels = ctx->get_pixels();
+const auto [width, height] = ctx->get_image_size();
 ```
 
-Виклик `read_header` повертає цілий заголовок у вигляді рядка ключових записів, який приймають аналізатори FITS WCS, тому дивись [Вмикання інтеграції WCSLIB (FITS WCS)](/doc/sections/uk_UA/5-project-build/image-libraries/5-39-enabling-the-wcslib-library.md) щодо компоненту, який відображає ці пікселі на небесну сферу.
+Виклик `read_header` заповнює контекст цілим заголовком у вигляді рядка ключових записів, який приймають аналізатори FITS WCS, тому дивись [Вмикання інтеграції WCSLIB (FITS WCS)](/doc/sections/uk_UA/5-project-build/image-libraries/5-39-enabling-the-wcslib-library.md) щодо компоненту, який відображає ці пікселі на небесну сферу.
 
 Метод `app::Application::run` з файлу [src/app/applications/Application.cpp](/src/app/applications/Application.cpp) зчитує зображення FITS, на яке вказує параметр командного рядка `--image` (або `-i`), і звітує про нього через журнал проекту, тому заміни його тіло власним кодом обробки FITS.

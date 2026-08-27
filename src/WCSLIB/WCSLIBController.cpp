@@ -35,11 +35,18 @@ WCSLIBController::~WCSLIBController()
   }
 }
 
-bool WCSLIBController::parse(const std::string& header)
+bool WCSLIBController::parse(const context& ctx)
 {
-  assert(!header.empty());
+  assert(ctx != nullptr);
+
+  if (ctx == nullptr) {
+    LOGE("No valid FITS context provided");
+    return false;
+  }
 
   release();
+
+  const std::string& header = ctx->get_header();
 
   const int records = static_cast<int>(header.size() / KEYRECORD_LENGTH);
 

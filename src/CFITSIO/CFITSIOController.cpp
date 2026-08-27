@@ -19,12 +19,18 @@ CFITSIOController::~CFITSIOController()
   }
 }
 
-bool CFITSIOController::open(const std::string& path, const bool writable)
+bool CFITSIOController::open(const context& ctx, const bool writable)
 {
+  if (!valid(ctx)) {
+    return false;
+  }
+
+  const std::string path = ctx->get_path();
+
   assert(!path.empty());
 
   if (path.empty()) {
-    LOGE("No FITS file path provided");
+    LOGE("The FITS context carries no file path");
     return false;
   }
 
@@ -37,10 +43,14 @@ bool CFITSIOController::open(const std::string& path, const bool writable)
   return succeeded("open the " + path + " FITS file");
 }
 
-bool CFITSIOController::create_image(const std::string& path,
-                                     const image_size& size)
+bool CFITSIOController::create_image(const context& ctx)
 {
-  const auto [width, height] = size;
+  if (!valid(ctx)) {
+    return false;
+  }
+
+  const std::string path = ctx->get_path();
+  const auto [width, height] = ctx->get_image_size();
 
   assert(!path.empty());
 
@@ -122,41 +132,58 @@ int CFITSIOController::get_hdu_count()
   return hdus;
 }
 
-CFITSIOController::pixels_buffer& CFITSIOController::read()
+bool CFITSIOController::read(const context& ctx)
 {
-  pbuff.clear();
-
-  const auto [width, height] = get_image_size();
-  const LONGLONG pixels = static_cast<LONGLONG>(width) * height;
-
-  if (pixels <= 0) {
-    LOGE("No two dimensional FITS image to read");
-    return pbuff;
+  if (!valid(ctx)) {
+    return false;
   }
 
-  pbuff.resize(static_cast<pixels_buffer::size_type>(pixels));
+  auto& pixels = ctx->get_pixels();
+
+  pixels.clear();
+
+  const auto size = get_image_size();
+  const auto [width, height] = size;
+
+  ctx->set_image_size(size);
+
+  const LONGLONG count = static_cast<LONGLONG>(width) * height;
+
+  if (count <= 0) {
+    LOGE("No two dimensional FITS image to read");
+    return false;
+  }
+
+  pixels.resize(static_cast<pixels_buffer::size_type>(count));
 
   // The null value and the null flag pointers are the optional ones and stay
   // omitted here, which turns the undefined pixels check off.
-  fits_read_img(fits, TDOUBLE, 1, pixels, nullptr, pbuff.data(), nullptr,
+  fits_read_img(fits, TDOUBLE, 1, count, nullptr, pixels.data(), nullptr,
                 &status);
 
   if (!succeeded("read the FITS image pixels")) {
-    pbuff.clear();
+    pixels.clear();
+    return false;
   }
 
-  return pbuff;
+  return true;
 }
 
-bool CFITSIOController::write(const pixels_buffer& pixels)
+bool CFITSIOController::write(const context& ctx)
 {
+  if (!valid(ctx)) {
+    return false;
+  }
+
+  const auto& pixels = ctx->get_pixels();
+
   const auto [width, height] = get_image_size();
   const LONGLONG expected = static_cast<LONGLONG>(width) * height;
   const LONGLONG given = static_cast<LONGLONG>(pixels.size());
 
   if (expected <= 0 || given != expected) {
-    LOGE("Got " << given << " pixels while the open FITS image holds "
-                << expected);
+    LOGE("The context carries "
+         << given << " pixels while the open FITS image holds " << expected);
     return false;
   }
 
@@ -166,6 +193,38 @@ bool CFITSIOController::write(const pixels_buffer& pixels)
                  &status);
 
   return succeeded("write the FITS image pixels");
+}
+
+bool CFITSIOController::read_header(const context& ctx)
+{
+  if (!valid(ctx)) {
+    return false;
+  }
+
+  ctx->set_header({});
+
+  if (!prepare()) {
+    return false;
+  }
+
+  char* records = nullptr;
+  int recordsCount = 0;
+
+  fits_hdr2str(fits, 0, nullptr, 0, &records, &recordsCount, &status);
+
+  const bool fetched = succeeded("read the FITS header");
+
+  if (fetched && records != nullptr) {
+    ctx->set_header(records);
+  }
+
+  // The CFITSIO allocates that buffer itself, so it releases it as well, and
+  // it skips the release for a non zero status left behind by the call above.
+  int releaseStatus = 0;
+
+  fits_free_memory(records, &releaseStatus);
+
+  return fetched;
 }
 
 std::string CFITSIOController::read_keyword(const std::string& name)
@@ -221,34 +280,6 @@ bool CFITSIOController::write_keyword(const std::string& name,
   return succeeded("write the " + name + " FITS keyword");
 }
 
-std::string CFITSIOController::read_header()
-{
-  if (!prepare()) {
-    return {};
-  }
-
-  char* records = nullptr;
-  int recordsCount = 0;
-
-  fits_hdr2str(fits, 0, nullptr, 0, &records, &recordsCount, &status);
-
-  std::string header;
-
-  if (succeeded("read the FITS header") && records != nullptr) {
-    header = records;
-  }
-
-  // The CFITSIO allocates that buffer itself, so it releases it as well, and
-  // it skips the release for a non zero status left behind by the call above.
-  int releaseStatus = 0;
-
-  fits_free_memory(records, &releaseStatus);
-
-  return header;
-}
-
-CFITSIOController::pixels_buffer& CFITSIOController::get() { return pbuff; }
-
 int CFITSIOController::last_status() const { return status; }
 
 std::string CFITSIOController::last_error() const
@@ -266,6 +297,18 @@ bool CFITSIOController::prepare()
 
   if (fits == nullptr) {
     LOGE("No FITS file is open");
+    return false;
+  }
+
+  return true;
+}
+
+bool CFITSIOController::valid(const context& ctx)
+{
+  assert(ctx != nullptr);
+
+  if (ctx == nullptr) {
+    LOGE("No valid FITS context provided");
     return false;
   }
 

@@ -17,9 +17,24 @@ Both of the paths provide the very same `CFITSIO::cfitsio` target, so link it to
 target_link_libraries(${PROJECT_BINARY_NAME} CFITSIO::cfitsio)
 ```
 
+### The context
+
+Both of the custom components operate by the `cfitsioi::CFITSIOContext` class of the [src/CFITSIO/CFITSIOContext.h](/src/CFITSIO/CFITSIOContext.h) file. It is a plain data holder, declared the very way the `app::ApplicationContext` is: private members reachable through a `get_` and a `set_` prefixed access methods pair alone.
+
+| Field | What holds it |
+| --- | --- |
+| `path` | the FITS file the controller opens or creates |
+| `image_size` | the image width and height, refilled on every read |
+| `pixels` | the image pixels, read into and written out of |
+| `header` | the FITS keyrecords string the WCS parser takes |
+
+The `get_pixels` accessor hands a modifiable reference out, so the controller reads a whole image straight into the context and copies none of it on the way.
+
+An instance travels from the CFITSIO component to the WCSLIB one carrying the data alone, so neither of the two components holds a reference to the other.
+
 ### The controller
 
-The `cfitsioi::CFITSIOController` class of the [src/CFITSIO/CFITSIOController.h](/src/CFITSIO/CFITSIOController.h) file wraps the main CFITSIO image calls, holding a single open FITS file per instance:
+The `cfitsioi::CFITSIOController` class of the [src/CFITSIO/CFITSIOController.h](/src/CFITSIO/CFITSIOController.h) file wraps the main CFITSIO image calls, holding a single open FITS file per instance and no data of it's own: every call below either takes it's input out of the given context or reads it's result into it.
 
 | Method | The CFITSIO call behind it |
 | --- | --- |
@@ -38,19 +53,26 @@ The `cfitsioi::CFITSIOController` class of the [src/CFITSIO/CFITSIOController.h]
 Nothing throws: every method reports it's outcome through the return value and leaves the CFITSIO status code of the performed call in the `last_status` accessor.
 
 ```
+auto ctx = cfitsioi::CFITSIOContext::create();
 auto fits = cfitsioi::CFITSIOController::create();
 
-fits->create_image("/tmp/image.fits", {8, 4});
-fits->write(cfitsioi::CFITSIOController::pixels_buffer(8 * 4, 42.0));
+ctx->set_path("/tmp/image.fits");
+ctx->set_image_size({8, 4});
+ctx->set_pixels(cfitsioi::CFITSIOContext::pixels_buffer(8 * 4, 42.0));
+
+fits->create_image(ctx);
+fits->write(ctx);
 fits->write_keyword("OBJECT", "M31");
 fits->close();
 
-fits->open("/tmp/image.fits");
+fits->open(ctx);
+fits->read(ctx);
+fits->read_header(ctx);
 
-const auto pixels = fits->read();
-const auto [width, height] = fits->get_image_size();
+const auto& pixels = ctx->get_pixels();
+const auto [width, height] = ctx->get_image_size();
 ```
 
-The `read_header` call hands the whole header over as the keyrecords string the FITS WCS parsers take, so see [Enabling the WCSLIB library (FITS WCS)](/doc/sections/en_US/5-project-build/image-libraries/5-39-enabling-the-wcslib-library.md) for the component that maps those pixels onto the sky.
+The `read_header` call fills the context with the whole header as the keyrecords string the FITS WCS parsers take, so see [Enabling the WCSLIB library (FITS WCS)](/doc/sections/en_US/5-project-build/image-libraries/5-39-enabling-the-wcslib-library.md) for the component that maps those pixels onto the sky.
 
 The `app::Application::run` method of the [src/app/applications/Application.cpp](/src/app/applications/Application.cpp) file reads the FITS image the `--image` (or `-i`) command line parameter points at and reports about it through the project logger, so replace it's body with your own FITS handling code.

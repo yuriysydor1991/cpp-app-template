@@ -4,6 +4,7 @@
 #include <filesystem>
 #include <string>
 
+#include "src/CFITSIO/CFITSIOContext.h"
 #include "src/CFITSIO/CFITSIOController.h"
 #include "src/WCSLIB/WCSLIBController.h"
 
@@ -20,8 +21,11 @@ class CTEST_WCSLIBController : public Test
  public:
   CTEST_WCSLIBController()
       : controller{WCSLIBController::create()},
-        fits{cfitsioi::CFITSIOController::create()}
+        fits{cfitsioi::CFITSIOController::create()},
+        fctx{cfitsioi::CFITSIOContext::create()}
   {
+    fctx->set_path(fits_path());
+    fctx->set_image_size({WIDTH, HEIGHT});
   }
 
   ~CTEST_WCSLIBController() override
@@ -43,9 +47,10 @@ class CTEST_WCSLIBController : public Test
   /// the reference world coordinate below.
   bool write_wcs_image()
   {
-    return fits->create_image(fits_path(), {WIDTH, HEIGHT}) &&
-           fits->write(cfitsioi::CFITSIOController::pixels_buffer(
-               WIDTH * HEIGHT, 1.0)) &&
+    fctx->set_pixels(
+        cfitsioi::CFITSIOController::pixels_buffer(WIDTH * HEIGHT, 1.0));
+
+    return fits->create_image(fctx) && fits->write(fctx) &&
            fits->write_keyword("CTYPE1", "RA---TAN") &&
            fits->write_keyword("CTYPE2", "DEC--TAN") &&
            fits->write_keyword("CUNIT1", "deg") &&
@@ -69,25 +74,27 @@ class CTEST_WCSLIBController : public Test
 
   WCSLIBControllerPtr controller;
   cfitsioi::CFITSIOControllerPtr fits;
+  cfitsioi::CFITSIOContextPtr fctx;
 };
 
 TEST_F(CTEST_WCSLIBController, header_of_a_written_image_holds_whole_keyrecords)
 {
   ASSERT_TRUE(write_wcs_image());
-  ASSERT_TRUE(fits->open(fits_path()));
+  ASSERT_TRUE(fits->open(fctx));
 
-  const std::string header = fits->read_header();
+  ASSERT_TRUE(fits->read_header(fctx));
 
-  EXPECT_FALSE(header.empty());
-  EXPECT_EQ(header.size() % 80U, 0U);
+  EXPECT_FALSE(fctx->get_header().empty());
+  EXPECT_EQ(fctx->get_header().size() % 80U, 0U);
 }
 
 TEST_F(CTEST_WCSLIBController, header_of_a_written_image_gets_parsed)
 {
   ASSERT_TRUE(write_wcs_image());
-  ASSERT_TRUE(fits->open(fits_path()));
+  ASSERT_TRUE(fits->open(fctx));
 
-  ASSERT_TRUE(controller->parse(fits->read_header()));
+  ASSERT_TRUE(fits->read_header(fctx));
+  ASSERT_TRUE(controller->parse(fctx));
 
   EXPECT_EQ(controller->get_representations_count(), 1);
   EXPECT_EQ(controller->get_axes_count(), 2);
@@ -99,8 +106,9 @@ TEST_F(CTEST_WCSLIBController, header_of_a_written_image_gets_parsed)
 TEST_F(CTEST_WCSLIBController, reference_pixel_of_a_written_image_converts)
 {
   ASSERT_TRUE(write_wcs_image());
-  ASSERT_TRUE(fits->open(fits_path()));
-  ASSERT_TRUE(controller->parse(fits->read_header()));
+  ASSERT_TRUE(fits->open(fctx));
+  ASSERT_TRUE(fits->read_header(fctx));
+  ASSERT_TRUE(controller->parse(fctx));
 
   const auto world = controller->to_world({REFERENCE_X, REFERENCE_Y});
 
@@ -112,8 +120,9 @@ TEST_F(CTEST_WCSLIBController, reference_pixel_of_a_written_image_converts)
 TEST_F(CTEST_WCSLIBController, image_corner_of_a_written_image_round_trips)
 {
   ASSERT_TRUE(write_wcs_image());
-  ASSERT_TRUE(fits->open(fits_path()));
-  ASSERT_TRUE(controller->parse(fits->read_header()));
+  ASSERT_TRUE(fits->open(fctx));
+  ASSERT_TRUE(fits->read_header(fctx));
+  ASSERT_TRUE(controller->parse(fctx));
 
   const WCSLIBController::coordinates corner{1.0, 1.0};
 
@@ -135,13 +144,14 @@ TEST_F(CTEST_WCSLIBController, image_corner_of_a_written_image_round_trips)
 TEST_F(CTEST_WCSLIBController,
        image_without_wcs_keywords_maps_pixels_onto_themselves)
 {
-  ASSERT_TRUE(fits->create_image(fits_path(), {WIDTH, HEIGHT}));
+  ASSERT_TRUE(fits->create_image(fctx));
   ASSERT_TRUE(fits->close());
-  ASSERT_TRUE(fits->open(fits_path()));
+  ASSERT_TRUE(fits->open(fctx));
 
   // The axes count alone is enough for the parser to build a default linear
   // representation, whose axes carry no type and convert into themselves.
-  ASSERT_TRUE(controller->parse(fits->read_header()));
+  ASSERT_TRUE(fits->read_header(fctx));
+  ASSERT_TRUE(controller->parse(fctx));
 
   EXPECT_EQ(controller->get_axes_count(), 2);
   EXPECT_TRUE(controller->get_axis_type(0).empty());

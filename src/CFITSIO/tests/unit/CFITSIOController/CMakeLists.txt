@@ -4,6 +4,7 @@ add_executable(
   UTEST_CFITSIOController
   UTEST_CFITSIOController.cpp
   ${CMAKE_SOURCE_DIR}/src/CFITSIO/CFITSIOController.cpp
+  ${CMAKE_SOURCE_DIR}/src/CFITSIO/CFITSIOContext.cpp
 )
 
 target_include_directories(

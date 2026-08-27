@@ -8,6 +8,7 @@ add_executable(
   CTEST_WCSLIBController.cpp
   ${CMAKE_SOURCE_DIR}/src/WCSLIB/WCSLIBController.cpp
   ${CMAKE_SOURCE_DIR}/src/CFITSIO/CFITSIOController.cpp
+  ${CMAKE_SOURCE_DIR}/src/CFITSIO/CFITSIOContext.cpp
 )
 
 target_compile_definitions(

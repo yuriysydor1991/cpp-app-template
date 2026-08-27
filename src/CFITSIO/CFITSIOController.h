@@ -5,8 +5,8 @@
 
 #include <memory>
 #include <string>
-#include <tuple>
-#include <vector>
+
+#include "src/CFITSIO/CFITSIOContext.h"
 
 /**
  * @brief The CFITSIO adaptor subsystem namespace.
@@ -17,18 +17,20 @@ namespace cfitsioi
 /**
  * @brief The CFITSIO two dimensional image reader and writer class.
  *
- * A single instance holds a single open FITS file at a time. Every call
- * reports it's outcome through the return value and leaves the CFITSIO status
- * code of the performed call in the last_status accessor, so nothing throws.
+ * A single instance holds a single open FITS file at a time and carries no
+ * data of it's own: it reads into the given CFITSIOContext and writes out of
+ * it. Every call reports it's outcome through the return value and leaves the
+ * CFITSIO status code of the performed call in the last_status accessor, so
+ * nothing throws.
  */
 class CFITSIOController
 {
  public:
-  /// @brief The pixels of a whole image, row by row.
-  using pixels_buffer = std::vector<double>;
+  /// @brief The context both of the custom components operate by.
+  using context = CFITSIOContextPtr;
 
-  /// @brief The image width and the image height, in pixels.
-  using image_size = std::tuple<long, long>;
+  using pixels_buffer = CFITSIOContext::pixels_buffer;
+  using image_size = CFITSIOContext::image_size;
 
   using CFITSIOControllerPtr = std::shared_ptr<CFITSIOController>;
 
@@ -38,28 +40,28 @@ class CFITSIOController
   CFITSIOController(CFITSIOController&&) = delete;
 
   /**
-   * @brief Opens an already existing FITS file and moves onto it's first
-   * image.
+   * @brief Opens the already existing FITS file the context points at and
+   * moves onto it's first image.
    *
-   * @param path The file to open. The whole CFITSIO extended file name syntax
-   * is welcome here, so an "image.fits[2]" alike image selector works too.
+   * @param ctx The context carrying the file path. The whole CFITSIO extended
+   * file name syntax is welcome there, so an "image.fits[2]" alike image
+   * selector works too.
    * @param writable Pass true to open the file for the writing as well.
    *
    * @return Returns true when the file has been opened.
    */
-  virtual bool open(const std::string& path, const bool writable = false);
+  virtual bool open(const context& ctx, const bool writable = false);
 
   /**
    * @brief Creates a FITS file holding a single double precision image of the
-   * given size and leaves it open for the writing. An already existing file of
-   * the same path gets overwritten.
+   * path and the size the context carries and leaves it open for the writing.
+   * An already existing file of the same path gets overwritten.
    *
-   * @param path The file to create.
-   * @param size The width and the height of the image to create.
+   * @param ctx The context carrying the file path and the image size.
    *
    * @return Returns true when the file and it's image have been created.
    */
-  virtual bool create_image(const std::string& path, const image_size& size);
+  virtual bool create_image(const context& ctx);
 
   /// @brief Writes the pending changes out and closes the held file, if any.
   virtual bool close();
@@ -77,21 +79,35 @@ class CFITSIOController
   virtual int get_hdu_count();
 
   /**
-   * @brief Reads the whole open image into the internal pixels buffer.
+   * @brief Reads the whole open image into the pixels buffer of the context
+   * and refills the image size it carries.
    *
-   * @return Returns the pixels buffer, which is empty in case of any error.
+   * @param ctx The context to read into.
+   *
+   * @return Returns true when the pixels have been read.
    */
-  virtual pixels_buffer& read();
+  virtual bool read(const context& ctx);
 
   /**
-   * @brief Writes the given pixels over the whole open image.
+   * @brief Writes the pixels the context carries over the whole open image.
    *
-   * @param pixels The pixels to write, as many of them as the open image
-   * holds.
+   * @param ctx The context to write out of. It must carry as many pixels as
+   * the open image holds.
    *
    * @return Returns true when the pixels have been written.
    */
-  virtual bool write(const pixels_buffer& pixels);
+  virtual bool write(const context& ctx);
+
+  /**
+   * @brief Reads the whole header of the open file into the context as the
+   * FITS keyrecords string of exactly 80 characters per record, the very form
+   * the WCSLIBController takes.
+   *
+   * @param ctx The context to read into.
+   *
+   * @return Returns true when the header has been read.
+   */
+  virtual bool read_header(const context& ctx);
 
   /**
    * @brief Reads a header keyword of the open file as a string.
@@ -130,23 +146,6 @@ class CFITSIOController
   virtual bool write_keyword(const std::string& name, const double value,
                              const std::string& comment = {});
 
-  /**
-   * @brief Reads the whole header of the open file as the FITS keyrecords
-   * string of exactly 80 characters per record, the very form the WCS parsers
-   * expect.
-   *
-   * @return Returns the header string, empty in case of any error.
-   */
-  virtual std::string read_header();
-
-  /**
-   * @brief Gives the buffer holding the pixels fetched by the last read call.
-   *
-   * @note This is the internal buffer accessor and not an image reading call.
-   * Use the read one to perform it.
-   */
-  virtual pixels_buffer& get();
-
   /// @brief Gives the CFITSIO status code of the last performed call, where
   /// the zero one reports a success.
   virtual int last_status() const;
@@ -163,6 +162,9 @@ class CFITSIOController
    */
   bool prepare();
 
+  /// @brief Tells whether the given context is there to operate by.
+  static bool valid(const context& ctx);
+
   /**
    * @brief Logs the CFITSIO error of the just performed call, if any.
    *
@@ -175,7 +177,6 @@ class CFITSIOController
   /// @brief The FITS images of the controller are the two dimensional ones.
   inline static constexpr const int IMAGE_AXES = 2;
 
-  pixels_buffer pbuff;
   fitsfile* fits{nullptr};
   int status{0};
 };

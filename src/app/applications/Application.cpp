@@ -5,6 +5,7 @@
 #include <memory>
 #include <string>
 
+#include "src/CFITSIO/CFITSIOContext.h"
 #include "src/CFITSIO/CFITSIOController.h"
 #include "src/WCSLIB/WCSLIBController.h"
 #include "src/app/CMDParamNames.h"
@@ -21,18 +22,19 @@ constexpr const wcslibi::WCSLIBController::coordinates::size_type
     CELESTIAL_AXES = 2U;
 
 /**
- * @brief Logs what the open image itself tells about it: the blocks the file
+ * @brief Logs what the read image itself tells about it: the blocks the file
  * is built of, the image size, the pixel type and the range the pixels span.
  */
-void report_image(const cfitsioi::CFITSIOControllerPtr& fits)
+void report_image(const cfitsioi::CFITSIOControllerPtr& fits,
+                  const cfitsioi::CFITSIOContextPtr& fctx)
 {
-  const auto [width, height] = fits->get_image_size();
+  const auto [width, height] = fctx->get_image_size();
 
   LOGI("It holds " << fits->get_hdu_count() << " HDU(s) and a " << width << "x"
                    << height << " image of the " << fits->read_keyword("BITPIX")
                    << " BITPIX pixels");
 
-  const auto& pixels = fits->read();
+  const auto& pixels = fctx->get_pixels();
 
   if (pixels.empty()) {
     LOGW("It carries no pixel to report about");
@@ -47,16 +49,19 @@ void report_image(const cfitsioi::CFITSIOControllerPtr& fits)
 }
 
 /**
- * @brief Logs where the centre of the open image points at, as long as it's
- * header carries the world coordinate system keywords.
+ * @brief Logs where the centre of the read image points at, as long as the
+ * header the context carries holds the world coordinate system keywords.
+ *
+ * The context alone is what the WCSLIB component needs here, so no CFITSIO
+ * call takes part in the conversion.
  */
-void report_coordinates(const cfitsioi::CFITSIOControllerPtr& fits)
+void report_coordinates(const cfitsioi::CFITSIOContextPtr& fctx)
 {
   auto wcs = wcslibi::WCSLIBController::create();
 
   assert(wcs != nullptr);
 
-  if (!wcs->parse(fits->read_header())) {
+  if (!wcs->parse(fctx)) {
     LOGW("It carries no world coordinate system to report about");
     return;
   }
@@ -72,7 +77,7 @@ void report_coordinates(const cfitsioi::CFITSIOControllerPtr& fits)
     return;
   }
 
-  const auto [width, height] = fits->get_image_size();
+  const auto [width, height] = fctx->get_image_size();
 
   // The FITS pixels are counted from one, so the centre of an axis sits in
   // the middle between the first and the last pixel of it.
@@ -109,11 +114,15 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return 0;
   }
 
+  auto fctx = cfitsioi::CFITSIOContext::create();
   auto fits = cfitsioi::CFITSIOController::create();
 
+  assert(fctx != nullptr);
   assert(fits != nullptr);
 
-  if (!fits->open(path)) {
+  fctx->set_path(path);
+
+  if (!fits->open(fctx)) {
     LOGE("Fail to open the " << path << " FITS image: " << fits->last_error());
     ctx->push_error("Fail to open the FITS image: " + path);
     return INVALID;
@@ -121,8 +130,14 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
 
   LOGI("Reading the " << path << " FITS image");
 
-  report_image(fits);
-  report_coordinates(fits);
+  if (!fits->read(fctx) || !fits->read_header(fctx)) {
+    LOGE("Fail to read the " << path << " FITS image: " << fits->last_error());
+    ctx->push_error("Fail to read the FITS image: " + path);
+    return INVALID;
+  }
+
+  report_image(fits, fctx);
+  report_coordinates(fctx);
 
   return 0;
 }

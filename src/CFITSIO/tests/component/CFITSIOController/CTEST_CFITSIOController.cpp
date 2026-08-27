@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 
+#include "src/CFITSIO/CFITSIOContext.h"
 #include "src/CFITSIO/CFITSIOController.h"
 
 using namespace cfitsioi;
@@ -13,7 +14,12 @@ using namespace testing;
 class CTEST_CFITSIOController : public Test
 {
  public:
-  CTEST_CFITSIOController() : controller{CFITSIOController::create()} {}
+  CTEST_CFITSIOController()
+      : controller{CFITSIOController::create()}, ctx{CFITSIOContext::create()}
+  {
+    ctx->set_path(fits_path());
+    ctx->set_image_size({WIDTH, HEIGHT});
+  }
 
   ~CTEST_CFITSIOController() override
   {
@@ -56,8 +62,9 @@ class CTEST_CFITSIOController : public Test
 
   bool write_sample_image()
   {
-    return controller->create_image(fits_path(), {WIDTH, HEIGHT}) &&
-           controller->write(make_pixels()) &&
+    ctx->set_pixels(make_pixels());
+
+    return controller->create_image(ctx) && controller->write(ctx) &&
            controller->write_keyword("OBJECT", OBJECT, "the sample object") &&
            controller->close();
   }
@@ -69,6 +76,7 @@ class CTEST_CFITSIOController : public Test
   static constexpr const std::string::size_type KEYRECORD_LENGTH = 80U;
 
   CFITSIOControllerPtr controller;
+  CFITSIOContextPtr ctx;
 };
 
 TEST_F(CTEST_CFITSIOController, create_write_and_close_success)
@@ -78,32 +86,41 @@ TEST_F(CTEST_CFITSIOController, create_write_and_close_success)
   EXPECT_TRUE(std::filesystem::exists(fits_path()));
 }
 
-TEST_F(CTEST_CFITSIOController, written_image_is_read_back)
+TEST_F(CTEST_CFITSIOController, written_image_is_read_back_into_the_context)
 {
   ASSERT_TRUE(write_sample_image());
-  ASSERT_TRUE(controller->open(fits_path()));
+
+  // Dropping what the writing has left behind, so the reading alone refills it.
+  ctx->set_pixels({});
+  ctx->set_image_size({0, 0});
+
+  ASSERT_TRUE(controller->open(ctx));
+  ASSERT_TRUE(controller->read(ctx));
 
   EXPECT_TRUE(controller->is_open());
+  EXPECT_EQ(ctx->get_image_size(), CFITSIOContext::image_size(WIDTH, HEIGHT));
+  EXPECT_EQ(ctx->get_pixels(), make_pixels());
   EXPECT_EQ(controller->get_image_size(),
-            CFITSIOController::image_size(WIDTH, HEIGHT));
+            CFITSIOContext::image_size(WIDTH, HEIGHT));
   EXPECT_EQ(controller->get_hdu_count(), 1);
-  EXPECT_EQ(controller->read(), make_pixels());
-  EXPECT_EQ(controller->get(), make_pixels());
   EXPECT_EQ(controller->read_keyword("OBJECT"), OBJECT);
 }
 
 TEST_F(CTEST_CFITSIOController, existing_image_gets_overwritten)
 {
   ASSERT_TRUE(write_sample_image());
-  EXPECT_TRUE(controller->create_image(fits_path(), {HEIGHT, WIDTH}));
+
+  ctx->set_image_size({HEIGHT, WIDTH});
+
+  EXPECT_TRUE(controller->create_image(ctx));
   EXPECT_EQ(controller->get_image_size(),
-            CFITSIOController::image_size(HEIGHT, WIDTH));
+            CFITSIOContext::image_size(HEIGHT, WIDTH));
 }
 
 TEST_F(CTEST_CFITSIOController, keyword_of_an_open_image_gets_updated)
 {
   ASSERT_TRUE(write_sample_image());
-  ASSERT_TRUE(controller->open(fits_path(), true));
+  ASSERT_TRUE(controller->open(ctx, true));
 
   EXPECT_TRUE(controller->write_keyword("OBJECT", "another object"));
   EXPECT_EQ(controller->read_keyword("OBJECT"), "another object");
@@ -112,7 +129,7 @@ TEST_F(CTEST_CFITSIOController, keyword_of_an_open_image_gets_updated)
 TEST_F(CTEST_CFITSIOController, readonly_image_rejects_a_keyword_write)
 {
   ASSERT_TRUE(write_sample_image());
-  ASSERT_TRUE(controller->open(fits_path()));
+  ASSERT_TRUE(controller->open(ctx));
 
   // The CFITSIO keeps the written keyword in a buffer of it's own, so a read
   // only file reports the refusal at the closing flush and not at the write.
@@ -123,7 +140,7 @@ TEST_F(CTEST_CFITSIOController, readonly_image_rejects_a_keyword_write)
 
 TEST_F(CTEST_CFITSIOController, numeric_keyword_is_read_back)
 {
-  ASSERT_TRUE(controller->create_image(fits_path(), {WIDTH, HEIGHT}));
+  ASSERT_TRUE(controller->create_image(ctx));
 
   // The numeric overload writes an unquoted value, which is what tells it
   // apart from the string one.
@@ -131,12 +148,14 @@ TEST_F(CTEST_CFITSIOController, numeric_keyword_is_read_back)
   EXPECT_EQ(std::stod(controller->read_keyword("CRVAL1")), REFERENCE);
 }
 
-TEST_F(CTEST_CFITSIOController, header_holds_the_written_keywords)
+TEST_F(CTEST_CFITSIOController,
+       header_of_the_context_holds_the_written_keywords)
 {
   ASSERT_TRUE(write_sample_image());
-  ASSERT_TRUE(controller->open(fits_path()));
+  ASSERT_TRUE(controller->open(ctx));
+  ASSERT_TRUE(controller->read_header(ctx));
 
-  const std::string header = controller->read_header();
+  const std::string& header = ctx->get_header();
 
   // Every keyrecord is exactly that long and the last one is always the END.
   ASSERT_FALSE(header.empty());
@@ -151,7 +170,7 @@ TEST_F(CTEST_CFITSIOController, header_holds_the_written_keywords)
 TEST_F(CTEST_CFITSIOController, missing_keyword_read_fails)
 {
   ASSERT_TRUE(write_sample_image());
-  ASSERT_TRUE(controller->open(fits_path()));
+  ASSERT_TRUE(controller->open(ctx));
 
   EXPECT_TRUE(controller->read_keyword("NOSUCHKW").empty());
   EXPECT_NE(controller->last_status(), 0);
@@ -159,17 +178,24 @@ TEST_F(CTEST_CFITSIOController, missing_keyword_read_fails)
 
 TEST_F(CTEST_CFITSIOController, write_of_a_mismatching_pixels_count_fails)
 {
-  ASSERT_TRUE(controller->create_image(fits_path(), {WIDTH, HEIGHT}));
+  ASSERT_TRUE(controller->create_image(ctx));
 
-  EXPECT_FALSE(controller->write({1.0, 2.0}));
-  EXPECT_FALSE(controller->write({}));
+  ctx->set_pixels({1.0, 2.0});
+
+  EXPECT_FALSE(controller->write(ctx));
+
+  ctx->set_pixels({});
+
+  EXPECT_FALSE(controller->write(ctx));
 }
 
 TEST_F(CTEST_CFITSIOController, open_of_a_non_fits_file_fails)
 {
   std::ofstream{plain_path()} << "not a FITS file at all\n";
 
-  EXPECT_FALSE(controller->open(plain_path()));
+  ctx->set_path(plain_path());
+
+  EXPECT_FALSE(controller->open(ctx));
   EXPECT_FALSE(controller->is_open());
   EXPECT_NE(controller->last_status(), 0);
 }
@@ -177,10 +203,14 @@ TEST_F(CTEST_CFITSIOController, open_of_a_non_fits_file_fails)
 TEST_F(CTEST_CFITSIOController, reopen_replaces_the_held_file)
 {
   ASSERT_TRUE(write_sample_image());
-  ASSERT_TRUE(controller->open(fits_path()));
-  ASSERT_FALSE(controller->read().empty());
+  ASSERT_TRUE(controller->open(ctx));
+  ASSERT_TRUE(controller->read(ctx));
+  ASSERT_FALSE(ctx->get_pixels().empty());
 
-  EXPECT_FALSE(controller->open("/tmp/this/path/does/not/exist.fits"));
+  ctx->set_path("/tmp/this/path/does/not/exist.fits");
+
+  EXPECT_FALSE(controller->open(ctx));
   EXPECT_FALSE(controller->is_open());
-  EXPECT_TRUE(controller->read().empty());
+  EXPECT_FALSE(controller->read(ctx));
+  EXPECT_TRUE(ctx->get_pixels().empty());
 }

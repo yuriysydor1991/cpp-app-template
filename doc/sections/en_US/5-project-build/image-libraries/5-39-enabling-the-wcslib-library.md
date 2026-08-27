@@ -34,19 +34,25 @@ The `get_representations_count`, `get_axes_count`, `get_axis_type` and `get_reje
 
 Nothing throws: every method reports it's outcome through the return value and leaves the WCSLIB status code of the performed call in the `last_status` accessor.
 
-The controller is a component of it's own and holds no reference to the CFITSIO one, so it takes the header as a plain keyrecords string - the very form the `cfitsioi::CFITSIOController::read_header` call returns:
+The controller is a component of it's own and holds no reference to the CFITSIO one: it takes the header out of the very same [cfitsioi::CFITSIOContext](/doc/sections/en_US/5-project-build/image-libraries/5-38-enabling-the-cfitsio-library.md) instance the CFITSIO component reads that header into, so the data alone travels between the two components.
 
 ```
+auto ctx = cfitsioi::CFITSIOContext::create();
 auto fits = cfitsioi::CFITSIOController::create();
 auto wcs = wcslibi::WCSLIBController::create();
 
-fits->open("/tmp/image.fits");
+ctx->set_path("/tmp/image.fits");
 
-wcs->parse(fits->read_header());
+fits->open(ctx);
+fits->read_header(ctx);
+
+wcs->parse(ctx);
 
 const auto world = wcs->to_world({4.5, 2.5});
 const auto pixel = wcs->to_pixel(world);
 ```
+
+A context filled by hand does just as well, since `set_header` is all the `parse` call reads out of it.
 
 A pixel coordinate counts from `1.0`, as the FITS standard does, and a world one carries degrees for the celestial axes. Both of them hold one value per axis of the selected representation, so `get_axes_count` tells how many.
 

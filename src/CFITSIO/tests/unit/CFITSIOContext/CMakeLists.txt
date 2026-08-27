@@ -1,28 +1,26 @@
 cmake_minimum_required(VERSION 3.13)
 
 add_executable(
-  UTEST_WCSLIBController
-  UTEST_WCSLIBController.cpp
-  ${CMAKE_SOURCE_DIR}/src/WCSLIB/WCSLIBController.cpp
+  UTEST_CFITSIOContext
+  UTEST_CFITSIOContext.cpp
   ${CMAKE_SOURCE_DIR}/src/CFITSIO/CFITSIOContext.cpp
 )
 
 target_include_directories(
-  UTEST_WCSLIBController
-  PRIVATE ${WCSLIB_MOCKS_ROOT}/log
+  UTEST_CFITSIOContext
+  PRIVATE ${CFITSIO_MOCKS_ROOT}/log
   PRIVATE ${CMAKE_SOURCE_DIR}
 )
 
 target_link_libraries(
-  UTEST_WCSLIBController
+  UTEST_CFITSIOContext
   GTest::gtest_main GTest::gmock
-  WCSLIB::wcslib
 )
 
 include(GoogleTest)
 
 gtest_add_tests(
-  TARGET UTEST_WCSLIBController
+  TARGET UTEST_CFITSIOContext
   TEST_SUFFIX .noArgs
   TEST_LIST noArgsTests
 )

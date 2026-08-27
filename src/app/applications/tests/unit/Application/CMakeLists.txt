@@ -5,6 +5,7 @@ add_executable(
   UTEST_Application.cpp
   ${CMAKE_SOURCE_DIR}/src/app/applications/Application.cpp
   ${APP_MOCKS_ROOT}/ApplicationContext/src/app/ApplicationContext.cpp
+  ${CMAKE_SOURCE_DIR}/src/CFITSIO/CFITSIOContext.cpp
 )
 
 target_include_directories(

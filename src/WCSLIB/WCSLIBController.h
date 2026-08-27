@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 
+#include "src/CFITSIO/CFITSIOContext.h"
+
 /// @brief The WCSLIB coordinate representation. Only the pointers to it are
 /// held here, so the WCSLIB headers stay inside the implementation.
 struct wcsprm;
@@ -19,9 +21,10 @@ namespace wcslibi
  * @brief The WCSLIB (the FITS World Coordinate System) converter class.
  *
  * A single instance holds the coordinate representations parsed out of a
- * single FITS header. Every call reports it's outcome through the return
- * value and leaves the WCSLIB status code of the performed call in the
- * last_status accessor, so nothing throws.
+ * single FITS header, which it takes from the very same CFITSIOContext the
+ * CFITSIO component reads that header into. Every call reports it's outcome
+ * through the return value and leaves the WCSLIB status code of the performed
+ * call in the last_status accessor, so nothing throws.
  */
 class WCSLIBController
 {
@@ -31,6 +34,9 @@ class WCSLIBController
   /// degrees for the celestial axes.
   using coordinates = std::vector<double>;
 
+  /// @brief The context both of the custom components operate by.
+  using context = cfitsioi::CFITSIOContextPtr;
+
   using WCSLIBControllerPtr = std::shared_ptr<WCSLIBController>;
 
   virtual ~WCSLIBController();
@@ -39,15 +45,15 @@ class WCSLIBController
   WCSLIBController(WCSLIBController&&) = delete;
 
   /**
-   * @brief Parses the coordinate representations out of the given FITS header
-   * and selects the primary one.
+   * @brief Parses the coordinate representations out of the FITS header the
+   * context carries and selects the primary one.
    *
-   * @param header The FITS keyrecords string of exactly 80 characters per
-   * record, the very form the CFITSIO fits_hdr2str call returns.
+   * @param ctx The context carrying the header, as the
+   * cfitsioi::CFITSIOController::read_header call fills it out of a file.
    *
    * @return Returns true when at least one representation has been parsed.
    */
-  virtual bool parse(const std::string& header);
+  virtual bool parse(const context& ctx);
 
   /**
    * @brief Selects the parsed representation to convert with.

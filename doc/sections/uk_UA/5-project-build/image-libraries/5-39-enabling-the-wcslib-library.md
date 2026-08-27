@@ -34,19 +34,25 @@ target_link_libraries(${PROJECT_BINARY_NAME} WCSLIB::wcslib)
 
 Жоден з методів не кидає винятків: кожен повідомляє про результат через значення, що повертається, і залишає код стану WCSLIB виконаного виклику у методі доступу `last_status`.
 
-Контролер є окремим компонентом і не має жодного посилання на компонент CFITSIO, тому приймає заголовок як звичайний рядок ключових записів - саме у такому вигляді його повертає виклик `cfitsioi::CFITSIOController::read_header`:
+Контролер є окремим компонентом і не має жодного посилання на компонент CFITSIO: він бере заголовок з того самого екземпляру [cfitsioi::CFITSIOContext](/doc/sections/uk_UA/5-project-build/image-libraries/5-38-enabling-the-cfitsio-library.md), у який компонент CFITSIO цей заголовок зчитує, тому між двома компонентами подорожують самі лише дані.
 
 ```
+auto ctx = cfitsioi::CFITSIOContext::create();
 auto fits = cfitsioi::CFITSIOController::create();
 auto wcs = wcslibi::WCSLIBController::create();
 
-fits->open("/tmp/image.fits");
+ctx->set_path("/tmp/image.fits");
 
-wcs->parse(fits->read_header());
+fits->open(ctx);
+fits->read_header(ctx);
+
+wcs->parse(ctx);
 
 const auto world = wcs->to_world({4.5, 2.5});
 const auto pixel = wcs->to_pixel(world);
 ```
+
+Заповнений вручну контекст підходить так само, оскільки виклик `parse` читає з нього лише `set_header`.
 
 Піксельна координата рахується від `1.0`, як того вимагає стандарт FITS, а світова містить градуси для небесних осей. Обидві містять одне значення на кожну вісь обраного представлення, а їх кількість повідомляє `get_axes_count`.
 

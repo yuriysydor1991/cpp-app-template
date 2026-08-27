@@ -8,6 +8,8 @@
 #include <string>
 #include <vector>
 
+#include "src/CFITSIO/CFITSIOContext.h"
+
 namespace wcslibi
 {
 
@@ -15,6 +17,7 @@ class WCSLIBController
 {
  public:
   using coordinates = std::vector<double>;
+  using context = cfitsioi::CFITSIOContextPtr;
   using WCSLIBControllerPtr = std::shared_ptr<WCSLIBController>;
 
   virtual ~WCSLIBController() = default;
@@ -43,7 +46,7 @@ class WCSLIBController
 
   inline static std::function<void(WCSLIBController&)> onMockCreate;
 
-  MOCK_METHOD(bool, parse, (const std::string& header));
+  MOCK_METHOD(bool, parse, (const context& ctx));
   MOCK_METHOD(bool, select, (int index));
   MOCK_METHOD(void, release, ());
   MOCK_METHOD(bool, is_ready, (), (const));

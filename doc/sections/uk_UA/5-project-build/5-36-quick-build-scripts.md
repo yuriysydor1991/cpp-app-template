@@ -30,6 +30,29 @@
 scripts/build/release.sh
 ```
 
+### Скрипти пакувальників
+
+Кожен зі скриптів нижче виконує кроки конфігурації і побудови `Release` з увімкненою однією опцією пакувальника, а потім будує ціль, яка утворює пакунок з того самого дерева побудови. Вони приймають параметри скриптів повного циклу вище, а утворений пакунок потрапляє до директорії `build/release`:
+
+| Скрипт | Утворює |
+| --- | --- |
+| [build-deb.sh](/scripts/build/build-deb.sh) | пакунок DEB - опція `ENABLE_DEB` і ціль `package` |
+| [build-flatpak.sh](/scripts/build/build-flatpak.sh) | звʼязку flatpak - опція `ENABLE_FLATPAK` і ціль `flatpak` |
+| [build-freebsd-pkg.sh](/scripts/build/build-freebsd-pkg.sh) | пакунок FreeBSD pkg - опція `ENABLE_FREEBSD_PKG` і ціль `package` |
+| [build-rpm.sh](/scripts/build/build-rpm.sh) | пакунок RPM - опція `ENABLE_RPM` і ціль `package` |
+| [build-snap.sh](/scripts/build/build-snap.sh) | пакунок snap - опція `ENABLE_SNAP` і ціль `snap` |
+| [build-wix.sh](/scripts/build/build-wix.sh) | інсталятор WIX MSI - опція `ENABLE_WIX` і ціль `package` |
+
+Власний аргумент `-D<змінна>=<значення>` передається до кроку конфігурації після опції пакувальника, тому перекриває і її, і будь-яке інше налаштування проекту:
+
+```
+# у кореневій директорії проекту
+
+scripts/build/build-deb.sh -DPROJECT_MAINTAINER_EMAIL=me@example.org
+```
+
+Самі опції пакувальників, потрібні їм інструменти і їх власні налаштування описано у підсекціях пакувальників секції [Побудова проекту](/doc/sections/uk_UA/5-project-build/5-project-build.md).
+
 ### Скрипти окремих кроків
 
 Кожен скрипт повного циклу вище є ланцюжком зі скриптів окремих кроків нижче, які можна запускати самостійно, коли потрібен лише один крок:

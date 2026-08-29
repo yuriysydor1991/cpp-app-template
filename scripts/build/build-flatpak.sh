@@ -1,7 +1,10 @@
 #!/bin/bash -e
 #
-# Builds the project in the Release configuration with the flatpak packager
-# enabled and produces the package by the `flatpak` target of that build.
+# Produces the flatpak bundle: a Release configure with the ENABLE_FLATPAK option
+# enabled, then the `flatpak` target of that build.
+#
+# flatpak-builder builds the project from the sources inside its own sandbox,
+# so no build step is performed and the build directory needs no artifacts.
 #
 # Every parameter of the release-configure.sh and the release-build.sh scripts
 # is accepted and forwarded, so an own -D<variable>=<value> override wins over
@@ -14,8 +17,6 @@ BUILD_SCRIPTS_ROOT=$(realpath "$(dirname "$0")")
 
 ${BUILD_SCRIPTS_ROOT}/release-configure.sh -DENABLE_FLATPAK=ON "$@"
 
-${BUILD_SCRIPTS_ROOT}/release-build.sh "$@"
-
 ${BUILD_SCRIPTS_ROOT}/release-build.sh --target flatpak "$@"
 
-log "The flatpak package is inside the ${RELEASE_BUILD_DIR} directory"
+log "Look for the flatpak bundle inside the ${RELEASE_BUILD_DIR} directory"

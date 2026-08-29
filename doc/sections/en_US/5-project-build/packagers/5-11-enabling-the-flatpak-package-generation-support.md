@@ -5,10 +5,12 @@ In order to enable the flatpak generation of the redistribution package on the t
 ```
 # inside the project root directory 
 
-cmake -B build -S . -DENABLE_FLATPAK=ON
+cmake -B build -S . -DENABLE_FLATPAK=ON -DENABLE_GTKMM4=OFF
 ```
 
 Which in order will enable the `flatpak` target.
+
+The `flatpak-builder` configures and builds the project from the sources inside its own sandbox, where the gtkmm4 stack and the WebKitGTK of the SDK are used, so the host build tree generates the `flatpak` target only. The `ENABLE_GTKMM4=OFF` option keeps that tree free of the gtkmm4 and the WebKitGTK development packages requirement, so drop it in case the same build tree should build the project on the host too.
 
 And finally to generate the flatpak package run the `flatpak` target for the build:
 

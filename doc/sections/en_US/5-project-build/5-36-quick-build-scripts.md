@@ -30,7 +30,7 @@ scripts/build/release.sh
 
 ### Packager scripts
 
-Each of the scripts below performs the `Release` configure and build steps with a single packager option enabled and then builds the target which produces the package out of the very same build tree. They accept the parameters of the entry point scripts above, and the produced package lands in the `build/release` directory:
+Each of the scripts below performs the `Release` configure step with a single packager option enabled and then builds the target which produces the package. There is no separate build step: each of those targets builds whatever it needs on its own, so nothing unused is built into the `build/release` directory beforehand. They accept the parameters of the entry point scripts above, and the produced package lands there:
 
 | Script | Produces |
 | --- | --- |

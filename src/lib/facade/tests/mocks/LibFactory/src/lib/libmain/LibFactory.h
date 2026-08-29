@@ -10,17 +10,16 @@
 
 #include "ILib.h"
 #include "LibraryContext.h"
-#include "project-lib-decls.h"
 
-namespace TEMPLATE_LIB_IMPL_NAMESPACE
+namespace lib0impl
 {
 
 class LibFactorySynthParent
 {
  public:
-  using ILibPtr = TEMPLATE_LIB_NAMESPACE::ILibPtr;
-  using LibraryContextPtr = TEMPLATE_LIB_NAMESPACE::LibraryContextPtr;
-  using LibraryContext = TEMPLATE_LIB_NAMESPACE::LibraryContext;
+  using ILibPtr = CppAppTemplate012::ILibPtr;
+  using LibraryContextPtr = CppAppTemplate012::LibraryContextPtr;
+  using LibraryContext = CppAppTemplate012::LibraryContext;
 
   virtual ~LibFactorySynthParent() = default;
   LibFactorySynthParent() = default;
@@ -58,6 +57,6 @@ class LibFactory : public LibFactorySynthParent
 
 using LibFactoryPtr = LibFactory::LibFactoryPtr;
 
-}  // namespace TEMPLATE_LIB_IMPL_NAMESPACE
+}  // namespace lib0impl
 
 #endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_LIBFACTORY_CLASS_H

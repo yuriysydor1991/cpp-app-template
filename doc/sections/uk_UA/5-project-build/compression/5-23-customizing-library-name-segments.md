@@ -5,23 +5,29 @@
 імен імпортованої цілі що експортується через `install(EXPORT ...)`) виводиться
 з трьох опціональних CMake-опцій. Вони дозволяють паралельним встановленням
 різних версій бібліотеки співіснувати у системі - наприклад
-`include/CppAppTemplate-0.12.0-dev/` поруч з `include/CppAppTemplate-0/`.
+`include/CppAppTemplate-0.12.0-dev/` поруч з `include/CppAppTemplate-0.12/`.
 
 | Опція | За замовчуванням | Ефект |
 |---|---|---|
-| `-DLIB_INCLUDE_MINOR_IN_NAME=ON` | `OFF` | Додає `.<minor>` до імені бібліотеки |
+| `-DLIB_INCLUDE_MINOR_IN_NAME=ON` | `ON` | Додає `.<minor>` до імені бібліотеки |
 | `-DLIB_INCLUDE_MICRO_IN_NAME=ON` | `OFF` | Додає `.<micro>` (вмикає прапорець minor неявно) |
 | `-DLIB_NAME_SUFFIX=-dev` | `""` | Додає довільний завершальний суфікс |
+
+Сегмент minor увімкнено за замовчуванням, бо публічний простір імен бібліотеки
+несе ту саму пару головного і другорядного номерів - `CppAppTemplate012`, дивись
+[Публічні інтерфейсні файли бібліотеки](/doc/sections/uk_UA/4-project-structure/4-8-the-librarys-installable-include-header-files.md).
+Дві другорядні версії бібліотеки тоді встановлюються цілком поруч, а застосунок
+може залежати від обох одразу.
 
 Приклади імен бібліотеки для проекту `0.12.0`:
 
 | Прапорці конфігурації | Імʼя бібліотеки |
 |---|---|
-| (немає) | `CppAppTemplate-0` |
-| `-DLIB_INCLUDE_MINOR_IN_NAME=ON` | `CppAppTemplate-0.11` |
-| `-DLIB_INCLUDE_MINOR_IN_NAME=ON -DLIB_INCLUDE_MICRO_IN_NAME=ON` | `CppAppTemplate-0.12.0` |
-| `-DLIB_NAME_SUFFIX=-dev` | `CppAppTemplate-0-dev` |
-| `-DLIB_INCLUDE_MINOR_IN_NAME=ON -DLIB_INCLUDE_MICRO_IN_NAME=ON -DLIB_NAME_SUFFIX=-dev` | `CppAppTemplate-0.12.0-dev` |
+| (немає) | `CppAppTemplate-0.12` |
+| `-DLIB_INCLUDE_MINOR_IN_NAME=OFF` | `CppAppTemplate-0` |
+| `-DLIB_INCLUDE_MICRO_IN_NAME=ON` | `CppAppTemplate-0.12.0` |
+| `-DLIB_NAME_SUFFIX=-dev` | `CppAppTemplate-0.12-dev` |
+| `-DLIB_INCLUDE_MICRO_IN_NAME=ON -DLIB_NAME_SUFFIX=-dev` | `CppAppTemplate-0.12.0-dev` |
 
 Приклад поєднаної конфігурації:
 
@@ -29,7 +35,6 @@
 # всередині кореневої директорії проекту
 
 cmake -S . -B build \
-  -DLIB_INCLUDE_MINOR_IN_NAME=ON \
   -DLIB_INCLUDE_MICRO_IN_NAME=ON \
   -DLIB_NAME_SUFFIX=-dev
 cmake --build build

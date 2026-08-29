@@ -23,20 +23,22 @@ namespace logger
  * the boost::log or any other logging library instead of deriving from the
  * default real logger. Hand a new instance over through the
  * LOG_INIT_REAL_LOGGER macro to make the whole binary log through it. The proxy
- * itself lives in the project unique TEMPLATE_DEFAULT_LOG_NAMESPACE namespace
- * and is not installed, because every derived library owns a copy of it, while
- * this interface is shared - so the macro, and the public
+ * itself lives in the default_logger namespace and is not installed, because
+ * every derived library owns a copy of it - kept apart from the copies of the
+ * other derived libraries by the library hidden symbol visibility - while this
+ * interface is shared. So the macro, and the public
  * LibraryFacade::init_logger behind it, are the only names a library user
  * needs.
  *
  * Current file is a target for the library header installation: the public
  * LibraryFacade::init_logger accepts this interface, so the library user
  * implements it. Unlike the rest of the installed headers it deliberately
- * carries neither the project unique namespace nor the project unique include
- * guard. It is the single logging contract every library derived from this
- * template accepts, so one application logger implementation serves all of the
- * derived libraries an application depends on at once, and the first installed
- * copy of this header which an application includes stands for all of them.
+ * carries neither the version carrying library namespace nor the matching
+ * include guard. It is the single logging contract every library derived from
+ * this template accepts, so one application logger implementation serves all
+ * of the derived libraries an application depends on at once, and the first
+ * installed copy of this header which an application includes stands for all
+ * of them.
  *
  * That makes the class layout a shared binary interface between an application
  * and every derived library it loads. Extend it by appending new methods after

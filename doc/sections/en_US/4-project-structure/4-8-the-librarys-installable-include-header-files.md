@@ -1,11 +1,77 @@
-The [src/lib/facade/public](/src/lib/facade/public) directory contains installable public include header files. Public header files are defining implemented library main facade interface for the underlying functionality. Introduce new classes and/or methods to share more functionality amongst any project of interest. The contents of the [src/lib/facade/public](/src/lib/facade/public) will be installed for example under the default `include/CppAppTemplate-0` (in accordance of the project name and it's major version) sub-directory with respect of specified prefixed root install directory.
+## The library's installable include header files
 
-The logging interface [src/log/ILogger.h](/src/log/ILogger.h) is an installable public header too, even though it stays inside the logging subsystem directory instead of the [src/lib/facade/public](/src/lib/facade/public) one. The library carries its own copy of the logging subsystem, so the public [src/lib/facade/public/LibraryFacade.h.in](/src/lib/facade/public/LibraryFacade.h.in) declares the `init_logger` method to accept the logger instance owned by the library user, and a user which can not include that interface can not implement it either. The [src/lib/facade/CMakeLists.txt](/src/lib/facade/CMakeLists.txt) copies it next to the generated facade headers, so it lands in the very same `include/CppAppTemplate-0` sub-directory and the library user reaches it through the `LibraryFacade.h` include alone.
+The [src/lib/facade/public](/src/lib/facade/public) directory holds the whole installable interface of the library - four hand written headers, all in the `CppAppTemplate012` namespace:
 
-Unlike the facade headers the logging interface carries neither the project unique namespace nor the project unique include guard on purpose. It is the single logging contract every library derived from this template accepts, so one application logger implementation serves all of the derived libraries an application depends on at once. That makes the `logger::ILogger` class layout a binary interface shared between an application and every derived library it loads: extend it by appending new methods after the existing ones only. Inserting a method, reordering the existing ones or changing a signature shifts the virtual table slots, and an application built against one revision of that header then silently calls the wrong method of a library built against another one.
+| Header | Declares |
+|---|---|
+| [LibraryFacade.h](/src/lib/facade/public/LibraryFacade.h) | the `LibraryFacade` static methods, the entry point of the library |
+| [ILib.h](/src/lib/facade/public/ILib.h) | `ILib::libcall()` - the interface every library implementation carries |
+| [LibraryContext.h](/src/lib/facade/public/LibraryContext.h) | the data a `libcall()` is given |
+| [LibraryAPI.h](/src/lib/facade/public/LibraryAPI.h) | the `TEMPLATE_LIB_API` visibility macro |
 
-The logger implementation behind that interface is the opposite case: it is private to the library and therefore has to be unique per derived project. CMake derives the `PROJECT_DEFAULT_LOG_NAMESPACE` variable from the project name in [cmake/template-project-misc-variables-declare.cmake](/cmake/template-project-misc-variables-declare.cmake) - for example `CppAppTemplate_0_default_logger` - and hands it to every translation unit as the `TEMPLATE_DEFAULT_LOG_NAMESPACE` compile definition, which the logging subsystem uses as its namespace name. Every derived library carries an own copy of that subsystem, and copies which share a namespace share the real logger instance holder too: the loader then binds the logging calls of all of them into whichever library it resolved first, so the logger instance one library adopted silently serves the others as well, while the loggers those others adopted receive nothing. The [src/log/default-logger/default-logger-decls.h](/src/log/default-logger/default-logger-decls.h) header falls back to the plain `default_logger` name when no definition is given, so the very same logging subsystem sources stay usable in a project which declares no library of its own.
+Introduce new classes and/or methods to share more functionality amongst any project of interest. The contents of the directory are installed under the `include/CppAppTemplate-0.12` sub-directory - the installable library name, see [Customizing the installable library name segments](/doc/sections/en_US/5-project-build/compression/5-23-customizing-library-name-segments.md) - with respect of the specified prefixed root install directory.
 
-The `ITEST_many_libs` integration test (see [Project tests](/doc/sections/en_US/4-project-structure/4-4-project-tests.md)) covers both halves: it hands a single application logger over to every generated library through the installed `init_logger` and asserts that all of them answer into it, and then hands every library a logger of its own and asserts that none of them receives the messages of another.
+The logging interface [src/log/ILogger.h](/src/log/ILogger.h) is an installable public header too, even though it stays inside the logging subsystem directory instead of the [src/lib/facade/public](/src/lib/facade/public) one. The library carries its own copy of the logging subsystem, so the public [LibraryFacade.h](/src/lib/facade/public/LibraryFacade.h) declares the `init_logger` method to accept the logger instance owned by the library user, and a user which can not include that interface can not implement it either. The [src/lib/facade/CMakeLists.txt](/src/lib/facade/CMakeLists.txt) installs it from where it lives into the very same sub-directory, so the library user reaches it through the `LibraryFacade.h` include alone.
+
+Unlike the facade headers the logging interface carries neither the version carrying library namespace nor the matching include guard on purpose. It is the single logging contract every library derived from this template accepts, so one application logger implementation serves all of the derived libraries an application depends on at once. That makes the `logger::ILogger` class layout a binary interface shared between an application and every derived library it loads: extend it by appending new methods after the existing ones only. Inserting a method, reordering the existing ones or changing a signature shifts the virtual table slots, and an application built against one revision of that header then silently calls the wrong method of a library built against another one.
+
+### Renaming the library namespaces
+
+The names are written out in the sources instead of being generated by CMake, so a derived project renames them by hand. Three of them, and an application which depends on two libraries derived from this template needs every one of them to differ:
+
+| Name | Stands for |
+|---|---|
+| `CppAppTemplate012` | the public namespace: the project name followed by the major and the minor version of the library |
+| `CPP_APP_TEMPLATE_012_` | the include guard prefix of the public headers, carrying the very same stamp |
+| `lib0impl` | the implementation namespace, which is not installed |
+
+The whole rename is one command over the sources, and the `ITEST_many_libs` test below performs exactly it:
+
+```
+# inside the project root directory
+
+grep -rl -e CppAppTemplate012 -e CPP_APP_TEMPLATE_012_ -e lib0impl src \
+  | xargs sed -i \
+      -e 's/CppAppTemplate012/YourLibrary010/g' \
+      -e 's/CPP_APP_TEMPLATE_012_/YOUR_LIBRARY_010_/g' \
+      -e 's/\blib0impl\b/yourlib0impl/g'
+```
+
+The version segment is a part of the public namespace on purpose: the installable library name carries the very same major and minor pair, so two minor versions of one library install completely side by side and an application may depend on both of them at once. Rename the namespace along with a minor version bump to keep that pair in step.
+
+The logging subsystem namespace is deliberately **not** on that list - see the next section.
+
+### Why only these headers are visible
+
+The library is built with the `CXX_VISIBILITY_PRESET hidden` property, and so are the logging subsystem object libraries which end up inside it, so only the entities marked with the `TEMPLATE_LIB_API` macro of [LibraryAPI.h](/src/lib/facade/public/LibraryAPI.h) leave the shared object. That is a correctness requirement rather than a size optimisation: every library derived from this template carries the very same `lib0impl`, `default_logger` and `project_decls` names, and an application which loads two of them would otherwise let the dynamic linker bind the calls of one library into the definitions of the other - the logger instance one library adopted would silently serve the other one as well, while the logger that other one adopted would receive nothing.
+
+Visibility does not reach the marked types themselves. A `std::make_shared` instantiation names its class in its own mangled name, and `std::make_shared<LibraryContext>` is weak and exported because `LibraryContext` is marked - as it has to be, its type information crosses the library boundary. Two derived libraries which kept one public namespace therefore share that allocation, while their contexts do not even share a layout, which is what the rename above is for. The implementation namespace is renamed along with it because a class which gains the mark by mistake, or a toolchain which does not push the hidden visibility into a template instantiation, brings `lib0impl::LibFactory` back into the export set the very same way.
+
+So a new public class belongs in [src/lib/facade/public](/src/lib/facade/public) and has to be marked with `TEMPLATE_LIB_API`; every other component under [src](/src) stays private to the shared object and is reached through the abstract interfaces above.
+
+### Including the installed headers
+
+Both the installed `include/CppAppTemplate-0.12` sub-directory and the plain include root above it are exported by the library target, so a consumer may write either form:
+
+```cpp
+#include <CppAppTemplate-0.12/LibraryFacade.h>  // recommended
+#include <LibraryFacade.h>                      // also works
+```
+
+The prefixed form is the safe one: every library derived from this template installs a `LibraryFacade.h` of its own, and names such as `ILib.h` are generic enough to collide in a busy include path. A project which reaches more than one derived library is best served by one alias header per library, holding that single prefixed include and a short namespace alias:
+
+```cpp
+#include <CppAppTemplate-0.12/LibraryFacade.h>
+
+namespace cat = CppAppTemplate012;
+```
+
+Everything else then names the library through the alias only, so following it to the namespace of its next version stays a one line change.
+
+### Coverage
+
+The `ITEST_many_libs` integration test (see [Project tests](/doc/sections/en_US/4-project-structure/4-4-project-tests.md)) generates a hundred whole derived library projects, renames the three names of each of them the way the section above describes, installs all of them and builds a single application against the lot. It hands a single application logger over to every library through the installed `init_logger` and asserts that all of them answer into it, and then hands every library a logger of its own and asserts that none of them receives the messages of another. The logging subsystem namespace stays untouched in every generated project, so the second half of the test is what the hidden symbol visibility alone is holding up.
+
+### The installed CMake package
 
 Alongside successful installation of the library's binary and header files there will be installed appropriate CMake-module to ensure library visibility for the external projects requiring it. Examine the [src/lib/cmake/lib-cmake-module-gen.cmake](/src/lib/cmake/lib-cmake-module-gen.cmake) and [src/lib/cmake/TemplateLibraryConfig.cmake.in](/src/lib/cmake/TemplateLibraryConfig.cmake.in) CMake files for details on the library project CMake module.

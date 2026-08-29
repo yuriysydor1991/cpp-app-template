@@ -3,10 +3,9 @@
 #include <cassert>
 #include <memory>
 
-#include "project-lib-decls.h"
 #include "src/lib/libmain/LibMain.h"
 
-namespace TEMPLATE_LIB_IMPL_NAMESPACE
+namespace lib0impl
 {
 
 LibFactory::ILibPtr LibFactory::create_default_lib()
@@ -32,4 +31,4 @@ LibFactoryPtr LibFactory::create_factory()
   return std::make_shared<LibFactory>();
 }
 
-}  // namespace TEMPLATE_LIB_IMPL_NAMESPACE
+}  // namespace lib0impl

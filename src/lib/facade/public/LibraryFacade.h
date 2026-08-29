@@ -1,13 +1,14 @@
-#ifndef @PROJECT_LIB_NAMESPACE@_LIBRARYFACADE_CLASS_H
-#define @PROJECT_LIB_NAMESPACE@_LIBRARYFACADE_CLASS_H
+#ifndef CPP_APP_TEMPLATE_012_LIBRARYFACADE_CLASS_H
+#define CPP_APP_TEMPLATE_012_LIBRARYFACADE_CLASS_H
 
 #include <memory>
 
 #include "ILib.h"
 #include "ILogger.h"
+#include "LibraryAPI.h"
 #include "LibraryContext.h"
 
-namespace @PROJECT_LIB_NAMESPACE@
+namespace CppAppTemplate012
 {
 
 /**
@@ -20,7 +21,7 @@ namespace @PROJECT_LIB_NAMESPACE@
  *
  * Current file is a target for the library header installation.
  */
-class LibraryFacade
+class TEMPLATE_LIB_API LibraryFacade
 {
  public:
   virtual ~LibraryFacade() = default;
@@ -71,6 +72,6 @@ class LibraryFacade
   static void init_logger(const logger::ILoggerPtr& appLogger);
 };
 
-}  // namespace @PROJECT_LIB_NAMESPACE@
+}  // namespace CppAppTemplate012
 
-#endif  // @PROJECT_LIB_NAMESPACE@_LIBRARYFACADE_CLASS_H
+#endif  // CPP_APP_TEMPLATE_012_LIBRARYFACADE_CLASS_H

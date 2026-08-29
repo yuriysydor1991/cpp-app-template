@@ -5,9 +5,19 @@
 
 #include "ILib.h"
 #include "LibraryContext.h"
-#include "project-lib-decls.h"
 
-namespace TEMPLATE_LIB_IMPL_NAMESPACE
+/**
+ * @brief The library implementation namespace. Nothing declared under it is
+ * installed - a consuming project only ever sees the CppAppTemplate012
+ * interfaces.
+ *
+ * Rename it by hand along with the public namespace. The library is built with
+ * the hidden symbol visibility, but a std::make_shared instantiation names its
+ * class in its own mangled name, so two derived libraries which kept this name
+ * may still share the factory of whichever of them the loader resolved first -
+ * and the two factories do not even share a vtable layout.
+ */
+namespace lib0impl
 {
 
 /**
@@ -19,9 +29,9 @@ class LibFactory
 {
  public:
   using LibFactoryPtr = std::shared_ptr<LibFactory>;
-  using ILibPtr = TEMPLATE_LIB_NAMESPACE::ILibPtr;
-  using LibraryContextPtr = TEMPLATE_LIB_NAMESPACE::LibraryContextPtr;
-  using LibraryContext = TEMPLATE_LIB_NAMESPACE::LibraryContext;
+  using ILibPtr = CppAppTemplate012::ILibPtr;
+  using LibraryContextPtr = CppAppTemplate012::LibraryContextPtr;
+  using LibraryContext = CppAppTemplate012::LibraryContext;
 
   virtual ~LibFactory() = default;
   LibFactory() = default;
@@ -58,6 +68,6 @@ class LibFactory
 
 using LibFactoryPtr = LibFactory::LibFactoryPtr;
 
-}  // namespace TEMPLATE_LIB_IMPL_NAMESPACE
+}  // namespace lib0impl
 
 #endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_LIBFACTORY_CLASS_H

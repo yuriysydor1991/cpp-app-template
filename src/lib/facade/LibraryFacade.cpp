@@ -4,16 +4,15 @@
 #include <iostream>
 #include <memory>
 
-#include "project-lib-decls.h"
 #include "src/lib/libmain/LibFactory.h"
 #include "src/log/log.h"
 
-namespace TEMPLATE_LIB_NAMESPACE
+namespace CppAppTemplate012
 {
 
 LibraryContextPtr LibraryFacade::create_library_context()
 {
-  auto libFactory = TEMPLATE_LIB_IMPL_NAMESPACE::LibFactory::create_factory();
+  auto libFactory = lib0impl::LibFactory::create_factory();
 
   assert(libFactory != nullptr);
 
@@ -22,7 +21,7 @@ LibraryContextPtr LibraryFacade::create_library_context()
 
 ILibPtr LibraryFacade::create_default_lib()
 {
-  auto libFactory = TEMPLATE_LIB_IMPL_NAMESPACE::LibFactory::create_factory();
+  auto libFactory = lib0impl::LibFactory::create_factory();
 
   assert(libFactory != nullptr);
 
@@ -31,7 +30,7 @@ ILibPtr LibraryFacade::create_default_lib()
 
 ILibPtr LibraryFacade::create_library(LibraryContextPtr ctx)
 {
-  auto libFactory = TEMPLATE_LIB_IMPL_NAMESPACE::LibFactory::create_factory();
+  auto libFactory = lib0impl::LibFactory::create_factory();
 
   assert(libFactory != nullptr);
 
@@ -43,4 +42,4 @@ void LibraryFacade::init_logger(const logger::ILoggerPtr& appLogger)
   LOG_INIT_REAL_LOGGER(appLogger);
 }
 
-}  // namespace TEMPLATE_LIB_NAMESPACE
+}  // namespace CppAppTemplate012

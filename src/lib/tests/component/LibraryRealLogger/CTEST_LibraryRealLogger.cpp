@@ -8,15 +8,14 @@
 
 #include "LibraryContext.h"
 #include "LibraryFacade.h"
-#include "project-lib-decls.h"
 #include "src/log/ILogger.h"
 #include "src/log/default-logger/real-default-logger/RealDefaultLogger.h"
 #include "src/log/log.h"
 #include "src/log/severity-macro-consts.h"
 
 using namespace testing;
-using namespace TEMPLATE_LIB_NAMESPACE;
-using namespace TEMPLATE_DEFAULT_LOG_NAMESPACE;
+using namespace CppAppTemplate012;
+using namespace default_logger;
 
 namespace
 {

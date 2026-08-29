@@ -16,6 +16,11 @@
 # has silently bound both calls to the same implementation - which is exactly
 # what identical symbols in every derived library cause.
 #
+# Every generated project performs the by-hand renames the template asks a
+# derived project for - the public namespace with its include guard stamp and
+# the implementation namespace - so the test drives the very same rename
+# procedure the documentation describes.
+#
 # The test also asserts that no library opens a log file of its own: the
 # logging destination belongs to the application which uses the libraries, not
 # to the libraries themselves.
@@ -29,10 +34,12 @@
 #
 # The test then hands every library a logger of its OWN and asserts that none of
 # them receives the messages of another. Every derived library carries a copy of
-# the whole logging subsystem, so the copies have to keep their real logger
-# instance holders apart: libraries which share that holder let a single logger
-# collect everything while the rest stay silent, and the logger one library
-# adopted silently serves the others too.
+# the whole logging subsystem under one and the same default_logger namespace,
+# so the copies are kept apart by the hidden symbol visibility of the library
+# alone: were those symbols exported, the libraries would share a single real
+# logger instance holder, one logger would collect everything while the rest
+# stay silent, and the logger one library adopted would silently serve the
+# others too.
 
 set -euo pipefail
 
@@ -91,16 +98,24 @@ parse_args()
 }
 
 # The top level CMake project name of the generated library with the given
-# index. It drives the installed library name, the installed headers directory
-# and the library C++ namespace, so it is the only thing which makes the
-# generated projects distinguishable.
+# index. It drives the installed library name and the installed headers
+# directory; the C++ namespaces are renamed after it by hand below.
 lib_project_name() { echo "CppAppTemplateLib$1"; }
 
-# The PROJECT_LIBRARY_NAME the template derives from the project name.
-lib_target_name() { echo "$(lib_project_name "$1")-0"; }
+# The PROJECT_LIBRARY_NAME the template derives from the project name and the
+# project version. The minor version segment is a part of it by default.
+lib_target_name() { echo "$(lib_project_name "$1")-0.12"; }
 
-# The library public C++ namespace the template derives from the project name.
-lib_namespace() { echo "$(lib_project_name "$1")_0"; }
+# The library public C++ namespace, renamed by hand the way the template asks a
+# derived project to rename it.
+lib_namespace() { echo "$(lib_project_name "$1")012"; }
+
+# The include guard stamp of the public headers, renamed along with it.
+lib_guard() { echo "CPP_APP_TEMPLATE_LIB$1_012_"; }
+
+# The library implementation C++ namespace, renamed along with them: it never
+# leaves the shared object, but its weak template instantiations may.
+lib_impl_namespace() { echo "lib$1impl"; }
 
 prepare_work_dir()
 {
@@ -142,11 +157,28 @@ generate_library_project()
   grep -q "^  ${name}$" "${dst}/CMakeLists.txt" || \
     fail "failed to rename the top level CMake project into ${name}"
 
+  # The renames the template asks a derived project to perform by hand: the
+  # public namespace and the include guard stamp of the public headers, which
+  # an application naming two derived libraries at once has to tell apart, and
+  # the implementation namespace, whose weak template instantiations may leave
+  # the shared object even though the classes themselves do not. The logging
+  # subsystem namespace is deliberately left alone - the hidden symbol
+  # visibility of the library is what keeps those copies apart.
+  grep -rl -e 'CppAppTemplate012' -e 'CPP_APP_TEMPLATE_012_' -e 'lib0impl' \
+    "${dst}/src" | xargs sed -i \
+      -e "s/CppAppTemplate012/$(lib_namespace "${index}")/g" \
+      -e "s/CPP_APP_TEMPLATE_012_/$(lib_guard "${index}")/g" \
+      -e "s/\blib0impl\b/$(lib_impl_namespace "${index}")/g"
+
+  grep -q "namespace $(lib_namespace "${index}")$" \
+    "${dst}/src/lib/facade/public/LibraryFacade.h" || \
+    fail "failed to rename the public namespace of the ${name} library"
+
   # The library user passes a number in and reads the answer back, the way the
   # template asks for the LibraryContext fields to be introduced.
   sed -i \
     's|  // Introduce here the library required data fields.|  int number{0};\n  int result{0};\n|' \
-    "${dst}/src/lib/facade/public/LibraryContext.h.in"
+    "${dst}/src/lib/facade/public/LibraryContext.h"
 
   # The library implementation itself. Every generated library answers with its
   # own generation index added to the given number.

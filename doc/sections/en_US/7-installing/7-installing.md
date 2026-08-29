@@ -9,7 +9,7 @@ In order to install generated executable (as shown previous) file into yours sys
 
 ```
 # installs generated library under the /usr/local/lib/ for example
-# and installs header include files under the /usr/local/include/libCppAppTemplateLib
+# and installs header include files under the /usr/local/include/CppAppTemplate-0.12
 
 sudo cmake --install .
 ```

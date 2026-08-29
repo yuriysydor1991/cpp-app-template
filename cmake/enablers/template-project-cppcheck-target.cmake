@@ -26,13 +26,15 @@ endif()
 
 message(STATUS "cppcheck: ${CPPCHECK_EXEC}")
 
-# The library public headers are generated, so the analyzed sources reach them
-# through the generated include directory only. The branches which build no
-# library declare none of those variables and add no include of their own.
-if(PROJECT_LIB_PUBLIC_INCLUDE_DIR AND PROJECT_LIBRARY_NAME)
+# The library implementation includes the public headers by their bare names,
+# so the analyzed sources reach them through the public directory itself, along
+# with the src/log one holding the installable logging interface. The branches
+# which build no library carry neither directory.
+if(EXISTS ${CMAKE_SOURCE_DIR}/src/lib/facade/public)
   set(
     CPPCHECK_LIB_PUBLIC_INCLUDE
-    -I${PROJECT_LIB_PUBLIC_INCLUDE_DIR}/${PROJECT_LIBRARY_NAME}
+    -I${CMAKE_SOURCE_DIR}/src/lib/facade/public
+    -I${CMAKE_SOURCE_DIR}/src/log
   )
 endif()
 

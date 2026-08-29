@@ -7,16 +7,15 @@
 
 #include "ILib.h"
 #include "LibraryContext.h"
-#include "project-lib-decls.h"
 
-namespace TEMPLATE_LIB_IMPL_NAMESPACE
+namespace lib0impl
 {
 
-class LibMain : public TEMPLATE_LIB_NAMESPACE::ILib
+class LibMain : public CppAppTemplate012::ILib
 {
  public:
   using LibMainPtr = std::shared_ptr<LibMain>;
-  using LibraryContextPtr = TEMPLATE_LIB_NAMESPACE::LibraryContextPtr;
+  using LibraryContextPtr = CppAppTemplate012::LibraryContextPtr;
 
   ~LibMain() override = default;
   LibMain() = default;
@@ -28,6 +27,6 @@ class LibMain : public TEMPLATE_LIB_NAMESPACE::ILib
 
 using LibMainPtr = LibMain::LibMainPtr;
 
-}  // namespace TEMPLATE_LIB_IMPL_NAMESPACE
+}  // namespace lib0impl
 
 #endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_LIBRARYMAIN_CLASS_H

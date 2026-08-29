@@ -4,7 +4,6 @@
 #include <sstream>
 
 #include "src/log/default-logger/DefaultLogger.h"
-#include "src/log/default-logger/default-logger-decls.h"
 #include "src/log/severity-macro-consts.h"
 
 #ifndef LOG_INIT
@@ -12,14 +11,12 @@
  * @brief The logging init macros. Use them in the main function or
  * as by default is used in the app::ApplicationFactory::execute method.
  */
-#define LOG_INIT(filepath, logLvl, printMessages)                       \
-  TEMPLATE_DEFAULT_LOG_NAMESPACE::DefaultLogger::init(filepath, logLvl, \
-                                                      printMessages);
+#define LOG_INIT(filepath, logLvl, printMessages) \
+  default_logger::DefaultLogger::init(filepath, logLvl, printMessages);
 #endif  // LOG_INIT
 
 #ifndef LOG_INIT_DEFAULTS
-#define LOG_INIT_DEFAULTS() \
-  TEMPLATE_DEFAULT_LOG_NAMESPACE::DefaultLogger::init();
+#define LOG_INIT_DEFAULTS() default_logger::DefaultLogger::init();
 #endif  // LOG_INIT_DEFAULTS
 
 #ifndef LOG_REAL_LOGGER
@@ -29,8 +26,7 @@
  * it's LOG_INIT_REAL_LOGGER macro to make the whole binary log into the very
  * same logger instance.
  */
-#define LOG_REAL_LOGGER() \
-  TEMPLATE_DEFAULT_LOG_NAMESPACE::DefaultLogger::real_logger()
+#define LOG_REAL_LOGGER() default_logger::DefaultLogger::real_logger()
 #endif  // LOG_REAL_LOGGER
 
 #ifndef LOG_INIT_REAL_LOGGER
@@ -44,7 +40,7 @@
  * hand an own logging library wrapper over to the logging macroses.
  */
 #define LOG_INIT_REAL_LOGGER(realLogger) \
-  TEMPLATE_DEFAULT_LOG_NAMESPACE::DefaultLogger::real_logger(realLogger);
+  default_logger::DefaultLogger::real_logger(realLogger);
 #endif  // LOG_INIT_REAL_LOGGER
 
 #ifndef LOG_INIT_DEFAULTS_IF_OWN
@@ -55,12 +51,11 @@
  * `lib`-style project initialization routine to keep the log file, level and
  * printing settings of the adopted logger instance untouched.
  */
-#define LOG_INIT_DEFAULTS_IF_OWN()                       \
-  {                                                      \
-    if (!TEMPLATE_DEFAULT_LOG_NAMESPACE::DefaultLogger:: \
-            real_logger_adopted()) {                     \
-      LOG_INIT_DEFAULTS();                               \
-    }                                                    \
+#define LOG_INIT_DEFAULTS_IF_OWN()                               \
+  {                                                              \
+    if (!default_logger::DefaultLogger::real_logger_adopted()) { \
+      LOG_INIT_DEFAULTS();                                       \
+    }                                                            \
   }
 #endif  // LOG_INIT_DEFAULTS_IF_OWN
 
@@ -68,12 +63,12 @@
 /**
  * @brief The internal logger macro to define the general logging code body.
  */
-#define LOG_BODY(LOGLVL, msg)                                   \
-  {                                                             \
-    std::stringstream logMessageContainer;                      \
-    logMessageContainer << msg;                                 \
-    TEMPLATE_DEFAULT_LOG_NAMESPACE::DefaultLogger::log(         \
-        LOGLVL, __FILE__, __LINE__, logMessageContainer.str()); \
+#define LOG_BODY(LOGLVL, msg)                                      \
+  {                                                                \
+    std::stringstream logMessageContainer;                         \
+    logMessageContainer << msg;                                    \
+    default_logger::DefaultLogger::log(LOGLVL, __FILE__, __LINE__, \
+                                       logMessageContainer.str()); \
   }
 #endif  // LOG_BODY
 
@@ -84,8 +79,7 @@
  * @param msg The logging message which may use the << operator
  * and each of the log elements MUST be converted into the std::string.
  */
-#define LOGE(msg) \
-  LOG_BODY(TEMPLATE_DEFAULT_LOG_NAMESPACE::DefaultLogger::LVL_ERROR, msg)
+#define LOGE(msg) LOG_BODY(default_logger::DefaultLogger::LVL_ERROR, msg)
 #endif  // LOGE
 
 #ifndef LOGI
@@ -96,8 +90,7 @@
  * @param msg The logging message which may use the << operator
  * and each of the log elements MUST be converted into the std::string.
  */
-#define LOGI(msg) \
-  LOG_BODY(TEMPLATE_DEFAULT_LOG_NAMESPACE::DefaultLogger::LVL_INFO, msg)
+#define LOGI(msg) LOG_BODY(default_logger::DefaultLogger::LVL_INFO, msg)
 #else
 #define LOGI(msg)
 #endif  // MAX_LOG_LEVEL
@@ -111,8 +104,7 @@
  * @param msg The logging message which may use the << operator
  * and each of the log elements MUST be converted into the std::string.
  */
-#define LOGW(msg) \
-  LOG_BODY(TEMPLATE_DEFAULT_LOG_NAMESPACE::DefaultLogger::LVL_WARNING, msg)
+#define LOGW(msg) LOG_BODY(default_logger::DefaultLogger::LVL_WARNING, msg)
 #else
 #define LOGW(msg)
 #endif  // MAX_LOG_LEVEL
@@ -126,8 +118,7 @@
  * @param msg The logging message which may use the << operator
  * and each of the log elements MUST be converted into the std::string.
  */
-#define LOGD(msg) \
-  LOG_BODY(TEMPLATE_DEFAULT_LOG_NAMESPACE::DefaultLogger::LVL_DEBUG, msg)
+#define LOGD(msg) LOG_BODY(default_logger::DefaultLogger::LVL_DEBUG, msg)
 #else
 #define LOGD(msg)
 #endif  // MAX_LOG_LEVEL
@@ -141,8 +132,7 @@
  * @param msg The logging message which may use the << operator
  * and each of the log elements MUST be converted into the std::string.
  */
-#define LOGT(msg) \
-  LOG_BODY(TEMPLATE_DEFAULT_LOG_NAMESPACE::DefaultLogger::LVL_TRACE, msg)
+#define LOGT(msg) LOG_BODY(default_logger::DefaultLogger::LVL_TRACE, msg)
 #else
 #define LOGT(msg)
 #endif  // MAX_LOG_LEVEL

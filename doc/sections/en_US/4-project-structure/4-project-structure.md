@@ -2,6 +2,7 @@
 
 1. [Project diagrams](/doc/sections/en_US/4-project-structure/4-0-project-diagrams.md)
 1. [Implement code straight away!](/doc/sections/en_US/4-project-structure/4-1-implement-code-straight-away.md)
+1. [The library's installable include header files](/doc/sections/en_US/4-project-structure/4-8-the-librarys-installable-include-header-files.md)
 1. [Changing the project and executable name](/doc/sections/en_US/4-project-structure/4-2-changing-the-project-and-executable-name.md)
 1. [Version tracking and other project parameters](/doc/sections/en_US/4-project-structure/4-3-version-tracking-and-other-project-parameters.md)
 1. [Minimal possible versions](/doc/sections/en_US/4-project-structure/4-6-minimal-possible-versions.md)

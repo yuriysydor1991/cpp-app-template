@@ -3,10 +3,9 @@
 #include <cassert>
 #include <memory>
 
-#include "project-lib-decls.h"
 #include "src/log/log.h"
 
-namespace TEMPLATE_LIB_IMPL_NAMESPACE
+namespace lib0impl
 {
 
 LibMain::LibMain()
@@ -34,4 +33,4 @@ bool LibMain::libcall([[maybe_unused]] LibraryContextPtr ctx)
 
 LibMainPtr LibMain::create() { return std::make_shared<LibMain>(); }
 
-}  // namespace TEMPLATE_LIB_IMPL_NAMESPACE
+}  // namespace lib0impl

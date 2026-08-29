@@ -3,7 +3,7 @@
 #include <memory>
 #include <string>
 
-namespace TEMPLATE_DEFAULT_LOG_NAMESPACE
+namespace default_logger
 {
 
 void DefaultLogger::log(const unsigned short& loglvl, const std::string& msg)
@@ -68,4 +68,4 @@ DefaultLogger::RealLoggerPtr& DefaultLogger::real_logger_holder()
   return realLogger;
 }
 
-}  // namespace TEMPLATE_DEFAULT_LOG_NAMESPACE
+}  // namespace default_logger

@@ -1,13 +1,21 @@
-#ifndef @PROJECT_LIB_NAMESPACE@_LIBRARYCONTEXT_CLASS_H
-#define @PROJECT_LIB_NAMESPACE@_LIBRARYCONTEXT_CLASS_H
+#ifndef CPP_APP_TEMPLATE_012_LIBRARYCONTEXT_CLASS_H
+#define CPP_APP_TEMPLATE_012_LIBRARYCONTEXT_CLASS_H
 
 #include <memory>
+
+#include "LibraryAPI.h"
 
 /**
  * @brief The facade interface namespace for the library.
  * Designed to give access to the library functionality.
+ *
+ * The name carries the project name and the major and minor version numbers of
+ * the library, so that an application may depend on many libraries derived
+ * from this template - and on many versions of one of them - at once. Rename it
+ * by hand in every public header and in every implementation source which names
+ * it, together with the include guards above.
  */
-namespace @PROJECT_LIB_NAMESPACE@
+namespace CppAppTemplate012
 {
 
 /**
@@ -19,7 +27,7 @@ namespace @PROJECT_LIB_NAMESPACE@
  *
  * Current file is a target for the library header installation.
  */
-class LibraryContext
+class TEMPLATE_LIB_API LibraryContext
 {
  public:
   using LibraryContextPtr = std::shared_ptr<LibraryContext>;
@@ -33,6 +41,6 @@ class LibraryContext
 
 using LibraryContextPtr = LibraryContext::LibraryContextPtr;
 
-}  // namespace @PROJECT_LIB_NAMESPACE@
+}  // namespace CppAppTemplate012
 
-#endif  // @PROJECT_LIB_NAMESPACE@_LIBRARYCONTEXT_CLASS_H
+#endif  // CPP_APP_TEMPLATE_012_LIBRARYCONTEXT_CLASS_H

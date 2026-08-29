@@ -9,13 +9,12 @@
 
 #include "project-global-decls.h"
 #include "src/log/ILogger.h"
-#include "src/log/default-logger/default-logger-decls.h"
 #include "src/log/severity-macro-consts.h"
 
 /**
  * @brief The default logger quick implementation encapsulation namespace.
  */
-namespace TEMPLATE_DEFAULT_LOG_NAMESPACE
+namespace default_logger
 {
 
 /**
@@ -23,12 +22,12 @@ namespace TEMPLATE_DEFAULT_LOG_NAMESPACE
  * code and the whole logger state. It logs into a plain text file and,
  * optionally, duplicates every message into the stdout or the stderr stream.
  *
- * The TEMPLATE_DEFAULT_LOG_NAMESPACE::DefaultLogger static methods are just a
+ * The default_logger::DefaultLogger static methods are just a
  * proxy which forwards every call into an instance of the logger::ILogger
  * interface, which this class implements and which the DefaultLogger creates by
  * default. Implement the logger::ILogger on your own, or inherit this class,
  * and pass a new instance into the
- * TEMPLATE_DEFAULT_LOG_NAMESPACE::DefaultLogger::real_logger setter to replace
+ * default_logger::DefaultLogger::real_logger setter to replace
  * the logging behaviour without touching the logging macroses. Replace it with
  * log4cpp or similar if necessary.
  */
@@ -156,6 +155,6 @@ class RealDefaultLogger : public logger::ILogger
   unsigned short lvl{MAX_LOG_LEVEL};
 };
 
-}  // namespace TEMPLATE_DEFAULT_LOG_NAMESPACE
+}  // namespace default_logger
 
 #endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_REAL_DEFAULT_LOGGER_IMPLEMENTATION_CLASS_H

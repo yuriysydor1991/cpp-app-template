@@ -2,18 +2,17 @@
 #include <gtest/gtest.h>
 
 #include "LibraryFacade.h"
-#include "project-lib-decls.h"
 #include "src/lib/libmain/LibFactory.h"
 #include "src/lib/libmain/LibMain.h"
 
-using namespace TEMPLATE_LIB_NAMESPACE;
-using namespace TEMPLATE_LIB_IMPL_NAMESPACE;
+using namespace CppAppTemplate012;
+using namespace lib0impl;
 using namespace testing;
 
 class UTEST_LibraryFacade : public Test
 {
  public:
-  using LibFactory = TEMPLATE_LIB_IMPL_NAMESPACE::LibFactory;
+  using LibFactory = lib0impl::LibFactory;
 
   UTEST_LibraryFacade() = default;
   ~UTEST_LibraryFacade() = default;

@@ -27,7 +27,8 @@ target_include_directories(
   PRIVATE
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
-    ${PROJECT_LIB_PUBLIC_INCLUDE_DIR}/${PROJECT_LIBRARY_NAME}
+    ${CMAKE_SOURCE_DIR}/src/lib/facade/public
+    ${CMAKE_SOURCE_DIR}/src/log
 )
 
 target_link_libraries(

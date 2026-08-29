@@ -2,11 +2,10 @@
 #include <gtest/gtest.h>
 
 #include "LibraryContext.h"
-#include "project-lib-decls.h"
 #include "src/lib/libmain/LibMain.h"
 
-using namespace TEMPLATE_LIB_NAMESPACE;
-using namespace TEMPLATE_LIB_IMPL_NAMESPACE;
+using namespace CppAppTemplate012;
+using namespace lib0impl;
 using namespace testing;
 
 class UTEST_LibMain : public Test

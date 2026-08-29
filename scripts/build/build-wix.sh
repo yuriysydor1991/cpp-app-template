@@ -1,7 +1,10 @@
 #!/bin/bash -e
 #
-# Configures the project in the release build type with the WIX MSI packager
-# enabled and produces the package by the `wix` target of that build.
+# Produces the WIX MSI installer: a release configure with the ENABLE_WIX option
+# enabled, then the `wix` target of that build.
+#
+# The target only runs the WiX toolset over the configured .wxs file, so the
+# project itself is built first.
 #
 # Every extra parameter is forwarded to the meson setup step, so an own
 # -D<option>=<value> override wins over the ENABLE_WIX one below.
@@ -21,4 +24,4 @@ meson compile -C "${BUILD_DIR}"
 
 meson compile -C "${BUILD_DIR}" wix
 
-echo "#### The WIX MSI package is inside the ${BUILD_DIR} directory"
+echo "#### Look for the WIX MSI installer inside the ${BUILD_DIR} directory"

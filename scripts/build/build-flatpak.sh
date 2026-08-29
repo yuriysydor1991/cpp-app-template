@@ -1,7 +1,10 @@
 #!/bin/bash -e
 #
-# Configures the project in the release build type with the flatpak packager
-# enabled and produces the package by the `flatpak` target of that build.
+# Produces the flatpak bundle: a release configure with the ENABLE_FLATPAK option
+# enabled, then the `flatpak` target of that build.
+#
+# flatpak-builder builds the project from the sources inside its own sandbox,
+# so no build step is performed and the build directory needs no artifacts.
 #
 # Every extra parameter is forwarded to the meson setup step, so an own
 # -D<option>=<value> override wins over the ENABLE_FLATPAK one below.
@@ -17,8 +20,6 @@ fi
 
 meson setup "${BUILD_DIR}" "${PROJECT_ROOT}" "${SETUP_ARGS[@]}" "$@"
 
-meson compile -C "${BUILD_DIR}"
-
 meson compile -C "${BUILD_DIR}" flatpak
 
-echo "#### The flatpak package is inside the ${BUILD_DIR} directory"
+echo "#### Look for the flatpak bundle inside the ${BUILD_DIR} directory"

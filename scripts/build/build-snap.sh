@@ -1,7 +1,10 @@
 #!/bin/bash -e
 #
-# Configures the project in the release build type with the snap packager
-# enabled and produces the package by the `snap` target of that build.
+# Produces the snap package: a release configure with the ENABLE_SNAP option
+# enabled, then the `snap` target of that build.
+#
+# snapcraft builds the project from the sources inside its own environment, so
+# no build step is performed and the build directory needs no artifacts.
 #
 # Every extra parameter is forwarded to the meson setup step, so an own
 # -D<option>=<value> override wins over the ENABLE_SNAP one below.
@@ -17,8 +20,6 @@ fi
 
 meson setup "${BUILD_DIR}" "${PROJECT_ROOT}" "${SETUP_ARGS[@]}" "$@"
 
-meson compile -C "${BUILD_DIR}"
-
 meson compile -C "${BUILD_DIR}" snap
 
-echo "#### The snap package is inside the ${BUILD_DIR} directory"
+echo "#### Look for the snap package inside the ${BUILD_DIR} directory"

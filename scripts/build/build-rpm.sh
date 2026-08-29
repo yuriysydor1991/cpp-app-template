@@ -1,7 +1,10 @@
 #!/bin/bash -e
 #
-# Configures the project in the release build type with the RPM packager
-# enabled and produces the package by the `rpm` target of that build.
+# Produces the RPM package: a release configure with the ENABLE_RPM option
+# enabled, then the `rpm` target of that build.
+#
+# The target installs the project with `meson install`, which builds what it
+# needs, so no separate build step is performed.
 #
 # Every extra parameter is forwarded to the meson setup step, so an own
 # -D<option>=<value> override wins over the ENABLE_RPM one below.
@@ -17,8 +20,6 @@ fi
 
 meson setup "${BUILD_DIR}" "${PROJECT_ROOT}" "${SETUP_ARGS[@]}" "$@"
 
-meson compile -C "${BUILD_DIR}"
-
 meson compile -C "${BUILD_DIR}" rpm
 
-echo "#### The RPM package is inside the ${BUILD_DIR} directory"
+echo "#### Look for the RPM package inside the ${BUILD_DIR} directory"

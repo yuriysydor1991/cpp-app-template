@@ -14,4 +14,6 @@ flatpak install org.freedesktop.Sdk/x86_64/24.08 org.freedesktop.Platform/x86_64
 
 Необіхдно замінити `org.freedesktop.Sdk/x86_64/24.08 org.freedesktop.Platform/x86_64/24.08` власним варіантом обраного середовища і SDK. У документації до flatpak можна визначити як переглянути усі доступні варіанти.
 
+Ціль `flatpak` самостійно встановлює необхідні їй середовище і SDK з віддаленого сховища `flathub`, тож наведена команда лише виконує їх попереднє встановлення.
+
 Деталі у секції [Вмикання підтримки генерації flatpak пакету](/doc/sections/uk_UA/5-project-build/packagers/5-11-enabling-the-flatpak-package-generation-support.md).

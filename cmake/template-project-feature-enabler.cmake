@@ -13,20 +13,24 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/enablers/images")
 include(template-project-enabler-function)
 include(template-project-git-enabler)
 
-include(template-project-GTest-enabler)
-include(template-project-clang-format-target)
-include(template-project-valgrind-target)
-
-# 3rd-party libraries required before the src tree is configured
-include(template-project-firebird-enabler)
-
-# packagers
+# packagers, configured before everything the ENABLE_PACKAGERS_ONLY mode skips
 include(template-project-deb-enabler)
 include(template-project-flatpak-target)
 include(template-project-snap-enabler)
 include(template-project-freebsd-pkg-enabler)
 include(template-project-wix-enabler)
 include(template-project-rpm-enabler)
+
+if (ENABLE_PACKAGERS_ONLY)
+  return()
+endif()
+
+include(template-project-GTest-enabler)
+include(template-project-clang-format-target)
+include(template-project-valgrind-target)
+
+# 3rd-party libraries required before the src tree is configured
+include(template-project-firebird-enabler)
 
 # compile options
 include(template-project-sanitizers)

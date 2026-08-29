@@ -43,6 +43,15 @@ option(
   ON
 )
 
+# The flatpak and the snap packagers compile the project from its sources inside
+# their own sandboxes, so their targets need neither the host source tree nor
+# the 3rd party libraries it links against.
+option(
+  ENABLE_PACKAGERS_ONLY
+  "Set to ON to configure the packager targets alone, leaving the project sources and their dependencies out of the configure"
+  OFF
+)
+
 string(TIMESTAMP PROJECT_CONFIGURE_DATE "%Y-%m-%d %H:%M:%S")
 
 message(STATUS "CMAKE_PROJECT_NAME: ${CMAKE_PROJECT_NAME}")

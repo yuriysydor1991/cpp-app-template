@@ -5,10 +5,12 @@ In order to enable the flatpak generation of the redistribution package on the t
 ```
 # inside the project root directory 
 
-cmake -B build -S . -DENABLE_FLATPAK=ON
+cmake -B build -S . -DENABLE_FLATPAK=ON -DENABLE_PACKAGERS_ONLY=ON
 ```
 
 Which in order will enable the `flatpak` target.
+
+The `flatpak-builder` compiles the project from its sources inside its own sandbox, so the `ENABLE_PACKAGERS_ONLY` option above keeps the project sources and the 3rd party libraries they link against out of the configure: the `flatpak` target is then available on a host that carries none of the project's build dependencies. Drop that option to configure the ordinary build targets next to the `flatpak` one.
 
 And finally to generate the flatpak package run the `flatpak` target for the build:
 

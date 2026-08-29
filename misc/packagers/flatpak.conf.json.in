@@ -6,19 +6,23 @@
   "command": "${PROJECT_BINARY_NAME}",
   "modules": [
     {
-      "comment": "Builds the Firebird client library (libfbclient) from the official sources and installs it into the /app prefix. The maintainer may need to pin the commit and tune the build options for the chosen Firebird version.",
+      "x-comment": "Builds the Firebird client library (libfbclient) with its ChaCha wire encryption plugin and installs the staged tree into /app. The client only mode leaves the DBMS server, its plugins and the examples out of the build. /app is the prefix libfbclient is compiled with, so it looks for firebird.conf, plugins.conf, firebird.msg and tzdata right there at run time.",
       "name": "firebird",
       "buildsystem": "simple",
       "build-commands": [
-        "./autogen.sh --prefix=/app --with-builtin-tommath --without-fbsample --without-fbsample-db",
+        "./autogen.sh --prefix=/app --enable-client-only --with-builtin-tommath --with-builtin-tomcrypt",
         "make -j$(nproc)",
-        "make install"
+        "cp -a extern/libtommath/.libs/libtommath.so* extern/libtomcrypt/.libs/libtomcrypt.so* gen/Release/firebird/lib/",
+        "rm -rf gen/Release/firebird/bin gen/Release/firebird/tests",
+        "cp -a gen/Release/firebird/. /app/"
       ],
       "sources": [
         {
           "type": "git",
           "url": "https://github.com/FirebirdSQL/firebird.git",
-          "tag": "v4.0.5"
+          "tag": "v5.0.4",
+          "commit": "f6d83a28c009ab039ea40ffdb4ccc58f190dfbe6",
+          "disable-submodules": true
         }
       ]
     },
@@ -32,7 +36,8 @@
       "sources": [
         {
           "type": "dir",
-          "path": "${CMAKE_SOURCE_DIR}"
+          "path": "${CMAKE_SOURCE_DIR}",
+          "skip": ["build"]
         }
       ]
     }

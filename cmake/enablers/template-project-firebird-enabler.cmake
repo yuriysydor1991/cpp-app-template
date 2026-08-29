@@ -1,17 +1,18 @@
 cmake_minimum_required(VERSION 3.13)
 
-# Reusable enabler module for the Firebird client library (fbclient).
+# Enabler module for the Firebird client library (fbclient).
 #
-# Mirrors the libcurl/LibXml2/nlohmann-json enablers: it delegates to the
-# shared template_project_default_3rdparty_enabler, which probes the system
-# installation first and only falls back to fetching the upstream sources when
-# nothing is found. The system probe is performed through the project
-# cmake/FindFirebird.cmake module, which exposes the Firebird::fbclient imported
-# target the Firebird driver links against.
+# Unlike the libcurl/LibXml2/nlohmann-json enablers this one does not delegate
+# to the shared template_project_default_3rdparty_enabler: its FetchContent
+# fallback is useless for Firebird. Firebird is an autotools project whose root
+# CMakeLists.txt is a legacy leftover that requires CMake 2.8.12, resolves its
+# modules through the top level CMAKE_SOURCE_DIR and never exports a consumable
+# client library target, so adding it as a subproject only breaks the configure
+# stage. The development package is the expected and supported path.
 #
-# Building Firebird from source is heavy and seldom needed: the development
-# package (for example 'sudo apt install -y firebird-dev') is the expected and
-# supported path.
+# The system probe is performed through the project cmake/FindFirebird.cmake
+# module, which exposes the Firebird::fbclient imported target the Firebird
+# driver links against.
 
 option(
   ENABLE_FIREBIRD
@@ -23,11 +24,19 @@ if (NOT ENABLE_FIREBIRD)
   return()
 endif()
 
-set(TEMPLATE_APP_FIREBIRD_GIT "https://github.com/FirebirdSQL/firebird.git" CACHE STRING "The Firebird library git source repository")
-set(TEMPLATE_APP_FIREBIRD_GIT_TAG "master" CACHE STRING "The Firebird project git repository tag of interest")
+message(STATUS "Trying to probe system installed Firebird")
 
-template_project_default_3rdparty_enabler(
-  NAME Firebird
-  GIT_REPOSITORY ${TEMPLATE_APP_FIREBIRD_GIT}
-  GIT_TAG ${TEMPLATE_APP_FIREBIRD_GIT_TAG}
-)
+find_package(Firebird QUIET)
+
+if (NOT Firebird_FOUND)
+  message(
+    FATAL_ERROR
+    "The Firebird client library (fbclient) development files are not available "
+    "in the system. Install them (for example 'sudo apt install -y firebird-dev') "
+    "or point the TEMPLATE_APP_FIREBIRD_INCLUDE_HINT and the "
+    "TEMPLATE_APP_FIREBIRD_LIB_HINT cache variables at your own Firebird "
+    "installation."
+  )
+endif()
+
+message(STATUS "The project Firebird is made available")

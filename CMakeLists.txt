@@ -13,7 +13,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include(cmake/template-project-bootstrap.cmake)
 
-add_subdirectory(src)
-add_subdirectory(doc)
+if (NOT ENABLE_PACKAGERS_ONLY)
+  add_subdirectory(src)
+  add_subdirectory(doc)
 
-include(template-project-feature-enabler-post)
+  include(template-project-feature-enabler-post)
+endif()

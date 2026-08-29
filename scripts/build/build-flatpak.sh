@@ -4,18 +4,20 @@
 # enabled, then the `flatpak` target of that build.
 #
 # flatpak-builder builds the project from the sources inside its own sandbox,
-# so no build step is performed and the build directory needs no artifacts.
+# so no build step is performed, the build directory needs no artifacts and the
+# ENABLE_PACKAGERS_ONLY configure keeps the host free of the project's own 3rd
+# party build dependencies.
 #
 # Every parameter of the release-configure.sh and the release-build.sh scripts
 # is accepted and forwarded, so an own -D<variable>=<value> override wins over
-# the ENABLE_FLATPAK one below.
+# the ones below.
 
 PROJECT_ROOT=$(realpath "$(dirname "$0")/../..")
 BUILD_SCRIPTS_ROOT=$(realpath "$(dirname "$0")")
 
 . "${BUILD_SCRIPTS_ROOT}/common.sh"
 
-${BUILD_SCRIPTS_ROOT}/release-configure.sh -DENABLE_FLATPAK=ON "$@"
+${BUILD_SCRIPTS_ROOT}/release-configure.sh -DENABLE_FLATPAK=ON -DENABLE_PACKAGERS_ONLY=ON "$@"
 
 ${BUILD_SCRIPTS_ROOT}/release-build.sh --target flatpak "$@"
 

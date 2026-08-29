@@ -6,59 +6,95 @@
   "command": "${PROJECT_BINARY_NAME}",
   "modules": [
     {
-      "name": "graphviz",
-      "buildsystem": "autotools",
+      "name": "libsigc++",
+      "buildsystem": "meson",
       "config-opts": [
-        "--enable-network", 
-        "--disable-documentation", 
-        "--disable-static",
-        "--enable-shared",
-        "--without-gmodule"
+        "--libdir=lib",
+        "-Dbuild-examples=false",
+        "-Dbuild-tests=false"
       ],
       "sources": [
         {
           "type": "archive",
-          "url": "https://gitlab.com/api/v4/projects/4207231/packages/generic/graphviz-releases/10.0.1/graphviz-10.0.1.tar.gz",
-          "sha256": "72e1a575e9c382c4fd2267837962bc4582b3d9ad746e338cd8024bdeca124f32"
+          "url": "https://download.gnome.org/sources/libsigc++/2.12/libsigc++-2.12.1.tar.xz",
+          "sha256": "a9dbee323351d109b7aee074a9cb89ca3e7bcf8ad8edef1851f4cf359bd50843"
         }
-      ] 
+      ]
     },
     {
-      "name": "mm-common",
+      "name": "glibmm",
       "buildsystem": "meson",
+      "config-opts": [
+        "--libdir=lib",
+        "-Dbuild-examples=false"
+      ],
       "sources": [
         {
-          "type": "git",
-          "url": "https://gitlab.gnome.org/GNOME/mm-common.git",
-          "tag": "1.0.6"
+          "type": "archive",
+          "url": "https://download.gnome.org/sources/glibmm/2.66/glibmm-2.66.10.tar.xz",
+          "sha256": "2b61780203aed98e701d3ea57c8f353e7c8ada9706a79be782f6c5153dd035c0"
         }
-      ],
+      ]
+    },
+    {
+      "name": "cairomm",
+      "buildsystem": "meson",
       "config-opts": [
-        "-Duse-network=true",
+        "--libdir=lib",
+        "-Dbuild-examples=false",
+        "-Dbuild-tests=false"
+      ],
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://www.cairographics.org/releases/cairomm-1.14.6.tar.xz",
+          "sha256": "7e0d5c7f29175d573a03ab5c45aef63f48dd91a5caf335a404cd763e4b7cea4a"
+        }
+      ]
+    },
+    {
+      "name": "pangomm",
+      "buildsystem": "meson",
+      "config-opts": [
         "--libdir=lib"
       ],
-      "build-options": {
-        "build-args": [ "--share=network" ]
-      }
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://download.gnome.org/sources/pangomm/2.46/pangomm-2.46.5.tar.xz",
+          "sha256": "38ca0b050b065de4e3da0c182df657437757063bbf0c4b6c9567ddba019b1d68"
+        }
+      ]
+    },
+    {
+      "name": "atkmm",
+      "buildsystem": "meson",
+      "config-opts": [
+        "--libdir=lib"
+      ],
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://download.gnome.org/sources/atkmm/2.28/atkmm-2.28.5.tar.xz",
+          "sha256": "ae449192a582a2582a95e0602b15d792bbd639e836339b81ef916aa87540ac5c"
+        }
+      ]
     },
     {
       "name": "gtkmm",
       "buildsystem": "meson",
+      "config-opts": [
+        "--libdir=lib",
+        "-Dbuild-demos=false",
+        "-Dbuild-tests=false"
+      ],
       "sources": [
         {
-          "type": "git",
-          "url": "https://github.com/GNOME/gtkmm.git",
-          "tag": "3.24.8"
+          "type": "archive",
+          "url": "https://download.gnome.org/sources/gtkmm/3.24/gtkmm-3.24.8.tar.xz",
+          "sha256": "d2940c64922e5b958554b23d4c41d1839ea9e43e0d2e5b3819cfb46824a098c4"
         }
-      ],
-      "config-opts": [
-        "--libdir=lib"
-      ],
-      "build-options": {
-        "build-args": [ 
-          "--share=network"
-        ]
-      }
+      ]
     },
     {
       "name": "${CMAKE_PROJECT_NAME}",
@@ -67,7 +103,8 @@
       "sources": [
         {
           "type": "dir",
-          "path": "${CMAKE_SOURCE_DIR}"
+          "path": "${CMAKE_SOURCE_DIR}",
+          "skip": ["build"]
         }
       ]
     }

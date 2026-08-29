@@ -7,6 +7,8 @@ FLATPAK_BUILD = join_paths(meson.current_build_dir(), meson.project_name() + '-f
 FLATPAK_DST_NAME = meson.project_name() + '-' + meson.project_version() + '.flatpak'
 flatpakConfDst = 'flatpak.conf.json'
 FLATPAK_CONF_SRC = join_paths('..', '..', 'misc', 'flatpak.conf.json.meson.in')
+FLATPAK_DEPS_REMOTE = 'flathub'
+FLATPAK_DEPS_REMOTE_URL = 'https://dl.flathub.org/repo/flathub.flatpakrepo'
 
 flatpak_conf_data = configuration_data()
 
@@ -21,7 +23,11 @@ configure_file(
 )
 
 flatpak_cmd = [
-  'flatpak-builder', '--repo=' + FLATPAK_REPO, 
+  'flatpak', 'remote-add', '--user', '--if-not-exists', 
+    FLATPAK_DEPS_REMOTE, FLATPAK_DEPS_REMOTE_URL,
+  '&&',
+  'flatpak-builder', '--user', '--install-deps-from=' + FLATPAK_DEPS_REMOTE, 
+    '--assumeyes', '--repo=' + FLATPAK_REPO, 
     FLATPAK_BUILD, 
     join_paths(meson.current_build_dir(), flatpakConfDst),
   '&&',

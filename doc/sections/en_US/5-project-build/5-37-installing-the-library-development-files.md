@@ -30,11 +30,11 @@ What each mode installs for a `0.12.0` project named `CppAppTemplate`:
 
 | Installed artefact | `ON` | `OFF` |
 |---|---|---|
-| `<prefix>/lib/libCppAppTemplate-0.so.0.12.0` - the library binary | yes | yes |
-| `<prefix>/lib/libCppAppTemplate-0.so.0` - the SONAME symlink the loader resolves | yes | yes |
-| `<prefix>/lib/libCppAppTemplate-0.so` - the namelink the linker resolves | yes | no |
-| `<prefix>/include/CppAppTemplate-0/*.h` - the public headers | yes | no |
-| `<prefix>/lib/cmake/CppAppTemplate-0/*.cmake` - the `find_package` integration | yes | no |
+| `<prefix>/lib/libCppAppTemplate-0.12.so.0.12.0` - the library binary | yes | yes |
+| `<prefix>/lib/libCppAppTemplate-0.12.so.0` - the SONAME symlink the loader resolves | yes | yes |
+| `<prefix>/lib/libCppAppTemplate-0.12.so` - the namelink the linker resolves | yes | no |
+| `<prefix>/include/CppAppTemplate-0.12/*.h` - the public headers | yes | no |
+| `<prefix>/lib/cmake/CppAppTemplate-0.12/*.cmake` - the `find_package` integration | yes | no |
 | the debug symbols, if the project installs any | yes | no |
 
 The template installs no separate debug symbol files of its own - a `Debug`

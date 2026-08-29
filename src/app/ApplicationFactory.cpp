@@ -108,7 +108,7 @@ int ApplicationFactory::run(int& gargc, char**& gargv)
   // initialized application logger instance is handed over to it. Without that
   // call the library would log into an own default log file instead of the one
   // chosen here and the project logs would be split in two.
-  templatelib0::LibraryFacade::init_logger(LOG_REAL_LOGGER());
+  CppAppTemplate012::LibraryFacade::init_logger(LOG_REAL_LOGGER());
 
   std::shared_ptr<ApplicationContext> ctx = create_context(gargc, gargv);
 

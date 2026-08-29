@@ -1,9 +1,9 @@
-#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_LIBRARYCONTEXT_CLASS_H
-#define YOUR_CPP_APP_TEMPLATE_PROJECT_LIBRARYCONTEXT_CLASS_H
+#ifndef CPP_APP_TEMPLATE_012_LIBRARYCONTEXT_CLASS_H
+#define CPP_APP_TEMPLATE_012_LIBRARYCONTEXT_CLASS_H
 
 #include <gmock/gmock.h>
 
-namespace templatelib0
+namespace CppAppTemplate012
 {
 
 class LibraryContext
@@ -20,6 +20,6 @@ class LibraryContext
 
 using LibraryContextPtr = LibraryContext::LibraryContextPtr;
 
-}  // namespace templatelib0
+}  // namespace CppAppTemplate012
 
-#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_LIBRARYCONTEXT_CLASS_H
+#endif  // CPP_APP_TEMPLATE_012_LIBRARYCONTEXT_CLASS_H

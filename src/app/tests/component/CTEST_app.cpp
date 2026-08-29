@@ -9,7 +9,7 @@
 
 using namespace app;
 using namespace testing;
-using namespace templatelib0;
+using namespace CppAppTemplate012;
 using namespace lib0impl;
 using namespace converters;
 

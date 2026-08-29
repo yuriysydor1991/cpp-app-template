@@ -30,7 +30,7 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  auto libi = templatelib0::LibraryFacade::create_library(libctx);
+  auto libi = CppAppTemplate012::LibraryFacade::create_library(libctx);
 
   if (!libi->libcall(libctx)) {
     LOGE("Invalid library execution status");
@@ -45,7 +45,7 @@ Application::LibraryContextPtr Application::create_and_convert_libctx(
     std::shared_ptr<ApplicationContext> ctx)
 {
   LibraryContextPtr libctx =
-      templatelib0::LibraryFacade::create_library_context();
+      CppAppTemplate012::LibraryFacade::create_library_context();
 
   assert(libctx != nullptr);
 

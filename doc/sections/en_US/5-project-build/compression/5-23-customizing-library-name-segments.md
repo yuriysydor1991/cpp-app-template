@@ -6,25 +6,31 @@ library that downstream consumers can link against. The library name they see
 package directory and the imported-target namespace exported through
 `install(EXPORT ...)`) is derived from three optional CMake options. They let
 parallel installs of distinct versions of the library coexist on the same host -
-e.g. `include/CppAppTemplate-0.12.0-dev/` next to `include/CppAppTemplate-0/`.
+e.g. `include/CppAppTemplate-0.12.0-dev/` next to `include/CppAppTemplate-0.12/`.
 The main application executable name is unaffected and keeps using
 `PROJECT_BINARY_NAME`.
 
 | Option | Default | Effect |
 |---|---|---|
-| `-DLIB_INCLUDE_MINOR_IN_NAME=ON` | `OFF` | Appends `.<minor>` to the library name |
+| `-DLIB_INCLUDE_MINOR_IN_NAME=ON` | `ON` | Appends `.<minor>` to the library name |
 | `-DLIB_INCLUDE_MICRO_IN_NAME=ON` | `OFF` | Appends `.<micro>` (implies the minor flag) |
 | `-DLIB_NAME_SUFFIX=-dev` | `""` | Appends an arbitrary trailing tag |
+
+The minor segment is on by default, because the library public namespace carries
+the very same major and minor pair - `CppAppTemplate012`, see [The library's
+installable include header files](/doc/sections/en_US/4-project-structure/4-9-the-librarys-installable-include-header-files.md).
+Two minor versions of the library then install completely side by side and an
+application may depend on both of them at once.
 
 Resulting library name examples for a `0.12.0` project:
 
 | Configure flags | Library name |
 |---|---|
-| (none) | `CppAppTemplate-0` |
-| `-DLIB_INCLUDE_MINOR_IN_NAME=ON` | `CppAppTemplate-0.11` |
-| `-DLIB_INCLUDE_MINOR_IN_NAME=ON -DLIB_INCLUDE_MICRO_IN_NAME=ON` | `CppAppTemplate-0.12.0` |
-| `-DLIB_NAME_SUFFIX=-dev` | `CppAppTemplate-0-dev` |
-| `-DLIB_INCLUDE_MINOR_IN_NAME=ON -DLIB_INCLUDE_MICRO_IN_NAME=ON -DLIB_NAME_SUFFIX=-dev` | `CppAppTemplate-0.12.0-dev` |
+| (none) | `CppAppTemplate-0.12` |
+| `-DLIB_INCLUDE_MINOR_IN_NAME=OFF` | `CppAppTemplate-0` |
+| `-DLIB_INCLUDE_MICRO_IN_NAME=ON` | `CppAppTemplate-0.12.0` |
+| `-DLIB_NAME_SUFFIX=-dev` | `CppAppTemplate-0.12-dev` |
+| `-DLIB_INCLUDE_MICRO_IN_NAME=ON -DLIB_NAME_SUFFIX=-dev` | `CppAppTemplate-0.12.0-dev` |
 
 Combined configure example:
 
@@ -32,7 +38,6 @@ Combined configure example:
 # inside the project root directory
 
 cmake -S . -B build \
-  -DLIB_INCLUDE_MINOR_IN_NAME=ON \
   -DLIB_INCLUDE_MICRO_IN_NAME=ON \
   -DLIB_NAME_SUFFIX=-dev
 cmake --build build

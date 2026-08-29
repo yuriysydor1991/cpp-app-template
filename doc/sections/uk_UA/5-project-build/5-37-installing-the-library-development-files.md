@@ -31,11 +31,11 @@ cmake --install build --prefix /usr/local
 
 | Встановлюваний артефакт | `ON` | `OFF` |
 |---|---|---|
-| `<prefix>/lib/libCppAppTemplate-0.so.0.12.0` - бінарний файл бібліотеки | так | так |
-| `<prefix>/lib/libCppAppTemplate-0.so.0` - символьне посилання SONAME для завантажувача | так | так |
-| `<prefix>/lib/libCppAppTemplate-0.so` - символьне посилання для лінкера | так | ні |
-| `<prefix>/include/CppAppTemplate-0/*.h` - публічні заголовкові файли | так | ні |
-| `<prefix>/lib/cmake/CppAppTemplate-0/*.cmake` - інтеграція з `find_package` | так | ні |
+| `<prefix>/lib/libCppAppTemplate-0.12.so.0.12.0` - бінарний файл бібліотеки | так | так |
+| `<prefix>/lib/libCppAppTemplate-0.12.so.0` - символьне посилання SONAME для завантажувача | так | так |
+| `<prefix>/lib/libCppAppTemplate-0.12.so` - символьне посилання для лінкера | так | ні |
+| `<prefix>/include/CppAppTemplate-0.12/*.h` - публічні заголовкові файли | так | ні |
+| `<prefix>/lib/cmake/CppAppTemplate-0.12/*.cmake` - інтеграція з `find_package` | так | ні |
 | символи зневадження, якщо проект їх встановлює | так | ні |
 
 Даний шаблон не встановлює власних окремих файлів символів зневадження -

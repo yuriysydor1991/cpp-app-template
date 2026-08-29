@@ -18,6 +18,15 @@ target_include_directories(
   PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/facade/public>
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src/log>
+    # Both the plain include root and the versioned sub-directory are exported,
+    # so a consumer may write either
+    #   #include <CppAppTemplate-0.12/LibraryFacade.h>  (recommended)
+    # or the short
+    #   #include <LibraryFacade.h>
+    # The prefixed form is the safe one: every library derived from this
+    # template installs a LibraryFacade.h of its own, and names like ILib.h are
+    # generic enough to collide in a busy include path.
+    $<INSTALL_INTERFACE:include>
     $<INSTALL_INTERFACE:include/${PROJECT_LIBRARY_NAME}>
 )
 
@@ -38,6 +47,24 @@ set_target_properties(
   PROPERTIES
   VERSION ${PROJECT_VERSION}
   SOVERSION ${PROJECT_VERSION_MAJOR}
+  # Only the TEMPLATE_LIB_API marked interface of facade/public leaves the
+  # shared object. That is a correctness requirement and not a size
+  # optimisation: every library derived from this template carries the very
+  # same lib0impl, default_logger and project_decls names, and an application
+  # which loads two of them would otherwise let the dynamic linker bind the
+  # calls of one library into the definitions of the other. The application of
+  # this very project carries an own copy of the logging subsystem too, and
+  # reaches the library one through LibraryFacade::init_logger alone.
+  CXX_VISIBILITY_PRESET hidden
+)
+
+# Turns the TEMPLATE_LIB_API macro of the public headers into the export half
+# of the __declspec pair while the library itself is being compiled. Nothing
+# outside of this build ever defines it, so a consumer of the installed headers
+# gets the import half.
+target_compile_definitions(
+  ${PROJECT_LIBRARY_NAME}
+  PRIVATE TEMPLATE_LIB_BUILDING=1
 )
 
 if(LIB_INSTALL_DEV_FILES)

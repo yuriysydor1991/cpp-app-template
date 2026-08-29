@@ -6,6 +6,17 @@
 #include "ILib.h"
 #include "LibraryContext.h"
 
+/**
+ * @brief The library implementation namespace. Nothing declared under it is
+ * installed - a consuming project only ever sees the CppAppTemplate012
+ * interfaces.
+ *
+ * Rename it by hand along with the public namespace. The library is built with
+ * the hidden symbol visibility, but a std::make_shared instantiation names its
+ * class in its own mangled name, so two derived libraries which kept this name
+ * may still share the factory of whichever of them the loader resolved first -
+ * and the two factories do not even share a vtable layout.
+ */
 namespace lib0impl
 {
 
@@ -18,9 +29,9 @@ class LibFactory
 {
  public:
   using LibFactoryPtr = std::shared_ptr<LibFactory>;
-  using ILibPtr = templatelib0::ILibPtr;
-  using LibraryContextPtr = templatelib0::LibraryContextPtr;
-  using LibraryContext = templatelib0::LibraryContext;
+  using ILibPtr = CppAppTemplate012::ILibPtr;
+  using LibraryContextPtr = CppAppTemplate012::LibraryContextPtr;
+  using LibraryContext = CppAppTemplate012::LibraryContext;
 
   virtual ~LibFactory() = default;
   LibFactory() = default;

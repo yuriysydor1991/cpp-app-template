@@ -1,13 +1,15 @@
-#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_LIBRARYCONTEXT_CLASS_H
-#define YOUR_CPP_APP_TEMPLATE_PROJECT_LIBRARYCONTEXT_CLASS_H
+#ifndef CPP_APP_TEMPLATE_012_LIBRARYCONTEXT_CLASS_H
+#define CPP_APP_TEMPLATE_012_LIBRARYCONTEXT_CLASS_H
 
 #include <memory>
+
+#include "LibraryAPI.h"
 
 /**
  * @brief The facade interface namespace for the library.
  * Designed to give access to the library functionality.
  */
-namespace templatelib0
+namespace CppAppTemplate012
 {
 
 /**
@@ -24,7 +26,7 @@ namespace templatelib0
  *
  * Current file is a target for the library header installation.
  */
-class LibraryContext
+class TEMPLATE_LIB_API LibraryContext
 {
  public:
   using LibraryContextPtr = std::shared_ptr<LibraryContext>;
@@ -39,6 +41,6 @@ class LibraryContext
 
 using LibraryContextPtr = LibraryContext::LibraryContextPtr;
 
-}  // namespace templatelib0
+}  // namespace CppAppTemplate012
 
-#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_LIBRARYCONTEXT_CLASS_H
+#endif  // CPP_APP_TEMPLATE_012_LIBRARYCONTEXT_CLASS_H

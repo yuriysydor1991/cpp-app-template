@@ -11,8 +11,8 @@ using namespace testing;
 class UTEST_Application : public Test
 {
  public:
-  using LibraryFacade = templatelib0::LibraryFacade;
-  using LibraryContext = templatelib0::LibraryContext;
+  using LibraryFacade = CppAppTemplate012::LibraryFacade;
+  using LibraryContext = CppAppTemplate012::LibraryContext;
   using ApplicationContext2LibraryContext =
       converters::ApplicationContext2LibraryContext;
 
@@ -20,12 +20,12 @@ class UTEST_Application : public Test
       : app{std::make_shared<Application>()},
         appCtx{std::make_shared<ApplicationContext>(argc, argv)}
   {
-    templatelib0::LibraryFacade::resetMocks();
+    CppAppTemplate012::LibraryFacade::resetMocks();
   }
 
   ~UTEST_Application()
   {
-    templatelib0::LibraryFacade::resetMocks();
+    CppAppTemplate012::LibraryFacade::resetMocks();
     ApplicationContext2LibraryContext::onMockCreate = nullptr;
   }
 
@@ -45,11 +45,12 @@ TEST_F(UTEST_Application, normal_exit)
   auto ctxInstance = std::make_shared<LibraryContext>();
   auto libmain = std::make_shared<lib0impl::LibMain>();
 
-  EXPECT_CALL(*templatelib0::LibraryFacade::create_library_context_mock, Call())
+  EXPECT_CALL(*CppAppTemplate012::LibraryFacade::create_library_context_mock,
+              Call())
       .Times(1)
       .WillOnce(Return(ctxInstance));
 
-  EXPECT_CALL(*templatelib0::LibraryFacade::create_library_mock, Call(_))
+  EXPECT_CALL(*CppAppTemplate012::LibraryFacade::create_library_mock, Call(_))
       .Times(1)
       .WillOnce(Return(libmain));
 
@@ -78,7 +79,8 @@ TEST_F(UTEST_Application, failure_exit_no_lib_context)
 {
   MockFunction<void(ApplicationContext2LibraryContext&)> converterEnsurer;
 
-  EXPECT_CALL(*templatelib0::LibraryFacade::create_library_context_mock, Call())
+  EXPECT_CALL(*CppAppTemplate012::LibraryFacade::create_library_context_mock,
+              Call())
       .Times(1)
       .WillOnce(Return(nullptr));
 
@@ -104,7 +106,8 @@ TEST_F(UTEST_Application, failure_exit_invalid_context_conversion_result)
 
   auto ctxInstance = std::make_shared<LibraryContext>();
 
-  EXPECT_CALL(*templatelib0::LibraryFacade::create_library_context_mock, Call())
+  EXPECT_CALL(*CppAppTemplate012::LibraryFacade::create_library_context_mock,
+              Call())
       .Times(1)
       .WillOnce(Return(ctxInstance));
 
@@ -136,11 +139,12 @@ TEST_F(UTEST_Application, failure_exit_invalid_lib_result)
   auto ctxInstance = std::make_shared<LibraryContext>();
   auto libmain = std::make_shared<lib0impl::LibMain>();
 
-  EXPECT_CALL(*templatelib0::LibraryFacade::create_library_context_mock, Call())
+  EXPECT_CALL(*CppAppTemplate012::LibraryFacade::create_library_context_mock,
+              Call())
       .Times(1)
       .WillOnce(Return(ctxInstance));
 
-  EXPECT_CALL(*templatelib0::LibraryFacade::create_library_mock, Call(_))
+  EXPECT_CALL(*CppAppTemplate012::LibraryFacade::create_library_mock, Call(_))
       .Times(1)
       .WillOnce(Return(libmain));
 

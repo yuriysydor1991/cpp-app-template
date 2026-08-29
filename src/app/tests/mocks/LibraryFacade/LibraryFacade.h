@@ -1,5 +1,5 @@
-#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_LIBRARYFACADE_CLASS_H
-#define YOUR_CPP_APP_TEMPLATE_PROJECT_LIBRARYFACADE_CLASS_H
+#ifndef CPP_APP_TEMPLATE_012_LIBRARYFACADE_CLASS_H
+#define CPP_APP_TEMPLATE_012_LIBRARYFACADE_CLASS_H
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -11,13 +11,13 @@
 #include "LibraryContext.h"
 #include "src/log/ILogger.h"
 
-namespace templatelib0
+namespace CppAppTemplate012
 {
 
 class LibraryFacade
 {
  public:
-  using LibraryContextPtr = templatelib0::LibraryContextPtr;
+  using LibraryContextPtr = CppAppTemplate012::LibraryContextPtr;
 
   virtual ~LibraryFacade() = default;
   LibraryFacade() = default;
@@ -72,6 +72,6 @@ class LibraryFacade
   }
 };
 
-}  // namespace templatelib0
+}  // namespace CppAppTemplate012
 
-#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_LIBRARYFACADE_CLASS_H
+#endif  // CPP_APP_TEMPLATE_012_LIBRARYFACADE_CLASS_H

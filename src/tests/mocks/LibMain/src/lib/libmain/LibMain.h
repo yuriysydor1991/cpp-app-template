@@ -11,11 +11,11 @@
 namespace lib0impl
 {
 
-class LibMain : public templatelib0::ILib
+class LibMain : public CppAppTemplate012::ILib
 {
  public:
   using LibMainPtr = std::shared_ptr<LibMain>;
-  using LibraryContextPtr = templatelib0::LibraryContextPtr;
+  using LibraryContextPtr = CppAppTemplate012::LibraryContextPtr;
 
   virtual ~LibMain() = default;
   LibMain() = default;

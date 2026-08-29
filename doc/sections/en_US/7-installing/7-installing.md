@@ -10,7 +10,7 @@ In order to install generated executable (as shown previous) file into your's sy
 ```
 # installs generated binary under the /usr/local/bin/ for example
 # installs generated library under the /usr/local/lib/
-# and installs header include files under the /usr/local/include/CppAppTemplate
+# and installs header include files under the /usr/local/include/CppAppTemplate-0.12
 # run from the project's build directory
 
 sudo cmake --install .

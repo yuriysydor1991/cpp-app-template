@@ -18,7 +18,7 @@ LibMain::LibMain()
     // destination of an adopted one belongs to the code which uses the
     // library, so the library must not replace the log file, the level nor the
     // printing settings chosen by it. See the
-    // templatelib0::LibraryFacade::init_logger method.
+    // CppAppTemplate012::LibraryFacade::init_logger method.
     LOG_INIT_DEFAULTS_IF_OWN();
     inited = true;
   }

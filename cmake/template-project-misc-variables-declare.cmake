@@ -9,10 +9,15 @@ set(
 
 string(TOLOWER ${PROJECT_BINARY_NAME} PROJECT_BINARY_NAME_lower)
 
+# ON by default: the library public namespace carries the major and the minor
+# version (CppAppTemplate012), so the installable names track the very same
+# pair. Two minor versions then install completely side by side - their
+# binaries, their header directories and their CMake packages all differ - and
+# an application is free to depend on both of them at once.
 option(
   LIB_INCLUDE_MINOR_IN_NAME
   "Append .<minor> to the installable library name (binary, headers subdir, CMake package dir)"
-  OFF
+  ON
 )
 
 option(

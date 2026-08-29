@@ -74,7 +74,7 @@ class UTEST_ApplicationFactory : public Test
     Application::onMockCreate = nullptr;
     ApplicationHelpPrinter::onMockCreate = nullptr;
     ApplicationVersionPrinter::onMockCreate = nullptr;
-    templatelib0::LibraryFacade::init_logger_mock.reset();
+    CppAppTemplate012::LibraryFacade::init_logger_mock.reset();
     logMock::realLogger.reset();
   }
 
@@ -322,7 +322,8 @@ TEST_F(UTEST_ApplicationFactory, factory_run_inits_the_library_logger)
 
   CommandLineParser::onMockCreate = onMockCreateParserEnsurer.AsStdFunction();
   Application::onMockCreate = onMockCreateAppEnsurer.AsStdFunction();
-  templatelib0::LibraryFacade::init_logger_mock = std::move(init_logger_mock);
+  CppAppTemplate012::LibraryFacade::init_logger_mock =
+      std::move(init_logger_mock);
 
   EXPECT_EQ(factory->run(customArgc, customArgv), 0);
 }

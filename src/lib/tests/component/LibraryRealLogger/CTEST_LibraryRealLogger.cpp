@@ -15,7 +15,7 @@
 #include "src/log/severity-macro-consts.h"
 
 using namespace testing;
-using namespace templatelib0;
+using namespace CppAppTemplate012;
 using namespace default_logger;
 
 namespace

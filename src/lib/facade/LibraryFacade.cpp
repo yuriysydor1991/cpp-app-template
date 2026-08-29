@@ -7,7 +7,7 @@
 #include "src/lib/libmain/LibFactory.h"
 #include "src/log/log.h"
 
-namespace templatelib0
+namespace CppAppTemplate012
 {
 
 LibraryContextPtr LibraryFacade::create_library_context()
@@ -42,4 +42,4 @@ void LibraryFacade::init_logger(const logger::ILoggerPtr& appLogger)
   LOG_INIT_REAL_LOGGER(appLogger);
 }
 
-}  // namespace templatelib0
+}  // namespace CppAppTemplate012

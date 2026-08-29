@@ -8,6 +8,7 @@
     {
       "name": "cfitsio",
       "buildsystem": "cmake-ninja",
+      "builddir": true,
       "config-opts": [
         "-DCMAKE_BUILD_TYPE=Release",
         "-DTESTS=OFF",

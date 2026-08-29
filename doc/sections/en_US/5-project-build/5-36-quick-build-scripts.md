@@ -30,6 +30,29 @@ A complete `Release` build takes the single command:
 scripts/build/release.sh
 ```
 
+### Packager scripts
+
+Each of the scripts below performs the `Release` configure and build steps with a single packager option enabled and then builds the target which produces the package out of the very same build tree. They accept the parameters of the entry point scripts above, and the produced package lands in the `build/release` directory:
+
+| Script | Produces |
+| --- | --- |
+| [build-deb.sh](/scripts/build/build-deb.sh) | the DEB package - the `ENABLE_DEB` option and the `package` target |
+| [build-flatpak.sh](/scripts/build/build-flatpak.sh) | the flatpak bundle - the `ENABLE_FLATPAK` option and the `flatpak` target |
+| [build-freebsd-pkg.sh](/scripts/build/build-freebsd-pkg.sh) | the FreeBSD pkg package - the `ENABLE_FREEBSD_PKG` option and the `package` target |
+| [build-rpm.sh](/scripts/build/build-rpm.sh) | the RPM package - the `ENABLE_RPM` option and the `package` target |
+| [build-snap.sh](/scripts/build/build-snap.sh) | the snap package - the `ENABLE_SNAP` option and the `snap` target |
+| [build-wix.sh](/scripts/build/build-wix.sh) | the WIX MSI installer - the `ENABLE_WIX` option and the `package` target |
+
+An own `-D<variable>=<value>` argument is forwarded to the configure step after the packager option, so it overrides that option and every other project setting:
+
+```
+# inside the project root directory
+
+scripts/build/build-deb.sh -DPROJECT_MAINTAINER_EMAIL=me@example.org
+```
+
+The packager options themselves, the tools they need and their own settings are described by the packager subsections of the [Project build](/doc/sections/en_US/5-project-build/5-project-build.md) section.
+
 ### Stage scripts
 
 Every entry point script above is a chain of the stage scripts below, which may be started on their own when a single step is needed:

@@ -11,8 +11,11 @@ target_include_directories(
   PRIVATE
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
-    ${MONGOCXX_INCLUDE_DIRS}
-    ${BSONCXX_INCLUDE_DIRS}
+)
+
+target_link_libraries(
+  TemplateMongoDBQueryMakerObj
+  mongo::mongocxx_shared mongo::bsoncxx_shared
 )
 
 target_link_libraries(

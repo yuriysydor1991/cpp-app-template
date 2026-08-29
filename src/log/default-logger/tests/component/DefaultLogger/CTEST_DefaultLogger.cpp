@@ -10,7 +10,7 @@
 #include <thread>
 #include <type_traits>
 
-#include "src/log/ILogger.h"
+#include "src/lib/facade/public/ILogger.h"
 #include "src/log/default-logger/DefaultLogger.h"
 #include "src/log/default-logger/real-default-logger/RealDefaultLogger.h"
 

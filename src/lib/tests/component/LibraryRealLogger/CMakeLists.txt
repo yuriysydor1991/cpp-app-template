@@ -28,7 +28,6 @@ target_include_directories(
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
     ${CMAKE_SOURCE_DIR}/src/lib/facade/public
-    ${CMAKE_SOURCE_DIR}/src/log
 )
 
 target_link_libraries(

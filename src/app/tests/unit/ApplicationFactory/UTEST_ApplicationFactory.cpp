@@ -9,7 +9,7 @@
 #include "src/app/applications/Application.h"
 #include "src/app/applications/ApplicationHelpPrinter.h"
 #include "src/app/applications/ApplicationVersionPrinter.h"
-#include "src/log/ILogger.h"
+#include "src/lib/facade/public/ILogger.h"
 #include "src/log/log.h"
 
 using namespace app;

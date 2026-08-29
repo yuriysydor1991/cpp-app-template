@@ -9,10 +9,10 @@
 
 #include "LibraryContext.h"
 #include "LibraryFacade.h"
-#include "src/log/ILogger.h"
+#include "src/lib/facade/public/ILogger.h"
+#include "src/lib/facade/public/severity-macro-consts.h"
 #include "src/log/default-logger/real-default-logger/RealDefaultLogger.h"
 #include "src/log/log.h"
-#include "src/log/severity-macro-consts.h"
 
 using namespace testing;
 using namespace CppAppTemplate012;
@@ -169,6 +169,19 @@ class CTEST_LibraryRealLogger : public Test
 
   const DefaultLogger::RealLoggerPtr originalRealLogger{LOG_REAL_LOGGER()};
 };
+
+TEST_F(CTEST_LibraryRealLogger, logger_interface_severities_stay_as_they_are)
+{
+  // The severity values cross the library boundary along with the class layout
+  // of the interface they belong to, so a change to any of them is a change to
+  // the ABI of every already installed library. See the logger::ILogger
+  // documentation.
+  EXPECT_EQ(logger::ILogger::LVL_ERROR, 1U);
+  EXPECT_EQ(logger::ILogger::LVL_WARNING, 2U);
+  EXPECT_EQ(logger::ILogger::LVL_INFO, 3U);
+  EXPECT_EQ(logger::ILogger::LVL_DEBUG, 4U);
+  EXPECT_EQ(logger::ILogger::LVL_TRACE, 5U);
+}
 
 TEST_F(CTEST_LibraryRealLogger, given_real_logger_is_adopted)
 {

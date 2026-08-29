@@ -9,7 +9,7 @@
 
 #include "ILib.h"
 #include "LibraryContext.h"
-#include "src/log/ILogger.h"
+#include "src/lib/facade/public/ILogger.h"
 
 namespace CppAppTemplate012
 {

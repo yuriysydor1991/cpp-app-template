@@ -14,7 +14,6 @@ target_include_directories(
   PRIVATE ${FACADE_MOCK_DIR}/LibFactory
   PRIVATE ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR}
   PRIVATE ${CMAKE_SOURCE_DIR}/src/lib/facade/public
-  PRIVATE ${CMAKE_SOURCE_DIR}/src/log
 )
 
 target_link_libraries(

@@ -8,16 +8,15 @@ add_library(
 )
 
 # The public LibraryFacade.h header declares the logger instance adoption, so
-# the logging interface headers are a part of the library public ones. They sit
-# in the src/log directory during the build and land next to the facade ones
-# after the installation.
+# the logging interface headers are a part of the library public ones and live
+# among them: the single facade/public directory is the whole installable
+# surface.
 target_include_directories(
   ${PROJECT_LIBRARY_NAME}
   PRIVATE ${CMAKE_SOURCE_DIR}
   PRIVATE ${CMAKE_BINARY_DIR}
   PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/facade/public>
-    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src/log>
     # Both the plain include root and the versioned sub-directory are exported,
     # so a consumer may write either
     #   #include <CppAppTemplate-0.12/LibraryFacade.h>  (recommended)

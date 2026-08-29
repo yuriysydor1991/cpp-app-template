@@ -10,6 +10,8 @@ cmake -B build -S . -DENABLE_FLATPAK=ON
 
 Which in order will enable the `flatpak` target.
 
+The `flatpak-builder` compiles the project inside it's own sandbox, which carries no network access, while the Font Awesome enabler fetches it's checkout through the Internet. The generated manifest therefore lists the very same `TEMPLATE_APP_FONTAWESOME_GIT` repository and `TEMPLATE_APP_FONTAWESOME_GIT_TAG` tag among the module sources, so that the `flatpak-builder` downloads the checkout before the sandbox is entered, and hands it over to the sandboxed configure through the `TEMPLATE_APP_FONTAWESOME_DIR` option. Every other source of the icon set (an own repository mirror or an own tag) reaches the flatpak package the very same way: through those two cache variables.
+
 And finally to generate the flatpak package run the `flatpak` target for the build:
 
 ```

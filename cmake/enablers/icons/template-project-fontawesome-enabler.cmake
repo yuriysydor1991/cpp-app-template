@@ -6,13 +6,8 @@ option(
   ON
 )
 
-if (NOT ENABLE_FONTAWESOME)
-  return()
-endif()
-
-include(template-project-fontawesome-index-generator)
-include(template-project-fontawesome-resources)
-
+# The packager manifests carry the very same checkout, so it's coordinates
+# stay declared even with the enabler itself switched off.
 set(
   TEMPLATE_APP_FONTAWESOME_GIT "https://github.com/FortAwesome/Font-Awesome.git"
   CACHE STRING "The Font Awesome Free icon set git source repository"
@@ -22,6 +17,13 @@ set(
   TEMPLATE_APP_FONTAWESOME_GIT_TAG "7.3.1"
   CACHE STRING "The Font Awesome project git repository tag of interest"
 )
+
+if (NOT ENABLE_FONTAWESOME)
+  return()
+endif()
+
+include(template-project-fontawesome-index-generator)
+include(template-project-fontawesome-resources)
 
 set(
   TEMPLATE_APP_FONTAWESOME_DIR ""

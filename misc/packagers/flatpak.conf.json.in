@@ -8,11 +8,22 @@
     {
       "name": "${CMAKE_PROJECT_NAME}",
       "buildsystem": "cmake",
-      "config-opts": ["-DCMAKE_BUILD_TYPE=Release"],
+      "config-opts": [
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DTEMPLATE_APP_FONTAWESOME_DIR=/run/build/${CMAKE_PROJECT_NAME}/fontawesome"
+      ],
       "sources": [
         {
           "type": "dir",
-          "path": "${CMAKE_SOURCE_DIR}"
+          "path": "${CMAKE_SOURCE_DIR}",
+          "skip": ["build"]
+        },
+        {
+          "x-comment": "The sandbox the module is built in carries no network access, so the very checkout the Font Awesome enabler would fetch there is downloaded by the flatpak-builder itself and handed over to the configure through the TEMPLATE_APP_FONTAWESOME_DIR option above.",
+          "type": "git",
+          "url": "${TEMPLATE_APP_FONTAWESOME_GIT}",
+          "tag": "${TEMPLATE_APP_FONTAWESOME_GIT_TAG}",
+          "dest": "fontawesome"
         }
       ]
     }

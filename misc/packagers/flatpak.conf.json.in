@@ -104,7 +104,7 @@
         "-DCMAKE_BUILD_TYPE=Release",
         "-DCMAKE_INSTALL_PREFIX=/app",
         "-DMySQL_INCLUDE_DIRS=/app/include/jdbc",
-        "-DMySQL_LIBRARIES=/app/lib64/libmysqlcppconn.so"
+        "-DMySQL_LIBRARIES=/app/lib/libmysqlcppconn.so"
       ],
       "sources": [
         {

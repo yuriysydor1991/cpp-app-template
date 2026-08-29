@@ -1,7 +1,10 @@
 #!/bin/bash -e
 #
-# Builds the project in the Release configuration with the DEB packager
-# enabled and produces the package by the `package` target of that build.
+# Produces the DEB package: a Release configure with the ENABLE_DEB option
+# enabled, then the `package` target of that build.
+#
+# The `package` target runs the preinstall step, which builds the project, so
+# no separate build step is performed.
 #
 # Every parameter of the release-configure.sh and the release-build.sh scripts
 # is accepted and forwarded, so an own -D<variable>=<value> override wins over
@@ -14,8 +17,6 @@ BUILD_SCRIPTS_ROOT=$(realpath "$(dirname "$0")")
 
 ${BUILD_SCRIPTS_ROOT}/release-configure.sh -DENABLE_DEB=ON "$@"
 
-${BUILD_SCRIPTS_ROOT}/release-build.sh "$@"
-
 ${BUILD_SCRIPTS_ROOT}/release-build.sh --target package "$@"
 
-log "The DEB package is inside the ${RELEASE_BUILD_DIR} directory"
+log "Look for the DEB package inside the ${RELEASE_BUILD_DIR} directory"

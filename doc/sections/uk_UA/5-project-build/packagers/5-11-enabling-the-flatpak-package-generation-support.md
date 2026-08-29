@@ -10,6 +10,16 @@ mkdir -vp build && cd build && cmake ../ -DENABLE_FLATPAK=ON
 
 Успішно виконана команда у свою чергу увімкне ціль для побудови під назвою `flatpak`.
 
+Ціль `flatpak` виконує побудову проекту всередині власної пісочниці, отож файли розробки gtkmm4 і libadwaita ніколи не беруться із хост-системи. У разі їх відсутності на хост-системі необхідно вимкнути відповідні параметри:
+
+```
+# всередині кореневої директорії проекту 
+
+mkdir -vp build && cd build && cmake ../ -DENABLE_FLATPAK=ON -DENABLE_GTKMM4=OFF -DENABLE_LIBADWAITA=OFF
+```
+
+Скрипт [build-flatpak.sh](/scripts/build/build-flatpak.sh) із секції [Швидкі скрипти побудови](/doc/sections/uk_UA/5-project-build/5-36-quick-build-scripts.md) виконує таку саму конфігурацію самостійно.
+
 На кінець, щоб згенерувати пакет розповсюдження flatpak необхідно побудувати ціль `flatpak`:
 
 ```

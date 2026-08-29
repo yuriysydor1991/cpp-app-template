@@ -10,6 +10,16 @@ cmake -B build -S . -DENABLE_FLATPAK=ON
 
 Which in order will enable the `flatpak` target.
 
+The `flatpak` target builds the project inside its own sandbox, so the gtkmm4 and the libadwaita development files are never taken from the host. Turn their enablers off whenever the host lacks them:
+
+```
+# inside the project root directory 
+
+cmake -B build -S . -DENABLE_FLATPAK=ON -DENABLE_GTKMM4=OFF -DENABLE_LIBADWAITA=OFF
+```
+
+The [build-flatpak.sh](/scripts/build/build-flatpak.sh) script of the [Quick build scripts](/doc/sections/en_US/5-project-build/5-36-quick-build-scripts.md) section performs that very configure on its own.
+
 And finally to generate the flatpak package run the `flatpak` target for the build:
 
 ```

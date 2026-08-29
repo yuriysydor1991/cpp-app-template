@@ -8,8 +8,8 @@
 #include <string>
 
 #include "project-global-decls.h"
-#include "src/log/ILogger.h"
-#include "src/log/severity-macro-consts.h"
+#include "src/lib/facade/public/ILogger.h"
+#include "src/lib/facade/public/severity-macro-consts.h"
 
 /**
  * @brief The default logger quick implementation encapsulation namespace.

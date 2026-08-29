@@ -1,6 +1,6 @@
 ## The library's installable public include header files
 
-The [src/lib/facade/public](/src/lib/facade/public) directory holds the whole installable interface of the library - four hand written headers, all in the `CppAppTemplate012` namespace:
+The [src/lib/facade/public](/src/lib/facade/public) directory holds the whole installable interface of the library - six hand written headers, and nothing outside of that directory is ever installed:
 
 | Header | Declares |
 |---|---|
@@ -8,8 +8,28 @@ The [src/lib/facade/public](/src/lib/facade/public) directory holds the whole in
 | [ILib.h](/src/lib/facade/public/ILib.h) | `ILib::libcall()` - the interface every library implementation carries |
 | [LibraryContext.h](/src/lib/facade/public/LibraryContext.h) | the data a `libcall()` is given |
 | [LibraryAPI.h](/src/lib/facade/public/LibraryAPI.h) | the `TEMPLATE_LIB_API` visibility macro |
+| [ILogger.h](/src/lib/facade/public/ILogger.h) | `logger::ILogger` - the logger the library user implements and hands over |
+| [severity-macro-consts.h](/src/lib/facade/public/severity-macro-consts.h) | the `MACRO_LVL_*` severities the `ILogger::LVL_*` values are defined through |
+
+The first four are in the `CppAppTemplate012` namespace; the logging interface deliberately is not - see below.
 
 Introduce new classes and/or methods there to share more functionality with any project of interest. The contents of the directory are installed under the `include/CppAppTemplate-0.12` sub-directory - the installable library name, see [Customizing the installable library name segments](/doc/sections/en_US/5-29-customizing-library-name-segments.md) - with respect to the configured Meson `--prefix`.
+
+### The logging interface
+
+The library carries its own copy of the logging subsystem, so `LibraryFacade::init_logger` accepts the logger instance owned by the library user and every library message lands in the very same destination as the messages of the code which uses the library. A user which can not include that interface can not implement it either, so [ILogger.h](/src/lib/facade/public/ILogger.h) lives among the public headers rather than under the private [src/log](/src/log) subsystem it is used by: a change to it is a change to the ABI of every library already installed, and the directory it sits in is what says so. The rest of the subsystem - the `default_logger` proxy and the real logger behind it - stays private, and the library keeps its own default logger until a user hands one over.
+
+```cpp
+#include <CppAppTemplate-0.12/LibraryFacade.h>
+
+class MyLogger : public logger::ILogger { /* the eight methods */ };
+
+CppAppTemplate012::LibraryFacade::init_logger(std::make_shared<MyLogger>());
+```
+
+Unlike the facade headers the logging interface carries neither the version carrying library namespace nor the matching include guard, and it is not marked with `TEMPLATE_LIB_API` either. It is the single logging contract every library derived from this template accepts, so one application logger implementation serves all of the derived libraries an application depends on at once; the calls into it are plain virtual dispatch through the object own virtual table, so nothing of it has to leave a shared object.
+
+That makes the `logger::ILogger` class layout a binary interface shared between an application and every derived library it loads: extend it by appending new methods after the existing ones only. Inserting a method, reordering the existing ones, changing a signature or dropping one shifts the virtual table slots, and an application built against one revision of that header then calls a library built against another one through the wrong slot - a wrong method at best, and a segmentation fault as soon as the arguments do not match. The `LVL_*` severity values cross that boundary the very same way, which is what the `logger_interface_severities_stay_as_they_are` case of the `CTEST_LibraryRealLogger` component test pins down.
 
 ### Renaming the library namespaces
 

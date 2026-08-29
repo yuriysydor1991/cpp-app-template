@@ -3,8 +3,8 @@
 
 #include <sstream>
 
+#include "src/lib/facade/public/severity-macro-consts.h"
 #include "src/log/default-logger/DefaultLogger.h"
-#include "src/log/severity-macro-consts.h"
 
 #ifndef LOG_INIT
 /**

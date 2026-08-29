@@ -4,7 +4,7 @@
 #include <memory>
 #include <string>
 
-#include "src/log/severity-macro-consts.h"
+#include "severity-macro-consts.h"
 
 /**
  * @brief The implementation independent part of the logging subsystem
@@ -23,7 +23,34 @@ namespace logger
  * to wrap the log4cpp, the boost::log or any other logging library instead of
  * deriving from the default_logger::RealDefaultLogger. Hand a new instance over
  * to the default_logger::DefaultLogger::real_logger setter, or through the
- * LOG_INIT_REAL_LOGGER macro, to make the whole binary log through it.
+ * LOG_INIT_REAL_LOGGER macro, to make the whole binary log through it. The
+ * proxy itself is not installed, because every derived library owns a copy of
+ * it, so the public LibraryFacade::init_logger is the only name a library user
+ * needs.
+ *
+ * Current file lives among the installable public headers, because that method
+ * accepts this interface and the library user implements it. Unlike the rest of
+ * them it deliberately carries neither the version carrying library namespace
+ * nor the matching include guard, and it is not marked with the
+ * TEMPLATE_LIB_API macro either. It is the single logging contract every
+ * library derived from this template accepts, so one application logger
+ * implementation serves all of the derived libraries an application depends on
+ * at once, and the first installed copy of this header which an application
+ * includes stands for all of them. The calls into an implementation of it are
+ * plain virtual dispatch through the object own virtual table, so nothing of it
+ * has to leave a shared object.
+ *
+ * That makes the class layout a binary interface shared between an application
+ * and every derived library it loads, and the reason this header sits in the
+ * installable directory instead of the private logging subsystem one: a change
+ * to it is a change to the ABI of every library already installed. Extend it by
+ * appending new methods after the existing ones only. Inserting a method,
+ * reordering the existing ones, changing a signature or dropping one shifts the
+ * virtual table slots, and an application built against one revision of this
+ * file then calls a library built against another one through the wrong slot -
+ * which is a wrong method at best and a segmentation fault as soon as the
+ * arguments do not match. The LVL_* values cross that boundary the very same
+ * way, so treat them as a part of the contract too.
  */
 class ILogger
 {

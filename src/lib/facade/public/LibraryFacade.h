@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "ILib.h"
+#include "ILogger.h"
 #include "LibraryAPI.h"
 #include "LibraryContext.h"
 
@@ -50,6 +51,25 @@ class TEMPLATE_LIB_API LibraryFacade
    * @return Returns a new ILib descendant or a nullptr in case of any error.
    */
   static ILibPtr create_library(LibraryContextPtr ctx);
+
+  /**
+   * @brief Hands the logger instance owned by the library user over to the
+   * library, so every library log message lands in the very same destination
+   * as the messages of the code which uses that library.
+   *
+   * The library carries its own copy of the logging subsystem, so without that
+   * call it logs through an own default logger instance. Call it once, before
+   * any other library call, right after the library user initializes its own
+   * logging.
+   *
+   * Any logger::ILogger implementation is accepted, so an application built on
+   * top of another logging library is free to hand its own wrapper over.
+   *
+   * @param appLogger The library user owned logger instance. If the null
+   * pointer given - nothing will be performed and the library keeps its own
+   * logger.
+   */
+  static void init_logger(const logger::ILoggerPtr& appLogger);
 };
 
 }  // namespace CppAppTemplate012

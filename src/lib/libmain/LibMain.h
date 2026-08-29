@@ -14,11 +14,11 @@ namespace lib0impl
  * Class is designed to hold the main library implementation code. So, put
  * a new code inside of a current class' libcall method.
  */
-class LibMain : public templatelib0::ILib
+class LibMain : public CppAppTemplate012::ILib
 {
  public:
   using LibMainPtr = std::shared_ptr<LibMain>;
-  using LibraryContextPtr = templatelib0::LibraryContextPtr;
+  using LibraryContextPtr = CppAppTemplate012::LibraryContextPtr;
 
   ~LibMain() override = default;
   LibMain();

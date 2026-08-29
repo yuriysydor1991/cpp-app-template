@@ -36,11 +36,11 @@ What each mode installs for a `0.12.0` project named `CppAppTemplate`:
 
 | Installed artefact | `true` | `false` |
 |---|---|---|
-| `<libdir>/libCppAppTemplate-0.so.0.12.0` - the library binary | yes | yes |
-| `<libdir>/libCppAppTemplate-0.so.0` - the SONAME symlink the loader resolves | yes | yes |
-| `<prefix>/include/CppAppTemplate-0/*.h` - the public headers | yes | no |
-| `<libdir>/pkgconfig/CppAppTemplate-0.pc` - the pkg-config file | yes | no |
-| `<libdir>/cmake/CppAppTemplate-0/*.cmake` - the `find_package` integration | yes | no |
+| `<libdir>/libCppAppTemplate-0.12.so.0.12.0` - the library binary | yes | yes |
+| `<libdir>/libCppAppTemplate-0.12.so.0` - the SONAME symlink the loader resolves | yes | yes |
+| `<prefix>/include/CppAppTemplate-0.12/*.h` - the public headers | yes | no |
+| `<libdir>/pkgconfig/CppAppTemplate-0.12.pc` - the pkg-config file | yes | no |
+| `<libdir>/cmake/CppAppTemplate-0.12/*.cmake` - the `find_package` integration | yes | no |
 | the debug symbols, if the project installs any | yes | no |
 
 The template installs no separate debug symbol files of its own - a `debug`
@@ -50,8 +50,8 @@ can also strip the installed binaries outright with `meson install --strip`,
 which is an orthogonal knob and stays unaffected by this option.
 
 One development file cannot be separated on Meson: the unversioned
-`<libdir>/libCppAppTemplate-0.so` namelink, which only a linker looking for
-`-lCppAppTemplate-0` needs. Meson installs the whole symlink chain as a single
+`<libdir>/libCppAppTemplate-0.12.so` namelink, which only a linker looking for
+`-lCppAppTemplate-0.12` needs. Meson installs the whole symlink chain as a single
 unit of the `library()` target, so it is installed in both modes. The CMake
 based branches of this template drop it through `NAMELINK_SKIP`.
 

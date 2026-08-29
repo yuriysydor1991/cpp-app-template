@@ -1,15 +1,16 @@
-#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_ILIB_CLASS_H
-#define YOUR_CPP_APP_TEMPLATE_PROJECT_ILIB_CLASS_H
+#ifndef CPP_APP_TEMPLATE_012_ILIB_CLASS_H
+#define CPP_APP_TEMPLATE_012_ILIB_CLASS_H
 
 #include <memory>
 
+#include "LibraryAPI.h"
 #include "LibraryContext.h"
 
 /**
  * @brief The implementation part of the application library.
  * Hides all the guts of particular implementation code.
  */
-namespace templatelib0
+namespace CppAppTemplate012
 {
 
 /**
@@ -21,7 +22,7 @@ namespace templatelib0
  *
  * Current file is a target for the library header installation.
  */
-class ILib
+class TEMPLATE_LIB_API ILib
 {
  public:
   using ILibPtr = std::shared_ptr<ILib>;
@@ -44,6 +45,6 @@ class ILib
 
 using ILibPtr = ILib::ILibPtr;
 
-}  // namespace templatelib0
+}  // namespace CppAppTemplate012
 
-#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_ILIB_CLASS_H
+#endif  // CPP_APP_TEMPLATE_012_ILIB_CLASS_H

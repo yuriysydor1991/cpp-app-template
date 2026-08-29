@@ -6,7 +6,7 @@
 
 #include "src/lib/libmain/LibFactory.h"
 
-namespace templatelib0
+namespace CppAppTemplate012
 {
 
 LibraryContextPtr LibraryFacade::create_library_context()
@@ -36,4 +36,4 @@ ILibPtr LibraryFacade::create_library(LibraryContextPtr ctx)
   return libFactory->create_appropriate_lib(ctx);
 }
 
-}  // namespace templatelib0
+}  // namespace CppAppTemplate012

@@ -13,7 +13,10 @@ get_filename_component(_@PROJECT_LIBRARY_NAME@_install_prefix
 add_library(@PROJECT_LIBRARY_NAME@::@PROJECT_LIBRARY_NAME@ SHARED IMPORTED)
 
 set_target_properties(@PROJECT_LIBRARY_NAME@::@PROJECT_LIBRARY_NAME@ PROPERTIES
-  INTERFACE_INCLUDE_DIRECTORIES "${_@PROJECT_LIBRARY_NAME@_install_prefix}/@INCLUDE_INSTALL_SUBDIR@"
+  # Both the versioned sub-directory and the plain include root, so a consumer
+  # may write either <@PROJECT_LIBRARY_NAME@/LibraryFacade.h> (recommended) or
+  # the short <LibraryFacade.h>.
+  INTERFACE_INCLUDE_DIRECTORIES "${_@PROJECT_LIBRARY_NAME@_install_prefix}/@INCLUDE_INSTALL_SUBDIR@;${_@PROJECT_LIBRARY_NAME@_install_prefix}/@INCLUDE_ROOT_SUBDIR@"
 )
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Windows")

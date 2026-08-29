@@ -37,11 +37,11 @@ meson install -C build
 
 | Встановлюваний артефакт | `true` | `false` |
 |---|---|---|
-| `<libdir>/libCppAppTemplate-0.so.0.12.0` - бінарний файл бібліотеки | так | так |
-| `<libdir>/libCppAppTemplate-0.so.0` - символьне посилання SONAME для завантажувача | так | так |
-| `<prefix>/include/CppAppTemplate-0/*.h` - публічні заголовкові файли | так | ні |
-| `<libdir>/pkgconfig/CppAppTemplate-0.pc` - файл pkg-config | так | ні |
-| `<libdir>/cmake/CppAppTemplate-0/*.cmake` - інтеграція з `find_package` | так | ні |
+| `<libdir>/libCppAppTemplate-0.12.so.0.12.0` - бінарний файл бібліотеки | так | так |
+| `<libdir>/libCppAppTemplate-0.12.so.0` - символьне посилання SONAME для завантажувача | так | так |
+| `<prefix>/include/CppAppTemplate-0.12/*.h` - публічні заголовкові файли | так | ні |
+| `<libdir>/pkgconfig/CppAppTemplate-0.12.pc` - файл pkg-config | так | ні |
+| `<libdir>/cmake/CppAppTemplate-0.12/*.cmake` - інтеграція з `find_package` | так | ні |
 | символи зневадження, якщо проект їх встановлює | так | ні |
 
 Даний шаблон не встановлює власних окремих файлів символів зневадження -
@@ -53,8 +53,8 @@ meson install -C build
 не впливає.
 
 Один з файлів розробки неможливо відокремити засобами Meson: неверсійоване
-символьне посилання `<libdir>/libCppAppTemplate-0.so`, яке потрібне лише
-лінкеру для пошуку за прапорцем `-lCppAppTemplate-0`. Meson встановлює увесь
+символьне посилання `<libdir>/libCppAppTemplate-0.12.so`, яке потрібне лише
+лінкеру для пошуку за прапорцем `-lCppAppTemplate-0.12`. Meson встановлює увесь
 ланцюжок символьних посилань як єдине ціле разом з ціллю `library()`, тому воно
 встановлюється в обох режимах. Гілки даного шаблону на основі CMake прибирають
 його за допомогою `NAMELINK_SKIP`.

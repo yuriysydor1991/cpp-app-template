@@ -9,14 +9,26 @@ lib_libmain_sources = files(
 
 lib_public_includes = include_directories('facade/public')
 
+# Only the TEMPLATE_LIB_API marked interface of facade/public leaves the shared
+# object. That is a correctness requirement and not a size optimisation: every
+# library derived from this template carries the very same lib0impl,
+# default_logger and project_decls names, and an application which loads two of
+# them would otherwise let the dynamic linker bind the calls of one library
+# into the definitions of the other.
+#
+# TEMPLATE_LIB_BUILDING turns that macro into the export half of the __declspec
+# pair while the library itself is being compiled. Nothing outside of this
+# build ever defines it, so a consumer of the installed headers gets the import
+# half.
 template_project_main_library = library(
   PROJECT_LIBRARY_NAME,
   lib_facade_sources + lib_libmain_sources,
   include_directories: [configuration_inc, lib_public_includes],
   link_whole: [loglib],
   dependencies: template_project_extra_deps,
-  cpp_args: template_project_extra_cpp_args,
+  cpp_args: template_project_extra_cpp_args + ['-DTEMPLATE_LIB_BUILDING=1'],
   link_args: template_project_extra_link_args,
+  gnu_symbol_visibility: 'hidden',
   version: meson.project_version(),
   soversion: project_major_version,
   install: true,
@@ -40,7 +52,11 @@ pkgconfig.generate(
   name: PROJECT_LIBRARY_NAME,
   filebase: PROJECT_LIBRARY_NAME,
   description: project_description,
-  subdirs: PROJECT_LIBRARY_NAME,
+  # Both the versioned sub-directory and the plain include root, so a consumer
+  # may write either <CppAppTemplate-0.12/LibraryFacade.h> (recommended) or the
+  # short <LibraryFacade.h>. The prefixed form is the safe one: every library
+  # derived from this template installs a LibraryFacade.h of its own.
+  subdirs: [PROJECT_LIBRARY_NAME, '.'],
   url: 'http://www.kytok.org.ua/',
 )
 
@@ -62,6 +78,7 @@ cmake_conf.set('CMAKE_CONFIG_INSTALL_DIR', cmake_config_install_subdir)
 cmake_conf.set('LIB_INSTALL_SUBDIR', get_option('libdir'))
 cmake_conf.set('INCLUDE_INSTALL_SUBDIR',
   join_paths(get_option('includedir'), PROJECT_LIBRARY_NAME))
+cmake_conf.set('INCLUDE_ROOT_SUBDIR', get_option('includedir'))
 cmake_conf.set('RELATIVE_BACK_FROM_CMAKE_DIR', relative_back_from_cmake_dir)
 
 configure_file(

@@ -97,7 +97,8 @@
   ],
   "finish-args": [
     "--filesystem=/run/host",
-    "--share=ipc", 
+    "--share=ipc",
+    "--share=network",
     "--socket=fallback-x11",
     "--socket=wayland",
     "--device=dri",

@@ -14,4 +14,6 @@ flatpak install runtime/org.kde.Platform/x86_64/5.15 runtime/org.kde.Sdk/x86_64/
 
 Необіхдно замінити `runtime/org.kde.Platform/x86_64/5.15` і `runtime/org.kde.Sdk/x86_64/5.15` власним варіантом обраного SDK і середовища. У документації до flatpak можна визначити як переглянути усі доступні варіанти.
 
+Ціль `flatpak` самостійно встановлює необхідні їй середовище і SDK з віддаленого сховища `flathub`, тож наведена команда лише виконує їх попереднє встановлення.
+
 Деталі у секції [Вмикання підтримки генерації flatpak пакету](/doc/sections/uk_UA/5-project-build/packagers/5-11-enabling-the-flatpak-package-generation-support.md).

@@ -4,9 +4,9 @@
 #include <memory>
 #include <string>
 
-#include "src/log/ILogger.h"
+#include "src/lib/facade/public/ILogger.h"
+#include "src/lib/facade/public/severity-macro-consts.h"
 #include "src/log/default-logger/real-default-logger/RealDefaultLogger.h"
-#include "src/log/severity-macro-consts.h"
 
 /**
  * @brief The default logger quick implementation encapsulation namespace.

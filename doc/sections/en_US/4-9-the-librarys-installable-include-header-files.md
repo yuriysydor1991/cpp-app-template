@@ -1,6 +1,6 @@
 ## The library's installable public include header files
 
-The [src/lib/facade/public](/src/lib/facade/public) directory holds the whole installable interface of the library - four hand written headers, all in the `CppAppTemplate011` namespace:
+The [src/lib/facade/public](/src/lib/facade/public) directory holds the whole installable interface of the library - six hand written headers, and nothing outside of that directory is ever installed:
 
 | Header | Declares |
 |---|---|
@@ -8,8 +8,28 @@ The [src/lib/facade/public](/src/lib/facade/public) directory holds the whole in
 | [ILib.h](/src/lib/facade/public/ILib.h) | `ILib::libcall()` - the interface every library implementation carries |
 | [LibraryContext.h](/src/lib/facade/public/LibraryContext.h) | the data a `libcall()` is given |
 | [LibraryAPI.h](/src/lib/facade/public/LibraryAPI.h) | the `TEMPLATE_LIB_API` visibility macro |
+| [ILogger.h](/src/lib/facade/public/ILogger.h) | `logger::ILogger` - the logger the library user implements and hands over |
+| [severity-macro-consts.h](/src/lib/facade/public/severity-macro-consts.h) | the `MACRO_LVL_*` severities the `ILogger::LVL_*` values are defined through |
+
+The first four are in the `CppAppTemplate011` namespace; the logging interface deliberately is not - see below.
 
 Introduce new classes and/or methods there to share more functionality with any project of interest. The contents of the directory are installed under the `include/CppAppTemplate-0.11` sub-directory - the installable library name, see [Customizing the installable library name segments](/doc/sections/en_US/5-29-customizing-library-name-segments.md) - with respect to the configured Meson `--prefix`.
+
+### The logging interface
+
+The library carries its own copy of the logging subsystem, so `LibraryFacade::init_logger` accepts the logger instance owned by the library user and every library message lands in the very same destination as the messages of the code which uses the library. A user which can not include that interface can not implement it either, so [ILogger.h](/src/lib/facade/public/ILogger.h) lives among the public headers rather than under the private [src/log](/src/log) subsystem it is used by: a change to it is a change to the ABI of every library already installed, and the directory it sits in is what says so. The rest of the subsystem - the `default_logger` proxy and the real logger behind it - stays private, and the library keeps its own default logger until a user hands one over.
+
+```cpp
+#include <CppAppTemplate-0.11/LibraryFacade.h>
+
+class MyLogger : public logger::ILogger { /* the eight methods */ };
+
+CppAppTemplate011::LibraryFacade::init_logger(std::make_shared<MyLogger>());
+```
+
+Unlike the facade headers the logging interface carries neither the version carrying library namespace nor the matching include guard, and it is not marked with `TEMPLATE_LIB_API` either. It is the single logging contract every library derived from this template accepts, so one application logger implementation serves all of the derived libraries an application depends on at once; the calls into it are plain virtual dispatch through the object own virtual table, so nothing of it has to leave a shared object.
+
+That makes the `logger::ILogger` class layout a binary interface shared between an application and every derived library it loads: extend it by appending new methods after the existing ones only. Inserting a method, reordering the existing ones, changing a signature or dropping one shifts the virtual table slots, and an application built against one revision of that header then calls a library built against another one through the wrong slot - a wrong method at best, and a segmentation fault as soon as the arguments do not match. The `LVL_*` severity values cross that boundary the very same way, which is what the `logger_interface_severities_stay_as_they_are` case of the `CTEST_LibraryRealLogger` component test pins down.
 
 ### Renaming the library namespaces
 
@@ -41,7 +61,7 @@ The version segment is a part of the public namespace on purpose: the installabl
 
 The library is built with `gnu_symbol_visibility: 'hidden'`, so only the entities marked with the `TEMPLATE_LIB_API` macro of [LibraryAPI.h](/src/lib/facade/public/LibraryAPI.h) leave the shared object. That is a correctness requirement rather than a size optimisation: every library derived from this template carries the very same `lib0impl` and `project_decls` names, and an application which loads two of them would otherwise let the dynamic linker bind the calls of one library into the definitions of the other.
 
-The logging subsystem is the one exception on this branch. It is compiled by its own `static_library()` call, keeps the default visibility and is therefore still exported by the shared object, because the application of this very project carries no copy of that subsystem and resolves its own logging through the library. The two of them share a single logger instance, which is what puts the library messages into the application log file. A library meant to be shipped on its own - and loaded beside another library derived from this template - hides that subsystem as well and hands the logging destination over through a public method instead; the `lib` branch of this template does exactly that.
+The logging subsystem is the one exception on this branch. It is compiled by its own `static_library()` call, keeps the default visibility and is therefore still exported by the shared object, because the application of this very project carries no copy of that subsystem and resolves its own logging through the library. The two of them share a single logger instance, which is what puts the library messages into the application log file. A library meant to be shipped on its own - and loaded beside another library derived from this template - hides that subsystem as well: `LibraryFacade::init_logger` above is the public method its user hands the logging destination over through, and the application of this project would then carry a copy of the subsystem of its own. The `lib` branch of this template is built exactly that way.
 
 Visibility does not reach every template instantiation the marked classes are named in either. `std::make_shared<T>` spells `T` out inside its own mangled name, and the `std::__shared_count<T, ...>` and `std::_Sp_counted_ptr_inplace<T, ...>` instantiations behind it stay weak and exported: an optimised build exports the one naming the marked `LibraryContext`, and a plain `debug` build exports the ones naming `lib0impl::LibFactory` and `lib0impl::LibMain` as well, because nothing inlines them away there. Two derived libraries which kept one set of names therefore share those allocations while their classes do not even share a layout - which is what the renames above are for, and why the implementation namespace is on that list even though nothing under it is installed.
 

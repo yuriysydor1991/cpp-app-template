@@ -3,6 +3,8 @@
 
 #include <gmock/gmock.h>
 
+#include "src/lib/facade/public/ILogger.h"
+
 class logMock
 {
  public:
@@ -12,6 +14,8 @@ class logMock
       LOG_INIT;
   inline static testing::MockFunction<void()> LOG_INIT_DEFAULTS;
   inline static testing::MockFunction<void()> LOG_INIT_DEFAULTS_IF_OWN;
+  inline static testing::MockFunction<void(const logger::ILoggerPtr&)>
+      LOG_INIT_REAL_LOGGER;
 
   inline static testing::MockFunction<void(const std::string&)> LOGE;
   inline static testing::MockFunction<void(const std::string&)> LOGI;
@@ -25,6 +29,8 @@ class logMock
 #define LOG_INIT_DEFAULTS() logMock::LOG_INIT_DEFAULTS.AsStdFunction()();
 #define LOG_INIT_DEFAULTS_IF_OWN() \
   logMock::LOG_INIT_DEFAULTS_IF_OWN.AsStdFunction()();
+#define LOG_INIT_REAL_LOGGER(realLogger) \
+  logMock::LOG_INIT_REAL_LOGGER.AsStdFunction()(realLogger);
 
 #define LOGE(msg)                                             \
   {                                                           \

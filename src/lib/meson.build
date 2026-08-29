@@ -116,3 +116,7 @@ endif
 
 subdir('facade')
 subdir('libmain')
+
+if get_option('ENABLE_COMPONENT_TESTS')
+  subdir('tests')
+endif

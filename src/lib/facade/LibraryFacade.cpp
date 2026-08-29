@@ -5,6 +5,7 @@
 #include <memory>
 
 #include "src/lib/libmain/LibFactory.h"
+#include "src/log/log.h"
 
 namespace CppAppTemplate011
 {
@@ -34,6 +35,11 @@ ILibPtr LibraryFacade::create_library(LibraryContextPtr ctx)
   assert(libFactory != nullptr);
 
   return libFactory->create_appropriate_lib(ctx);
+}
+
+void LibraryFacade::init_logger(const logger::ILoggerPtr& appLogger)
+{
+  LOG_INIT_REAL_LOGGER(appLogger);
 }
 
 }  // namespace CppAppTemplate011

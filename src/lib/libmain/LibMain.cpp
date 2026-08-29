@@ -13,7 +13,12 @@ LibMain::LibMain()
   static bool inited{false};
 
   if (!inited) {
-    LOG_INIT_DEFAULTS();
+    // Only the own default logger instance is initialized here. The logging
+    // destination of an adopted one belongs to the code which uses the
+    // library, so the library must not replace the log file, the level nor the
+    // printing settings chosen by it. See the
+    // CppAppTemplate011::LibraryFacade::init_logger method.
+    LOG_INIT_DEFAULTS_IF_OWN();
     inited = true;
   }
 }

@@ -11,6 +11,7 @@ UTEST_LibraryFacade = executable(
     MOCK_LibraryContext,
     MOCK_LibMain,
     FACADE_MOCK_LibFactory,
+    MOCK_log,
     configuration_inc,
     lib_public_includes,
   ],

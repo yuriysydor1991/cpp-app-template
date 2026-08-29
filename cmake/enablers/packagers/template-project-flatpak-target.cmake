@@ -17,6 +17,8 @@ set(FLATPAK_PROJECT_URL ua.org.kytok.template.wt4.${PROJECT_BINARY_NAME})
 set(FLATPAK_REPO ${PROJECT_BINARY_NAME}-repo)
 set(FLATPAK_DST_NAME ${PROJECT_BINARY_NAME}-${CMAKE_PROJECT_VERSION}.flatpak)
 set(flatpakConfDst ${CMAKE_BINARY_DIR}/flatpak.conf.json)
+set(FLATPAK_DEPS_REMOTE flathub)
+set(FLATPAK_DEPS_REMOTE_URL https://dl.flathub.org/repo/flathub.flatpakrepo)
 set(
   FLATPAK_CONF_SRC 
   ${CMAKE_SOURCE_DIR}/misc/packagers/flatpak.conf.json.in 
@@ -32,7 +34,9 @@ message(STATUS "flatpak json conf src: ${FLATPAK_CONF_SRC}")
 add_custom_target(
   flatpak
   COMMAND 
-    ${FLATPAKB_EXEC} --repo=${FLATPAK_REPO} "${CMAKE_BINARY_DIR}/flatpak-build" ${flatpakConfDst} &&
+    ${FLATPAK_EXEC} remote-add --user --if-not-exists ${FLATPAK_DEPS_REMOTE} ${FLATPAK_DEPS_REMOTE_URL} &&
+    ${FLATPAKB_EXEC} --user --install-deps-from=${FLATPAK_DEPS_REMOTE} --assumeyes
+      --repo=${FLATPAK_REPO} "${CMAKE_BINARY_DIR}/flatpak-build" ${flatpakConfDst} &&
     ${FLATPAK_EXEC} build-bundle ${FLATPAK_REPO} ${FLATPAK_DST_NAME} ${FLATPAK_PROJECT_URL}
   WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
   COMMENT "Executing the flatpak-builder command to generate the ${FLATPAK_DST_NAME} flatpak package."

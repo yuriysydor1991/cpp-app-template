@@ -13,7 +13,6 @@ target_include_directories(
   PRIVATE ${CMAKE_SOURCE_DIR}
   PRIVATE ${CMAKE_BINARY_DIR}
   PRIVATE ${CMAKE_SOURCE_DIR}/src/lib/facade/public
-  PRIVATE ${CMAKE_SOURCE_DIR}/src/log
 )
 
 target_link_libraries(

@@ -27,14 +27,12 @@ endif()
 message(STATUS "cppcheck: ${CPPCHECK_EXEC}")
 
 # The library implementation includes the public headers by their bare names,
-# so the analyzed sources reach them through the public directory itself, along
-# with the src/log one holding the installable logging interface. The branches
-# which build no library carry neither directory.
+# so the analyzed sources reach them through the public directory itself. The
+# branches which build no library carry no such directory.
 if(EXISTS ${CMAKE_SOURCE_DIR}/src/lib/facade/public)
   set(
     CPPCHECK_LIB_PUBLIC_INCLUDE
     -I${CMAKE_SOURCE_DIR}/src/lib/facade/public
-    -I${CMAKE_SOURCE_DIR}/src/log
   )
 endif()
 

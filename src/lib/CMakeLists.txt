@@ -7,18 +7,15 @@ add_library(
   SHARED
 )
 
-# The public headers are written by hand and used as they are. The src/log
-# directory joins them, because the installable logging interface the public
-# LibraryFacade.h includes keeps living in the logging subsystem the whole
-# template branch family shares; the install rules of the facade subdirectory
-# put both into one and the same installed directory.
+# The public headers are written by hand and used as they are. The logging
+# interface the public LibraryFacade.h accepts is one of them, so the single
+# facade/public directory is the whole installable surface.
 target_include_directories(
   ${PROJECT_LIBRARY_NAME}
   PRIVATE ${CMAKE_SOURCE_DIR}
   PRIVATE ${CMAKE_BINARY_DIR}
   PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/facade/public>
-    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src/log>
     # Both the plain include root and the versioned sub-directory are exported,
     # so a consumer may write either
     #   #include <CppAppTemplate-0.12/LibraryFacade.h>  (recommended)

@@ -9,9 +9,9 @@ sudo apt install -y flatpak flatpak-builder
 Також знадобиться один з цільових SDK який може бути встановленим за допомогою команди подібної на наступну:
 
 ```
-flatpak install org.gnome.Platform/x86_64/48 org.gnome.Sdk/x86_64/48
+flatpak install org.gnome.Platform/x86_64/49 org.gnome.Sdk/x86_64/49
 ```
 
-Необіхдно замінити `org.gnome.Platform/x86_64/48 org.gnome.Sdk/x86_64/48` власним варіантом обраної платформи і SDK. У документації до flatpak можна визначити як переглянути усі доступні варіанти.
+Необіхдно замінити `org.gnome.Platform/x86_64/49 org.gnome.Sdk/x86_64/49` власним варіантом обраної платформи і SDK. У документації до flatpak можна визначити як переглянути усі доступні варіанти.
 
 Деталі у секції [Вмикання підтримки генерації flatpak пакету](/doc/sections/uk_UA/5-project-build/packagers/5-11-enabling-the-flatpak-package-generation-support.md).

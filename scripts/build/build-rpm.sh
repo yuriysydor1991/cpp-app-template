@@ -1,7 +1,10 @@
 #!/bin/bash -e
 #
-# Builds the project in the Release configuration with the RPM packager
-# enabled and produces the package by the `package` target of that build.
+# Produces the RPM package: a Release configure with the ENABLE_RPM option
+# enabled, then the `package` target of that build.
+#
+# The `package` target runs the preinstall step, which builds the project, so
+# no separate build step is performed.
 #
 # Every parameter of the release-configure.sh and the release-build.sh scripts
 # is accepted and forwarded, so an own -D<variable>=<value> override wins over
@@ -14,8 +17,6 @@ BUILD_SCRIPTS_ROOT=$(realpath "$(dirname "$0")")
 
 ${BUILD_SCRIPTS_ROOT}/release-configure.sh -DENABLE_RPM=ON "$@"
 
-${BUILD_SCRIPTS_ROOT}/release-build.sh "$@"
-
 ${BUILD_SCRIPTS_ROOT}/release-build.sh --target package "$@"
 
-log "The RPM package is inside the ${RELEASE_BUILD_DIR} directory"
+log "Look for the RPM package inside the ${RELEASE_BUILD_DIR} directory"

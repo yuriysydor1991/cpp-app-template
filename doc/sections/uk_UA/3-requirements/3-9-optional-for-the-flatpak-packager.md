@@ -14,4 +14,6 @@ flatpak install org.gnome.Platform/x86_64/48 org.gnome.Sdk/x86_64/48
 
 Необіхдно замінити `org.gnome.Platform/x86_64/48 org.gnome.Sdk/x86_64/48` власним варіантом обраного SDK. У документації до flatpak можна визначити як переглянути усі доступні варіанти.
 
+Ціль `flatpak` самостійно встановлює необхідні їй середовище і SDK з віддаленого сховища `flathub`, тож наведена команда лише виконує їх попереднє встановлення.
+
 Деталі у секції [Вмикання підтримки генерації flatpak пакету](/doc/sections/uk_UA/5-project-build/packagers/5-11-enabling-the-flatpak-package-generation-support.md).

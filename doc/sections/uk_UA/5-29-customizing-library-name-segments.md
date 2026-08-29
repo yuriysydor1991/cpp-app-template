@@ -5,23 +5,29 @@
 package з простором імен імпортованої цілі) виводиться з трьох опціональних
 Meson-опцій. Вони дозволяють паралельним встановленням різних версій бібліотеки
 співіснувати у системі - наприклад `include/CppAppTemplate-0.11.0-dev/` поруч з
-`include/CppAppTemplate-0/`.
+`include/CppAppTemplate-0.11/`.
 
 | Опція | За замовчуванням | Ефект |
 |---|---|---|
-| `-DLIB_INCLUDE_MINOR_IN_NAME=true` | `false` | Додає `.<minor>` до імені бібліотеки |
+| `-DLIB_INCLUDE_MINOR_IN_NAME=true` | `true` | Додає `.<minor>` до імені бібліотеки |
 | `-DLIB_INCLUDE_MICRO_IN_NAME=true` | `false` | Додає `.<micro>` (вмикає прапорець minor неявно) |
 | `-DLIB_NAME_SUFFIX='-dev'` | `''` | Додає довільний завершальний суфікс |
+
+Сегмент minor увімкнено за замовчуванням, бо публічний простір імен бібліотеки
+несе ту саму пару головного і другорядного номерів - `CppAppTemplate011`, дивись
+[Публічні заголовкові файли бібліотеки для встановлення](/doc/sections/uk_UA/4-9-the-librarys-installable-include-header-files.md).
+Дві другорядні версії бібліотеки тоді встановлюються цілком поруч, а застосунок
+може залежати від обох одразу.
 
 Приклади імен бібліотеки для проекту `0.11.0`:
 
 | Прапорці конфігурації | Імʼя бібліотеки |
 |---|---|
-| (немає) | `CppAppTemplate-0` |
-| `-DLIB_INCLUDE_MINOR_IN_NAME=true` | `CppAppTemplate-0.10` |
-| `-DLIB_INCLUDE_MINOR_IN_NAME=true -DLIB_INCLUDE_MICRO_IN_NAME=true` | `CppAppTemplate-0.11.0` |
-| `-DLIB_NAME_SUFFIX='-dev'` | `CppAppTemplate-0-dev` |
-| `-DLIB_INCLUDE_MINOR_IN_NAME=true -DLIB_INCLUDE_MICRO_IN_NAME=true -DLIB_NAME_SUFFIX='-dev'` | `CppAppTemplate-0.11.0-dev` |
+| (немає) | `CppAppTemplate-0.11` |
+| `-DLIB_INCLUDE_MINOR_IN_NAME=false` | `CppAppTemplate-0` |
+| `-DLIB_INCLUDE_MICRO_IN_NAME=true` | `CppAppTemplate-0.11.0` |
+| `-DLIB_NAME_SUFFIX='-dev'` | `CppAppTemplate-0.11-dev` |
+| `-DLIB_INCLUDE_MICRO_IN_NAME=true -DLIB_NAME_SUFFIX='-dev'` | `CppAppTemplate-0.11.0-dev` |
 
 Однакове імʼя послідовно використовується для кожного встановлюваного артефакту:
 

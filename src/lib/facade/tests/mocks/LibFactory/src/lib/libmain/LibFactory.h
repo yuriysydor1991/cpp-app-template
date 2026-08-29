@@ -17,9 +17,9 @@ namespace lib0impl
 class LibFactorySynthParent
 {
  public:
-  using ILibPtr = templatelib0::ILibPtr;
-  using LibraryContextPtr = templatelib0::LibraryContextPtr;
-  using LibraryContext = templatelib0::LibraryContext;
+  using ILibPtr = CppAppTemplate011::ILibPtr;
+  using LibraryContextPtr = CppAppTemplate011::LibraryContextPtr;
+  using LibraryContext = CppAppTemplate011::LibraryContext;
 
   virtual ~LibFactorySynthParent() = default;
   LibFactorySynthParent() = default;

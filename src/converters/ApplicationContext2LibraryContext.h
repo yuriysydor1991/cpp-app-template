@@ -22,7 +22,7 @@ class ApplicationContext2LibraryContext
  public:
   using DefaultCtxConPtr = std::shared_ptr<ApplicationContext2LibraryContext>;
 
-  using LibraryContextPtr = templatelib0::LibraryContextPtr;
+  using LibraryContextPtr = CppAppTemplate011::LibraryContextPtr;
   using ApplicationContext = app::ApplicationContext;
 
   virtual ~ApplicationContext2LibraryContext() = default;

@@ -192,7 +192,10 @@ option(
 option(
   'LIB_INCLUDE_MINOR_IN_NAME',
   type: 'boolean',
-  value: false,
+  # true by default: the library public namespace carries the major and the
+  # minor version (CppAppTemplate011), so the installable names track the very
+  # same pair and two minor versions install completely side by side.
+  value: true,
   description: 'Append .<minor> to the installable library name (binary, headers subdir, pkg-config, CMake package dir)'
 )
 

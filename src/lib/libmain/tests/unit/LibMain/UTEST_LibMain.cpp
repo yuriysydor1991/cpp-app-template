@@ -4,7 +4,7 @@
 #include "LibraryContext.h"
 #include "src/lib/libmain/LibMain.h"
 
-using namespace templatelib0;
+using namespace CppAppTemplate011;
 using namespace lib0impl;
 using namespace testing;
 

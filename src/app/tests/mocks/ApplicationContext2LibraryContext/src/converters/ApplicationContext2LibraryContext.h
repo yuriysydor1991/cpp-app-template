@@ -15,7 +15,7 @@ namespace converters
 class ApplicationContext2LibraryContextSynthParent
 {
  public:
-  using LibraryContext = templatelib0::LibraryContext;
+  using LibraryContext = CppAppTemplate011::LibraryContext;
   using ApplicationContext = app::ApplicationContext;
 
   virtual ~ApplicationContext2LibraryContextSynthParent() = default;
@@ -29,7 +29,7 @@ class ApplicationContext2LibraryContext
 {
  public:
   using DefaultCtxConPtr = std::shared_ptr<ApplicationContext2LibraryContext>;
-  using LibraryContext = templatelib0::LibraryContext;
+  using LibraryContext = CppAppTemplate011::LibraryContext;
   using ApplicationContext = app::ApplicationContext;
 
   virtual ~ApplicationContext2LibraryContext() = default;

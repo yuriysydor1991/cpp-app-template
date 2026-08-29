@@ -33,7 +33,7 @@ class Application : public IApplication
   virtual int run(std::shared_ptr<ApplicationContext> ctx) override;
 
  protected:
-  using LibraryContextPtr = templatelib0::LibraryContextPtr;
+  using LibraryContextPtr = CppAppTemplate011::LibraryContextPtr;
   using DefaultCtxConPtr = converters::DefaultCtxConPtr;
 
   DefaultCtxConPtr create_ctx_converter();

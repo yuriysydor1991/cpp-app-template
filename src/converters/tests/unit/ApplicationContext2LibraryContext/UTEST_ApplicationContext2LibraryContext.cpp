@@ -7,7 +7,7 @@
 
 using namespace app;
 using namespace converters;
-using namespace templatelib0;
+using namespace CppAppTemplate011;
 using namespace testing;
 
 class UTEST_ApplicationContext2LibraryContext : public Test

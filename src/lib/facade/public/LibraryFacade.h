@@ -1,12 +1,13 @@
-#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_LIBRARYFACADE_CLASS_H
-#define YOUR_CPP_APP_TEMPLATE_PROJECT_LIBRARYFACADE_CLASS_H
+#ifndef CPP_APP_TEMPLATE_011_LIBRARYFACADE_CLASS_H
+#define CPP_APP_TEMPLATE_011_LIBRARYFACADE_CLASS_H
 
 #include <memory>
 
 #include "ILib.h"
+#include "LibraryAPI.h"
 #include "LibraryContext.h"
 
-namespace templatelib0
+namespace CppAppTemplate011
 {
 
 /**
@@ -19,7 +20,7 @@ namespace templatelib0
  *
  * Current file is a target for the library header installation.
  */
-class LibraryFacade
+class TEMPLATE_LIB_API LibraryFacade
 {
  public:
   virtual ~LibraryFacade() = default;
@@ -51,6 +52,6 @@ class LibraryFacade
   static ILibPtr create_library(LibraryContextPtr ctx);
 };
 
-}  // namespace templatelib0
+}  // namespace CppAppTemplate011
 
-#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_LIBRARYFACADE_CLASS_H
+#endif  // CPP_APP_TEMPLATE_011_LIBRARYFACADE_CLASS_H

@@ -5,23 +5,29 @@ The library name that downstream consumers see (the library binary, the
 package directory + imported-target namespace) is derived from three optional
 Meson options. They let parallel installs of distinct versions of the library
 coexist on the same host - e.g.
-`include/CppAppTemplate-0.11.0-dev/` next to `include/CppAppTemplate-0/`.
+`include/CppAppTemplate-0.11.0-dev/` next to `include/CppAppTemplate-0.11/`.
 
 | Option | Default | Effect |
 |---|---|---|
-| `-DLIB_INCLUDE_MINOR_IN_NAME=true` | `false` | Appends `.<minor>` to the library name |
+| `-DLIB_INCLUDE_MINOR_IN_NAME=true` | `true` | Appends `.<minor>` to the library name |
 | `-DLIB_INCLUDE_MICRO_IN_NAME=true` | `false` | Appends `.<micro>` (implies the minor flag) |
 | `-DLIB_NAME_SUFFIX='-dev'` | `''` | Appends an arbitrary trailing tag |
+
+The minor segment is on by default, because the library public namespace carries
+the very same major and minor pair - `CppAppTemplate011`, see [The library's
+installable public include header files](/doc/sections/en_US/4-9-the-librarys-installable-include-header-files.md).
+Two minor versions of the library then install completely side by side and an
+application may depend on both of them at once.
 
 Resulting library name examples for a `0.11.0` project:
 
 | Configure flags | Library name |
 |---|---|
-| (none) | `CppAppTemplate-0` |
-| `-DLIB_INCLUDE_MINOR_IN_NAME=true` | `CppAppTemplate-0.10` |
-| `-DLIB_INCLUDE_MINOR_IN_NAME=true -DLIB_INCLUDE_MICRO_IN_NAME=true` | `CppAppTemplate-0.11.0` |
-| `-DLIB_NAME_SUFFIX='-dev'` | `CppAppTemplate-0-dev` |
-| `-DLIB_INCLUDE_MINOR_IN_NAME=true -DLIB_INCLUDE_MICRO_IN_NAME=true -DLIB_NAME_SUFFIX='-dev'` | `CppAppTemplate-0.11.0-dev` |
+| (none) | `CppAppTemplate-0.11` |
+| `-DLIB_INCLUDE_MINOR_IN_NAME=false` | `CppAppTemplate-0` |
+| `-DLIB_INCLUDE_MICRO_IN_NAME=true` | `CppAppTemplate-0.11.0` |
+| `-DLIB_NAME_SUFFIX='-dev'` | `CppAppTemplate-0.11-dev` |
+| `-DLIB_INCLUDE_MICRO_IN_NAME=true -DLIB_NAME_SUFFIX='-dev'` | `CppAppTemplate-0.11.0-dev` |
 
 The same name is used consistently for every installed artefact:
 

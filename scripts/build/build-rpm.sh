@@ -1,7 +1,10 @@
 #!/bin/bash -e
 #
-# Builds the project in the Release configuration with the RPM packager
-# enabled and produces the package by the `package` target of that build.
+# Produces the RPM package: a Release configure with the ENABLE_RPM option
+# enabled, then the `package` target of that build.
+#
+# The `package` target runs the preinstall step, which builds the project, so
+# no separate build step is performed.
 #
 # Every extra parameter is forwarded to the CMake configure step, so an own
 # -D<variable>=<value> override wins over the ENABLE_RPM one below.
@@ -14,8 +17,6 @@ cmake -B "${BUILD_DIR}" -S "${PROJECT_ROOT}" \
   -DENABLE_RPM=ON \
   "$@"
 
-cmake --build "${BUILD_DIR}" -j"$(getconf _NPROCESSORS_ONLN 2>/dev/null || echo 4)"
-
 cmake --build "${BUILD_DIR}" --target package
 
-echo "#### The RPM package is inside the ${BUILD_DIR} directory"
+echo "#### Look for the RPM package inside the ${BUILD_DIR} directory"

@@ -14,4 +14,6 @@ flatpak install org.gnome.Platform/x86_64/48 org.gnome.Sdk/x86_64/48
 
 Replace the `org.gnome.Platform/x86_64/48 org.gnome.Sdk/x86_64/48` with your preferred runtime and SDK. Consult the flatpak documentation on how to list all available options.
 
+The `flatpak` target installs the runtime and the SDK it needs from the `flathub` remote on its own, so the command above only preinstalls them.
+
 Look for the details at the [Enabling the flatpak package generation support](/doc/sections/en_US/5-project-build/packagers/5-11-enabling-the-flatpak-package-generation-support.md).

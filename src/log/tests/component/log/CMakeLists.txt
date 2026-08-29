@@ -20,12 +20,11 @@ target_include_directories(
   PRIVATE
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
-    ${LOG4CPP_INCLUDE_DIRS}
 )
 
 target_link_libraries(
   CTEST_log
-  GTest::gtest_main GTest::gmock ${LOG4CPP_LIBRARIES}
+  GTest::gtest_main GTest::gmock LOG4CPP::log4cpp
 )
 
 include(GoogleTest)

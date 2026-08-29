@@ -13,6 +13,11 @@ target_include_directories(
 )
 
 target_link_libraries(
+  TemplateLog4Cpp5ControllerObj
+  PRIVATE LOG4CPP::log4cpp
+)
+
+target_link_libraries(
   ${PROJECT_BINARY_NAME}
   PRIVATE TemplateLog4Cpp5ControllerObj
 )

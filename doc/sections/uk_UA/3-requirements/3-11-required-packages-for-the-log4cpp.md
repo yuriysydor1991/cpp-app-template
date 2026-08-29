@@ -5,3 +5,5 @@
 ```
 sudo apt install -y pkg-config liblog4cpp5-dev
 ```
+
+[Модуль вмикання log4cpp](/doc/sections/uk_UA/5-project-build/5-37-enabling-the-log4cpp-library.md) самостійно завантажує та збирає вихідні коди бібліотеки, якщо у системі такого пакету немає, тому наведене вище встановлення є необов'язковим.

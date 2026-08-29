@@ -36,7 +36,8 @@ add_custom_target(
   COMMAND 
     ${FLATPAK_EXEC} remote-add --user --if-not-exists ${FLATPAK_DEPS_REMOTE} ${FLATPAK_DEPS_REMOTE_URL} &&
     ${FLATPAKB_EXEC} --user --install-deps-from=${FLATPAK_DEPS_REMOTE} --assumeyes
-      --repo=${FLATPAK_REPO} "${CMAKE_BINARY_DIR}/flatpak-build" ${flatpakConfDst} &&
+      --force-clean --repo=${FLATPAK_REPO} "${CMAKE_BINARY_DIR}/flatpak-build"
+      ${flatpakConfDst} &&
     ${FLATPAK_EXEC} build-bundle ${FLATPAK_REPO} ${FLATPAK_DST_NAME} ${FLATPAK_PROJECT_URL}
   WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
   COMMENT "Executing the flatpak-builder command to generate the ${FLATPAK_DST_NAME} flatpak package."

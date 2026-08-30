@@ -1,5 +1,21 @@
 cmake_minimum_required(VERSION 3.13)
 
+set(FLATPAK_PROJECT_URL ua.org.kytok.template.claude.${PROJECT_BINARY_NAME})
+
+option(
+  ENABLE_FLATPAK_METAINFO
+  "Set to ON to install the AppStream metainfo file: the flatpak-builder build does it"
+  OFF
+)
+
+if(ENABLE_FLATPAK_METAINFO)
+  set(flatpakMetainfoDst ${CMAKE_BINARY_DIR}/${FLATPAK_PROJECT_URL}.metainfo.xml)
+
+  configure_file(${CMAKE_SOURCE_DIR}/misc/packagers/flatpak.metainfo.xml.in ${flatpakMetainfoDst})
+
+  install(FILES ${flatpakMetainfoDst} DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/metainfo)
+endif()
+
 option(
   ENABLE_FLATPAK
   "Set to ON to enable the flatpak package creation from the project build artifacts"
@@ -13,7 +29,6 @@ endif()
 find_program(FLATPAKB_EXEC flatpak-builder REQUIRED)
 find_program(FLATPAK_EXEC flatpak REQUIRED)
 
-set(FLATPAK_PROJECT_URL ua.org.kytok.template.claude.${PROJECT_BINARY_NAME})
 set(FLATPAK_REPO ${PROJECT_BINARY_NAME}-repo)
 set(FLATPAK_DST_NAME ${PROJECT_BINARY_NAME}-${CMAKE_PROJECT_VERSION}.flatpak)
 set(flatpakConfDst ${CMAKE_BINARY_DIR}/flatpak.conf.json)

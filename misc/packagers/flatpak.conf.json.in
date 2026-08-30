@@ -8,6 +8,7 @@
     {
       "name": "opencv",
       "buildsystem": "cmake-ninja",
+      "builddir": true,
       "config-opts": [
         "-DCMAKE_BUILD_TYPE=Release",
         "-DBUILD_LIST=core,imgproc,imgcodecs,objdetect",

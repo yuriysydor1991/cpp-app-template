@@ -41,7 +41,10 @@
     {
       "name": "${CMAKE_PROJECT_NAME}",
       "buildsystem": "cmake",
-      "config-opts": ["-DCMAKE_BUILD_TYPE=Release"],
+      "config-opts": [
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DENABLE_FLATPAK_METAINFO=ON"
+      ],
       "sources": [
         {
           "type": "dir",

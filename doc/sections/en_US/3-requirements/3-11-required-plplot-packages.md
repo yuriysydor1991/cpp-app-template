@@ -12,8 +12,9 @@ Or compile it manually by commands that may look like next:
 # clone the project into current directory
 git clone https://git.code.sf.net/p/plplot/plplot plplot
 
-# configure CMake project 
-cmake -B plplot-build -S plplot -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_fortran=OFF
+# configure CMake project (the gnu17 C dialect keeps the pre-C23 PLplot
+# configuration checks compilable by the modern C compilers)
+cmake -B plplot-build -S plplot -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_fortran=OFF -DCMAKE_C_FLAGS=-std=gnu17
 
 # build all the project contents
 cmake --build plplot-build -j$(nproc)

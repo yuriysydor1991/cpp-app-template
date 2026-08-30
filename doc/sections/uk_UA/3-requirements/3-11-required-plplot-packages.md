@@ -12,8 +12,10 @@ sudo apt install -y libplplot-dev
 # клонування проекту у поточну директорію
 git clone https://git.code.sf.net/p/plplot/plplot plplot
 
-# конфігурування проекту за допомогою CMake
-cmake -B plplot-build -S plplot -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_fortran=OFF
+# конфігурування проекту за допомогою CMake (діалект gnu17 дозволяє сучасним
+# компіляторам мови C зібрати перевірки конфігурації PLplot, написані до
+# стандарту C23)
+cmake -B plplot-build -S plplot -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_fortran=OFF -DCMAKE_C_FLAGS=-std=gnu17
 
 # побудова усіх цілей проекту
 cmake --build plplot-build -j$(nproc)

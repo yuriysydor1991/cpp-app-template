@@ -11,6 +11,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/enablers/compression")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/enablers/images")
 
 include(template-project-enabler-function)
+include(template-project-standalone-build-function)
 include(template-project-git-enabler)
 
 include(template-project-GTest-enabler)

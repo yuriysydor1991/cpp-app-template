@@ -1,8 +1,5 @@
 cmake_minimum_required(VERSION 3.13)
 
-set(TEMPLATE_APP_SQLITECPP_GIT "https://github.com/SRombauts/SQLiteCpp.git")
-set(TEMPLATE_APP_SQLITECPP_GIT_TAG "3.3.3")
-
 message(STATUS "Trying to probe the system SQLite")
 
 find_package(SQLiteCpp QUIET)

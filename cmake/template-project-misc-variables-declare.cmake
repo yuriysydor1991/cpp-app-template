@@ -40,6 +40,16 @@ set(
   "Sets the default log file path"
 )
 
+set(
+  TEMPLATE_APP_SQLITECPP_GIT "https://github.com/SRombauts/SQLiteCpp.git"
+  CACHE STRING "The SQLiteCpp git repository the project fetches and the packagers consume"
+)
+
+set(
+  TEMPLATE_APP_SQLITECPP_GIT_TAG "3.3.3"
+  CACHE STRING "The SQLiteCpp git tag the project fetches and the packagers consume"
+)
+
 option(
   ENABLE_LOGS_MICROSECONDS_TIME
   "Set to OFF to disable the microseconds fields included into the log messages"

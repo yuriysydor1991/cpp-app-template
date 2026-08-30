@@ -1,7 +1,7 @@
 {
   "id": "${FLATPAK_PROJECT_URL}",
   "runtime": "org.kde.Platform",
-  "runtime-version": "5.15",
+  "runtime-version": "5.15-25.08",
   "sdk": "org.kde.Sdk",
   "command": "${PROJECT_BINARY_NAME}",
   "modules": [
@@ -11,7 +11,11 @@
       "builddir": true,
       "config-opts": [
         "-DCMAKE_BUILD_TYPE=Release",
-        "-DENABLE_fortran=OFF"
+        "-DCMAKE_C_FLAGS=-std=gnu17",
+        "-DPLPLOT_USE_QT5=ON",
+        "-DDEFAULT_NO_BINDINGS=ON",
+        "-DENABLE_cxx=ON",
+        "-DENABLE_qt=ON"
       ],
       "sources": [
         {

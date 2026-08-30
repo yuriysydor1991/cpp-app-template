@@ -52,8 +52,9 @@
     {
       "name": "plotgencpp",
       "buildsystem": "simple",
+      "//": "The library sources reach for std::uint8_t without including <cstdint>, which the SDK libstdc++ headers no longer drag in on their own.",
       "build-commands": [
-        "cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/app",
+        "cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/app -DCMAKE_CXX_FLAGS=\"$CXXFLAGS -include cstdint\"",
         "cmake --build build -j$(nproc)",
         "find . -name 'libPlotGenCpp.so' -exec cp {} /app/lib64 \\;"
       ],

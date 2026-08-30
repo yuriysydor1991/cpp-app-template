@@ -32,8 +32,7 @@
       "config-opts": [
         "-Ddocs=disabled",
         "-Ddocs_pdf=disabled",
-        "-Dssl=auto",
-        "-Dlibdir=lib"
+        "-Dssl=auto"
       ],
       "builddir": true,
       "sources": [

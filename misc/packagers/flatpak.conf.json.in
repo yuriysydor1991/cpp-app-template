@@ -67,7 +67,8 @@
       "buildsystem": "cmake",
       "config-opts": [
         "-DCMAKE_BUILD_TYPE=Release",
-        "-DCMAKE_PREFIX_PATH=/app"
+        "-DCMAKE_PREFIX_PATH=/app",
+        "-DENABLE_FLATPAK_METAINFO=ON"
       ],
       "sources": [
         {

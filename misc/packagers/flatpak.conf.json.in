@@ -10,7 +10,8 @@
       "buildsystem": "cmake",
       "config-opts": [
         "-DCMAKE_BUILD_TYPE=Release",
-        "-DTEMPLATE_APP_FONTAWESOME_DIR=/run/build/${CMAKE_PROJECT_NAME}/fontawesome"
+        "-DTEMPLATE_APP_FONTAWESOME_DIR=/run/build/${CMAKE_PROJECT_NAME}/fontawesome",
+        "-DENABLE_FLATPAK_METAINFO=ON"
       ],
       "sources": [
         {

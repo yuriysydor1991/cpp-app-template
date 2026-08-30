@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.13)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+# defines the CMAKE_INSTALL_* dirs and consumes the ones the flatpak-builder passes
+include(GNUInstallDirs)
+
 set(
   PROJECT_BINARY_NAME ${CMAKE_PROJECT_NAME}
   CACHE STRING "Project main binary name and target"

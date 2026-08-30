@@ -1,8 +1,10 @@
 {
   "id": "${FLATPAK_PROJECT_URL}",
   "runtime": "org.kde.Platform",
-  "runtime-version": "6.8",
+  "runtime-version": "${FLATPAK_RUNTIME_VERSION}",
   "sdk": "org.kde.Sdk",
+  "base": "io.qt.qtwebengine.BaseApp",
+  "base-version": "${FLATPAK_RUNTIME_VERSION}",
   "command": "${PROJECT_BINARY_NAME}",
   "modules": [
     {
@@ -17,8 +19,12 @@
       ]
     }
   ],
+  "cleanup-commands": [
+    "/app/cleanup-BaseApp.sh"
+  ],
   "finish-args": [
     "--share=ipc", 
+    "--share=network",
     "--socket=fallback-x11",
     "--socket=wayland",
     "--device=dri"

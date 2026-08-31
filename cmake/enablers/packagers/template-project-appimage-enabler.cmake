@@ -35,7 +35,7 @@ set(
 
 set(
   APPIMAGE_ICON_SRC
-  ${CMAKE_SOURCE_DIR}/misc/packagers/appimage.icon.svg.in
+  ${CMAKE_SOURCE_DIR}/misc/packagers/appimage/appimage.icon.svg.in
   CACHE STRING "The AppImage SVG icon source file cmake configured"
 )
 
@@ -45,13 +45,13 @@ set(APPIMAGE_DST_NAME ${PROJECT_BINARY_NAME}-${CMAKE_PROJECT_VERSION}-${TEMPLATE
 string(SUBSTRING ${CMAKE_PROJECT_NAME} 0 1 APPIMAGE_ICON_LETTER)
 
 configure_file(
-  ${CMAKE_SOURCE_DIR}/misc/packagers/appimage.desktop.in
+  ${CMAKE_SOURCE_DIR}/misc/packagers/appimage/appimage.desktop.in
   ${APPIMAGE_APPDIR}/${PROJECT_BINARY_NAME}.desktop
 )
 
 configure_file(${APPIMAGE_ICON_SRC} ${APPIMAGE_APPDIR}/${PROJECT_BINARY_NAME}.svg)
 
-configure_file(${CMAKE_SOURCE_DIR}/misc/packagers/appimage.AppRun.in ${CMAKE_BINARY_DIR}/AppRun)
+configure_file(${CMAKE_SOURCE_DIR}/misc/packagers/appimage/appimage.AppRun.in ${CMAKE_BINARY_DIR}/AppRun)
 
 # the AppImage runtime executes the AppRun, which the configure_file leaves
 # without the execution permission

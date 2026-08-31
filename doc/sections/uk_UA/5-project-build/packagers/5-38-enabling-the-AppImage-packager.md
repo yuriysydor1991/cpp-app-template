@@ -41,8 +41,9 @@ chmod +x CppAppTemplate-0.14.0-x86_64.AppImage
 - `TEMPLATE_PROJECT_APPIMAGE_CATEGORIES` - завершений крапкою з комою перелік категорій файлу робочого столу (типово: `Utility;`). Іншими типовими значеннями є `Development;`, `Network;`, `Graphics;`.
 - `TEMPLATE_PROJECT_APPIMAGE_TERMINAL` - ключ `Terminal` файлу робочого столу (типово: `true`). Для віконного застосунку, якому термінал не потрібен, необхідно встановити значення `false`.
 - `APPIMAGE_ICON_SRC` - файл-джерело піктограми SVG, який CMake конфігурує у `AppDir` (типово: наведений вище шаблон).
+- `TEMPLATE_PROJECT_APPIMAGE_ARCHITECTURE` - архітектура центрального процесора цільової системи (типово: змінна CMake `CMAKE_SYSTEM_PROCESSOR`). Іншими типовими значеннями є `aarch64`, `armhf`, `i686`.
 
-Архітектура у назві пакунку, як і змінна середовища `ARCH`, яку вимагає `appimagetool`, береться зі змінної CMake `CMAKE_SYSTEM_PROCESSOR`.
+Архітектура центрального процесора цільової системи потрапляє у назву файлу пакунку і передається `appimagetool` як змінна середовища `ARCH`, яку той вимагає. Її варто перевизначати при крос-компіляції проекту, аби пакунок, який називає CMake, був тим самим пакунком, який вбудовує `appimagetool`.
 
 Детальніше про налаштування пакунку AppImage у файлі [cmake/enablers/packagers/template-project-appimage-enabler.cmake](/cmake/enablers/packagers/template-project-appimage-enabler.cmake).
 

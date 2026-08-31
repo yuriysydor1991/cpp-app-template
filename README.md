@@ -130,6 +130,7 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
     1. [Optional for the flatpak packager](/doc/sections/en_US/3-requirements/3-9-optional-for-the-flatpak-packager.md)
     1. [Optional for the Docker container runs](/doc/sections/en_US/3-requirements/3-10-optional-for-docker-container-runs.md)
     1. [Optional for the snap packager](/doc/sections/en_US/3-requirements/3-11-optional-for-snap-packager.md)
+    1. [Optional for the AppImage packager](/doc/sections/en_US/3-requirements/3-13-optional-for-the-AppImage-packager.md)
     1. [Required packages for the SDL3 development](/doc/sections/en_US/3-requirements/3-12-required-for-the-SDL3-development.md)
 1. [Project structure](/doc/sections/en_US/4-project-structure/4-project-structure.md)
     1. [Project diagrams](/doc/sections/en_US/4-project-structure/4-0-project-diagrams.md)
@@ -170,6 +171,7 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
         1. [Enabling FreeBSD pkg package generation with cpack](/doc/sections/en_US/5-project-build/packagers/5-20-enabling-FreeBSD-pkg-package-generation-with-cpack.md)
         1. [Enabling WIX MSI package generation with cpack](/doc/sections/en_US/5-project-build/packagers/5-21-enabling-WIX-MSI-package-generation-with-cpack.md)
         1. [Enabling RPM package generation with cpack](/doc/sections/en_US/5-project-build/packagers/5-22-enabling-RPM-package-generation-with-cpack.md)
+        1. [Enabling the AppImage packager](/doc/sections/en_US/5-project-build/packagers/5-37-enabling-the-AppImage-packager.md)
     1. Libraries
         1. [Enabling the libcurl](/doc/sections/en_US/5-project-build/5-14-enabling-libcurl.md)
         1. [Enabling the nlohmann json library](/doc/sections/en_US/5-project-build/5-18-enabling-the-nlohmann-json-library.md)

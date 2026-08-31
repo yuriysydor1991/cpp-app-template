@@ -19,6 +19,13 @@ set(
 )
 
 set(
+  TEMPLATE_PROJECT_APPIMAGE_ARCHITECTURE
+  ${CMAKE_SYSTEM_PROCESSOR}
+  CACHE STRING
+  "The destination CPU architecture of the AppImage package (e.g. x86_64, aarch64, armhf, i686)"
+)
+
+set(
   APPIMAGE_ICON_SRC
   ${CMAKE_SOURCE_DIR}/misc/packagers/appimage.icon.svg.in
   CACHE STRING "The AppImage SVG icon source file cmake configured"
@@ -48,13 +55,22 @@ set(CPACK_PACKAGE_ICON ${PROJECT_BINARY_NAME}.svg)
 
 set(CPACK_APPIMAGE_DESKTOP_FILE ${PROJECT_BINARY_NAME}.desktop)
 
+# the CPACK_SYSTEM_NAME of the default file name names the system alone, so the
+# destination CPU lands into the package name the custom target enabler gives
+set(
+  CPACK_PACKAGE_FILE_NAME
+  ${PROJECT_BINARY_NAME}-${CMAKE_PROJECT_VERSION}-${TEMPLATE_PROJECT_APPIMAGE_ARCHITECTURE}
+)
+
 include(CPack)
 
 # the appimage target of the custom target enabler, so both implementations
 # produce their package the same way for the build scripts and the pipeline
 add_custom_target(
   appimage
-  COMMAND ${CMAKE_CPACK_COMMAND}
+  COMMAND
+    ${CMAKE_COMMAND} -E env ARCH=${TEMPLATE_PROJECT_APPIMAGE_ARCHITECTURE}
+      ${CMAKE_CPACK_COMMAND}
   WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
   COMMENT "Executing the cpack command to generate the AppImage package."
 )

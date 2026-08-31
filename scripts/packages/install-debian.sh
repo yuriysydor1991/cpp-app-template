@@ -1,10 +1,7 @@
 #!/bin/bash -e
 #
-# Installs the packages required to build and develop the project, the
-# development ones included.
-#
-# The list is collected from the project documentation, the Dockerfiles and the
-# flatpak packager configuration of the branch.
+# Installs the minimal set of packages required to build and run the project
+# locally.
 
 PROJECT_ROOT=$(realpath "$(dirname "$0")/../..")
 
@@ -12,29 +9,19 @@ PROJECT_ROOT=$(realpath "$(dirname "$0")/../..")
 
 PACKAGES=(
     autoconf
-    autoconf-doc
     automake
     btop
     build-essential
-    clang-format
-    clang-tidy
     cmake
-    cppcheck
     curl
-    docker-buildx
-    docker.io
-    doxygen
     fdupes
     ffmpeg
     firebird-dev
-    flatpak
-    flatpak-builder
     freeglut3-dev
     g++
     git
     gnuplot
     googletest
-    graphviz
     htop
     libboost-all-dev
     libcurl4-openssl-dev
@@ -78,7 +65,6 @@ PACKAGES=(
     nano
     nmap
     opencv-data
-    opencv-doc
     pkg-config
     qml-module-qtquick-controls2
     qml-module-qtquick-dialogs
@@ -100,10 +86,7 @@ PACKAGES=(
     qt6-webengine-dev-tools
     qt6-webview-dev
     qtquickcontrols2-5-dev
-    rpm
-    snapd
     traceroute
-    valgrind
     wget
     whois
 )

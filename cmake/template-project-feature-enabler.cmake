@@ -20,18 +20,25 @@ include(template-project-snap-enabler)
 include(template-project-freebsd-pkg-enabler)
 include(template-project-wix-enabler)
 include(template-project-rpm-enabler)
-include(template-project-appimage-enabler)
 
-# the CPack AppImage generator demands the CMake 4.2, so its enabler is parsed
-# on the user demand alone, leaving the older CMake versions unaffected
+# The CPack AppImage generator demands the CMake 4.20, so the ENABLE_APPIMAGE
+# of such a CMake takes the CPack enabler and leaves the custom target one,
+# which every older CMake keeps using, out. The older CMake versions parse the
+# CPack enabler file on the user demand alone.
 option(
   ENABLE_APPIMAGE_CPACK
-  "Set to ON to enable the AppImage package creation with the CPack generator (demands the CMake 4.2)"
+  "Set to ON to enable the AppImage package creation with the CPack generator (demands the CMake 4.20)"
   OFF
 )
 
+if(ENABLE_APPIMAGE AND CMAKE_VERSION VERSION_GREATER_EQUAL 4.20)
+  set(ENABLE_APPIMAGE_CPACK ON)
+endif()
+
 if(ENABLE_APPIMAGE_CPACK)
   include(template-project-appimage-cpack-enabler)
+else()
+  include(template-project-appimage-enabler)
 endif()
 
 if (ENABLE_PACKAGERS_ONLY)

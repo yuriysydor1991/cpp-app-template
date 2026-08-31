@@ -31,6 +31,18 @@ include(template-project-wix-enabler)
 include(template-project-rpm-enabler)
 include(template-project-appimage-enabler)
 
+# the CPack AppImage generator demands the CMake 4.2, so its enabler is parsed
+# on the user demand alone, leaving the older CMake versions unaffected
+option(
+  ENABLE_APPIMAGE_CPACK
+  "Set to ON to enable the AppImage package creation with the CPack generator (demands the CMake 4.2)"
+  OFF
+)
+
+if(ENABLE_APPIMAGE_CPACK)
+  include(template-project-appimage-cpack-enabler)
+endif()
+
 # compile options
 include(template-project-sanitizers)
 

@@ -11,7 +11,7 @@ option(
 if(ENABLE_FLATPAK_METAINFO)
   set(flatpakMetainfoDst ${CMAKE_BINARY_DIR}/${FLATPAK_PROJECT_URL}.metainfo.xml)
 
-  configure_file(${CMAKE_SOURCE_DIR}/misc/packagers/flatpak.metainfo.xml.in ${flatpakMetainfoDst})
+  configure_file(${CMAKE_SOURCE_DIR}/misc/packagers/flatpak/flatpak.metainfo.xml.in ${flatpakMetainfoDst})
 
   install(FILES ${flatpakMetainfoDst} DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/metainfo)
 endif()
@@ -43,7 +43,7 @@ set(FLATPAK_DEPS_REMOTE flathub)
 set(FLATPAK_DEPS_REMOTE_URL https://dl.flathub.org/repo/flathub.flatpakrepo)
 set(
   FLATPAK_CONF_SRC 
-  ${CMAKE_SOURCE_DIR}/misc/packagers/flatpak.conf.json.in 
+  ${CMAKE_SOURCE_DIR}/misc/packagers/flatpak/flatpak.conf.json.in 
   CACHE STRING "The flatpak json conf source file cmake configured"
 )
 

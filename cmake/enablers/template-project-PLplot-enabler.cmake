@@ -19,8 +19,12 @@ set(TEMPLATE_APP_PLPLOT_GIT_TAG "master" CACHE STRING "The PLplot project git re
 # PLPLOT_USE_QT5 keeps the installed plplotConfig.cmake valid when no Qt device
 # is built. Only the C++ and the Qt bindings are required, the last one for the
 # qtwidget device and it is dropped by the PLplot itself when no Qt5 is found.
+# The installed plplotConfig.cmake forwards the plplot_FIND_QUIETLY and the
+# plplot_FIND_REQUIRED values into its own find_package() calls, so no flag is
+# passed to the search of it.
 template_project_default_3rdparty_enabler(
   NAME plplot
+  NO_FIND_PACKAGE_FLAGS
   GIT_REPOSITORY ${TEMPLATE_APP_PLPLOT_GIT}
   GIT_TAG ${TEMPLATE_APP_PLPLOT_GIT_TAG}
   COMPONENTS CXX

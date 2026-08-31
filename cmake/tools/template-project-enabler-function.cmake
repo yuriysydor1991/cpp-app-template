@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
 function(template_project_default_3rdparty_enabler)
-  set(FCN_KEYWORDS_FLAGS DISABLE_SYSTEM_PROBE STANDALONE_BUILD)
+  set(FCN_KEYWORDS_FLAGS DISABLE_SYSTEM_PROBE STANDALONE_BUILD NO_FIND_PACKAGE_FLAGS)
   set(FCN_KEYWORDS_SINGLE NAME GIT_REPOSITORY GIT_TAG)
   set(FCN_KEYWORDS_MULTI COMPONENTS CMAKE_ARGS)
 
@@ -11,6 +11,16 @@ function(template_project_default_3rdparty_enabler)
     "${FCN_KEYWORDS_SINGLE}"
     "${FCN_KEYWORDS_MULTI}"
     ${ARGN})
+
+  # A package configuration file may forward the QUIET and REQUIRED flags by
+  # value into its own find_package() calls, which makes those calls invalid.
+  # Such a package is searched flagless in the config mode, since only its own
+  # configuration file provides it anyway.
+  if (ARG_NO_FIND_PACKAGE_FLAGS)
+    set(FIND_FLAGS_STR CONFIG)
+  else()
+    set(FIND_FLAGS_STR QUIET)
+  endif()
 
   if(ARG_COMPONENTS)
     set(COMPONENTS_STR COMPONENTS ${ARG_COMPONENTS})
@@ -24,7 +34,7 @@ function(template_project_default_3rdparty_enabler)
 
   if (NOT ARG_DISABLE_SYSTEM_PROBE)
     message(STATUS "Trying to probe system installed ${ARG_NAME}")
-    find_package(${ARG_NAME} QUIET ${COMPONENTS_STR})
+    find_package(${ARG_NAME} ${FIND_FLAGS_STR} ${COMPONENTS_STR})
   endif()
 
   if (${ARG_NAME}_FOUND)
@@ -52,9 +62,15 @@ function(template_project_default_3rdparty_enabler)
       )
 
       find_package(
-        ${ARG_NAME} REQUIRED ${COMPONENTS_STR}
+        ${ARG_NAME} ${FIND_FLAGS_STR} ${COMPONENTS_STR}
         PATHS ${TEMPLATE_PROJECT_STANDALONE_INSTALL_DIR}
         NO_DEFAULT_PATH)
+
+      if (NOT ${ARG_NAME}_FOUND)
+        message(FATAL_ERROR
+          "The standalone built ${ARG_NAME} is not found in the "
+          "${TEMPLATE_PROJECT_STANDALONE_INSTALL_DIR} directory")
+      endif()
     else()
       FetchContent_MakeAvailable(${ARG_NAME})
     endif()

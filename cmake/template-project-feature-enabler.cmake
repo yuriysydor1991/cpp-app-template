@@ -25,6 +25,7 @@ include(template-project-snap-enabler)
 include(template-project-freebsd-pkg-enabler)
 include(template-project-wix-enabler)
 include(template-project-rpm-enabler)
+include(template-project-appimage-enabler)
 
 # compile options
 include(template-project-sanitizers)

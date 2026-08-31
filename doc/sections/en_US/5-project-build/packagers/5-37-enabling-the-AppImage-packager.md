@@ -41,8 +41,9 @@ The following cache variables may optionally be overridden in order to tune the 
 - `TEMPLATE_PROJECT_APPIMAGE_CATEGORIES` - the semicolon terminated desktop entry categories (default: `Utility;`). Other typical values are `Development;`, `Network;`, `Graphics;`.
 - `TEMPLATE_PROJECT_APPIMAGE_TERMINAL` - the `Terminal` key of the desktop entry (default: `true`). Set it to `false` for a windowed application which needs no terminal.
 - `APPIMAGE_ICON_SRC` - the SVG icon source file the CMake configures into the `AppDir` (default: the template one above).
+- `TEMPLATE_PROJECT_APPIMAGE_ARCHITECTURE` - the destination CPU architecture (default: the `CMAKE_SYSTEM_PROCESSOR` variable of the CMake). Other typical values are `aarch64`, `armhf`, `i686`.
 
-The package name architecture, as well as the `ARCH` environment variable the `appimagetool` requires, is taken from the `CMAKE_SYSTEM_PROCESSOR` variable of the CMake.
+The destination CPU architecture ends up in the package file name and is given to the `appimagetool` as the `ARCH` environment variable it requires. Override it when cross compiling the project, so the package the CMake names is the package the `appimagetool` embeds.
 
 In order to examine details of the AppImage package configuration visit the [cmake/enablers/packagers/template-project-appimage-enabler.cmake](/cmake/enablers/packagers/template-project-appimage-enabler.cmake) file.
 

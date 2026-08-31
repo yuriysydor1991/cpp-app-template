@@ -32,12 +32,12 @@ scripts/build/release.sh
 
 Each of the scripts below performs the `Release` configure step with a single packager option enabled and then builds the target which produces the package. There is no separate build step: each of those targets builds whatever it needs on its own, so nothing unused is built into the `build/release` directory beforehand. They accept the parameters of the entry point scripts above, and the produced package lands there:
 
-| Script | Produces |
-| --- | --- |
-| [build-deb.sh](/scripts/build/build-deb.sh) | the DEB package - the `ENABLE_DEB` option and the `package` target |
-| [build-freebsd-pkg.sh](/scripts/build/build-freebsd-pkg.sh) | the FreeBSD pkg package - the `ENABLE_FREEBSD_PKG` option and the `package` target |
-| [build-rpm.sh](/scripts/build/build-rpm.sh) | the RPM package - the `ENABLE_RPM` option and the `package` target |
-| [build-wix.sh](/scripts/build/build-wix.sh) | the WIX MSI installer - the `ENABLE_WIX` option and the `package` target |
+| Script | Produces | The `--install` installs it with |
+| --- | --- | --- |
+| [build-deb.sh](/scripts/build/build-deb.sh) | the DEB package - the `ENABLE_DEB` option and the `package` target | `sudo apt-get install` |
+| [build-freebsd-pkg.sh](/scripts/build/build-freebsd-pkg.sh) | the FreeBSD pkg package - the `ENABLE_FREEBSD_PKG` option and the `package` target | `sudo pkg add` |
+| [build-rpm.sh](/scripts/build/build-rpm.sh) | the RPM package - the `ENABLE_RPM` option and the `package` target | `sudo dnf install` |
+| [build-wix.sh](/scripts/build/build-wix.sh) | the WIX MSI installer - the `ENABLE_WIX` option and the `package` target | `msiexec //i` |
 
 An own `-D<variable>=<value>` argument is forwarded to the configure step after the packager option, so it overrides that option and every other project setting:
 
@@ -68,7 +68,7 @@ The scripts accept the next parameters of their own, which are never passed to t
 | --- | --- |
 | `--no-reconfigure` | Keeps the existing build directory and skips the configure step entirely. Without the parameter the configure step **erases** the build directory before configuring the project anew. |
 | `--test` | Performs the test step, which starts the `ctest` command inside the `Debug` build directory. Without the parameter the test step is skipped. The parameter belongs to the `Debug` scripts alone, as the tests are enabled by their configure step only. |
-| `--install` | Performs the install step. Without the parameter the install step is skipped, so no `sudo` password is ever asked for a plain build. |
+| `--install` | Performs the install step. Without the parameter the install step is skipped, so no `sudo` password is ever asked for a plain build. The packager scripts install the package they have just produced instead, with the tool of that packager. |
 
 Any `-D<variable>=<value>` argument is passed to the configure step, which makes every CMake option of this documentation available to the scripts:
 

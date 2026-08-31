@@ -27,7 +27,7 @@ set(
 
 set(
   APPIMAGE_ICON_SRC
-  ${CMAKE_SOURCE_DIR}/misc/packagers/appimage.icon.svg.in
+  ${CMAKE_SOURCE_DIR}/misc/packagers/appimage/appimage.icon.svg.in
   CACHE STRING "The AppImage SVG icon source file cmake configured"
 )
 
@@ -36,7 +36,7 @@ set(appimageIconDst ${CMAKE_BINARY_DIR}/${PROJECT_BINARY_NAME}.svg)
 
 string(SUBSTRING ${CMAKE_PROJECT_NAME} 0 1 APPIMAGE_ICON_LETTER)
 
-configure_file(${CMAKE_SOURCE_DIR}/misc/packagers/appimage.desktop.in ${appimageDesktopDst})
+configure_file(${CMAKE_SOURCE_DIR}/misc/packagers/appimage/appimage.desktop.in ${appimageDesktopDst})
 configure_file(${APPIMAGE_ICON_SRC} ${appimageIconDst})
 
 # the generator demands the desktop entry and the icon it names inside the

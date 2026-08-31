@@ -28,14 +28,14 @@ mkdir -vp build && cd build && cmake ../ -DENABLE_FLATPAK=ON -DENABLE_GTKMM4=OFF
 cmake --build . --target flatpak
 ```
 
-У разі успішної побудови цілі буде створено файл під назвою `CppAppTemplate-0.9.0.flatpak` у кореневій директорії побудови проекту шаблону. Для того щоб преглянути або/і змінити ціль побудови пакету flatpak необхідно відвідати файли `cmake/template-project-flatpak-target.cmake` або `misc/packagers/flatpak.conf.json.in`.
+У разі успішної побудови цілі буде створено файл під назвою `CppAppTemplate-0.9.0-x86_64.flatpak` у кореневій директорії побудови проекту шаблону. Для того щоб преглянути або/і змінити ціль побудови пакету flatpak необхідно відвідати файли `cmake/template-project-flatpak-target.cmake` або `misc/packagers/flatpak.conf.json.in`.
 
 Необхідно звернутися до документації програми flatpak для того щоб дізнитись як встановлювати або запускати програми котрі розповсюджуються у вигляді пакету flatpak. Для не змінених паарметрів поточного проекту вони можуть виглядати наступним чином:
 
 ```
 # для встановлення (версія може змінитись)
 # всередині директорії побудови проекту-шаблону 
-flatpak install --user CppAppTemplate-0.9.0.flatpak
+flatpak install --user CppAppTemplate-0.9.0-x86_64.flatpak
 
 # для запуску встановленої програми
 flatpak run ua.org.kytok.template.gtkmm4.CppAppTemplate

@@ -32,9 +32,9 @@ The `CMAKE_INSTALL_PREFIX` of the configure step above is the prefix the binary 
 
 The `AppDir` gets the three files the AppImage format requires beside the installed project: the `AppRun` startup script, the desktop entry and the icon it names. All the three are configured by the CMake from the templates of the [misc/packagers](/misc/packagers) directory:
 
-- [appimage.AppRun.in](/misc/packagers/appimage.AppRun.in) - the `AppRun` script, which exports the `LD_LIBRARY_PATH` of the packaged libraries and starts the project binary;
-- [appimage.desktop.in](/misc/packagers/appimage.desktop.in) - the desktop entry the desktop environments integrate the package with;
-- [appimage.icon.svg.in](/misc/packagers/appimage.icon.svg.in) - the icon the desktop entry names.
+- [appimage.AppRun.in](/misc/packagers/appimage/appimage.AppRun.in) - the `AppRun` script, which exports the `LD_LIBRARY_PATH` of the packaged libraries and starts the project binary;
+- [appimage.desktop.in](/misc/packagers/appimage/appimage.desktop.in) - the desktop entry the desktop environments integrate the package with;
+- [appimage.icon.svg.in](/misc/packagers/appimage/appimage.icon.svg.in) - the icon the desktop entry names.
 
 The following cache variables may optionally be overridden in order to tune the produced package:
 

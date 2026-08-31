@@ -1,10 +1,7 @@
 #!/bin/bash -e
 #
-# Installs the packages required to build and develop the project, the
-# development ones included.
-#
-# The list is collected from the project documentation, the Dockerfiles and the
-# flatpak packager configuration of the branch.
+# Installs the minimal set of packages required to build and run the project
+# locally.
 
 PROJECT_ROOT=$(realpath "$(dirname "$0")/../..")
 
@@ -12,32 +9,17 @@ PROJECT_ROOT=$(realpath "$(dirname "$0")/../..")
 
 PACKAGES=(
     build-essential
-    clang-format
-    clang-tidy
     cmake
-    cppcheck
-    docker-buildx
-    docker.io
-    doxygen
-    flatpak
-    flatpak-builder
     g++
     git
     googletest
-    graphviz
     libboost-all-dev
     libgmock-dev
     libgtest-dev
     libssl-dev
     libstdc++6
-    rpm
-    snapd
-    valgrind
     witty
-    witty-dbg
     witty-dev
-    witty-doc
-    witty-examples
 )
 
 APT_SUDO=""

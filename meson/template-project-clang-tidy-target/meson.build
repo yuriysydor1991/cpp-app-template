@@ -40,11 +40,23 @@ foreach include_dir : clang_tidy_implicit_includes
   endif
 endforeach
 
+# Only the translation units are handed over: a header carries no compilation
+# database entry of it's own, so clang-tidy would analyze it with the guessed
+# flags of an unrelated file and report it's project includes as not found. The
+# headers still get checked as a part of the sources including them.
+clang_tidy_sources = []
+
+foreach source_file : all_CPP_sources
+  if source_file.endswith('.cpp')
+    clang_tidy_sources += source_file
+  endif
+endforeach
+
 clang_tidy_cmd = [
   clang_tidy_exec,
   '--config-file=' + join_paths(meson.project_source_root(), 'misc', '.clang-tidy'),
   '-p', meson.project_build_root(),
-] + clang_tidy_extra_args + all_CPP_sources
+] + clang_tidy_extra_args + clang_tidy_sources
 
 clang_tidy_target = custom_target(
   'clang-tidy',

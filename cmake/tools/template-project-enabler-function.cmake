@@ -32,10 +32,18 @@ function(template_project_default_3rdparty_enabler)
 
     include(FetchContent)
 
+    # A fetched copy stays invisible to the find_package call of a nested
+    # project (like the liboai one asking for it's own dependencies) unless the
+    # CMake is told to redirect that call into the fetched copy.
+    if (CMAKE_VERSION VERSION_GREATER_EQUAL 3.24)
+      set(FIND_PACKAGE_OVERRIDE OVERRIDE_FIND_PACKAGE)
+    endif()
+
     FetchContent_Declare(
         ${ARG_NAME}
         GIT_REPOSITORY ${ARG_GIT_REPOSITORY}
         GIT_TAG        ${ARG_GIT_TAG}
+        ${FIND_PACKAGE_OVERRIDE}
     )
 
     FetchContent_MakeAvailable(${ARG_NAME})

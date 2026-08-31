@@ -10,22 +10,8 @@ if (NOT ENABLE_LIBOAI)
   return()
 endif()
 
-# The liboai CMake project requests both of it's dependencies through the
-# find_package call, so a fetched (rather than an installed) copy of any of
-# them stays invisible to it. Both are probed here in order to fail with a
-# clear message instead of failing inside the fetched liboai project.
-find_package(CURL QUIET)
-find_package(nlohmann_json QUIET CONFIG)
-
-if (NOT CURL_FOUND OR NOT nlohmann_json_FOUND)
-  message(
-    FATAL_ERROR
-    "The liboai library requires the system wide installed libcurl and the "
-    "nlohmann JSON development packages (the libcurl4-openssl-dev and the "
-    "nlohmann-json3-dev ones for the Debian based distributions). Install "
-    "them or set the ENABLE_LIBOAI option to OFF."
-  )
-endif()
+set(TEMPLATE_APP_CURL_GIT "https://github.com/curl/curl.git" CACHE STRING "The CURL library git source repository")
+set(TEMPLATE_APP_CURL_GIT_TAG "master" CACHE STRING "The CURL project git repository tag of interest")
 
 set(TEMPLATE_APP_LIBOAI_GIT "https://github.com/d7ead/liboai.git" CACHE STRING "The liboai library git source repository")
 set(TEMPLATE_APP_LIBOAI_GIT_TAG "main" CACHE STRING "The liboai project git repository tag of interest")
@@ -35,6 +21,26 @@ set(TEMPLATE_APP_LIBOAI_GIT_TAG "main" CACHE STRING "The liboai project git repo
 # from them inside the sandbox where no system wide package is available.
 set(TEMPLATE_APP_NLOHMANN_GIT "https://github.com/nlohmann/json.git" CACHE STRING "The Nlohmann JSON library git source repository")
 set(TEMPLATE_APP_NLOHMANN_GIT_TAG "master" CACHE STRING "The Nlohmann JSON project git repository tag of interest")
+
+# The liboai CMake project requests both of it's dependencies through the
+# find_package call, so they are made available before it. A fetched copy
+# answers such a call too, because the CMake redirects the package config of
+# every FetchContent populated dependency since it's 3.24 version.
+# A fetched nlohmann JSON keeps it's install rules off by default, which makes
+# the liboai own install(EXPORT) call fail on the target it links.
+set(JSON_Install ON CACHE BOOL "Install the nlohmann JSON CMake targets")
+
+template_project_default_3rdparty_enabler(
+  NAME nlohmann_json
+  GIT_REPOSITORY ${TEMPLATE_APP_NLOHMANN_GIT}
+  GIT_TAG ${TEMPLATE_APP_NLOHMANN_GIT_TAG}
+)
+
+template_project_default_3rdparty_enabler(
+  NAME CURL
+  GIT_REPOSITORY ${TEMPLATE_APP_CURL_GIT}
+  GIT_TAG ${TEMPLATE_APP_CURL_GIT_TAG}
+)
 
 template_project_default_3rdparty_enabler(
   NAME oai

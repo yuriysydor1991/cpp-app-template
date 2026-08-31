@@ -36,6 +36,7 @@ Each of the scripts below performs the `Release` configure step with a single pa
 
 | Script | Produces | The `--install` installs it with |
 | --- | --- | --- |
+| [build-appimage.sh](/scripts/build/build-appimage.sh) | the AppImage package - the `ENABLE_APPIMAGE` option and the `appimage` target | `install` into the `${HOME}/.local/bin` |
 | [build-deb.sh](/scripts/build/build-deb.sh) | the DEB package - the `ENABLE_DEB` option and the `package` target | `sudo apt-get install` |
 | [build-flatpak.sh](/scripts/build/build-flatpak.sh) | the flatpak bundle - the `ENABLE_FLATPAK` option and the `flatpak` target | `flatpak install --user` |
 | [build-freebsd-pkg.sh](/scripts/build/build-freebsd-pkg.sh) | the FreeBSD pkg package - the `ENABLE_FREEBSD_PKG` option and the `package` target | `sudo pkg add` |

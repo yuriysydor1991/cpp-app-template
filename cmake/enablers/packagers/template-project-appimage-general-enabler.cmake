@@ -6,7 +6,7 @@ cmake_minimum_required(VERSION 3.13)
 # own, and never parses the CPack enabler file. The ENABLE_APPIMAGE_CPACK of a
 # user demands the CPack one regardless of the ENABLE_APPIMAGE.
 
-set(APPIMAGE_CPACK_CMAKE_VERSION 4.20)
+set(APPIMAGE_CPACK_CMAKE_VERSION 4.2)
 
 option(
   ENABLE_APPIMAGE_CPACK
@@ -19,7 +19,9 @@ if(ENABLE_APPIMAGE AND CMAKE_VERSION VERSION_GREATER_EQUAL ${APPIMAGE_CPACK_CMAK
 endif()
 
 if(ENABLE_APPIMAGE_CPACK)
+  message(STATUS "AppImage packager: the CPack generator")
   include(template-project-appimage-cpack-enabler)
 else()
+  message(STATUS "AppImage packager: the appimagetool custom target")
   include(template-project-appimage-enabler)
 endif()

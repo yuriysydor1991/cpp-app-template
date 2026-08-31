@@ -32,9 +32,9 @@ chmod +x CppAppTemplate-0.14.0-x86_64.AppImage
 
 Окрім встановленого проекту `AppDir` отримує три файли, які вимагає формат AppImage: скрипт запуску `AppRun`, файл робочого столу і названу ним піктограму. Усі три конфігуруються CMake з шаблонів каталогу [misc/packagers](/misc/packagers):
 
-- [appimage.AppRun.in](/misc/packagers/appimage.AppRun.in) - скрипт `AppRun`, який експортує `LD_LIBRARY_PATH` запакованих бібліотек і запускає бінарний файл проекту;
-- [appimage.desktop.in](/misc/packagers/appimage.desktop.in) - файл робочого столу, яким середовища робочого столу інтегрують пакунок;
-- [appimage.icon.svg.in](/misc/packagers/appimage.icon.svg.in) - піктограма, яку називає файл робочого столу.
+- [appimage.AppRun.in](/misc/packagers/appimage/appimage.AppRun.in) - скрипт `AppRun`, який експортує `LD_LIBRARY_PATH` запакованих бібліотек і запускає бінарний файл проекту;
+- [appimage.desktop.in](/misc/packagers/appimage/appimage.desktop.in) - файл робочого столу, яким середовища робочого столу інтегрують пакунок;
+- [appimage.icon.svg.in](/misc/packagers/appimage/appimage.icon.svg.in) - піктограма, яку називає файл робочого столу.
 
 Наступні змінні кешу можливо за бажанням перевизначити для налаштування згенерованого пакунку:
 

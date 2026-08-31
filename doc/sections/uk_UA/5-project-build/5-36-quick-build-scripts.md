@@ -36,6 +36,7 @@ scripts/build/release.sh
 
 | Скрипт | Утворює | Параметр `--install` встановлює його командою |
 | --- | --- | --- |
+| [build-appimage.sh](/scripts/build/build-appimage.sh) | пакунок AppImage - опція `ENABLE_APPIMAGE` і ціль `appimage` | `install` у каталог `${HOME}/.local/bin` |
 | [build-deb.sh](/scripts/build/build-deb.sh) | пакунок DEB - опція `ENABLE_DEB` і ціль `package` | `sudo apt-get install` |
 | [build-flatpak.sh](/scripts/build/build-flatpak.sh) | звʼязку flatpak - опція `ENABLE_FLATPAK` і ціль `flatpak` | `flatpak install --user` |
 | [build-freebsd-pkg.sh](/scripts/build/build-freebsd-pkg.sh) | пакунок FreeBSD pkg - опція `ENABLE_FREEBSD_PKG` і ціль `package` | `sudo pkg add` |

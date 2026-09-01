@@ -10,7 +10,7 @@
  * @return Returns a zero value in case of success and other value
  * in case of any error.
  */
-int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
+int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
 {
   LOG_INIT_DEFAULTS();
 

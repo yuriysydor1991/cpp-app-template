@@ -64,7 +64,7 @@ TEST_F(CTEST_PhysicalDeviceInfoHandler, live_runtime_enumeration)
   EXPECT_TRUE(handler->handle(&instance));
 }
 
-int main(int argc, char** argv)
+int main(int argc, char* argv[])
 {
   // QVulkanInstance needs a QGuiApplication with a platform plugin that
   // supports Vulkan. Default to the offscreen plugin when running headless so

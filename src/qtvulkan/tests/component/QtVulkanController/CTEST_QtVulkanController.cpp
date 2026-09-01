@@ -58,7 +58,7 @@ TEST_F(CTEST_QtVulkanController, run_against_live_runtime)
   EXPECT_TRUE(controller->run());
 }
 
-int main(int argc, char** argv)
+int main(int argc, char* argv[])
 {
   // QVulkanInstance needs a QGuiApplication with a platform plugin that
   // supports Vulkan. Default to the offscreen plugin when running headless so

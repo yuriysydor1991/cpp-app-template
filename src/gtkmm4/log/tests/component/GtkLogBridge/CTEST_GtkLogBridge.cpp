@@ -214,7 +214,7 @@ TEST_F(CTEST_GtkLogBridge, repeated_install_is_ignored)
               HasSubstr("a warning after the repeated install"));
 }
 
-int main(int argc, char** argv)
+int main(int argc, char* argv[])
 {
   // The application has it's logger ready before the toolkit is touched, and
   // the GLib logging is taken over right after that, exactly the way the

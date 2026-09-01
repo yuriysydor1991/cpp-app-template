@@ -55,7 +55,7 @@ TEST_F(CTEST_Hostname1QueryHandler, live_system_bus_query)
   EXPECT_TRUE(handler->handle(&bus));
 }
 
-int main(int argc, char** argv)
+int main(int argc, char* argv[])
 {
   QCoreApplication app(argc, argv);
   InitGoogleTest(&argc, argv);

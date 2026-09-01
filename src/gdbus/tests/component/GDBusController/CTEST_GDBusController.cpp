@@ -56,7 +56,7 @@ TEST_F(CTEST_GDBusController, run_against_live_system_bus)
   EXPECT_TRUE(controller->run());
 }
 
-int main(int argc, char** argv)
+int main(int argc, char* argv[])
 {
   Gio::init();
   InitGoogleTest(&argc, argv);

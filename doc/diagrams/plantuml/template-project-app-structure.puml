@@ -43,6 +43,7 @@ package Facade {
   class ApplicationFactory {
     +{abstract} std::shared_ptr<ApplicationContext> create_default_context(int& gargc, char**& gargv)
     +{abstract} std::shared_ptr<CommandLineParser> create_default_arg_parser()
+    +{abstract} std::shared_ptr<ISignalsHandler> create_default_signals_handler()
     +{abstract} std::shared_ptr<IApplication> create_default_application()
     +{abstract} std::shared_ptr<IApplication> create_help_printer()
     +{abstract} std::shared_ptr<IApplication> create_version_printer()
@@ -73,6 +74,22 @@ package CMD-flags-parser {
   }
 }
 
+package Signals-handlers {
+  abstract class ISignalsHandler {
+    +{abstract} bool install(std::shared_ptr<ApplicationContext> ctx)
+    +{abstract} void uninstall()
+  }
+
+  class SignalsHandler {
+    +{abstract} bool install(std::shared_ptr<ApplicationContext> ctx)
+    +{abstract} void uninstall()
+    #{abstract} const std::set<int>& get_handled_signals()
+    #{static} void stop_context(int signalNumber)
+    -{static} inline std::atomic<ApplicationContext*> mstopping_context{nullptr}
+    -std::set<int> minstalled_signals
+  }
+}
+
 IApplication <|.. Application
 IApplication <|.. ApplicationHelpPrinter
 IApplication <|.. ApplicationVersionPrinter
@@ -82,6 +99,8 @@ ApplicationContext --> Application
 ApplicationContext --> ApplicationHelpPrinter
 ApplicationContext --> ApplicationVersionPrinter
 ApplicationContext --> ApplicationFactory
+ApplicationContext --> ISignalsHandler
+ApplicationContext --> SignalsHandler
 
 ApplicationFactory <.. IApplication
 ApplicationFactory <.. Application
@@ -89,6 +108,10 @@ ApplicationFactory <.. ApplicationHelpPrinter
 ApplicationFactory <.. ApplicationVersionPrinter
 ApplicationFactory <.. ApplicationContext
 ApplicationFactory <.. CommandLineParser
+ApplicationFactory <.. ISignalsHandler
+ApplicationFactory <.. SignalsHandler
+
+ISignalsHandler <|.. SignalsHandler
 
 CommandLineParser <.. CMDParamNames
 

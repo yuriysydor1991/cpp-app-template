@@ -177,6 +177,8 @@
     1. Фізика
         1. [Вмикання інтеграції Box2D (2D)](/doc/sections/uk_UA/5-project-build/physics/5-38-enabling-the-box2d-library.md)
         1. [Вмикання інтеграції Jolt Physics (3D)](/doc/sections/uk_UA/5-project-build/physics/5-39-enabling-the-jolt-library.md)
+    1. Ігрові платформи
+        1. [Вмикання інтеграції Steamworks SDK (Steam)](/doc/sections/uk_UA/5-project-build/game-platforms/5-40-enabling-the-steamworks-sdk.md)
 1. [Запуск головного виконуваного файлу](/doc/sections/uk_UA/6-run-the-executable/6-run-the-executable.md)
     1. [Запуск через IDE](/doc/sections/uk_UA/6-run-the-executable/6-1-IDE-run.md)
     1. Запуск з терміналу

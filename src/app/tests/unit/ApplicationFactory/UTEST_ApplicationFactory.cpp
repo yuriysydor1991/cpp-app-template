@@ -11,6 +11,7 @@
 #include "src/app/applications/ApplicationVersionPrinter.h"
 #include "src/lib/facade/public/ILogger.h"
 #include "src/log/log.h"
+#include "src/app/signals-handlers/SignalsHandler.h"
 
 using namespace app;
 using namespace testing;
@@ -76,6 +77,19 @@ class UTEST_ApplicationFactory : public Test
     ApplicationVersionPrinter::onMockCreate = nullptr;
     CppAppTemplate012::LibraryFacade::init_logger_mock.reset();
     logMock::realLogger.reset();
+    SignalsHandler::onMockCreate = nullptr;
+  }
+
+  void expect_the_signals_handler_install()
+  {
+    EXPECT_CALL(onMockCreateSignalsHandlerEnsurer, Call(_))
+        .Times(1)
+        .WillOnce(Invoke([](SignalsHandler& instance) {
+          EXPECT_CALL(instance, install(_)).Times(1).WillOnce(Return(true));
+        }));
+
+    SignalsHandler::onMockCreate =
+        onMockCreateSignalsHandlerEnsurer.AsStdFunction();
   }
 
   inline std::shared_ptr<ApplicationContext> create_context(int& gargc,
@@ -83,6 +97,9 @@ class UTEST_ApplicationFactory : public Test
   {
     return std::make_shared<ApplicationContext>(gargc, gargv);
   }
+
+  MockFunction<void(SignalsHandler& instance)>
+      onMockCreateSignalsHandlerEnsurer;
 
   std::shared_ptr<ApplicationFactory> factory;
 
@@ -107,6 +124,15 @@ TEST_F(UTEST_ApplicationFactory, create_default_arg_parser)
       factory->create_default_arg_parser();
 
   EXPECT_NE(parser, nullptr);
+}
+
+TEST_F(UTEST_ApplicationFactory, create_default_signals_handler)
+{
+  std::shared_ptr<ISignalsHandler> signalsHandler =
+      factory->create_default_signals_handler();
+
+  EXPECT_NE(signalsHandler, nullptr);
+  EXPECT_NE(std::dynamic_pointer_cast<SignalsHandler>(signalsHandler), nullptr);
 }
 
 TEST_F(UTEST_ApplicationFactory, create_default_application)
@@ -224,6 +250,8 @@ TEST_F(UTEST_ApplicationFactory, factory_run_default_app)
         EXPECT_CALL(instance, run(_)).Times(1).WillOnce(Return(0));
       }));
 
+  expect_the_signals_handler_install();
+
   CommandLineParser::onMockCreate = onMockCreateParserEnsurer.AsStdFunction();
   Application::onMockCreate = onMockCreateAppEnsurer.AsStdFunction();
 
@@ -253,6 +281,8 @@ TEST_F(UTEST_ApplicationFactory, factory_run_help_app)
       .WillOnce(Invoke([&](ApplicationHelpPrinter& instance) {
         EXPECT_CALL(instance, run(_)).Times(1).WillOnce(Return(0));
       }));
+
+  expect_the_signals_handler_install();
 
   CommandLineParser::onMockCreate = onMockCreateParserEnsurer.AsStdFunction();
   ApplicationHelpPrinter::onMockCreate = onMockCreateAppEnsurer.AsStdFunction();
@@ -284,6 +314,8 @@ TEST_F(UTEST_ApplicationFactory, factory_run_version_app)
       .WillOnce(Invoke([&](ApplicationVersionPrinter& instance) {
         EXPECT_CALL(instance, run(_)).Times(1).WillOnce(Return(0));
       }));
+
+  expect_the_signals_handler_install();
 
   CommandLineParser::onMockCreate = onMockCreateParserEnsurer.AsStdFunction();
   ApplicationVersionPrinter::onMockCreate =
@@ -350,6 +382,8 @@ TEST_F(UTEST_ApplicationFactory, factory_execute_default_app)
       .WillOnce(Invoke([&](Application& instance) {
         EXPECT_CALL(instance, run(_)).Times(1).WillOnce(Return(0));
       }));
+
+  expect_the_signals_handler_install();
 
   CommandLineParser::onMockCreate = onMockCreateParserEnsurer.AsStdFunction();
   Application::onMockCreate = onMockCreateAppEnsurer.AsStdFunction();

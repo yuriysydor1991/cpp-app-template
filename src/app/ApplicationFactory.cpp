@@ -11,6 +11,8 @@
 #include "src/app/applications/ApplicationHelpPrinter.h"
 #include "src/app/applications/ApplicationVersionPrinter.h"
 #include "src/app/applications/IApplication.h"
+#include "src/app/signals-handlers/ISignalsHandler.h"
+#include "src/app/signals-handlers/SignalsHandler.h"
 #include "src/log/log.h"
 
 namespace app
@@ -26,6 +28,12 @@ std::shared_ptr<CommandLineParser>
 ApplicationFactory::create_default_arg_parser()
 {
   return std::make_shared<CommandLineParser>();
+}
+
+std::shared_ptr<ISignalsHandler>
+ApplicationFactory::create_default_signals_handler()
+{
+  return std::make_shared<SignalsHandler>();
 }
 
 std::shared_ptr<ApplicationContext> ApplicationFactory::create_context(
@@ -126,6 +134,20 @@ int ApplicationFactory::run(int& gargc, char**& gargv)
   if (app == nullptr) {
     LOGE("Fail to create the application object");
     return IApplication::INVALID;
+  }
+
+  std::shared_ptr<ISignalsHandler> signalsHandler =
+      create_default_signals_handler();
+
+  assert(signalsHandler != nullptr);
+
+  if (signalsHandler == nullptr) {
+    LOGE("Fail to create the signals handler object");
+    return IApplication::INVALID;
+  }
+
+  if (!signalsHandler->install(ctx)) {
+    LOGW("Fail to handle the application stop signals");
   }
 
   LOGD("Starting the application");

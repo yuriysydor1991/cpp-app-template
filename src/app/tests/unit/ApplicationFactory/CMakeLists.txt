@@ -15,6 +15,7 @@ target_include_directories(
   PRIVATE ${APPLICATIONS_MOCKS_ROOT}/ApplicationVersionPrinter
   PRIVATE ${APP_MOCKS_ROOT}/CommandLineParser
   PRIVATE ${APP_MOCKS_ROOT}/LibraryFacade
+  PRIVATE ${SIGNALS_HANDLERS_MOCKS_ROOT}/SignalsHandler
   PRIVATE ${APP_MOCKS_ROOT}/project-global-decls
   PRIVATE ${GENERAL_MOCKS_ROOT}/LibraryContext
   PRIVATE ${GENERAL_MOCKS_ROOT}/log

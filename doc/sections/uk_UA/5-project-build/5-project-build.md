@@ -43,3 +43,6 @@
     1. [Вмикання інтеграції OpenJPEG (JPEG 2000)](/doc/sections/uk_UA/5-project-build/image-libraries/5-31-enabling-the-openjpeg-library.md)
     1. [Вмикання інтеграції libavif (AVIF)](/doc/sections/uk_UA/5-project-build/image-libraries/5-32-enabling-the-libavif-library.md)
     1. [Вмикання інтеграції libheif (HEIF/HEIC)](/doc/sections/uk_UA/5-project-build/image-libraries/5-33-enabling-the-libheif-library.md)
+1. Фізика
+    1. [Вмикання інтеграції Box2D (2D)](/doc/sections/uk_UA/5-project-build/physics/5-38-enabling-the-box2d-library.md)
+    1. [Вмикання інтеграції Jolt Physics (3D)](/doc/sections/uk_UA/5-project-build/physics/5-39-enabling-the-jolt-library.md)

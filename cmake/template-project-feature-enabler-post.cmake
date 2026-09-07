@@ -24,3 +24,7 @@ include(template-project-libheif-enabler)
 
 # security / cryptography
 include(template-project-openssl-enabler)
+
+# physics
+include(template-project-box2d-enabler)
+include(template-project-jolt-enabler)

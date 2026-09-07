@@ -195,6 +195,8 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
     1. Physics
         1. [Enabling the Box2D library (2D)](/doc/sections/en_US/5-project-build/physics/5-38-enabling-the-box2d-library.md)
         1. [Enabling the Jolt Physics library (3D)](/doc/sections/en_US/5-project-build/physics/5-39-enabling-the-jolt-library.md)
+    1. Game platforms
+        1. [Enabling the Steamworks SDK (Steam)](/doc/sections/en_US/5-project-build/game-platforms/5-40-enabling-the-steamworks-sdk.md)
 1. [Run the executable](/doc/sections/en_US/6-run-the-executable/6-run-the-executable.md)
     1. [IDE run](/doc/sections/en_US/6-run-the-executable/6-1-IDE-run.md)
     1. Command line run

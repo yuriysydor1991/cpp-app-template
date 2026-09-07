@@ -46,3 +46,5 @@
 1. Physics
     1. [Enabling the Box2D library (2D)](/doc/sections/en_US/5-project-build/physics/5-38-enabling-the-box2d-library.md)
     1. [Enabling the Jolt Physics library (3D)](/doc/sections/en_US/5-project-build/physics/5-39-enabling-the-jolt-library.md)
+1. Game platforms
+    1. [Enabling the Steamworks SDK (Steam)](/doc/sections/en_US/5-project-build/game-platforms/5-40-enabling-the-steamworks-sdk.md)

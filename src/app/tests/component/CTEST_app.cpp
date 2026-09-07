@@ -1,6 +1,8 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include <csignal>
+
 #include "src/app/ApplicationFactory.h"
 #include "src/sqlite3cpp/SQLiteController.h"
 
@@ -33,6 +35,13 @@ TEST_F(CTEST_app, create_default_arg_parser_success)
   EXPECT_NE(argp, nullptr);
 }
 
+TEST_F(CTEST_app, create_default_signals_handler_success)
+{
+  auto shandler = facade.create_default_signals_handler();
+
+  EXPECT_NE(shandler, nullptr);
+}
+
 TEST_F(CTEST_app, create_default_application_success)
 {
   auto dapp = facade.create_default_application();
@@ -63,6 +72,22 @@ TEST_F(CTEST_app, create_application_success)
   auto app = facade.create_application(actx);
 
   EXPECT_NE(app, nullptr);
+}
+
+TEST_F(CTEST_app, signals_handler_stops_the_context)
+{
+  auto actx = facade.create_default_context(argc, argv);
+  auto shandler = facade.create_default_signals_handler();
+
+  EXPECT_TRUE(shandler->install(actx));
+  EXPECT_FALSE(actx->get_stop());
+
+  std::raise(SIGTERM);
+
+  // False positive: the raise does return, since the installed handler
+  // does return too.
+  // cppcheck-suppress unreachableCode
+  EXPECT_TRUE(actx->get_stop());
 }
 
 TEST_F(CTEST_app, execute_success)

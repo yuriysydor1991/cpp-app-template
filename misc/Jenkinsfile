@@ -133,6 +133,11 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "UTEST_CURLController\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_CURLController.junit.xml'
           }
         }
+        stage('UTEST_SignalsHandler') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_SignalsHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_SignalsHandler.junit.xml'
+          }
+        }
       }
       post { always { junit "$BUILDDIR/$BDJUNITOUT/UTEST_*.xml" } }
     }

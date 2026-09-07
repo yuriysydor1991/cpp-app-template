@@ -27,3 +27,6 @@ include(template-project-openssl-enabler)
 # physics
 include(template-project-box2d-enabler)
 include(template-project-jolt-enabler)
+
+# game platforms
+include(template-project-steamworks-enabler)

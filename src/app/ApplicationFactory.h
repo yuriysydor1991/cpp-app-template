@@ -6,6 +6,7 @@
 #include "src/app/ApplicationContext.h"
 #include "src/app/CommandLineParser.h"
 #include "src/app/applications/IApplication.h"
+#include "src/app/signals-handlers/ISignalsHandler.h"
 
 namespace app
 {
@@ -39,6 +40,14 @@ class ApplicationFactory
    * @return Returns created parser instance.
    */
   virtual std::shared_ptr<CommandLineParser> create_default_arg_parser();
+
+  /**
+   * @brief Creates the OS signals handler instance which asks the created
+   * application to stop through the application context stop flag.
+   *
+   * @return Returns created signals handler instance.
+   */
+  virtual std::shared_ptr<ISignalsHandler> create_default_signals_handler();
 
   /**
    * @brief Creates default instance for the application implementation.

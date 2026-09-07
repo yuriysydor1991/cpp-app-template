@@ -1,0 +1,30 @@
+cmake_minimum_required(VERSION 3.13)
+
+add_executable(
+  UTEST_SignalsHandler
+  UTEST_SignalsHandler.cpp
+  ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/SignalsHandler.cpp
+  ${APP_MOCKS_ROOT}/ApplicationContext/src/app/ApplicationContext.cpp
+)
+
+target_include_directories(
+  UTEST_SignalsHandler
+  PRIVATE ${APP_MOCKS_ROOT}/ApplicationContext
+  PRIVATE ${APP_MOCKS_ROOT}/log
+  PRIVATE ${CMAKE_SOURCE_DIR}
+)
+
+target_link_libraries(
+  UTEST_SignalsHandler
+  GTest::gtest_main GTest::gmock
+)
+
+include(GoogleTest)
+
+gtest_add_tests(
+  TARGET UTEST_SignalsHandler
+  TEST_SUFFIX .noArgs
+  TEST_LIST noArgsTests
+)
+
+set_tests_properties(${noArgsTests} PROPERTIES TIMEOUT 60)

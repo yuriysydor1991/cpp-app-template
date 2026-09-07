@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.13)
 
 function(template_project_default_3rdparty_enabler)
   set(FCN_KEYWORDS_FLAGS DISABLE_SYSTEM_PROBE)
-  set(FCN_KEYWORDS_SINGLE NAME GIT_REPOSITORY GIT_TAG)
+  set(FCN_KEYWORDS_SINGLE NAME GIT_REPOSITORY GIT_TAG SOURCE_SUBDIR)
   set(FCN_KEYWORDS_MULTI COMPONENTS)
 
   cmake_parse_arguments(
@@ -14,6 +14,10 @@ function(template_project_default_3rdparty_enabler)
 
   if(ARG_COMPONENTS)
     set(COMPONENTS_STR COMPONENTS ${ARG_COMPONENTS})
+  endif()
+
+  if(ARG_SOURCE_SUBDIR)
+    set(SOURCE_SUBDIR_STR SOURCE_SUBDIR ${ARG_SOURCE_SUBDIR})
   endif()
 
   if (NOT ARG_DISABLE_SYSTEM_PROBE)
@@ -36,6 +40,7 @@ function(template_project_default_3rdparty_enabler)
         ${ARG_NAME}
         GIT_REPOSITORY ${ARG_GIT_REPOSITORY}
         GIT_TAG        ${ARG_GIT_TAG}
+        ${SOURCE_SUBDIR_STR}
     )
 
     FetchContent_MakeAvailable(${ARG_NAME})

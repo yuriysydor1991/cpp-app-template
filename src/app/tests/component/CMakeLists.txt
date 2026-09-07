@@ -15,6 +15,7 @@ add_executable(
   ${CMAKE_SOURCE_DIR}/src/app/applications/ApplicationVersionPrinter.cpp
   ${FONTAWESOME_SUBSYSTEM_SOURCES}
   ${FONTAWESOME_GENERATED_ICONS_SOURCE}
+  ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/SignalsHandler.cpp
 )
 
 target_include_directories(

@@ -69,6 +69,40 @@ void ApplicationContext::set_stop(const bool newValue)
   mstop.store(newValue);
 }
 
+bool ApplicationContext::get_pause() const { return mpause.load(); }
+
+void ApplicationContext::set_pause(const bool newValue)
+{
+  mpause.store(newValue);
+}
+
+bool ApplicationContext::get_reload() const { return mreload.load(); }
+
+void ApplicationContext::set_reload(const bool newValue)
+{
+  mreload.store(newValue);
+}
+
+bool ApplicationContext::get_first_user_request() const
+{
+  return mfirst_user_request.load();
+}
+
+void ApplicationContext::set_first_user_request(const bool newValue)
+{
+  mfirst_user_request.store(newValue);
+}
+
+bool ApplicationContext::get_second_user_request() const
+{
+  return msecond_user_request.load();
+}
+
+void ApplicationContext::set_second_user_request(const bool newValue)
+{
+  msecond_user_request.store(newValue);
+}
+
 const std::string& ApplicationContext::get_mysql_dbname() const
 {
   return mmysql_dbname;

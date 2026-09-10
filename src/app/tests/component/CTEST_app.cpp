@@ -91,6 +91,100 @@ TEST_F(CTEST_app, signals_handler_stops_the_context)
   EXPECT_TRUE(actx->get_stop());
 }
 
+TEST_F(CTEST_app, signals_handler_pauses_and_resumes_the_context)
+{
+#if defined(SIGTSTP) && defined(SIGCONT)
+  auto actx = facade.create_default_context(argc, argv);
+  auto shandler = facade.create_default_signals_handler();
+
+  EXPECT_TRUE(shandler->install(actx));
+  EXPECT_FALSE(actx->get_pause());
+
+  // The installed handler replaces the OS default disposition, so the current
+  // process is not suspended by the raise below.
+  std::raise(SIGTSTP);
+
+  // False positive: the raise does return, since the installed handler
+  // does return too.
+  // cppcheck-suppress unreachableCode
+  EXPECT_TRUE(actx->get_pause());
+  EXPECT_FALSE(actx->get_stop());
+
+  std::raise(SIGCONT);
+
+  EXPECT_FALSE(actx->get_pause());
+  EXPECT_FALSE(actx->get_stop());
+#endif  // defined(SIGTSTP) && defined(SIGCONT)
+}
+
+TEST_F(CTEST_app, signals_handler_reloads_the_context)
+{
+#ifdef SIGHUP
+  auto actx = facade.create_default_context(argc, argv);
+  auto shandler = facade.create_default_signals_handler();
+
+  EXPECT_TRUE(shandler->install(actx));
+  EXPECT_FALSE(actx->get_reload());
+
+  // The SIGHUP signal asks for a configuration reload here and terminates the
+  // process under the OS default disposition, so the raise below proves the
+  // handler took it over.
+  std::raise(SIGHUP);
+
+  // False positive: the raise does return, since the installed handler
+  // does return too.
+  // cppcheck-suppress unreachableCode
+  EXPECT_TRUE(actx->get_reload());
+  EXPECT_FALSE(actx->get_stop());
+#endif  // SIGHUP
+}
+
+TEST_F(CTEST_app, signals_handler_serves_the_user_requests)
+{
+#if defined(SIGUSR1) && defined(SIGUSR2)
+  auto actx = facade.create_default_context(argc, argv);
+  auto shandler = facade.create_default_signals_handler();
+
+  EXPECT_TRUE(shandler->install(actx));
+  EXPECT_FALSE(actx->get_first_user_request());
+  EXPECT_FALSE(actx->get_second_user_request());
+
+  std::raise(SIGUSR1);
+
+  // False positive: the raise does return, since the installed handler
+  // does return too.
+  // cppcheck-suppress unreachableCode
+  EXPECT_TRUE(actx->get_first_user_request());
+  EXPECT_FALSE(actx->get_second_user_request());
+
+  std::raise(SIGUSR2);
+
+  EXPECT_TRUE(actx->get_second_user_request());
+
+  EXPECT_FALSE(actx->get_stop());
+#endif  // defined(SIGUSR1) && defined(SIGUSR2)
+}
+
+TEST_F(CTEST_app, signals_handler_ignores_the_broken_pipe)
+{
+#ifdef SIGPIPE
+  auto actx = facade.create_default_context(argc, argv);
+  auto shandler = facade.create_default_signals_handler();
+
+  EXPECT_TRUE(shandler->install(actx));
+
+  // The OS default disposition terminates the process here, so the test case
+  // simply reaching its end proves the signal is ignored.
+  std::raise(SIGPIPE);
+
+  // False positive: the raise does return, since the signal is ignored.
+  // cppcheck-suppress unreachableCode
+  EXPECT_FALSE(actx->get_stop());
+  EXPECT_FALSE(actx->get_pause());
+  EXPECT_FALSE(actx->get_reload());
+#endif  // SIGPIPE
+}
+
 TEST_F(CTEST_app, execute_success)
 {
   MockFunction<void(MySQLController&)> controllerEnsurer;

@@ -1,19 +1,21 @@
 #include "src/app/signals-handlers/SignalsHandler.h"
 
-#include <atomic>
 #include <cassert>
-#include <csignal>
 #include <memory>
-#include <set>
+#include <vector>
 
 #include "src/app/ApplicationContext.h"
+#include "src/app/signals-handlers/ISignalsHandler.h"
+#include "src/app/signals-handlers/handlers/posix/ContinueSignalsHandler.h"
+#include "src/app/signals-handlers/handlers/posix/IgnoredSignalsHandler.h"
+#include "src/app/signals-handlers/handlers/posix/PauseSignalsHandler.h"
+#include "src/app/signals-handlers/handlers/posix/ReloadSignalsHandler.h"
+#include "src/app/signals-handlers/handlers/posix/StopSignalsHandler.h"
+#include "src/app/signals-handlers/handlers/posix/UserSignalsHandler.h"
 #include "src/log/log.h"
 
 namespace app
 {
-
-static_assert(std::atomic<ApplicationContext*>::is_always_lock_free,
-              "The signal handler may touch the lock free atomics only");
 
 SignalsHandler::~SignalsHandler() { SignalsHandler::uninstall(); }
 
@@ -28,61 +30,61 @@ bool SignalsHandler::install(std::shared_ptr<ApplicationContext> ctx)
 
   uninstall();
 
-  mstopping_context.store(ctx.get());
+  mhandlers = create_handlers();
 
-  for (const int signalNumber : get_handled_signals()) {
-    if (std::signal(signalNumber, &SignalsHandler::stop_context) == SIG_ERR) {
-      LOGE("Fail to handle the signal " << signalNumber);
+  if (mhandlers.empty()) {
+    LOGE("No signals handlers created");
+    return false;
+  }
+
+  bool anyInstalled{false};
+
+  for (const std::shared_ptr<ISignalsHandler>& handler : mhandlers) {
+    assert(handler != nullptr);
+
+    if (handler == nullptr) {
+      LOGE("An invalid signals handler met");
       continue;
     }
 
-    minstalled_signals.emplace(signalNumber);
+    anyInstalled = handler->install(ctx) || anyInstalled;
   }
 
-  LOGD("Handling " << minstalled_signals.size() << " application stop signals");
+  if (!anyInstalled) {
+    LOGE("None of the signals handlers covers its signals");
+    return false;
+  }
 
-  return !minstalled_signals.empty();
+  LOGD("Handling the OS signals with " << mhandlers.size() << " handlers");
+
+  return true;
 }
 
 void SignalsHandler::uninstall()
 {
-  if (minstalled_signals.empty()) {
-    return;
+  for (const std::shared_ptr<ISignalsHandler>& handler : mhandlers) {
+    if (handler == nullptr) {
+      continue;
+    }
+
+    handler->uninstall();
   }
 
-  for (const int signalNumber : minstalled_signals) {
-    std::signal(signalNumber, SIG_DFL);
-  }
-
-  minstalled_signals.clear();
-  mstopping_context.store(nullptr);
+  mhandlers.clear();
 }
 
-const std::set<int>& SignalsHandler::get_handled_signals()
+std::vector<std::shared_ptr<ISignalsHandler>> SignalsHandler::create_handlers()
 {
-  // Place here the OS signals that are asking the application to stop. The
-  // ones the C++ standard does not declare are guarded with the ifdef.
-  static const std::set<int> stopSignals{
-      SIGINT,
-      SIGTERM,
-#ifdef SIGHUP
-      SIGHUP,
-#endif  // SIGHUP
-#ifdef SIGQUIT
-      SIGQUIT,
-#endif  // SIGQUIT
+  // Place here a subhandler of every OS signals category the application
+  // covers.
+  return {
+      std::make_shared<StopSignalsHandler>(),
+      std::make_shared<PauseSignalsHandler>(),
+      std::make_shared<ContinueSignalsHandler>(),
+      std::make_shared<ReloadSignalsHandler>(),
+      std::make_shared<UserSignalsHandler>(),
+      std::make_shared<IgnoredSignalsHandler>(),
   };
-
-  return stopSignals;
-}
-
-void SignalsHandler::stop_context([[maybe_unused]] int signalNumber)
-{
-  ApplicationContext* const ctx = mstopping_context.load();
-
-  if (ctx != nullptr) {
-    ctx->set_stop(true);
-  }
 }
 
 }  // namespace app

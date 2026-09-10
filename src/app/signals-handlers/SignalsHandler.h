@@ -1,9 +1,8 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_SIGNALSHANDLER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_SIGNALSHANDLER_CLASS_H
 
-#include <atomic>
 #include <memory>
-#include <set>
+#include <vector>
 
 #include "src/app/ApplicationContext.h"
 #include "src/app/signals-handlers/ISignalsHandler.h"
@@ -12,62 +11,61 @@ namespace app
 {
 
 /**
- * @brief The default OS signals handler which raises the application context
- * stop flag on every process termination request like the Ctrl+C one.
+ * @brief The facade of the whole signals handlers component, which covers
+ * every OS signals category of the application with a single
+ * ISignalsHandler::install call.
  *
- * The std::signal dispositions are the process wide ones, so a single alive
- * instance is expected and the context of the latest SignalsHandler::install
- * call is the one that gets stopped.
+ * The class implements the very same ISignalsHandler interface its
+ * subhandlers do, so the rest of the application depends on the interface
+ * only and neither knows how many categories exist nor which platform
+ * declares them. The covered categories are the ones the
+ * SignalsHandler::create_handlers method creates, which are the
+ * StopSignalsHandler, the PauseSignalsHandler, the ContinueSignalsHandler, the
+ * ReloadSignalsHandler, the UserSignalsHandler and the IgnoredSignalsHandler
+ * ones by default.
  */
 class SignalsHandler : public ISignalsHandler
 {
  public:
-  /// @brief Releases the handled signals with the own SignalsHandler
+  /// @brief Releases the subhandlers with the own SignalsHandler
   /// implementation of the ISignalsHandler::uninstall method.
   ~SignalsHandler() override;
   SignalsHandler() = default;
 
   /**
-   * @brief Makes the SignalsHandler::stop_context routine the handler of every
-   * SignalsHandler::get_handled_signals signal. See the ISignalsHandler
-   * interface.
+   * @brief Creates the SignalsHandler::create_handlers subhandlers and hands
+   * the given context over to the ISignalsHandler::install method of every one
+   * of them. See the ISignalsHandler interface.
    *
-   * @param ctx The context to stop once a handled signal arrives.
+   * @param ctx The context to hand over to the subhandlers.
    *
-   * @return Returns true if at least one signal is handled from now on and
-   * false in case of any error.
+   * @return Returns true if at least one subhandler covers its signals from
+   * now on and false in case of any error. A subhandler which covers no
+   * signals on the current platform is not an error on its own, so the whole
+   * facade still reports a success as long as any other one succeeds.
    */
   virtual bool install(std::shared_ptr<ApplicationContext> ctx) override;
 
-  /// @brief Gives the handled signals back to the OS default disposition. See
-  /// the ISignalsHandler interface.
+  /// @brief Calls the ISignalsHandler::uninstall method of every created
+  /// subhandler and releases them. See the ISignalsHandler interface.
   virtual void uninstall() override;
 
  protected:
   /**
-   * @brief Method should return the set of the OS signals numbers that are
-   * asking the application to stop.
-   */
-  virtual const std::set<int>& get_handled_signals();
-
-  /**
-   * @brief The routine the OS calls in the signal context, so it touches the
-   * lock free atomics only and does no logging, since nothing else is async
-   * signal safe.
+   * @brief Method should create a subhandler of every OS signals category the
+   * application covers.
    *
-   * @param signalNumber The arrived signal number given by the OS.
+   * Add a newly written category handler here and the whole application gets
+   * it covered, since nothing else creates the subhandlers.
+   *
+   * @return The created subhandlers, an empty vector in case of any error.
    */
-  static void stop_context(int signalNumber);
+  virtual std::vector<std::shared_ptr<ISignalsHandler>> create_handlers();
 
  private:
-  /// @brief The context to stop, kept as a plain pointer, since neither the
-  /// std::signal handler accepts a user data argument nor the std::shared_ptr
-  /// is async signal safe.
-  inline static std::atomic<ApplicationContext*> mstopping_context{nullptr};
-
-  /// @brief The signals that are handled by the current instance and are to be
-  /// released by the SignalsHandler::uninstall method.
-  std::set<int> minstalled_signals;
+  /// @brief The subhandlers of the latest SignalsHandler::install call, which
+  /// are to be released by the SignalsHandler::uninstall method.
+  std::vector<std::shared_ptr<ISignalsHandler>> mhandlers;
 };
 
 }  // namespace app

@@ -130,7 +130,7 @@ int ApplicationFactory::run(int& gargc, char**& gargv)
   }
 
   if (!signalsHandler->install(ctx)) {
-    LOGW("Fail to handle the application stop signals");
+    LOGW("Fail to handle the application OS signals");
   }
 
   LOGD("Starting the application");

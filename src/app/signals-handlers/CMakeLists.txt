@@ -5,4 +5,5 @@ target_sources(
   PRIVATE SignalsHandler.cpp
 )
 
+add_subdirectory(handlers)
 add_subdirectory(tests)

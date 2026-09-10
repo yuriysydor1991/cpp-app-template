@@ -16,6 +16,14 @@ add_executable(
   ${FONTAWESOME_SUBSYSTEM_SOURCES}
   ${FONTAWESOME_GENERATED_ICONS_SOURCE}
   ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/SignalsHandler.cpp
+  ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/handlers/ASignalsHandler.cpp
+  ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/ContinueSignalsHandler.cpp
+  ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/IgnoredSignalsHandler.cpp
+  ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/ReloadSignalsHandler.cpp
+  ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/UserSignalsHandler.cpp
+  ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/PauseSignalsHandler.cpp
+  ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/PosixSignalsHandler.cpp
+  ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/StopSignalsHandler.cpp
 )
 
 target_include_directories(

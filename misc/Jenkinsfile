@@ -109,6 +109,41 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "UTEST_SignalsHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_SignalsHandler.junit.xml'
           }
         }
+        stage('UTEST_ASignalsHandler') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_ASignalsHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ASignalsHandler.junit.xml'
+          }
+        }
+        stage('UTEST_ContinueSignalsHandler') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_ContinueSignalsHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ContinueSignalsHandler.junit.xml'
+          }
+        }
+        stage('UTEST_IgnoredSignalsHandler') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_IgnoredSignalsHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_IgnoredSignalsHandler.junit.xml'
+          }
+        }
+        stage('UTEST_PauseSignalsHandler') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_PauseSignalsHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_PauseSignalsHandler.junit.xml'
+          }
+        }
+        stage('UTEST_ReloadSignalsHandler') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_ReloadSignalsHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ReloadSignalsHandler.junit.xml'
+          }
+        }
+        stage('UTEST_StopSignalsHandler') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_StopSignalsHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_StopSignalsHandler.junit.xml'
+          }
+        }
+        stage('UTEST_UserSignalsHandler') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_UserSignalsHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_UserSignalsHandler.junit.xml'
+          }
+        }
       }
       post { always { junit "$BUILDDIR/$BDJUNITOUT/UTEST_*.xml" } }
     }

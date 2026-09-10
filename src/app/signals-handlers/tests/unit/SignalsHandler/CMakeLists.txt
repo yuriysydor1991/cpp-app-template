@@ -4,14 +4,21 @@ add_executable(
   UTEST_SignalsHandler
   UTEST_SignalsHandler.cpp
   ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/SignalsHandler.cpp
-  ${APP_MOCKS_ROOT}/ApplicationContext/src/app/ApplicationContext.cpp
+  ${GLOBAL_MOCKS_ROOT}/ApplicationContext/src/app/ApplicationContext.cpp
 )
 
 target_include_directories(
   UTEST_SignalsHandler
-  PRIVATE ${APP_MOCKS_ROOT}/ApplicationContext
-  PRIVATE ${APP_MOCKS_ROOT}/log
+  PRIVATE ${GLOBAL_MOCKS_ROOT}/ApplicationContext
+  PRIVATE ${POSIX_SIGNALS_HANDLERS_MOCKS_ROOT}/ContinueSignalsHandler
+  PRIVATE ${POSIX_SIGNALS_HANDLERS_MOCKS_ROOT}/IgnoredSignalsHandler
+  PRIVATE ${POSIX_SIGNALS_HANDLERS_MOCKS_ROOT}/PauseSignalsHandler
+  PRIVATE ${POSIX_SIGNALS_HANDLERS_MOCKS_ROOT}/ReloadSignalsHandler
+  PRIVATE ${POSIX_SIGNALS_HANDLERS_MOCKS_ROOT}/StopSignalsHandler
+  PRIVATE ${POSIX_SIGNALS_HANDLERS_MOCKS_ROOT}/UserSignalsHandler
+  PRIVATE ${GLOBAL_MOCKS_ROOT}/log
   PRIVATE ${CMAKE_SOURCE_DIR}
+  PRIVATE ${CMAKE_BINARY_DIR}
 )
 
 target_link_libraries(

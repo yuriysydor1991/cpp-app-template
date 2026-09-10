@@ -36,6 +36,15 @@ class ApplicationContext
   MOCK_METHOD(bool, get_stop, (), (const));
   MOCK_METHOD(void, set_stop, (const bool newValue));
 
+  MOCK_METHOD(bool, get_pause, (), (const));
+  MOCK_METHOD(void, set_pause, (const bool newValue));
+  MOCK_METHOD(bool, get_reload, (), (const));
+  MOCK_METHOD(void, set_reload, (const bool newValue));
+  MOCK_METHOD(bool, get_first_user_request, (), (const));
+  MOCK_METHOD(void, set_first_user_request, (const bool newValue));
+  MOCK_METHOD(bool, get_second_user_request, (), (const));
+  MOCK_METHOD(void, set_second_user_request, (const bool newValue));
+
   const std::string& get_http_address() const { return mhttp_address; }
   void set_http_address(const std::string& newValue)
   {

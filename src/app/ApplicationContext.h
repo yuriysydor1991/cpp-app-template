@@ -74,6 +74,42 @@ class ApplicationContext
   /// routines to return from IApplication::run.
   void set_stop(const bool newValue);
 
+  /// @brief Tells if the application was asked to pause. Atomic, so it is safe
+  /// to poll it from any thread.
+  bool get_pause() const;
+
+  /// @brief Sets the application pause flag. Raise it to ask the running
+  /// routines to suspend their work without leaving IApplication::run and
+  /// lower it to let them continue.
+  void set_pause(const bool newValue);
+
+  /// @brief Tells if the application was asked to reload its configuration.
+  /// Atomic, so it is safe to poll it from any thread.
+  bool get_reload() const;
+
+  /// @brief Sets the application reload flag. The application is expected to
+  /// reread its configuration once the flag is raised and to lower it back on
+  /// its own afterwards.
+  void set_reload(const bool newValue);
+
+  /// @brief Tells if the first user defined request is pending. Atomic, so it
+  /// is safe to poll it from any thread.
+  bool get_first_user_request() const;
+
+  /// @brief Sets the first user defined request flag. The meaning of the
+  /// request is the application own one - reopening the log files is the
+  /// classic one - and the application is expected to lower the flag back
+  /// after serving it.
+  void set_first_user_request(const bool newValue);
+
+  /// @brief Tells if the second user defined request is pending. Atomic, so it
+  /// is safe to poll it from any thread.
+  bool get_second_user_request() const;
+
+  /// @brief Sets the second user defined request flag. See the
+  /// ApplicationContext::set_first_user_request setter.
+  void set_second_user_request(const bool newValue);
+
   /// @brief The OpenAI API token to authorize the ChatGPT calls with. When
   /// empty the OAIController takes the token from the environment variable
   /// named in it's TOKEN_ENV_VAR field.
@@ -123,6 +159,22 @@ class ApplicationContext
   /// @brief The thread safe application stop flag. See the
   /// ApplicationContext::set_stop setter.
   std::atomic_bool mstop{false};
+
+  /// @brief The thread safe application pause flag. See the
+  /// ApplicationContext::set_pause setter.
+  std::atomic_bool mpause{false};
+
+  /// @brief The thread safe configuration reload flag. See the
+  /// ApplicationContext::set_reload setter.
+  std::atomic_bool mreload{false};
+
+  /// @brief The thread safe first user defined request flag. See the
+  /// ApplicationContext::set_first_user_request setter.
+  std::atomic_bool mfirst_user_request{false};
+
+  /// @brief The thread safe second user defined request flag. See the
+  /// ApplicationContext::set_second_user_request setter.
+  std::atomic_bool msecond_user_request{false};
 
   /**
    * @brief The OpenAI API token to authorize the ChatGPT calls with. When

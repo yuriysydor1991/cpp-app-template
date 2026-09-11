@@ -1,5 +1,5 @@
-#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_OPENGAMEARTRANDOMSOUND_CLASS_H
-#define YOUR_CPP_APP_TEMPLATE_PROJECT_OPENGAMEARTRANDOMSOUND_CLASS_H
+#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_KENNEYRANDOMSOUND_CLASS_H
+#define YOUR_CPP_APP_TEMPLATE_PROJECT_KENNEYRANDOMSOUND_CLASS_H
 
 #include <random>
 #include <string>
@@ -60,10 +60,22 @@ class OpenGameArtRandomSound
   OpenGameArtSoundPtr pick(const IOpenGameArtSoundsPtr& sounds,
                            const std::string& extension);
 
+  /**
+   * @brief Draws a sound out of an already gathered list.
+   *
+   * The counterpart of a caller which narrowed the set by a rule of it's own,
+   * so the drawing stays here and the narrowing stays there.
+   *
+   * @param sounds The list to draw of.
+   *
+   * @return Returns the drawn sound or a nullptr one for an empty list.
+   */
+  OpenGameArtSoundPtr pick(const IOpenGameArtSounds::SoundsList& sounds);
+
  private:
   std::mt19937 mgenerator;
 };
 
 }  // namespace opengameartaudio
 
-#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_OPENGAMEARTRANDOMSOUND_CLASS_H
+#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_KENNEYRANDOMSOUND_CLASS_H

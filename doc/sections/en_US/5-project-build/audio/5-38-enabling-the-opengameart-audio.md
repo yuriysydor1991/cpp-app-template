@@ -129,7 +129,30 @@ The branch ships a player, so the packs are not only reachable but audible. It i
 
 The `cmake/enablers/audio/template-project-sdl2-audio-enabler.cmake` module probes the system SDL2 first and falls back to a FetchContent build, the same way every other third party enabler of this project does. Only the audio subsystem of SDL2 is used - no window, no renderer and no OpenGL.
 
-**The bare SDL2 decodes the RIFF/WAVE files alone.** The compressed formats are the business of the separate `SDL_mixer` library, so a `.ogg` or a `.mp3` sound is refused with a message naming it rather than handed to the audio device as noise:
+**The bare SDL2 decodes the RIFF/WAVE files alone.** The compressed formats are the business of the separate `SDL_mixer` library, so a `.ogg` or a `.mp3` sound is refused with a message naming it rather than handed to the audio device as noise.
+
+Which formats those are is the backend's own business, though, and so is the question of whether a backend was built in at all. **Neither ever reaches the calling code**: `OpenGameArtSoundsController` keeps the set and the player together and answers both questions on it's own.
+
+```cpp
+#include "src/opengameartaudio/controller/OpenGameArtSoundsController.h"
+
+auto controller = opengameartaudio::OpenGameArtSoundsController::create(sounds);
+
+auto sound = controller->draw();   // a sound the backend really decodes
+                                   // (any sound of the set when it decodes none)
+
+if (controller->playable()) {      // is there a backend at all
+  controller->play(sound);         // returns once the sound has been played
+}
+```
+
+The controller asks the player which extensions it supports instead of naming one, so a backend gained, swapped or dropped later changes nothing in the code above.
+
+Switching `ENABLE_SDL2_AUDIO` off drops the player and leaves the rest of the subsystem - the index, the aliases and the resource manifests - untouched. The very same sources still compile: the `OpenGameArtSoundPlayerFactory::create` implementation the build picks answers with a player or with a nullptr one, so **no calling place carries a preprocessor branch**.
+
+### The layers underneath
+
+`OpenGameArtSdlSoundPlayer` is the SDL2 backend itself and stays reachable for an application wanting to drive it directly:
 
 ```cpp
 #include "src/opengameartaudio/player/OpenGameArtSdlSoundPlayer.h"
@@ -138,11 +161,7 @@ auto player = opengameartaudio::OpenGameArtSdlSoundPlayer::create();
 
 player->supports("wav");  // true
 player->supports("ogg");  // false, SDL_mixer territory
-
-player->play(sound);      // returns once the sound has been played to the end
 ```
-
-Switching `ENABLE_SDL2_AUDIO` off drops the player and leaves the rest of the subsystem - the index, the aliases and the resource manifests - untouched, so the branch still composes with an application bringing it's own audio backend.
 
 ### Drawing a sound at random
 

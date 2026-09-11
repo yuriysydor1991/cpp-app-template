@@ -5,6 +5,7 @@ add_executable(
   UTEST_Application.cpp
   ${CMAKE_SOURCE_DIR}/src/app/applications/Application.cpp
   ${OPENGAMEART_AUDIO_SUBSYSTEM_SOURCES}
+  ${OPENGAMEART_AUDIO_NO_PLAYER_SOURCE}
   ${APP_MOCKS_ROOT}/ApplicationContext/src/app/ApplicationContext.cpp
 )
 

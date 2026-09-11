@@ -9,6 +9,7 @@ add_executable(
   CTEST_app.cpp
   ${CMAKE_SOURCE_DIR}/src/app/applications/Application.cpp
   ${OPENGAMEART_AUDIO_SUBSYSTEM_SOURCES}
+  ${OPENGAMEART_AUDIO_NO_PLAYER_SOURCE}
   ${CMAKE_SOURCE_DIR}/src/app/ApplicationContext.cpp
   ${CMAKE_SOURCE_DIR}/src/app/ApplicationFactory.cpp
   ${CMAKE_SOURCE_DIR}/src/app/applications/ApplicationHelpPrinter.cpp

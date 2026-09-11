@@ -23,14 +23,25 @@ OpenGameArtRandomSound::OpenGameArtRandomSound(Seed gseed) : mgenerator{gseed}
 OpenGameArtSoundPtr OpenGameArtRandomSound::pick(
     const IOpenGameArtSoundsPtr& sounds)
 {
-  if (sounds == nullptr || sounds->all().empty()) {
+  if (sounds == nullptr) {
     LOGW("No sounds to draw one of");
     return {};
   }
 
-  std::uniform_int_distribution<std::size_t> drawn{0, sounds->all().size() - 1};
+  return pick(sounds->all());
+}
 
-  return sounds->all().at(drawn(mgenerator));
+OpenGameArtSoundPtr OpenGameArtRandomSound::pick(
+    const IOpenGameArtSounds::SoundsList& sounds)
+{
+  if (sounds.empty()) {
+    LOGW("No sounds to draw one of");
+    return {};
+  }
+
+  std::uniform_int_distribution<std::size_t> drawn{0, sounds.size() - 1};
+
+  return sounds.at(drawn(mgenerator));
 }
 
 OpenGameArtSoundPtr OpenGameArtRandomSound::pick(

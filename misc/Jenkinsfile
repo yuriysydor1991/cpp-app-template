@@ -153,6 +153,11 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "UTEST_OpenGameArtRandomSound\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_OpenGameArtRandomSound.junit.xml'
           }
         }
+        stage('UTEST_OpenGameArtSoundsController') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_OpenGameArtSoundsController\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_OpenGameArtSoundsController.junit.xml'
+          }
+        }
         stage('UTEST_SignalsHandler') { 
           steps { 
             sh 'cd $BUILDDIR && ctest -R "UTEST_SignalsHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_SignalsHandler.junit.xml'

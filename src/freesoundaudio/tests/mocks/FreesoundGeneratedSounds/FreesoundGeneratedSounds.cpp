@@ -15,12 +15,12 @@ const std::map<std::string, FreesoundGeneratedSounds::NamesList>& generated()
       sounds{
           {"impact-sounds",
            {
-               "Audio/impactMetal_light_000.ogg",
+               "Audio/impactMetal_light_000.wav",
            }},
           {"interface-sounds",
            {
                "Audio/click_001.ogg",
-               "Audio/confirmation_001.ogg",
+               "Audio/confirmation_001.wav",
            }},
       };
 
@@ -32,9 +32,9 @@ const std::map<std::string, FreesoundGeneratedSounds::NamesList>& generated()
 const std::map<std::string, std::string>& generatedLicenses()
 {
   static const std::map<std::string, std::string> licenses{
-      {"impact-sounds/Audio/impactMetal_light_000.ogg", "CC-BY-4.0"},
+      {"impact-sounds/Audio/impactMetal_light_000.wav", "CC-BY-4.0"},
       {"interface-sounds/Audio/click_001.ogg", "CC0-1.0"},
-      {"interface-sounds/Audio/confirmation_001.ogg", "CC0-1.0"},
+      {"interface-sounds/Audio/confirmation_001.wav", "CC0-1.0"},
   };
 
   return licenses;
@@ -43,11 +43,11 @@ const std::map<std::string, std::string>& generatedLicenses()
 const std::map<std::string, std::string>& generatedSources()
 {
   static const std::map<std::string, std::string> sources{
-      {"impact-sounds/Audio/impactMetal_light_000.ogg",
+      {"impact-sounds/Audio/impactMetal_light_000.wav",
        "https://freesound.org/s/000000/"},
       {"interface-sounds/Audio/click_001.ogg",
        "https://freesound.org/s/111111/"},
-      {"interface-sounds/Audio/confirmation_001.ogg",
+      {"interface-sounds/Audio/confirmation_001.wav",
        "https://freesound.org/s/222222/"},
   };
 

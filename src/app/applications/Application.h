@@ -2,6 +2,7 @@
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATION_CLASS_H
 
 #include <memory>
+#include <string>
 
 #include "src/app/ApplicationContext.h"
 #include "src/app/applications/IApplication.h"
@@ -28,6 +29,11 @@ class Application : public IApplication
    * and other value otherwise.
    */
   virtual int run(std::shared_ptr<ApplicationContext> ctx) override;
+
+ private:
+  /// @brief The sound file extension the run implementation narrows it's draw
+  /// to, because the bare SDL2 decodes the RIFF/WAVE files alone.
+  inline static const std::string DEMO_PLAYABLE_EXTENSION = "wav";
 };
 
 }  // namespace app

@@ -153,6 +153,11 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "UTEST_FreesoundRandomSound\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_FreesoundRandomSound.junit.xml'
           }
         }
+        stage('UTEST_FreesoundSoundsController') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_FreesoundSoundsController\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_FreesoundSoundsController.junit.xml'
+          }
+        }
         stage('UTEST_SignalsHandler') { 
           steps { 
             sh 'cd $BUILDDIR && ctest -R "UTEST_SignalsHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_SignalsHandler.junit.xml'

@@ -5,16 +5,11 @@
 #include <memory>
 
 #include "freesound-audio-decls.h"
-#include "src/freesoundaudio/player/FreesoundRandomSound.h"
-#include "src/freesoundaudio/player/IFreesoundSoundPlayer.h"
+#include "src/freesoundaudio/controller/FreesoundSoundsController.h"
 #include "src/freesoundaudio/resources/FreesoundGResourcePath.h"
 #include "src/freesoundaudio/resources/FreesoundQtResourcePath.h"
 #include "src/freesoundaudio/sounds/FreesoundSounds.h"
 #include "src/log/log.h"
-
-#ifdef TEMPLATE_APP_SDL2_AUDIO
-#include "src/freesoundaudio/player/FreesoundSdlSoundPlayer.h"
-#endif
 
 namespace app
 {
@@ -32,32 +27,19 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
 
   assert(sounds != nullptr);
 
-  LOGI("The Freesound categories carry "
+  LOGI("The Freesound packs carry "
        << sounds->count() << " sounds at "
        << freesound_audio_decls::FREESOUND_AUDIO_ROOT_DIR);
 
-  freesoundaudio::FreesoundRandomSound drawn;
+  const auto controller =
+      freesoundaudio::FreesoundSoundsController::create(sounds);
 
-#ifdef TEMPLATE_APP_SDL2_AUDIO
-  auto player = freesoundaudio::FreesoundSdlSoundPlayer::create();
+  assert(controller != nullptr);
 
-  // The bare SDL2 decodes the RIFF/WAVE files alone, so the draw is narrowed
-  // to what the player at hand really plays before it falls back to any sound
-  // at all.
-  auto sound = drawn.pick(sounds, DEMO_PLAYABLE_EXTENSION);
+  const auto sound = controller->draw();
 
   if (sound == nullptr) {
-    sound = drawn.pick(sounds);
-  }
-#else
-  const freesoundaudio::IFreesoundSoundPlayerPtr player;
-
-  auto sound = drawn.pick(sounds);
-#endif
-
-  if (sound == nullptr) {
-    LOGW(
-        "No sound to play: fill the categories in and reconfigure the project");
+    LOGW("No sound to play: fill the packs in and reconfigure the project");
     return 0;
   }
 
@@ -69,16 +51,14 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
   LOGI("... embedded into the GResource ones: "
        << freesoundaudio::FreesoundGResourcePath::create()->of(sound));
 
-  if (player == nullptr) {
-    LOGI(
-        "... and no player is built in: switch the ENABLE_SDL2_AUDIO option "
-        "ON to hear it");
+  if (!controller->playable()) {
+    LOGI("... and no audio backend is built in, so nothing sounds it here");
     return 0;
   }
 
   LOGI("Playing the " << sound->alias() << " sound ...");
 
-  if (!player->play(sound)) {
+  if (!controller->play(sound)) {
     LOGW("The " << sound->alias() << " sound has not been played");
   }
 

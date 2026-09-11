@@ -14,6 +14,7 @@ UTEST_ApplicationFactory = executable(
     MOCK_ApplicationHelpPrinter,
     MOCK_ApplicationVersionPrinter,
     MOCK_CommandLineParser,
+    MOCK_SignalsHandler,
     MOCK_project_global_decls,
     MOCK_log,
     configuration_inc

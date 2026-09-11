@@ -1,6 +1,8 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include <thread>
+
 #include "src/app/ApplicationContext.h"
 
 using namespace app;
@@ -33,6 +35,10 @@ TEST_F(UTEST_ApplicationContext, empty_context)
   EXPECT_TRUE(appCtx->get_errors().empty());
   EXPECT_FALSE(appCtx->get_print_help_and_exit());
   EXPECT_FALSE(appCtx->get_print_version_and_exit());
+  EXPECT_FALSE(appCtx->get_pause());
+  EXPECT_FALSE(appCtx->get_reload());
+  EXPECT_FALSE(appCtx->get_first_user_request());
+  EXPECT_FALSE(appCtx->get_second_user_request());
 }
 
 TEST_F(UTEST_ApplicationContext, custom_argc)
@@ -47,6 +53,10 @@ TEST_F(UTEST_ApplicationContext, custom_argc)
   EXPECT_TRUE(appCtx->get_errors().empty());
   EXPECT_FALSE(appCtx->get_print_help_and_exit());
   EXPECT_FALSE(appCtx->get_print_version_and_exit());
+  EXPECT_FALSE(appCtx->get_pause());
+  EXPECT_FALSE(appCtx->get_reload());
+  EXPECT_FALSE(appCtx->get_first_user_request());
+  EXPECT_FALSE(appCtx->get_second_user_request());
 }
 
 TEST_F(UTEST_ApplicationContext, custom_argv)
@@ -62,6 +72,10 @@ TEST_F(UTEST_ApplicationContext, custom_argv)
   EXPECT_TRUE(appCtx->get_errors().empty());
   EXPECT_FALSE(appCtx->get_print_help_and_exit());
   EXPECT_FALSE(appCtx->get_print_version_and_exit());
+  EXPECT_FALSE(appCtx->get_pause());
+  EXPECT_FALSE(appCtx->get_reload());
+  EXPECT_FALSE(appCtx->get_first_user_request());
+  EXPECT_FALSE(appCtx->get_second_user_request());
 }
 
 TEST_F(UTEST_ApplicationContext, pushing_an_error)
@@ -95,4 +109,90 @@ TEST_F(UTEST_ApplicationContext, pushing_multiple_errors)
 
   EXPECT_FALSE(appCtx->get_print_help_and_exit());
   EXPECT_FALSE(appCtx->get_print_version_and_exit());
+}
+
+TEST_F(UTEST_ApplicationContext, setting_the_pause_flag)
+{
+  EXPECT_FALSE(appCtx->get_pause());
+
+  appCtx->set_pause(true);
+
+  EXPECT_TRUE(appCtx->get_pause());
+  EXPECT_FALSE(appCtx->get_stop());
+
+  appCtx->set_pause(false);
+
+  EXPECT_FALSE(appCtx->get_pause());
+}
+
+TEST_F(UTEST_ApplicationContext, raising_the_pause_flag_from_another_thread)
+{
+  EXPECT_FALSE(appCtx->get_pause());
+
+  std::thread pauser{[this]() { appCtx->set_pause(true); }};
+
+  pauser.join();
+
+  EXPECT_TRUE(appCtx->get_pause());
+
+  EXPECT_TRUE(appCtx->get_errors().empty());
+  EXPECT_FALSE(appCtx->get_print_help_and_exit());
+  EXPECT_FALSE(appCtx->get_print_version_and_exit());
+  EXPECT_FALSE(appCtx->get_stop());
+}
+
+TEST_F(UTEST_ApplicationContext, setting_the_reload_flag)
+{
+  EXPECT_FALSE(appCtx->get_reload());
+
+  appCtx->set_reload(true);
+
+  EXPECT_TRUE(appCtx->get_reload());
+  EXPECT_FALSE(appCtx->get_stop());
+  EXPECT_FALSE(appCtx->get_pause());
+
+  appCtx->set_reload(false);
+
+  EXPECT_FALSE(appCtx->get_reload());
+}
+
+TEST_F(UTEST_ApplicationContext, setting_the_user_request_flags)
+{
+  EXPECT_FALSE(appCtx->get_first_user_request());
+  EXPECT_FALSE(appCtx->get_second_user_request());
+
+  appCtx->set_first_user_request(true);
+
+  EXPECT_TRUE(appCtx->get_first_user_request());
+  EXPECT_FALSE(appCtx->get_second_user_request());
+
+  appCtx->set_second_user_request(true);
+
+  EXPECT_TRUE(appCtx->get_first_user_request());
+  EXPECT_TRUE(appCtx->get_second_user_request());
+
+  appCtx->set_first_user_request(false);
+  appCtx->set_second_user_request(false);
+
+  EXPECT_FALSE(appCtx->get_first_user_request());
+  EXPECT_FALSE(appCtx->get_second_user_request());
+
+  EXPECT_FALSE(appCtx->get_stop());
+  EXPECT_FALSE(appCtx->get_pause());
+  EXPECT_FALSE(appCtx->get_reload());
+}
+
+TEST_F(UTEST_ApplicationContext, raising_the_reload_flag_from_another_thread)
+{
+  EXPECT_FALSE(appCtx->get_reload());
+
+  std::thread reloader{[this]() { appCtx->set_reload(true); }};
+
+  reloader.join();
+
+  EXPECT_TRUE(appCtx->get_reload());
+
+  EXPECT_TRUE(appCtx->get_errors().empty());
+  EXPECT_FALSE(appCtx->get_stop());
+  EXPECT_FALSE(appCtx->get_pause());
 }

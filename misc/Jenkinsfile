@@ -127,6 +127,46 @@ pipeline {
             sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_CommandLineParser --suite UTEST_CommandLineParser'
           }
         }
+        stage('UTEST_SignalsHandler') {
+          steps {
+            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_SignalsHandler --suite UTEST_SignalsHandler'
+          }
+        }
+        stage('UTEST_ASignalsHandler') {
+          steps {
+            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_ASignalsHandler --suite UTEST_ASignalsHandler'
+          }
+        }
+        stage('UTEST_ContinueSignalsHandler') {
+          steps {
+            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_ContinueSignalsHandler --suite UTEST_ContinueSignalsHandler'
+          }
+        }
+        stage('UTEST_IgnoredSignalsHandler') {
+          steps {
+            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_IgnoredSignalsHandler --suite UTEST_IgnoredSignalsHandler'
+          }
+        }
+        stage('UTEST_PauseSignalsHandler') {
+          steps {
+            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_PauseSignalsHandler --suite UTEST_PauseSignalsHandler'
+          }
+        }
+        stage('UTEST_ReloadSignalsHandler') {
+          steps {
+            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_ReloadSignalsHandler --suite UTEST_ReloadSignalsHandler'
+          }
+        }
+        stage('UTEST_StopSignalsHandler') {
+          steps {
+            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_StopSignalsHandler --suite UTEST_StopSignalsHandler'
+          }
+        }
+        stage('UTEST_UserSignalsHandler') {
+          steps {
+            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_UserSignalsHandler --suite UTEST_UserSignalsHandler'
+          }
+        }
       }
       post { always { junit "$BUILDDIR/meson-logs/UTEST_*.junit.xml" } }
     }

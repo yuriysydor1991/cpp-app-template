@@ -31,4 +31,5 @@ target_link_libraries(
 add_subdirectory(packs)
 add_subdirectory(sounds)
 add_subdirectory(resources)
+add_subdirectory(player)
 add_subdirectory(tests)

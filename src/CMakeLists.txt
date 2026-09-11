@@ -26,6 +26,25 @@ configure_file(
   ${CMAKE_BINARY_DIR}/project-global-decls.h
 )
 
+# The OpenGameArt audio subsystem sources, gathered before the subdirectories below
+# so every test executable linking a part of it (the app ones included) builds
+# the very same set.
+set(
+  OPENGAMEART_AUDIO_SUBSYSTEM_SOURCES
+  ${CMAKE_CURRENT_SOURCE_DIR}/opengameartaudio/OpenGameArtSound.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/opengameartaudio/packs/OpenGameArtPack.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/opengameartaudio/packs/OpenGameArtPacks.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/opengameartaudio/sounds/OpenGameArtSounds.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/opengameartaudio/resources/OpenGameArtResourcePath.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/opengameartaudio/resources/OpenGameArtQtResourcePath.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/opengameartaudio/resources/OpenGameArtGResourcePath.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/opengameartaudio/player/OpenGameArtRandomSound.cpp
+)
+
 add_subdirectory(app)
 add_subdirectory(log)
 add_subdirectory(opengameartaudio)
+
+if (ENABLE_SDL2_AUDIO)
+  target_compile_definitions(${PROJECT_BINARY_NAME} PRIVATE TEMPLATE_APP_SDL2_AUDIO=1)
+endif()

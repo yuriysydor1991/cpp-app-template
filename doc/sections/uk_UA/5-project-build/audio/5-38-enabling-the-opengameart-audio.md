@@ -119,4 +119,55 @@ qtPath->uriOf(click);  // "qrc:/sounds/interface-sounds/Audio/click_001.ogg"
 
 ### Відтворення звуків
 
-Дана гілка навмисно не містить жодного звукового рушія, точно так само, як гілка `appFontAwesome` не містить жодного інструментарію графічного інтерфейсу: вона відповідає за те, щоб зробити ресурси доступними, і ні за що більше. Достатньо передати `filePath` звуку (або його шлях у системі ресурсів) тому рушію, який програма вже використовує — SDL, SFML, OpenAL чи miniaudio — і гілка поєднується з будь-яким з них.
+Гілка постачає програвач, тому набори не лише доступні, а й чутні. Його побудовано на **звуковій підсистемі SDL2** і вмикається він змінною CMake `ENABLE_SDL2_AUDIO`, яка типово має значення `ON`:
+
+| Змінна | Типове значення | Призначення |
+| --- | --- | --- |
+| `ENABLE_SDL2_AUDIO` | `ON` | будує програвач звуку на основі SDL2 |
+| `TEMPLATE_APP_SDL2_GIT` | репозиторій першоджерела | git-репозиторій вихідних кодів SDL2 |
+| `TEMPLATE_APP_SDL2_GIT_TAG` | `release-2.32.10` | версія SDL2, на якій слід зафіксуватись |
+
+Модуль `cmake/enablers/audio/template-project-sdl2-audio-enabler.cmake` спочатку шукає SDL2 у системі і лише потім вдається до побудови через FetchContent — так само, як це робить кожен інший механізм вмикання сторонніх бібліотек у даному проекті. Використовується виключно звукова підсистема SDL2: жодного вікна, жодного рендерера і жодного OpenGL.
+
+**Сам по собі SDL2 декодує лише файли RIFF/WAVE.** Стиснені формати є справою окремої бібліотеки `SDL_mixer`, тому звук `.ogg` чи `.mp3` відхиляється з повідомленням, яке його називає, а не передається до звукового пристрою як шум:
+
+```cpp
+#include "src/opengameartaudio/player/OpenGameArtSdlSoundPlayer.h"
+
+auto player = opengameartaudio::OpenGameArtSdlSoundPlayer::create();
+
+player->supports("wav");  // true
+player->supports("ogg");  // false, це територія SDL_mixer
+
+player->play(sound);      // повертається, щойно звук відтворено до кінця
+```
+
+Вимикання `ENABLE_SDL2_AUDIO` прибирає програвач і залишає решту підсистеми — покажчик, псевдоніми і маніфести ресурсів — недоторканою, тому гілка й надалі поєднується з програмою, яка приносить власний звуковий рушій.
+
+### Випадковий вибір звуку
+
+Демонстрація, що відтворює на кожному запуску один і той самий клац, доводить небагато, тому `OpenGameArtRandomSound` витягує звук з усього доступного набору. Зерно можна задати, і саме це дозволяє тесту попросити повторюваний вибір:
+
+```cpp
+#include "src/opengameartaudio/player/OpenGameArtRandomSound.h"
+
+opengameartaudio::OpenGameArtRandomSound drawn;
+
+auto any = drawn.pick(sounds);          // будь-який звук взагалі
+auto wave = drawn.pick(sounds, "wav");  // лише те, що програвач дійсно декодує
+```
+
+### Демонстрація
+
+Метод `Application::run` даної гілки поєднує усі три складові: повідомляє, скільки звуків містять налаштовані набори, витягує придатний для відтворення, друкує шлях до його файлу і обидва шляхи у системах ресурсів, та відтворює його:
+
+```
+INF : The OpenGameArt packs carry 8 sounds at /.../resources/opengameart-audio
+INF : The drawn cc0-footsteps/Audio/step_grass_01.wav sound file: /.../step_grass_01.wav
+INF : ... published under: CC0-1.0
+INF : ... embedded into the Qt resources: :/sounds/cc0-footsteps/Audio/step_grass_01.wav
+INF : ... embedded into the GResource ones: /ua/org/kytok/template/CppAppTemplate/sounds/cc0-footsteps/Audio/step_grass_01.wav
+INF : Playing the cc0-footsteps/Audio/step_grass_01.wav sound ...
+```
+
+Якщо набори порожні або серед них немає звуку у форматі, який декодує програвач, демонстрація повідомляє про це і завершується коректно, а не з помилкою.

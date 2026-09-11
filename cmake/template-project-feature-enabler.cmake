@@ -17,6 +17,7 @@ include(template-project-git-enabler)
 include(template-project-GTest-enabler)
 
 # audio assets
+include(template-project-sdl2-audio-enabler)
 include(template-project-opengameart-audio-enabler)
 include(template-project-clang-format-target)
 include(template-project-valgrind-target)

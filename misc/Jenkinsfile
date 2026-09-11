@@ -148,6 +148,11 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "UTEST_OpenGameArtResourcePath\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_OpenGameArtResourcePath.junit.xml'
           }
         }
+        stage('UTEST_OpenGameArtRandomSound') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_OpenGameArtRandomSound\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_OpenGameArtRandomSound.junit.xml'
+          }
+        }
         stage('UTEST_SignalsHandler') { 
           steps { 
             sh 'cd $BUILDDIR && ctest -R "UTEST_SignalsHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_SignalsHandler.junit.xml'
@@ -212,6 +217,11 @@ pipeline {
         stage('CTEST_OpenGameArtSounds') { 
           steps { 
             sh 'cd $BUILDDIR && ctest -R "CTEST_OpenGameArtSounds\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_OpenGameArtSounds.junit.xml'
+          }
+        }
+        stage('CTEST_OpenGameArtSoundPlayer') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "CTEST_OpenGameArtSoundPlayer\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_OpenGameArtSoundPlayer.junit.xml'
           }
         }
       }

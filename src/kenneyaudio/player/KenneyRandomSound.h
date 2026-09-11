@@ -60,6 +60,18 @@ class KenneyRandomSound
   KenneySoundPtr pick(const IKenneySoundsPtr& sounds,
                       const std::string& extension);
 
+  /**
+   * @brief Draws a sound out of an already gathered list.
+   *
+   * The counterpart of a caller which narrowed the set by a rule of it's own,
+   * so the drawing stays here and the narrowing stays there.
+   *
+   * @param sounds The list to draw of.
+   *
+   * @return Returns the drawn sound or a nullptr one for an empty list.
+   */
+  KenneySoundPtr pick(const IKenneySounds::SoundsList& sounds);
+
  private:
   std::mt19937 mgenerator;
 };

@@ -17,14 +17,24 @@ KenneyRandomSound::KenneyRandomSound(Seed gseed) : mgenerator{gseed} {}
 
 KenneySoundPtr KenneyRandomSound::pick(const IKenneySoundsPtr& sounds)
 {
-  if (sounds == nullptr || sounds->all().empty()) {
+  if (sounds == nullptr) {
     LOGW("No sounds to draw one of");
     return {};
   }
 
-  std::uniform_int_distribution<std::size_t> drawn{0, sounds->all().size() - 1};
+  return pick(sounds->all());
+}
 
-  return sounds->all().at(drawn(mgenerator));
+KenneySoundPtr KenneyRandomSound::pick(const IKenneySounds::SoundsList& sounds)
+{
+  if (sounds.empty()) {
+    LOGW("No sounds to draw one of");
+    return {};
+  }
+
+  std::uniform_int_distribution<std::size_t> drawn{0, sounds.size() - 1};
+
+  return sounds.at(drawn(mgenerator));
 }
 
 KenneySoundPtr KenneyRandomSound::pick(const IKenneySoundsPtr& sounds,

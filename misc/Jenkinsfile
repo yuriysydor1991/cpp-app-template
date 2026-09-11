@@ -153,6 +153,11 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "UTEST_KenneyRandomSound\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_KenneyRandomSound.junit.xml'
           }
         }
+        stage('UTEST_KenneySoundsController') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_KenneySoundsController\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_KenneySoundsController.junit.xml'
+          }
+        }
         stage('UTEST_SignalsHandler') { 
           steps { 
             sh 'cd $BUILDDIR && ctest -R "UTEST_SignalsHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_SignalsHandler.junit.xml'

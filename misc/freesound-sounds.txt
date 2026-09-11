@@ -1,0 +1,27 @@
+# The Freesound sounds this project makes available.
+#
+# Freesound publishes it's submissions under CC0, CC-BY and CC-BY-NC alike, one
+# license per sound rather than one for the whole database, so every sound is
+# named here together with the page it came from and the very license it was
+# published under. Every line follows the
+#
+#   <category>/<file>|<download URL>|<license>
+#
+# form, the '#' starting a comment and the empty lines being skipped. The
+# category becomes the subdirectory the file is downloaded into and the first
+# part of it's alias, while the license and the source travel into the binary
+# and are given back by the FreesoundSound::license and the
+# FreesoundSound::sourceUrl accessors.
+#
+# Keep this file the single place recording where a sound came from and what it
+# is licensed under: the enabler refuses a sound file carrying no manifest
+# entry, so the provenance can not silently go missing.
+#
+# The Freesound API needs an account token, so the download URL recorded here is
+# whatever address the sound is really reachable by rather than an API call the
+# build could make on it's own. Fill the lines below with the submissions of
+# interest, taking their addresses and licenses from https://freesound.org .
+# For example:
+#
+#   interface/click.ogg|https://freesound.org/people/<author>/sounds/<id>/download/<file>|CC0-1.0
+#   interface/notification.ogg|https://freesound.org/people/<author>/sounds/<id>/download/<file>|CC-BY-4.0

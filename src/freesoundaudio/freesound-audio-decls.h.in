@@ -1,0 +1,18 @@
+#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_FREESOUND_AUDIO_DECLS_H
+#define YOUR_CPP_APP_TEMPLATE_PROJECT_FREESOUND_AUDIO_DECLS_H
+
+#include <string>
+
+/// @brief Compile-time declarations of the Freesound sound categories in use
+namespace freesound_audio_decls {
+
+/// @brief The Freesound sound categories root directory
+const std::string FREESOUND_AUDIO_ROOT_DIR = "${FREESOUND_AUDIO_ROOT_DIR}" ;
+/// @brief The Qt resource system prefix the generated .qrc manifests use
+const std::string FREESOUND_AUDIO_QT_RESOURCE_PREFIX = "${FREESOUND_AUDIO_QT_RESOURCE_PREFIX}" ;
+/// @brief The GResource prefix the generated .gresource.xml manifests use
+const std::string FREESOUND_AUDIO_GRESOURCE_PREFIX = "${FREESOUND_AUDIO_GRESOURCE_PREFIX}" ;
+
+} // namespace freesound_audio_decls
+
+#endif // YOUR_CPP_APP_TEMPLATE_PROJECT_FREESOUND_AUDIO_DECLS_H

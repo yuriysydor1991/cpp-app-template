@@ -44,9 +44,11 @@
 - гілка `appGtkmm4Libadwaita` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appGtkmm4Libadwaita), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appGtkmm4Libadwaita)] із загальними класами програми для генерації єдиного виконуваного бінарного файлу, усе головне вікно якого побудоване з віджетів бібліотеки [libadwaita](https://gnome.pages.gitlab.gnome.org/libadwaita/) - `AdwApplicationWindow` з `AdwToolbarView`, `AdwHeaderBar` і розміщеним зверху заголовком з описом над логотипом, що заповнює усю вільну висоту - поряд з прив'язкою C++ [Gtkmm-4](https://gtkmm.gnome.org/en/index.html).
 - гілка `appwxWidgets` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appwxWidgets), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appwxWidgets)] яка містить загальні класи для генерації бінарного виконуваного файлу разом з структурою заданою для розробки кросплатформної віконної програми на базі [wxWidgets](https://www.wxwidgets.org/) з C++, що надається через CMake FetchContent.
 
-## Іконки / Ресурси
+## Іконки / Звук / Ресурси
 
 - гілка `appFontAwesome` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appFontAwesome), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appFontAwesome)] яка містить загальні класи для генерації бінарного виконуваного файлу, що тримає цілий набір іконок [Font Awesome](https://fontawesome.com/) Free викачаним та недоторканим, робить кожну іконку кожного стилю доступною з коду C++ та записує маніфести Qt ([.qrc](https://doc.qt.io/qt-6/resources.html)) і Gtkmm ([GResource](https://docs.gtk.org/gio/struct.Resource.html)), які вбудовують обрані іконки у двійковий файл програми.
+
+- гілка `appFreesoundAudio` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appFreesoundAudio), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appFreesoundAudio)] яка містить загальні класи для генерації бінарного виконуваного файлу, що тримає дібрані звуки [Freesound](https://freesound.org) завантаженими та недоторканими, фіксує ліцензію і сторінку-джерело кожного окремого звуку у маніфесті, який потрапляє до двійкового файлу, робить кожен звук доступним з коду C++ та записує маніфести Qt ([.qrc](https://doc.qt.io/qt-6/resources.html)) і Gtkmm ([GResource](https://docs.gtk.org/gio/struct.Resource.html)), які вбудовують обрані звуки у двійковий файл програми.
 
 ## 3D / OpenGL / Vulkan
 
@@ -192,6 +194,8 @@
         1. [Вмикання інтеграції OpenJPEG (JPEG 2000)](/doc/sections/uk_UA/5-project-build/image-libraries/5-31-enabling-the-openjpeg-library.md)
         1. [Вмикання інтеграції libavif (AVIF)](/doc/sections/uk_UA/5-project-build/image-libraries/5-32-enabling-the-libavif-library.md)
         1. [Вмикання інтеграції libheif (HEIF/HEIC)](/doc/sections/uk_UA/5-project-build/image-libraries/5-33-enabling-the-libheif-library.md)
+    1. Звук
+        1. [Вмикання звукових ефектів Freesound](/doc/sections/uk_UA/5-project-build/audio/5-38-enabling-the-freesound-audio.md)
 1. [Запуск головного виконуваного файлу](/doc/sections/uk_UA/6-run-the-executable/6-run-the-executable.md)
     1. [Запуск через IDE](/doc/sections/uk_UA/6-run-the-executable/6-1-IDE-run.md)
     1. Запуск з терміналу

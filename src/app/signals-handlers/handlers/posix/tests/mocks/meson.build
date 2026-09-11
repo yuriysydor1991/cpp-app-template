@@ -1,0 +1,6 @@
+MOCK_ContinueSignalsHandler = include_directories('ContinueSignalsHandler')
+MOCK_IgnoredSignalsHandler = include_directories('IgnoredSignalsHandler')
+MOCK_PauseSignalsHandler = include_directories('PauseSignalsHandler')
+MOCK_ReloadSignalsHandler = include_directories('ReloadSignalsHandler')
+MOCK_StopSignalsHandler = include_directories('StopSignalsHandler')
+MOCK_UserSignalsHandler = include_directories('UserSignalsHandler')

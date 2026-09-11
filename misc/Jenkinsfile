@@ -128,6 +128,26 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "UTEST_CommandLineParser\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_CommandLineParser.junit.xml'
           }
         }
+        stage('UTEST_KenneySound') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_KenneySound\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_KenneySound.junit.xml'
+          }
+        }
+        stage('UTEST_KenneyPacks') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_KenneyPacks\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_KenneyPacks.junit.xml'
+          }
+        }
+        stage('UTEST_KenneySounds') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_KenneySounds\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_KenneySounds.junit.xml'
+          }
+        }
+        stage('UTEST_KenneyResourcePath') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_KenneyResourcePath\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_KenneyResourcePath.junit.xml'
+          }
+        }
         stage('UTEST_SignalsHandler') { 
           steps { 
             sh 'cd $BUILDDIR && ctest -R "UTEST_SignalsHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_SignalsHandler.junit.xml'
@@ -187,6 +207,11 @@ pipeline {
         stage('CTEST_app') { 
           steps { 
             sh 'cd $BUILDDIR && ctest -R "CTEST_app\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_app.junit.xml'
+          }
+        }
+        stage('CTEST_KenneySounds') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "CTEST_KenneySounds\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_KenneySounds.junit.xml'
           }
         }
       }

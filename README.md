@@ -44,9 +44,11 @@ Examine available branches to find your most applicable variant of the template 
 - `appGtkmm4Libadwaita` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appGtkmm4Libadwaita), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appGtkmm4Libadwaita)] with general application related classes to generate a single binary executable whose whole main window is built out of the [libadwaita](https://gnome.pages.gitlab.gnome.org/libadwaita/) widgets - an `AdwApplicationWindow` with an `AdwToolbarView`, an `AdwHeaderBar` and a top placed heading with the description over the logo which fills all the free height - next to the [Gtkmm-4](https://gtkmm.gnome.org/en/index.html) C++ binding.
 - `appwxWidgets` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appwxWidgets), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appwxWidgets)] for the application general classes with additional defined structure for the [wxWidgets](https://www.wxwidgets.org/) cross-platform C++ window application development, provided through CMake FetchContent.
 
-## Icons / Resources
+## Icons / Audio / Resources
 
 - `appFontAwesome` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appFontAwesome), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appFontAwesome)] with general application related classes to generate a single binary executable that keeps the whole [Font Awesome](https://fontawesome.com/) Free icon set checked out and intact, makes every icon of every style reachable from the C++ code and writes the Qt ([.qrc](https://doc.qt.io/qt-6/resources.html)) and the Gtkmm ([GResource](https://docs.gtk.org/gio/struct.Resource.html)) manifests that embed the selected icons into the application binary.
+
+- `appKenneyAudio` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appKenneyAudio), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appKenneyAudio)] with general application related classes to generate a single binary executable that keeps the [Kenney](https://kenney.nl/assets) CC0 sound effect packs fetched and intact, makes every sound of every pack reachable from the C++ code and writes the Qt ([.qrc](https://doc.qt.io/qt-6/resources.html)) and the Gtkmm ([GResource](https://docs.gtk.org/gio/struct.Resource.html)) manifests that embed the selected sounds into the application binary.
 
 ## 3D / OpenGL / Vulkan
 
@@ -191,6 +193,8 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
         1. [Enabling the OpenJPEG library (JPEG 2000)](/doc/sections/en_US/5-project-build/image-libraries/5-31-enabling-the-openjpeg-library.md)
         1. [Enabling the libavif library (AVIF)](/doc/sections/en_US/5-project-build/image-libraries/5-32-enabling-the-libavif-library.md)
         1. [Enabling the libheif library (HEIF/HEIC)](/doc/sections/en_US/5-project-build/image-libraries/5-33-enabling-the-libheif-library.md)
+    1. Audio
+        1. [Enabling the Kenney sound effects](/doc/sections/en_US/5-project-build/audio/5-38-enabling-the-kenney-audio.md)
 1. [Run the executable](/doc/sections/en_US/6-run-the-executable/6-run-the-executable.md)
     1. [IDE run](/doc/sections/en_US/6-run-the-executable/6-1-IDE-run.md)
     1. Command line run

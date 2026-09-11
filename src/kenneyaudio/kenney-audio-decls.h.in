@@ -1,0 +1,18 @@
+#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_KENNEY_AUDIO_DECLS_H
+#define YOUR_CPP_APP_TEMPLATE_PROJECT_KENNEY_AUDIO_DECLS_H
+
+#include <string>
+
+/// @brief Compile-time declarations of the Kenney sound packs in use
+namespace kenney_audio_decls {
+
+/// @brief The Kenney sound packs root directory
+const std::string KENNEY_AUDIO_ROOT_DIR = "${KENNEY_AUDIO_ROOT_DIR}" ;
+/// @brief The Qt resource system prefix the generated .qrc manifests use
+const std::string KENNEY_AUDIO_QT_RESOURCE_PREFIX = "${KENNEY_AUDIO_QT_RESOURCE_PREFIX}" ;
+/// @brief The GResource prefix the generated .gresource.xml manifests use
+const std::string KENNEY_AUDIO_GRESOURCE_PREFIX = "${KENNEY_AUDIO_GRESOURCE_PREFIX}" ;
+
+} // namespace kenney_audio_decls
+
+#endif // YOUR_CPP_APP_TEMPLATE_PROJECT_KENNEY_AUDIO_DECLS_H

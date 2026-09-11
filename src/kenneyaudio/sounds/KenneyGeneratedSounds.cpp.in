@@ -1,0 +1,54 @@
+#include "src/kenneyaudio/sounds/KenneyGeneratedSounds.h"
+
+#include <map>
+#include <string>
+
+namespace kenneyaudio
+{
+
+namespace
+{
+
+const std::map<std::string, KenneyGeneratedSounds::NamesList>& generated()
+{
+  static const std::map<std::string, KenneyGeneratedSounds::NamesList> sounds{
+@KENNEY_AUDIO_GENERATED_SOUNDS@
+  };
+
+  return sounds;
+}
+
+}  // namespace
+
+const KenneyGeneratedSounds::NamesList& KenneyGeneratedSounds::packs()
+{
+  static const NamesList packNames = []() {
+    NamesList collected;
+
+    collected.reserve(generated().size());
+
+    for (const auto& pack : generated()) {
+      collected.push_back(pack.first);
+    }
+
+    return collected;
+  }();
+
+  return packNames;
+}
+
+const KenneyGeneratedSounds::NamesList& KenneyGeneratedSounds::names(
+    const std::string& packName)
+{
+  static const NamesList none;
+
+  const auto found = generated().find(packName);
+
+  if (found == generated().cend()) {
+    return none;
+  }
+
+  return found->second;
+}
+
+}  // namespace kenneyaudio

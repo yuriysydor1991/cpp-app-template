@@ -97,4 +97,54 @@ The `COMPRESSED` flag of the GResource writer stays available for the uncompress
 
 ### Playing the sounds
 
-The branch carries no audio backend on purpose, exactly the way the `appFontAwesome` one carries no GUI toolkit: it answers for making the assets reachable and nothing more. Hand the `filePath` of a sound (or it's resource path) over to whatever backend the application already uses - the SDL, the SFML, the OpenAL or the miniaudio one - and the branch composes with any of them.
+The branch ships a player, so the packs are not only reachable but audible. It is built upon the **SDL2 audio subsystem** and enabled by the `ENABLE_SDL2_AUDIO` CMake variable, which is `ON` by default:
+
+| Variable | Default | Meaning |
+| --- | --- | --- |
+| `ENABLE_SDL2_AUDIO` | `ON` | builds the sound player against SDL2 |
+| `TEMPLATE_APP_SDL2_GIT` | the upstream repository | the SDL2 git source repository |
+| `TEMPLATE_APP_SDL2_GIT_TAG` | `release-2.32.10` | the SDL2 release to pin |
+
+The `cmake/enablers/audio/template-project-sdl2-audio-enabler.cmake` module probes the system SDL2 first and falls back to a FetchContent build, the same way every other third party enabler of this project does. Only the audio subsystem of SDL2 is used - no window, no renderer and no OpenGL.
+
+**The bare SDL2 decodes the RIFF/WAVE files alone.** The compressed formats are the business of the separate `SDL_mixer` library, so a `.ogg` or a `.mp3` sound is refused with a message naming it rather than handed to the audio device as noise:
+
+```cpp
+#include "src/kenneyaudio/player/KenneySdlSoundPlayer.h"
+
+auto player = kenneyaudio::KenneySdlSoundPlayer::create();
+
+player->supports("wav");  // true
+player->supports("ogg");  // false, SDL_mixer territory
+
+player->play(sound);      // returns once the sound has been played to the end
+```
+
+Switching `ENABLE_SDL2_AUDIO` off drops the player and leaves the rest of the subsystem - the index, the aliases and the resource manifests - untouched, so the branch still composes with an application bringing it's own audio backend.
+
+### Drawing a sound at random
+
+A demo playing the very same click on every run proves little, so `KenneyRandomSound` draws one out of the whole available set. The seed is takeable, which is what lets a test ask for a repeatable draw:
+
+```cpp
+#include "src/kenneyaudio/player/KenneyRandomSound.h"
+
+kenneyaudio::KenneyRandomSound drawn;
+
+auto any = drawn.pick(sounds);          // any sound at all
+auto wave = drawn.pick(sounds, "wav");  // only what the player really decodes
+```
+
+### The demo
+
+`Application::run` of this branch puts the three together: it reports how many sounds the configured packs carry, draws a playable one, prints it's file path and both resource system paths, and plays it:
+
+```
+INF : The Kenney packs carry 12 sounds at /.../resources/kenney-audio
+INF : The drawn interface-sounds/Audio/confirmation_001.wav sound file: /.../confirmation_001.wav
+INF : ... embedded into the Qt resources: :/sounds/interface-sounds/Audio/confirmation_001.wav
+INF : ... embedded into the GResource ones: /ua/org/kytok/template/CppAppTemplate/sounds/interface-sounds/Audio/confirmation_001.wav
+INF : Playing the interface-sounds/Audio/confirmation_001.wav sound ...
+```
+
+With the packs empty, or with no sound of a format the player decodes, the demo says so and returns cleanly instead of failing.

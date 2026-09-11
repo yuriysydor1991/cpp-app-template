@@ -14,7 +14,7 @@ class UTEST_KenneySounds : public Test
 
 TEST_F(UTEST_KenneySounds, carries_every_sound_of_every_pack)
 {
-  EXPECT_EQ(sounds->count(), 3u);
+  EXPECT_EQ(sounds->count(), 4u);
   EXPECT_EQ(sounds->all().size(), sounds->count());
 }
 
@@ -22,7 +22,7 @@ TEST_F(UTEST_KenneySounds, gives_the_sounds_of_a_single_pack)
 {
   const auto ofInterface = sounds->ofPack("interface-sounds");
 
-  EXPECT_EQ(ofInterface.size(), 2u);
+  EXPECT_EQ(ofInterface.size(), 3u);
 
   for (const auto& sound : ofInterface) {
     EXPECT_EQ(sound->pack()->name(), "interface-sounds");

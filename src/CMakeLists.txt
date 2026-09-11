@@ -26,6 +26,25 @@ configure_file(
   ${CMAKE_BINARY_DIR}/project-global-decls.h
 )
 
+# The Kenney audio subsystem sources, gathered before the subdirectories below
+# so every test executable linking a part of it (the app ones included) builds
+# the very same set.
+set(
+  KENNEY_AUDIO_SUBSYSTEM_SOURCES
+  ${CMAKE_CURRENT_SOURCE_DIR}/kenneyaudio/KenneySound.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/kenneyaudio/packs/KenneyPack.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/kenneyaudio/packs/KenneyPacks.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/kenneyaudio/sounds/KenneySounds.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/kenneyaudio/resources/KenneyResourcePath.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/kenneyaudio/resources/KenneyQtResourcePath.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/kenneyaudio/resources/KenneyGResourcePath.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/kenneyaudio/player/KenneyRandomSound.cpp
+)
+
 add_subdirectory(app)
 add_subdirectory(log)
 add_subdirectory(kenneyaudio)
+
+if (ENABLE_SDL2_AUDIO)
+  target_compile_definitions(${PROJECT_BINARY_NAME} PRIVATE TEMPLATE_APP_SDL2_AUDIO=1)
+endif()

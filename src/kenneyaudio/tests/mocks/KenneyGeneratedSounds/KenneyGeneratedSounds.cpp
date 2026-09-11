@@ -17,12 +17,13 @@ const std::map<std::string, KenneyGeneratedSounds::NamesList>& generated()
   static const std::map<std::string, KenneyGeneratedSounds::NamesList> sounds{
       {"impact-sounds",
        {
-           "Audio/impactMetal_light_000.ogg",
+           "Audio/impactMetal_light_000.wav",
        }},
       {"interface-sounds",
        {
            "Audio/click_001.ogg",
-           "Audio/confirmation_001.ogg",
+           "Audio/confirmation_001.wav",
+           "Audio/switch_001.ogg",
        }},
   };
 

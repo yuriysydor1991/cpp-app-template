@@ -9,11 +9,15 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/enablers/dockerers")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/enablers/packagers")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/enablers/compression")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/enablers/images")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/enablers/audio")
 
 include(template-project-enabler-function)
 include(template-project-git-enabler)
 
 include(template-project-GTest-enabler)
+
+# audio assets
+include(template-project-opengameart-audio-enabler)
 include(template-project-clang-format-target)
 include(template-project-valgrind-target)
 

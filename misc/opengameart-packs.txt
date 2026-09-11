@@ -1,0 +1,22 @@
+# The OpenGameArt sound packs this project makes available.
+#
+# OpenGameArt hosts it's submissions under several different licenses, so a
+# pack is named here together with the very license it was published under
+# rather than assumed to be a CC0 one. Every line follows the
+#
+#   <pack>|<archive URL>|<license>
+#
+# form, the '#' starting a comment and the empty lines being skipped. The pack
+# name becomes the subdirectory the archive is unpacked into and the first part
+# of every sound alias, while the license is compiled into the binary and given
+# back by the OpenGameArtPack::license accessor.
+#
+# Keep this file the single place recording where a pack came from and what it
+# is licensed under: the enabler refuses to build a pack carrying no license
+# entry, so the provenance can not silently go missing.
+#
+# Fill the lines below with the submissions of interest, taking their addresses
+# and licenses from https://opengameart.org . For example:
+#
+#   cc0-interface-sfx|https://opengameart.org/sites/default/files/<archive>.zip|CC0-1.0
+#   cc0-footsteps|https://opengameart.org/sites/default/files/<archive>.zip|CC0-1.0

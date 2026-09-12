@@ -390,7 +390,9 @@ pipeline {
 
           BT='`'
           DQ='"'
-          CURLOPTS="--silent --location --globoff --connect-timeout 15 --max-time 45 --retry 2 --retry-delay 5 --output /dev/null"
+          CURLOPTS="--silent --location --globoff --connect-timeout 15 --max-time 45 --output /dev/null"
+          ATTEMPTS=3
+          RETRY_DELAY=5
 
           find . -name "*.md" -not -path "./.git/*" | sort > "$MDLIST"
 
@@ -421,48 +423,78 @@ pipeline {
           awk '{print $1}' "$URLLIST" | sort -u > "$UNIQLIST"
           echo "Checking $(wc -l < "$UNIQLIST") external URL(s) from $(wc -l < "$MDLIST") documentation file(s)"
 
-          while IFS= read -r url; do
-            case "$url" in
+          # A single reachability probe printing the HTTP status code or the
+          # word telling how the request of a non-HTTP scheme has ended.
+          probe_url() {
+            case "$1" in
               git://*)
-                if git ls-remote "$url" > /dev/null 2>&1; then
-                  echo "  OK      $url"
-                else
-                  echo "  BROKEN  $url (git ls-remote failed)"
-                  echo "$url git-unreachable" >> "$BADLIST"
-                fi
-                continue
+                git ls-remote "$1" > /dev/null 2>&1 && echo git-ok || echo git-unreachable
+                return
                 ;;
               ftp://*|ftps://*)
-                if curl $CURLOPTS "$url" > /dev/null 2>&1; then
-                  echo "  OK      $url"
-                else
-                  echo "  BROKEN  $url (FTP request failed)"
-                  echo "$url ftp-unreachable" >> "$BADLIST"
-                fi
-                continue
+                curl $CURLOPTS "$1" > /dev/null 2>&1 && echo ftp-ok || echo ftp-unreachable
+                return
                 ;;
             esac
 
-            code=$(curl $CURLOPTS --head --write-out '%{http_code}' "$url" 2>/dev/null) || true
+            code=$(curl $CURLOPTS --head --write-out '%{http_code}' "$1" 2>/dev/null) || true
             case "$code" in
-              2*|3*) echo "  OK      $url ($code)" ; continue ;;
+              2*|3*) echo "$code" ; return ;;
             esac
 
             # Some servers reject or mishandle HEAD - retry the URL with a GET.
-            code=$(curl $CURLOPTS --request GET --write-out '%{http_code}' "$url" 2>/dev/null) || true
+            code=$(curl $CURLOPTS --request GET --write-out '%{http_code}' "$1" 2>/dev/null) || true
             case "$code" in
-              2*|3*) echo "  OK      $url ($code on GET)" ;;
-              401|403|418|429)
-                echo "  WARN    $url ($code - the server refuses the automated requests)"
-                echo "$url $code" >> "$WARNLIST"
+              2*|3*) echo "$code" ; return ;;
+            esac
+
+            echo "$code"
+          }
+
+          # A connection failure, a rate limit or a server-side error can be a
+          # single hiccup, while the other answers are the server final word.
+          retry_worthy() {
+            case "$1" in
+              000|408|429|5*|git-unreachable|ftp-unreachable) return 0 ;;
+            esac
+            return 1
+          }
+
+          while IFS= read -r url; do
+            attempt=1
+            while : ; do
+              result=$(probe_url "$url")
+              retry_worthy "$result" || break
+              [ "$attempt" -lt "$ATTEMPTS" ] || break
+              echo "  RETRY   $url ($result on the attempt $attempt of $ATTEMPTS, the next one in ${RETRY_DELAY}s)"
+              attempt=$((attempt + 1))
+              sleep "$RETRY_DELAY"
+            done
+
+            case "$result" in
+              git-ok) echo "  OK      $url (reachable as a git remote)" ;;
+              ftp-ok) echo "  OK      $url" ;;
+              2*|3*) echo "  OK      $url ($result)" ;;
+              403) echo "  OK      $url (403 - the server refuses the automated requests)" ;;
+              401|418|429)
+                echo "  WARN    $url ($result - the server refuses the automated requests)"
+                echo "$url $result" >> "$WARNLIST"
                 ;;
               000)
                 echo "  BROKEN  $url (no response: DNS, TLS or connection failure)"
                 echo "$url no-response" >> "$BADLIST"
                 ;;
+              git-unreachable)
+                echo "  BROKEN  $url (git ls-remote failed)"
+                echo "$url git-unreachable" >> "$BADLIST"
+                ;;
+              ftp-unreachable)
+                echo "  BROKEN  $url (FTP request failed)"
+                echo "$url ftp-unreachable" >> "$BADLIST"
+                ;;
               *)
-                echo "  BROKEN  $url ($code)"
-                echo "$url $code" >> "$BADLIST"
+                echo "  BROKEN  $url ($result)"
+                echo "$url $result" >> "$BADLIST"
                 ;;
             esac
           done < "$UNIQLIST"

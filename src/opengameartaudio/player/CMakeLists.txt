@@ -44,8 +44,8 @@ endif()
 
 add_library(
   TemplateProjectOpenGameArtSoundPlayerObj OBJECT
-  OpenGameArtSdlSoundPlayer.cpp
-  OpenGameArtSdlSoundPlayerFactory.cpp
+  OpenGameArtSdlMixerSoundPlayer.cpp
+  OpenGameArtSdlMixerSoundPlayerFactory.cpp
 )
 
 target_include_directories(
@@ -57,11 +57,13 @@ target_include_directories(
 
 target_link_libraries(
   TemplateProjectOpenGameArtSoundPlayerObj
+  ${TEMPLATE_APP_SDL2_MIXER_TARGET}
   ${TEMPLATE_APP_SDL2_AUDIO_TARGET}
 )
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
   TemplateProjectOpenGameArtSoundPlayerObj
+  ${TEMPLATE_APP_SDL2_MIXER_TARGET}
   ${TEMPLATE_APP_SDL2_AUDIO_TARGET}
 )

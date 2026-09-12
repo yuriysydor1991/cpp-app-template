@@ -119,17 +119,19 @@ The `COMPRESSED` flag of the GResource writer stays available for the uncompress
 
 ### Playing the sounds
 
-The branch ships a player, so the packs are not only reachable but audible. It is built upon the **SDL2 audio subsystem** and enabled by the `ENABLE_SDL2_AUDIO` CMake variable, which is `ON` by default:
+The branch ships a player, so the packs are not only reachable but audible. It is built upon the **SDL2 audio subsystem** and the **SDL_mixer decoders**, and enabled by the `ENABLE_SDL2_AUDIO` CMake variable, which is `ON` by default:
 
 | Variable | Default | Meaning |
 | --- | --- | --- |
-| `ENABLE_SDL2_AUDIO` | `ON` | builds the sound player against SDL2 |
+| `ENABLE_SDL2_AUDIO` | `ON` | builds the sound player against SDL2 and SDL_mixer |
 | `TEMPLATE_APP_SDL2_GIT` | the upstream repository | the SDL2 git source repository |
 | `TEMPLATE_APP_SDL2_GIT_TAG` | `release-2.32.10` | the SDL2 release to pin |
+| `TEMPLATE_APP_SDL2_MIXER_GIT` | the upstream repository | the SDL_mixer git source repository |
+| `TEMPLATE_APP_SDL2_MIXER_GIT_TAG` | `release-2.8.1` | the SDL_mixer release to pin |
 
-The `cmake/enablers/audio/template-project-sdl2-audio-enabler.cmake` module probes the system SDL2 first and falls back to a FetchContent build, the same way every other third party enabler of this project does. Only the audio subsystem of SDL2 is used - no window, no renderer and no OpenGL.
+The `cmake/enablers/audio/template-project-sdl2-audio-enabler.cmake` module probes the system libraries first and falls back to a FetchContent build, the same way every other third party enabler of this project does. Only the audio subsystem of SDL2 is used - no window, no renderer and no OpenGL.
 
-**The bare SDL2 decodes the RIFF/WAVE files alone.** The compressed formats are the business of the separate `SDL_mixer` library, so a `.ogg` or a `.mp3` sound is refused with a message naming it rather than handed to the audio device as noise.
+**The bare SDL2 decodes the RIFF/WAVE files alone**, while OpenGameArt hosts it's submissions as `.ogg` and `.mp3` alike, so the decoders of the `SDL_mixer` satellite library are what makes those audible at all. Only the decoders SDL_mixer carries inside it's own sources are taken - the stb_vorbis `.ogg` one, the minimp3 `.mp3` one and the drflac `.flac` one - so a FetchContent build asks for no third party library of it's own, while the Opus, MOD, MIDI and WavPack ones, each needing a library installed on the host, are switched off rather than failing the configure of a host carrying none.
 
 Which formats those are is the backend's own business, though, and so is the question of whether a backend was built in at all. **Neither ever reaches the calling code**: `OpenGameArtSoundsController` keeps the set and the player together and answers both questions on it's own.
 
@@ -152,16 +154,18 @@ Switching `ENABLE_SDL2_AUDIO` off drops the player and leaves the rest of the su
 
 ### The layers underneath
 
-`OpenGameArtSdlSoundPlayer` is the SDL2 backend itself and stays reachable for an application wanting to drive it directly:
+`OpenGameArtSdlMixerSoundPlayer` is the SDL2 backend itself and stays reachable for an application wanting to drive it directly:
 
 ```cpp
-#include "src/opengameartaudio/player/OpenGameArtSdlSoundPlayer.h"
+#include "src/opengameartaudio/player/OpenGameArtSdlMixerSoundPlayer.h"
 
-auto player = opengameartaudio::OpenGameArtSdlSoundPlayer::create();
+auto player = opengameartaudio::OpenGameArtSdlMixerSoundPlayer::create();
 
-player->supports("wav");  // true
-player->supports("ogg");  // false, SDL_mixer territory
+player->supports("ogg");  // true
+player->supports("mid");  // false, no MIDI decoder is brought up
 ```
+
+The extensions answered for are the ones `Mix_Init` really brought up rather than a hand written list, so a SDL_mixer installed with more decoders than the FetchContent build carries is used for what it really decodes.
 
 ### Drawing a sound at random
 
@@ -172,8 +176,8 @@ A demo playing the very same click on every run proves little, so `OpenGameArtRa
 
 opengameartaudio::OpenGameArtRandomSound drawn;
 
-auto any = drawn.pick(sounds);          // any sound at all
-auto wave = drawn.pick(sounds, "wav");  // only what the player really decodes
+auto any = drawn.pick(sounds);             // any sound at all
+auto vorbis = drawn.pick(sounds, "ogg");  // only what the player really decodes
 ```
 
 ### The demo

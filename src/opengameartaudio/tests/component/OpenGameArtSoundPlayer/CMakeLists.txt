@@ -12,7 +12,7 @@ add_executable(
   ${CMAKE_SOURCE_DIR}/src/opengameartaudio/packs/OpenGameArtPacks.cpp
   ${CMAKE_SOURCE_DIR}/src/opengameartaudio/sounds/OpenGameArtSounds.cpp
   ${CMAKE_SOURCE_DIR}/src/opengameartaudio/player/OpenGameArtRandomSound.cpp
-  ${CMAKE_SOURCE_DIR}/src/opengameartaudio/player/OpenGameArtSdlSoundPlayer.cpp
+  ${CMAKE_SOURCE_DIR}/src/opengameartaudio/player/OpenGameArtSdlMixerSoundPlayer.cpp
   ${OPENGAMEART_AUDIO_GENERATED_SOUNDS_SOURCE}
 )
 
@@ -26,6 +26,7 @@ target_include_directories(
 target_link_libraries(
   CTEST_OpenGameArtSoundPlayer
   GTest::gtest_main GTest::gmock
+  ${TEMPLATE_APP_SDL2_MIXER_TARGET}
   ${TEMPLATE_APP_SDL2_AUDIO_TARGET}
 )
 

@@ -119,17 +119,19 @@ qtPath->uriOf(click);  // "qrc:/sounds/interface-sounds/Audio/click_001.ogg"
 
 ### Відтворення звуків
 
-Гілка постачає програвач, тому набори не лише доступні, а й чутні. Його побудовано на **звуковій підсистемі SDL2** і вмикається він змінною CMake `ENABLE_SDL2_AUDIO`, яка типово має значення `ON`:
+Гілка постачає програвач, тому набори не лише доступні, а й чутні. Його побудовано на **звуковій підсистемі SDL2** та **декодерах SDL_mixer** і вмикається він змінною CMake `ENABLE_SDL2_AUDIO`, яка типово має значення `ON`:
 
 | Змінна | Типове значення | Призначення |
 | --- | --- | --- |
-| `ENABLE_SDL2_AUDIO` | `ON` | будує програвач звуку на основі SDL2 |
+| `ENABLE_SDL2_AUDIO` | `ON` | будує програвач звуку на основі SDL2 та SDL_mixer |
 | `TEMPLATE_APP_SDL2_GIT` | репозиторій першоджерела | git-репозиторій вихідних кодів SDL2 |
 | `TEMPLATE_APP_SDL2_GIT_TAG` | `release-2.32.10` | версія SDL2, на якій слід зафіксуватись |
+| `TEMPLATE_APP_SDL2_MIXER_GIT` | репозиторій першоджерела | git-репозиторій вихідних кодів SDL_mixer |
+| `TEMPLATE_APP_SDL2_MIXER_GIT_TAG` | `release-2.8.1` | версія SDL_mixer, на якій слід зафіксуватись |
 
-Модуль `cmake/enablers/audio/template-project-sdl2-audio-enabler.cmake` спочатку шукає SDL2 у системі і лише потім вдається до побудови через FetchContent — так само, як це робить кожен інший механізм вмикання сторонніх бібліотек у даному проекті. Використовується виключно звукова підсистема SDL2: жодного вікна, жодного рендерера і жодного OpenGL.
+Модуль `cmake/enablers/audio/template-project-sdl2-audio-enabler.cmake` спочатку шукає системні бібліотеки і лише потім вдається до побудови через FetchContent — так само, як це робить кожен інший механізм вмикання сторонніх бібліотек у даному проекті. Використовується виключно звукова підсистема SDL2: жодного вікна, жодного рендерера і жодного OpenGL.
 
-**Сам по собі SDL2 декодує лише файли RIFF/WAVE.** Стиснені формати є справою окремої бібліотеки `SDL_mixer`, тому звук `.ogg` чи `.mp3` відхиляється з повідомленням, яке його називає, а не передається до звукового пристрою як шум.
+**Сам по собі SDL2 декодує лише файли RIFF/WAVE**, тоді як OpenGameArt розміщує свої матеріали і у форматі `.ogg`, і у форматі `.mp3`, тому саме декодери бібліотеки-супутника `SDL_mixer` роблять їх чутними взагалі. Беруться лише ті декодери, які SDL_mixer містить у власних вихідних кодах, — stb_vorbis для `.ogg`, minimp3 для `.mp3` та drflac для `.flac`, — тому побудова через FetchContent не потребує жодної сторонньої бібліотеки, а декодери Opus, MOD, MIDI та WavPack, кожен з яких вимагає встановленої у системі бібліотеки, вимкнено, щоб не завалювати конфігурування на вузлі, де такої немає.
 
 Проте те, які саме це формати, є власною справою рушія — так само, як і питання, чи був рушій узагалі вбудований. **Ані те, ані інше ніколи не сягає коду, що викликає**: клас `OpenGameArtSoundsController` тримає набір і програвач разом і відповідає на обидва питання самостійно.
 
@@ -152,16 +154,18 @@ if (controller->playable()) {      // чи є рушій узагалі
 
 ### Рівні під сподом
 
-`OpenGameArtSdlSoundPlayer` — це і є рушій SDL2, і він залишається доступним для програми, яка бажає керувати ним напряму:
+`OpenGameArtSdlMixerSoundPlayer` — це і є рушій SDL2, і він залишається доступним для програми, яка бажає керувати ним напряму:
 
 ```cpp
-#include "src/opengameartaudio/player/OpenGameArtSdlSoundPlayer.h"
+#include "src/opengameartaudio/player/OpenGameArtSdlMixerSoundPlayer.h"
 
-auto player = opengameartaudio::OpenGameArtSdlSoundPlayer::create();
+auto player = opengameartaudio::OpenGameArtSdlMixerSoundPlayer::create();
 
-player->supports("wav");  // true
-player->supports("ogg");  // false, це територія SDL_mixer
+player->supports("ogg");  // true
+player->supports("mid");  // false, декодера MIDI не піднято
 ```
+
+Розширення, за які програвач відповідає, — це ті, які дійсно підняв виклик `Mix_Init`, а не написаний руками перелік, тому встановлений у системі SDL_mixer з більшою кількістю декодерів, ніж має побудова через FetchContent, використовується на всі свої можливості.
 
 ### Випадковий вибір звуку
 
@@ -172,8 +176,8 @@ player->supports("ogg");  // false, це територія SDL_mixer
 
 opengameartaudio::OpenGameArtRandomSound drawn;
 
-auto any = drawn.pick(sounds);          // будь-який звук взагалі
-auto wave = drawn.pick(sounds, "wav");  // лише те, що програвач дійсно декодує
+auto any = drawn.pick(sounds);             // будь-який звук взагалі
+auto vorbis = drawn.pick(sounds, "ogg");  // лише те, що програвач дійсно декодує
 ```
 
 ### Демонстрація

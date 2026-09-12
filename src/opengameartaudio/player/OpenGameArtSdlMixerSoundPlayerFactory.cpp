@@ -1,5 +1,5 @@
 #include "src/opengameartaudio/player/IOpenGameArtSoundPlayer.h"
-#include "src/opengameartaudio/player/OpenGameArtSdlSoundPlayer.h"
+#include "src/opengameartaudio/player/OpenGameArtSdlMixerSoundPlayer.h"
 #include "src/opengameartaudio/player/OpenGameArtSoundPlayerFactory.h"
 
 namespace opengameartaudio
@@ -10,7 +10,7 @@ namespace opengameartaudio
 // decision.
 IOpenGameArtSoundPlayerPtr OpenGameArtSoundPlayerFactory::create()
 {
-  return OpenGameArtSdlSoundPlayer::create();
+  return OpenGameArtSdlMixerSoundPlayer::create();
 }
 
 }  // namespace opengameartaudio

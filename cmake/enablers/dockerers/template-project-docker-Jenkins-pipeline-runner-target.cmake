@@ -91,7 +91,7 @@ execute_process(
   OUTPUT_STRIP_TRAILING_WHITESPACE
 )
 
-if (JENKINS_PIPELINE_FORCE_REBUILD)  
+if (JENKINS_PIPELINE_FORCE_REBUILD)
   if (NOT JENKINS_PIPELINE_DOCKER_CONTAINER_PRESENT STREQUAL "")
     message(STATUS "Stopping and erasing the ${JENKINS_PIPELINE_DOCKER_CONTAINER_NAME} container")
     set(JENKINS_PIPELINE_DOCKER_CONTAINER_PRESENT "")
@@ -102,20 +102,25 @@ if (JENKINS_PIPELINE_FORCE_REBUILD)
       COMMAND ${SCRIPT_EXEC} -q -c "DOCKER_HOST=${DOCKER_HOST_STR} ${DOCKER_EXEC} container rm ${JENKINS_PIPELINE_DOCKER_CONTAINER_NAME}" /dev/null
     )
   endif()
-  
+
   if (NOT JENKINS_PIPELINE_DOCKER_IMAGE_NAME_PRESENT STREQUAL "")
     message(STATUS "Erasing the ${JENKINS_PIPELINE_DOCKER_IMAGE_NAME} image")
     set(JENKINS_PIPELINE_DOCKER_IMAGE_NAME_PRESENT "")
     execute_process(
-      COMMAND ${SCRIPT_EXEC} -q -c "DOCKER_HOST=${DOCKER_HOST_STR} ${DOCKER_EXEC} image rm ${JENKINS_PIPELINE_DOCKER_IMAGE_NAME}" /dev/null
+      COMMAND ${SCRIPT_EXEC} -q -c "DOCKER_HOST=${DOCKER_HOST_STR} ${DOCKER_EXEC} image rm -f ${JENKINS_PIPELINE_DOCKER_IMAGE_NAME}" /dev/null
     )
   endif()
+
+  # the erased image leaves both its own layers and the pulled base image of
+  # the Dockerfile behind in the builder cache, so the build reproduces the
+  # very same image until the cache is refused and the base image pulled anew
+  set(JENKINS_PIPELINE_DOCKER_BUILD_FLAGS --no-cache --pull)
 endif()
 
 if (JENKINS_PIPELINE_DOCKER_IMAGE_NAME_PRESENT STREQUAL "")
   set(
     JENKINS_PIPELINE_DOCKER_BUILD_CMD
-      DOCKER_HOST=${DOCKER_HOST_STR} DOCKER_BUILDKIT=1 ${DOCKER_EXEC} build
+      DOCKER_HOST=${DOCKER_HOST_STR} DOCKER_BUILDKIT=1 ${DOCKER_EXEC} build ${JENKINS_PIPELINE_DOCKER_BUILD_FLAGS}
         -f "${CMAKE_CURRENT_BINARY_DIR}/${JENKINS_PIPELINE_DOCKERFILE_DST}"
         --build-context project=${CMAKE_SOURCE_DIR} 
         --build-arg CACHEBUST="${PROJECT_CONFIGURE_DATE}" 

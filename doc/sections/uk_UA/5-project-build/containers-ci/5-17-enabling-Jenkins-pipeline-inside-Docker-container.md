@@ -132,3 +132,11 @@ scripts/docker/jenkins-run.sh -DJENKINS_PIPELINES_PANEL_HTTP_PORT=9090
 
 scripts/docker/jenkins-run.sh --rebuild
 ```
+
+Прапорець `--renew-container` скрипта [jenkins-run.sh](/scripts/docker/jenkins-run.sh) встановлює CMake-змінну `JENKINS_PIPELINE_RENEW_CONTAINER`, котра зупиняє і стирає лише контейнер, залишає образ незмінним та запускає новий контейнер із нього, отож конвеєр отримує домівку Jenkins свіжого контейнера без годин, потрібних на побудову образу:
+
+```
+# в середині кореневої директорії проекту
+
+scripts/docker/jenkins-run.sh --renew-container
+```

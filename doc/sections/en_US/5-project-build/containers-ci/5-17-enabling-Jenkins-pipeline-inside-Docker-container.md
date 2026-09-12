@@ -116,3 +116,11 @@ The `--rebuild` flag of both scripts sets the `JENKINS_PIPELINE_FORCE_REBUILD` C
 
 scripts/docker/jenkins-run.sh --rebuild
 ```
+
+The `--renew-container` flag of the [jenkins-run.sh](/scripts/docker/jenkins-run.sh) script sets the `JENKINS_PIPELINE_RENEW_CONTAINER` CMake variable, which stops and erases the container alone, keeps the image as it is and starts a new container of it, so the pipeline gets a Jenkins home of a fresh container without the hours the image build takes:
+
+```
+# inside the project root directory
+
+scripts/docker/jenkins-run.sh --renew-container
+```

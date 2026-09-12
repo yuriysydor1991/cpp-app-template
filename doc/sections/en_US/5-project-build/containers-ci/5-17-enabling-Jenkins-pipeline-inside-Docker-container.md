@@ -78,7 +78,7 @@ They land in the per user installation of the `jenkins` user, the one the `flatp
 - the whole package set installs in a single `apt` transaction and the BuildKit caches keep the archives and the package lists, so a repeated image build re-installs without re-downloading;
 - every library built from the sources is cloned shallow, built and erased inside a single layer, so neither the sources nor the build trees reach the image;
 - the image carries the `ccache` and points the `CMAKE_C_COMPILER_LAUNCHER` and the `CMAKE_CXX_COMPILER_LAUNCHER` environment variables at it, so the configure step of every branch picks it up and the repeated pipeline builds turn into cache hits;
-- the built-in node takes as many executors as the container is allowed CPU cores by the `JENKINS_PIPELINE_DOCKER_MAX_CORES` CMake variable, so the parallel test stages of the pipeline really run in parallel;
+- the built-in node keeps two executors, so the parallel test stages of the pipeline really run in parallel while the builds of the two of them still leave the host machine usable;
 - the image build gets an empty directory as its context and takes the exported jobs from the tree being configured, so neither the binary tree travels to the Docker daemon nor a clone of the published branch is needed.
 
 ### Starter scripts

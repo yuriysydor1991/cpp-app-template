@@ -224,17 +224,17 @@ EOF
 
 RUN jenkins-plugin-cli --plugin-file /usr/share/jenkins/ref/plugins.txt
 
-# The parallel test stages of the pipeline take as many executors as the
-# container is allowed to use, which the JVM reports through the CPU count.
+# Every executor runs a build of its own with as many compiler jobs as the
+# container has cores, so two of them is what a workstation survives.
 RUN cat > /usr/share/jenkins/ref/init.groovy.d/executors.groovy <<'EOF'
 import jenkins.model.Jenkins
 
 def instance = Jenkins.instance
-def cpus = Runtime.runtime.availableProcessors()
+def executors = 2
 
-if (instance.numExecutors != cpus) {
-  println "Setting the built-in node executors to " + cpus
-  instance.setNumExecutors(cpus)
+if (instance.numExecutors != executors) {
+  println "Setting the built-in node executors to " + executors
+  instance.setNumExecutors(executors)
   instance.save()
 }
 EOF

@@ -1,5 +1,45 @@
 cmake_minimum_required(VERSION 3.13)
 
+# Gives the address of the given pack's archive back, read out of the pack's
+# own page at kenney.nl.
+#
+# The archive address carries a content hash the site regenerates whenever the
+# pack is updated, so a hand written address goes stale instead of downloading
+# anything, while the page naming it stays reachable under the pack name.
+function(template_project_kenney_audio_pack_url pack outVar)
+  string(REPLACE "<pack>" "${pack}" packPage "${TEMPLATE_APP_KENNEY_AUDIO_PAGE_TEMPLATE}")
+
+  set(pageFile "${KENNEY_AUDIO_ROOT_DIR}/${pack}.html")
+
+  file(DOWNLOAD "${packPage}" "${pageFile}" STATUS pageStatus TLS_VERIFY ON)
+
+  list(GET pageStatus 0 pageCode)
+
+  if (NOT pageCode EQUAL 0)
+    list(GET pageStatus 1 pageError)
+    file(REMOVE "${pageFile}")
+
+    message(
+      FATAL_ERROR
+      "Fail to read the Kenney ${pack} pack page at ${packPage}: ${pageError}. Correct the TEMPLATE_APP_KENNEY_AUDIO_PAGE_TEMPLATE variable, run the misc/scripts/fetch-kenney-audio.sh script by hand, or point the TEMPLATE_APP_KENNEY_AUDIO_DIR one to an already downloaded packs directory."
+    )
+  endif()
+
+  file(READ "${pageFile}" pageText)
+  file(REMOVE "${pageFile}")
+
+  string(REGEX MATCH "https://[^\"' \t\r\n]*/assets/${pack}/[^\"' \t\r\n]*\\.zip" packUrl "${pageText}")
+
+  if (NOT packUrl)
+    message(
+      FATAL_ERROR
+      "The Kenney ${pack} pack page at ${packPage} names no pack archive to download. Check the pack name of the KENNEY_AUDIO_PACKS list against kenney.nl/assets or point the TEMPLATE_APP_KENNEY_AUDIO_DIR variable to an already downloaded packs directory."
+    )
+  endif()
+
+  set(${outVar} "${packUrl}" PARENT_SCOPE)
+endfunction()
+
 # Downloads and unpacks every pack of the KENNEY_AUDIO_PACKS list into the
 # KENNEY_AUDIO_ROOT_DIR directory, one subdirectory per pack. An already
 # unpacked pack is left alone, so a reconfigure costs no download at all.
@@ -20,7 +60,7 @@ function(template_project_kenney_audio_fetch_packs)
       continue()
     endif()
 
-    string(REPLACE "<pack>" "${pack}" packUrl "${TEMPLATE_APP_KENNEY_AUDIO_URL_TEMPLATE}")
+    template_project_kenney_audio_pack_url("${pack}" packUrl)
 
     set(packArchive "${KENNEY_AUDIO_ROOT_DIR}/${pack}.zip")
 
@@ -41,7 +81,7 @@ function(template_project_kenney_audio_fetch_packs)
 
       message(
         FATAL_ERROR
-        "Fail to download the Kenney ${pack} pack from ${packUrl}: ${downloadError}. Correct the TEMPLATE_APP_KENNEY_AUDIO_URL_TEMPLATE variable, run the misc/scripts/fetch-kenney-audio.sh script by hand, or point the TEMPLATE_APP_KENNEY_AUDIO_DIR one to an already downloaded packs directory."
+        "Fail to download the Kenney ${pack} pack from ${packUrl}: ${downloadError}. Correct the TEMPLATE_APP_KENNEY_AUDIO_PAGE_TEMPLATE variable, run the misc/scripts/fetch-kenney-audio.sh script by hand, or point the TEMPLATE_APP_KENNEY_AUDIO_DIR one to an already downloaded packs directory."
       )
     endif()
 

@@ -20,14 +20,14 @@ The `cmake/enablers/audio/template-project-kenney-audio-enabler.cmake` module de
 | --- | --- | --- |
 | `ENABLE_KENNEY_AUDIO` | `ON` | enables the whole integration |
 | `KENNEY_AUDIO_PACKS` | `interface-sounds;impact-sounds;digital-audio;ui-audio` | the packs to make available |
-| `TEMPLATE_APP_KENNEY_AUDIO_URL_TEMPLATE` | the upstream URL | the per pack download URL, the `<pack>` placeholder standing for the pack name |
+| `TEMPLATE_APP_KENNEY_AUDIO_PAGE_TEMPLATE` | the upstream page | the per pack page the archive address is read out of, the `<pack>` placeholder standing for the pack name |
 | `TEMPLATE_APP_KENNEY_AUDIO_DIR` | empty | an already available packs directory to reuse instead of downloading one |
 | `KENNEY_AUDIO_EXTENSIONS` | `ogg;wav;mp3` | the sound file extensions to pick out of the packs |
 | `KENNEY_AUDIO_QT_RESOURCE_PREFIX` | `/sounds` | the prefix of the generated `.qrc` manifests |
 | `KENNEY_AUDIO_GRESOURCE_PREFIX` | `/ua/org/kytok/template/<binary>/sounds` | the prefix of the generated `.gresource.xml` manifests |
 | `KENNEY_AUDIO_GENERATE_FULL_MANIFESTS` | `ON` | generates the manifests carrying every available sound |
 
-**Verify the `TEMPLATE_APP_KENNEY_AUDIO_URL_TEMPLATE` value against [kenney.nl](https://kenney.nl/assets) before the first fetch**: the pack archives are ordinary downloads rather than a versioned API, so their addresses are the upstream site's business and may change.
+**The archive address is read out of the pack's own page rather than written down here**: it carries a content hash the site regenerates whenever the pack is updated, so a hand written address goes stale instead of downloading anything, while the page naming it stays reachable under the pack name.
 
 ### Downloading the packs by hand
 
@@ -39,7 +39,7 @@ misc/scripts/fetch-kenney-audio.sh ~/kenney-audio
 cmake -S . -B build -DTEMPLATE_APP_KENNEY_AUDIO_DIR=~/kenney-audio
 ```
 
-The script takes the target directory as it's single argument, obeys the `KENNEY_AUDIO_PACKS` and the `KENNEY_AUDIO_URL_TEMPLATE` environment variables, downloads through `curl` or `wget` (whichever is available) and leaves an already unpacked pack alone.
+The script takes the target directory as it's single argument, obeys the `KENNEY_AUDIO_PACKS` and the `KENNEY_AUDIO_PAGE_TEMPLATE` environment variables, downloads through `curl` or `wget` (whichever is available) and leaves an already unpacked pack alone.
 
 ### Reaching the sounds from the C++ code
 

@@ -12,7 +12,7 @@ set -eu
 
 TARGET_DIR="${1:-./resources/kenney-audio}"
 PACKS="${KENNEY_AUDIO_PACKS:-interface-sounds impact-sounds digital-audio ui-audio}"
-URL_TEMPLATE="${KENNEY_AUDIO_URL_TEMPLATE:-https://kenney.nl/media/pages/assets/<pack>/<pack>.zip}"
+PAGE_TEMPLATE="${KENNEY_AUDIO_PAGE_TEMPLATE:-https://kenney.nl/assets/<pack>}"
 
 if command -v curl >/dev/null 2>&1; then
   download() { curl -fsSL -o "$2" "$1"; }
@@ -22,6 +22,25 @@ else
   echo "Neither curl nor wget is available to download the packs with" >&2
   exit 1
 fi
+
+# The archive address carries a content hash the site regenerates whenever the
+# pack is updated, so it is read out of the pack's own page instead of being
+# written down here.
+pack_url()
+{
+  packPage=$(echo "$PAGE_TEMPLATE" | sed "s|<pack>|$1|g")
+  pageFile="$TARGET_DIR/$1.html"
+
+  if ! download "$packPage" "$pageFile" ; then
+    rm -f "$pageFile"
+    echo "Fail to read the $1 pack page at $packPage." >&2
+    exit 1
+  fi
+
+  grep -oE "https://[^\"'[:space:]]*/assets/$1/[^\"'[:space:]]*\\.zip" "$pageFile" | head -n1
+
+  rm -f "$pageFile"
+}
 
 if ! command -v unzip >/dev/null 2>&1; then
   echo "No unzip available to unpack the downloaded archives with" >&2
@@ -38,15 +57,21 @@ for pack in $PACKS; do
     continue
   fi
 
-  packUrl=$(echo "$URL_TEMPLATE" | sed "s|<pack>|$pack|g")
+  packUrl=$(pack_url "$pack")
   packArchive="$TARGET_DIR/$pack.zip"
+
+  if [ -z "$packUrl" ] ; then
+    echo "The $pack pack page names no archive to download." >&2
+    echo "Check the pack name against https://kenney.nl/assets" >&2
+    exit 1
+  fi
 
   echo "Downloading $pack: $packUrl"
 
   if ! download "$packUrl" "$packArchive"; then
     rm -f "$packArchive"
     echo "Fail to download the $pack pack from $packUrl." >&2
-    echo "Correct the KENNEY_AUDIO_URL_TEMPLATE environment variable or download the pack by hand from https://kenney.nl/assets" >&2
+    echo "Correct the KENNEY_AUDIO_PAGE_TEMPLATE environment variable or download the pack by hand from https://kenney.nl/assets" >&2
     exit 1
   fi
 

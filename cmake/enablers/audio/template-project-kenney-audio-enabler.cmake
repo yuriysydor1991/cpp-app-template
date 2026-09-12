@@ -14,8 +14,8 @@ set(
 )
 
 set(
-  TEMPLATE_APP_KENNEY_AUDIO_URL_TEMPLATE "https://kenney.nl/media/pages/assets/<pack>/<pack>.zip"
-  CACHE STRING "The per pack download URL, the <pack> placeholder standing for the pack name. Verify it against kenney.nl before the first fetch."
+  TEMPLATE_APP_KENNEY_AUDIO_PAGE_TEMPLATE "https://kenney.nl/assets/<pack>"
+  CACHE STRING "The per pack page the archive address is read out of, the <pack> placeholder standing for the pack name"
 )
 
 if (NOT ENABLE_KENNEY_AUDIO)

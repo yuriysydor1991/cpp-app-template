@@ -1,4 +1,4 @@
-#include "src/freesoundaudio/player/FreesoundSdlSoundPlayer.h"
+#include "src/freesoundaudio/player/FreesoundSdlMixerSoundPlayer.h"
 #include "src/freesoundaudio/player/FreesoundSoundPlayerFactory.h"
 #include "src/freesoundaudio/player/IFreesoundSoundPlayer.h"
 
@@ -9,7 +9,7 @@ namespace freesoundaudio
 // audio enabler ran, so the choice of a backend stays a build time decision.
 IFreesoundSoundPlayerPtr FreesoundSoundPlayerFactory::create()
 {
-  return FreesoundSdlSoundPlayer::create();
+  return FreesoundSdlMixerSoundPlayer::create();
 }
 
 }  // namespace freesoundaudio

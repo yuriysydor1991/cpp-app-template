@@ -12,7 +12,7 @@ add_executable(
   ${CMAKE_SOURCE_DIR}/src/freesoundaudio/categories/FreesoundCategories.cpp
   ${CMAKE_SOURCE_DIR}/src/freesoundaudio/sounds/FreesoundSounds.cpp
   ${CMAKE_SOURCE_DIR}/src/freesoundaudio/player/FreesoundRandomSound.cpp
-  ${CMAKE_SOURCE_DIR}/src/freesoundaudio/player/FreesoundSdlSoundPlayer.cpp
+  ${CMAKE_SOURCE_DIR}/src/freesoundaudio/player/FreesoundSdlMixerSoundPlayer.cpp
   ${FREESOUND_AUDIO_GENERATED_SOUNDS_SOURCE}
 )
 
@@ -26,6 +26,7 @@ target_include_directories(
 target_link_libraries(
   CTEST_FreesoundSoundPlayer
   GTest::gtest_main GTest::gmock
+  ${TEMPLATE_APP_SDL2_MIXER_TARGET}
   ${TEMPLATE_APP_SDL2_AUDIO_TARGET}
 )
 

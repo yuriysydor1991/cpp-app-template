@@ -1,6 +1,6 @@
 ## Enabling the Freesound sound effects
 
-The [Freesound](https://freesound.nl/assets) CC0 sound effect categories are made available to the project by the `ENABLE_FREESOUND_AUDIO` CMake variable, which is `ON` by default on this branch:
+The [Freesound](https://freesound.org) CC0 sound effect categories are made available to the project by the `ENABLE_FREESOUND_AUDIO` CMake variable, which is `ON` by default on this branch:
 
 ```
 # Inside the source root directory
@@ -19,7 +19,7 @@ The `cmake/enablers/audio/template-project-freesound-audio-enabler.cmake` module
 | Variable | Default | Meaning |
 | --- | --- | --- |
 | `ENABLE_FREESOUND_AUDIO` | `ON` | enables the whole integration |
-| `TEMPLATE_APP_FREESOUND_AUDIO_MANIFEST` | `misc/freesound-categories.txt` | the manifest naming every category together with it's archive URL and it's license |
+| `TEMPLATE_APP_FREESOUND_AUDIO_MANIFEST` | `misc/freesound-sounds.txt` | the manifest naming every sound together with it's download URL and it's license |
 | `TEMPLATE_APP_FREESOUND_AUDIO_DIR` | empty | an already available categories directory to reuse instead of downloading one |
 | `FREESOUND_AUDIO_EXTENSIONS` | `ogg;wav;mp3` | the sound file extensions to pick out of the categories |
 | `FREESOUND_AUDIO_QT_RESOURCE_PREFIX` | `/sounds` | the prefix of the generated `.qrc` manifests |
@@ -37,15 +37,15 @@ Freesound publishes it's submissions under CC0, CC-BY and CC-BY-NC alike, **one 
 form, the `#` starting a comment and the empty lines being skipped:
 
 ```
-interface/click.ogg|https://freesound.org/people/<author>/sounds/<id>/download/<file>|CC0-1.0
-interface/notification.ogg|https://freesound.org/people/<author>/sounds/<id>/download/<file>|CC-BY-4.0
+interface/click.ogg|<the preview address of the submission>|CC0-1.0
+feedback/notification.ogg|<the preview address of the submission>|CC-BY-4.0
 ```
 
 The category is simply the subdirectory the file is downloaded into and the first part of it's alias, so the grouping is the developer's own rather than anything the site imposes.
 
-**The manifest ships empty on purpose and the configure step stops until it is filled**: picking the submissions of interest - and reading the license of each one at [freesound.org](https://freesound.org) - is a decision this branch refuses to make on the developer's behalf. A sound file sitting in the sounds directory with no manifest entry is refused as well, so the provenance can not silently go missing.
+**The manifest ships with five CC0 submissions of two categories** - two interface clicks and three feedback beeps - so the branch configures, builds and runs as it is checked out, while picking further submissions, and reading the license of each one at [freesound.org](https://freesound.org), stays the developer's own decision. A sound file sitting in the sounds directory with no manifest entry is refused, so the provenance can not silently go missing.
 
-The Freesound API needs an account token, so the recorded URL is whatever address the sound is really reachable by rather than an API call the build could make on it's own.
+The Freesound API needs an account token and the `/download/` address of a submission answers a logged in account alone - an anonymous request lands on the login page - so the recorded address is the publicly reachable preview one, `cdn.freesound.org/previews/<first 3 digits of the id>/<id>_<uploader id>-hq.ogg`. The submission itself stays reachable as `freesound.org/s/<id>` and names it's uploader there, so the id inside the recorded address is the provenance of the very file.
 
 The license and the source travel all the way into the binary, so the code answers for both:
 
@@ -53,12 +53,12 @@ The license and the source travel all the way into the binary, so the code answe
 auto click = sounds->find("interface", "click.ogg");
 
 click->license();    // "CC0-1.0"
-click->sourceUrl();  // "https://freesound.org/people/<author>/sounds/<id>/..."
+click->sourceUrl();  // "https://cdn.freesound.org/previews/623/623175_11545182-hq.ogg"
 ```
 
 That is what makes the attribution of a CC-BY sound possible at all, and the `misc/scripts/fetch-freesound-audio.sh` script writes the very same table into a `LICENSES.md` next to the downloaded files, so the directory carries it's provenance even once it leaves the build tree.
 
-### Downloading the categories by hand
+### Downloading the sounds by hand
 
 A host whose configure step reaches no network of it's own, a categories directory shared between several build trees and a wish to keep the downloads away from the build tree are all served by the `misc/scripts/fetch-freesound-audio.sh` script:
 
@@ -68,7 +68,7 @@ misc/scripts/fetch-freesound-audio.sh ~/freesound-audio
 cmake -S . -B build -DTEMPLATE_APP_FREESOUND_AUDIO_DIR=~/freesound-audio
 ```
 
-The script takes the target directory as it's single argument, obeys the `FREESOUND_AUDIO_PACKS` and the `FREESOUND_AUDIO_URL_TEMPLATE` environment variables, downloads through `curl` or `wget` (whichever is available) and leaves an already unpacked category alone.
+The script takes the target directory as it's single argument, obeys the `FREESOUND_AUDIO_MANIFEST` environment variable, downloads through `curl` or `wget` (whichever is available) and leaves an already downloaded sound alone.
 
 ### Reaching the sounds from the C++ code
 
@@ -188,12 +188,13 @@ auto wave = drawn.pick(sounds, "wav");  // only what the player really decodes
 `Application::run` of this branch puts the three together: it reports how many sounds the configured packs carry, draws a playable one, prints it's file path and both resource system paths, and plays it:
 
 ```
-INF : The Freesound categories carry 6 sounds at /.../resources/freesound-audio
-INF : The drawn impacts/thud.wav sound file: /.../thud.wav
-INF : ... published under CC0-1.0 at https://freesound.org/people/<author>/sounds/<id>/...
-INF : ... embedded into the Qt resources: :/sounds/impacts/thud.wav
-INF : ... embedded into the GResource ones: /ua/org/kytok/template/CppAppTemplate/sounds/impacts/thud.wav
-INF : Playing the impacts/thud.wav sound ...
+INF : The Freesound packs carry 5 sounds at /.../resources/freesound-audio
+INF : The drawn feedback/confirmation.ogg sound file: /.../feedback/confirmation.ogg
+INF : ... published under CC0-1.0 at https://cdn.freesound.org/previews/581/581603_5487341-hq.ogg
+INF : ... embedded into the Qt resources: :/sounds/feedback/confirmation.ogg
+INF : ... embedded into the GResource ones: /ua/org/kytok/template/CppAppTemplate/sounds/feedback/confirmation.ogg
+INF : Playing the feedback/confirmation.ogg sound ...
+WRN : The bare SDL2 decodes the .wav files alone, so the feedback/confirmation.ogg sound needs the SDL_mixer library to be played
 ```
 
-With the packs empty, or with no sound of a format the player decodes, the demo says so and returns cleanly instead of failing.
+With the packs empty, or with no sound of a format the player decodes, the demo says so and returns cleanly instead of failing. The sounds the manifest ships are the `.ogg` previews Freesound serves anonymously and the bare SDL2 decodes `.wav` alone, so the last line above is the demo reporting exactly that: a `.wav` submission added to the manifest - or a player backed by the SDL_mixer library - is what makes it sound.

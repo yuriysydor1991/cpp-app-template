@@ -17,11 +17,21 @@
 # is licensed under: the enabler refuses a sound file carrying no manifest
 # entry, so the provenance can not silently go missing.
 #
-# The Freesound API needs an account token, so the download URL recorded here is
-# whatever address the sound is really reachable by rather than an API call the
-# build could make on it's own. Fill the lines below with the submissions of
-# interest, taking their addresses and licenses from https://freesound.org .
-# For example:
+# The Freesound API needs an account token and the '/download/' address of a
+# submission answers a logged in account alone - an anonymous request lands on
+# the login page - so the publicly reachable preview address of every sound is
+# recorded here instead:
 #
-#   interface/click.ogg|https://freesound.org/people/<author>/sounds/<id>/download/<file>|CC0-1.0
-#   interface/notification.ogg|https://freesound.org/people/<author>/sounds/<id>/download/<file>|CC-BY-4.0
+#   https://cdn.freesound.org/previews/<first 3 digits of the id>/<id>_<uploader id>-hq.ogg
+#
+# The submission itself stays reachable as https://freesound.org/s/<id> and
+# names it's uploader there, so the id inside the recorded address is the
+# provenance of the very file. The sounds below are CC0 ones, so they need no
+# attribution at all: a CC-BY submission added among them is to be credited by
+# the application on it's own.
+
+interface/click.ogg|https://cdn.freesound.org/previews/623/623175_11545182-hq.ogg|CC0-1.0
+interface/wooden-click.ogg|https://cdn.freesound.org/previews/321/321083_1196020-hq.ogg|CC0-1.0
+feedback/confirmation.ogg|https://cdn.freesound.org/previews/581/581603_5487341-hq.ogg|CC0-1.0
+feedback/error.ogg|https://cdn.freesound.org/previews/581/581604_5487341-hq.ogg|CC0-1.0
+feedback/notification.ogg|https://cdn.freesound.org/previews/571/571513_2226836-hq.ogg|CC0-1.0

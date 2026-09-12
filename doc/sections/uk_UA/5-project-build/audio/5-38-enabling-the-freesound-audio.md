@@ -1,6 +1,6 @@
 ## Вмикання звукових ефектів Freesound
 
-Набори звукових ефектів [Freesound](https://freesound.nl/assets) під ліцензією CC0 стають доступними проекту за допомогою змінної CMake `ENABLE_FREESOUND_AUDIO`, яка на даній гілці типово має значення `ON`:
+Набори звукових ефектів [Freesound](https://freesound.org) під ліцензією CC0 стають доступними проекту за допомогою змінної CMake `ENABLE_FREESOUND_AUDIO`, яка на даній гілці типово має значення `ON`:
 
 ```
 # Всередині кореневої директорії з вихідними кодами
@@ -19,7 +19,7 @@ Freesound публікує набори на умовах [CC0](https://creative
 | Змінна | Типове значення | Призначення |
 | --- | --- | --- |
 | `ENABLE_FREESOUND_AUDIO` | `ON` | вмикає усю інтеграцію |
-| `TEMPLATE_APP_FREESOUND_AUDIO_MANIFEST` | `misc/freesound-categories.txt` | маніфест, що називає кожен набір разом з адресою його архіву і його ліцензією |
+| `TEMPLATE_APP_FREESOUND_AUDIO_MANIFEST` | `misc/freesound-sounds.txt` | маніфест, що називає кожен звук разом з адресою його завантаження і його ліцензією |
 | `TEMPLATE_APP_FREESOUND_AUDIO_DIR` | порожнє | вже наявна директорія з наборами, яку слід використати замість завантаження |
 | `FREESOUND_AUDIO_EXTENSIONS` | `ogg;wav;mp3` | розширення звукових файлів, які слід обрати з наборів |
 | `FREESOUND_AUDIO_QT_RESOURCE_PREFIX` | `/sounds` | префікс згенерованих маніфестів `.qrc` |
@@ -37,15 +37,15 @@ Freesound публікує свої матеріали під ліцензіям
 де `#` починає коментар, а порожні рядки пропускаються:
 
 ```
-interface/click.ogg|https://freesound.org/people/<автор>/sounds/<id>/download/<файл>|CC0-1.0
-interface/notification.ogg|https://freesound.org/people/<автор>/sounds/<id>/download/<файл>|CC-BY-4.0
+interface/click.ogg|<адреса попереднього перегляду матеріалу>|CC0-1.0
+feedback/notification.ogg|<адреса попереднього перегляду матеріалу>|CC-BY-4.0
 ```
 
 Категорія — це лише піддиректорія, до якої завантажується файл, і перша частина його псевдоніма, тому групування є власним рішенням розробника, а не чимось, що нав'язує сайт.
 
-**Маніфест навмисно постачається порожнім, і етап налаштування зупиняється, доки його не буде заповнено**: вибір потрібних матеріалів — і читання ліцензії кожного з них на [freesound.org](https://freesound.org) — є рішенням, яке дана гілка відмовляється приймати замість розробника. Звуковий файл, що лежить у директорії звуків без запису у маніфесті, також відхиляється, тому походження не може мовчки загубитись.
+**Маніфест постачається з п'ятьма матеріалами під ліцензією CC0 у двох категоріях** — двома клацаннями інтерфейсу та трьома звуками зворотного зв'язку — тому гілка налаштовується, збирається і запускається у тому вигляді, у якому її отримано, тоді як вибір подальших матеріалів — і читання ліцензії кожного з них на [freesound.org](https://freesound.org) — залишається власним рішенням розробника. Звуковий файл, що лежить у директорії звуків без запису у маніфесті, відхиляється, тому походження не може мовчки загубитись.
 
-API Freesound потребує токена облікового запису, тому записана адреса є тією адресою, за якою звук дійсно доступний, а не викликом API, що його могла б зробити сама побудова.
+API Freesound потребує токена облікового запису, а адреса `/download/` матеріалу відповідає лише авторизованому обліковому запису — анонімний запит потрапляє на сторінку входу, — тому записаною адресою є загальнодоступна адреса попереднього перегляду `cdn.freesound.org/previews/<перші 3 цифри id>/<id>_<id вивантажувача>-hq.ogg`. Сам матеріал залишається доступним як `freesound.org/s/<id>` і називає там свого вивантажувача, тому id у записаній адресі є походженням самого файлу.
 
 Ліцензія і джерело потрапляють аж до виконуваного файлу, тому код відповідає за обидва:
 
@@ -53,7 +53,7 @@ API Freesound потребує токена облікового запису, �
 auto click = sounds->find("interface", "click.ogg");
 
 click->license();    // "CC0-1.0"
-click->sourceUrl();  // "https://freesound.org/people/<автор>/sounds/<id>/..."
+click->sourceUrl();  // "https://cdn.freesound.org/previews/623/623175_11545182-hq.ogg"
 ```
 
 Саме це робить можливим зазначення авторства для звуку під ліцензією CC-BY, а скрипт `misc/scripts/fetch-freesound-audio.sh` записує ту саму таблицю до файлу `LICENSES.md` поруч із завантаженими файлами, тому директорія несе своє походження навіть після того, як покине дерево побудови.
@@ -68,7 +68,7 @@ misc/scripts/fetch-freesound-audio.sh ~/freesound-audio
 cmake -S . -B build -DTEMPLATE_APP_FREESOUND_AUDIO_DIR=~/freesound-audio
 ```
 
-Скрипт приймає директорію призначення як свій єдиний аргумент, зважає на змінні середовища `FREESOUND_AUDIO_PACKS` та `FREESOUND_AUDIO_URL_TEMPLATE`, завантажує за допомогою `curl` або `wget` (залежно від того, що доступне) і не чіпає вже розпакований набір.
+Скрипт приймає директорію призначення як свій єдиний аргумент, зважає на змінну середовища `FREESOUND_AUDIO_MANIFEST`, завантажує за допомогою `curl` або `wget` (залежно від того, що доступне) і не чіпає вже завантажений звук.
 
 ### Доступ до звуків з коду C++
 
@@ -188,12 +188,13 @@ auto wave = drawn.pick(sounds, "wav");  // лише те, що програва�
 Метод `Application::run` даної гілки поєднує усі три складові: повідомляє, скільки звуків містять налаштовані набори, витягує придатний для відтворення, друкує шлях до його файлу і обидва шляхи у системах ресурсів, та відтворює його:
 
 ```
-INF : The Freesound categories carry 6 sounds at /.../resources/freesound-audio
-INF : The drawn impacts/thud.wav sound file: /.../thud.wav
-INF : ... published under CC0-1.0 at https://freesound.org/people/<author>/sounds/<id>/...
-INF : ... embedded into the Qt resources: :/sounds/impacts/thud.wav
-INF : ... embedded into the GResource ones: /ua/org/kytok/template/CppAppTemplate/sounds/impacts/thud.wav
-INF : Playing the impacts/thud.wav sound ...
+INF : The Freesound packs carry 5 sounds at /.../resources/freesound-audio
+INF : The drawn feedback/confirmation.ogg sound file: /.../feedback/confirmation.ogg
+INF : ... published under CC0-1.0 at https://cdn.freesound.org/previews/581/581603_5487341-hq.ogg
+INF : ... embedded into the Qt resources: :/sounds/feedback/confirmation.ogg
+INF : ... embedded into the GResource ones: /ua/org/kytok/template/CppAppTemplate/sounds/feedback/confirmation.ogg
+INF : Playing the feedback/confirmation.ogg sound ...
+WRN : The bare SDL2 decodes the .wav files alone, so the feedback/confirmation.ogg sound needs the SDL_mixer library to be played
 ```
 
-Якщо набори порожні або серед них немає звуку у форматі, який декодує програвач, демонстрація повідомляє про це і завершується коректно, а не з помилкою.
+Якщо набори порожні або серед них немає звуку у форматі, який декодує програвач, демонстрація повідомляє про це і завершується коректно, а не з помилкою. Звуки, які постачає маніфест, — це попередні перегляди `.ogg`, що їх Freesound віддає анонімно, а сам SDL2 декодує лише `.wav`, тому останній рядок вище є саме таким повідомленням демонстрації: аби вона зазвучала, потрібен матеріал `.wav` у маніфесті або програвач на основі бібліотеки SDL_mixer.

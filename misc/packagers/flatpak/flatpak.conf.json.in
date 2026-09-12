@@ -10,14 +10,25 @@
       "buildsystem": "cmake",
       "config-opts": [
         "-DCMAKE_BUILD_TYPE=Release",
+        "-DTEMPLATE_APP_FREESOUND_AUDIO_DIR=/run/build/${CMAKE_PROJECT_NAME}/freesound-audio",
         "-DENABLE_FLATPAK_METAINFO=ON"
       ],
       "sources": [
         {
           "type": "dir",
-          "path": "${CMAKE_SOURCE_DIR}"
+          "path": "${CMAKE_SOURCE_DIR}",
+          "skip": ["build"]
+        },
+        {
+          "x-comment": "The sandbox the module is built in carries no network access, so the very sounds the Freesound enabler would download there are handed over as the directory the host configure has filled already, the TEMPLATE_APP_FREESOUND_AUDIO_DIR option above pointing the sandboxed configure at it.",
+          "type": "dir",
+          "path": "${FREESOUND_AUDIO_ROOT_DIR}",
+          "dest": "freesound-audio"
         }
       ]
     }
+  ],
+  "finish-args": [
+    "--socket=pulseaudio"
   ]
 }

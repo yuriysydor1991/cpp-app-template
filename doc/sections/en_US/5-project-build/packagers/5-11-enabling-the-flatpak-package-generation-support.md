@@ -10,6 +10,8 @@ cmake -B build -S . -DENABLE_FLATPAK=ON
 
 Which in order will enable the `flatpak` target.
 
+The `flatpak-builder` compiles the project inside it's own sandbox, which carries no network access, while the Freesound enabler downloads it's sounds through the Internet. The generated manifest therefore hands the sounds directory the host configure has filled - the downloaded one, or the one the `TEMPLATE_APP_FREESOUND_AUDIO_DIR` variable has pointed it at - over to the module as a source of it's own, and the sandboxed configure reaches it through that very same variable. The packaged application is granted `--socket=pulseaudio`, so the sound player really reaches an audio device.
+
 And finally to generate the flatpak package run the `flatpak` target for the build:
 
 ```

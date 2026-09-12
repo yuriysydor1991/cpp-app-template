@@ -44,6 +44,42 @@ This may also be found at: /var/jenkins_home/secrets/initialAdminPassword
 
 Файл за відносним шляхом cmake/enablers/dockerers/template-project-docker-Jenkins-pipeline-runner-target.cmake містить рецепти побудови Docker контейнера для конвеєрів перевірки [Jenkins](https://www.jenkins.io/) що за замовчуванням перезапустить попередньо побудований контейнер для конвеєрів перевірки.
 
+### Вміст образу
+
+Образ доповнює `jenkins/jenkins:lts` усім, що потребують конвеєри перевірки кожної гілки шаблонного проекту, отож один контейнер обслуговує їх усі:
+
+- інструментарій і аналізатори: `build-essential`, `cmake`, `meson` разом з `ninja-build`, `clang-format`, `clang-tidy`, `cppcheck`, `valgrind`, `doxygen` разом з `graphviz` та пакунки розробки GoogleTest і GoogleMock;
+- пакунки розробки кожної бібліотеки, з якою компонується гілка - Qt6 разом з модулями QML, QtCharts, Qt Location та WebView / WebEngine, Gtkmm-3 і Gtkmm-4 разом з libadwaita та WebKitGTK, SDL2, SDL3, SFML, FreeGLUT, Vulkan, OpenCV, CFITSIO разом з WCSLIB, PLplot, giza, Boost, libcurl, nlohmann JSON, PostgreSQL, MySQL, Firebird та інші;
+- бібліотеки, для яких дистрибутив не постачає пакунка, побудовані з їх первинних джерел: wxWidgets, Wt, SQLiteCpp, драйвери MongoDB для C і C++, MatPlot++ та sdbus-c++;
+- пакувальники: `flatpak` разом з `flatpak-builder`, `appimagetool`, `rpm` та `dpkg-dev` зі складу `build-essential`.
+
+Пакувальники snap, FreeBSD pkg та WIX MSI залишились поза образом: перший потребує власних systemd та LXD, другий - `cpack`, зібраного з `libpkg`, а третій - хоста MS Windows.
+
+### Перевірки пакувальників
+
+Параметри побудови `RUN_FLATPAK_PACKAGER`, `RUN_APPIMAGE_PACKAGER`, `RUN_DEB_PACKAGER` та `RUN_RPM_PACKAGER` конвеєра [misc/Jenkinsfile](/misc/Jenkinsfile) будують пакунок і завершують побудову невдачею, якщо файл пакунка не з'явився, отож контейнер перевіряє пакувальники гілки так само, як перевіряє її тести. Усі вони вимкнені за замовчуванням - потрібні вмикаються на сторінці *Build with Parameters* відповідного завдання.
+
+`flatpak-builder` виконує побудову всередині пісочниці [bubblewrap](https://github.com/containers/bubblewrap), а середовище виконання AppImage монтує себе через FUSE, що заборонено типовими профілями контейнера, отож ціль `jenkins-pipeline-docker-run` запускає контейнер із пристроєм `/dev/fuse`, можливістю `SYS_ADMIN` та незабороняючими профілями seccomp і AppArmor.
+
+Кожна пара середовища виконання та SDK, яку називають flatpak-маніфести гілок, встановлюється до образу, отож жоден запуск конвеєра не завантажує їх повторно. Цей перелік є CMake-змінною `JENKINS_PIPELINE_FLATPAK_RUNTIMES`, і кожна пара коштує образу гігабайтів, отож його варто скоротити до потрібних гілок:
+
+```
+# в середині кореневої директорії проекту
+
+scripts/docker/jenkins-run.sh \
+  -DJENKINS_PIPELINE_FLATPAK_RUNTIMES="org.freedesktop.Platform//24.08 org.freedesktop.Sdk//24.08"
+```
+
+Вони потрапляють до користувацької інсталяції користувача `jenkins` - тієї самої, з якою працює ціль `flatpak` кожної гілки, - котру змінна оточення `FLATPAK_USER_DIR` образу утримує за шляхом `/var/flatpak`, поза томом `/var/jenkins_home`, який відкидав би її при кожному запуску контейнера.
+
+### Швидкодія побудови образу і конвеєрів
+
+- увесь набір пакунків встановлюється однією транзакцією `apt`, а кеші BuildKit зберігають архіви і переліки пакунків, отож повторна побудова образу перевстановлює їх без повторного завантаження;
+- кожна побудована з джерел бібліотека клонується поверхнево, будується і стирається в межах одного шару, отож ані джерела, ані дерева побудови не потрапляють до образу;
+- образ містить `ccache` і спрямовує до нього змінні оточення `CMAKE_C_COMPILER_LAUNCHER` та `CMAKE_CXX_COMPILER_LAUNCHER`, отож крок конфігурування кожної гілки підхоплює його, а повторні побудови конвеєра перетворюються на влучання в кеш;
+- вбудований вузол отримує стільки виконавців, скільки ядер процесора дозволено контейнеру CMake-змінною `JENKINS_PIPELINE_DOCKER_MAX_CORES`, отож паралельні стадії тестів конвеєра справді виконуються паралельно;
+- побудова образу отримує порожню директорію як свій контекст і бере експортовані завдання з дерева, що конфігурується, отож ані двійкове дерево не передається до служби Docker, ані клон опублікованої гілки не потрібен.
+
 ### Експортування та імпортування конфігурацій завдань Jenkins
 
 Встановлення значення `ON` для CMake-змінної `JENKINS_CLI_JAR_TARGETS` вмикає керування завданнями [Jenkins](https://www.jenkins.io/) за допомогою клієнта [Jenkins CLI](https://www.jenkins.io/doc/book/managing/cli/). Повний шлях до клієнта `jenkins-cli.jar` (котрий можна завантажити з Web-панелі запущеної системи [Jenkins](https://www.jenkins.io/)) необхідно вказати у CMake-змінній `JENKINS_CLI_JAR_PATH` разом із обліковими даними `JENKINS_CLI_LOGIN` та `JENKINS_CLI_SECRET`. Під час кроку конфігурування CMake кожне завдання запущеного примірника [Jenkins](https://www.jenkins.io/) експортуватиметься як XML-конфігурація у файли `<build>/Jenkins-exported-jobs/<назва-завдання>.xml`.

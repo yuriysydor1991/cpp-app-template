@@ -54,6 +54,17 @@ set(
   "The Jenkins pipeline docker containers max allowed CPU cores"
 )
 
+# Every runtime and SDK pair the flatpak manifests of the branches ask for. The
+# image seeds them into the per user installation the flatpak target builds
+# against, so no pipeline run downloads them again. Trim the list to the
+# branches of interest to spare the image the gigabytes of the unused ones.
+set(
+  JENKINS_PIPELINE_FLATPAK_RUNTIMES
+  "org.freedesktop.Platform//24.08 org.freedesktop.Sdk//24.08 org.gnome.Platform//48 org.gnome.Sdk//48 org.gnome.Platform//49 org.gnome.Sdk//49 org.kde.Platform//6.8 org.kde.Sdk//6.8 org.kde.Platform//5.15-25.08 org.kde.Sdk//5.15-25.08"
+  CACHE STRING
+  "Space separated flatpak refs the Jenkins pipeline image installs for the flatpak packager checks"
+)
+
 if (NOT ENABLE_JENKINS_DOCKER_PIPELINE)
   return()
 endif()
@@ -61,6 +72,12 @@ endif()
 find_program(SCRIPT_EXEC script REQUIRED)
 
 configure_file(${JENKINS_PIPELINE_DOCKERFILE_SRC} ${JENKINS_PIPELINE_DOCKERFILE_DST})
+
+# The image takes its sources from the project build context alone, so the
+# build gets an empty directory instead of the whole binary tree to upload.
+set(JENKINS_PIPELINE_DOCKER_BUILD_CONTEXT ${CMAKE_CURRENT_BINARY_DIR}/jenkins-pipeline-context)
+
+file(MAKE_DIRECTORY ${JENKINS_PIPELINE_DOCKER_BUILD_CONTEXT})
 
 execute_process(
   COMMAND ${SCRIPT_EXEC} -q -c "DOCKER_HOST=${DOCKER_HOST_STR} ${DOCKER_EXEC} images -q ${JENKINS_PIPELINE_DOCKER_IMAGE_NAME}" /dev/null
@@ -79,10 +96,10 @@ if (JENKINS_PIPELINE_FORCE_REBUILD)
     message(STATUS "Stopping and erasing the ${JENKINS_PIPELINE_DOCKER_CONTAINER_NAME} container")
     set(JENKINS_PIPELINE_DOCKER_CONTAINER_PRESENT "")
     execute_process(
-      COMMAND DOCKER_HOST=${DOCKER_HOST_STR} ${DOCKER_EXEC} container stop ${JENKINS_PIPELINE_DOCKER_CONTAINER_NAME}
+      COMMAND ${SCRIPT_EXEC} -q -c "DOCKER_HOST=${DOCKER_HOST_STR} ${DOCKER_EXEC} container stop ${JENKINS_PIPELINE_DOCKER_CONTAINER_NAME}" /dev/null
     )
     execute_process(
-      COMMAND DOCKER_HOST=${DOCKER_HOST_STR} ${DOCKER_EXEC} container rm ${JENKINS_PIPELINE_DOCKER_CONTAINER_NAME}
+      COMMAND ${SCRIPT_EXEC} -q -c "DOCKER_HOST=${DOCKER_HOST_STR} ${DOCKER_EXEC} container rm ${JENKINS_PIPELINE_DOCKER_CONTAINER_NAME}" /dev/null
     )
   endif()
   
@@ -90,7 +107,7 @@ if (JENKINS_PIPELINE_FORCE_REBUILD)
     message(STATUS "Erasing the ${JENKINS_PIPELINE_DOCKER_IMAGE_NAME} image")
     set(JENKINS_PIPELINE_DOCKER_IMAGE_NAME_PRESENT "")
     execute_process(
-      COMMAND DOCKER_HOST=${DOCKER_HOST_STR} ${DOCKER_EXEC} rm ${JENKINS_PIPELINE_DOCKER_IMAGE_NAME}
+      COMMAND ${SCRIPT_EXEC} -q -c "DOCKER_HOST=${DOCKER_HOST_STR} ${DOCKER_EXEC} image rm ${JENKINS_PIPELINE_DOCKER_IMAGE_NAME}" /dev/null
     )
   endif()
 endif()
@@ -99,10 +116,10 @@ if (JENKINS_PIPELINE_DOCKER_IMAGE_NAME_PRESENT STREQUAL "")
   set(
     JENKINS_PIPELINE_DOCKER_BUILD_CMD
       DOCKER_HOST=${DOCKER_HOST_STR} DOCKER_BUILDKIT=1 ${DOCKER_EXEC} build
-        -f "${JENKINS_PIPELINE_DOCKERFILE_DST}"
+        -f "${CMAKE_CURRENT_BINARY_DIR}/${JENKINS_PIPELINE_DOCKERFILE_DST}"
         --build-context project=${CMAKE_SOURCE_DIR} 
         --build-arg CACHEBUST="${PROJECT_CONFIGURE_DATE}" 
-        -t ${JENKINS_PIPELINE_DOCKER_IMAGE_NAME} .
+        -t ${JENKINS_PIPELINE_DOCKER_IMAGE_NAME} ${JENKINS_PIPELINE_DOCKER_BUILD_CONTEXT}
   )
 else()
   set(
@@ -112,6 +129,10 @@ else()
 endif()
 
 # -d --restart=on-failure
+#
+# The flatpak-builder sandbox and the AppImage runtime of the packager stages
+# demand the FUSE device with the mount permission, which the default seccomp
+# and AppArmor profiles of the container deny.
 if (JENKINS_PIPELINE_DOCKER_CONTAINER_PRESENT STREQUAL "")
   set(
     JENKINS_PIPELINE_DOCKER_RUN_CMD
@@ -136,6 +157,7 @@ endif()
 
 message(STATUS "Jenkins pipeline docker build command: ${JENKINS_PIPELINE_DOCKER_BUILD_CMD}")
 message(STATUS "Jenkins pipeline docker run command: ${JENKINS_PIPELINE_DOCKER_RUN_CMD}")
+message(STATUS "Jenkins pipeline flatpak runtimes: ${JENKINS_PIPELINE_FLATPAK_RUNTIMES}")
 
 add_custom_target(
   jenkins-pipeline-docker-build

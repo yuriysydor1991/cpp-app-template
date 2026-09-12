@@ -1,182 +1,155 @@
+# syntax=docker/dockerfile:1
 FROM jenkins/jenkins:lts
 
-USER root 
+USER root
 
-RUN apt update
-RUN apt upgrade -y
-RUN apt install -y libstdc++6 build-essential git cmake g++
-RUN apt install -y clang-format
-RUN apt install -y cppcheck
-RUN apt install -y valgrind
-RUN apt install -y flatpak flatpak-builder
-RUN apt install -y clang-tidy
-RUN apt install -y libgtest-dev
-RUN apt install -y libgmock-dev
-
-RUN apt install -y meson
-RUN apt install -y pkg-config liblog4cpp5-dev
-RUN apt install -y libboost-all-dev
-
-RUN apt install -y qt6-base-dev qt6-base-dev-tools \
-  qt6-declarative-dev qt6-tools-dev qt6-tools-dev-tools \
-  qml6-module-qtquick qml6-module-qtqml-workerscript \
-  qml6-module-qtquick-templates qml6-module-qtquick-window \
-  qtquickcontrols2-5-dev libqt6gui6 qml-module-qtquick2 \
-  qml-module-qtquick-controls2 qml-module-qtquick-dialogs \
-  qml-module-qtquick-layouts qml-module-qtquick-shapes \
-  libqt6quick6 libqt6quickcontrols2-6 libqt6opengl6-dev \
-  libqt6openglwidgets6 qt6-webview-dev qml6-module-qtwebview \
-  qt6-webengine-dev libqt6webenginecore6 qt6-webengine-dev-tools \
-  qml6-module-qtquick-controls
-  
-RUN apt install -y libopengl-dev libgl-dev
-
-RUN apt install -y pkg-config libgtkmm-3.0-dev
-RUN apt install -y libgtkmm-4.0-dev libwebkitgtk-6.0-dev
-
-RUN apt install -y libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-net-dev
-
-RUN apt install -y freeglut3-dev libglew-dev
-RUN apt install -y libcurl4-openssl-dev
-RUN apt install -y libpqxx-dev
-RUN apt install -y libmysqlcppconn-dev
-
-RUN apt install -y gnuplot
-
-RUN apt install -y snapd
-
-RUN apt install -y mesa-common-dev ffmpeg
-
-RUN apt install -y wget curl htop btop 
-RUN apt install -y nmap traceroute whois
-RUN apt install -y automake autoconf autoconf-doc fdupes
-
-RUN apt install -y libopencv-dev libopencv-dnn-dev libopencv-imgcodecs-dev \
-  libopencv-imgproc-dev opencv-data opencv-doc
-
-RUN apt install -y nano
-
-RUN apt install -y firebird-dev
-RUN apt install -y libsdl3-dev libsdl3-image-dev libsdl3-ttf-dev libgl1-mesa-dev
-
-RUN apt install -y libnotify-dev
-RUN apt install -y libgstreamerd-3-dev libgstreamermm-1.0-dev libgstreamer1.0-dev
-WORKDIR /src/wxWidgets
-RUN git clone --branch v3.3.2 https://github.com/wxWidgets/wxWidgets.git wxWidgets
-WORKDIR /src/wxWidgets/wxWidgets
-RUN git submodule update --init
-WORKDIR /src/wxWidgets/
-RUN cmake -S wxWidgets -B wxWidgets-build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
-RUN cmake --build wxWidgets-build -j$(nproc)
-RUN cmake --install wxWidgets-build --prefix /usr
-
+ARG DEBIAN_FRONTEND=noninteractive
 ARG srcD=/usr/src
-ARG prefixD=/usr
 
+# The whole branch set installs in a single apt transaction, so the dependency
+# resolution runs once instead of once per package group, and the BuildKit
+# caches keep the archives and the package lists for the next image build.
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+  rm -f /etc/apt/apt.conf.d/docker-clean && \
+  echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache && \
+  apt-get update && \
+  apt-get upgrade -y && \
+  apt-get install -y \
+    autoconf automake build-essential ccache clang-format clang-tidy cmake \
+    cppcheck doxygen file git graphviz libgmock-dev libgtest-dev meson \
+    ninja-build pkg-config valgrind \
+    flatpak flatpak-builder fuse3 libfuse2t64 rpm \
+    firebird-dev libboost-all-dev libcurl4-openssl-dev liblog4cpp5-dev \
+    liblzma-dev libmysqlcppconn-dev libpqxx-dev libssl-dev libsystemd-dev \
+    libxml2-dev nlohmann-json3-dev zlib1g-dev \
+    freeglut3-dev libepoxy-dev libgl-dev libglew-dev libglm-dev libopengl-dev \
+    libvulkan-dev mesa-common-dev mesa-vulkan-drivers \
+    libadwaita-1-dev libglib2.0-dev-bin libgtkmm-3.0-dev libgtkmm-4.0-dev \
+    libwebkitgtk-6.0-dev \
+    libqt6opengl6-dev qt6-base-dev qt6-base-dev-tools qt6-charts-dev \
+    qt6-declarative-dev qt6-location-dev qt6-positioning-dev qt6-tools-dev \
+    qt6-tools-dev-tools qt6-webengine-dev qt6-webengine-dev-tools \
+    qt6-webview-dev \
+    qml6-module-qtqml-workerscript qml6-module-qtquick \
+    qml6-module-qtquick-controls qml6-module-qtquick-dialogs \
+    qml6-module-qtquick-layouts qml6-module-qtquick-shapes \
+    qml6-module-qtquick-templates qml6-module-qtquick-window \
+    libsdl2-dev libsdl2-image-dev libsdl2-net-dev libsdl2-ttf-dev \
+    libsdl3-dev libsdl3-image-dev libsdl3-ttf-dev libsfml-dev \
+    ffmpeg libgstreamer1.0-dev libgstreamerd-3-dev libgstreamermm-1.0-dev \
+    libnotify-dev \
+    giza-dev gnuplot libcfitsio-dev libopencv-dev libplplot-dev wcslib-dev \
+    btop curl fdupes htop nano nmap traceroute wget whois
+
+# The appimage target of every branch demands the appimagetool in the PATH. The
+# extracted tool starts without FUSE and the pinned runtime spares the package
+# build the per run runtime download the tool does otherwise.
+RUN arch="$(uname -m)" && \
+  case "$arch" in armv7l) arch=armhf ;; esac && \
+  curl -fsSL -o /tmp/appimagetool \
+    https://github.com/AppImage/appimagetool/releases/download/1.9.1/appimagetool-$arch.AppImage && \
+  chmod +x /tmp/appimagetool && \
+  (cd /tmp && ./appimagetool --appimage-extract > /dev/null) && \
+  mv /tmp/squashfs-root /opt/appimagetool && \
+  curl -fsSL -o /opt/appimagetool/runtime \
+    https://github.com/AppImage/type2-runtime/releases/download/20251108/runtime-$arch && \
+  printf '#!/bin/sh\nexec /opt/appimagetool/AppRun --runtime-file /opt/appimagetool/runtime "$@"\n' \
+    > /usr/local/bin/appimagetool && \
+  chmod +x /usr/local/bin/appimagetool && \
+  rm -f /tmp/appimagetool
+
+# Every library the distribution ships no package of is cloned, built and
+# erased inside a single layer, so the sources never reach the image.
+
+# wxWidgets
+RUN git clone --branch v3.3.2 --depth 1 --single-branch --recurse-submodules \
+    --shallow-submodules https://github.com/wxWidgets/wxWidgets.git $srcD/wxWidgets && \
+  cmake -S $srcD/wxWidgets -B $srcD/wxWidgets-build -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr && \
+  cmake --build $srcD/wxWidgets-build -j$(nproc) && \
+  cmake --install $srcD/wxWidgets-build --strip && \
+  rm -fr $srcD/wxWidgets $srcD/wxWidgets-build
 
 # Witty
-WORKDIR $srcD
+RUN git clone --branch 4.11.4 --depth 1 --single-branch \
+    https://github.com/emweb/wt.git $srcD/wt && \
+  cmake -S $srcD/wt -B $srcD/wt-build -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_LIBWTDBO=OFF -DENABLE_OPENGL=OFF \
+    -DENABLE_FIREBIRD=OFF -DENABLE_POSTGRES=OFF -DENABLE_SQLITE=OFF \
+    -DENABLE_MYSQL=OFF -DENABLE_MSSQLSERVER=OFF -DINSTALL_DOCUMENTATION=OFF \
+    -DBUILD_EXAMPLES=OFF -DENABLE_QT4=OFF -DENABLE_QT5=OFF -DENABLE_QT6=OFF \
+    -DENABLE_LIBWTTEST=OFF -DENABLE_PANGO=OFF -DENABLE_HARU=OFF \
+    -DCONNECTOR_FCGI=OFF -DBUILD_TESTS=OFF -DCONNECTOR_ISAPI=OFF && \
+  cmake --build $srcD/wt-build -j$(nproc) && \
+  cmake --install $srcD/wt-build --strip && \
+  rm -fr $srcD/wt $srcD/wt-build
 
-RUN git clone --single-branch --progress --branch 4.11.4 --depth 1 https://github.com/emweb/wt.git wt
+# SQLiteCpp, at the revision the appSQLiteCpp3 branch fetches
+RUN git clone --branch 3.3.3 --depth 1 --single-branch \
+    https://github.com/SRombauts/SQLiteCpp.git $srcD/SQLiteCpp && \
+  cmake -S $srcD/SQLiteCpp -B $srcD/SQLiteCpp-build -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr && \
+  cmake --build $srcD/SQLiteCpp-build -j$(nproc) && \
+  cmake --install $srcD/SQLiteCpp-build --strip && \
+  rm -fr $srcD/SQLiteCpp $srcD/SQLiteCpp-build
 
-ARG wtDir=$srcD/wt
-ARG wtBDir=$wtDir/build
+# MongoDB C driver
+RUN git clone --depth 1 --single-branch \
+    https://github.com/mongodb/mongo-c-driver.git $srcD/mongo-c-driver && \
+  cmake -S $srcD/mongo-c-driver -B $srcD/mongo-c-driver-build \
+    -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_LIBDIR=lib -DENABLE_TESTS=OFF -DENABLE_EXAMPLES=OFF && \
+  cmake --build $srcD/mongo-c-driver-build -j$(nproc) && \
+  cmake --install $srcD/mongo-c-driver-build --strip && \
+  rm -fr $srcD/mongo-c-driver $srcD/mongo-c-driver-build
 
-WORKDIR $srcD/wt
+# MongoDB C++ driver
+RUN git clone --depth 1 --single-branch \
+    https://github.com/mongodb/mongo-cxx-driver.git $srcD/mongo-cxx-driver && \
+  cmake -S $srcD/mongo-cxx-driver -B $srcD/mongo-cxx-driver-build \
+    -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_SHARED_LIBS=ON -DENABLE_TESTS=OFF && \
+  cmake --build $srcD/mongo-cxx-driver-build -j$(nproc) && \
+  cmake --install $srcD/mongo-cxx-driver-build --strip && \
+  rm -fr $srcD/mongo-cxx-driver $srcD/mongo-cxx-driver-build
 
-RUN cmake -B $wtBDir -S $srcD/wt  -DENABLE_LIBWTDBO=OFF -DENABLE_OPENGL=OFF \
-  -DENABLE_FIREBIRD=OFF -DENABLE_POSTGRES=OFF -DENABLE_SQLITE=OFF \
-  -DENABLE_MYSQL=OFF -DENABLE_MSSQLSERVER=OFF -DINSTALL_DOCUMENTATION=OFF \
-  -DBUILD_EXAMPLES=OFF -DENABLE_QT4=OFF -DENABLE_QT5=OFF -DENABLE_QT6=OFF \
-  -DENABLE_LIBWTTEST=OFF -DENABLE_PANGO=OFF -DENABLE_HARU=OFF -DCONNECTOR_FCGI=OFF \
-  -DBUILD_TESTS=OFF -DCONNECTOR_ISAPI=OFF
-RUN cmake --build $wtBDir -j$(nproc)
-RUN cmake --install $wtBDir --prefix $prefixD
+# MatPlot++
+RUN git clone --depth 1 --single-branch \
+    https://github.com/alandefreitas/matplotplusplus.git $srcD/matplotplusplus && \
+  cmake -S $srcD/matplotplusplus -B $srcD/matplotplusplus-build \
+    -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=ON -DMATPLOTPP_BUILD_EXAMPLES=OFF \
+    -DMATPLOTPP_BUILD_SHARED_LIBS=ON -DMATPLOTPP_BUILD_TESTS=OFF && \
+  cmake --build $srcD/matplotplusplus-build -j$(nproc) && \
+  cmake --install $srcD/matplotplusplus-build --strip && \
+  rm -fr $srcD/matplotplusplus $srcD/matplotplusplus-build
 
+# sdbus-c++
+RUN git clone --branch v2.1.0 --depth 1 --single-branch \
+    https://github.com/Kistler-Group/sdbus-cpp.git $srcD/sdbus-cpp && \
+  cmake -S $srcD/sdbus-cpp -B $srcD/sdbus-cpp-build -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr -DSDBUSCPP_BUILD_DOCS=OFF && \
+  cmake --build $srcD/sdbus-cpp-build -j$(nproc) && \
+  cmake --install $srcD/sdbus-cpp-build --strip && \
+  rm -fr $srcD/sdbus-cpp $srcD/sdbus-cpp-build
 
-# SQLite
-WORKDIR $srcD
+# The flatpak target of every branch installs its build dependencies into the
+# per user installation, which the /var/jenkins_home volume would drop on every
+# container start, so it is pointed out of the volume and seeded below.
+ENV FLATPAK_USER_DIR=/var/flatpak
 
-RUN git clone https://github.com/SRombauts/SQLiteCpp.git
+RUN install -d -o jenkins -g jenkins /var/flatpak
 
-WORKDIR $srcD/SQLiteCpp
+USER jenkins
 
-RUN cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$prefixD
-RUN cmake --build build -j$(nproc)
-RUN cmake --install build --prefix $prefixD
+RUN runtimes="${JENKINS_PIPELINE_FLATPAK_RUNTIMES}" && \
+  flatpak remote-add --user --if-not-exists flathub \
+    https://dl.flathub.org/repo/flathub.flatpakrepo && \
+  { test -z "$runtimes" || \
+    flatpak install --user --noninteractive flathub $runtimes ; }
 
-
-# MongoDB
-WORKDIR $srcD
-
-RUN git clone --single-branch --progress --branch master --depth 1  https://github.com/mongodb/mongo-c-driver.git mongo-c-driver
-WORKDIR $srcD/mongo-c-driver
-
-RUN cmake -B $srcD/mongo-c-driver/build -S $srcD/mongo-c-driver -DENABLE_TESTS=OFF -DENABLE_EXAMPLES=OFF -DCMAKE_INSTALL_LIBDIR=lib
-RUN cmake --build $srcD/mongo-c-driver/build -j$(nproc) --target all
-RUN cmake --install $srcD/mongo-c-driver/build --prefix /usr
-
-
-WORKDIR $srcD/
-
-RUN git clone --progress https://github.com/mongodb/mongo-cxx-driver.git mongo-cxx-driver
-WORKDIR $srcD/mongo-cxx-driver
-
-RUN cmake -B $srcD/mongo-cxx-driver/build -S $srcD/mongo-cxx-driver -DCMAKE_INSTALL_LIBDIR=lib \
-  -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE=Release -DENABLE_TESTS=OFF -DCMAKE_INSTALL_PREFIX=/usr
-RUN cmake --build $srcD/mongo-cxx-driver/build -j$(nproc) --target all
-RUN cmake --install $srcD/mongo-cxx-driver/build
-
-
-WORKDIR $srcD
-
-ARG prjName=matplotplusplus
-ARG matPlotScr=$srcD/$prjName
-ARG matPlotBuild=$srcD/$prjName-build-docker-singlerun
-
-RUN git clone https://github.com/alandefreitas/matplotplusplus.git $prjName
-RUN cmake -B $matPlotBuild -S $matPlotScr \
-    -DMATPLOTPP_BUILD_EXAMPLES=OFF \
-    -DMATPLOTPP_BUILD_SHARED_LIBS=ON \
-    -DMATPLOTPP_BUILD_TESTS=OFF \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=ON \
-    -DCMAKE_INSTALL_PREFIX=$prefixD
-RUN cmake --build $matPlotBuild -j$(nproc)
-RUN cmake --install $matPlotBuild --prefix $prefixD
-
-RUN flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-
-RUN flatpak install -y runtime/org.freedesktop.Platform/x86_64/24.08
-RUN flatpak install -y runtime/org.freedesktop.Sdk/x86_64/24.08
-RUN flatpak install -y runtime/org.kde.Platform/x86_64/6.8
-RUN flatpak install -y runtime/org.kde.Sdk/x86_64/6.8
-
-
-# SDBus-C++
-WORKDIR $srcD
-
-ARG sdbuscxxName=sdbus-cpp
-ARG sdbuscxxScr=$srcD/$sdbuscxxName
-ARG sdbuscxxBuild=$srcD/$sdbuscxxName-build-docker-singlerun
-
-RUN git clone --branch v2.1.0 --depth 1 https://github.com/Kistler-Group/sdbus-cpp.git $sdbuscxxName
-RUN cmake -B $sdbuscxxBuild -S $sdbuscxxScr \
-    -DSDBUSCPP_BUILD_DOCS=OFF \
-    -DCMAKE_INSTALL_PREFIX=$prefixD
-RUN cmake --build $sdbuscxxBuild -j$(nproc)
-RUN cmake --install $sdbuscxxBuild --prefix $prefixD
-
-
-RUN apt install -y qt6-webview-dev qml6-module-qtwebview \
-  qt6-webengine-dev libqt6webenginecore6 qt6-webengine-dev-tools
-
-
-WORKDIR $srcD
-
-
-RUN git clone --branch maintenance --depth 1 https://github.com/yuriysydor1991/cpp-app-template.git cpp-app-template
-RUN cp -R $srcD/cpp-app-template/misc/Jenkins/Jenkins-exported-jobs/ /usr/share/jenkins/ref/jobs-import/
+USER root
 
 RUN cat > /usr/share/jenkins/ref/plugins.txt <<'EOF'
 # Job organization
@@ -225,6 +198,9 @@ antisamy-markup-formatter
 # Visualization
 pipeline-graph-view
 
+# Test reports
+junit
+
 # Library dependency
 jsoup
 
@@ -248,10 +224,25 @@ EOF
 
 RUN jenkins-plugin-cli --plugin-file /usr/share/jenkins/ref/plugins.txt
 
+# The parallel test stages of the pipeline take as many executors as the
+# container is allowed to use, which the JVM reports through the CPU count.
+RUN cat > /usr/share/jenkins/ref/init.groovy.d/executors.groovy <<'EOF'
+import jenkins.model.Jenkins
+
+def instance = Jenkins.instance
+def cpus = Runtime.runtime.availableProcessors()
+
+if (instance.numExecutors != cpus) {
+  println "Setting the built-in node executors to " + cpus
+  instance.setNumExecutors(cpus)
+  instance.save()
+}
+EOF
+
 RUN cat > /usr/share/jenkins/ref/init.groovy.d/import-jobs.groovy <<'EOF'
 import jenkins.model.Jenkins
 
-def jenkins = Jenkins.instance
+def instance = Jenkins.instance
 def jobsDir = new File('/usr/share/jenkins/ref/jobs-import')
 
 if (!jobsDir.exists()) {
@@ -262,20 +253,33 @@ if (!jobsDir.exists()) {
 jobsDir.eachFileMatch(~/.*\.xml/) { file ->
   def jobName = file.name.replaceFirst(/\.xml$/, '')
 
-  if (jenkins.getItem(jobName) != null) {
-    println "Job '${jobName}' already exists, skipping"
+  if (instance.getItem(jobName) != null) {
+    println "Job '" + jobName + "' already exists, skipping"
     return
   }
 
-  println "Importing job '${jobName}' from ${file}"
+  println "Importing job '" + jobName + "' from " + file
+
   file.withInputStream { stream ->
-    jenkins.createProjectFromXML(jobName, stream)
+    instance.createProjectFromXML(jobName, stream)
   }
 }
 
-jenkins.save()
+instance.save()
 EOF
 
-USER jenkins
+# ccache makes the repeated branch rebuilds cache hits: the first configure of
+# every pipeline build directory picks the launchers from the environment.
+ENV CCACHE_MAXSIZE=20G \
+    CMAKE_C_COMPILER_LAUNCHER=ccache \
+    CMAKE_CXX_COMPILER_LAUNCHER=ccache
 
-CMD ["jenkins.sh"]
+# The jobs come from the tree being configured instead of a clone of the
+# published branch, and the CACHEBUST of the configure step refreshes them
+# without invalidating any layer above.
+ARG CACHEBUST
+
+COPY --from=project --chown=jenkins:jenkins \
+  misc/Jenkins/Jenkins-exported-jobs /usr/share/jenkins/ref/jobs-import
+
+USER jenkins

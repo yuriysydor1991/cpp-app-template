@@ -28,7 +28,7 @@ OpenGameArt публікує набори на умовах [CC0](https://creati
 
 ### Маніфест наборів
 
-OpenGameArt розміщує свої матеріали під декількома різними ліцензіями, тому дана гілка не називає жодного власного набору: маніфест `misc/opengameart-packs.txt` є єдиним місцем, що фіксує, **який** набір використовується, **звідки** він походить і **під якою** ліцензією опублікований. Кожен рядок має вигляд
+OpenGameArt розміщує свої матеріали під декількома різними ліцензіями, тому маніфест `misc/opengameart-packs.txt` є єдиним місцем, що фіксує, **який** набір використовується, **звідки** він походить і **під якою** ліцензією опублікований. Кожен рядок має вигляд
 
 ```
 <набір>|<адреса архіву>|<ліцензія>
@@ -37,16 +37,19 @@ OpenGameArt розміщує свої матеріали під декілько
 де `#` починає коментар, а порожні рядки пропускаються:
 
 ```
-cc0-interface-sfx|https://opengameart.org/sites/default/files/<архів>.zip|CC0-1.0
-cc0-footsteps|https://opengameart.org/sites/default/files/<архів>.zip|CC0-1.0
+interface-sounds|https://opengameart.org/sites/default/files/kenney_interfaceSounds.zip|CC0-1.0
+digital-sounds|https://opengameart.org/sites/default/files/Digital_SFX_Set.zip|CC0-1.0
+retro-sounds|https://opengameart.org/sites/default/files/strange_retrosfx_wav_0.zip|CC0-1.0
 ```
 
-**Маніфест навмисно постачається порожнім, і етап налаштування зупиняється, доки його не буде заповнено**: вибір потрібних матеріалів — і читання ліцензії кожного з них на [opengameart.org](https://opengameart.org) — є рішенням, яке дана гілка відмовляється приймати замість розробника. Набір без записаної ліцензії відхиляється, а не вважається мовчазно таким, що має ліцензію CC0.
+Саме ці три матеріали під ліцензією CC0 і постачаються у маніфесті, по одному на кожен формат звукових файлів, які називає змінна `OPENGAMEART_AUDIO_EXTENSIONS`: `.ogg` [Interface Sounds](https://opengameart.org/content/interface-sounds), `.mp3` [63 Digital sound effects](https://opengameart.org/content/63-digital-sound-effects-lasers-phasers-space-etc) та `.wav` [15 Strange Retro SFX](https://opengameart.org/content/15-strange-retro-sfx). Приберіть їх, замініть їх або додайте поруч потрібні матеріали — прочитавши ліцензію кожного з них на [opengameart.org](https://opengameart.org) — та повторіть етап налаштування.
+
+**Набір без записаної ліцензії відхиляється**, а не вважається мовчазно таким, що має ліцензію CC0, а спорожнений маніфест зупиняє етап налаштування, замість того щоб зібрати програму без жодного звуку.
 
 Записана ліцензія потрапляє аж до виконуваного файлу, тому код також відповідає за неї:
 
 ```cpp
-auto pack = packs->find("cc0-interface-sfx");
+auto pack = packs->find("interface-sounds");
 
 pack->license();  // "CC0-1.0"
 ```
@@ -61,7 +64,7 @@ misc/scripts/fetch-opengameart-audio.sh ~/opengameart-audio
 cmake -S . -B build -DTEMPLATE_APP_OPENGAMEART_AUDIO_DIR=~/opengameart-audio
 ```
 
-Скрипт приймає директорію призначення як свій єдиний аргумент, зважає на змінні середовища `OPENGAMEART_AUDIO_PACKS` та `OPENGAMEART_AUDIO_URL_TEMPLATE`, завантажує за допомогою `curl` або `wget` (залежно від того, що доступне) і не чіпає вже розпакований набір.
+Скрипт приймає директорію призначення як свій єдиний аргумент, читає той самий маніфест, що й побудова (змінна середовища `OPENGAMEART_AUDIO_MANIFEST` вказує йому на інший), завантажує за допомогою `curl` або `wget` (залежно від того, що доступне) і не чіпає вже розпакований набір.
 
 ### Доступ до звуків з коду C++
 
@@ -185,12 +188,12 @@ auto vorbis = drawn.pick(sounds, "ogg");  // лише те, що програв�
 Метод `Application::run` даної гілки поєднує усі три складові: повідомляє, скільки звуків містять налаштовані набори, витягує придатний для відтворення, друкує шлях до його файлу і обидва шляхи у системах ресурсів, та відтворює його:
 
 ```
-INF : The OpenGameArt packs carry 8 sounds at /.../resources/opengameart-audio
-INF : The drawn cc0-footsteps/Audio/step_grass_01.wav sound file: /.../step_grass_01.wav
+INF : The OpenGameArt packs carry 177 sounds at /.../resources/opengameart-audio
+INF : The drawn interface-sounds/Audio/select_004.ogg sound file: /.../select_004.ogg
 INF : ... published under: CC0-1.0
-INF : ... embedded into the Qt resources: :/sounds/cc0-footsteps/Audio/step_grass_01.wav
-INF : ... embedded into the GResource ones: /ua/org/kytok/template/CppAppTemplate/sounds/cc0-footsteps/Audio/step_grass_01.wav
-INF : Playing the cc0-footsteps/Audio/step_grass_01.wav sound ...
+INF : ... embedded into the Qt resources: :/sounds/interface-sounds/Audio/select_004.ogg
+INF : ... embedded into the GResource ones: /ua/org/kytok/template/CppAppTemplate/sounds/interface-sounds/Audio/select_004.ogg
+INF : Playing the interface-sounds/Audio/select_004.ogg sound ...
 ```
 
 Якщо набори порожні або серед них немає звуку у форматі, який декодує програвач, демонстрація повідомляє про це і завершується коректно, а не з помилкою.

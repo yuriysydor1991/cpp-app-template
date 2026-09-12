@@ -28,7 +28,7 @@ The `cmake/enablers/audio/template-project-opengameart-audio-enabler.cmake` modu
 
 ### The packs manifest
 
-OpenGameArt hosts it's submissions under several different licenses, so this branch names no pack of it's own: the `misc/opengameart-packs.txt` manifest is the single place recording **which** pack is used, **where** it came from and **what** it is licensed under. Every line follows the
+OpenGameArt hosts it's submissions under several different licenses, so the `misc/opengameart-packs.txt` manifest is the single place recording **which** pack is used, **where** it came from and **what** it is licensed under. Every line follows the
 
 ```
 <pack>|<archive URL>|<license>
@@ -37,16 +37,19 @@ OpenGameArt hosts it's submissions under several different licenses, so this bra
 form, the `#` starting a comment and the empty lines being skipped:
 
 ```
-cc0-interface-sfx|https://opengameart.org/sites/default/files/<archive>.zip|CC0-1.0
-cc0-footsteps|https://opengameart.org/sites/default/files/<archive>.zip|CC0-1.0
+interface-sounds|https://opengameart.org/sites/default/files/kenney_interfaceSounds.zip|CC0-1.0
+digital-sounds|https://opengameart.org/sites/default/files/Digital_SFX_Set.zip|CC0-1.0
+retro-sounds|https://opengameart.org/sites/default/files/strange_retrosfx_wav_0.zip|CC0-1.0
 ```
 
-**The manifest ships empty on purpose and the configure step stops until it is filled**: picking the submissions of interest - and reading the license of each one at [opengameart.org](https://opengameart.org) - is a decision this branch refuses to make on the developer's behalf. A pack with no recorded license is refused rather than silently assumed to be a CC0 one.
+Those three CC0 submissions are the ones the manifest ships with, one per sound file format the `OPENGAMEART_AUDIO_EXTENSIONS` variable names: the `.ogg` [Interface Sounds](https://opengameart.org/content/interface-sounds), the `.mp3` [63 Digital sound effects](https://opengameart.org/content/63-digital-sound-effects-lasers-phasers-space-etc) and the `.wav` [15 Strange Retro SFX](https://opengameart.org/content/15-strange-retro-sfx). Drop them, replace them or add the submissions of interest next to them - reading the license of each one at [opengameart.org](https://opengameart.org) - and reconfigure.
+
+**A pack with no recorded license is refused** rather than silently assumed to be a CC0 one, and an emptied manifest stops the configure step instead of building a soundless application.
 
 The recorded license travels all the way into the binary, so the code answers for it as well:
 
 ```cpp
-auto pack = packs->find("cc0-interface-sfx");
+auto pack = packs->find("interface-sounds");
 
 pack->license();  // "CC0-1.0"
 ```
@@ -61,7 +64,7 @@ misc/scripts/fetch-opengameart-audio.sh ~/opengameart-audio
 cmake -S . -B build -DTEMPLATE_APP_OPENGAMEART_AUDIO_DIR=~/opengameart-audio
 ```
 
-The script takes the target directory as it's single argument, obeys the `OPENGAMEART_AUDIO_PACKS` and the `OPENGAMEART_AUDIO_URL_TEMPLATE` environment variables, downloads through `curl` or `wget` (whichever is available) and leaves an already unpacked pack alone.
+The script takes the target directory as it's single argument, reads the very manifest the build does (the `OPENGAMEART_AUDIO_MANIFEST` environment variable points it at another one), downloads through `curl` or `wget` (whichever is available) and leaves an already unpacked pack alone.
 
 ### Reaching the sounds from the C++ code
 
@@ -185,12 +188,12 @@ auto vorbis = drawn.pick(sounds, "ogg");  // only what the player really decodes
 `Application::run` of this branch puts the three together: it reports how many sounds the configured packs carry, draws a playable one, prints it's file path and both resource system paths, and plays it:
 
 ```
-INF : The OpenGameArt packs carry 8 sounds at /.../resources/opengameart-audio
-INF : The drawn cc0-footsteps/Audio/step_grass_01.wav sound file: /.../step_grass_01.wav
+INF : The OpenGameArt packs carry 177 sounds at /.../resources/opengameart-audio
+INF : The drawn interface-sounds/Audio/select_004.ogg sound file: /.../select_004.ogg
 INF : ... published under: CC0-1.0
-INF : ... embedded into the Qt resources: :/sounds/cc0-footsteps/Audio/step_grass_01.wav
-INF : ... embedded into the GResource ones: /ua/org/kytok/template/CppAppTemplate/sounds/cc0-footsteps/Audio/step_grass_01.wav
-INF : Playing the cc0-footsteps/Audio/step_grass_01.wav sound ...
+INF : ... embedded into the Qt resources: :/sounds/interface-sounds/Audio/select_004.ogg
+INF : ... embedded into the GResource ones: /ua/org/kytok/template/CppAppTemplate/sounds/interface-sounds/Audio/select_004.ogg
+INF : Playing the interface-sounds/Audio/select_004.ogg sound ...
 ```
 
 With the packs empty, or with no sound of a format the player decodes, the demo says so and returns cleanly instead of failing.

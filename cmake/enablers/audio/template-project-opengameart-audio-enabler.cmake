@@ -101,5 +101,5 @@ endif()
 # manifest over to the resource compiler of the toolkit in use. For example:
 #   template_project_opengameart_audio_write_qrc(
 #     "${CMAKE_CURRENT_BINARY_DIR}/opengameart-audio.qrc"
-#     SOUNDS interface-sounds/click_001.ogg interface-sounds/confirmation_001.ogg
+#     SOUNDS interface-sounds/Audio/click_001.ogg interface-sounds/Audio/confirmation_001.ogg
 #   )

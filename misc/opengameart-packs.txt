@@ -15,8 +15,11 @@
 # is licensed under: the enabler refuses to build a pack carrying no license
 # entry, so the provenance can not silently go missing.
 #
-# Fill the lines below with the submissions of interest, taking their addresses
-# and licenses from https://opengameart.org . For example:
-#
-#   cc0-interface-sfx|https://opengameart.org/sites/default/files/<archive>.zip|CC0-1.0
-#   cc0-footsteps|https://opengameart.org/sites/default/files/<archive>.zip|CC0-1.0
+# The packs below are the CC0 ones this branch defaults to, one per sound file
+# format the OPENGAMEART_AUDIO_EXTENSIONS variable names. Drop them, replace
+# them or add the submissions of interest from https://opengameart.org next to
+# them, taking the license of each one from it's very submission page.
+
+interface-sounds|https://opengameart.org/sites/default/files/kenney_interfaceSounds.zip|CC0-1.0
+digital-sounds|https://opengameart.org/sites/default/files/Digital_SFX_Set.zip|CC0-1.0
+retro-sounds|https://opengameart.org/sites/default/files/strange_retrosfx_wav_0.zip|CC0-1.0

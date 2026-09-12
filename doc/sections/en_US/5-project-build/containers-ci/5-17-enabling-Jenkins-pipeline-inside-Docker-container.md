@@ -72,3 +72,11 @@ scripts/docker/jenkins-run.sh -DJENKINS_PIPELINES_PANEL_HTTP_PORT=9090
 ```
 
 Whether the already built image and the already created container are reused or rebuilt is decided by the CMake script at the configure step, so the `--no-reconfigure` parameter keeps the decision of the previous configure run.
+
+The `--rebuild` flag of both scripts sets the `JENKINS_PIPELINE_FORCE_REBUILD` CMake variable, which erases the container and the image and builds the image anew with the base image of the Dockerfile pulled again and no builder cache reused, so nothing of the previous image survives:
+
+```
+# inside the project root directory
+
+scripts/docker/jenkins-run.sh --rebuild
+```

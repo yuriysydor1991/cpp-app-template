@@ -1,5 +1,5 @@
 #include "src/kenneyaudio/player/IKenneySoundPlayer.h"
-#include "src/kenneyaudio/player/KenneySdlSoundPlayer.h"
+#include "src/kenneyaudio/player/KenneySdlMixerSoundPlayer.h"
 #include "src/kenneyaudio/player/KenneySoundPlayerFactory.h"
 
 namespace kenneyaudio
@@ -9,7 +9,7 @@ namespace kenneyaudio
 // audio enabler ran, so the choice of a backend stays a build time decision.
 IKenneySoundPlayerPtr KenneySoundPlayerFactory::create()
 {
-  return KenneySdlSoundPlayer::create();
+  return KenneySdlMixerSoundPlayer::create();
 }
 
 }  // namespace kenneyaudio

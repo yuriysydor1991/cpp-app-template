@@ -1,8 +1,10 @@
-#include "src/kenneyaudio/player/KenneySdlSoundPlayer.h"
+#include "src/kenneyaudio/player/KenneySdlMixerSoundPlayer.h"
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
+#include <SDL_mixer.h>
 
 #include <cassert>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -13,10 +15,46 @@
 namespace kenneyaudio
 {
 
-KenneySdlSoundPlayer::KenneySdlSoundPlayer()
+namespace
+{
+
+// The sound file extensions the player answers for, each together with the
+// Mix_Init flag of the decoder it asks SDL_mixer for. The RIFF/WAVE one asks
+// for none at all: SDL_mixer reads those through SDL2 itself.
+const std::map<std::string, int> DECODERS = {
+    {"wav", 0},
+    {"ogg", MIX_INIT_OGG},
+    {"mp3", MIX_INIT_MP3},
+    {"flac", MIX_INIT_FLAC},
+};
+
+int decodersOfInterest()
+{
+  int wanted{0};
+
+  for (const auto& [extension, decoder] : DECODERS) {
+    wanted |= decoder;
+  }
+
+  return wanted;
+}
+
+}  // namespace
+
+KenneySdlMixerSoundPlayer::KenneySdlMixerSoundPlayer()
 {
   if (SDL_InitSubSystem(SDL_INIT_AUDIO) != 0) {
     LOGE("Fail to bring the SDL2 audio subsystem up: " << SDL_GetError());
+    return;
+  }
+
+  mdecoders = Mix_Init(decodersOfInterest());
+
+  if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT,
+                    MIX_DEFAULT_CHANNELS, CHUNK_SAMPLES) != 0) {
+    LOGE("Fail to open the mixing audio device: " << Mix_GetError());
+    Mix_Quit();
+    SDL_QuitSubSystem(SDL_INIT_AUDIO);
     return;
   }
 
@@ -25,19 +63,27 @@ KenneySdlSoundPlayer::KenneySdlSoundPlayer()
   LOGD("The SDL2 audio driver in use: " << SDL_GetCurrentAudioDriver());
 }
 
-KenneySdlSoundPlayer::~KenneySdlSoundPlayer()
+KenneySdlMixerSoundPlayer::~KenneySdlMixerSoundPlayer()
 {
   if (minitialized) {
+    Mix_CloseAudio();
+    Mix_Quit();
     SDL_QuitSubSystem(SDL_INIT_AUDIO);
   }
 }
 
-bool KenneySdlSoundPlayer::supports(const std::string& extension) const
+bool KenneySdlMixerSoundPlayer::supports(const std::string& extension) const
 {
-  return extension == SUPPORTED_EXTENSION;
+  const auto decoder = DECODERS.find(extension);
+
+  if (!minitialized || decoder == DECODERS.end()) {
+    return false;
+  }
+
+  return (decoder->second & mdecoders) == decoder->second;
 }
 
-bool KenneySdlSoundPlayer::play(const KenneySoundPtr& sound)
+bool KenneySdlMixerSoundPlayer::play(const KenneySoundPtr& sound)
 {
   assert(sound != nullptr);
 
@@ -47,73 +93,57 @@ bool KenneySdlSoundPlayer::play(const KenneySoundPtr& sound)
   }
 
   if (!minitialized) {
-    LOGE("No SDL2 audio subsystem to play the " << sound->alias()
-                                                << " sound with");
+    LOGE("No mixing audio device to play the " << sound->alias()
+                                               << " sound with");
     return false;
   }
 
   if (!supports(sound->extension())) {
-    LOGW("The bare SDL2 decodes the ."
-         << SUPPORTED_EXTENSION << " files alone, so the " << sound->alias()
-         << " sound needs the SDL_mixer library to be played");
+    LOGW("The SDL_mixer library at hand carries no ."
+         << sound->extension() << " decoder, so the " << sound->alias()
+         << " sound stays unplayable");
     return false;
   }
 
-  SDL_AudioSpec spec{};
-  Uint8* buffer{nullptr};
-  Uint32 length{0};
+  auto* chunk = Mix_LoadWAV(sound->filePath().c_str());
 
-  if (SDL_LoadWAV(sound->filePath().c_str(), &spec, &buffer, &length) ==
-      nullptr) {
-    LOGE("Fail to read the " << sound->filePath()
-                             << " sound file: " << SDL_GetError());
+  if (chunk == nullptr) {
+    LOGE("Fail to decode the " << sound->filePath()
+                               << " sound file: " << Mix_GetError());
     return false;
   }
 
-  const auto device = SDL_OpenAudioDevice(nullptr, 0, &spec, nullptr, 0);
+  const auto channel = Mix_PlayChannel(-1, chunk, 0);
 
-  if (device == 0) {
-    LOGE("Fail to open an audio device for the "
-         << sound->alias() << " sound: " << SDL_GetError());
-    SDL_FreeWAV(buffer);
+  if (channel < 0) {
+    LOGE("Fail to play the " << sound->alias() << " sound: " << Mix_GetError());
+    Mix_FreeChunk(chunk);
     return false;
   }
-
-  const auto queued = SDL_QueueAudio(device, buffer, length) == 0;
-
-  SDL_FreeWAV(buffer);
-
-  if (!queued) {
-    LOGE("Fail to queue the " << sound->alias()
-                              << " sound: " << SDL_GetError());
-    SDL_CloseAudioDevice(device);
-    return false;
-  }
-
-  SDL_PauseAudioDevice(device, 0);
 
   int waited{0};
 
-  while (SDL_GetQueuedAudioSize(device) > 0 && waited < DRAIN_LIMIT_MS) {
+  while (Mix_Playing(channel) != 0 && waited < DRAIN_LIMIT_MS) {
     SDL_Delay(DRAIN_STEP_MS);
     waited += DRAIN_STEP_MS;
   }
 
-  const auto played = SDL_GetQueuedAudioSize(device) == 0;
-
-  SDL_CloseAudioDevice(device);
+  const auto played = Mix_Playing(channel) == 0;
 
   if (!played) {
     LOGW("The " << sound->alias() << " sound was still playing after "
                 << DRAIN_LIMIT_MS << " ms and has been cut");
+    Mix_HaltChannel(channel);
   }
+
+  Mix_FreeChunk(chunk);
 
   return played;
 }
 
-IKenneySoundPlayerPtr KenneySdlSoundPlayer::create()
+IKenneySoundPlayerPtr KenneySdlMixerSoundPlayer::create()
 {
-  return std::make_shared<KenneySdlSoundPlayer>();
+  return std::make_shared<KenneySdlMixerSoundPlayer>();
 }
 
 }  // namespace kenneyaudio

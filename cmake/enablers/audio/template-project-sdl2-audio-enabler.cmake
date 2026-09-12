@@ -36,3 +36,43 @@ else()
 endif()
 
 message(STATUS "The sound player links against: ${TEMPLATE_APP_SDL2_AUDIO_TARGET}")
+
+set(TEMPLATE_APP_SDL2_MIXER_GIT "https://github.com/libsdl-org/SDL_mixer.git" CACHE STRING "The SDL_mixer library git source repository")
+set(TEMPLATE_APP_SDL2_MIXER_GIT_TAG "release-2.8.1" CACHE STRING "The SDL_mixer project git repository tag of interest")
+
+# SDL2 itself decodes the RIFF/WAVE files alone, while the Kenney packs ship
+# their sounds as .ogg, so the decoders of the SDL_mixer satellite library are
+# what makes them audible at all.
+#
+# Only the decoders SDL_mixer carries inside it's own sources are taken - the
+# stb_vorbis .ogg one, the minimp3 .mp3 one and the drflac .flac one - so a
+# FetchContent build asks for no third party library of it's own. The rest
+# needs one installed on the host (opusfile, libxmp, FluidSynth, WavPack) and
+# is switched off here instead of failing the configure of a host carrying
+# none.
+set(SDL2MIXER_VORBIS "STB" CACHE STRING "The SDL_mixer .ogg decoder: the built in stb_vorbis one")
+set(SDL2MIXER_OPUS OFF CACHE BOOL "Build the SDL_mixer Opus decoder, which needs the system opusfile library")
+set(SDL2MIXER_MOD OFF CACHE BOOL "Build the SDL_mixer MOD decoders, which need the system libxmp or modplug library")
+set(SDL2MIXER_MIDI OFF CACHE BOOL "Build the SDL_mixer MIDI outputs, the FluidSynth one needing the system library")
+set(SDL2MIXER_WAVPACK OFF CACHE BOOL "Build the SDL_mixer WavPack decoder, which needs the system wavpack library")
+
+template_project_default_3rdparty_enabler(
+  NAME SDL2_mixer
+  GIT_REPOSITORY ${TEMPLATE_APP_SDL2_MIXER_GIT}
+  GIT_TAG        ${TEMPLATE_APP_SDL2_MIXER_GIT_TAG}
+)
+
+if (TARGET SDL2_mixer::SDL2_mixer)
+  set(TEMPLATE_APP_SDL2_MIXER_TARGET SDL2_mixer::SDL2_mixer CACHE INTERNAL "The SDL_mixer target the sound player links against")
+elseif (TARGET SDL2_mixer::SDL2_mixer-static)
+  set(TEMPLATE_APP_SDL2_MIXER_TARGET SDL2_mixer::SDL2_mixer-static CACHE INTERNAL "The SDL_mixer target the sound player links against")
+elseif (TARGET SDL2_mixer)
+  set(TEMPLATE_APP_SDL2_MIXER_TARGET SDL2_mixer CACHE INTERNAL "The SDL_mixer target the sound player links against")
+else()
+  message(
+    FATAL_ERROR
+    "The SDL2 audio enabler ran but no SDL2_mixer::SDL2_mixer, SDL2_mixer::SDL2_mixer-static or SDL2_mixer target is available. Install libsdl2-mixer-dev on the host, check the FetchContent build for upstream errors, or switch the ENABLE_SDL2_AUDIO option OFF to drop the sound player."
+  )
+endif()
+
+message(STATUS "The sound player decodes with: ${TEMPLATE_APP_SDL2_MIXER_TARGET}")

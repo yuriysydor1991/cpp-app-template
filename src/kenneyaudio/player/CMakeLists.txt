@@ -44,8 +44,8 @@ endif()
 
 add_library(
   TemplateProjectKenneySoundPlayerObj OBJECT
-  KenneySdlSoundPlayer.cpp
-  KenneySdlSoundPlayerFactory.cpp
+  KenneySdlMixerSoundPlayer.cpp
+  KenneySdlMixerSoundPlayerFactory.cpp
 )
 
 target_include_directories(
@@ -57,11 +57,13 @@ target_include_directories(
 
 target_link_libraries(
   TemplateProjectKenneySoundPlayerObj
+  ${TEMPLATE_APP_SDL2_MIXER_TARGET}
   ${TEMPLATE_APP_SDL2_AUDIO_TARGET}
 )
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
   TemplateProjectKenneySoundPlayerObj
+  ${TEMPLATE_APP_SDL2_MIXER_TARGET}
   ${TEMPLATE_APP_SDL2_AUDIO_TARGET}
 )

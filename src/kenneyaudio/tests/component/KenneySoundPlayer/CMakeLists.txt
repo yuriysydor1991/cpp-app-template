@@ -12,7 +12,7 @@ add_executable(
   ${CMAKE_SOURCE_DIR}/src/kenneyaudio/packs/KenneyPacks.cpp
   ${CMAKE_SOURCE_DIR}/src/kenneyaudio/sounds/KenneySounds.cpp
   ${CMAKE_SOURCE_DIR}/src/kenneyaudio/player/KenneyRandomSound.cpp
-  ${CMAKE_SOURCE_DIR}/src/kenneyaudio/player/KenneySdlSoundPlayer.cpp
+  ${CMAKE_SOURCE_DIR}/src/kenneyaudio/player/KenneySdlMixerSoundPlayer.cpp
   ${KENNEY_AUDIO_GENERATED_SOUNDS_SOURCE}
 )
 
@@ -26,6 +26,7 @@ target_include_directories(
 target_link_libraries(
   CTEST_KenneySoundPlayer
   GTest::gtest_main GTest::gmock
+  ${TEMPLATE_APP_SDL2_MIXER_TARGET}
   ${TEMPLATE_APP_SDL2_AUDIO_TARGET}
 )
 

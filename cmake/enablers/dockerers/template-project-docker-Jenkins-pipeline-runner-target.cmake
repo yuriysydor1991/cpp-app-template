@@ -145,7 +145,10 @@ endif()
 #
 # The flatpak-builder sandbox and the AppImage runtime of the packager stages
 # demand the FUSE device with the mount permission, which the default seccomp
-# and AppArmor profiles of the container deny.
+# and AppArmor profiles of the container deny. The bubblewrap sandbox of the
+# flatpak-builder mounts a procfs of its own, which the kernel refuses while
+# the masked and the read only /proc paths of the container keep the mounted
+# one partly hidden, so the system paths go unconfined as well.
 if (JENKINS_PIPELINE_DOCKER_CONTAINER_PRESENT STREQUAL "")
   set(
     JENKINS_PIPELINE_DOCKER_RUN_CMD
@@ -158,6 +161,7 @@ if (JENKINS_PIPELINE_DOCKER_CONTAINER_PRESENT STREQUAL "")
       --cap-add=SYS_ADMIN
       --security-opt apparmor=unconfined
       --security-opt seccomp=unconfined
+      --security-opt systempaths=unconfined
       ${JENKINS_PIPELINE_DOCKER_IMAGE_NAME}
   )
 else()

@@ -83,6 +83,13 @@ for pack in $PACKS; do
     exit 1
   fi
 
+  # The archives are Windows made ones and carry the DOS read-only attribute on
+  # a directory of their own (the Audio one of the digital-audio pack), which
+  # the extraction turns into a directory no file may be created inside any
+  # more: the packs are a build input and not a read-only tree, so the write
+  # permission goes back on.
+  chmod -R u+w "$packDir"
+
   rm -f "$packArchive"
 done
 

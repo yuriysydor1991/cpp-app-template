@@ -85,20 +85,32 @@ function(template_project_kenney_audio_fetch_packs)
       )
     endif()
 
-    file(MAKE_DIRECTORY "${packDir}")
+    set(packUnpackDir "${packDir}.unpacked")
+
+    file(MAKE_DIRECTORY "${packUnpackDir}")
 
     execute_process(
       COMMAND "${CMAKE_COMMAND}" -E tar xf "${packArchive}"
-      WORKING_DIRECTORY "${packDir}"
+      WORKING_DIRECTORY "${packUnpackDir}"
       RESULT_VARIABLE extractResult
     )
 
     file(REMOVE "${packArchive}")
 
     if (NOT extractResult EQUAL 0)
-      file(REMOVE_RECURSE "${packDir}")
+      file(REMOVE_RECURSE "${packUnpackDir}")
       message(FATAL_ERROR "Fail to unpack the downloaded Kenney ${pack} pack archive")
     endif()
+
+    # The archives are Windows made ones and carry the DOS read-only attribute
+    # on a directory of their own (the Audio one of the digital-audio pack),
+    # which the extraction turns into a directory no file may be created inside
+    # any more: the build tree stops being removable and copyable, the
+    # flatpak-builder source copy failing on it. Hence the extraction into a
+    # directory of it's own and the copy dropping the archive permissions.
+    file(COPY "${packUnpackDir}/" DESTINATION "${packDir}" NO_SOURCE_PERMISSIONS)
+
+    file(REMOVE_RECURSE "${packUnpackDir}")
   endforeach()
 endfunction()
 

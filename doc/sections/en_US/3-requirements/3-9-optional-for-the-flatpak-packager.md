@@ -9,10 +9,10 @@ sudo apt install -y flatpak flatpak-builder
 You'll also need the one of it's target SDK which may be installed by a command that may look like this:
 
 ```
-flatpak install org.gnome.Platform/x86_64/48 org.gnome.Sdk/x86_64/48
+flatpak install org.gnome.Platform/x86_64/49 org.gnome.Sdk/x86_64/49
 ```
 
-Replace the `org.gnome.Platform/x86_64/48 org.gnome.Sdk/x86_64/48` with your preferred platform and SDK. Consult the flatpak documentation on how to list all available options.
+Replace the `org.gnome.Platform/x86_64/49 org.gnome.Sdk/x86_64/49` with your preferred platform and SDK. Consult the flatpak documentation on how to list all available options.
 
 The `flatpak` target installs the runtime and the SDK it needs from the `flathub` remote on its own, so the command above only preinstalls them.
 

@@ -16,7 +16,7 @@ set(
     --env QT_X11_NO_MITSHM=1
     --volume /tmp/.X11-unix:/tmp/.X11-unix
     --volume $$HOME/.Xauthority:/home/${DOCKERFILE_SINGLE_RUN_USER_NAME}/.Xauthority
-    -v $(XDG_RUNTIME_DIR):$(XDG_RUNTIME_DIR)
+    -v $$XDG_RUNTIME_DIR:$$XDG_RUNTIME_DIR
     --network host
     ${DOCKER_SINGLE_RUN_NAME} &&
     xhost -local:

@@ -6,24 +6,6 @@
   "command": "${PROJECT_BINARY_NAME}",
   "modules": [
     {
-      "name": "SDL2",
-      "buildsystem": "cmake-ninja",
-      "builddir": true,
-      "config-opts": [
-        "-DCMAKE_BUILD_TYPE=Release",
-        "-DSDL_STATIC=OFF",
-        "-DSDL_SHARED=ON"
-      ],
-      "sources": [
-        {
-          "type": "git",
-          "url": "https://github.com/libsdl-org/SDL.git",
-          "tag": "release-2.30.10",
-          "commit": "9c821dc21ccbd69b2bda421fdb35cb4ae2da8f5e"
-        }
-      ]
-    },
-    {
       "name": "${CMAKE_PROJECT_NAME}",
       "buildsystem": "cmake",
       "config-opts": [

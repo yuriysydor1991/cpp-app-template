@@ -10,14 +10,25 @@
       "buildsystem": "cmake",
       "config-opts": [
         "-DCMAKE_BUILD_TYPE=Release",
+        "-DTEMPLATE_APP_KENNEY_AUDIO_DIR=/run/build/${CMAKE_PROJECT_NAME}/kenney-audio",
         "-DENABLE_FLATPAK_METAINFO=ON"
       ],
       "sources": [
         {
           "type": "dir",
-          "path": "${CMAKE_SOURCE_DIR}"
+          "path": "${CMAKE_SOURCE_DIR}",
+          "skip": ["build"]
+        },
+        {
+          "x-comment": "The sandbox the module is built in carries no network access, so the very packs the Kenney enabler would download there are handed over as the directory the host configure has filled already, the TEMPLATE_APP_KENNEY_AUDIO_DIR option above pointing the sandboxed configure at it.",
+          "type": "dir",
+          "path": "${KENNEY_AUDIO_ROOT_DIR}",
+          "dest": "kenney-audio"
         }
       ]
     }
+  ],
+  "finish-args": [
+    "--socket=pulseaudio"
   ]
 }

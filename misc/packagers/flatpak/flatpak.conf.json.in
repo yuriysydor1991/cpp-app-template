@@ -1,28 +1,10 @@
 {
   "id": "${FLATPAK_PROJECT_URL}",
   "runtime": "org.freedesktop.Platform",
-  "runtime-version": "24.08",
+  "runtime-version": "25.08",
   "sdk": "org.freedesktop.Sdk",
   "command": "${PROJECT_BINARY_NAME}",
   "modules": [
-    {
-      "name": "SDL3",
-      "buildsystem": "cmake-ninja",
-      "config-opts": [
-        "-DCMAKE_BUILD_TYPE=Release",
-        "-DSDL_STATIC=OFF",
-        "-DSDL_SHARED=ON",
-        "-DCMAKE_INSTALL_LIBDIR=lib"
-      ],
-      "sources": [
-        {
-          "type": "git",
-          "url": "https://github.com/libsdl-org/SDL.git",
-          "tag": "release-3.2.10",
-          "commit": "877399b2b2cf21e67554ed9046410f268ce1d1b2"
-        }
-      ]
-    },
     {
       "name": "${CMAKE_PROJECT_NAME}",
       "buildsystem": "cmake",

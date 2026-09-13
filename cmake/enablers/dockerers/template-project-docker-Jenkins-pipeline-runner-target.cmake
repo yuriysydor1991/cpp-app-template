@@ -60,13 +60,14 @@ set(
   "The Jenkins pipeline docker containers max allowed CPU cores"
 )
 
-# Every runtime and SDK pair the flatpak manifests of the branches ask for. The
-# image seeds them into the per user installation the flatpak target builds
-# against, so no pipeline run downloads them again. Trim the list to the
-# branches of interest to spare the image the gigabytes of the unused ones.
+# Every runtime, SDK and base application the flatpak manifests of the branches
+# ask for. The image seeds them into the per user installation the flatpak
+# target builds against, so no pipeline run downloads them again. Trim the list
+# to the branches of interest to spare the image the gigabytes of the unused
+# ones.
 set(
   JENKINS_PIPELINE_FLATPAK_RUNTIMES
-  "org.freedesktop.Platform//24.08 org.freedesktop.Sdk//24.08 org.gnome.Platform//48 org.gnome.Sdk//48 org.gnome.Platform//49 org.gnome.Sdk//49 org.kde.Platform//6.8 org.kde.Sdk//6.8 org.kde.Platform//5.15-25.08 org.kde.Sdk//5.15-25.08"
+  "org.freedesktop.Platform//24.08 org.freedesktop.Sdk//24.08 org.freedesktop.Platform//25.08 org.freedesktop.Sdk//25.08 org.gnome.Platform//49 org.gnome.Sdk//49 org.kde.Platform//6.10 org.kde.Sdk//6.10 org.kde.Platform//5.15-25.08 org.kde.Sdk//5.15-25.08 io.qt.qtwebengine.BaseApp//6.10"
   CACHE STRING
   "Space separated flatpak refs the Jenkins pipeline image installs for the flatpak packager checks"
 )

@@ -6,32 +6,12 @@
   "command": "${PROJECT_BINARY_NAME}",
   "modules": [
     {
-      "name": "tcl",
-      "buildsystem": "simple",
-      "builddir": true,
-      "make-args": ["libtclstub8.6.a"],
-      "sources": [
-        {
-          "type": "git",
-          "url": "https://github.com/tcltk/tcl.git",
-          "tag": "core-8-6-16",
-          "commit": "874e4fe4264a40c00c4db5115afba9600f9f368d"
-        }
-      ],
-      "build-commands": [
-        "cd unix && ./configure --enable-threads --enable-static --prefix=/app && make -j$(nproc)",
-        "install -Dm644 unix/libtclstub8.6.a /app/lib/libtclstub8.6.a",
-        "install -Dm644 generic/tcl.h /app/include/tcl.h",
-        "install -Dm644 generic/tclDecls.h /app/include/tclDecls.h",
-        "install -Dm644 generic/tclPlatDecls.h /app/include/tclPlatDecls.h"
-      ]
-    },
-    {
       "name": "libpq",
       "buildsystem": "meson",
       "config-opts": [
         "-Ddocs=disabled",
         "-Ddocs_pdf=disabled",
+        "-Dpltcl=disabled",
         "-Dssl=auto"
       ],
       "builddir": true,

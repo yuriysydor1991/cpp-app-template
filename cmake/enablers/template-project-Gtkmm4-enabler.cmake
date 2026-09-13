@@ -12,7 +12,8 @@ endif()
 
 find_package(PkgConfig)
 
-pkg_check_modules(GTKMM gtkmm-4.0 REQUIRED)
+# The 4.14 is the first gtkmm carrying the Gdk::DmabufTextureBuilder
+pkg_check_modules(GTKMM gtkmm-4.0>=4.14 REQUIRED)
 
 string(REPLACE  "." "/" GTKMM_APP_RESOURCES_PREFIX_COMPUTED "/${PROJECT_REVERSE_URL}")
 

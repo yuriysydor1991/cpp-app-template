@@ -30,9 +30,10 @@ set(
   "The Dockerfile source environment name (FROM ubuntu, debian, jenkins etc.)"
 )
 
+# The Gdk::DmabufTextureBuilder needs gtkmm 4.14+, absent from the 24.04 LTS
 set(
   DOCKERFILE_SINGLE_RUN_BASE_IMAGE_VERSION
-  "24.04"
+  "26.04"
   CACHE STRING 
   "The Dockerfile source environment version"
 )

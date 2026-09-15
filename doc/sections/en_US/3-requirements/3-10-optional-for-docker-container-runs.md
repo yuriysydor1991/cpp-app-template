@@ -34,7 +34,7 @@ To check if Docker works execute next command to run the simple `hello-world` co
 DOCKER_HOST="tcp://127.0.0.1:2375" docker run hello-world
 ```
 
-You may add the `export DOCKER_HOST="tcp://127.0.0.1:2375"` to your `.bashrc` file to avoid the `DOCKER_HOST` environment variable inclusion into every docker command run by executing the command:
+The project build targets issue the `docker` commands with no `DOCKER_HOST` definition of their own, so the variable must be defined in the environment to connect to the Docker service over TCP. Add the `export DOCKER_HOST="tcp://127.0.0.1:2375"` line into your `.bashrc` file by executing the command:
 
 ```
 echo 'export DOCKER_HOST="tcp://127.0.0.1:2375"' >> ~/.bashrc

@@ -1,8 +1,8 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include <memory>
 #include <csignal>
+#include <memory>
 
 #include "src/app/ApplicationFactory.h"
 #include "src/sdbuscxx/SDBusCxxController.h"

@@ -1,9 +1,9 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "src/PgSQLxx/PgSQL.h"
 #include <csignal>
 
+#include "src/PgSQLxx/PgSQL.h"
 #include "src/app/ApplicationFactory.h"
 
 using namespace app;

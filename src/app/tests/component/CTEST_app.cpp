@@ -1,9 +1,9 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "src/Firebird/Firebird.h"
 #include <csignal>
 
+#include "src/Firebird/Firebird.h"
 #include "src/app/ApplicationFactory.h"
 
 using namespace app;

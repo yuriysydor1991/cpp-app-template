@@ -164,8 +164,8 @@ generate_library_project()
   # the shared object even though the classes themselves do not. The logging
   # subsystem namespace is deliberately left alone - the hidden symbol
   # visibility of the library is what keeps those copies apart.
-  grep -rl -e 'CppAppTemplate012' -e 'CPP_APP_TEMPLATE_012_' -e 'lib0impl' \
-    "${dst}/src" | xargs sed -i \
+  grep -rl --null -e 'CppAppTemplate012' -e 'CPP_APP_TEMPLATE_012_' -e 'lib0impl' \
+    "${dst}/src" | xargs -0 sed -i \
       -e "s/CppAppTemplate012/$(lib_namespace "${index}")/g" \
       -e "s/CPP_APP_TEMPLATE_012_/$(lib_guard "${index}")/g" \
       -e "s/\blib0impl\b/$(lib_impl_namespace "${index}")/g"

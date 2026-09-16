@@ -1,10 +1,10 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "LibraryContext.h"
-#include "LibraryFacade.h"
 #include <csignal>
 
+#include "LibraryContext.h"
+#include "LibraryFacade.h"
 #include "src/app/ApplicationFactory.h"
 #include "src/converters/ApplicationContext2LibraryContext.h"
 #include "src/lib/libmain/LibMain.h"

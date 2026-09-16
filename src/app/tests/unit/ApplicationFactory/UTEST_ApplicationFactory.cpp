@@ -9,9 +9,9 @@
 #include "src/app/applications/Application.h"
 #include "src/app/applications/ApplicationHelpPrinter.h"
 #include "src/app/applications/ApplicationVersionPrinter.h"
+#include "src/app/signals-handlers/SignalsHandler.h"
 #include "src/lib/facade/public/ILogger.h"
 #include "src/log/log.h"
-#include "src/app/signals-handlers/SignalsHandler.h"
 
 using namespace app;
 using namespace testing;

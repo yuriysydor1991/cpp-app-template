@@ -23,25 +23,37 @@ Examine available branches to find your most applicable variant of the template 
 ## Basic application infrastructure
 
 - `main` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template)] just the clear `main` function and all available CMake integrations with no additional app infrastructure classes.
+
 - `app` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/app), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/app)] with just general application related classes to generate a single binary executable.
+
 - `applib` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/applib), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/applib)] for the application binary with additional separate library binary and header files (available for the installation) in order to provide library's code reusability across multiple applications.
+
 - `lib` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/lib), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/lib)] for the library with the headers include files (and documentation) without target binary.
+
 - `appMeson` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appMeson), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appMeson)] with just general application related classes to generate a single binary executable with the [Meson](https://mesonbuild.com/) build system.
+
 - `applibMeson` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/applibMeson), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/applibMeson)] for the application binary with additional separate library binary and header files (available for the installation) in order to provide library's code reusability across multiple applications, built with the [Meson](https://mesonbuild.com/) build system and detectable by downstream Meson projects via `dependency()` (pkg-config) with optional CMake `find_package()` support.
+
 - `libMeson` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/libMeson), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/libMeson)] for the library with the headers include files (and documentation) without target binary, built with the [Meson](https://mesonbuild.com/) build system and detectable by downstream Meson projects via `dependency()` (pkg-config) with optional CMake `find_package()` support.
 
 ## Logging messages
 
 - `appLog4Cpp5` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appLog4Cpp5), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appLog4Cpp5)] the template infrastructure to fast start the application development with the [log4cpp](https://log4cpp.sourceforge.net/) extended logging library.
+
 - `appBoostLog` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appBoostLog), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appBoostLog)] the template infrastructure to fast start the application development with the [Boost.Log](https://www.boost.org/doc/libs/latest/libs/log/doc/html/index.html) extended logging library.
 
 ## Windowing / GUI
 
 - `appQt6` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appQt6), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appQt6)] for the application general classes with additional defined structure for the [Qt6](https://www.qt.io/development/qt-framework/qt6) [QML](https://doc.qt.io/qt-6/qtqml-index.html) window application development.
+
 - `appGtkmm3` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appGtkmm3), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appGtkmm3)] for the application general classes with additional defined structure for the [Gtkmm](https://gtkmm.gnome.org/en/index.html)-3.0 with C++ window application development.
+
 - `appGtkmm3Glade` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appGtkmm3Glade), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appGtkmm3Glade)] for the application general classes with additional defined structure for the C++ application development with [Gtkmm](https://gtkmm.gnome.org/en/index.html)-3.0 and [Glade](https://en.wikipedia.org/wiki/Glade_Interface_Designer) application with XML UI creation.
+
 - `appGtkmm4` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appGtkmm4), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appGtkmm4)] for the application general classes with additional defined structure for the [Gtkmm-4](https://gtkmm.gnome.org/en/index.html) with C++ window application development.
+
 - `appGtkmm4Libadwaita` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appGtkmm4Libadwaita), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appGtkmm4Libadwaita)] with general application related classes to generate a single binary executable whose whole main window is built out of the [libadwaita](https://gnome.pages.gitlab.gnome.org/libadwaita/) widgets - an `AdwApplicationWindow` with an `AdwToolbarView`, an `AdwHeaderBar` and a top placed heading with the description over the logo which fills all the free height - next to the [Gtkmm-4](https://gtkmm.gnome.org/en/index.html) C++ binding.
+
 - `appwxWidgets` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appwxWidgets), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appwxWidgets)] (**current**) for the application general classes with additional defined structure for the [wxWidgets](https://www.wxwidgets.org/) cross-platform C++ window application development, provided through CMake FetchContent.
 
 ## Icons / Audio / Resources
@@ -57,61 +69,85 @@ Examine available branches to find your most applicable variant of the template 
 ## 3D / OpenGL / Vulkan
 
 - `appSDL3` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSDL3), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSDL3)] with just general application related classes to generate a single binary executable with a [SDL3](https://wiki.libsdl.org/SDL3/FrontPage) library for the [OpenGL](https://www.opengl.org/) 3D development and more!
+
 - `appSDL2` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSDL2), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSDL2)] with just general application related classes to generate a single binary executable with a [SDL2](https://en.wikipedia.org/wiki/Simple_DirectMedia_Layer) library for the [OpenGL](https://www.opengl.org/) 3D development and more!
+
 - `appGtkmm4GLArea` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appGtkmm4GLArea), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appGtkmm4GLArea)] with general application related classes to generate a single binary executable that embeds raw [OpenGL](https://www.opengl.org/) rendering inside a [Gtkmm-4](https://gtkmm.gnome.org/en/index.html) window with the native [Gtk::GLArea](https://docs.gtk.org/gtk4/class.GLArea.html) widget.
+
 - `appQt6GLArea` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appQt6GLArea), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appQt6GLArea)] with general application related classes to generate a single binary executable that embeds raw [OpenGL](https://www.opengl.org/) rendering inside a [Qt6](https://www.qt.io/development/qt-framework/qt6) [QML](https://doc.qt.io/qt-6/qtqml-index.html) window with a [QQuickFramebufferObject](https://doc.qt.io/qt-6/qquickframebufferobject.html) scene-graph item.
+
 - `appSFML` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSFML), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSFML)] with just general application related classes to generate a single binary executable with the [SFML](https://www.sfml-dev.org/) multimedia library (2D graphics, windowing, input and [OpenGL](https://www.opengl.org/) access) provided through the system package or the CMake FetchContent fallback.
+
 - `appFreeGlut` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appFreeGlut), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appFreeGlut)] with just general application related classes to generate a single binary executable with a [FreeGlut](https://freeglut.sourceforge.net/) library for the [OpenGL](https://www.opengl.org/) 3D development.
+
 - `appQt6Vulkan` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appQt6Vulkan), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appQt6Vulkan)] with general application related classes to generate a single binary executable that creates a [Vulkan](https://www.vulkan.org/) instance through the native [Qt6](https://www.qt.io/development/qt-framework/qt6) [QVulkanInstance](https://doc.qt.io/qt-6/qvulkaninstance.html) (`Qt6::Gui`), enumerates the available physical devices (GPUs), logs their properties via the application logger and shows a blank, black, Vulkan rendered window (a [QVulkanWindow](https://doc.qt.io/qt-6/qvulkanwindow.html) cleared to black) for the duration of the Qt event loop (the Qt6 framework counterpart of the app based appVulkan branch).
+
 - `appGtkmm4Vulkan` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appGtkmm4Vulkan), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appGtkmm4Vulkan)] with general application related classes to generate a single binary executable that creates a [Vulkan](https://www.vulkan.org/) instance through the raw Vulkan loader, enumerates the available physical devices (GPUs) and logs their properties via the application logger, then renders a black frame with Vulkan into an off-screen image and shows it in a [Gtkmm-4](https://gtkmm.gnome.org/en/index.html) window through a Linux dma-buf ([Gdk::DmabufTexture](https://docs.gtk.org/gdk4/class.DmabufTexture.html)), since GTK4 has no native Vulkan rendering widget (the Gtkmm-4 counterpart of the app based appVulkan branch).
 
 ## Web / HTTP / Net
 
 - `appWt4` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appWt4), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appWt4)] the template infrastructure to fast start Web application developing based on the [Wt C++](https://www.webtoolkit.eu/wt) full stack framework.
+
 - `appBoostBeast` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appBoostBeast), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appBoostBeast)] the template infrastructure for the Web application fast start development with the [Boost Beast](https://www.boost.org/libs/beast) HTTP server.
+
 - `appCURL` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appCURL), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appCURL)] the template infrastructure to fast start the application development with the [CURL](https://en.wikipedia.org/wiki/CURL) multi protocol client library (including the [HTTP](https://uk.wikipedia.org/wiki/HTTP)) to download data from the network.
 
 ## Database Management systems (DBMS) / SQL / NoSQL
 
 - `appPgSQLxx` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appPgSQLxx), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appPgSQLxx)] the template infrastructure to fast start application development with the [PostgreSQL DBMS](https://en.wikipedia.org/wiki/PostgreSQL) usage.
+
 - `appFirebird` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appFirebird), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appFirebird)] the template infrastructure to fast start application development with the [Firebird DBMS](https://firebirdsql.org/) usage through the native client library (fbclient).
+
 - `appMySQLCppConn` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appMySQLCppConn), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appMySQLCppConn)] the template infrastructure to fast start application development with the [MySQL DBMS](https://en.wikipedia.org/wiki/MySQL) usage.
+
 - `appSQLiteCpp3` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSQLiteCpp3), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSQLiteCpp3)] the template infrastructure to fast start application development with the [SQLite DBMS](https://en.wikipedia.org/wiki/SQLite) and [SQLiteCpp C++ bind](https://github.com/SRombauts/SQLiteCpp) usage.
+
 - `appMongoDBCpp4` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appMongoDBCpp4), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appMongoDBCpp4)] the template infrastructure to fast start application development with the [MongoDB NoSQL DBMS](https://en.wikipedia.org/wiki/MongoDB) usage.
 
 ## Data Visualization / Plots / Graphs
 
 - `appMatPlotxx` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appMatPlotxx), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appMatPlotxx)] the template infrastructure to fast start application development with the [MatPlot++](https://alandefreitas.github.io/matplotplusplus/) usage - a nice plot library with required [gnuplot](http://www.gnuplot.info/) application and [Qt6](https://www.qt.io/development/qt-framework/qt6).
+
 - `appPLplot` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appPLplot), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appPLplot)] the template infrastructure to fast start application development with the [PLplot](https://plplot.sourceforge.net/) usage - a powerful plotting library used in scientific applications with a lot of windowing and language bindings and export capabilities (PNG, SVG, JPEG, GIF, PDF and more).
+
 - `appPGPLOT` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appPGPLOT), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appPGPLOT)] the template infrastructure to fast start application development with the [PGPLOT](https://sites.astro.caltech.edu/~tjp/pgplot/) usage - a classic scientific graphics subroutine library widely used in the astronomy field, integrated through it's C (cpgplot) binding and supporting both the original library and it's free [giza](https://danieljprice.github.io/giza/) drop-in replacement.
+
 - `appQt6ChartView` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appQt6ChartView), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appQt6ChartView)] the template infrastructure to fast start data visualization and plotting right inside a [Qt6](https://www.qt.io/development/qt-framework/qt6) [QML](https://doc.qt.io/qt-6/qtqml-index.html) window with the native [ChartView](https://doc.qt.io/qt-6/qml-qtcharts-chartview.html) element from the [QtCharts](https://doc.qt.io/qt-6/qtcharts-index.html) module.
 
 ## Maps
 
 - `appGtkmm4LeafLet` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appGtkmm4LeafLet), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appGtkmm4LeafLet)] with general application related classes to generate a single binary executable with usage of [Gtkmm-4](https://gtkmm.gnome.org/en/index.html) with [WebKitGtk](https://webkitgtk.org/) and [LeafLet](https://leafletjs.com/) maps.
+
 - `appQt6LeafLet` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appQt6LeafLet), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appQt6LeafLet)] with general application related classes to generate a single binary executable with usage of [Qt6](https://www.qt.io/development/qt-framework/qt6) and [QML](https://doc.qt.io/qt-6/qtqml-index.html) with [WebView QML](https://doc.qt.io/qt-6/qml-qtwebview-webview.html) and [LeafLet](https://leafletjs.com/) maps.
+
 - `appQt6QtLocation` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appQt6QtLocation), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appQt6QtLocation)] with general application related classes to generate a single binary executable that renders [OpenStreetMap](https://www.openstreetmap.org/) tiles natively inside a [Qt6](https://www.qt.io/development/qt-framework/qt6) [QML](https://doc.qt.io/qt-6/qtqml-index.html) window with the native [Map](https://doc.qt.io/qt-6/qml-qtlocation-map.html) element from the [Qt Location](https://doc.qt.io/qt-6/qtlocation-index.html) module (the native counterpart of the [WebView](https://doc.qt.io/qt-6/qml-qtwebview-webview.html) based appQt6LeafLet branch).
 
 ## Computer Vision / Image Processing
 
 - `appOpenCV` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appOpenCV), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appOpenCV)] the template infrastructure to fast start application development with the [OpenCV](https://opencv.org/) computer vision library.
+
 - `appCFITSIO` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appCFITSIO), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appCFITSIO)] with general application related classes to generate a single binary executable that wraps the [CFITSIO](https://heasarc.gsfc.nasa.gov/fitsio/) library in a small controller exposing the main FITS (the astronomy image format) calls - image create, open, read, write and the header keyword access - and reads the FITS image given by the `--image` command line parameter from the Application, reporting about it through the project logger. A separate component wraps the [WCSLIB](https://www.atnf.csiro.au/people/mcalabre/WCS/) library the same way, so the header of that image also tells where its centre points at in the sky.
 
 ## Artificial intelligence / LLM
 
 - `appCURLClaude` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appCURLClaude), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appCURLClaude)] with general application related classes to generate a single binary executable that asks [Claude](https://www.claude.com/) a question given in the command line over the [Anthropic API](https://platform.claude.com/docs/en/api/overview) and prints the received answer. Anthropic ships no official C++ SDK, so the branch talks to the API directly with the [libcurl](https://curl.se/libcurl/) and the [nlohmann JSON](https://github.com/nlohmann/json) libraries and carries no third party API wrapper.
+
 - `appCURLChatGPT` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appCURLChatGPT), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appCURLChatGPT)] with general application related classes to generate a single binary executable that asks [ChatGPT](https://chatgpt.com/) a question given in the command line over the [OpenAI API](https://developers.openai.com/api/docs) responses endpoint and prints the received answer. OpenAI ships no official C++ SDK, so the branch talks to the API directly with the [libcurl](https://curl.se/libcurl/) and the [nlohmann JSON](https://github.com/nlohmann/json) libraries and carries no third party API wrapper.
 
 ## System / DBus
 
 - `appSDBusCxxClient` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSDBusCxxClient), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSDBusCxxClient)] with just general application related classes to generate a single binary executable with the usage of [Kistler-Group's sdbus-c++](https://github.com/Kistler-Group/sdbus-cpp.git) library as a [DBus](https://en.wikipedia.org/wiki/D-Bus) services client.
+
 - `appSDBusCxxServer` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSDBusCxxServer), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSDBusCxxServer)] with just general application related classes to generate a single binary executable with the usage of [Kistler-Group's sdbus-c++](https://github.com/Kistler-Group/sdbus-cpp.git) library as a server on the [DBus](https://en.wikipedia.org/wiki/D-Bus).
+
 - `appQt6QtDBusClient` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appQt6QtDBusClient), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appQt6QtDBusClient)] with general application related classes to generate a single binary executable that reads the general system information from [systemd-hostnamed](https://www.freedesktop.org/software/systemd/man/latest/org.freedesktop.hostname1.html) over the [DBus](https://en.wikipedia.org/wiki/D-Bus) with the native [Qt6](https://www.qt.io/development/qt-framework/qt6) [QtDBus](https://doc.qt.io/qt-6/qtdbus-index.html) module and shows it in the [QML](https://doc.qt.io/qt-6/qtqml-index.html) window (the Qt6 framework counterpart of the sdbus-c++ based appSDBusCxxClient branch).
+
 - `appGtkmm4GDBusClient` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appGtkmm4GDBusClient), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appGtkmm4GDBusClient)] with general application related classes to generate a single binary executable that reads the general system information from [systemd-hostnamed](https://www.freedesktop.org/software/systemd/man/latest/org.freedesktop.hostname1.html) over the [DBus](https://en.wikipedia.org/wiki/D-Bus) with the native GLib [GDBus](https://docs.gtk.org/gio/) stack through the [Gtkmm-4](https://gtkmm.gnome.org/en/index.html)/giomm `Gio::DBus` API and logs it via the application logger (the gtkmm4 framework counterpart of the sdbus-c++ based appSDBusCxxClient branch).
 
 ## Data compression / decompression
 
 - `appZlib` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appZlib), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appZlib)] with general application related classes to generate a single binary executable that wraps the [zlib](https://www.zlib.net/) compression library in a small controller exposing simple compress / uncompress methods (in memory and to / from gzip `.gz` files), and demonstrates a compress + uncompress round-trip from the Application.
+
 - `appLZMA` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appLZMA), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appLZMA)] with general application related classes to generate a single binary executable that wraps the [liblzma](https://tukaani.org/xz/) (XZ Utils) compression library in a small controller exposing simple in-memory compress / uncompress methods over the `.xz` (LZMA2) container, and demonstrates a compress + uncompress round-trip from the Application.
 
 

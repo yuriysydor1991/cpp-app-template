@@ -5,8 +5,12 @@ clang_tidy_exec = find_program('clang-tidy', required: true)
 # the standard library headers. Ask the compiler for its implicit search list
 # and hand it over, the way the CMake based branches pass the
 # CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES contents to the very same tool.
+# The GCC own headers (the intrinsics among them) call the GCC builtins clang
+# does not know, so clang-tidy takes the ones of its own resource directory.
 clang_tidy_implicit_includes_py = '''
-import os, subprocess, sys
+import os, re, subprocess, sys
+
+gcc_own = re.compile(r'/gcc/[^/]+/[^/]+/include(-fixed)?$')
 
 probe = subprocess.run(
   sys.argv[1:] + ['-E', '-x', 'c++', '-v', os.devnull],
@@ -20,7 +24,7 @@ for line in probe.stderr.splitlines():
     inside = True
   elif line.startswith('End of search list.'):
     break
-  elif inside and os.path.isdir(line.strip()):
+  elif inside and os.path.isdir(line.strip()) and not gcc_own.search(line.strip()):
     print(line.strip())
 '''
 

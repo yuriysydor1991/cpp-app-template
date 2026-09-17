@@ -76,3 +76,14 @@ else()
 endif()
 
 message(STATUS "The sound player decodes with: ${TEMPLATE_APP_SDL2_MIXER_TARGET}")
+
+# The FetchContent built SDL2 and SDL_mixer are the 3rd-party code as much as
+# the installed ones, so their headers stay out of the project warnings and
+# the clang-tidy checks.
+foreach(sdlTarget IN ITEMS ${TEMPLATE_APP_SDL2_AUDIO_TARGET} ${TEMPLATE_APP_SDL2_MIXER_TARGET})
+  get_target_property(sdlAliasedTarget ${sdlTarget} ALIASED_TARGET)
+  if (sdlAliasedTarget)
+    set(sdlTarget ${sdlAliasedTarget})
+  endif()
+  set_target_properties(${sdlTarget} PROPERTIES SYSTEM ON)
+endforeach()

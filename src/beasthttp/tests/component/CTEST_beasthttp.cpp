@@ -121,12 +121,18 @@ TEST_F(CTEST_beasthttp, multithread_accept_wait_success)
   actx->set_http_address(tests_address);
   actx->set_http_port(used_http_port);
 
-  EXPECT_CALL(*actx, get_stop())
-      .Times(expected_reps)
-      .WillRepeatedly(Invoke([&]() -> bool {
-        signal_ready();
-        return false;
-      }));
+  {
+    // The stop answer waits for every requester call, however late it comes.
+    InSequence stopSequence;
+
+    EXPECT_CALL(*actx, get_stop())
+        .Times(expected_reps)
+        .WillRepeatedly(Invoke([&]() -> bool {
+          signal_ready();
+          return false;
+        }));
+    EXPECT_CALL(*actx, get_stop()).WillOnce(Return(true));
+  }
   EXPECT_CALL(*actx, set_stop(_)).Times(0);
 
   std::thread httpThread{[this, actx]() { EXPECT_TRUE(http->serve(actx)); }};
@@ -152,8 +158,6 @@ TEST_F(CTEST_beasthttp, multithread_accept_wait_success)
   }
 
   requestersThs.clear();
-
-  EXPECT_CALL(*actx, get_stop()).Times(1).WillRepeatedly(Return(true));
 
   auto response = http_request(used_http_port);
 

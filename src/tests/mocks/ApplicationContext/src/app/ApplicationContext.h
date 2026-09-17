@@ -3,6 +3,7 @@
 
 #include <gmock/gmock.h>
 
+#include <atomic>
 #include <string>
 #include <vector>
 
@@ -36,14 +37,23 @@ class ApplicationContext
   MOCK_METHOD(bool, get_stop, (), (const));
   MOCK_METHOD(void, set_stop, (const bool newValue));
 
-  MOCK_METHOD(bool, get_pause, (), (const));
-  MOCK_METHOD(void, set_pause, (const bool newValue));
-  MOCK_METHOD(bool, get_reload, (), (const));
-  MOCK_METHOD(void, set_reload, (const bool newValue));
-  MOCK_METHOD(bool, get_first_user_request, (), (const));
-  MOCK_METHOD(void, set_first_user_request, (const bool newValue));
-  MOCK_METHOD(bool, get_second_user_request, (), (const));
-  MOCK_METHOD(void, set_second_user_request, (const bool newValue));
+  bool get_pause() const { return mpause.load(); }
+  void set_pause(const bool newValue) { mpause.store(newValue); }
+
+  bool get_reload() const { return mreload.load(); }
+  void set_reload(const bool newValue) { mreload.store(newValue); }
+
+  bool get_first_user_request() const { return mfirst_user_request.load(); }
+  void set_first_user_request(const bool newValue)
+  {
+    mfirst_user_request.store(newValue);
+  }
+
+  bool get_second_user_request() const { return msecond_user_request.load(); }
+  void set_second_user_request(const bool newValue)
+  {
+    msecond_user_request.store(newValue);
+  }
 
   const std::string& get_http_address() const { return mhttp_address; }
   void set_http_address(const std::string& newValue)
@@ -67,6 +77,11 @@ class ApplicationContext
   bool mprint_help_and_exit{false};
   bool mprint_version_and_exit{false};
   std::vector<std::string> merrors;
+  std::atomic_bool mstop{false};
+  std::atomic_bool mpause{false};
+  std::atomic_bool mreload{false};
+  std::atomic_bool mfirst_user_request{false};
+  std::atomic_bool msecond_user_request{false};
   std::string mhttp_address;
   unsigned short mhttp_port;
 };

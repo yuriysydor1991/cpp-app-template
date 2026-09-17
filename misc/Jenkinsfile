@@ -475,6 +475,7 @@ pipeline {
               ftp-ok) echo "  OK      $url" ;;
               2*|3*) echo "  OK      $url ($result)" ;;
               403) echo "  OK      $url (403 - the server refuses the automated requests)" ;;
+              405) echo "  OK      $url (405 - the endpoint exists but refuses the HEAD and GET requests)" ;;
               401|418|429)
                 echo "  WARN    $url ($result - the server refuses the automated requests)"
                 echo "$url $result" >> "$WARNLIST"

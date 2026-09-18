@@ -119,3 +119,63 @@ void harfbuzz_freetype_line(FT_Face face, hb_font_t *font, const char *utf8Text)
 ```
 
 A HarfBuzz built with the FreeType support (the distribution packages are) also creates such a font straight out of the sized `FT_Face` with the `hb_ft_font_create_referenced()` of `<hb-ft.h>`.
+
+### Shaping each font type (copy-paste examples)
+
+HarfBuzz reads the TrueType and the OpenType fonts (`.ttf`, `.otf`) together with their collections (`.ttc`, `.otc`), variations and color tables on its own and shapes them all with the same code - only the face index of a collection and the design of a variable font come on top:
+
+```cpp
+#include <hb.h>
+
+// Opens the face of the given index out of a font file - a collection (.ttc,
+// .otc) holds hb_face_count(blob) of them, the other files one - at the given
+// setting of a variable font, e.g. "wght=700" for the bold (or nullptr).
+hb_font_t *harfbuzz_open_font(const char *fontPath, unsigned int faceIndex,
+                              const char *variation)
+{
+  hb_blob_t *blob = hb_blob_create_from_file(fontPath);
+  hb_face_t *face = hb_face_create(blob, faceIndex);
+  hb_font_t *font = hb_font_create(face);
+
+  hb_variation_t setting;
+  if (variation != nullptr && hb_variation_from_string(variation, -1, &setting)) {
+    hb_font_set_variations(font, &setting, 1);
+  }
+
+  // The font keeps its face alive and the face its blob.
+  hb_face_destroy(face);
+  hb_blob_destroy(blob);
+
+  return font;
+}
+```
+
+The color fonts (emoji) shape like any other font, while their technology picks the way their glyphs render:
+
+```cpp
+#include <hb-ot.h>
+#include <hb.h>
+
+// Names the color technology of a face, which decides how its glyphs render:
+// FreeType blends the COLR v0 layers and loads the CBDT/sbix bitmaps with
+// FT_LOAD_COLOR, while the COLR v1 paints and the SVG glyphs need a vector
+// graphics library. The shaping itself stays the same for all of them.
+const char *harfbuzz_color_type(hb_face_t *face)
+{
+  if (hb_ot_color_has_paint(face)) {
+    return "COLR v1";
+  }
+
+  if (hb_ot_color_has_layers(face)) {
+    return "COLR v0";
+  }
+
+  if (hb_ot_color_has_png(face)) {
+    return "CBDT/sbix bitmaps";
+  }
+
+  return hb_ot_color_has_svg(face) ? "SVG" : "no color";
+}
+```
+
+The other types FreeType opens - the `.woff` and `.woff2` web fonts, the Type 1 and the bitmap fonts - reach HarfBuzz through their `FT_Face`: shape them with the font the `hb_ft_font_create_referenced()` of `<hb-ft.h>` makes out of it (a HarfBuzz built with FreeType, see above). The web fonts shape in full, while the Type 1 and the bitmap fonts carry no OpenType layout tables, so their text gets the plain character to glyph mapping together with the kerning FreeType reads (e.g. out of the `.afm` file attached to a Type 1 font, see the [FreeType section](/doc/sections/en_US/5-project-build/fonts/5-41-enabling-the-freetype-library.md)).

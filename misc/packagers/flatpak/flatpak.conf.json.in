@@ -83,5 +83,10 @@
         "build-args": [ "--share=network" ]
       }
     }
+  ],
+  "finish-args": [
+    "--share=ipc",
+    "--socket=x11",
+    "--device=dri"
   ]
 }

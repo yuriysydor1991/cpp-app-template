@@ -67,3 +67,56 @@ FontFile fontconfig_find_font(const char *pattern, FcChar32 character)
 ```
 
 Наприклад, `fontconfig_find_font("sans-serif", 0)` дає типовий шрифт без засічок системи, а `fontconfig_find_font("sans-serif", 0x0457)` - найближчий, що має ще й літеру `ї`: так обирається резервний шрифт для символів, яких бракує основному.
+
+### Пошук шрифтів кожного типу (приклад для копіювання)
+
+Fontconfig записує тип кожного встановленого шрифту, тож шаблон з його властивостей перелічує всі шрифти певного типу:
+
+```cpp
+#include <fontconfig/fontconfig.h>
+
+#include <cstdio>
+
+// Виводить файл, індекс face та формат кожного встановленого шрифту того
+// типу, який обирає шаблон, наприклад ":fontformat=CFF" для шрифтів OpenType
+// CFF чи ":color=True" для кольорових (емодзі).
+void fontconfig_list_fonts(const char *pattern)
+{
+  FcConfig *config = FcInitLoadConfigAndFonts();
+  FcPattern *query = FcNameParse(reinterpret_cast<const FcChar8 *>(pattern));
+  FcObjectSet *properties =
+      FcObjectSetBuild(FC_FILE, FC_INDEX, FC_FONTFORMAT, nullptr);
+  FcFontSet *fonts = FcFontList(config, query, properties);
+
+  for (int i = 0; fonts != nullptr && i < fonts->nfont; ++i) {
+    FcChar8 *file = nullptr;
+    FcChar8 *format = nullptr;
+    int index = 0;
+
+    FcPatternGetString(fonts->fonts[i], FC_FILE, 0, &file);
+    FcPatternGetString(fonts->fonts[i], FC_FONTFORMAT, 0, &format);
+    FcPatternGetInteger(fonts->fonts[i], FC_INDEX, 0, &index);
+
+    std::printf("%s (face %d, %s)\n", reinterpret_cast<const char *>(file),
+                index, format != nullptr ? reinterpret_cast<const char *>(format) : "?");
+  }
+
+  FcFontSetDestroy(fonts);
+  FcObjectSetDestroy(properties);
+  FcPatternDestroy(query);
+  FcConfigDestroy(config);
+}
+```
+
+| Тип шрифту | Шаблон |
+| --- | --- |
+| TrueType | `:fontformat=TrueType` |
+| OpenType (CFF) | `:fontformat=CFF` |
+| PostScript Type 1 | `:fontformat=Type 1` |
+| Вебшрифти | `:fontwrapper=WOFF`, `:fontwrapper=WOFF2` (Fontconfig 2.15 і новіші) |
+| Колекції | `:index=1` (другий face кожної колекції) |
+| Варіативні шрифти | `:variable=True` |
+| Кольорові шрифти (емодзі) | `:color=True` |
+| Растрові шрифти | `:scalable=False`, `:fontformat=PCF`, `:fontformat=BDF` |
+
+Виведені файл та індекс face ідуть просто до `FT_New_Face()` з FreeType чи `hb_face_create()` з HarfBuzz. Багато дистрибутивів вимикають растрові шрифти файлом конфігурації Fontconfig `70-no-bitmaps*.conf`, і там шаблони растрових шрифтів нічого не виводять.

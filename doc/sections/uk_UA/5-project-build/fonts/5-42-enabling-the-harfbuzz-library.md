@@ -119,3 +119,63 @@ void harfbuzz_freetype_line(FT_Face face, hb_font_t *font, const char *utf8Text)
 ```
 
 HarfBuzz, побудована з підтримкою FreeType (як у пакетах дистрибутивів), також створює такий font просто з `FT_Face` із заданим розміром функцією `hb_ft_font_create_referenced()` з `<hb-ft.h>`.
+
+### Формування тексту кожного типу шрифтів (приклади для копіювання)
+
+HarfBuzz сама читає шрифти TrueType та OpenType (`.ttf`, `.otf`) разом з їхніми колекціями (`.ttc`, `.otc`), варіаціями та кольоровими таблицями і формує ними текст тим самим кодом - додаються лише індекс face колекції та дизайн варіативного шрифту:
+
+```cpp
+#include <hb.h>
+
+// Відкриває face з заданим індексом із файлу шрифтів - колекція (.ttc, .otc)
+// містить hb_face_count(blob) з них, інші файли - один - із заданим
+// налаштуванням варіативного шрифту, наприклад "wght=700" для жирного (або nullptr).
+hb_font_t *harfbuzz_open_font(const char *fontPath, unsigned int faceIndex,
+                              const char *variation)
+{
+  hb_blob_t *blob = hb_blob_create_from_file(fontPath);
+  hb_face_t *face = hb_face_create(blob, faceIndex);
+  hb_font_t *font = hb_font_create(face);
+
+  hb_variation_t setting;
+  if (variation != nullptr && hb_variation_from_string(variation, -1, &setting)) {
+    hb_font_set_variations(font, &setting, 1);
+  }
+
+  // Font утримує свій face, а face - свій blob.
+  hb_face_destroy(face);
+  hb_blob_destroy(blob);
+
+  return font;
+}
+```
+
+Кольорові шрифти (емодзі) формують текст, як і будь-які інші, а їхня технологія визначає спосіб відмальовування їхніх гліфів:
+
+```cpp
+#include <hb-ot.h>
+#include <hb.h>
+
+// Називає кольорову технологію face, яка визначає, як відмальовуються його
+// гліфи: FreeType змішує шари COLR v0 та завантажує растри CBDT/sbix з
+// FT_LOAD_COLOR, тоді як малюнки COLR v1 та SVG гліфи потребують бібліотеки
+// векторної графіки. Саме формування тексту для них усіх однакове.
+const char *harfbuzz_color_type(hb_face_t *face)
+{
+  if (hb_ot_color_has_paint(face)) {
+    return "COLR v1";
+  }
+
+  if (hb_ot_color_has_layers(face)) {
+    return "COLR v0";
+  }
+
+  if (hb_ot_color_has_png(face)) {
+    return "CBDT/sbix bitmaps";
+  }
+
+  return hb_ot_color_has_svg(face) ? "SVG" : "no color";
+}
+```
+
+Інші типи, які відкриває FreeType - вебшрифти `.woff` та `.woff2`, шрифти Type 1 та растрові - потрапляють до HarfBuzz через свій `FT_Face`: формуй текст шрифтом, який створює з нього `hb_ft_font_create_referenced()` з `<hb-ft.h>` (HarfBuzz, побудована з FreeType, дивись вище). Вебшрифти формують текст повністю, тоді як шрифти Type 1 та растрові не мають таблиць розкладки OpenType, тож їхній текст отримує просте відображення символів у гліфи разом з кернінгом, який читає FreeType (наприклад, з файлу `.afm`, приєднаного до шрифту Type 1, дивись [розділ FreeType](/doc/sections/uk_UA/5-project-build/fonts/5-41-enabling-the-freetype-library.md)).

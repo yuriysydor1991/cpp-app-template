@@ -30,3 +30,10 @@ include(template-project-jolt-enabler)
 
 # game platforms
 include(template-project-steamworks-enabler)
+
+# fonts
+include(template-project-freetype-enabler)
+include(template-project-harfbuzz-enabler)
+include(template-project-fontconfig-enabler)
+include(template-project-msdfgen-enabler)
+include(template-project-stb-truetype-enabler)

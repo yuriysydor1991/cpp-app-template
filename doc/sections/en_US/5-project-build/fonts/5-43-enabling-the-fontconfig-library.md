@@ -67,3 +67,56 @@ FontFile fontconfig_find_font(const char *pattern, FcChar32 character)
 ```
 
 For example, `fontconfig_find_font("sans-serif", 0)` gives the default sans-serif font of the system and `fontconfig_find_font("sans-serif", 0x0457)` the closest one having the `ї` letter as well - the way to pick a fallback font for the characters the main one lacks.
+
+### Finding the fonts of each type (copy-paste example)
+
+Fontconfig records the type of every installed font, so a pattern of its properties lists all the fonts of a type:
+
+```cpp
+#include <fontconfig/fontconfig.h>
+
+#include <cstdio>
+
+// Prints the file, the face index and the format of every installed font of
+// the type a pattern selects, e.g. ":fontformat=CFF" for the OpenType CFF
+// fonts or ":color=True" for the color (emoji) ones.
+void fontconfig_list_fonts(const char *pattern)
+{
+  FcConfig *config = FcInitLoadConfigAndFonts();
+  FcPattern *query = FcNameParse(reinterpret_cast<const FcChar8 *>(pattern));
+  FcObjectSet *properties =
+      FcObjectSetBuild(FC_FILE, FC_INDEX, FC_FONTFORMAT, nullptr);
+  FcFontSet *fonts = FcFontList(config, query, properties);
+
+  for (int i = 0; fonts != nullptr && i < fonts->nfont; ++i) {
+    FcChar8 *file = nullptr;
+    FcChar8 *format = nullptr;
+    int index = 0;
+
+    FcPatternGetString(fonts->fonts[i], FC_FILE, 0, &file);
+    FcPatternGetString(fonts->fonts[i], FC_FONTFORMAT, 0, &format);
+    FcPatternGetInteger(fonts->fonts[i], FC_INDEX, 0, &index);
+
+    std::printf("%s (face %d, %s)\n", reinterpret_cast<const char *>(file),
+                index, format != nullptr ? reinterpret_cast<const char *>(format) : "?");
+  }
+
+  FcFontSetDestroy(fonts);
+  FcObjectSetDestroy(properties);
+  FcPatternDestroy(query);
+  FcConfigDestroy(config);
+}
+```
+
+| Font type | Pattern |
+| --- | --- |
+| TrueType | `:fontformat=TrueType` |
+| OpenType (CFF) | `:fontformat=CFF` |
+| PostScript Type 1 | `:fontformat=Type 1` |
+| Web fonts | `:fontwrapper=WOFF`, `:fontwrapper=WOFF2` (Fontconfig 2.15 and newer) |
+| Collections | `:index=1` (the second face of every collection) |
+| Variable fonts | `:variable=True` |
+| Color fonts (emoji) | `:color=True` |
+| Bitmap fonts | `:scalable=False`, `:fontformat=PCF`, `:fontformat=BDF` |
+
+The listed file and face index go straight to the `FT_New_Face()` of FreeType or the `hb_face_create()` of HarfBuzz. Many distributions keep the bitmap fonts out of use with a `70-no-bitmaps*.conf` Fontconfig configuration file, and the bitmap patterns list nothing there.

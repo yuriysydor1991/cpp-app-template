@@ -56,6 +56,12 @@ option(
   ON
 )
 
+option(
+  ENABLE_DESKTOP_APPLICATION
+  "Set to ON when the project binary is a windowed application: the packages then install its desktop entry and mark it as a desktop application"
+  ON
+)
+
 string(TIMESTAMP PROJECT_CONFIGURE_DATE "%Y-%m-%d %H:%M:%S")
 
 message(STATUS "PROJECT_NAME: ${PROJECT_NAME}")

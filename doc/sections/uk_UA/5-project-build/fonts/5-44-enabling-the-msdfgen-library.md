@@ -115,3 +115,47 @@ void main()
 Uniform змінна `screenPxRange` містить діапазон відстаней у пікселях екрана: діапазон завширшки 4 пікселі поля 32x32 вище, намальованого на чотирикутнику 64x64 пікселі, дає `4 * 64 / 32 = 8`.
 
 Для Vulkan скомпілюй той самий шейдер у SPIR-V з кваліфікаторами `layout(location = ...)` на його вході та виході, кваліфікатором `layout(binding = ...)` на семплері та двома звичайними uniform змінними, перенесеними в uniform або push constant блок.
+
+### Використання кожного типу шрифтів (приклади для копіювання)
+
+msdfgen завантажує кожен контурний шрифт, який відкриває FreeType - TrueType, OpenType (CFF), `.woff` / `.woff2` та Type 1 - тими ж `msdfgen::loadFont()` та `msdfgen::loadGlyph()`, що й у сніпеті вище. Варіативні шрифти та колекції потребують ще одного кроку:
+
+```cpp
+#include <ft2build.h>
+#include FT_FREETYPE_H
+// FreeType іде першою, адже вона вмикає msdfgen::adoptFreetypeFont()
+#include <msdfgen-ext.h>
+#include <msdfgen.h>
+
+// Відкриває варіативний шрифт із заданою товщиною, наприклад 700 для
+// жирного. msdfgen приймає осі за іменами, які дає їм шрифт ("Weight" тут), а
+// msdfgen::listFontVariationAxes() перелічує їх разом з їхніми діапазонами.
+msdfgen::FontHandle *msdfgen_load_weight(msdfgen::FreetypeHandle *ft,
+                                         const char *fontPath, double weight)
+{
+  msdfgen::FontHandle *font = msdfgen::loadFont(ft, fontPath);
+
+  if (font != nullptr) {
+    // false для шрифтів без такої осі, які тоді лишаються як є
+    msdfgen::setFontVariationAxis(ft, font, "Weight", weight);
+  }
+
+  return font;
+}
+
+// Відкриває face з заданим індексом із колекції шрифтів (.ttc, .otc), адже
+// msdfgen::loadFont() бере лише перший face. msdfgen::destroyFont() лишає сам
+// face для FT_Done_Face().
+msdfgen::FontHandle *msdfgen_collection_face(FT_Library library,
+                                             const char *fontPath,
+                                             FT_Long faceIndex, FT_Face &face)
+{
+  if (FT_New_Face(library, fontPath, faceIndex, &face) != 0) {
+    return nullptr;
+  }
+
+  return msdfgen::adoptFreetypeFont(face);
+}
+```
+
+Для `FT_New_Face()` у сніпеті колекції прилінкуй також ціль `Freetype::Freetype`. Растрові шрифти (`.pcf`, `.bdf`, `.fon`) та растрові кольорові емодзі (CBDT, sbix) не мають контурів, від яких можна виміряти відстані - `msdfgen::loadGlyph()` дає для них порожню форму - тож малюй їх пікселями гліфів з [розділу FreeType](/doc/sections/uk_UA/5-project-build/fonts/5-41-enabling-the-freetype-library.md).

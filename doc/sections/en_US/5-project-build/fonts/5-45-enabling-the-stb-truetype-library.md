@@ -91,3 +91,24 @@ TextMesh stb_truetype_line(const char *fontPath, const char *text)
 The atlas rows are tightly packed and go from the top down - upload them as described in the [FreeType section](/doc/sections/en_US/5-project-build/fonts/5-41-enabling-the-freetype-library.md). The `s` and `t` coordinates already point the top of every quad at the top of its glyph, so the vertices draw right as they are in both OpenGL and Vulkan, given a projection with the y axis going down the screen.
 
 stb_truetype does no range checking of the offsets it reads out of a font file, so load the trusted fonts only with it (e.g. the ones shipped together with the application) and FreeType for the rest.
+
+### Using each font type (copy-paste example)
+
+stb_truetype reads the TrueType (`.ttf`) and the OpenType CFF (`.otf`) fonts together with their collections (`.ttc`, `.otc`):
+
+```cpp
+#include <stb_truetype.h>
+
+// Opens the font of the given index out of the bytes of a font file: a
+// collection (.ttc, .otc) holds stbtt_GetNumberOfFonts(data) of them, the
+// other files one at the index 0. The packing functions like the
+// stbtt_PackFontRange() take the same index as their font_index argument.
+bool stb_truetype_open(stbtt_fontinfo &info, const unsigned char *data, int index)
+{
+  const int offset = stbtt_GetFontOffsetForIndex(data, index);
+
+  return offset >= 0 && stbtt_InitFont(&info, data, offset) != 0;
+}
+```
+
+The web fonts (`.woff`, `.woff2`), the Type 1 and the bitmap fonts, as well as the bitmap only color emoji (CBDT, sbix), do not open with it at all. Out of a variable font it renders the default design only and out of a COLR color font the plain outlines only, without the color layers - use FreeType for all of those.

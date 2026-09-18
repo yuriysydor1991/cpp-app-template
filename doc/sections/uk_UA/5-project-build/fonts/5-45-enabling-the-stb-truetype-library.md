@@ -91,3 +91,24 @@ TextMesh stb_truetype_line(const char *fontPath, const char *text)
 Рядки атласу щільно запаковані та йдуть згори донизу - завантажуй їх так, як описано в [розділі FreeType](/doc/sections/uk_UA/5-project-build/fonts/5-41-enabling-the-freetype-library.md). Координати `s` та `t` уже спрямовують верх кожного чотирикутника на верх його гліфа, тож вершини малюються правильно як є і в OpenGL, і у Vulkan за проекції з віссю y, спрямованою вниз екрана.
 
 stb_truetype не перевіряє меж зсувів, які читає з файлу шрифтів, тож завантажуй нею лише довірені шрифти (наприклад, ті, що постачаються разом із застосунком), а решту - через FreeType.
+
+### Використання кожного типу шрифтів (приклад для копіювання)
+
+stb_truetype читає шрифти TrueType (`.ttf`) та OpenType CFF (`.otf`) разом з їхніми колекціями (`.ttc`, `.otc`):
+
+```cpp
+#include <stb_truetype.h>
+
+// Відкриває шрифт із заданим індексом з байтів файлу шрифтів: колекція
+// (.ttc, .otc) містить stbtt_GetNumberOfFonts(data) з них, інші файли - один
+// з індексом 0. Функції пакування на кшталт stbtt_PackFontRange() приймають
+// той самий індекс як свій аргумент font_index.
+bool stb_truetype_open(stbtt_fontinfo &info, const unsigned char *data, int index)
+{
+  const int offset = stbtt_GetFontOffsetForIndex(data, index);
+
+  return offset >= 0 && stbtt_InitFont(&info, data, offset) != 0;
+}
+```
+
+Вебшрифти (`.woff`, `.woff2`), шрифти Type 1 та растрові, а також суто растрові кольорові емодзі (CBDT, sbix) нею взагалі не відкриваються. З варіативного шрифту вона відмальовує лише типовий дизайн, а з кольорового шрифту COLR - лише прості контури без кольорових шарів - для всього цього використовуй FreeType.

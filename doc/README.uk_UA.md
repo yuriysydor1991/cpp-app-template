@@ -241,6 +241,12 @@
         1. [Вмикання інтеграції Jolt Physics (3D)](/doc/sections/uk_UA/5-project-build/physics/5-39-enabling-the-jolt-library.md)
     1. Ігрові платформи
         1. [Вмикання інтеграції Steamworks SDK (Steam)](/doc/sections/uk_UA/5-project-build/game-platforms/5-40-enabling-the-steamworks-sdk.md)
+    1. Шрифти
+        1. [Вмикання інтеграції FreeType (растеризація)](/doc/sections/uk_UA/5-project-build/fonts/5-41-enabling-the-freetype-library.md)
+        1. [Вмикання інтеграції HarfBuzz (формування тексту)](/doc/sections/uk_UA/5-project-build/fonts/5-42-enabling-the-harfbuzz-library.md)
+        1. [Вмикання інтеграції Fontconfig (пошук шрифтів)](/doc/sections/uk_UA/5-project-build/fonts/5-43-enabling-the-fontconfig-library.md)
+        1. [Вмикання інтеграції msdfgen (MSDF гліфи)](/doc/sections/uk_UA/5-project-build/fonts/5-44-enabling-the-msdfgen-library.md)
+        1. [Вмикання інтеграції stb_truetype (один заголовковий файл)](/doc/sections/uk_UA/5-project-build/fonts/5-45-enabling-the-stb-truetype-library.md)
 1. [Запуск головного виконуваного файлу](/doc/sections/uk_UA/6-run-the-executable/6-run-the-executable.md)
     1. [Запуск через IDE](/doc/sections/uk_UA/6-run-the-executable/6-1-IDE-run.md)
     1. Запуск з терміналу

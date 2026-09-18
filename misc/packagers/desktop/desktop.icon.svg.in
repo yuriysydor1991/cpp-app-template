@@ -6,5 +6,5 @@
     fill="#ffffff"
     font-family="sans-serif" font-size="144" font-weight="bold"
     text-anchor="middle"
-  >${APPIMAGE_ICON_LETTER}</text>
+  >${DESKTOP_ICON_LETTER}</text>
 </svg>

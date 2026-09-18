@@ -13,6 +13,17 @@ endif()
 set(TEMPLATE_PROJECT_SNAP_GRADE "devel" CACHE STRING "The snap package grade")
 set(TEMPLATE_PROJECT_SNAP_CONFINEMENT "strict" CACHE STRING "The snap package confinement")
 
+# a windowed application: its desktop entry and the interfaces of a window
+if(ENABLE_DESKTOP_APPLICATION)
+  file(
+    RELATIVE_PATH snapDesktopFile /
+    ${CMAKE_INSTALL_FULL_DATAROOTDIR}/applications/${FLATPAK_PROJECT_URL}.desktop
+  )
+
+  set(SNAP_APP_DESKTOP "\n    desktop: ${snapDesktopFile}")
+  set(SNAP_APP_DESKTOP_PLUGS "\n      - desktop\n      - desktop-legacy\n      - wayland\n      - x11\n      - opengl")
+endif()
+
 configure_file(
   ${CMAKE_SOURCE_DIR}/misc/packagers/snapcraft/snapcraft.yaml.in
   ${CMAKE_CURRENT_BINARY_DIR}/snap/snapcraft.yaml

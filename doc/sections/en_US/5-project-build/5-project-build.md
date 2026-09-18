@@ -48,3 +48,9 @@
     1. [Enabling the Jolt Physics library (3D)](/doc/sections/en_US/5-project-build/physics/5-39-enabling-the-jolt-library.md)
 1. Game platforms
     1. [Enabling the Steamworks SDK (Steam)](/doc/sections/en_US/5-project-build/game-platforms/5-40-enabling-the-steamworks-sdk.md)
+1. Fonts
+    1. [Enabling the FreeType library (rasterization)](/doc/sections/en_US/5-project-build/fonts/5-41-enabling-the-freetype-library.md)
+    1. [Enabling the HarfBuzz library (text shaping)](/doc/sections/en_US/5-project-build/fonts/5-42-enabling-the-harfbuzz-library.md)
+    1. [Enabling the Fontconfig library (font lookup)](/doc/sections/en_US/5-project-build/fonts/5-43-enabling-the-fontconfig-library.md)
+    1. [Enabling the msdfgen library (MSDF glyphs)](/doc/sections/en_US/5-project-build/fonts/5-44-enabling-the-msdfgen-library.md)
+    1. [Enabling the stb_truetype library (single header)](/doc/sections/en_US/5-project-build/fonts/5-45-enabling-the-stb-truetype-library.md)

@@ -11,6 +11,17 @@ option(
 if(ENABLE_FLATPAK_METAINFO)
   set(flatpakMetainfoDst ${CMAKE_BINARY_DIR}/${FLATPAK_PROJECT_URL}.metainfo.xml)
 
+  # a desktop application launches through the desktop entry named after its id
+  if(ENABLE_DESKTOP_APPLICATION)
+    set(FLATPAK_METAINFO_TYPE desktop-application)
+    set(
+      FLATPAK_METAINFO_LAUNCHABLE
+      "\n  <launchable type=\"desktop-id\">${FLATPAK_PROJECT_URL}.desktop</launchable>"
+    )
+  else()
+    set(FLATPAK_METAINFO_TYPE console-application)
+  endif()
+
   configure_file(${CMAKE_SOURCE_DIR}/misc/packagers/flatpak/flatpak.metainfo.xml.in ${flatpakMetainfoDst})
 
   install(FILES ${flatpakMetainfoDst} DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/metainfo)

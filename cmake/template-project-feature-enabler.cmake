@@ -24,6 +24,7 @@ include(template-project-Qt6-enabler)
 # packagers
 include(template-project-deb-enabler)
 include(template-project-flatpak-target)
+include(template-project-desktop-entry)
 include(template-project-snap-enabler)
 include(template-project-freebsd-pkg-enabler)
 include(template-project-wix-enabler)

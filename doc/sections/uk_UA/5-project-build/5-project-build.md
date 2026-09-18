@@ -43,3 +43,9 @@
     1. [Вмикання інтеграції OpenJPEG (JPEG 2000)](/doc/sections/uk_UA/5-project-build/image-libraries/5-31-enabling-the-openjpeg-library.md)
     1. [Вмикання інтеграції libavif (AVIF)](/doc/sections/uk_UA/5-project-build/image-libraries/5-32-enabling-the-libavif-library.md)
     1. [Вмикання інтеграції libheif (HEIF/HEIC)](/doc/sections/uk_UA/5-project-build/image-libraries/5-33-enabling-the-libheif-library.md)
+1. Шрифти
+    1. [Вмикання інтеграції FreeType (растеризація)](/doc/sections/uk_UA/5-project-build/fonts/5-41-enabling-the-freetype-library.md)
+    1. [Вмикання інтеграції HarfBuzz (формування тексту)](/doc/sections/uk_UA/5-project-build/fonts/5-42-enabling-the-harfbuzz-library.md)
+    1. [Вмикання інтеграції Fontconfig (пошук шрифтів)](/doc/sections/uk_UA/5-project-build/fonts/5-43-enabling-the-fontconfig-library.md)
+    1. [Вмикання інтеграції msdfgen (MSDF гліфи)](/doc/sections/uk_UA/5-project-build/fonts/5-44-enabling-the-msdfgen-library.md)
+    1. [Вмикання інтеграції stb_truetype (один заголовковий файл)](/doc/sections/uk_UA/5-project-build/fonts/5-45-enabling-the-stb-truetype-library.md)

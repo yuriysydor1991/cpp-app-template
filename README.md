@@ -234,6 +234,12 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
         1. [Enabling the OpenJPEG library (JPEG 2000)](/doc/sections/en_US/5-project-build/image-libraries/5-31-enabling-the-openjpeg-library.md)
         1. [Enabling the libavif library (AVIF)](/doc/sections/en_US/5-project-build/image-libraries/5-32-enabling-the-libavif-library.md)
         1. [Enabling the libheif library (HEIF/HEIC)](/doc/sections/en_US/5-project-build/image-libraries/5-33-enabling-the-libheif-library.md)
+    1. Fonts
+        1. [Enabling the FreeType library (rasterization)](/doc/sections/en_US/5-project-build/fonts/5-41-enabling-the-freetype-library.md)
+        1. [Enabling the HarfBuzz library (text shaping)](/doc/sections/en_US/5-project-build/fonts/5-42-enabling-the-harfbuzz-library.md)
+        1. [Enabling the Fontconfig library (font lookup)](/doc/sections/en_US/5-project-build/fonts/5-43-enabling-the-fontconfig-library.md)
+        1. [Enabling the msdfgen library (MSDF glyphs)](/doc/sections/en_US/5-project-build/fonts/5-44-enabling-the-msdfgen-library.md)
+        1. [Enabling the stb_truetype library (single header)](/doc/sections/en_US/5-project-build/fonts/5-45-enabling-the-stb-truetype-library.md)
 1. [Run the executable](/doc/sections/en_US/6-run-the-executable/6-run-the-executable.md)
     1. [IDE run](/doc/sections/en_US/6-run-the-executable/6-1-IDE-run.md)
     1. Command line run

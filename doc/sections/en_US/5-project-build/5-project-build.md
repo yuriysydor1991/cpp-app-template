@@ -26,6 +26,7 @@
     1. [Enabling FreeBSD pkg package generation with cpack](/doc/sections/en_US/5-project-build/packagers/5-20-enabling-FreeBSD-pkg-package-generation-with-cpack.md)
     1. [Enabling WIX MSI package generation with cpack](/doc/sections/en_US/5-project-build/packagers/5-21-enabling-WIX-MSI-package-generation-with-cpack.md)
     1. [Enabling RPM package generation with cpack](/doc/sections/en_US/5-project-build/packagers/5-22-enabling-RPM-package-generation-with-cpack.md)
+    1. [Enabling the desktop application packaging](/doc/sections/en_US/5-project-build/packagers/5-46-enabling-the-desktop-application-packaging.md)
 1. Artificial intelligence
     1. [Connecting to the Claude servers](/doc/sections/en_US/5-project-build/ai/5-37-connecting-to-the-claude-servers.md)
 1. Libraries

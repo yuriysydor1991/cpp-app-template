@@ -33,14 +33,13 @@ chmod +x CppAppTemplate-0.14.0-x86_64.AppImage
 Окрім встановленого проекту `AppDir` отримує три файли, які вимагає формат AppImage: скрипт запуску `AppRun`, файл робочого столу і названу ним піктограму. Усі три конфігуруються CMake з шаблонів каталогу [misc/packagers](/misc/packagers):
 
 - [appimage.AppRun.in](/misc/packagers/appimage/appimage.AppRun.in) - скрипт `AppRun`, який експортує `LD_LIBRARY_PATH` запакованих бібліотек і запускає бінарний файл проекту;
-- [appimage.desktop.in](/misc/packagers/appimage/appimage.desktop.in) - файл робочого столу, яким середовища робочого столу інтегрують пакунок;
-- [appimage.icon.svg.in](/misc/packagers/appimage/appimage.icon.svg.in) - піктограма, яку називає файл робочого столу.
+- [desktop.entry.in](/misc/packagers/desktop/desktop.entry.in) - файл робочого столу, яким середовища робочого столу інтегрують пакунок;
+- [desktop.icon.svg.in](/misc/packagers/desktop/desktop.icon.svg.in) - піктограма, яку називає файл робочого столу.
 
-Наступні змінні кешу можливо за бажанням перевизначити для налаштування згенерованого пакунку:
+Файл робочого столу та піктограма - ті самі, що їх містить кожен пакунок віконного застосунку: змінна `ENABLE_DESKTOP_APPLICATION` задає ключ `Terminal` файлу робочого столу (`false` для віконного застосунку, `true` для консольного), а змінні `TEMPLATE_PROJECT_DESKTOP_CATEGORIES` та `DESKTOP_ICON_SRC` налаштовують категорії та піктограму - дивись [розділ пакування застосунку робочого столу](/doc/sections/uk_UA/5-project-build/packagers/5-46-enabling-the-desktop-application-packaging.md).
 
-- `TEMPLATE_PROJECT_APPIMAGE_CATEGORIES` - завершений крапкою з комою перелік категорій файлу робочого столу (типово: `Utility;`). Іншими типовими значеннями є `Development;`, `Network;`, `Graphics;`.
-- `TEMPLATE_PROJECT_APPIMAGE_TERMINAL` - ключ `Terminal` файлу робочого столу (типово: `true`). Для віконного застосунку, якому термінал не потрібен, необхідно встановити значення `false`.
-- `APPIMAGE_ICON_SRC` - файл-джерело піктограми SVG, який CMake конфігурує у `AppDir` (типово: наведений вище шаблон).
+Наступну змінну кешу можливо за бажанням перевизначити для налаштування згенерованого пакунку:
+
 - `TEMPLATE_PROJECT_APPIMAGE_ARCHITECTURE` - архітектура центрального процесора цільової системи (типово: змінна CMake `CMAKE_SYSTEM_PROCESSOR`). Іншими типовими значеннями є `aarch64`, `armhf`, `i686`.
 
 Архітектура центрального процесора цільової системи потрапляє у назву файлу пакунку і передається `appimagetool` як змінна середовища `ARCH`, яку той вимагає. Її варто перевизначати при крос-компіляції проекту, аби пакунок, який називає CMake, був тим самим пакунком, який вбудовує `appimagetool`.

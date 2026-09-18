@@ -115,3 +115,47 @@ void main()
 The `screenPxRange` uniform holds the distance range in the screen pixels: the 4 pixels wide range of the 32x32 field above drawn on a 64x64 pixels quad gives `4 * 64 / 32 = 8`.
 
 For Vulkan compile the same shader into SPIR-V with the `layout(location = ...)` qualifiers on its input and output, the `layout(binding = ...)` one on the sampler and the two plain uniforms moved into a uniform or push constant block.
+
+### Using each font type (copy-paste examples)
+
+msdfgen loads every outline font FreeType opens - the TrueType, the OpenType (CFF), the `.woff` / `.woff2` and the Type 1 ones - with the same `msdfgen::loadFont()` and `msdfgen::loadGlyph()` of the snippet above. The variable fonts and the collections need one more step:
+
+```cpp
+#include <ft2build.h>
+#include FT_FREETYPE_H
+// FreeType goes first, since it enables the msdfgen::adoptFreetypeFont()
+#include <msdfgen-ext.h>
+#include <msdfgen.h>
+
+// Opens a variable font at the given weight, e.g. 700 for the bold. msdfgen
+// takes the axes by the names the font gives them ("Weight" here), which the
+// msdfgen::listFontVariationAxes() lists together with their ranges.
+msdfgen::FontHandle *msdfgen_load_weight(msdfgen::FreetypeHandle *ft,
+                                         const char *fontPath, double weight)
+{
+  msdfgen::FontHandle *font = msdfgen::loadFont(ft, fontPath);
+
+  if (font != nullptr) {
+    // false for the fonts with no such axis, which then stay as they are
+    msdfgen::setFontVariationAxis(ft, font, "Weight", weight);
+  }
+
+  return font;
+}
+
+// Opens the face of the given index out of a font collection (.ttc, .otc),
+// since the msdfgen::loadFont() takes the first face only. The
+// msdfgen::destroyFont() leaves the face itself to the FT_Done_Face().
+msdfgen::FontHandle *msdfgen_collection_face(FT_Library library,
+                                             const char *fontPath,
+                                             FT_Long faceIndex, FT_Face &face)
+{
+  if (FT_New_Face(library, fontPath, faceIndex, &face) != 0) {
+    return nullptr;
+  }
+
+  return msdfgen::adoptFreetypeFont(face);
+}
+```
+
+Link the `Freetype::Freetype` target as well for the `FT_New_Face()` of the collection snippet. The bitmap fonts (`.pcf`, `.bdf`, `.fon`) and the bitmap color emoji (CBDT, sbix) have no outlines to measure the distances from - the `msdfgen::loadGlyph()` gives an empty shape for them - so draw those with the glyph pixels of the [FreeType section](/doc/sections/en_US/5-project-build/fonts/5-41-enabling-the-freetype-library.md).

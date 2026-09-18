@@ -46,6 +46,12 @@ option(
   ON
 )
 
+option(
+  ENABLE_DESKTOP_APPLICATION
+  "Set to ON when the project binary is a windowed application: the packages then install its desktop entry and mark it as a desktop application"
+  OFF
+)
+
 # The flatpak and the snap packagers compile the project from its sources inside
 # their own sandboxes, so their targets need neither the host source tree nor
 # the 3rd party libraries it links against.

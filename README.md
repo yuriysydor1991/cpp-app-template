@@ -213,6 +213,7 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
         1. [Enabling WIX MSI package generation with cpack](/doc/sections/en_US/5-project-build/packagers/5-21-enabling-WIX-MSI-package-generation-with-cpack.md)
         1. [Enabling RPM package generation with cpack](/doc/sections/en_US/5-project-build/packagers/5-22-enabling-RPM-package-generation-with-cpack.md)
         1. [Enabling the AppImage packager](/doc/sections/en_US/5-project-build/packagers/5-38-enabling-the-AppImage-packager.md)
+        1. [Enabling the desktop application packaging](/doc/sections/en_US/5-project-build/packagers/5-46-enabling-the-desktop-application-packaging.md)
     1. Libraries
         1. [Enabling the MongoDB C++ driver](/doc/sections/en_US/5-project-build/5-37-enabling-the-mongocxx-library.md)
         1. [Enabling the libcurl](/doc/sections/en_US/5-project-build/5-14-enabling-libcurl.md)

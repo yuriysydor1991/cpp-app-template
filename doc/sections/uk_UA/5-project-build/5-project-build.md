@@ -26,6 +26,7 @@
     1. [Вмикання підтримки генерування пакунків FreeBSD pkg з cpack](/doc/sections/uk_UA/5-project-build/packagers/5-20-enabling-FreeBSD-pkg-package-generation-with-cpack.md)
     1. [Вмикання підтримки генерування WIX MSI-пакетів з cpack](/doc/sections/uk_UA/5-project-build/packagers/5-21-enabling-WIX-MSI-package-generation-with-cpack.md)
     1. [Вмикання підтримки генерування RPM-пакунків з cpack](/doc/sections/uk_UA/5-project-build/packagers/5-22-enabling-RPM-package-generation-with-cpack.md)
+    1. [Вмикання пакування застосунку робочого столу](/doc/sections/uk_UA/5-project-build/packagers/5-46-enabling-the-desktop-application-packaging.md)
 1. Бібліотеки
     1. [Вмикання інтеграції libcurl](/doc/sections/uk_UA/5-project-build/5-14-enabling-libcurl.md)
     1. [Вмикання інтеграції бібліотеки nlohmann JSON](/doc/sections/uk_UA/5-project-build/5-18-enabling-the-nlohmann-json-library.md)

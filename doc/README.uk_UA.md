@@ -216,6 +216,7 @@
         1. [Вмикання підтримки генерування WIX MSI-пакетів з cpack](/doc/sections/uk_UA/5-project-build/packagers/5-21-enabling-WIX-MSI-package-generation-with-cpack.md)
         1. [Вмикання підтримки генерування RPM-пакунків з cpack](/doc/sections/uk_UA/5-project-build/packagers/5-22-enabling-RPM-package-generation-with-cpack.md)
         1. [Вмикання пакувальника AppImage](/doc/sections/uk_UA/5-project-build/packagers/5-38-enabling-the-AppImage-packager.md)
+        1. [Вмикання пакування застосунку робочого столу](/doc/sections/uk_UA/5-project-build/packagers/5-46-enabling-the-desktop-application-packaging.md)
     1. Штучний інтелект
         1. [Підключення до серверів OpenAI](/doc/sections/uk_UA/5-project-build/ai/5-37-connecting-to-the-openai-servers.md)
     1. Бібліотеки

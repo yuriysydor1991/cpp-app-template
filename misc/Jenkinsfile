@@ -335,7 +335,9 @@ pipeline {
           LINKLIST=$(mktemp)
           trap 'rm -f "$MDLIST" "$LINKLIST"' EXIT
 
-          find . -name "*.md" -not -path "./.git/*" | sort > "$MDLIST"
+          # The repository own documentation only: a build tree keeps the
+          # fetched third-party sources with the markdown files of their own.
+          git ls-files -z '*.md' | tr '\\0' '\\n' | sort > "$MDLIST"
 
           while IFS= read -r mdfile; do
             grep -oE '[[][^]]*[]][(][^)]+[)]' "$mdfile" 2>/dev/null \
@@ -383,7 +385,9 @@ pipeline {
           ATTEMPTS=3
           RETRY_DELAY=5
 
-          find . -name "*.md" -not -path "./.git/*" | sort > "$MDLIST"
+          # The repository own documentation only: a build tree keeps the
+          # fetched third-party sources with the markdown files of their own.
+          git ls-files -z '*.md' | tr '\\0' '\\n' | sort > "$MDLIST"
 
           # Collect every external URL together with the documentation file it
           # sits in, unwrapping it from the markdown link, the inline code and

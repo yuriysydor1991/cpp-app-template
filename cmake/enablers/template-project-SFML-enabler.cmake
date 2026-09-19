@@ -34,6 +34,14 @@ template_project_default_3rdparty_enabler(
   COMPONENTS     graphics window system
 )
 
+# The clang-tidy checks are for the project code, not the fetched SFML one.
+set_target_properties(
+  sfml-graphics
+  sfml-window
+  sfml-system
+  PROPERTIES CXX_CLANG_TIDY "" SYSTEM ON
+)
+
 target_link_libraries(
   TemplateProjectPlotGenCppControllerObj
   sfml-graphics

@@ -46,6 +46,9 @@ if (NOT CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   target_compile_options(PlotGenCpp PRIVATE -include cstdint)
 endif()
 
+# The clang-tidy checks are for the project code, not the fetched library one.
+set_target_properties(PlotGenCpp PROPERTIES CXX_CLANG_TIDY "" SYSTEM ON)
+
 # install(TARGETS PlotGenCpp
 #     EXPORT PlotGenCpp
 #     ARCHIVE DESTINATION lib

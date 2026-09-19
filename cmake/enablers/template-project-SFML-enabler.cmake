@@ -22,6 +22,10 @@ set(TEMPLATE_APP_SFML_GIT_TAG "2.6.2" CACHE STRING "The SFML library git source 
 set(SFML_BUILD_AUDIO OFF CACHE BOOL "Build the SFML audio module")
 set(SFML_BUILD_NETWORK OFF CACHE BOOL "Build the SFML network module")
 
+# Its pkg-config files go to an absolute path under the configure time install
+# prefix, which a cmake --install --prefix cannot redirect.
+set(SFML_INSTALL_PKGCONFIG_FILES OFF CACHE BOOL "Install the SFML pkg-config files")
+
 # COMPONENTS graphics window system
 template_project_default_3rdparty_enabler(
   NAME SFML

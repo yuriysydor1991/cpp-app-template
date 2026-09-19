@@ -20,6 +20,9 @@ set(SFML_BUILD_AUDIO OFF CACHE BOOL "" FORCE)
 set(SFML_BUILD_NETWORK OFF CACHE BOOL "" FORCE)
 set(SFML_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 set(SFML_BUILD_DOC OFF CACHE BOOL "" FORCE)
+# Its pkg-config files go to an absolute path under the configure time install
+# prefix, which a cmake --install --prefix cannot redirect.
+set(SFML_INSTALL_PKGCONFIG_FILES OFF CACHE BOOL "" FORCE)
 
 # Probes the system installed SFML (COMPONENTS graphics window system) first and
 # falls back to fetching and building it from the upstream git repository.

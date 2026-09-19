@@ -26,6 +26,10 @@ else()
     # the project has no use for.
     set(ENABLE_TESTS OFF CACHE BOOL "Build the MongoDB driver test targets")
 
+    # Its uninstall script generator loops forever over the install manifest of
+    # a cmake --install --prefix other than the configured one.
+    set(ENABLE_UNINSTALL OFF CACHE BOOL "Generate the MongoDB driver uninstall script")
+
     # The fetched sources download and build the MongoDB C driver themselves
     # when the system carries no bson and mongoc packages.
     template_project_default_3rdparty_enabler(

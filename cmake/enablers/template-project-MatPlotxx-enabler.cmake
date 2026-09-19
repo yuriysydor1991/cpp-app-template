@@ -18,3 +18,9 @@ template_project_default_3rdparty_enabler(
   GIT_REPOSITORY ${TEMPLATE_APP_MATPLOTCXX_GIT}
   GIT_TAG        ${TEMPLATE_APP_MATPLOTCXXL_GIT_TAG}
 )
+
+# The fetched library headers are treated as the installed ones are, so the
+# project warnings and the clang-tidy checks skip them.
+if (TARGET matplot)
+  set_target_properties(matplot PROPERTIES SYSTEM ON)
+endif()

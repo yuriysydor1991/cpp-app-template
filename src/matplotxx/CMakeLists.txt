@@ -13,6 +13,11 @@ target_include_directories(
 )
 
 target_link_libraries(
+  TemplateProjectMatPlotxxControllerObj
+  Matplot++::matplot
+)
+
+target_link_libraries(
   ${PROJECT_BINARY_NAME}
   TemplateProjectMatPlotxxControllerObj
   Matplot++::matplot

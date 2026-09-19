@@ -50,6 +50,12 @@ if (NOT Wt_FOUND)
 
   # The stand-alone httpd connector carries the Wt::WRun server the project runs on.
   set(CONNECTOR_HTTP ON CACHE BOOL "" FORCE)
+
+  # Its resources, themes and configuration go to absolute paths, which a cmake
+  # --install --prefix cannot redirect, so the configuration one turns relative.
+  set(INSTALL_RESOURCES OFF CACHE BOOL "" FORCE)
+  set(INSTALL_THEMES OFF CACHE BOOL "" FORCE)
+  set(CONFIGDIR etc/wt CACHE STRING "" FORCE)
 endif()
 
 template_project_default_3rdparty_enabler(

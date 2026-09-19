@@ -1,0 +1,99 @@
+# GitHub Actions pipeline analogous to misc/Jenkinsfile.
+#
+# It mirrors the Jenkins stages on an Ubuntu runner: a clang-format check, a
+# Debug build with sanitizers running the unit and component tests (with an
+# optional cppcheck pass), a clang-tidy check, and a Release build + install.
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      run_cppcheck:
+        description: 'Run the cppcheck static code check?'
+        type: boolean
+        default: false
+
+# Cancel superseded runs for the same ref.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  BUILDDIR: build
+  # The development packages of the branch specific libraries.
+  DEPENDENCIES: ''
+
+jobs:
+  code-format:
+    name: Code format (clang-format)
+    runs-on: ubuntu-26.04
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install tools
+        run: sudo apt-get update && sudo apt-get install -y build-essential meson ninja-build g++ clang-format $DEPENDENCIES
+      - name: Code format configure
+        run: meson setup "$BUILDDIR" -DENABLE_CLANGFORMAT=true
+      - name: Code format build (clang-format)
+        run: meson compile -C "$BUILDDIR" clang-format
+      - name: Verify the sources are clang-format clean
+        run: git diff --exit-code
+
+  build-and-test:
+    name: Debug build & tests
+    runs-on: ubuntu-26.04
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install tools
+        run: sudo apt-get update && sudo apt-get install -y build-essential meson ninja-build g++ cppcheck libgtest-dev libgmock-dev $DEPENDENCIES
+      - name: Debug configure
+        run: |
+          meson setup "$BUILDDIR" --buildtype=debug -DENABLE_UNIT_TESTS=true \
+            -DENABLE_SANITIZERS=true -DENABLE_CPPCHECK=true \
+            -DMAX_LOG_LEVEL=5 -DENABLE_COMPONENT_TESTS=true
+      - name: Debug build
+        run: meson compile -C "$BUILDDIR"
+      - name: cppcheck
+        if: ${{ inputs.run_cppcheck }}
+        run: meson compile -C "$BUILDDIR" cppcheck
+      # Every test is a suite of its own, so a single run covers the unit and
+      # the component ones.
+      - name: Unit & Component Tests
+        run: meson test -C "$BUILDDIR" --no-rebuild --print-errorlogs
+      - name: Upload JUnit test results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: junit-results
+          path: ${{ env.BUILDDIR }}/meson-logs/*.junit.xml
+          if-no-files-found: ignore
+
+  clang-tidy:
+    name: clang-tidy
+    runs-on: ubuntu-26.04
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install tools
+        run: sudo apt-get update && sudo apt-get install -y build-essential meson ninja-build g++ clang-tidy libgtest-dev libgmock-dev $DEPENDENCIES
+      - name: Debug configure (clang-tidy)
+        run: |
+          meson setup "$BUILDDIR" --buildtype=debug -DENABLE_CLANG_TIDY=true \
+            -DENABLE_UNIT_TESTS=true -DENABLE_COMPONENT_TESTS=true \
+            -DMAX_LOG_LEVEL=5
+      - name: Debug build (clang-tidy)
+        run: meson compile -C "$BUILDDIR" clang-tidy
+
+  release:
+    name: Release build & install
+    runs-on: ubuntu-26.04
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install tools
+        run: sudo apt-get update && sudo apt-get install -y build-essential meson ninja-build g++ $DEPENDENCIES
+      - name: Release configure
+        run: meson setup "$BUILDDIR" --buildtype=release
+      - name: Release build
+        run: meson compile -C "$BUILDDIR"
+      - name: Release install
+        run: meson install -C "$BUILDDIR" --destdir "$(pwd)/$BUILDDIR/install-try"

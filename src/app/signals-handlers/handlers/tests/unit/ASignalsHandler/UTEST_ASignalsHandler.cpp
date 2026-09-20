@@ -79,6 +79,7 @@ class UTEST_ASignalsHandler : public Test
         appCtx{create_context()}
   {
     TestSignalsHandler::reset_the_state();
+    restore_the_default_dispositions();
   }
 
   ~UTEST_ASignalsHandler() override
@@ -90,6 +91,16 @@ class UTEST_ASignalsHandler : public Test
   std::shared_ptr<ApplicationContext> create_context()
   {
     return std::make_shared<ApplicationContext>(argc, argv);
+  }
+
+  /// @brief Gives the covered signals the OS default disposition, since a
+  /// process inherits the ignored ones of its parent - the nohup tool and the
+  /// shell job control do leave some of them ignored.
+  static void restore_the_default_dispositions()
+  {
+    for (const int signalNumber : TestSignalsHandler::handledSignals) {
+      std::signal(signalNumber, SIG_DFL);
+    }
   }
 
   static void expect_the_default_dispositions()

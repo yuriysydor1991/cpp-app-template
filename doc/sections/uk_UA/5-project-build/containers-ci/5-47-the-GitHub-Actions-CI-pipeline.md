@@ -22,10 +22,10 @@ env:
   BUILDDIR: build
   BDJUNITOUT: junit-out
   # The development packages of the branch specific libraries.
-  DEPENDENCIES: ''
+  DEPENDENCIES: libasound2-dev libsamplerate0-dev libudev-dev libgles-dev libxcursor-dev libxi-dev libxrandr-dev libxss-dev
 ```
 
-Саме ця змінна - єдиний рядок, яким різняться гілки шаблону, отож проект, який долучає власну бібліотеку, дописує туди її пакунок розробки. Ця гілка не потребує пакунків, яких бракує образу виконавця, отож її власний рядок лишається порожнім.
+Саме ця змінна - єдиний рядок, яким різняться гілки шаблону, отож проект, який долучає власну бібліотеку, дописує туди її пакунок розробки. Гілка будує SDL2 та SDL_mixer з їхніх джерел, отож наведені пакунки - це те, чого потребує саме та побудова: ALSA, libsamplerate, udev, заголовки OpenGL/EGL та X11, - а не пакунок розробки бібліотеки, яку долучає проект.
 
 ### Параметри ручного запуску
 

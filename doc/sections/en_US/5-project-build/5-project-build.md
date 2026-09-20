@@ -14,6 +14,7 @@
     1. [Enabling sanitizers](/doc/sections/en_US/5-project-build/code-quality/5-13-enabling-sanitizers.md)
 1. Containers & CI
     1. [The GitHub Actions CI pipeline](/doc/sections/en_US/5-project-build/containers-ci/5-41-the-GitHub-Actions-CI-pipeline.md)
+    1. [The GitLab CI/CD pipeline](/doc/sections/en_US/5-project-build/containers-ci/5-42-the-GitLab-CI-pipeline.md)
 1. Packagers
     1. [Enabling WIX MSI package generation with cpack](/doc/sections/en_US/5-project-build/packagers/5-21-enabling-WIX-MSI-package-generation-with-cpack.md)
 1. Libraries

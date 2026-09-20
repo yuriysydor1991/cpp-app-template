@@ -199,6 +199,7 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
         1. [Enabling sanitizers](/doc/sections/en_US/5-13-enabling-sanitizers.md)
     1. Containers & CI
         1. [The GitHub Actions CI pipeline](/doc/sections/en_US/5-31-the-GitHub-Actions-CI-pipeline.md)
+        1. [The GitLab CI/CD pipeline](/doc/sections/en_US/5-32-the-GitLab-CI-pipeline.md)
     1. Packagers
         1. [Enabling the DEB package generation support](/doc/sections/en_US/5-23-enabling-deb-package-generation.md)
         1. [Enabling the RPM package generation support](/doc/sections/en_US/5-24-enabling-rpm-package-generation.md)

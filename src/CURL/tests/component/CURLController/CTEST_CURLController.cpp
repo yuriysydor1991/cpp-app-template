@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 
+#include "project-global-decls.h"
 #include "src/CURL/CURLController.h"
 
 using namespace curli;
@@ -125,6 +126,16 @@ TEST_F(CTEST_CURLController, a_large_file_arrives_completely)
   EXPECT_EQ(
       as_string(controller->download(file_url_with("large.data", contents))),
       contents);
+}
+
+TEST_F(CTEST_CURLController, a_response_over_the_allowed_size_is_refused)
+{
+  static const std::string contents(
+      project_decls::PROJECT_CURL_MAX_RESPONSE_BYTES + 1U, 'o');
+
+  EXPECT_TRUE(
+      controller->download(file_url_with("oversized.data", contents)).empty());
+  EXPECT_FALSE(controller->last_response_successfull());
 }
 
 TEST_F(CTEST_CURLController, the_additional_headers_break_no_transfer)

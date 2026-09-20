@@ -25,11 +25,22 @@ class UTEST_UserSignalsHandler : public Test
       : handler{std::make_shared<TestUserSignalsHandler>()},
         appCtx{create_context()}
   {
+    restore_the_default_dispositions();
   }
 
   std::shared_ptr<ApplicationContext> create_context()
   {
     return std::make_shared<ApplicationContext>(argc, argv);
+  }
+
+  /// @brief Gives the covered signals the OS default disposition, since a
+  /// process inherits the ignored ones of its parent - the nohup tool and the
+  /// shell job control do leave some of them ignored.
+  void restore_the_default_dispositions()
+  {
+    for (const int signalNumber : handler->get_handled_signals()) {
+      std::signal(signalNumber, SIG_DFL);
+    }
   }
 
   void expect_the_default_dispositions()

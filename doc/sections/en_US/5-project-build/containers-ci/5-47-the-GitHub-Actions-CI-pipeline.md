@@ -22,10 +22,10 @@ env:
   BUILDDIR: build
   BDJUNITOUT: junit-out
   # The development packages of the branch specific libraries.
-  DEPENDENCIES: ''
+  DEPENDENCIES: libasound2-dev libsamplerate0-dev libudev-dev libgles-dev libxcursor-dev libxi-dev libxrandr-dev libxss-dev
 ```
 
-That variable is the single line the branches of the template differ by, so a project which links a library of its own appends the development package of the library there. This branch asks for no package the runner image misses, so its own line stays empty.
+That variable is the single line the branches of the template differ by, so a project which links a library of its own appends the development package of the library there. The branch builds SDL2 and the SDL_mixer from their sources, so the packages above are the ones that build asks for - the ALSA, the libsamplerate, the udev, the OpenGL/EGL and the X11 development ones - and not the package of a library the project links.
 
 ### The manual parameters
 

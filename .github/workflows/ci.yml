@@ -24,7 +24,7 @@ env:
   BUILDDIR: build
   BDJUNITOUT: junit-out
   # The development packages of the branch specific libraries.
-  DEPENDENCIES: ''
+  DEPENDENCIES: libasound2-dev libsamplerate0-dev libudev-dev libgles-dev libxcursor-dev libxi-dev libxrandr-dev libxss-dev
 
 jobs:
   code-format:

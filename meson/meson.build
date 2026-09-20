@@ -4,6 +4,8 @@ template_project_extra_deps = []
 template_project_extra_cpp_args = []
 template_project_extra_link_args = []
 
+subdir('template-project-hardening')
+
 subdir('template-project-all-source-files')
 subdir('template-project-misc-variables-declare')
 subdir('template-project-configure-file')

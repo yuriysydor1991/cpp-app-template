@@ -198,6 +198,7 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
         1. [Enabling sanitizers](/doc/sections/en_US/5-project-build/code-quality/5-13-enabling-sanitizers.md)
     1. Containers & CI
         1. [The GitHub Actions CI pipeline](/doc/sections/en_US/5-project-build/containers-ci/5-36-the-GitHub-Actions-CI-pipeline.md)
+        1. [The GitLab CI/CD pipeline](/doc/sections/en_US/5-project-build/containers-ci/5-37-the-GitLab-CI-pipeline.md)
     1. Packagers
         1. [Enabling WIX MSI package generation with cpack](/doc/sections/en_US/5-project-build/packagers/5-21-enabling-WIX-MSI-package-generation-with-cpack.md)
     1. Libraries

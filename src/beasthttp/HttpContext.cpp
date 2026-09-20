@@ -28,4 +28,8 @@ const std::string& HttpContext::http_address() const
 
 unsigned short HttpContext::http_port() const { return actx->get_http_port(); }
 
+unsigned int HttpContext::max_connections() const { return mmax_connections; }
+
+int HttpContext::listen_backlog() const { return mlisten_backlog; }
+
 }  // namespace beasthttp

@@ -1,6 +1,7 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_BEAST_INCLUDES_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_BEAST_INCLUDES_H
 
+#include <boost/asio/io_context.hpp>
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/beast/core.hpp>
 #include <boost/beast/http.hpp>

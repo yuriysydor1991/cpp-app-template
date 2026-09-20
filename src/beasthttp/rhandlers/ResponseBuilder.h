@@ -45,6 +45,26 @@ class ResponseBuilder
   virtual void set_defaults(std::shared_ptr<HTTPSessionContext> sctx);
 
   /**
+   * @brief Sets the header fields that tell the browser to treat the answer
+   * with no liberty of it's own: no content type guessing, no framing, no
+   * referrer leaking and no resource of a foreign origin. Override it in the
+   * descendant to change class instance behavior.
+   *
+   * @param sctx The single HTTP session context object to hold available
+   * relevant information.
+   */
+  virtual void set_security_headers(std::shared_ptr<HTTPSessionContext> sctx);
+
+  /**
+   * @brief Returns the content security policy of the answer, which the
+   * browser applies to the page it carries. Override it in the descendant
+   * once the page starts to load a resource of it's own.
+   *
+   * @return Returns the content security policy header field value.
+   */
+  virtual const char* const& get_content_security_policy();
+
+  /**
    * @brief Method should return current class HTTP return type
    * stored in the response object. Override it in the descendant to change
    * class instance behavior.

@@ -18,6 +18,18 @@ const std::string PROJECT_CONFIGURE_DATE = "${PROJECT_CONFIGURE_DATE}" ;
 const std::string PROJECT_HTTP_LISTEN_ADDRESS = "${PROJECT_HTTP_LISTEN_ADDRESS}" ;
 /// @brief Global project' default HTTP listen address
 constexpr const unsigned short PROJECT_HTTP_LISTEN_PORT = ${PROJECT_HTTP_LISTEN_PORT};
+/// @brief The maximum accepted HTTP request body size in bytes
+constexpr const unsigned long long PROJECT_HTTP_MAX_REQUEST_BODY_BYTES = ${PROJECT_HTTP_MAX_REQUEST_BODY_BYTES};
+/// @brief The maximum accepted HTTP request header size in bytes
+constexpr const unsigned long PROJECT_HTTP_MAX_REQUEST_HEADER_BYTES = ${PROJECT_HTTP_MAX_REQUEST_HEADER_BYTES};
+/// @brief The seconds a single HTTP request reading may take
+constexpr const unsigned int PROJECT_HTTP_REQUEST_TIMEOUT_SECONDS = ${PROJECT_HTTP_REQUEST_TIMEOUT_SECONDS};
+/// @brief The seconds a single HTTP response writing may take
+constexpr const unsigned int PROJECT_HTTP_RESPONSE_TIMEOUT_SECONDS = ${PROJECT_HTTP_RESPONSE_TIMEOUT_SECONDS};
+/// @brief The maximum number of the simultaneously served HTTP connections
+constexpr const unsigned int PROJECT_HTTP_MAX_CONNECTIONS = ${PROJECT_HTTP_MAX_CONNECTIONS};
+/// @brief The maximum number of the accepted connections waiting to be served
+constexpr const int PROJECT_HTTP_LISTEN_BACKLOG = ${PROJECT_HTTP_LISTEN_BACKLOG};
 
 } // namespace project_decls
 

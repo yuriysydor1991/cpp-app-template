@@ -40,22 +40,30 @@ bool HttpController::serve(std::shared_ptr<app::ApplicationContext> actx)
     boost::asio::io_context ioc{1};
     tcp::acceptor acceptor{ioc, {address, port}};
 
+    acceptor.listen(mcontext->listen_backlog());
+
     LOGI("Listening on http://" << mcontext->http_address() << ":"
                                 << mcontext->http_port());
 
     while (!mcontext->stop()) {
-      auto socket = std::make_shared<tcp::socket>(ioc);
-      acceptor.accept(*socket);
+      auto sctx = create_http_session_context();
 
-      auto future = std::make_shared<std::future<bool>>(
-          std::async(std::launch::async,
-                     [this, socket]() { return handle_session(socket); }));
+      acceptor.accept(sctx->stream->socket());
+
+      clean_threads();
+
+      if (sessions_limit_reached()) {
+        LOGW("Dropping the accepted connection: already serving the allowed "
+             << mcontext->max_connections() << " ones");
+        continue;
+      }
+
+      auto future = std::make_shared<std::future<bool>>(std::async(
+          std::launch::async, [this, sctx]() { return handle_session(sctx); }));
 
       handlersThs.insert(future);
 
       LOGT("Handling sessions: " << handlersThs.size());
-
-      clean_threads();
     }
 
     LOGD("Waiting remaining threads to be finished");
@@ -106,23 +114,29 @@ std::unique_ptr<HttpContext> HttpController::create_context(
 }
 
 std::shared_ptr<rhandlers::HTTPSessionContext>
-HttpController::create_http_session_context(std::shared_ptr<tcp::socket> socket)
+HttpController::create_http_session_context()
 {
-  return std::make_shared<rhandlers::HTTPSessionContext>(socket);
+  return std::make_shared<rhandlers::HTTPSessionContext>();
 }
 
-bool HttpController::handle_session(std::shared_ptr<tcp::socket> socket)
+bool HttpController::sessions_limit_reached() const
 {
-  assert(socket != nullptr);
+  assert(mcontext != nullptr);
+
+  return handlersThs.size() >= mcontext->max_connections();
+}
+
+bool HttpController::handle_session(
+    std::shared_ptr<rhandlers::HTTPSessionContext> sctx)
+{
+  assert(sctx != nullptr);
   assert(rhFactory != nullptr);
   assert(mcontext != nullptr);
 
-  if (socket == nullptr) {
-    LOGE("Invalid socket pointer provided");
+  if (sctx == nullptr) {
+    LOGE("Invalid context pointer provided");
     return false;
   }
-
-  auto sctx = create_http_session_context(socket);
 
   auto handler = rhFactory->create_appropriate_handler(sctx);
 
@@ -135,6 +149,11 @@ bool HttpController::handle_session(std::shared_ptr<tcp::socket> socket)
 
   /// @todo: make session requests read in cycle to recycle the connection
   handler->handle_session(sctx);
+
+  // The connection is released here and not by the context destructor, since
+  // the started session keeps it's context alive until the finished handler
+  // is reaped by the clean_threads call.
+  sctx->close();
 
   return true;
 }

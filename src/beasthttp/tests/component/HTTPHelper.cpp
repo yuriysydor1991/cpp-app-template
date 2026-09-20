@@ -51,6 +51,39 @@ std::string HTTPHelper::http_request_repeat(const unsigned short& uiport,
   return {};
 }
 
+std::string HTTPHelper::raw_request(const unsigned short& uiport,
+                                    const std::string& request)
+{
+  namespace net = boost::asio;
+  using tcp = net::ip::tcp;
+
+  net::io_context ioc;
+
+  tcp::resolver resolver(ioc);
+  auto const results = resolver.resolve(tests_address, std::to_string(uiport));
+
+  tcp::socket socket(ioc);
+  net::connect(socket, results.begin(), results.end());
+
+  boost::system::error_code ec;
+
+  // The error is ignored on purpose: the server refusing the request closes
+  // the connection while the request is still being sent.
+  net::write(socket, net::buffer(request), ec);
+
+  std::string received;
+
+  while (!ec) {
+    char chunk[512];
+
+    const std::size_t read = socket.read_some(net::buffer(chunk), ec);
+
+    received.append(chunk, read);
+  }
+
+  return received;
+}
+
 std::string HTTPHelper::perform_http_request_repeat(
     const unsigned short& uiport, const unsigned int& reps,
     const std::string& expected)

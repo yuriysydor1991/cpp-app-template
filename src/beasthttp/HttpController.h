@@ -54,27 +54,34 @@ class HttpController
       std::shared_ptr<app::ApplicationContext> actx);
 
   /**
-   * @brief Creates the rhandlers::HTTPSessionContext class instance
-   * in order to provide it to the HTTP session handler.
+   * @brief Creates the rhandlers::HTTPSessionContext class instance to
+   * accept the next connection into and to provide it to the HTTP session
+   * handler afterwards. Override it in the descendant to lower the hardening
+   * constraints the created context carries.
    *
-   * @param socket Socket through which the HTTP requests and HTTP responses
-   * will be transferred.
-   *
-   * @return Returns filled rhandlers::HTTPSessionContext instance to pass to
+   * @return Returns the rhandlers::HTTPSessionContext instance to pass to
    * the session handler.
    */
   virtual std::shared_ptr<rhandlers::HTTPSessionContext>
-  create_http_session_context(std::shared_ptr<tcp::socket> socket);
+  create_http_session_context();
 
   /**
-   * @brief The new session starter routine. Creates the HTTP session context
-   * with the appropriate session handler and calls for the handle_session
-   * method.
+   * @brief The new session starter routine. Creates the appropriate session
+   * handler for the given context and calls it's handle_session method.
    *
-   * @param socket Socket through which the HTTP requests and HTTP responses
-   * will be transferred.
+   * @param sctx The context holding the accepted connection through which the
+   * HTTP requests and HTTP responses will be transferred.
    */
-  virtual bool handle_session(std::shared_ptr<tcp::socket> socket);
+  virtual bool handle_session(
+      std::shared_ptr<rhandlers::HTTPSessionContext> sctx);
+
+  /**
+   * @brief Tells whether the server serves as many connections at once as
+   * it's context allows, so the next accepted one has to be dropped.
+   *
+   * @return Returns a true boolean value when no new session may be started.
+   */
+  virtual bool sessions_limit_reached() const;
 
   void wait_threads();
   void clean_threads();

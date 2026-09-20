@@ -47,7 +47,7 @@ class DefaultHandler : public IRequestHandler
       std::shared_ptr<rhandlers::HTTPSessionContext> sctx);
 
   /**
-   * @brief Reads the single HTTP request through the socket contained
+   * @brief Reads the single HTTP request through the stream contained
    * in the given HTTP session context. Fills fields of the
    * rhandlers::HTTPSessionContext class for the available HTTP request.
    * Override it in the descendant to change class instance behavior.
@@ -86,14 +86,14 @@ class DefaultHandler : public IRequestHandler
 
   /**
    * @param Creates the appropriate HTTP response writer into the given context'
-   * socket. Override it in the descendant to change class
+   * stream. Override it in the descendant to change class
    * instance behavior.
    */
   virtual std::shared_ptr<ResponseWriter> create_response_writer(
       std::shared_ptr<HTTPSessionContext> sctx);
 
   /**
-   * @brief Writes response into given context' socket object. Override it in
+   * @brief Writes response into given context' stream object. Override it in
    * the descendant to change class instance behavior.
    *
    * @param sctx The single HTTP session context object pointer.

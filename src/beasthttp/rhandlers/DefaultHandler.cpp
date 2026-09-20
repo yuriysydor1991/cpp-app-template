@@ -16,7 +16,7 @@ namespace beasthttp::rhandlers
 bool DefaultHandler::handle_session(std::shared_ptr<HTTPSessionContext> sctx)
 {
   assert(sctx != nullptr);
-  assert(sctx->socket != nullptr);
+  assert(sctx->stream != nullptr);
 
   if (sctx == nullptr) {
     LOGE("Invalid context pointer provided");

@@ -7,15 +7,21 @@
 namespace beasthttp::rhandlers
 {
 
-HTTPSessionContext::~HTTPSessionContext()
+HTTPSessionContext::~HTTPSessionContext() { close(); }
+
+void HTTPSessionContext::close()
 {
-  if (socket != nullptr) {
-    socket->shutdown(tcp::socket::shutdown_send, ec);
+  if (stream == nullptr) {
+    return;
   }
+
+  stream->socket().shutdown(tcp::socket::shutdown_send, ec);
+  stream->close();
 }
 
-HTTPSessionContext::HTTPSessionContext(std::shared_ptr<tcp::socket> nsocket)
-    : socket{nsocket}
+HTTPSessionContext::HTTPSessionContext()
+    : ioc{std::make_shared<boost::asio::io_context>(1)},
+      stream{std::make_shared<boost::beast::tcp_stream>(*ioc)}
 {
 }
 

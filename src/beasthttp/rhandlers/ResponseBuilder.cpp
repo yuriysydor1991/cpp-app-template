@@ -34,7 +34,32 @@ void ResponseBuilder::set_defaults(std::shared_ptr<HTTPSessionContext> sctx)
   sctx->response.set(http::field::server, project_decls::PROJECT_NAME);
   sctx->response.set(http::field::content_type, get_return_type());
 
+  set_security_headers(sctx);
+
   sctx->response.keep_alive(get_keep_alive());
+}
+
+void ResponseBuilder::set_security_headers(
+    std::shared_ptr<HTTPSessionContext> sctx)
+{
+  assert(sctx != nullptr);
+
+  sctx->response.set(http::field::x_content_type_options, "nosniff");
+  sctx->response.set(http::field::x_frame_options, "DENY");
+  sctx->response.set(http::field::referrer_policy, "no-referrer");
+  sctx->response.set(http::field::content_security_policy,
+                     get_content_security_policy());
+}
+
+const char* const& ResponseBuilder::get_content_security_policy()
+{
+  // The default page carries it's whole content inline and loads nothing at
+  // all, so everything but the page itself is denied.
+  static constexpr const char* const policy =
+      "default-src 'none'; frame-ancestors 'none'; base-uri 'none'; "
+      "form-action 'none'";
+
+  return policy;
 }
 
 const char* const& ResponseBuilder::get_return_type()

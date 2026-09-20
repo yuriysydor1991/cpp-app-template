@@ -24,7 +24,7 @@ class IRequestHandler
   /**
    * @brief Handle all the request for the given HTTP session context.
    *
-   * @param sctx Filled context with a socket and other necessary info.
+   * @param sctx Filled context with a stream and other necessary info.
    *
    * @returns A true boolean value on the success and false otherwise.
    */

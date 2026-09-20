@@ -14,6 +14,7 @@ target_compile_definitions(
 target_include_directories(
   CTEST_CURLController
   PRIVATE ${CURL_MOCKS_ROOT}/log
+  PRIVATE ${CURL_MOCKS_ROOT}/project-global-decls
   PRIVATE ${CMAKE_SOURCE_DIR}
 )
 

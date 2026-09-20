@@ -1,11 +1,13 @@
 #include "src/CURL/CURLController.h"
 
 #include <cassert>
+#include <cstddef>
 #include <functional>
 #include <memory>
 #include <string>
 #include <vector>
 
+#include "project-global-decls.h"
 #include "src/log/log.h"
 
 namespace curli
@@ -37,13 +39,12 @@ size_t wcallback(void* contents, size_t size, size_t nmemb, void* userp)
     return 0U;
   }
 
-  char* rawb = static_cast<char*>(contents);
-
-  auto& buff = controller->get();
-
-  buff.reserve(buff.size() + givenSize);
-
-  buff.insert(buff.end(), rawb, rawb + givenSize);
+  // A returned size other than the given one aborts the whole transfer, which
+  // is how the response size constraint is enforced for an answer carrying no
+  // length of it's own (a chunked one, for example).
+  if (!controller->append(static_cast<const char*>(contents), givenSize)) {
+    return 0U;
+  }
 
   return givenSize;
 }
@@ -103,6 +104,24 @@ CURLController::CURLController()
 
 CURLController::download_buffer& CURLController::get() { return cbuff; }
 
+bool CURLController::append(const char* const data, const std::size_t size)
+{
+  assert(data != nullptr);
+
+  if (cbuff.size() + size > MAX_RESPONSE_BYTES) {
+    LOGE("The response has outgrown the allowed " << MAX_RESPONSE_BYTES
+                                                  << " bytes");
+    return false;
+  }
+
+  // No reserve of the exact size here: it would reallocate the whole buffer
+  // for every arriving chunk, which a server sending the answer byte by byte
+  // would turn into a copying of a quadratic cost.
+  cbuff.insert(cbuff.end(), data, data + size);
+
+  return true;
+}
+
 long CURLController::last_response_code() const { return responseCode; }
 
 bool CURLController::last_response_successfull() const
@@ -143,6 +162,41 @@ bool CURLController::prepare(const std::string& url)
   curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, wcallback);
   curl_easy_setopt(curl, CURLOPT_WRITEDATA, this);
   curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, DEFAULT_CONNECTTIMEOUT);
+
+  return harden();
+}
+
+bool CURLController::harden()
+{
+  // No signal is raised for the timeouts, which keeps the request usable from
+  // a thread of it's own.
+  curl_easy_setopt(curl, CURLOPT_NOSIGNAL, 1L);
+
+  // The defaults of the libcurl already, set here so that no build with
+  // another default and no descendant lowers them unnoticed.
+  curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 1L);
+  curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, SSL_VERIFY_HOSTNAME);
+  curl_easy_setopt(curl, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);
+
+  // The answer announcing a bigger size is refused before a single byte of it
+  // is transferred. The one announcing no size at all is cut by the write
+  // callback instead.
+  curl_easy_setopt(curl, CURLOPT_MAXFILESIZE_LARGE,
+                   static_cast<curl_off_t>(MAX_RESPONSE_BYTES));
+
+#if LIBCURL_VERSION_NUM >= 0x075500
+  // A crafted URL reaches no scp, no smb and no dict service of the local
+  // network. The option arrived with the 7.85.0 release, so an older libcurl
+  // keeps the protocols of it's own build.
+  if (curl_easy_setopt(curl, CURLOPT_PROTOCOLS_STR,
+                       project_decls::PROJECT_CURL_ALLOWED_PROTOCOLS.c_str()) !=
+      CURLE_OK) {
+    LOGE("Fail to allow the "
+         << project_decls::PROJECT_CURL_ALLOWED_PROTOCOLS
+         << " protocols only. Check the PROJECT_CURL_ALLOWED_PROTOCOLS value");
+    return false;
+  }
+#endif
 
   return true;
 }

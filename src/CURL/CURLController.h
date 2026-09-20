@@ -3,9 +3,12 @@
 
 #include <curl/curl.h>
 
+#include <cstddef>
 #include <memory>
 #include <string>
 #include <vector>
+
+#include "project-global-decls.h"
 
 /**
  * @brief The libcurl adaptor subsystem namespace.
@@ -110,6 +113,21 @@ class CURLController
    */
   virtual download_buffer& get();
 
+  /**
+   * @brief Appends the received chunk to the response buffer, refusing the
+   * one that would grow it over the allowed size.
+   *
+   * @note Called by the libcurl write callback and not by the using code,
+   * which reads the assembled answer through the get method above.
+   *
+   * @param data The received chunk.
+   * @param size The size of the received chunk.
+   *
+   * @return Returns true when the chunk has been stored and false when the
+   * response has outgrown the allowed size, which aborts the transfer.
+   */
+  virtual bool append(const char* const data, const std::size_t size);
+
   static CURLControllerPtr create();
 
  private:
@@ -130,18 +148,39 @@ class CURLController
    */
   CURLcode perform();
 
+  /**
+   * @brief Applies the constraints that keep a hostile or a broken answer
+   * from exhausting the resources of the calling application. Every one of
+   * them is configured by the appropriate PROJECT_CURL_* CMake variable.
+   *
+   * @return Returns true when every constraint has been applied.
+   */
+  bool harden();
+
   inline static constexpr const download_buffer::size_type
       DEFAULT_BUFF_RESERVE = 10240U;
   /// @brief The libcurl reads every option below as a long one, so the
   /// constants carry that very type and no other.
-  inline static constexpr const long DEFAULT_TIMEOUT = 30L;
-  inline static constexpr const long DEFAULT_CONNECTTIMEOUT = 10L;
+  inline static constexpr const long DEFAULT_TIMEOUT =
+      project_decls::PROJECT_CURL_TRANSFER_TIMEOUT_SECONDS;
+  inline static constexpr const long DEFAULT_CONNECTTIMEOUT =
+      project_decls::PROJECT_CURL_CONNECT_TIMEOUT_SECONDS;
   inline static constexpr const long DEFAULT_LOWSPEEDSECS = 10L;
   inline static constexpr const long DEFAULT_LOWSPEEDLIMIT = 1L;
 
   /// @brief A POST request may wait way longer than a plain download, because
   /// a server generating an answer keeps the connection silent meanwhile.
-  inline static constexpr const long DEFAULT_POST_TIMEOUT = 300L;
+  inline static constexpr const long DEFAULT_POST_TIMEOUT =
+      project_decls::PROJECT_CURL_POST_TIMEOUT_SECONDS;
+
+  /// @brief The response above this size is refused instead of being
+  /// buffered, so a server answering endlessly exhausts no memory.
+  inline static constexpr const download_buffer::size_type MAX_RESPONSE_BYTES =
+      project_decls::PROJECT_CURL_MAX_RESPONSE_BYTES;
+
+  /// @brief The certificate check of the libcurl: the host name of the
+  /// certificate is matched against the one of the URL.
+  inline static constexpr const long SSL_VERIFY_HOSTNAME = 2L;
 
   /// @brief The lowest HTTP status code that reports a failure, so every
   /// status below it means a reachable URL.

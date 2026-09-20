@@ -13,6 +13,7 @@ option(
 )
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/compile-options")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/compile-options/hardening")
 
 # The position independent code is the compile time counterpart of the -pie
 # linker hardening option. CMake gives the -fPIE flavour to the executables and
@@ -21,8 +22,10 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   include(template-project-compile-options-MSVC)
+  include(template-project-hardening-MSVC)
 else()
   include(template-project-compile-options-GCC)
+  include(template-project-hardening-GCC)
 endif()
 
 set(
@@ -34,3 +37,4 @@ set(
 
 message(STATUS "COMPILER ID: ${CMAKE_CXX_COMPILER_ID}")
 message(STATUS "COMPILE OPTIONS: ${EXTRA_COMPILE_OPTIONS}")
+message(STATUS "LINK OPTIONS: ${EXTRA_LINK_OPTIONS}")

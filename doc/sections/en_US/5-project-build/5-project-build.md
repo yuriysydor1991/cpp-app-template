@@ -19,6 +19,7 @@
 1. [Enabling gprof profiler analysis](/doc/sections/en_US/5-project-build/profilers/5-15-enabling-gprof-profiler-analysis.md)
 1. [Enabling vagrind's callgrind profiler analysis](/doc/sections/en_US/5-project-build/profilers/5-16-enabling-valgrinds-callgrind-profiler-analysis.md)
 1. [Enabling Jenkins pipeline inside Docker container](/doc/sections/en_US/5-project-build/containers-ci/5-17-enabling-Jenkins-pipeline-inside-Docker-container.md)
+1. [The GitHub Actions CI pipeline](/doc/sections/en_US/5-project-build/containers-ci/5-47-the-GitHub-Actions-CI-pipeline.md)
 1. [Enabling the nlohmann JSON library](/doc/sections/en_US/5-project-build/5-18-enabling-the-nlohmann-json-library.md)
 1. [Enabling the snap packager](/doc/sections/en_US/5-project-build/packagers/5-19-enabling-the-snap-package-manager.md)
 1. [Enabling FreeBSD pkg package generation with cpack](/doc/sections/en_US/5-project-build/packagers/5-20-enabling-FreeBSD-pkg-package-generation-with-cpack.md)

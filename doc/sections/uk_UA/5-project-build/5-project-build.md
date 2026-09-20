@@ -19,6 +19,7 @@
 1. [Вмикання підтримки профілювання з gprof](/doc/sections/uk_UA/5-project-build/profilers/5-15-enabling-gprof-profiler-analysis.md)
 1. [Вмикання підтримки профілювання за допомогою vagrind/callgrind](/doc/sections/uk_UA/5-project-build/profilers/5-16-enabling-valgrinds-callgrind-profiler-analysis.md)
 1. [Вмикання конвеєра Jenkins всередині Docker контейнера](/doc/sections/uk_UA/5-project-build/containers-ci/5-17-enabling-Jenkins-pipeline-inside-Docker-container.md)
+1. [Конвеєр CI GitHub Actions](/doc/sections/uk_UA/5-project-build/containers-ci/5-47-the-GitHub-Actions-CI-pipeline.md)
 1. [Вмикання інтеграції бібліотеки nlohmann JSON](/doc/sections/uk_UA/5-project-build/5-18-enabling-the-nlohmann-json-library.md)
 1. [Вмикання пакувальника snap](/doc/sections/uk_UA/5-project-build/packagers/5-19-enabling-the-snap-package-manager.md)
 1. [Вмикання підтримки генерування пакунків FreeBSD pkg з cpack](/doc/sections/uk_UA/5-project-build/packagers/5-20-enabling-FreeBSD-pkg-package-generation-with-cpack.md)

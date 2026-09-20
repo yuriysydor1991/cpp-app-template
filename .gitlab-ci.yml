@@ -1,0 +1,86 @@
+# GitLab CI/CD pipeline analogous to misc/Jenkinsfile and the GitHub Actions
+# .github/workflows/ci.yml one.
+#
+# It mirrors the Jenkins stages inside an Ubuntu container: a clang-format
+# check, a Debug build with sanitizers running the unit and component tests
+# (with an optional cppcheck pass), a clang-tidy check, and a Release build +
+# install.
+
+# A merge request pipeline while a merge request is open, a branch pipeline
+# otherwise, so a single push never starts two pipelines at once.
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
+      when: never
+    - if: $CI_COMMIT_BRANCH
+
+# Every job is a check of its own, so a single stage runs them all in parallel.
+stages:
+  - check
+
+variables:
+  BUILDDIR: build
+  # The tools every job needs on top of the bare image.
+  TOOLS: build-essential meson ninja-build g++ git ca-certificates pkg-config
+  # The development packages of the branch specific libraries.
+  DEPENDENCIES: ''
+  RUN_CPPCHECK:
+    value: 'false'
+    options: ['false', 'true']
+    description: 'Run the cppcheck static code check?'
+
+default:
+  image: ubuntu:26.04
+  # Cancelled by the next pipeline of the same branch.
+  interruptible: true
+  before_script:
+    - apt-get update
+    - DEBIAN_FRONTEND=noninteractive apt-get install -y $TOOLS $JOB_TOOLS $DEPENDENCIES
+
+code-format:
+  stage: check
+  variables:
+    JOB_TOOLS: clang-format
+  script:
+    - meson setup "$BUILDDIR" -DENABLE_CLANGFORMAT=true
+    - meson compile -C "$BUILDDIR" clang-format
+    # Fails when the formatter has changed a tracked file.
+    - git diff --exit-code
+
+build-and-test:
+  stage: check
+  variables:
+    JOB_TOOLS: cppcheck libgtest-dev libgmock-dev
+  script:
+    - |
+      meson setup "$BUILDDIR" --buildtype=debug -DENABLE_UNIT_TESTS=true \
+        -DENABLE_SANITIZERS=true -DENABLE_CPPCHECK=true \
+        -DMAX_LOG_LEVEL=5 -DENABLE_COMPONENT_TESTS=true
+    - meson compile -C "$BUILDDIR"
+    - if [ "$RUN_CPPCHECK" = "true" ]; then meson compile -C "$BUILDDIR" cppcheck; fi
+    # Every test is a suite of its own, so a single run covers the unit and
+    # the component ones.
+    - meson test -C "$BUILDDIR" --no-rebuild --print-errorlogs
+  artifacts:
+    when: always
+    reports:
+      junit: $BUILDDIR/meson-logs/*.junit.xml
+
+clang-tidy:
+  stage: check
+  variables:
+    JOB_TOOLS: clang-tidy libgtest-dev libgmock-dev
+  script:
+    - |
+      meson setup "$BUILDDIR" --buildtype=debug -DENABLE_CLANG_TIDY=true \
+        -DENABLE_UNIT_TESTS=true -DENABLE_COMPONENT_TESTS=true \
+        -DMAX_LOG_LEVEL=5
+    - meson compile -C "$BUILDDIR" clang-tidy
+
+release:
+  stage: check
+  script:
+    - meson setup "$BUILDDIR" --buildtype=release
+    - meson compile -C "$BUILDDIR"
+    - meson install -C "$BUILDDIR" --destdir "$(pwd)/$BUILDDIR/install-try"

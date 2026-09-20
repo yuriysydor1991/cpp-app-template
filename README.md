@@ -209,6 +209,7 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
     1. Containers & CI
         1. [Enabling the Docker container build and run](/doc/sections/en_US/5-project-build/containers-ci/5-12-enabling-the-docker-container-build-and-run.md)
         1. [Enabling Jenkins pipeline inside Docker container](/doc/sections/en_US/5-project-build/containers-ci/5-17-enabling-Jenkins-pipeline-inside-Docker-container.md)
+        1. [The GitHub Actions CI pipeline](/doc/sections/en_US/5-project-build/containers-ci/5-47-the-GitHub-Actions-CI-pipeline.md)
     1. Packagers
         1. [Enabling DEB package generation with cpack](/doc/sections/en_US/5-project-build/packagers/5-10-enabling-DEB-package-generation-with-cpack.md)
         1. [Enabling the flatpak package generation support](/doc/sections/en_US/5-project-build/packagers/5-11-enabling-the-flatpak-package-generation-support.md)

@@ -212,6 +212,7 @@
         1. [Вмикання підтримки запуску Docker-контейнера](/doc/sections/uk_UA/5-project-build/containers-ci/5-12-enabling-the-docker-container-build-and-run.md)
         1. [Вмикання конвеєра Jenkins всередині Docker контейнера](/doc/sections/uk_UA/5-project-build/containers-ci/5-17-enabling-Jenkins-pipeline-inside-Docker-container.md)
         1. [Конвеєр CI GitHub Actions](/doc/sections/uk_UA/5-project-build/containers-ci/5-39-the-GitHub-Actions-CI-pipeline.md)
+        1. [Конвеєр CI/CD GitLab](/doc/sections/uk_UA/5-project-build/containers-ci/5-40-the-GitLab-CI-pipeline.md)
     1. Пакувальники
         1. [Вмикання підтримки генерування DEB-пакетів з cpack](/doc/sections/uk_UA/5-project-build/packagers/5-10-enabling-DEB-package-generation-with-cpack.md)
         1. [Вмикання підтримки генерації flatpak пакету](/doc/sections/uk_UA/5-project-build/packagers/5-11-enabling-the-flatpak-package-generation-support.md)

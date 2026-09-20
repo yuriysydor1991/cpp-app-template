@@ -1,0 +1,86 @@
+# GitLab CI/CD pipeline analogous to misc/Jenkinsfile and the GitHub Actions
+# .github/workflows/ci.yml one.
+#
+# It mirrors the Jenkins stages inside an Ubuntu container: a clang-format
+# check, a Debug build with sanitizers running the unit and component tests
+# (with an optional cppcheck pass), a clang-tidy build, and a Release build +
+# install.
+
+# A merge request pipeline while a merge request is open, a branch pipeline
+# otherwise, so a single push never starts two pipelines at once.
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
+      when: never
+    - if: $CI_COMMIT_BRANCH
+
+# Every job is a check of its own, so a single stage runs them all in parallel.
+stages:
+  - check
+
+variables:
+  BUILDDIR: build
+  BDJUNITOUT: junit-out
+  # The tools every job needs on top of the bare image.
+  TOOLS: build-essential cmake g++ git ca-certificates pkg-config
+  # The development packages of the branch specific libraries.
+  DEPENDENCIES: ''
+  RUN_CPPCHECK:
+    value: 'false'
+    options: ['false', 'true']
+    description: 'Run the cppcheck static code check?'
+
+default:
+  image: ubuntu:26.04
+  # Cancelled by the next pipeline of the same branch.
+  interruptible: true
+  before_script:
+    - apt-get update
+    - DEBIAN_FRONTEND=noninteractive apt-get install -y $TOOLS $JOB_TOOLS $DEPENDENCIES
+
+code-format:
+  stage: check
+  variables:
+    JOB_TOOLS: clang-format
+  script:
+    - cmake -S . -B "$BUILDDIR" -DCMAKE_BUILD_TYPE=Debug -DENABLE_CLANGFORMAT=ON
+    - cmake --build "$BUILDDIR" --target clang-format
+    # Fails when the formatter has changed a tracked file.
+    - git diff --exit-code
+
+build-and-test:
+  stage: check
+  variables:
+    JOB_TOOLS: cppcheck libgtest-dev libgmock-dev
+  script:
+    - |
+      cmake -S . -B "$BUILDDIR" -DCMAKE_BUILD_TYPE=Debug -DENABLE_UNIT_TESTS=ON \
+        -DENABLE_SANITIZERS=ON -DENABLE_CPPCHECK=ON \
+        -DMAX_LOG_LEVEL=5 -DENABLE_COMPONENT_TESTS=ON
+    - cmake --build "$BUILDDIR" -j"$(nproc)"
+    - if [ "$RUN_CPPCHECK" = "true" ]; then cmake --build "$BUILDDIR" -j"$(nproc)" --target cppcheck; fi
+    - mkdir -p "$BUILDDIR/$BDJUNITOUT"
+    - cd "$BUILDDIR"
+    - ctest -R "UTEST_" --output-on-failure --output-junit "$BDJUNITOUT/UTEST.junit.xml"
+    - ctest -R "CTEST_" --output-on-failure --output-junit "$BDJUNITOUT/CTEST.junit.xml"
+  artifacts:
+    when: always
+    reports:
+      junit: $BUILDDIR/$BDJUNITOUT/*.xml
+
+clang-tidy:
+  stage: check
+  variables:
+    JOB_TOOLS: clang-tidy
+  script:
+    - cmake -S . -B "$BUILDDIR" -DCMAKE_BUILD_TYPE=Debug -DENABLE_CLANG_TIDY=ON -DMAX_LOG_LEVEL=5
+    # clang-tidy runs during the compilation.
+    - cmake --build "$BUILDDIR" -j"$(nproc)"
+
+release:
+  stage: check
+  script:
+    - cmake -S . -B "$BUILDDIR" -DCMAKE_BUILD_TYPE=Release
+    - cmake --build "$BUILDDIR" -j"$(nproc)"
+    - cmake --install "$BUILDDIR" --prefix "$BUILDDIR/install-try"

@@ -12,6 +12,8 @@
     1. [Вмикання підтримки цілі статичного аналізатора коду cppcheck](/doc/sections/uk_UA/5-project-build/code-quality/5-7-enabling-the-static-code-analyzer-target-with-cppcheck.md)
     1. [Вмикання підтримки статичного аналізатора коду clang-tidy](/doc/sections/uk_UA/5-project-build/code-quality/5-8-enabling-static-code-analyzer-with-clang-tidy.md)
     1. [Вмикання перевірок під час виконання програми (sanitizers)](/doc/sections/uk_UA/5-project-build/code-quality/5-13-enabling-sanitizers.md)
+1. Контейнери та CI
+    1. [Конвеєр CI GitHub Actions](/doc/sections/uk_UA/5-project-build/containers-ci/5-36-the-GitHub-Actions-CI-pipeline.md)
 1. Бібліотеки
     1. [Вмикання інтеграції libcurl](/doc/sections/uk_UA/5-project-build/5-14-enabling-libcurl.md)
     1. [Вмикання інтеграції бібліотеки nlohmann JSON](/doc/sections/uk_UA/5-project-build/5-18-enabling-the-nlohmann-json-library.md)

@@ -196,6 +196,8 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
         1. [Enabling the static code analyzer target with cppcheck](/doc/sections/en_US/5-project-build/code-quality/5-7-enabling-the-static-code-analyzer-target-with-cppcheck.md)
         1. [Enabling the static code analyzer with clang-tidy](/doc/sections/en_US/5-project-build/code-quality/5-8-enabling-static-code-analyzer-with-clang-tidy.md)
         1. [Enabling sanitizers](/doc/sections/en_US/5-project-build/code-quality/5-13-enabling-sanitizers.md)
+    1. Containers & CI
+        1. [The GitHub Actions CI pipeline](/doc/sections/en_US/5-project-build/containers-ci/5-36-the-GitHub-Actions-CI-pipeline.md)
     1. Libraries
         1. [Enabling the libcurl](/doc/sections/en_US/5-project-build/5-14-enabling-libcurl.md)
         1. [Enabling the nlohmann json library](/doc/sections/en_US/5-project-build/5-18-enabling-the-nlohmann-json-library.md)

@@ -14,6 +14,7 @@
     1. [Enabling sanitizers](/doc/sections/en_US/5-project-build/code-quality/5-13-enabling-sanitizers.md)
 1. Containers & CI
     1. [The GitHub Actions CI pipeline](/doc/sections/en_US/5-project-build/containers-ci/5-36-the-GitHub-Actions-CI-pipeline.md)
+    1. [The GitLab CI/CD pipeline](/doc/sections/en_US/5-project-build/containers-ci/5-37-the-GitLab-CI-pipeline.md)
 1. Libraries
     1. [Enabling the libcurl](/doc/sections/en_US/5-project-build/5-14-enabling-libcurl.md)
     1. [Enabling the nlohmann JSON library](/doc/sections/en_US/5-project-build/5-18-enabling-the-nlohmann-json-library.md)

@@ -199,6 +199,7 @@
         1. [Вмикання перевірок під час виконання програми (sanitizers)](/doc/sections/uk_UA/5-project-build/code-quality/5-13-enabling-sanitizers.md)
     1. Контейнери та CI
         1. [Конвеєр CI GitHub Actions](/doc/sections/uk_UA/5-project-build/containers-ci/5-36-the-GitHub-Actions-CI-pipeline.md)
+        1. [Конвеєр CI/CD GitLab](/doc/sections/uk_UA/5-project-build/containers-ci/5-37-the-GitLab-CI-pipeline.md)
     1. Бібліотеки
         1. [Вмикання інтеграції libcurl](/doc/sections/uk_UA/5-project-build/5-14-enabling-libcurl.md)
         1. [Вмикання інтеграції бібліотеки nlohmann JSON](/doc/sections/uk_UA/5-project-build/5-18-enabling-the-nlohmann-json-library.md)

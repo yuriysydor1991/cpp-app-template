@@ -16,6 +16,16 @@ const std::string PROJECT_BUILD_COMMIT = "${PROJECT_GIT_COMMIT}" ;
 const std::string PROJECT_CONFIGURE_DATE = "${PROJECT_CONFIGURE_DATE}" ;
 /// @brief The project's home page
 const std::string PROJECT_HOME_URL = "${PROJECT_HOMEPAGE_URL}" ;
+/// @brief The maximum accepted response size of a single libcurl request in bytes
+constexpr const unsigned long long PROJECT_CURL_MAX_RESPONSE_BYTES = ${PROJECT_CURL_MAX_RESPONSE_BYTES};
+/// @brief The seconds a libcurl request may take to establish the connection
+constexpr const long PROJECT_CURL_CONNECT_TIMEOUT_SECONDS = ${PROJECT_CURL_CONNECT_TIMEOUT_SECONDS};
+/// @brief The seconds a whole libcurl download or reachability check may take
+constexpr const long PROJECT_CURL_TRANSFER_TIMEOUT_SECONDS = ${PROJECT_CURL_TRANSFER_TIMEOUT_SECONDS};
+/// @brief The seconds a whole libcurl POST request may take
+constexpr const long PROJECT_CURL_POST_TIMEOUT_SECONDS = ${PROJECT_CURL_POST_TIMEOUT_SECONDS};
+/// @brief The comma separated protocols a libcurl request is allowed to use
+const std::string PROJECT_CURL_ALLOWED_PROTOCOLS = "${PROJECT_CURL_ALLOWED_PROTOCOLS}" ;
 
 } // namespace project_decls
 

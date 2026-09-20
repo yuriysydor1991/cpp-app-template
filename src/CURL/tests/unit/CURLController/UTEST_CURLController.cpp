@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 
+#include "project-global-decls.h"
 #include "src/CURL/CURLController.h"
 
 using namespace curli;
@@ -104,4 +105,16 @@ TEST_F(UTEST_CURLController, a_failed_request_drops_the_previous_data)
 
   EXPECT_TRUE(controller->download(unsupportedURL).empty());
   EXPECT_TRUE(controller->get().empty());
+}
+
+TEST_F(UTEST_CURLController, the_response_buffer_stops_at_the_allowed_size)
+{
+  static const std::string allowed(
+      project_decls::PROJECT_CURL_MAX_RESPONSE_BYTES, 'a');
+
+  EXPECT_TRUE(controller->append(allowed.data(), allowed.size()));
+  EXPECT_EQ(controller->get().size(), allowed.size());
+
+  EXPECT_FALSE(controller->append(allowed.data(), 1U));
+  EXPECT_EQ(controller->get().size(), allowed.size());
 }

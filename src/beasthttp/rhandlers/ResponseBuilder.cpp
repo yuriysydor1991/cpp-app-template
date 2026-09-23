@@ -44,11 +44,11 @@ void ResponseBuilder::set_security_headers(
 {
   assert(sctx != nullptr);
 
-  sctx->response.set(http::field::x_content_type_options, "nosniff");
+  // Boost.Beast before 1.90 has no enumerator for the fields named by string.
+  sctx->response.set("X-Content-Type-Options", "nosniff");
   sctx->response.set(http::field::x_frame_options, "DENY");
-  sctx->response.set(http::field::referrer_policy, "no-referrer");
-  sctx->response.set(http::field::content_security_policy,
-                     get_content_security_policy());
+  sctx->response.set("Referrer-Policy", "no-referrer");
+  sctx->response.set("Content-Security-Policy", get_content_security_policy());
 }
 
 const char* const& ResponseBuilder::get_content_security_policy()

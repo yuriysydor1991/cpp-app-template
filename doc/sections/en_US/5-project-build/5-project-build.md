@@ -57,3 +57,9 @@
     1. [Enabling the Fontconfig library (font lookup)](/doc/sections/en_US/5-project-build/fonts/5-43-enabling-the-fontconfig-library.md)
     1. [Enabling the msdfgen library (MSDF glyphs)](/doc/sections/en_US/5-project-build/fonts/5-44-enabling-the-msdfgen-library.md)
     1. [Enabling the stb_truetype library (single header)](/doc/sections/en_US/5-project-build/fonts/5-45-enabling-the-stb-truetype-library.md)
+1. 3D assets
+    1. [Fetching the 3D assets (layout and licenses)](/doc/sections/en_US/5-project-build/3d-assets/5-52-fetching-the-3D-assets.md)
+    1. [Enabling the Poly Haven assets (models, PBR textures, HDRIs)](/doc/sections/en_US/5-project-build/3d-assets/5-53-enabling-the-poly-haven-assets.md)
+    1. [Enabling the Kenney assets (game kits)](/doc/sections/en_US/5-project-build/3d-assets/5-54-enabling-the-kenney-assets.md)
+    1. [Enabling the Quaternius assets (low-poly packs)](/doc/sections/en_US/5-project-build/3d-assets/5-55-enabling-the-quaternius-assets.md)
+    1. [Enabling the Khronos glTF Sample Assets (renderer tests)](/doc/sections/en_US/5-project-build/3d-assets/5-56-enabling-the-gltf-sample-assets.md)

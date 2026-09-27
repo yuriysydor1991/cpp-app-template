@@ -12,6 +12,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/enablers/images")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/enablers/physics")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/enablers/game-platforms")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/enablers/fonts")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/enablers/3d-assets")
 
 include(template-project-enabler-function)
 include(template-project-git-enabler)
@@ -41,3 +42,9 @@ include(template-project-clang-tidy-target)
 # profilers
 include(template-project-profiler-gprof)
 include(template-project-profiler-valgrind-callgrind)
+
+# 3D assets
+include(template-project-polyhaven-assets-enabler)
+include(template-project-kenney-assets-enabler)
+include(template-project-quaternius-assets-enabler)
+include(template-project-gltf-sample-assets-enabler)

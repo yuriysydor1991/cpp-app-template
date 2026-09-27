@@ -13,12 +13,15 @@ Each of the scripts below performs the configure, the build and the install step
 | [release.sh](/scripts/build/release.sh) | the `Release` build |
 | [debug.sh](/scripts/build/debug.sh) | the `Debug` build with the tests, the documentation and the `cppcheck` enabled |
 | [debug-cppcheck.sh](/scripts/build/debug-cppcheck.sh) | the `Debug` build of the `cppcheck` target |
+| [debug-clang-format.sh](/scripts/build/debug-clang-format.sh) | the `Debug` build of the `clang-format` target with the `ENABLE_CLANGFORMAT` option |
 | [debug-clang-tidy.sh](/scripts/build/debug-clang-tidy.sh) | the `Debug` build with the `ENABLE_CLANG_TIDY` option |
 | [debug-sanitizers.sh](/scripts/build/debug-sanitizers.sh) | the `Debug` build with the `ENABLE_SANITIZERS` option |
 | [debug-sanitizers-threads.sh](/scripts/build/debug-sanitizers-threads.sh) | the `Debug` build with the `ENABLE_SANITIZERS_THREADS` option |
 | [debug-compiler-analyzer.sh](/scripts/build/debug-compiler-analyzer.sh) | the `Debug` build with the `ENABLE_COMPILER_CODE_ANALYZER` option |
 
 The [debug-cppcheck.sh](/scripts/build/debug-cppcheck.sh) script builds a single CMake target which the test executables are not a part of, so it performs no test step at all.
+
+The [debug-clang-format.sh](/scripts/build/debug-clang-format.sh) script builds the `clang-format` target alone as well, which formats the project sources in place in accordance with the `misc/.clang-format` configuration, so it performs neither the test nor the install step.
 
 A complete `Release` build takes the single command:
 

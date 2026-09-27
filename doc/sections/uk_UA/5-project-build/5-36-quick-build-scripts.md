@@ -15,12 +15,15 @@
 | [debug-cppcheck.sh](/scripts/build/debug-cppcheck.sh) | побудову `Debug` цілі `cppcheck` |
 | [debug-valgrind.sh](/scripts/build/debug-valgrind.sh) | побудову `Debug` цілі `valgrind` |
 | [debug-callgrind.sh](/scripts/build/debug-callgrind.sh) | побудову `Debug` цілі `callgrind` |
+| [debug-clang-format.sh](/scripts/build/debug-clang-format.sh) | побудову `Debug` цілі `clang-format` з параметром `ENABLE_CLANGFORMAT` |
 | [debug-clang-tidy.sh](/scripts/build/debug-clang-tidy.sh) | побудову `Debug` з параметром `ENABLE_CLANG_TIDY` |
 | [debug-sanitizers.sh](/scripts/build/debug-sanitizers.sh) | побудову `Debug` з параметром `ENABLE_SANITIZERS` |
 | [debug-sanitizers-threads.sh](/scripts/build/debug-sanitizers-threads.sh) | побудову `Debug` з параметром `ENABLE_SANITIZERS_THREADS` |
 | [debug-compiler-analyzer.sh](/scripts/build/debug-compiler-analyzer.sh) | побудову `Debug` з параметром `ENABLE_COMPILER_CODE_ANALYZER` |
 
 Скрипти [debug-cppcheck.sh](/scripts/build/debug-cppcheck.sh), [debug-valgrind.sh](/scripts/build/debug-valgrind.sh) і [debug-callgrind.sh](/scripts/build/debug-callgrind.sh) будують окрему ціль CMake, до складу якої виконувані файли тестів не входять, отож ці три кроку тестування не виконують зовсім.
+
+Скрипт [debug-clang-format.sh](/scripts/build/debug-clang-format.sh) так само будує лише ціль `clang-format`, яка форматує код проекту на місці у відповідності до налаштувань файлу `misc/.clang-format`, отож не виконує ані кроку тестування, ані кроку встановлення.
 
 Повна побудова `Release` виконується однією командою:
 

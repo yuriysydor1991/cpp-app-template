@@ -57,3 +57,9 @@
     1. [Вмикання інтеграції Fontconfig (пошук шрифтів)](/doc/sections/uk_UA/5-project-build/fonts/5-43-enabling-the-fontconfig-library.md)
     1. [Вмикання інтеграції msdfgen (MSDF гліфи)](/doc/sections/uk_UA/5-project-build/fonts/5-44-enabling-the-msdfgen-library.md)
     1. [Вмикання інтеграції stb_truetype (один заголовковий файл)](/doc/sections/uk_UA/5-project-build/fonts/5-45-enabling-the-stb-truetype-library.md)
+1. 3D ресурси
+    1. [Завантаження 3D ресурсів (структура та ліцензії)](/doc/sections/uk_UA/5-project-build/3d-assets/5-52-fetching-the-3D-assets.md)
+    1. [Вмикання ресурсів Poly Haven (моделі, PBR текстури, HDRI)](/doc/sections/uk_UA/5-project-build/3d-assets/5-53-enabling-the-poly-haven-assets.md)
+    1. [Вмикання ресурсів Kenney (ігрові набори)](/doc/sections/uk_UA/5-project-build/3d-assets/5-54-enabling-the-kenney-assets.md)
+    1. [Вмикання ресурсів Quaternius (low-poly набори)](/doc/sections/uk_UA/5-project-build/3d-assets/5-55-enabling-the-quaternius-assets.md)
+    1. [Вмикання Khronos glTF Sample Assets (тести рендерера)](/doc/sections/uk_UA/5-project-build/3d-assets/5-56-enabling-the-gltf-sample-assets.md)

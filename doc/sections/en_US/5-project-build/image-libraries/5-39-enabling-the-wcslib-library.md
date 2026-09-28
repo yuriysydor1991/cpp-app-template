@@ -1,6 +1,6 @@
 ## Enabling the WCSLIB library (FITS WCS)
 
-In order to enable the [WCSLIB](https://www.atnf.csiro.au/people/mcalabre/WCS/) library (the FITS World Coordinate System, which maps the image pixels onto the sky) for the project set an `ON` value to the `ENABLE_WCSLIB` CMake variable (it is the default one for the `appCFITSIO` branch):
+In order to enable the [WCSLIB](https://www.atnf.csiro.au/people/mcalabre/WCS/) library (the FITS World Coordinate System, which maps the image pixels onto the sky) for the project by using the installed system one or by building it from the sources fetched through the available connection set an `ON` value to the `ENABLE_WCSLIB` CMake variable (it is the default one for the `appCFITSIO` branch):
 
 ```
 # Inside the source root directory
@@ -9,13 +9,15 @@ cmake -S . -B build -DENABLE_WCSLIB=ON
 cmake --build build --target all
 ```
 
-The [cmake/enablers/images/template-project-wcslib-enabler.cmake](/cmake/enablers/images/template-project-wcslib-enabler.cmake) module probes the system installation with `pkg-config` and provides the `WCSLIB::wcslib` target, so link it to your target(s) of interest:
+The [cmake/enablers/images/template-project-wcslib-enabler.cmake](/cmake/enablers/images/template-project-wcslib-enabler.cmake) module probes the system installation with `pkg-config`. When no system installation is found the `TEMPLATE_APP_WCSLIB_URL` source archive gets fetched instead and checked against the `TEMPLATE_APP_WCSLIB_URL_HASH` value. WCSLIB ships an autotools build alone, so the `template_project_autotools_3rdparty_build` function of the [cmake/tools/template-project-autotools-build-function.cmake](/cmake/tools/template-project-autotools-build-function.cmake) module builds it by its own `configure` script and GNU `make` right at the configure time, once per build tree, and installs it into the `_deps/wcslib-install` directory, where the very same `pkg-config` probe finds it then. That path requires a C compiler, GNU `make` and a build directory path without spaces, since the WCSLIB makefiles do not quote their install directories.
+
+Both of the paths provide the very same `WCSLIB::wcslib` target, so link it to your target(s) of interest:
 
 ```
 target_link_libraries(${PROJECT_BINARY_NAME} WCSLIB::wcslib)
 ```
 
-Unlike the [CFITSIO one](/doc/sections/en_US/5-project-build/image-libraries/5-38-enabling-the-cfitsio-library.md), the module has no fetch-from-the-Internet path: WCSLIB ships an autotools build alone, so there is no upstream CMake project for `FetchContent` to build. Install `wcslib-dev` (Debian/Ubuntu), `wcslib-devel` (Fedora/openSUSE) or `astro/wcslib` (FreeBSD) on the host instead.
+The fetched WCSLIB is built as a static library only, so the executable carries it inside and runs on a host without any WCSLIB installed.
 
 ### The controller
 

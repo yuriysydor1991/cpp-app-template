@@ -12,4 +12,4 @@ sudo apt install -y git g++ cmake
 sudo apt install -y pkg-config libcfitsio-dev wcslib-dev
 ```
 
-На дистрибутивах на базі RPM відповідні пакети називаються `pkgconf-pkg-config`, `cfitsio-devel` і `wcslib-devel`; на FreeBSD це `devel/pkgconf`, `astro/cfitsio` і `astro/wcslib` з `pkg`. Без пакету CFITSIO його вихідні коди натомість завантажуються і збираються з мережі, для чого додатково потрібні файли розробки zlib (`zlib1g-dev`). Пакет WCSLIB є обов'язковим: ця бібліотека постачається лише зі збіркою autotools, тому `FetchContent` не має що збирати.
+На дистрибутивах на базі RPM відповідні пакети називаються `pkgconf-pkg-config`, `cfitsio-devel` і `wcslib-devel`; на FreeBSD це `devel/pkgconf`, `astro/cfitsio` і `astro/wcslib` з `pkg`. Без пакету CFITSIO його вихідні коди натомість завантажуються і збираються з мережі, для чого додатково потрібні файли розробки zlib (`zlib1g-dev`). Без пакету WCSLIB натомість завантажується і збирається власним скриптом `configure` архів її вихідних кодів, для чого потрібні компілятор C, GNU `make` (обидва входять до `build-essential`) і шлях до директорії побудови без пробілів.

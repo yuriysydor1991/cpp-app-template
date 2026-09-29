@@ -27,19 +27,19 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     libvulkan-dev mesa-common-dev mesa-vulkan-drivers \
     libadwaita-1-dev libglib2.0-dev-bin libgtkmm-3.0-dev libgtkmm-4.0-dev \
     libwebkitgtk-6.0-dev \
-    libqt6opengl6-dev qt6-base-dev qt6-base-dev-tools qt6-charts-dev \
-    qt6-declarative-dev qt6-location-dev qt6-positioning-dev qt6-tools-dev \
-    qt6-tools-dev-tools qt6-webengine-dev qt6-webengine-dev-tools \
-    qt6-webview-dev \
+    qt6-base-dev qt6-base-dev-tools qt6-charts-dev qt6-declarative-dev \
+    qt6-declarative-private-dev qt6-location-dev qt6-positioning-dev \
+    qt6-tools-dev qt6-tools-dev-tools qt6-webengine-dev \
+    qt6-webengine-dev-tools qt6-webview-dev \
     qml6-module-qtqml-workerscript qml6-module-qtquick \
     qml6-module-qtquick-controls qml6-module-qtquick-dialogs \
     qml6-module-qtquick-layouts qml6-module-qtquick-shapes \
     qml6-module-qtquick-templates qml6-module-qtquick-window \
-    libsdl2-dev libsdl2-image-dev libsdl2-net-dev libsdl2-ttf-dev \
-    libsdl3-dev libsdl3-image-dev libsdl3-ttf-dev libsfml-dev \
+    libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-net-dev \
+    libsdl2-ttf-dev libsdl3-dev libsdl3-image-dev libsdl3-ttf-dev libsfml-dev \
     ffmpeg libgstreamer1.0-dev libgstreamerd-3-dev libgstreamermm-1.0-dev \
     libnotify-dev \
-    giza-dev gnuplot libcfitsio-dev libopencv-dev libplplot-dev wcslib-dev \
+    giza-dev gnuplot libcfitsio-dev libopencv-dev wcslib-dev \
     btop curl fdupes htop nano nmap traceroute wget whois
 
 # The appimage target of every branch demands the appimagetool in the PATH. The
@@ -59,7 +59,7 @@ RUN arch="$(uname -m)" && \
   chmod +x /usr/local/bin/appimagetool && \
   rm -f /tmp/appimagetool
 
-# Every library the distribution ships no package of is cloned, built and
+# Every library the distribution ships no usable package of is cloned, built and
 # erased inside a single layer, so the sources never reach the image.
 
 # wxWidgets
@@ -133,6 +133,17 @@ RUN git clone --branch v2.1.0 --depth 1 --single-branch \
   cmake --build $srcD/sdbus-cpp-build -j$(nproc) && \
   cmake --install $srcD/sdbus-cpp-build --strip && \
   rm -fr $srcD/sdbus-cpp $srcD/sdbus-cpp-build
+
+# PLplot, with the options of the appPLplot branch, since the CMake package of
+# the libplplot-dev fails on the binding files the distribution never ships
+RUN git clone --depth 1 --single-branch \
+    https://git.code.sf.net/p/plplot/plplot $srcD/plplot && \
+  cmake -S $srcD/plplot -B $srcD/plplot-build -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_FLAGS=-std=gnu17 -DPLPLOT_USE_QT5=ON \
+    -DDEFAULT_NO_BINDINGS=ON -DENABLE_cxx=ON -DENABLE_qt=ON && \
+  cmake --build $srcD/plplot-build -j$(nproc) && \
+  cmake --install $srcD/plplot-build --strip && \
+  rm -fr $srcD/plplot $srcD/plplot-build
 
 # The flatpak target of every branch installs its build dependencies into the
 # per user installation, which the /var/jenkins_home volume would drop on every

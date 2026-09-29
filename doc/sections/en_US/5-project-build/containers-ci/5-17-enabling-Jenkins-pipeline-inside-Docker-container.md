@@ -50,8 +50,8 @@ The [cmake/enablers/dockerers/template-project-docker-Jenkins-pipeline-runner-ta
 The image extends the `jenkins/jenkins:lts` one with everything the pipelines of every branch of the template ask for, so a single container serves them all:
 
 - the toolchain and the analyzers: `build-essential`, `cmake`, `meson` with `ninja-build`, `clang-format`, `clang-tidy`, `cppcheck`, `valgrind`, `doxygen` with `graphviz` and the GoogleTest / GoogleMock development packages;
-- the development packages of every library a branch links - Qt6 with the QML, the QtCharts, the Qt Location and the WebView / WebEngine modules, Gtkmm-3 and Gtkmm-4 with the libadwaita and the WebKitGTK, SDL2, SDL3, SFML, FreeGLUT, Vulkan, OpenCV, CFITSIO with WCSLIB, PLplot, giza, Boost, libcurl, the nlohmann JSON, PostgreSQL, MySQL, Firebird and the rest of them;
-- the libraries the distribution ships no package of, built from their upstream sources: wxWidgets, Wt, SQLiteCpp, the MongoDB C and C++ drivers, MatPlot++ and sdbus-c++;
+- the development packages of every library a branch links - Qt6 with the QML, the QtCharts, the Qt Location and the WebView / WebEngine modules, Gtkmm-3 and Gtkmm-4 with the libadwaita and the WebKitGTK, SDL2, SDL3, SFML, FreeGLUT, Vulkan, OpenCV, CFITSIO with WCSLIB, giza, Boost, libcurl, the nlohmann JSON, PostgreSQL, MySQL, Firebird and the rest of them;
+- the libraries the distribution ships no usable package of, built from their upstream sources: wxWidgets, Wt, SQLiteCpp, the MongoDB C and C++ drivers, MatPlot++, sdbus-c++ and PLplot;
 - the packagers: the `flatpak` with the `flatpak-builder`, the `appimagetool`, the `rpm` and the `dpkg-dev` of the `build-essential`.
 
 The snap, the FreeBSD pkg and the WIX MSI packagers stay out of the image: the first one demands a systemd and a LXD of its own, the second one a `cpack` built against the `libpkg` and the third one a MS Windows host.

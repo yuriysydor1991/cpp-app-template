@@ -150,6 +150,10 @@ Examine available branches to find your most applicable variant of the template 
 
 - `appLZMA` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appLZMA), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appLZMA)] with general application related classes to generate a single binary executable that wraps the [liblzma](https://tukaani.org/xz/) (XZ Utils) compression library in a small controller exposing simple in-memory compress / uncompress methods over the `.xz` (LZMA2) container, and demonstrates a compress + uncompress round-trip from the Application.
 
+## Scripting / JavaScript engines
+
+- `appV8` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appV8), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appV8)] with general application related classes to generate a single binary executable that embeds the [V8](https://v8.dev/) JavaScript engine: a small controller initializes the whole V8, runs the JavaScript code given by the Application and binds the JavaScript `console` object to the project logger, so the `console.log("Hello, V8! Insert your JavaScript code here!")` call of the Application prints through it.
+
 
 Alter current `README.md` and a `CHANGELOG.md` files to match your implementation introduced into the destination new project. Examine the `doc` directory for possible translations of a current md document:
 - `uk_UA` at [doc/README.uk_UA.md](doc/README.uk_UA.md)

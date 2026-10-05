@@ -1,22 +1,8 @@
-cmake_minimum_required(VERSION 3.13)
-
-# Enabler module for the Firebird client library (fbclient).
-#
-# Unlike the libcurl/LibXml2/nlohmann-json enablers this one does not delegate
-# to the shared template_project_default_3rdparty_enabler: its FetchContent
-# fallback is useless for Firebird. Firebird is an autotools project whose root
-# CMakeLists.txt is a legacy leftover that requires CMake 2.8.12, resolves its
-# modules through the top level CMAKE_SOURCE_DIR and never exports a consumable
-# client library target, so adding it as a subproject only breaks the configure
-# stage. The development package is the expected and supported path.
-#
-# The system probe is performed through the project cmake/FindFirebird.cmake
-# module, which exposes the Firebird::fbclient imported target the Firebird
-# driver links against.
+cmake_minimum_required(VERSION 3.16)
 
 option(
   ENABLE_FIREBIRD
-  "Set to ON to enable the Firebird client library (fbclient) integration"
+  "Set to ON to enable the Firebird client library (fbclient) (by using system wide available or through the Internet)"
   ON
 )
 
@@ -24,19 +10,62 @@ if (NOT ENABLE_FIREBIRD)
   return()
 endif()
 
+set(TEMPLATE_APP_FIREBIRD_GIT "https://github.com/FirebirdSQL/firebird.git" CACHE STRING "The Firebird DBMS git source repository")
+set(TEMPLATE_APP_FIREBIRD_GIT_TAG "v5.0.4" CACHE STRING "The Firebird project git repository tag of interest")
+
+# The project cmake/FindFirebird.cmake module probes the system installation.
 message(STATUS "Trying to probe system installed Firebird")
 
 find_package(Firebird QUIET)
 
-if (NOT Firebird_FOUND)
-  message(
-    FATAL_ERROR
-    "The Firebird client library (fbclient) development files are not available "
-    "in the system. Install them (for example 'sudo apt install -y firebird-dev') "
-    "or point the TEMPLATE_APP_FIREBIRD_INCLUDE_HINT and the "
-    "TEMPLATE_APP_FIREBIRD_LIB_HINT cache variables at your own Firebird "
-    "installation."
-  )
+if (Firebird_FOUND)
+  message(STATUS "System already contains the Firebird library")
+  return()
 endif()
+
+message(STATUS "The 'Firebird' is not available in the system")
+message(STATUS "Trying to make Firebird library available through the Internet")
+
+# Firebird is an autotools project whose root CMakeLists.txt is a legacy
+# leftover, so the template_project_default_3rdparty_enabler FetchContent can
+# not add it. The client library alone is built as an external project instead,
+# with the binary relocation that makes it look for its libtommath, its
+# configuration and its plugins next to itself.
+include(ExternalProject)
+include(ProcessorCount)
+
+ProcessorCount(fbJobs)
+
+set(fbStageDir ${CMAKE_BINARY_DIR}/_deps/firebird-src/gen/Release/firebird)
+
+ExternalProject_Add(
+  FirebirdClient
+  GIT_REPOSITORY ${TEMPLATE_APP_FIREBIRD_GIT}
+  GIT_TAG ${TEMPLATE_APP_FIREBIRD_GIT_TAG}
+  GIT_SHALLOW ON
+  GIT_SUBMODULES ""
+  UPDATE_DISCONNECTED ON
+  SOURCE_DIR ${CMAKE_BINARY_DIR}/_deps/firebird-src
+  BUILD_IN_SOURCE ON
+  CONFIGURE_COMMAND
+    ./autogen.sh --enable-client-only --enable-binreloc
+      --with-builtin-tommath --with-builtin-tomcrypt
+  BUILD_COMMAND make -j${fbJobs}
+  INSTALL_COMMAND ""
+  BUILD_BYPRODUCTS ${fbStageDir}/lib/libfbclient.so
+)
+
+# The imported target include directory has to exist at the configure time.
+file(MAKE_DIRECTORY ${fbStageDir}/include)
+
+add_library(Firebird::fbclient SHARED IMPORTED GLOBAL)
+
+set_target_properties(
+  Firebird::fbclient PROPERTIES
+  IMPORTED_LOCATION ${fbStageDir}/lib/libfbclient.so
+  INTERFACE_INCLUDE_DIRECTORIES ${fbStageDir}/include
+)
+
+add_dependencies(Firebird::fbclient FirebirdClient)
 
 message(STATUS "The project Firebird is made available")

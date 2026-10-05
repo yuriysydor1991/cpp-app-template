@@ -6,6 +6,12 @@ To be able to compile the template project against the [Firebird](https://firebi
 sudo apt install -y firebird-dev
 ```
 
+When the system lacks these development files the `cmake/enablers/template-project-firebird-enabler.cmake` enabler fetches the [Firebird](https://firebirdsql.org/) sources (see the `TEMPLATE_APP_FIREBIRD_GIT` and the `TEMPLATE_APP_FIREBIRD_GIT_TAG` CMake cache variables) and builds the client library alone together with the project, which demands the next build tools and libraries (GNU/Linux based OS):
+
+```
+sudo apt install -y autoconf automake libtool-bin make unzip zlib1g-dev libicu-dev libncurses-dev
+```
+
 In order to install the [Firebird](https://firebirdsql.org/) DBMS server by itself (it also pulls in the `libfbclient2` runtime library) the next command may be used (GNU/Linux based OS, the version suffix may differ between distributions):
 
 ```

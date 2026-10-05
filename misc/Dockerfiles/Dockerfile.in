@@ -7,30 +7,30 @@ ARG BUILDDIR=/src/${PROJECT_BINARY_NAME}-build-docker-singlerun
 
 WORKDIR /src
 
-RUN git clone --single-branch --progress --branch master --depth 1  https://github.com/mongodb/mongo-c-driver.git mongo-c-driver
-WORKDIR /src/mongo-c-driver
+# Each driver is cloned, built and erased inside a layer of its own, so neither
+# the sources nor the build trees reach the image.
+RUN git clone --single-branch --progress --branch master --depth 1  https://github.com/mongodb/mongo-c-driver.git mongo-c-driver && \
+  cmake -B /src/mongo-c-driver/build -S /src/mongo-c-driver -DENABLE_TESTS=OFF -DENABLE_EXAMPLES=OFF -DCMAKE_INSTALL_LIBDIR=lib && \
+  cmake --build /src/mongo-c-driver/build -j$(nproc) --target all && \
+  cmake --install /src/mongo-c-driver/build --prefix /usr && \
+  rm -fr /src/mongo-c-driver
 
-RUN cmake -B /src/mongo-c-driver/build -S /src/mongo-c-driver -DENABLE_TESTS=OFF -DENABLE_EXAMPLES=OFF -DCMAKE_INSTALL_LIBDIR=lib
-RUN cmake --build /src/mongo-c-driver/build -j$(nproc) --target all
-RUN cmake --install /src/mongo-c-driver/build --prefix /usr
+RUN git clone --progress https://github.com/mongodb/mongo-cxx-driver.git mongo-cxx-driver && \
+  cmake -B /src/mongo-cxx-driver/build -S /src/mongo-cxx-driver -DCMAKE_INSTALL_LIBDIR=lib \
+    -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE=Release -DENABLE_TESTS=OFF -DCMAKE_INSTALL_PREFIX=/usr && \
+  cmake --build /src/mongo-cxx-driver/build -j$(nproc) --target all && \
+  cmake --install /src/mongo-cxx-driver/build && \
+  rm -fr /src/mongo-cxx-driver
 
-
-WORKDIR /src/
-RUN git clone --progress https://github.com/mongodb/mongo-cxx-driver.git mongo-cxx-driver
-WORKDIR /src/mongo-cxx-driver
-
-RUN cmake -B /src/mongo-cxx-driver/build -S /src/mongo-cxx-driver -DCMAKE_INSTALL_LIBDIR=lib \
-  -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE=Release -DENABLE_TESTS=OFF -DCMAKE_INSTALL_PREFIX=/usr
-RUN cmake --build /src/mongo-cxx-driver/build -j$(nproc) --target all
-RUN cmake --install /src/mongo-cxx-driver/build
-
-
+# The sources come in through a bind mount and the build tree is erased right
+# after the install, so neither of them reaches the image.
 RUN --mount=from=project,target=/src/${PROJECT_BINARY_NAME} \ 
  cd /src/${PROJECT_BINARY_NAME} && \
  mkdir -vp $BUILDDIR && \
  cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Release &&  \
  cmake --build $BUILDDIR -j$(nproc) --target ${PROJECT_BINARY_NAME} && \
- cmake --install $BUILDDIR --prefix /usr
+ cmake --install $BUILDDIR --prefix /usr && \
+ rm -fr $BUILDDIR
 
 
 USER ${DOCKERFILE_SINGLE_RUN_USER_NAME}

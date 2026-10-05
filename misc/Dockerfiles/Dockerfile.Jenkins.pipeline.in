@@ -17,13 +17,13 @@ ARG prefixD=/usr
 
 WORKDIR $srcD
 
-RUN git clone https://github.com/SRombauts/SQLiteCpp.git
-
-WORKDIR $srcD/SQLiteCpp
-
-RUN cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$prefixD
-RUN cmake --build build -j$(nproc)
-RUN cmake --install build --prefix $prefixD
+# SQLiteCpp is cloned, built and erased inside a single layer, so neither the
+# sources nor the build tree reach the image.
+RUN git clone https://github.com/SRombauts/SQLiteCpp.git && \
+  cmake -S $srcD/SQLiteCpp -B $srcD/SQLiteCpp/build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$prefixD && \
+  cmake --build $srcD/SQLiteCpp/build -j$(nproc) && \
+  cmake --install $srcD/SQLiteCpp/build --prefix $prefixD && \
+  rm -fr $srcD/SQLiteCpp
 
 USER jenkins
 

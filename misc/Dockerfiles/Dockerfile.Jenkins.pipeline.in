@@ -22,16 +22,19 @@ ARG prjName=matplotplusplus
 ARG matPlotScr=$srcD/$prjName
 ARG matPlotBuild=$srcD/$prjName-build-docker-singlerun
 
-RUN git clone https://github.com/alandefreitas/matplotplusplus.git $prjName
-RUN cmake -B $matPlotBuild -S $matPlotScr \
+# Matplot++ is cloned, built and erased inside a single layer, so neither the
+# sources nor the build tree reach the image.
+RUN git clone https://github.com/alandefreitas/matplotplusplus.git $prjName && \
+  cmake -B $matPlotBuild -S $matPlotScr \
     -DMATPLOTPP_BUILD_EXAMPLES=OFF \
     -DMATPLOTPP_BUILD_SHARED_LIBS=ON \
     -DMATPLOTPP_BUILD_TESTS=OFF \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=ON \
-    -DCMAKE_INSTALL_PREFIX=$prefix
-RUN cmake --build $matPlotBuild -j$(nproc)
-RUN cmake --install $matPlotBuild --prefix $prefix
+    -DCMAKE_INSTALL_PREFIX=$prefix && \
+  cmake --build $matPlotBuild -j$(nproc) && \
+  cmake --install $matPlotBuild --prefix $prefix && \
+  rm -fr $matPlotScr $matPlotBuild
 
 
 USER jenkins

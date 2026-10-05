@@ -6,11 +6,14 @@ RUN apt install -y meson
 
 ARG BUILDDIR=/src/@PROJECT_BINARY_NAME@-build-docker-singlerun
 
+# The sources come in through a bind mount and the build tree is erased right
+# after the install, so neither of them reaches the image.
 RUN --mount=from=project,target=/src/@PROJECT_BINARY_NAME@ \ 
  cd /src/@PROJECT_BINARY_NAME@ && \
  meson setup $BUILDDIR && \
  meson compile -C ${BUILDDIR} && \
- meson install -C ${BUILDDIR}
+ meson install -C ${BUILDDIR} && \
+ rm -fr $BUILDDIR
 
 USER ubuntu
 

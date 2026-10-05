@@ -7,13 +7,10 @@ ARG DEBIAN_FRONTEND=noninteractive
 ARG srcD=/usr/src
 
 # The whole branch set installs in a single apt transaction, so the dependency
-# resolution runs once instead of once per package group, and the BuildKit
-# caches keep the archives and the package lists for the next image build.
-RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
-    --mount=type=cache,target=/var/lib/apt,sharing=locked \
-  rm -f /etc/apt/apt.conf.d/docker-clean && \
-  echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache && \
-  apt-get update && \
+# resolution runs once instead of once per package group, and the downloaded
+# archives and package lists are erased inside the very same layer, so neither
+# the image nor the builder cache keeps them.
+RUN apt-get update && \
   apt-get upgrade -y && \
   apt-get install -y \
     autoconf automake build-essential ccache clang-format clang-tidy cmake \
@@ -40,7 +37,9 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     ffmpeg libgstreamer1.0-dev libgstreamerd-3-dev libgstreamermm-1.0-dev \
     libnotify-dev \
     giza-dev gnuplot libcfitsio-dev libopencv-dev wcslib-dev \
-    btop curl fdupes htop nano nmap traceroute wget whois
+    btop curl fdupes htop nano nmap traceroute wget whois && \
+  apt-get clean && \
+  rm -fr /var/lib/apt/lists/*
 
 # The appimage target of every branch demands the appimagetool in the PATH. The
 # extracted tool starts without FUSE and the pinned runtime spares the package

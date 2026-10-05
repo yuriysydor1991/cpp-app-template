@@ -75,7 +75,7 @@ They land in the per user installation of the `jenkins` user, the one the `flatp
 
 ### The image build and the pipeline speed
 
-- the whole package set installs in a single `apt` transaction and the BuildKit caches keep the archives and the package lists, so a repeated image build re-installs without re-downloading;
+- the whole package set installs in a single `apt` transaction and the downloaded archives and the package lists are erased inside the very same layer, so neither the image nor the builder cache keeps them;
 - every library built from the sources is cloned shallow, built and erased inside a single layer, so neither the sources nor the build trees reach the image;
 - the image carries the `ccache` and points the `CMAKE_C_COMPILER_LAUNCHER` and the `CMAKE_CXX_COMPILER_LAUNCHER` environment variables at it, so the configure step of every branch picks it up and the repeated pipeline builds turn into cache hits;
 - the built-in node keeps two executors, so the parallel test stages of the pipeline really run in parallel while the builds of the two of them still leave the host machine usable;

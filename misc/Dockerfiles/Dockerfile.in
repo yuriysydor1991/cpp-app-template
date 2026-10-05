@@ -5,12 +5,17 @@ RUN apt install -y libstdc++6 build-essential git cmake g++
 
 ARG BUILDDIR=/src/${PROJECT_BINARY_NAME}-build-docker-singlerun
 
+# The sources come in through a bind mount and the build tree is erased right
+# after the install, so neither of them reaches the image. Only the downloaded
+# Freesound sounds stay, since the binary plays them from the build tree path it
+# was configured with.
 RUN --mount=from=project,target=/src/${PROJECT_BINARY_NAME} \ 
  cd /src/${PROJECT_BINARY_NAME} && \
  mkdir -vp $BUILDDIR && \
  cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Release &&  \
  cmake --build $BUILDDIR -j$(nproc) --target ${PROJECT_BINARY_NAME} && \
- cmake --install $BUILDDIR --prefix /usr
+ cmake --install $BUILDDIR --prefix /usr && \
+ find $BUILDDIR -mindepth 1 -maxdepth 1 ! -name resources -exec rm -fr {} +
 
 USER ${DOCKERFILE_SINGLE_RUN_USER_NAME}
 

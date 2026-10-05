@@ -151,6 +151,10 @@
 
 - гілка `appLZMA` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appLZMA), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appLZMA)] (**поточна**) яка містить загальні класи для генераці одинарного бінарного виконуваного файлу, що загортає бібліотеку стиснення [liblzma](https://tukaani.org/xz/) (XZ Utils) у невеликий контролер з простими методами стиснення / розпакування у пам'яті над контейнером `.xz` (LZMA2) і демонструє цикл стиснення + розпакування у класі Application.
 
+## Скриптові рушії / JavaScript
+
+- гілка `appV8` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appV8), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appV8)] яка містить загальні класи для генерації одинарного бінарного виконуваного файлу, що вбудовує рушій JavaScript [V8](https://v8.dev/): невеликий контролер ініціалізує весь V8, виконує заданий класом Application код JavaScript і привʼязує обʼєкт JavaScript `console` до журналу проекту, тож виклик `console.log("Hello, V8! Insert your JavaScript code here!")` у класі Application друкує саме через нього.
+
 
 Редагуй поточний файл `README.md` і `CHANGELOG.md` щоб документація відповідала впровадженому коду. Для перекладів даного файлу `README.md`:
 - `uk_UA` за відносною адресою doc/README.uk_UA.md

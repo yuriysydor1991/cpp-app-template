@@ -22,5 +22,9 @@ set(CPACK_DEB_COMPONENT_INSTALL ON)
 set(CPACK_PACKAGE_DESCRIPTION ${CMAKE_PROJECT_DESCRIPTION})
 set(CPACK_DEB_PACKAGE_ARCHITECTURE "amd64")  # Or arm64
 set(CPACK_DEBIAN_PACKAGE_DEPENDS "")
+# The executable links the libnode shared library the V8 lives in, which every
+# distribution release names by it's own ABI version (libnode109, libnode127),
+# so the dpkg-shlibdeps tool finds the package to depend on.
+set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
 
 include(CPack)

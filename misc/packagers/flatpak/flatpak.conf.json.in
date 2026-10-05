@@ -6,6 +6,28 @@
   "command": "${PROJECT_BINARY_NAME}",
   "modules": [
     {
+      "name": "libnode",
+      "buildsystem": "simple",
+      "build-commands": [
+        "./configure --prefix=/app --shared --without-npm --without-corepack",
+        "make -j$FLATPAK_BUILDER_N_JOBS",
+        "make install",
+        "ln -sf libnode.so.127 /app/lib/libnode.so"
+      ],
+      "cleanup": [
+        "/bin",
+        "/include",
+        "/share"
+      ],
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://nodejs.org/dist/v22.22.1/node-v22.22.1.tar.xz",
+          "sha256": "87104b07e7acee748bcc5391e1bc69cf3571caa0fdfb8b1d6b5fd3f9599b7849"
+        }
+      ]
+    },
+    {
       "name": "${CMAKE_PROJECT_NAME}",
       "buildsystem": "cmake",
       "config-opts": [

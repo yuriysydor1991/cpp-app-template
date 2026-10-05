@@ -24,7 +24,7 @@ env:
   BUILDDIR: build
   BDJUNITOUT: junit-out
   # The development packages of the branch specific libraries.
-  DEPENDENCIES: ''
+  DEPENDENCIES: libnode-dev
 
 jobs:
   code-format:

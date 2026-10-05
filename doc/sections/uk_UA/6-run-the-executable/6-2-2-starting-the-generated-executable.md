@@ -8,4 +8,10 @@
 ./src/CppAppTemplate
 ```
 
+Виконуваний файл гілки `appV8` ініціалізує рушій JavaScript V8 і виконує код JavaScript класу Application, чий виклик `console.log` друкує через журнал проекту з іменем файлу JavaScript і номером рядка замість C++ відповідників:
+
+```
+2026-10-05 18:25:16 INF 140370990078208 main.js:1 : Hello, V8! Insert your JavaScript code here!
+```
+
 І ще раз, ім'я `CppAppTemplate` являється ім'ям головного виконуваного бінарного файлу за замовчуванням. Його необхідно замінити у разі заміни ім'я за умовчанням у кореневому файлі `CMakeLists.txt` (змінні `CMAKE_PROJECT_NAME` або `PROJECT_BINARY_NAME`).

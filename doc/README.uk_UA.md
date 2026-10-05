@@ -24,7 +24,7 @@
 
 - гілка `main` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template)] один файл з функцією `main` і з усіма можливими інтеграціями для генерації одного бінарного виконуваного файлу.
 
-- гілка `app` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/app), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/app)] (**поточна**) яка містить загальні інфраструктурні класи програми для генераці одинарного бінарного виконуваного файлу.
+- гілка `app` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/app), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/app)] яка містить загальні інфраструктурні класи програми для генераці одинарного бінарного виконуваного файлу.
 
 - гілка `applib` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/applib), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/applib)] яка складається з класів банарного виконуваного файлу з додатковими інфраструктурними класами для генерації підключаємої бібліотеки і заголовкових файлів (доступні для встановлення), що призначені для поширення коду бібліотеки для повторного перевикористання іншими бінарнами файлами.
 
@@ -151,6 +151,10 @@
 
 - гілка `appLZMA` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appLZMA), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appLZMA)] яка містить загальні класи для генераці одинарного бінарного виконуваного файлу, що загортає бібліотеку стиснення [liblzma](https://tukaani.org/xz/) (XZ Utils) у невеликий контролер з простими методами стиснення / розпакування у пам'яті над контейнером `.xz` (LZMA2) і демонструє цикл стиснення + розпакування у класі Application.
 
+## Скриптові рушії / JavaScript
+
+- гілка `appV8` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appV8), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appV8)] (**поточна**) яка містить загальні класи для генерації одинарного бінарного виконуваного файлу, що вбудовує рушій JavaScript [V8](https://v8.dev/): невеликий контролер ініціалізує весь V8, виконує заданий класом Application код JavaScript і привʼязує обʼєкт JavaScript `console` до журналу проекту, тож виклик `console.log("Hello, V8! Insert your JavaScript code here!")` у класі Application друкує саме через нього.
+
 
 Редагуй поточний файл `README.md` і `CHANGELOG.md` щоб документація відповідала впровадженому коду. Для перекладів даного файлу `README.md`:
 - `uk_UA` за відносною адресою doc/README.uk_UA.md
@@ -238,6 +242,8 @@
         1. [Вмикання інтеграції OpenJPEG (JPEG 2000)](/doc/sections/uk_UA/5-project-build/image-libraries/5-31-enabling-the-openjpeg-library.md)
         1. [Вмикання інтеграції libavif (AVIF)](/doc/sections/uk_UA/5-project-build/image-libraries/5-32-enabling-the-libavif-library.md)
         1. [Вмикання інтеграції libheif (HEIF/HEIC)](/doc/sections/uk_UA/5-project-build/image-libraries/5-33-enabling-the-libheif-library.md)
+    1. Скриптові рушії
+        1. [Вмикання рушія JavaScript V8](/doc/sections/uk_UA/5-project-build/scripting/5-57-enabling-the-V8-JavaScript-engine.md)
 1. [Запуск головного виконуваного файлу](/doc/sections/uk_UA/6-run-the-executable/6-run-the-executable.md)
     1. [Запуск через IDE](/doc/sections/uk_UA/6-run-the-executable/6-1-IDE-run.md)
     1. Запуск з терміналу

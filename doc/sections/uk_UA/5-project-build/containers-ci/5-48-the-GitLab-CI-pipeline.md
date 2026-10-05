@@ -24,10 +24,10 @@ variables:
   # The tools every job needs on top of the bare image.
   TOOLS: build-essential cmake g++ git ca-certificates pkg-config
   # The development packages of the branch specific libraries.
-  DEPENDENCIES: ''
+  DEPENDENCIES: libnode-dev
 ```
 
-Саме остання змінна - єдиний рядок, яким різняться гілки шаблону, отож проект, який долучає власну бібліотеку, дописує туди її пакунок розробки. Ця гілка не потребує пакунків поза спільними інструментами, отож її власний рядок лишається порожнім.
+Саме остання змінна - єдиний рядок, яким різняться гілки шаблону, отож проект, який долучає власну бібліотеку, дописує туди її пакунок розробки.
 
 ### Параметри ручного запуску
 

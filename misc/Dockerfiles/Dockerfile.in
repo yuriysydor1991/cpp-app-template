@@ -6,25 +6,30 @@ RUN apt install -y libboost-all-dev
 
 WORKDIR /src
 
-RUN git clone --single-branch --progress --branch 4.11.4 --depth 1 https://github.com/emweb/wt.git wt
-WORKDIR /src/wt
-RUN cmake -B /src/wt/build -S /src/wt  -DENABLE_LIBWTDBO=OFF -DENABLE_OPENGL=OFF \
-  -DENABLE_FIREBIRD=OFF -DENABLE_POSTGRES=OFF -DENABLE_SQLITE=OFF \
-  -DENABLE_MYSQL=OFF -DENABLE_MSSQLSERVER=OFF -DINSTALL_DOCUMENTATION=OFF \
-  -DBUILD_EXAMPLES=OFF -DENABLE_QT4=OFF -DENABLE_QT5=OFF -DENABLE_QT6=OFF \
-  -DENABLE_LIBWTTEST=OFF -DENABLE_PANGO=OFF -DENABLE_HARU=OFF -DCONNECTOR_FCGI=OFF \
-  -DBUILD_TESTS=OFF -DCONNECTOR_ISAPI=OFF
-RUN cmake --build /src/wt/build -j$(nproc)
-RUN cmake --install /src/wt/build --prefix /usr
+# Wt is cloned, built and erased inside a single layer, so neither the sources
+# nor the build tree reach the image.
+RUN git clone --single-branch --progress --branch 4.11.4 --depth 1 https://github.com/emweb/wt.git wt && \
+  cmake -B /src/wt/build -S /src/wt  -DENABLE_LIBWTDBO=OFF -DENABLE_OPENGL=OFF \
+    -DENABLE_FIREBIRD=OFF -DENABLE_POSTGRES=OFF -DENABLE_SQLITE=OFF \
+    -DENABLE_MYSQL=OFF -DENABLE_MSSQLSERVER=OFF -DINSTALL_DOCUMENTATION=OFF \
+    -DBUILD_EXAMPLES=OFF -DENABLE_QT4=OFF -DENABLE_QT5=OFF -DENABLE_QT6=OFF \
+    -DENABLE_LIBWTTEST=OFF -DENABLE_PANGO=OFF -DENABLE_HARU=OFF -DCONNECTOR_FCGI=OFF \
+    -DBUILD_TESTS=OFF -DCONNECTOR_ISAPI=OFF && \
+  cmake --build /src/wt/build -j$(nproc) && \
+  cmake --install /src/wt/build --prefix /usr && \
+  rm -fr /src/wt
 
 ARG BUILDDIR=/src/${PROJECT_BINARY_NAME}-build-docker-singlerun
 
+# The sources come in through a bind mount and the build tree is erased right
+# after the install, so neither of them reaches the image.
 RUN --mount=from=project,target=/src/${PROJECT_BINARY_NAME} \ 
  cd /src/${PROJECT_BINARY_NAME} && \
  mkdir -vp $BUILDDIR && \
  cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Release &&  \
  cmake --build $BUILDDIR -j$(nproc) --target ${PROJECT_BINARY_NAME} && \
- cmake --install $BUILDDIR --prefix /usr
+ cmake --install $BUILDDIR --prefix /usr && \
+ rm -fr $BUILDDIR
 
 RUN install -o ${DOCKERFILE_SINGLE_RUN_USER_NAME} /dev/null /var/log/${PROJECT_BINARY_NAME}-${CMAKE_PROJECT_VERSION}-http-access.log
 

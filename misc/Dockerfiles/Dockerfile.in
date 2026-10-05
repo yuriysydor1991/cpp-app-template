@@ -10,20 +10,26 @@ WORKDIR $srcD
 
 ARG PLPLOTB=$srcD/plplot-build-docker-singlerun
 
-RUN git clone https://git.code.sf.net/p/plplot/plplot plplot
-RUN cmake -B $PLPLOTB -S plplot -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$prefixD -DENABLE_fortran=OFF
-RUN cmake --build $PLPLOTB -j$(nproc)
-RUN cmake --install $PLPLOTB --prefix $prefixD
+# PLplot is cloned, built and erased inside a single layer, so neither the
+# sources nor the build tree reach the image.
+RUN git clone https://git.code.sf.net/p/plplot/plplot plplot && \
+  cmake -B $PLPLOTB -S plplot -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$prefixD -DENABLE_fortran=OFF && \
+  cmake --build $PLPLOTB -j$(nproc) && \
+  cmake --install $PLPLOTB --prefix $prefixD && \
+  rm -fr $srcD/plplot $PLPLOTB
 
 
 ARG BUILDDIR=$srcD/${PROJECT_BINARY_NAME}-build-docker-singlerun
 
+# The sources come in through a bind mount and the build tree is erased right
+# after the install, so neither of them reaches the image.
 RUN --mount=from=project,target=/src/${PROJECT_BINARY_NAME} \ 
  cd /src/${PROJECT_BINARY_NAME} && \
  mkdir -vp $BUILDDIR && \
  cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Release &&  \
  cmake --build $BUILDDIR -j$(nproc) --target ${PROJECT_BINARY_NAME} && \
- cmake --install $BUILDDIR --prefix $prefixD
+ cmake --install $BUILDDIR --prefix $prefixD && \
+ rm -fr $BUILDDIR
 
 
 USER ${DOCKERFILE_SINGLE_RUN_USER_NAME}

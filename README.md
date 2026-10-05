@@ -142,6 +142,10 @@ Examine available branches to find your most applicable variant of the template 
 
 - `appGtkmm4GDBusClient` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appGtkmm4GDBusClient), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appGtkmm4GDBusClient)] with general application related classes to generate a single binary executable that reads the general system information from [systemd-hostnamed](https://www.freedesktop.org/software/systemd/man/latest/org.freedesktop.hostname1.html) over the [DBus](https://en.wikipedia.org/wiki/D-Bus) with the native GLib [GDBus](https://docs.gtk.org/gio/) stack through the [Gtkmm-4](https://gtkmm.gnome.org/en/index.html)/giomm `Gio::DBus` API and logs it via the application logger (the gtkmm4 framework counterpart of the sdbus-c++ based appSDBusCxxClient branch).
 
+## Scripting / JavaScript engines
+
+- `appV8` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appV8), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appV8)] with general application related classes to generate a single binary executable that embeds the [V8](https://v8.dev/) JavaScript engine: a small controller initializes the whole V8, runs the JavaScript code given by the Application and binds the JavaScript `console` object to the project logger, so the `console.log("Hello, V8! Insert your JavaScript code here!")` call of the Application prints through it.
+
 
 Alter current `README.md` and a `CHANGELOG.md` files to match your implementation introduced into the destination new project. Examine the `doc` directory for possible translations of a current md document:
 - `uk_UA` at [doc/README.uk_UA.md](doc/README.uk_UA.md)

@@ -21,10 +21,13 @@ WORKDIR $srcD
 ARG plotgenD=PlotGenCpp
 ARG plotgenB=PlotGenCpp-build
 
-RUN git clone https://github.com/skhelladi/PlotGenCpp.git $plotgenD
-RUN cmake -B $plotgenB -S $plotgenD -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$prefixD
-RUN cmake --build $plotgenB -j$(nproc)
-RUN cmake --install $plotgenB --prefix $prefixD
+# PlotGenCpp is cloned, built and erased inside a single layer, so neither the
+# sources nor the build tree reach the image.
+RUN git clone https://github.com/skhelladi/PlotGenCpp.git $plotgenD && \
+  cmake -B $plotgenB -S $plotgenD -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$prefixD && \
+  cmake --build $plotgenB -j$(nproc) && \
+  cmake --install $plotgenB --prefix $prefixD && \
+  rm -fr $plotgenD $plotgenB
 
 USER jenkins
 

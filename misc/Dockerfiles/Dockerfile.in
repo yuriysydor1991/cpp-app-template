@@ -12,19 +12,25 @@ WORKDIR $srcD
 ARG plotgenD=PlotGenCpp
 ARG plotgenB=PlotGenCpp-build
 
-RUN git clone https://github.com/skhelladi/PlotGenCpp.git $plotgenD
-RUN cmake -B $plotgenB -S $plotgenD -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$prefixD
-RUN cmake --build $plotgenB -j$(nproc)
-RUN cmake --install $plotgenB --prefix $prefixD
+# PlotGenCpp is cloned, built and erased inside a single layer, so neither the
+# sources nor the build tree reach the image.
+RUN git clone https://github.com/skhelladi/PlotGenCpp.git $plotgenD && \
+  cmake -B $plotgenB -S $plotgenD -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$prefixD && \
+  cmake --build $plotgenB -j$(nproc) && \
+  cmake --install $plotgenB --prefix $prefixD && \
+  rm -fr $plotgenD $plotgenB
 
 ARG BUILDDIR=/src/${PROJECT_BINARY_NAME}-build-docker-singlerun
 
+# The sources come in through a bind mount and the build tree is erased right
+# after the install, so neither of them reaches the image.
 RUN --mount=from=project,target=/src/${PROJECT_BINARY_NAME} \
  cd /src/${PROJECT_BINARY_NAME} && \
  mkdir -vp $BUILDDIR && \
  cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Release &&  \
  cmake --build $BUILDDIR -j$(nproc) --target ${PROJECT_BINARY_NAME} && \
- cmake --install $BUILDDIR --prefix ${prefixD}
+ cmake --install $BUILDDIR --prefix $prefixD && \
+ rm -fr $BUILDDIR
 
 USER ${DOCKERFILE_SINGLE_RUN_USER_NAME}
 

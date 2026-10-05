@@ -13,21 +13,27 @@ ARG DBusCxxB=$srcD/$DBusCxxS-build
 
 WORKDIR $srcD
 
-RUN git clone --branch v1.6.0 https://github.com/Kistler-Group/sdbus-cpp.git $DBusCxxS
-RUN cmake -B $DBusCxxB -S $DBusCxxS -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON
-RUN cmake --build $DBusCxxB -j$(nproc)
-RUN cmake --install $DBusCxxB --prefix $prefixD
+# sdbus-c++ is cloned, built and erased inside a single layer, so neither the
+# sources nor the build tree reach the image.
+RUN git clone --branch v1.6.0 https://github.com/Kistler-Group/sdbus-cpp.git $DBusCxxS && \
+  cmake -B $DBusCxxB -S $DBusCxxS -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON && \
+  cmake --build $DBusCxxB -j$(nproc) && \
+  cmake --install $DBusCxxB --prefix $prefixD && \
+  rm -fr $DBusCxxS $DBusCxxB
 
 WORKDIR $srcD
 
 ARG BUILDDIR=$srcD/${PROJECT_BINARY_NAME}-build-docker-singlerun
 
+# The sources come in through a bind mount and the build tree is erased right
+# after the install, so neither of them reaches the image.
 RUN --mount=from=project,target=$srcD/${PROJECT_BINARY_NAME} \ 
  cd $srcD/${PROJECT_BINARY_NAME} && \
  mkdir -vp $BUILDDIR && \
  cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Release &&  \
  cmake --build $BUILDDIR -j$(nproc) --target ${PROJECT_BINARY_NAME} && \
- cmake --install $BUILDDIR --prefix $prefixD
+ cmake --install $BUILDDIR --prefix $prefixD && \
+ rm -fr $BUILDDIR
 
 USER ${DOCKERFILE_SINGLE_RUN_USER_NAME}
 

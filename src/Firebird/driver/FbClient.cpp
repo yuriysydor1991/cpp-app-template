@@ -2,7 +2,6 @@
 
 #include <ibase.h>
 
-#include <cstring>
 #include <memory>
 #include <string>
 #include <vector>
@@ -38,8 +37,7 @@ bool has_error(const ISC_STATUS_ARRAY& status)
     char message[512];
     const ISC_STATUS* sptr = status;
 
-    if (fb_interpret(message, sizeof(message),
-                     const_cast<const ISC_STATUS**>(&sptr))) {
+    if (fb_interpret(message, sizeof(message), &sptr)) {
       LOGE("Firebird error: " << message);
     }
 
@@ -121,26 +119,25 @@ std::string FbClient::query_scalar(const std::string& query)
     return {};
   }
 
-  // Output descriptor for a single column.
-  XSQLDA* out_sqlda = reinterpret_cast<XSQLDA*>(std::malloc(XSQLDA_LENGTH(1)));
-  std::memset(out_sqlda, 0, XSQLDA_LENGTH(1));
-  out_sqlda->version = SQLDA_VERSION1;
-  out_sqlda->sqln = 1;
+  // Output descriptor for a single column: the XSQLDA embeds exactly one
+  // XSQLVAR, so XSQLDA_LENGTH(1) is its own size and no heap block is needed.
+  XSQLDA out_sqlda{};
+  out_sqlda.version = SQLDA_VERSION1;
+  out_sqlda.sqln = 1;
 
   isc_dsql_allocate_statement(impl->status, &impl->db, &stmt);
 
   isc_dsql_prepare(impl->status, &trans, &stmt, 0, query.c_str(),
-                   SQL_DIALECT_V6, out_sqlda);
-  if (has_error(impl->status) || out_sqlda->sqld < 1) {
+                   SQL_DIALECT_V6, &out_sqlda);
+  if (has_error(impl->status) || out_sqlda.sqld < 1) {
     LOGE("Failure to prepare the Firebird query: " << query);
     isc_dsql_free_statement(impl->status, &stmt, DSQL_drop);
     isc_rollback_transaction(impl->status, &trans);
-    std::free(out_sqlda);
     return {};
   }
 
   // Bind the single (VARCHAR) output column to a local buffer.
-  XSQLVAR& var = out_sqlda->sqlvar[0];
+  XSQLVAR& var = out_sqlda.sqlvar[0];
   const size_t buffer_len = static_cast<size_t>(var.sqllen) + sizeof(short) + 1;
   std::vector<char> buffer(buffer_len, 0);
   short null_flag = 0;
@@ -152,7 +149,7 @@ std::string FbClient::query_scalar(const std::string& query)
   isc_dsql_execute(impl->status, &trans, &stmt, SQL_DIALECT_V6, nullptr);
   if (has_error(impl->status)) {
     LOGE("Failure to execute the Firebird query: " << query);
-  } else if (isc_dsql_fetch(impl->status, &stmt, SQL_DIALECT_V6, out_sqlda) ==
+  } else if (isc_dsql_fetch(impl->status, &stmt, SQL_DIALECT_V6, &out_sqlda) ==
                  0 &&
              null_flag == 0) {
     // SQL_VARYING data is a 2-byte length prefix followed by the characters.
@@ -163,7 +160,6 @@ std::string FbClient::query_scalar(const std::string& query)
 
   isc_dsql_free_statement(impl->status, &stmt, DSQL_drop);
   isc_commit_transaction(impl->status, &trans);
-  std::free(out_sqlda);
 
   return result;
 }

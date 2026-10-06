@@ -284,6 +284,12 @@ ENV CCACHE_MAXSIZE=20G \
     CMAKE_C_COMPILER_LAUNCHER=ccache \
     CMAKE_CXX_COMPILER_LAUNCHER=ccache
 
+# A build of one executor starves the other one's sh step of the CPU quota and
+# the disk, so it's wrapper misses the 5 minutes heartbeat and Jenkins aborts
+# the healthy step with the -1 exit code (JENKINS-48300). A day long interval
+# keeps the check for the really dead wrappers alone.
+ENV JAVA_OPTS="-Dorg.jenkinsci.plugins.durabletask.BourneShellScript.HEARTBEAT_CHECK_INTERVAL=86400"
+
 # The jobs come from the tree being configured instead of a clone of the
 # published branch, and the CACHEBUST of the configure step refreshes them
 # without invalidating any layer above.

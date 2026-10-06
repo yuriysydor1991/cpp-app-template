@@ -198,6 +198,11 @@ pipeline {
             sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase CTEST_DefaultLogger --suite CTEST_DefaultLogger'
           }
         }
+        stage('CTEST_LibraryRealLogger') {
+          steps {
+            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase CTEST_LibraryRealLogger --suite CTEST_LibraryRealLogger'
+          }
+        }
         stage('CTEST_app') {
           steps {
             sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase CTEST_app --suite CTEST_app'

@@ -1,6 +1,6 @@
 ## Enabling the OpenGameArt sound effects
 
-The [OpenGameArt](https://opengameart.nl/assets) CC0 sound effect packs are made available to the project by the `ENABLE_OPENGAMEART_AUDIO` CMake variable, which is `ON` by default on this branch:
+The [OpenGameArt](https://opengameart.org) CC0 sound effect packs are made available to the project by the `ENABLE_OPENGAMEART_AUDIO` CMake variable, which is `ON` by default on this branch:
 
 ```
 # Inside the source root directory

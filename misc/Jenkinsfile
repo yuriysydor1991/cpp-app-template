@@ -416,8 +416,9 @@ pipeline {
           git ls-files -z '*.md' | tr '\\0' '\\n' | sort > "$MDLIST"
 
           # Collect every external URL together with the documentation file it
-          # sits in, unwrapping it from the markdown link, the inline code and
-          # the HTML decorations and dropping the local and the templated ones.
+          # sits in, unwrapping it from the markdown link, the inline code, the
+          # HTML decorations and the | separated fields (a raw | never belongs
+          # to an URL) and dropping the local and the templated ones.
           while IFS= read -r mdfile; do
             grep -oE "(https?|ftps?|git)://[^[:space:]]+" "$mdfile" 2>/dev/null |
             while IFS= read -r raw; do
@@ -427,6 +428,7 @@ pipeline {
               url="${url%%<*}"
               url="${url%%>*}"
               url="${url%%]*}"
+              url="${url%%|*}"
               case "$url" in *"("*) ;; *) url="${url%%)*}" ;; esac
               url=$(printf '%s' "$url" | sed 's/[.,;:!?]*$//')
               case "$url" in

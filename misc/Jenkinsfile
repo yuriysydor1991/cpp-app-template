@@ -114,6 +114,11 @@ pipeline {
             sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase CTEST_DefaultLogger --suite CTEST_DefaultLogger'
           }
         }
+        stage('CTEST_LibraryRealLogger') {
+          steps {
+            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase CTEST_LibraryRealLogger --suite CTEST_LibraryRealLogger'
+          }
+        }
       }
       post { always { junit "$BUILDDIR/meson-logs/CTEST_*.junit.xml" } }
     }

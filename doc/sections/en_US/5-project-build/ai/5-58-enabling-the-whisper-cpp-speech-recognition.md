@@ -25,20 +25,22 @@ The fetched sources build the [ggml](https://github.com/ggml-org/ggml) tensor li
 
 ### The model
 
-The whisper.cpp transcribes the speech with a [ggml model](https://huggingface.co/ggerganov/whisper.cpp) of the Whisper, which is no part of the build. Set the `ENABLE_WHISPERCPP_MODEL_DOWNLOAD` CMake variable to download the `TEMPLATE_APP_WHISPERCPP_MODEL` one (the English only `base.en` of 142 MiB by default) into the `models` directory of the build tree while configuring:
+The whisper.cpp transcribes the speech with a [ggml model](https://huggingface.co/ggerganov/whisper.cpp) of the Whisper, which is no part of the build, so the configure downloads the `TEMPLATE_APP_WHISPERCPP_MODEL` one into the `models` directory of the build tree. By default it is the multilingual `small` model of 466 MiB, which transcribes the English, the Ukrainian and the other languages of the Whisper.
+
+The download goes through the [download-ggml-model.sh](https://github.com/ggml-org/whisper.cpp/blob/master/models/download-ggml-model.sh) script of the whisper.cpp (the `download-ggml-model.cmd` one on the MS Windows), which needs the `curl` or the `wget` tool. No system package ships the script, so the configure fetches the one of the `TEMPLATE_APP_WHISPERCPP_GIT_TAG` release first. Every build tree downloads a model of it's own once, while a failed download only warns, leaving the `--model` parameter the way to give one. Pick another model with the `TEMPLATE_APP_WHISPERCPP_MODEL` variable:
 
 ```
-cmake -S . -B build -DENABLE_WHISPERCPP_MODEL_DOWNLOAD=ON -DTEMPLATE_APP_WHISPERCPP_MODEL=base
+cmake -S . -B build -DTEMPLATE_APP_WHISPERCPP_MODEL=large-v3-turbo
 ```
 
 | Variable | What it holds |
 | --- | --- |
-| `TEMPLATE_APP_WHISPERCPP_MODEL` | the model to download, e.g. the `tiny`, the `base`, the `small`, the `large-v3-turbo` one or the English only `.en` variant of them |
-| `ENABLE_WHISPERCPP_MODEL_DOWNLOAD` | downloads the model while configuring, `OFF` by default |
-| `PROJECT_WHISPER_MODEL_PATH` | the model the application loads while the `--model` (or `-m`) command line parameter gives none, the downloaded one if empty |
+| `TEMPLATE_APP_WHISPERCPP_MODEL` | the model to download, e.g. the multilingual `tiny`, `base`, `small`, `medium`, `large-v3-turbo` one, the quantized `small-q5_1` like one or the English only `.en` variant of them |
+| `ENABLE_WHISPERCPP_MODEL_DOWNLOAD` | downloads the model while configuring, `ON` by default |
+| `PROJECT_WHISPER_MODEL_PATH` | the model the application loads while the `--model` (or `-m`) command line parameter gives none, the downloaded one if empty, so nothing gets downloaded once it is given |
 | `PROJECT_WHISPER_LANGUAGE` | the spoken language code (`en`, `uk`, `de` etc.) the multilingual models transcribe, `auto` to detect it |
 
-The English only models transcribe the English whatever the `PROJECT_WHISPER_LANGUAGE` value is. Any model of the [whisper.cpp models](https://github.com/ggml-org/whisper.cpp/tree/master/models) list does, so download one by hand and point at it with the command line parameter as well:
+The bigger models recognize more precisely and take longer to transcribe an utterance. The automatic detection picks the language of every utterance on it's own, which a short utterance may get wrong, so give the `uk` value (or the other one) to the `PROJECT_WHISPER_LANGUAGE` variable for a single language speech. The English only models transcribe the English whatever the variable value is. Any model of the [whisper.cpp models](https://github.com/ggml-org/whisper.cpp/tree/master/models) list does, so download one by hand and point at it with the command line parameter as well:
 
 ```
 ./src/CppAppTemplate --model /path/to/ggml-small.bin
@@ -76,13 +78,13 @@ The `app::Application::run` method of the [src/app/applications/Application.cpp]
 
 ### The tests
 
-The `UTEST_WhisperController` and the `CTEST_WhisperController` tests transcribe with the empty model of the whisper.cpp own tests (the one holding no weights, so it recognizes no text) and the [speech sample](https://github.com/ggml-org/whisper.cpp/tree/master/samples) of it's sources, both downloaded while configuring the tests. The `disk` audio driver of the SDL2 plays that sample into the microphone of the component test, which recognizes it's words with the `PROJECT_WHISPER_MODEL_PATH` model once it is downloaded. The test cases needing an unavailable file skip themselves.
+The `UTEST_WhisperController` and the `CTEST_WhisperController` tests transcribe with the empty model of the whisper.cpp own tests (the one holding no weights, so it recognizes no text) and the [speech sample](https://github.com/ggml-org/whisper.cpp/tree/master/samples) of it's sources, both downloaded while configuring the tests. The `disk` audio driver of the SDL2 plays that sample into the microphone of the component test, which recognizes it's words with the downloaded `PROJECT_WHISPER_MODEL_PATH` model. The test cases needing an unavailable file skip themselves.
 
 ### Packaging
 
 The DEB package depends on the whisper.cpp, the ggml and the SDL2 ones the executable links against through the `dpkg-shlibdeps` tool. The flatpak builds the whisper.cpp from it's sources first and takes the SDL2 of the freedesktop runtime, while the snap fetches the whisper.cpp through the enabler and stages the SDL2. The fetched whisper.cpp installs it's libraries next to the executable (and it's headers too), so the packages built without the system one carry them.
 
-No package carries a model, so pass one with the `--model` parameter. The flatpak reads it from the home directory and records the microphone through the PulseAudio socket, while the snap needs it's `audio-record` interface connected by hand:
+The model stays in the build tree, so no package carries one and the flatpak and the snap builds download none: pass one with the `--model` parameter. The flatpak reads it from the home directory and records the microphone through the PulseAudio socket, while the snap needs it's `audio-record` interface connected by hand:
 
 ```
 sudo snap connect cppapptemplate:audio-record

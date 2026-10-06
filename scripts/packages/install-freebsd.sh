@@ -14,6 +14,7 @@ PROJECT_ROOT=$(realpath "$(dirname "$0")/../..")
 PACKAGES="
     bash
     cmake
+    curl
     git
     googletest
     sdl2

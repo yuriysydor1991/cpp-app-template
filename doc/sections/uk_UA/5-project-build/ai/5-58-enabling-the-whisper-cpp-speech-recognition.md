@@ -25,20 +25,22 @@ target_link_libraries(${PROJECT_BINARY_NAME} whisper)
 
 ### Модель
 
-whisper.cpp розпізнає мовлення за допомогою [ggml-моделі](https://huggingface.co/ggerganov/whisper.cpp) Whisper, яка не є частиною збірки. Встанови CMake змінну `ENABLE_WHISPERCPP_MODEL_DOWNLOAD`, щоб під час конфігурування завантажити модель `TEMPLATE_APP_WHISPERCPP_MODEL` (за замовчуванням англомовну `base.en` розміром 142 МіБ) у директорію `models` дерева збірки:
+whisper.cpp розпізнає мовлення за допомогою [ggml-моделі](https://huggingface.co/ggerganov/whisper.cpp) Whisper, яка не є частиною збірки, тож конфігурування завантажує модель `TEMPLATE_APP_WHISPERCPP_MODEL` у директорію `models` дерева збірки. За замовчуванням це багатомовна модель `small` розміром 466 МіБ, яка розпізнає англійську, українську та інші мови Whisper.
+
+Завантаження виконує скрипт [download-ggml-model.sh](https://github.com/ggml-org/whisper.cpp/blob/master/models/download-ggml-model.sh) з whisper.cpp (у MS Windows - скрипт `download-ggml-model.cmd`), якому потрібен інструмент `curl` або `wget`. Жоден системний пакет не постачає цього скрипта, тож конфігурування спершу завантажує скрипт випуску `TEMPLATE_APP_WHISPERCPP_GIT_TAG`. Кожне дерево збірки один раз завантажує власну модель, а невдале завантаження лише попереджає, залишаючи для моделі параметр `--model`. Іншу модель обирає змінна `TEMPLATE_APP_WHISPERCPP_MODEL`:
 
 ```
-cmake -S . -B build -DENABLE_WHISPERCPP_MODEL_DOWNLOAD=ON -DTEMPLATE_APP_WHISPERCPP_MODEL=base
+cmake -S . -B build -DTEMPLATE_APP_WHISPERCPP_MODEL=large-v3-turbo
 ```
 
 | Змінна | Що вона тримає |
 | --- | --- |
-| `TEMPLATE_APP_WHISPERCPP_MODEL` | модель для завантаження, наприклад `tiny`, `base`, `small`, `large-v3-turbo` або їхній англомовний варіант `.en` |
-| `ENABLE_WHISPERCPP_MODEL_DOWNLOAD` | завантажує модель під час конфігурування, за замовчуванням `OFF` |
-| `PROJECT_WHISPER_MODEL_PATH` | модель, яку завантажує програма, поки параметр командного рядка `--model` (або `-m`) не задає іншої, а якщо змінна порожня - завантажену модель |
+| `TEMPLATE_APP_WHISPERCPP_MODEL` | модель для завантаження, наприклад багатомовна `tiny`, `base`, `small`, `medium`, `large-v3-turbo`, квантована на кшталт `small-q5_1` або їхній англомовний варіант `.en` |
+| `ENABLE_WHISPERCPP_MODEL_DOWNLOAD` | завантажує модель під час конфігурування, за замовчуванням `ON` |
+| `PROJECT_WHISPER_MODEL_PATH` | модель, яку завантажує програма, поки параметр командного рядка `--model` (або `-m`) не задає іншої, а якщо змінна порожня - завантажену модель, тож коли змінну задано, нічого не завантажується |
 | `PROJECT_WHISPER_LANGUAGE` | код мови мовлення (`en`, `uk`, `de` тощо), яку розпізнають багатомовні моделі, `auto` для її визначення |
 
-Англомовні моделі розпізнають англійську мову незалежно від значення `PROJECT_WHISPER_LANGUAGE`. Підійде будь-яка модель зі [списку моделей whisper.cpp](https://github.com/ggml-org/whisper.cpp/tree/master/models), тож можна завантажити її вручну і вказати на неї параметром командного рядка:
+Більші моделі розпізнають точніше, але довше обробляють висловлювання. Автоматичне визначення обирає мову кожного висловлювання окремо і може помилитися на короткому висловлюванні, тож для мовлення однією мовою задай змінній `PROJECT_WHISPER_LANGUAGE` значення `uk` (або іншої мови). Англомовні моделі розпізнають англійську мову незалежно від значення цієї змінної. Підійде будь-яка модель зі [списку моделей whisper.cpp](https://github.com/ggml-org/whisper.cpp/tree/master/models), тож можна завантажити її вручну і вказати на неї параметром командного рядка:
 
 ```
 ./src/CppAppTemplate --model /шлях/до/ggml-small.bin
@@ -76,13 +78,13 @@ if (whisper->init("models/ggml-base.en.bin", "auto")) {
 
 ### Тести
 
-Тести `UTEST_WhisperController` і `CTEST_WhisperController` розпізнають мовлення порожньою моделлю власних тестів whisper.cpp (без жодних ваг, тож вона не розпізнає тексту) і [зразком мовлення](https://github.com/ggml-org/whisper.cpp/tree/master/samples) з її вихідних кодів, які завантажуються під час конфігурування тестів. Аудіодрайвер `disk` бібліотеки SDL2 програє цей зразок у мікрофон компонентного тесту, який розпізнає його слова моделлю `PROJECT_WHISPER_MODEL_PATH`, щойно її завантажено. Тестові випадки, яким бракує файлів, пропускаються.
+Тести `UTEST_WhisperController` і `CTEST_WhisperController` розпізнають мовлення порожньою моделлю власних тестів whisper.cpp (без жодних ваг, тож вона не розпізнає тексту) і [зразком мовлення](https://github.com/ggml-org/whisper.cpp/tree/master/samples) з її вихідних кодів, які завантажуються під час конфігурування тестів. Аудіодрайвер `disk` бібліотеки SDL2 програє цей зразок у мікрофон компонентного тесту, який розпізнає його слова завантаженою моделлю `PROJECT_WHISPER_MODEL_PATH`. Тестові випадки, яким бракує файлів, пропускаються.
 
 ### Пакування
 
 Пакет DEB залежить від пакетів whisper.cpp, ggml і SDL2, з якими лінкується виконуваний файл, за допомогою інструменту `dpkg-shlibdeps`. Flatpak спершу збирає whisper.cpp з вихідних кодів і бере SDL2 з середовища виконання freedesktop, тоді як snap завантажує whisper.cpp через модуль CMake і додає SDL2. Завантажена whisper.cpp встановлює свої бібліотеки поруч з виконуваним файлом (і свої заголовки також), тож пакети, зібрані без системної whisper.cpp, містять їх.
 
-Жоден пакет не містить моделі, тож передай її параметром `--model`. Flatpak читає її з домашньої директорії і записує мікрофон через сокет PulseAudio, тоді як snap потребує вручну під'єднаного інтерфейсу `audio-record`:
+Модель лишається у дереві збірки, тож жоден пакет її не містить, а збірки flatpak і snap не завантажують її взагалі: передай модель параметром `--model`. Flatpak читає її з домашньої директорії і записує мікрофон через сокет PulseAudio, тоді як snap потребує вручну під'єднаного інтерфейсу `audio-record`:
 
 ```
 sudo snap connect cppapptemplate:audio-record

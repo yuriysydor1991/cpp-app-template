@@ -25,6 +25,7 @@ parts:
       - -DCMAKE_BUILD_TYPE=Release
       - -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
       - -DGGML_NATIVE=OFF
+      - -DENABLE_WHISPERCPP_MODEL_DOWNLOAD=OFF
     build-packages:
       - git
       - libsdl2-dev

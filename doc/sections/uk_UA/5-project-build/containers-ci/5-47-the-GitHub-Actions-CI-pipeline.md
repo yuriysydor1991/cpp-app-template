@@ -22,7 +22,7 @@ env:
   BUILDDIR: build
   BDJUNITOUT: junit-out
   # The development packages of the branch specific libraries.
-  DEPENDENCIES: libwhisper-dev libsdl2-dev
+  DEPENDENCIES: libwhisper-dev libsdl2-dev curl
 ```
 
 Саме ця змінна - єдиний рядок, яким різняться гілки шаблону, отож проект, який долучає власну бібліотеку, дописує туди її пакунок розробки.

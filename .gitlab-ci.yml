@@ -25,7 +25,7 @@ variables:
   # The tools every job needs on top of the bare image.
   TOOLS: build-essential cmake g++ git ca-certificates pkg-config
   # The development packages of the branch specific libraries.
-  DEPENDENCIES: libwhisper-dev libsdl2-dev
+  DEPENDENCIES: libwhisper-dev libsdl2-dev curl
   RUN_CPPCHECK:
     value: 'false'
     options: ['false', 'true']

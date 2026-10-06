@@ -32,37 +32,60 @@ endforeach()
 
 set(PROJECT_WHISPER_LANGUAGE "auto" CACHE STRING "The spoken language code (en, uk, de etc.) the multilingual whisper.cpp models transcribe, auto to detect it")
 
-set(TEMPLATE_APP_WHISPERCPP_MODEL "base.en" CACHE STRING "The whisper.cpp ggml model (tiny, base.en, small, large-v3-turbo etc.) to download")
+set(TEMPLATE_APP_WHISPERCPP_MODEL "small" CACHE STRING "The whisper.cpp ggml model to download: a multilingual one (tiny, base, small, medium, large-v3-turbo etc.) transcribes the English, the Ukrainian and the other languages, while the .en ones the English only")
 
 option(
     ENABLE_WHISPERCPP_MODEL_DOWNLOAD
-    "Downloads the TEMPLATE_APP_WHISPERCPP_MODEL whisper.cpp model into the build directory while configuring"
-    OFF
+    "Downloads the TEMPLATE_APP_WHISPERCPP_MODEL model into the build directory with the whisper.cpp download script while configuring"
+    ON
 )
 
 set(PROJECT_WHISPER_MODEL_PATH "" CACHE STRING "The whisper.cpp model the application loads while no --model parameter is given, the downloaded TEMPLATE_APP_WHISPERCPP_MODEL one if empty")
 
 if (NOT PROJECT_WHISPER_MODEL_PATH)
-    set(PROJECT_WHISPER_MODEL_PATH "${CMAKE_BINARY_DIR}/models/ggml-${TEMPLATE_APP_WHISPERCPP_MODEL}.bin")
-endif()
+    set(modelDir "${CMAKE_BINARY_DIR}/models")
+    set(PROJECT_WHISPER_MODEL_PATH "${modelDir}/ggml-${TEMPLATE_APP_WHISPERCPP_MODEL}.bin")
 
-if (ENABLE_WHISPERCPP_MODEL_DOWNLOAD AND NOT EXISTS "${PROJECT_WHISPER_MODEL_PATH}")
-    message(STATUS "Downloading the ${TEMPLATE_APP_WHISPERCPP_MODEL} whisper.cpp model, which takes a while")
+    if (ENABLE_WHISPERCPP_MODEL_DOWNLOAD AND NOT EXISTS "${PROJECT_WHISPER_MODEL_PATH}")
+        # The model download scripts come with the whisper.cpp sources and with
+        # no system package, so the one of the TEMPLATE_APP_WHISPERCPP_GIT_TAG
+        # release is fetched first. It downloads the model from the Hugging Face
+        # with the curl, the wget or, on the MS Windows, the PowerShell.
+        if (WIN32)
+            set(modelScript download-ggml-model.cmd)
+            set(modelScriptShell cmd /c)
+        else()
+            set(modelScript download-ggml-model.sh)
+            set(modelScriptShell sh)
+        endif()
 
-    file(
-        DOWNLOAD "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-${TEMPLATE_APP_WHISPERCPP_MODEL}.bin"
-        "${PROJECT_WHISPER_MODEL_PATH}"
-        TLS_VERIFY ON
-        STATUS modelDownloadStatus
-    )
+        file(
+            DOWNLOAD "https://raw.githubusercontent.com/ggml-org/whisper.cpp/${TEMPLATE_APP_WHISPERCPP_GIT_TAG}/models/${modelScript}"
+            "${modelDir}/${modelScript}"
+            TLS_VERIFY ON
+            STATUS modelScriptStatus
+        )
 
-    list(GET modelDownloadStatus 0 modelDownloadCode)
+        list(GET modelScriptStatus 0 modelScriptCode)
 
-    # A failed download leaves a broken file behind, which no later configure
-    # would replace.
-    if (NOT modelDownloadCode EQUAL 0)
-        file(REMOVE "${PROJECT_WHISPER_MODEL_PATH}")
-        message(WARNING "Fail to download the ${TEMPLATE_APP_WHISPERCPP_MODEL} whisper.cpp model: ${modelDownloadStatus}")
+        if (modelScriptCode EQUAL 0)
+            message(STATUS "Downloading the ${TEMPLATE_APP_WHISPERCPP_MODEL} whisper.cpp model, which takes a while")
+
+            file(TO_NATIVE_PATH "${modelDir}/${modelScript}" nativeModelScript)
+            file(TO_NATIVE_PATH "${modelDir}" nativeModelDir)
+
+            execute_process(
+                COMMAND ${modelScriptShell} "${nativeModelScript}" ${TEMPLATE_APP_WHISPERCPP_MODEL} "${nativeModelDir}"
+                RESULT_VARIABLE modelDownloadCode
+            )
+        endif()
+
+        # A failed download leaves a broken file behind, which the script would
+        # take for a downloaded model next time.
+        if (NOT modelDownloadCode EQUAL 0 OR NOT EXISTS "${PROJECT_WHISPER_MODEL_PATH}")
+            file(REMOVE "${PROJECT_WHISPER_MODEL_PATH}")
+            message(WARNING "Fail to download the ${TEMPLATE_APP_WHISPERCPP_MODEL} whisper.cpp model, so the application needs the --model parameter")
+        endif()
     endif()
 endif()
 

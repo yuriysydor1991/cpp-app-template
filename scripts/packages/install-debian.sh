@@ -10,6 +10,7 @@ PROJECT_ROOT=$(realpath "$(dirname "$0")/../..")
 PACKAGES=(
     build-essential
     cmake
+    curl
     g++
     git
     googletest

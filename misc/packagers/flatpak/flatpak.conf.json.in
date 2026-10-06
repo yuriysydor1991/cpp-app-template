@@ -34,7 +34,8 @@
       "buildsystem": "cmake",
       "config-opts": [
         "-DCMAKE_BUILD_TYPE=Release",
-        "-DENABLE_FLATPAK_METAINFO=ON"
+        "-DENABLE_FLATPAK_METAINFO=ON",
+        "-DENABLE_WHISPERCPP_MODEL_DOWNLOAD=OFF"
       ],
       "sources": [
         {

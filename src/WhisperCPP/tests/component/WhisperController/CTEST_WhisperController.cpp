@@ -238,7 +238,8 @@ TEST_F(CTEST_WhisperController, the_speech_sample_gets_recognized)
                     "-DENABLE_WHISPERCPP_MODEL_DOWNLOAD=ON for the model";
   }
 
-  ASSERT_TRUE(controller->init(MODEL, "en"));
+  // a multilingual model detects the English of the sample on it's own
+  ASSERT_TRUE(controller->init(MODEL, "auto"));
 
   EXPECT_THAT(controller->transcribe(read_wave(SPEECH)),
               Optional(HasSubstr(PHRASE)));

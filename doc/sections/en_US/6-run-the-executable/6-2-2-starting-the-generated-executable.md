@@ -7,11 +7,11 @@ If executable compiles and is present in the build directory start it in the ter
 ./src/CppAppTemplate
 ```
 
-The `appWhisperCPP` branch executable loads a whisper model and listens to the default microphone of the system, logging every recognized utterance till the Ctrl+C keys stop it. Point it at a model with the `--model` (or `-m`) parameter, or configure the build with the `-DENABLE_WHISPERCPP_MODEL_DOWNLOAD=ON` option to make it load the downloaded one by default:
+The `appWhisperCPP` branch executable loads the whisper model the configure has downloaded (the multilingual `small` one by default) and listens to the default microphone of the system, logging every recognized utterance till the Ctrl+C keys stop it. Point it at another model with the `--model` (or `-m`) parameter:
 
 ```
 # from the build dir
-./src/CppAppTemplate --model /path/to/ggml-base.en.bin
+./src/CppAppTemplate --model /path/to/ggml-large-v3-turbo.bin
 ```
 
 ```

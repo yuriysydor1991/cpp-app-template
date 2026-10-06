@@ -51,7 +51,10 @@ class UTEST_Microphone : public Test
     return captured;
   }
 
-  inline static constexpr const int SAMPLE_RATE = 16000;
+  /// @brief The SDL3 behind the sdl2-compat runs the recording devices at
+  /// 44.1 kHz at least and converts their audio into the asked rate, so the
+  /// rate above it keeps the samples of the file intact for both SDL versions.
+  inline static constexpr const int SAMPLE_RATE = 48000;
   inline static constexpr const std::size_t TENTH = SAMPLE_RATE / 10;
 
   Microphone microphone;

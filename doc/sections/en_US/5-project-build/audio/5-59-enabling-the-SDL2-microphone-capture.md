@@ -32,3 +32,9 @@ The `SDL_AUDIODRIVER` environment variable picks the audio driver (the `pipewire
 ```
 SDL_AUDIODRIVER=disk SDL_DISKAUDIOFILEIN=speech.raw ./src/CppAppTemplate
 ```
+
+The SDL3 based [sdl2-compat](https://github.com/libsdl-org/sdl2-compat) library, which replaces the SDL2 on some of the newer distributions, reads the `SDL_AUDIO_DISK_INPUT_FILE` file instead. It runs the recording devices at 44.1 kHz at least, so the file holds the samples of that rate, which get converted into the requested one:
+
+```
+SDL_AUDIODRIVER=disk SDL_AUDIO_DISK_INPUT_FILE=speech-44100.raw ./src/CppAppTemplate
+```

@@ -32,3 +32,9 @@ if (microphone.open(16000)) {
 ```
 SDL_AUDIODRIVER=disk SDL_DISKAUDIOFILEIN=speech.raw ./src/CppAppTemplate
 ```
+
+Бібліотека [sdl2-compat](https://github.com/libsdl-org/sdl2-compat) на основі SDL3, яка замінює SDL2 у деяких новіших дистрибутивах, натомість читає файл `SDL_AUDIO_DISK_INPUT_FILE`. Вона відкриває пристрої захоплення з частотою щонайменше 44,1 кГц, тож відліки файлу мають бути саме такої частоти, а бібліотека перетворює їх на запитану:
+
+```
+SDL_AUDIODRIVER=disk SDL_AUDIO_DISK_INPUT_FILE=speech-44100.raw ./src/CppAppTemplate
+```

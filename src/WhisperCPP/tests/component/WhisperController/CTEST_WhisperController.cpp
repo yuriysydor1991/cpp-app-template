@@ -1,15 +1,13 @@
 #include <SDL.h>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <whisper.h>
 
-#include <algorithm>
 #include <cstddef>
-#include <cstdint>
 #include <fstream>
-#include <iterator>
 #include <sstream>
 #include <string>
-#include <vector>
+#include <utility>
 
 #include "src/WhisperCPP/WhisperController.h"
 #include "src/log/log.h"
@@ -60,74 +58,63 @@ class CTEST_WhisperController : public Test
     return std::ifstream{path}.good();
   }
 
-  /// @brief Picks the SDL audio driver of the microphone. The variables of
-  /// the SDL3 run sdl2-compat library are given as well.
-  static void use_audio_driver(const char* const driver,
-                               const std::string& inputFile = {})
+  /// @brief Picks the SDL audio driver of the microphone. The variable of the
+  /// SDL3 run sdl2-compat library is given as well.
+  static void use_audio_driver(const char* const driver)
   {
     SDL_setenv("SDL_AUDIODRIVER", driver, 1);
     SDL_setenv("SDL_AUDIO_DRIVER", driver, 1);
-    SDL_setenv("SDL_DISKAUDIOFILEIN", inputFile.c_str(), 1);
-    SDL_setenv("SDL_AUDIO_DISK_INPUT_FILE", inputFile.c_str(), 1);
-    SDL_setenv("SDL_DISKAUDIODELAY", "8", 1);
-    SDL_setenv("SDL_AUDIO_DISK_TIMESCALE", "0.125", 1);
   }
 
-  /// @brief Gives the little endian value of the given bytes count.
-  static std::uint32_t little_endian(const std::vector<char>& bytes,
-                                     const std::size_t offset,
-                                     const std::size_t count)
+  /// @brief Reads the given WAVE file into the mono samples of the given
+  /// rate.
+  static samples read_wave(const char* const path, const int rate)
   {
-    std::uint32_t value = 0U;
+    SDL_AudioSpec spec{};
+    Uint8* wave{nullptr};
+    Uint32 length{0U};
 
-    for (std::size_t index = count; index > 0U; --index) {
-      value = (value << 8U) |
-              static_cast<unsigned char>(bytes[offset + index - 1U]);
+    if (SDL_LoadWAV(path, &spec, &wave, &length) == nullptr) {
+      return {};
     }
 
-    return value;
+    SDL_AudioStream* const stream = SDL_NewAudioStream(
+        spec.format, spec.channels, spec.freq, AUDIO_F32SYS, 1U, rate);
+
+    SDL_AudioStreamPut(stream, wave, static_cast<int>(length));
+    SDL_AudioStreamFlush(stream);
+    SDL_FreeWAV(wave);
+
+    samples audio(static_cast<std::size_t>(SDL_AudioStreamAvailable(stream)) /
+                  sizeof(float));
+
+    SDL_AudioStreamGet(stream, audio.data(),
+                       static_cast<int>(audio.size() * sizeof(float)));
+    SDL_FreeAudioStream(stream);
+
+    return audio;
   }
 
-  /// @brief Reads the 16 bit samples of the given WAVE file, whose RIFF
-  /// chunks follow the 12 bytes of it's header.
-  static samples read_wave(const char* const path)
-  {
-    std::ifstream file{path, std::ifstream::binary};
-    const std::vector<char> bytes{std::istreambuf_iterator<char>{file}, {}};
-
-    for (std::size_t chunk = 12U; chunk + 8U <= bytes.size();
-         chunk += 8U + little_endian(bytes, chunk + 4U, 4U)) {
-      if (std::string(bytes.data() + chunk, 4U) != "data") {
-        continue;
-      }
-
-      // a truncated file carries less than the chunk header tells
-      samples audio(std::min<std::size_t>(little_endian(bytes, chunk + 4U, 4U),
-                                          bytes.size() - chunk - 8U) /
-                    2U);
-
-      for (std::size_t index = 0U; index < audio.size(); ++index) {
-        audio[index] = static_cast<float>(static_cast<std::int16_t>(
-                           little_endian(bytes, chunk + 8U + 2U * index, 2U))) /
-                       32768.0F;
-      }
-
-      return audio;
-    }
-
-    return {};
-  }
-
-  /// @brief Makes the disk audio driver capture the speech sample.
+  /// @brief Makes the disk audio driver capture the speech sample. The SDL2
+  /// reads the file at the rate the microphone asks for, while the SDL3 gets
+  /// the file of it's own at the SDL3_RATE.
   void speak_into_the_microphone() const
   {
-    const auto audio = read_wave(SPEECH);
+    for (const auto& [file, rate] : {std::pair{rawSpeech, WHISPER_SAMPLE_RATE},
+                                     std::pair{sdl3RawSpeech, SDL3_RATE}}) {
+      const auto audio = read_wave(SPEECH, rate);
 
-    std::ofstream{rawSpeech, std::ofstream::binary | std::ofstream::trunc}
-        .write(reinterpret_cast<const char*>(audio.data()),
-               static_cast<std::streamsize>(audio.size() * sizeof(float)));
+      std::ofstream{file, std::ofstream::binary | std::ofstream::trunc}.write(
+          reinterpret_cast<const char*>(audio.data()),
+          static_cast<std::streamsize>(audio.size() * sizeof(float)));
+    }
 
-    use_audio_driver("disk", rawSpeech);
+    use_audio_driver("disk");
+
+    SDL_setenv("SDL_DISKAUDIOFILEIN", rawSpeech.c_str(), 1);
+    SDL_setenv("SDL_AUDIO_DISK_INPUT_FILE", sdl3RawSpeech.c_str(), 1);
+    SDL_setenv("SDL_DISKAUDIODELAY", "8", 1);
+    SDL_setenv("SDL_AUDIO_DISK_TIMESCALE", "0.125", 1);
   }
 
   /// @brief Listens to the microphone till the heard text carries the given
@@ -159,6 +146,11 @@ class CTEST_WhisperController : public Test
   inline static constexpr const char* const PHRASE =
       "ask not what your country can do for you";
 
+  /// @brief The SDL3 behind the sdl2-compat runs the recording devices at
+  /// this rate at least, so it's disk driver reads the file at it and converts
+  /// the audio into the WHISPER_SAMPLE_RATE the microphone asks for.
+  inline static constexpr const int SDL3_RATE = 44100;
+
   /// @brief Every test case gets the files of it's own, so the parallel ctest
   /// runs keep them apart.
   const std::string name{
@@ -166,6 +158,7 @@ class CTEST_WhisperController : public Test
       std::string{UnitTest::GetInstance()->current_test_info()->name()}};
   const std::string logFile{name + ".log"};
   const std::string rawSpeech{name + ".raw"};
+  const std::string sdl3RawSpeech{name + ".sdl3.raw"};
 
   WhisperControllerPtr controller{WhisperController::create()};
 };
@@ -241,7 +234,7 @@ TEST_F(CTEST_WhisperController, the_speech_sample_gets_recognized)
   // a multilingual model detects the English of the sample on it's own
   ASSERT_TRUE(controller->init(MODEL, "auto"));
 
-  EXPECT_THAT(controller->transcribe(read_wave(SPEECH)),
+  EXPECT_THAT(controller->transcribe(read_wave(SPEECH, WHISPER_SAMPLE_RATE)),
               Optional(HasSubstr(PHRASE)));
 }
 

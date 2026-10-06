@@ -22,5 +22,8 @@ set(CPACK_DEB_COMPONENT_INSTALL ON)
 set(CPACK_PACKAGE_DESCRIPTION ${CMAKE_PROJECT_DESCRIPTION})
 set(CPACK_DEB_PACKAGE_ARCHITECTURE "amd64")  # Or arm64
 set(CPACK_DEBIAN_PACKAGE_DEPENDS "")
+# The executable links the whisper.cpp, the ggml and the SDL2 shared libraries,
+# so the dpkg-shlibdeps tool finds the packages to depend on.
+set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
 
 include(CPack)

@@ -24,7 +24,7 @@ Examine available branches to find your most applicable variant of the template 
 
 - `main` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template)] just the clear `main` function and all available CMake integrations with no additional app infrastructure classes.
 
-- `app` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/app), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/app)] (**current**) with just general application related classes to generate a single binary executable.
+- `app` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/app), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/app)] with just general application related classes to generate a single binary executable.
 
 - `applib` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/applib), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/applib)] for the application binary with additional separate library binary and header files (available for the installation) in order to provide library's code reusability across multiple applications.
 
@@ -134,6 +134,8 @@ Examine available branches to find your most applicable variant of the template 
 
 - `appCURLChatGPT` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appCURLChatGPT), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appCURLChatGPT)] with general application related classes to generate a single binary executable that asks [ChatGPT](https://chatgpt.com/) a question given in the command line over the [OpenAI API](https://developers.openai.com/api/docs) responses endpoint and prints the received answer. OpenAI ships no official C++ SDK, so the branch talks to the API directly with the [libcurl](https://curl.se/libcurl/) and the [nlohmann JSON](https://github.com/nlohmann/json) libraries and carries no third party API wrapper.
 
+- `appWhisperCPP` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appWhisperCPP), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appWhisperCPP)] (**current**) with general application related classes to generate a single binary executable that recognizes the speech with the [whisper.cpp](https://github.com/ggml-org/whisper.cpp) library: a small controller captures the default microphone of the system through the [SDL2](https://www.libsdl.org/) audio subsystem, cuts the captured audio into the utterances at the pauses of the speech and transcribes them, so the Application logs every recognized utterance through the `LOGI` macro.
+
 ## System / DBus
 
 - `appSDBusCxxClient` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSDBusCxxClient), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSDBusCxxClient)] with just general application related classes to generate a single binary executable with the usage of [Kistler-Group's sdbus-c++](https://github.com/Kistler-Group/sdbus-cpp.git) library as a [DBus](https://en.wikipedia.org/wiki/D-Bus) services client.
@@ -241,6 +243,10 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
         1. [Enabling the OpenJPEG library (JPEG 2000)](/doc/sections/en_US/5-project-build/image-libraries/5-31-enabling-the-openjpeg-library.md)
         1. [Enabling the libavif library (AVIF)](/doc/sections/en_US/5-project-build/image-libraries/5-32-enabling-the-libavif-library.md)
         1. [Enabling the libheif library (HEIF/HEIC)](/doc/sections/en_US/5-project-build/image-libraries/5-33-enabling-the-libheif-library.md)
+    1. Artificial intelligence
+        1. [Enabling the whisper.cpp speech recognition](/doc/sections/en_US/5-project-build/ai/5-58-enabling-the-whisper-cpp-speech-recognition.md)
+    1. Audio
+        1. [Enabling the SDL2 microphone capture](/doc/sections/en_US/5-project-build/audio/5-59-enabling-the-SDL2-microphone-capture.md)
 1. [Run the executable](/doc/sections/en_US/6-run-the-executable/6-run-the-executable.md)
     1. [IDE run](/doc/sections/en_US/6-run-the-executable/6-1-IDE-run.md)
     1. Command line run

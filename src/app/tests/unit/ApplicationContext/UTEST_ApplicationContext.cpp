@@ -15,6 +15,7 @@ class UTEST_ApplicationContext : public Test
  public:
   inline static constexpr const int expectedRandomInt{123};
   inline static const std::string expectedError{"random error description"};
+  inline static const std::string expectedModelPath{"/tmp/a-model.bin"};
 
   UTEST_ApplicationContext() : appCtx{create_context(argc, argv)} {}
 
@@ -34,6 +35,7 @@ TEST_F(UTEST_ApplicationContext, empty_context)
   EXPECT_EQ(appCtx->get_argc(), 0);
   EXPECT_EQ(appCtx->get_argv(), nullptr);
 
+  EXPECT_TRUE(appCtx->get_model_path().empty());
   EXPECT_TRUE(appCtx->get_errors().empty());
   EXPECT_FALSE(appCtx->get_print_help_and_exit());
   EXPECT_FALSE(appCtx->get_print_version_and_exit());
@@ -159,6 +161,23 @@ TEST_F(UTEST_ApplicationContext, setting_the_print_version_and_exit_flag)
 
   EXPECT_FALSE(appCtx->get_print_version_and_exit());
   EXPECT_FALSE(appCtx->get_print_help_and_exit());
+}
+
+TEST_F(UTEST_ApplicationContext, setting_the_model_path)
+{
+  EXPECT_TRUE(appCtx->get_model_path().empty());
+
+  appCtx->set_model_path(expectedModelPath);
+
+  EXPECT_EQ(appCtx->get_model_path(), expectedModelPath);
+
+  appCtx->set_model_path({});
+
+  EXPECT_TRUE(appCtx->get_model_path().empty());
+
+  EXPECT_TRUE(appCtx->get_errors().empty());
+  EXPECT_FALSE(appCtx->get_print_help_and_exit());
+  EXPECT_FALSE(appCtx->get_print_version_and_exit());
 }
 
 TEST_F(UTEST_ApplicationContext, setting_the_stop_flag)

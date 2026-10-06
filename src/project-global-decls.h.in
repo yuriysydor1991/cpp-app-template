@@ -14,6 +14,10 @@ const std::string PROJECT_BUILD_VERSION = "${PROJECT_VERSION}" ;
 const std::string PROJECT_BUILD_COMMIT = "${PROJECT_GIT_COMMIT}" ;
 /// @brief Global project' configure date
 const std::string PROJECT_CONFIGURE_DATE = "${PROJECT_CONFIGURE_DATE}" ;
+/// @brief The whisper.cpp model the application loads while no --model parameter is given
+const std::string PROJECT_WHISPER_MODEL_PATH = "${PROJECT_WHISPER_MODEL_PATH}" ;
+/// @brief The spoken language the multilingual whisper.cpp models transcribe, auto to detect it
+const std::string PROJECT_WHISPER_LANGUAGE = "${PROJECT_WHISPER_LANGUAGE}" ;
 
 } // namespace project_decls
 

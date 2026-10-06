@@ -9,6 +9,8 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/enablers/dockerers")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/enablers/packagers")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/enablers/compression")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/enablers/images")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/enablers/ai")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/enablers/audio")
 
 include(template-project-enabler-function)
 include(template-project-git-enabler)
@@ -16,6 +18,8 @@ include(template-project-git-enabler)
 include(template-project-GTest-enabler)
 include(template-project-clang-format-target)
 include(template-project-valgrind-target)
+include(template-project-whispercpp-enabler)
+include(template-project-sdl2-audio-enabler)
 
 # packagers
 include(template-project-deb-enabler)

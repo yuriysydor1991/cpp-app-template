@@ -13,6 +13,8 @@ apps:
     command: ${PROJECT_BINARY_INSTALLATION_DIR}/${PROJECT_BINARY_NAME}${SNAP_APP_DESKTOP}
     plugs:
       - home${SNAP_APP_DESKTOP_PLUGS}
+      - audio-playback
+      - audio-record
 
 parts:
   ${PROJECT_BINARY_NAME}:
@@ -22,3 +24,9 @@ parts:
     cmake-parameters:
       - -DCMAKE_BUILD_TYPE=Release
       - -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
+      - -DGGML_NATIVE=OFF
+    build-packages:
+      - git
+      - libsdl2-dev
+    stage-packages:
+      - libsdl2-2.0-0

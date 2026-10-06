@@ -8,4 +8,16 @@
 ./src/CppAppTemplate
 ```
 
+Виконуваний файл гілки `appWhisperCPP` завантажує модель whisper і слухає типовий мікрофон системи, записуючи у журнал кожне розпізнане висловлювання, доки його не зупинять клавіші Ctrl+C. Вкажи йому модель параметром `--model` (або `-m`) чи сконфігуруй збірку з параметром `-DENABLE_WHISPERCPP_MODEL_DOWNLOAD=ON`, щоб за замовчуванням він брав модель, завантажену під час конфігурування:
+
+```
+# з директорії побудови
+./src/CppAppTemplate --model /шлях/до/ggml-base.en.bin
+```
+
+```
+2026-10-06 16:00:22 INF 139857446091008 Application.cpp:39 : Listening to the default microphone, press Ctrl+C to stop
+2026-10-06 16:00:25 INF 139857446091008 Application.cpp:51 : And so, my fellow Americans!
+```
+
 І ще раз, ім'я `CppAppTemplate` являється ім'ям головного виконуваного бінарного файлу за замовчуванням. Його необхідно замінити у разі заміни ім'я за умовчанням у кореневому файлі `CMakeLists.txt` (змінні `CMAKE_PROJECT_NAME` або `PROJECT_BINARY_NAME`).

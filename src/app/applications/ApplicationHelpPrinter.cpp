@@ -38,7 +38,10 @@ int ApplicationHelpPrinter::run(std::shared_ptr<ApplicationContext> ctx)
             << CMDParamNames::VERSION
             << " - print application version, build git "
                "commit and configure date"
-            << std::endl;
+            << std::endl
+            << "\t" << CMDParamNames::MODELW << " or " << CMDParamNames::MODEL
+            << " <path> - load the given whisper model instead of the "
+            << project_decls::PROJECT_WHISPER_MODEL_PATH << " one" << std::endl;
 
   return 0;
 }

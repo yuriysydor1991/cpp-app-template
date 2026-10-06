@@ -15,6 +15,7 @@ PACKAGES=(
     googletest
     libgmock-dev
     libgtest-dev
+    libsdl2-dev
     libssl-dev
     libstdc++6
 )
@@ -25,9 +26,16 @@ if [[ ${EUID} -ne 0 ]] ; then
     APT_SUDO="sudo"
 fi
 
-log "Installing ${#PACKAGES[@]} packages"
-
 ${APT_SUDO} apt-get update
+
+# The whisper.cpp development package arrived with the Ubuntu 26.04 and the
+# Debian forky releases, while the older ones get it's sources fetched and
+# built by the project configure instead.
+if apt-cache show libwhisper-dev > /dev/null 2>&1 ; then
+    PACKAGES+=(libwhisper-dev)
+fi
+
+log "Installing ${#PACKAGES[@]} packages"
 
 ${APT_SUDO} apt-get install -y "${PACKAGES[@]}"
 

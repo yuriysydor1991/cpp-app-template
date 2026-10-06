@@ -16,6 +16,8 @@ PACKAGES="
     cmake
     git
     googletest
+    sdl2
+    whisper.cpp
 "
 
 PKG_SUDO=""

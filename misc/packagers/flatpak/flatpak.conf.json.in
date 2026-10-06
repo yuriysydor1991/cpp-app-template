@@ -6,6 +6,30 @@
   "command": "${PROJECT_BINARY_NAME}",
   "modules": [
     {
+      "name": "whisper.cpp",
+      "buildsystem": "cmake-ninja",
+      "builddir": true,
+      "config-opts": [
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DGGML_NATIVE=OFF",
+        "-DWHISPER_BUILD_EXAMPLES=OFF",
+        "-DWHISPER_BUILD_SERVER=OFF",
+        "-DWHISPER_BUILD_TESTS=OFF"
+      ],
+      "cleanup": [
+        "/include",
+        "/lib/cmake",
+        "/lib/pkgconfig"
+      ],
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://github.com/ggml-org/whisper.cpp/archive/refs/tags/v1.9.4.tar.gz",
+          "sha256": "57e280cee375ab02425b806ad5146b99f6eb9357e3c2b31357c8a6af2e2e44ae"
+        }
+      ]
+    },
+    {
       "name": "${CMAKE_PROJECT_NAME}",
       "buildsystem": "cmake",
       "config-opts": [
@@ -19,5 +43,9 @@
         }
       ]
     }
+  ],
+  "finish-args": [
+    "--socket=pulseaudio",
+    "--filesystem=home:ro"
   ]
 }

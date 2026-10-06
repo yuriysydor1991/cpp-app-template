@@ -3,9 +3,11 @@
 
 #include <csignal>
 
+#include "src/WhisperCPP/WhisperController.h"
 #include "src/app/ApplicationFactory.h"
 
 using namespace app;
+using namespace whisperi;
 using namespace testing;
 
 class CTEST_app : public Test
@@ -184,7 +186,18 @@ TEST_F(CTEST_app, signals_handler_ignores_the_broken_pipe)
 
 TEST_F(CTEST_app, execute_success)
 {
+  // The Application listens till the stop signal arrives, so the very first
+  // listening raises one the way the Ctrl+C keys do.
+  WhisperController::onMockCreate = [](WhisperController& whisper) {
+    EXPECT_CALL(whisper, listen()).WillOnce(Invoke([] {
+      std::raise(SIGINT);
+      return WhisperController::result{""};
+    }));
+  };
+
   int status = ApplicationFactory::execute(argc, argv);
+
+  WhisperController::onMockCreate = nullptr;
 
   EXPECT_EQ(status, 0);
 }

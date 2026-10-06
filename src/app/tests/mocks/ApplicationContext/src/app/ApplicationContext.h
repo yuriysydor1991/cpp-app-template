@@ -32,6 +32,9 @@ class ApplicationContext
 
   const std::vector<std::string>& get_errors() const { return merrors; }
 
+  const std::string& get_model_path() const { return mmodel_path; }
+  void set_model_path(const std::string& newValue) { mmodel_path = newValue; }
+
   bool get_stop() const { return mstop.load(); }
   void set_stop(const bool newValue) { mstop.store(newValue); }
 
@@ -61,6 +64,7 @@ class ApplicationContext
   bool mprint_help_and_exit{false};
   bool mprint_version_and_exit{false};
   std::vector<std::string> merrors;
+  std::string mmodel_path;
   std::atomic_bool mstop{false};
   std::atomic_bool mpause{false};
   std::atomic_bool mreload{false};

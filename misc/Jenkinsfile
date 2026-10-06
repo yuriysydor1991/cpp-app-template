@@ -169,6 +169,21 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "UTEST_UserSignalsHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_UserSignalsHandler.junit.xml'
           }
         }
+        stage('UTEST_DeviceInfoHandlerFactory') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_DeviceInfoHandlerFactory\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_DeviceInfoHandlerFactory.junit.xml'
+          }
+        }
+        stage('UTEST_PhysicalDeviceInfoHandler') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_PhysicalDeviceInfoHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_PhysicalDeviceInfoHandler.junit.xml'
+          }
+        }
+        stage('UTEST_QtVulkanController') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_QtVulkanController\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_QtVulkanController.junit.xml'
+          }
+        }
       }
       post { always { junit "$BUILDDIR/$BDJUNITOUT/UTEST_*.xml" } }
     }
@@ -193,6 +208,16 @@ pipeline {
         stage('CTEST_QtLogBridge') {
           steps {
             sh 'cd $BUILDDIR && ctest -R "CTEST_QtLogBridge\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_QtLogBridge.junit.xml'
+          }
+        }
+        stage('CTEST_PhysicalDeviceInfoHandler') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "CTEST_PhysicalDeviceInfoHandler\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_PhysicalDeviceInfoHandler.junit.xml'
+          }
+        }
+        stage('CTEST_QtVulkanController') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "CTEST_QtVulkanController\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_QtVulkanController.junit.xml'
           }
         }
       }

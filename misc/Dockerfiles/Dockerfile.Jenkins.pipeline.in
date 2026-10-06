@@ -15,28 +15,38 @@ RUN apt-get update && \
   apt-get install -y \
     autoconf automake build-essential ccache clang-format clang-tidy cmake \
     cppcheck doxygen file git graphviz libgmock-dev libgtest-dev meson \
-    ninja-build pkg-config valgrind \
+    ninja-build pkg-config python3 valgrind \
     flatpak flatpak-builder fuse3 libfuse2t64 rpm \
     firebird-dev libboost-all-dev libcurl4-openssl-dev liblog4cpp5-dev \
     liblzma-dev libmysqlcppconn-dev libpqxx-dev libssl-dev libsystemd-dev \
-    libxml2-dev nlohmann-json3-dev zlib1g-dev \
-    freeglut3-dev libepoxy-dev libgl-dev libglew-dev libglm-dev libopengl-dev \
+    libnode-dev libxml2-dev nlohmann-json3-dev zlib1g-dev \
+    freeglut3-dev libepoxy-dev libgl-dev libgl1-mesa-dev libglew-dev libglm-dev \
+    libopengl-dev \
     libvulkan-dev mesa-common-dev mesa-vulkan-drivers \
-    libadwaita-1-dev libglib2.0-dev-bin libgtkmm-3.0-dev libgtkmm-4.0-dev \
-    libwebkitgtk-6.0-dev \
+    libadwaita-1-dev libglib2.0-dev-bin libgtk-3-dev libgtkmm-3.0-dev \
+    libgtkmm-4.0-dev libwebkitgtk-6.0-dev \
     qt6-base-dev qt6-base-dev-tools qt6-charts-dev qt6-declarative-dev \
     qt6-declarative-private-dev qt6-location-dev qt6-positioning-dev \
     qt6-tools-dev qt6-tools-dev-tools qt6-webengine-dev \
     qt6-webengine-dev-tools qt6-webview-dev \
+    qml6-module-qtcharts qml6-module-qtlocation qml6-module-qtpositioning \
     qml6-module-qtqml-workerscript qml6-module-qtquick \
     qml6-module-qtquick-controls qml6-module-qtquick-dialogs \
-    qml6-module-qtquick-layouts qml6-module-qtquick-shapes \
-    qml6-module-qtquick-templates qml6-module-qtquick-window \
+    qml6-module-qtquick-layouts qml6-module-qtquick-localstorage \
+    qml6-module-qtquick-nativestyle qml6-module-qtquick-particles \
+    qml6-module-qtquick-pdf qml6-module-qtquick-scene2d \
+    qml6-module-qtquick-scene3d qml6-module-qtquick-shapes \
+    qml6-module-qtquick-templates qml6-module-qtquick-timeline \
+    qml6-module-qtquick-tooling qml6-module-qtquick-virtualkeyboard \
+    qml6-module-qtquick-window qml6-module-qtwebengine qml6-module-qtwebview \
+    qml-module-qtquick2 qml-module-qtquick-controls2 \
+    qml-module-qtquick-dialogs qml-module-qtquick-layouts \
+    qml-module-qtquick-shapes qtquickcontrols2-5-dev \
     libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-net-dev \
     libsdl2-ttf-dev libsdl3-dev libsdl3-image-dev libsdl3-ttf-dev libsfml-dev \
     ffmpeg libgstreamer1.0-dev libgstreamerd-3-dev libgstreamermm-1.0-dev \
     libnotify-dev \
-    giza-dev gnuplot libcfitsio-dev libopencv-dev wcslib-dev \
+    giza-dev gnuplot libcfitsio-dev libopencv-dev opencv-data wcslib-dev \
     btop curl fdupes htop nano nmap traceroute wget whois && \
   apt-get clean && \
   rm -fr /var/lib/apt/lists/*
@@ -143,6 +153,27 @@ RUN git clone --depth 1 --single-branch \
   cmake --build $srcD/plplot-build -j$(nproc) && \
   cmake --install $srcD/plplot-build --strip && \
   rm -fr $srcD/plplot $srcD/plplot-build
+
+# whisper.cpp, at the revision the appWhisperCPP branch fetches, since the
+# distribution ships no libwhisper-dev
+RUN git clone --branch v1.9.4 --depth 1 --single-branch \
+    https://github.com/ggml-org/whisper.cpp.git $srcD/whisper.cpp && \
+  cmake -S $srcD/whisper.cpp -B $srcD/whisper.cpp-build \
+    -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr \
+    -DWHISPER_BUILD_EXAMPLES=OFF -DWHISPER_BUILD_SERVER=OFF \
+    -DWHISPER_BUILD_TESTS=OFF && \
+  cmake --build $srcD/whisper.cpp-build -j$(nproc) && \
+  cmake --install $srcD/whisper.cpp-build --strip && \
+  rm -fr $srcD/whisper.cpp $srcD/whisper.cpp-build
+
+# liboai of the appLibOAI branch
+RUN git clone --depth 1 --single-branch \
+    https://github.com/d7ead/liboai.git $srcD/liboai && \
+  cmake -S $srcD/liboai -B $srcD/liboai-build -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr && \
+  cmake --build $srcD/liboai-build -j$(nproc) && \
+  cmake --install $srcD/liboai-build --strip && \
+  rm -fr $srcD/liboai $srcD/liboai-build
 
 # The flatpak target of every branch installs its build dependencies into the
 # per user installation, which the /var/jenkins_home volume would drop on every

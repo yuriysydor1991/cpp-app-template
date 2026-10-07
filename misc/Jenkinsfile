@@ -30,7 +30,7 @@ pipeline {
       }
       
       steps {
-        git branch: 'app',
+        git branch: 'appDarknetXX',
             url: 'https://github.com/yuriysydor1991/cpp-app-template.git'
       }
     }
@@ -128,6 +128,26 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "UTEST_CommandLineParser\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_CommandLineParser.junit.xml'
           }
         }
+        stage('UTEST_DarknetImage') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_DarknetImage\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_DarknetImage.junit.xml'
+          }
+        }
+        stage('UTEST_DarknetXXController') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_DarknetXXController\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_DarknetXXController.junit.xml'
+          }
+        }
+        stage('UTEST_Detection') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_Detection\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_Detection.junit.xml'
+          }
+        }
+        stage('UTEST_NetworkWeights') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_NetworkWeights\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_NetworkWeights.junit.xml'
+          }
+        }
         stage('UTEST_SignalsHandler') { 
           steps { 
             sh 'cd $BUILDDIR && ctest -R "UTEST_SignalsHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_SignalsHandler.junit.xml'
@@ -187,6 +207,11 @@ pipeline {
         stage('CTEST_app') { 
           steps { 
             sh 'cd $BUILDDIR && ctest -R "CTEST_app\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_app.junit.xml'
+          }
+        }
+        stage('CTEST_DarknetXXController') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "CTEST_DarknetXXController\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_DarknetXXController.junit.xml'
           }
         }
       }

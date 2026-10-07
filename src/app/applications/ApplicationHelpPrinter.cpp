@@ -38,6 +38,29 @@ int ApplicationHelpPrinter::run(std::shared_ptr<ApplicationContext> ctx)
             << CMDParamNames::VERSION
             << " - print application version, build git "
                "commit and configure date"
+            << std::endl
+            << "\t" << CMDParamNames::CFGW << " or " << CMDParamNames::CFG
+            << " <path> - load the network of the given cfg file instead of "
+               "the "
+            << project_decls::PROJECT_DARKNETXX_CFG_PATH << " one" << std::endl
+            << "\t" << CMDParamNames::WEIGHTSW << " or "
+            << CMDParamNames::WEIGHTS
+            << " <path> - load the given original Darknet weights file "
+               "(*.weights) instead of the "
+            << project_decls::PROJECT_DARKNETXX_WEIGHTS_PATH << " one"
+            << std::endl
+            << "\t" << CMDParamNames::DXXWJZ1W
+            << " <path> - load the given darknetxx dxxwjz1 weights file "
+               "(*.dxxwjz1) instead of the original one"
+            << std::endl
+            << "\t" << CMDParamNames::NAMESW << " or " << CMDParamNames::NAMES
+            << " <path> - label the objects with the class names of the given "
+               "file instead of the "
+            << project_decls::PROJECT_DARKNETXX_NAMES_PATH << " one"
+            << std::endl
+            << "\t" << CMDParamNames::IMAGEW << " or " << CMDParamNames::IMAGE
+            << " <path> - detect the objects in the given image instead of the "
+            << project_decls::PROJECT_DARKNETXX_IMAGE_PATH << " one"
             << std::endl;
 
   return 0;

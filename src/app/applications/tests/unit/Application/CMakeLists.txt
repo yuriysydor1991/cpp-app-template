@@ -5,6 +5,10 @@ add_executable(
   UTEST_Application.cpp
   ${CMAKE_SOURCE_DIR}/src/app/applications/Application.cpp
   ${APP_MOCKS_ROOT}/ApplicationContext/src/app/ApplicationContext.cpp
+  ${CMAKE_SOURCE_DIR}/src/DarknetXX/Detection.cpp
+  ${CMAKE_SOURCE_DIR}/src/DarknetXX/weights/Dxxwjz1Weights.cpp
+  ${CMAKE_SOURCE_DIR}/src/DarknetXX/weights/NetworkWeights.cpp
+  ${CMAKE_SOURCE_DIR}/src/DarknetXX/weights/OrigWeights.cpp
 )
 
 target_include_directories(
@@ -12,6 +16,7 @@ target_include_directories(
   PRIVATE ${APP_MOCKS_ROOT}/ApplicationContext
   PRIVATE ${APP_MOCKS_ROOT}/project-global-decls
   PRIVATE ${APP_MOCKS_ROOT}/log
+  PRIVATE ${APP_MOCKS_ROOT}/DarknetXXController
   PRIVATE ${CMAKE_SOURCE_DIR}
 )
 

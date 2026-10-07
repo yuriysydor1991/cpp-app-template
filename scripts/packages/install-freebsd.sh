@@ -16,6 +16,8 @@ PACKAGES="
     cmake
     git
     googletest
+    nlohmann-json
+    opencv
 "
 
 PKG_SUDO=""

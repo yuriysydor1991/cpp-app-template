@@ -15,8 +15,11 @@ PACKAGES=(
     googletest
     libgmock-dev
     libgtest-dev
+    libopencv-dev
     libssl-dev
     libstdc++6
+    nlohmann-json3-dev
+    zlib1g-dev
 )
 
 APT_SUDO=""

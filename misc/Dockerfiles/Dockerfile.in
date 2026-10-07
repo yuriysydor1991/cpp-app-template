@@ -2,6 +2,7 @@ FROM ${DOCKERFILE_SINGLE_RUN_BASE_IMAGE_STRING}
 
 RUN apt update
 RUN apt install -y libstdc++6 build-essential git cmake g++
+RUN apt install -y libopencv-dev zlib1g-dev nlohmann-json3-dev
 
 ARG BUILDDIR=/src/${PROJECT_BINARY_NAME}-build-docker-singlerun
 
@@ -10,7 +11,7 @@ ARG BUILDDIR=/src/${PROJECT_BINARY_NAME}-build-docker-singlerun
 RUN --mount=from=project,target=/src/${PROJECT_BINARY_NAME} \ 
  cd /src/${PROJECT_BINARY_NAME} && \
  mkdir -vp $BUILDDIR && \
- cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Release &&  \
+ cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Release -DENABLE_DARKNETXX_WEIGHTS_DOWNLOAD=OFF &&  \
  cmake --build $BUILDDIR -j$(nproc) --target ${PROJECT_BINARY_NAME} && \
  cmake --install $BUILDDIR --prefix /usr && \
  rm -fr $BUILDDIR

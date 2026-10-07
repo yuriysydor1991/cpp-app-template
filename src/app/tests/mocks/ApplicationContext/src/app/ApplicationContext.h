@@ -32,6 +32,27 @@ class ApplicationContext
 
   const std::vector<std::string>& get_errors() const { return merrors; }
 
+  const std::string& get_cfg_path() const { return mcfg_path; }
+  void set_cfg_path(const std::string& newValue) { mcfg_path = newValue; }
+
+  const std::string& get_weights_path() const { return mweights_path; }
+  void set_weights_path(const std::string& newValue)
+  {
+    mweights_path = newValue;
+  }
+
+  const std::string& get_dxxwjz1_path() const { return mdxxwjz1_path; }
+  void set_dxxwjz1_path(const std::string& newValue)
+  {
+    mdxxwjz1_path = newValue;
+  }
+
+  const std::string& get_names_path() const { return mnames_path; }
+  void set_names_path(const std::string& newValue) { mnames_path = newValue; }
+
+  const std::string& get_image_path() const { return mimage_path; }
+  void set_image_path(const std::string& newValue) { mimage_path = newValue; }
+
   bool get_stop() const { return mstop.load(); }
   void set_stop(const bool newValue) { mstop.store(newValue); }
 
@@ -61,6 +82,11 @@ class ApplicationContext
   bool mprint_help_and_exit{false};
   bool mprint_version_and_exit{false};
   std::vector<std::string> merrors;
+  std::string mcfg_path;
+  std::string mweights_path;
+  std::string mdxxwjz1_path;
+  std::string mnames_path;
+  std::string mimage_path;
   std::atomic_bool mstop{false};
   std::atomic_bool mpause{false};
   std::atomic_bool mreload{false};

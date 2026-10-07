@@ -25,7 +25,7 @@ variables:
   # The tools every job needs on top of the bare image.
   TOOLS: build-essential cmake g++ git ca-certificates pkg-config
   # The development packages of the branch specific libraries.
-  DEPENDENCIES: ''
+  DEPENDENCIES: libopencv-dev zlib1g-dev nlohmann-json3-dev
   RUN_CPPCHECK:
     value: 'false'
     options: ['false', 'true']

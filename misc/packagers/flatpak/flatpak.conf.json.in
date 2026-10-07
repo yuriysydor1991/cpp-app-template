@@ -6,18 +6,72 @@
   "command": "${PROJECT_BINARY_NAME}",
   "modules": [
     {
+      "name": "opencv",
+      "buildsystem": "cmake-ninja",
+      "builddir": true,
+      "config-opts": [
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DBUILD_LIST=core,imgproc,imgcodecs,highgui,videoio",
+        "-DBUILD_TESTS=OFF",
+        "-DBUILD_PERF_TESTS=OFF",
+        "-DBUILD_EXAMPLES=OFF",
+        "-DBUILD_opencv_apps=OFF",
+        "-DBUILD_DOCS=OFF",
+        "-DWITH_PROTOBUF=OFF",
+        "-DWITH_FFMPEG=OFF",
+        "-DWITH_GSTREAMER=OFF",
+        "-DWITH_GTK=OFF",
+        "-DWITH_V4L=OFF",
+        "-DWITH_TBB=OFF",
+        "-DWITH_IPP=OFF",
+        "-DWITH_OPENEXR=OFF",
+        "-DWITH_JASPER=OFF"
+      ],
+      "cleanup": [
+        "/include",
+        "/lib/cmake",
+        "/lib/pkgconfig"
+      ],
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://github.com/opencv/opencv/archive/refs/tags/4.10.0.tar.gz",
+          "sha256": "b2171af5be6b26f7a06b1229948bbb2bdaa74fcf5cd097e0af6378fce50a6eb9"
+        }
+      ]
+    },
+    {
       "name": "${CMAKE_PROJECT_NAME}",
       "buildsystem": "cmake",
       "config-opts": [
         "-DCMAKE_BUILD_TYPE=Release",
-        "-DENABLE_FLATPAK_METAINFO=ON"
+        "-DENABLE_FLATPAK_METAINFO=ON",
+        "-DENABLE_DARKNETXX_AVX=OFF",
+        "-DENABLE_DARKNETXX_WEIGHTS_DOWNLOAD=OFF",
+        "-DFETCHCONTENT_SOURCE_DIR_DARKNETXX=/run/build/${CMAKE_PROJECT_NAME}/darknetxx",
+        "-DFETCHCONTENT_SOURCE_DIR_NLOHMANN_JSON=/run/build/${CMAKE_PROJECT_NAME}/nlohmann-json"
       ],
       "sources": [
         {
           "type": "dir",
           "path": "${CMAKE_SOURCE_DIR}"
+        },
+        {
+          "type": "archive",
+          "url": "https://github.com/yuriysydor1991/darknetxx/archive/${TEMPLATE_APP_DARKNETXX_GIT_TAG}.tar.gz",
+          "sha256": "4cb14f0348c65ec5167fa2f5c1342338bc7c2e184e114d10c49e9a2c57b7463b",
+          "dest": "darknetxx"
+        },
+        {
+          "type": "archive",
+          "url": "https://github.com/nlohmann/json/archive/refs/tags/v3.12.0.tar.gz",
+          "sha256": "4b92eb0c06d10683f7447ce9406cb97cd4b453be18d7279320f7b2f025c10187",
+          "dest": "nlohmann-json"
         }
       ]
     }
+  ],
+  "finish-args": [
+    "--filesystem=home:ro"
   ]
 }

@@ -45,6 +45,56 @@ void ApplicationContext::push_error(const std::string& errorDescription)
   merrors.emplace_back(errorDescription);
 }
 
+const std::string& ApplicationContext::get_cfg_path() const
+{
+  return mcfg_path;
+}
+
+void ApplicationContext::set_cfg_path(const std::string& newValue)
+{
+  mcfg_path = newValue;
+}
+
+const std::string& ApplicationContext::get_weights_path() const
+{
+  return mweights_path;
+}
+
+void ApplicationContext::set_weights_path(const std::string& newValue)
+{
+  mweights_path = newValue;
+}
+
+const std::string& ApplicationContext::get_dxxwjz1_path() const
+{
+  return mdxxwjz1_path;
+}
+
+void ApplicationContext::set_dxxwjz1_path(const std::string& newValue)
+{
+  mdxxwjz1_path = newValue;
+}
+
+const std::string& ApplicationContext::get_names_path() const
+{
+  return mnames_path;
+}
+
+void ApplicationContext::set_names_path(const std::string& newValue)
+{
+  mnames_path = newValue;
+}
+
+const std::string& ApplicationContext::get_image_path() const
+{
+  return mimage_path;
+}
+
+void ApplicationContext::set_image_path(const std::string& newValue)
+{
+  mimage_path = newValue;
+}
+
 bool ApplicationContext::get_stop() const { return mstop.load(); }
 
 void ApplicationContext::set_stop(const bool newValue)

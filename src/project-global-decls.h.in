@@ -14,6 +14,14 @@ const std::string PROJECT_BUILD_VERSION = "${PROJECT_VERSION}" ;
 const std::string PROJECT_BUILD_COMMIT = "${PROJECT_GIT_COMMIT}" ;
 /// @brief Global project' configure date
 const std::string PROJECT_CONFIGURE_DATE = "${PROJECT_CONFIGURE_DATE}" ;
+/// @brief The network cfg file the application loads while no --cfg parameter is given
+const std::string PROJECT_DARKNETXX_CFG_PATH = "${PROJECT_DARKNETXX_CFG_PATH}" ;
+/// @brief The original Darknet weights file the application loads while no --weights or --dxxwjz1 parameter is given
+const std::string PROJECT_DARKNETXX_WEIGHTS_PATH = "${PROJECT_DARKNETXX_WEIGHTS_PATH}" ;
+/// @brief The class names file the application labels the objects with while no --names parameter is given
+const std::string PROJECT_DARKNETXX_NAMES_PATH = "${PROJECT_DARKNETXX_NAMES_PATH}" ;
+/// @brief The image the application detects the objects in while no --image parameter is given
+const std::string PROJECT_DARKNETXX_IMAGE_PATH = "${PROJECT_DARKNETXX_IMAGE_PATH}" ;
 
 } // namespace project_decls
 

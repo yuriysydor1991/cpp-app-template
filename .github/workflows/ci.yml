@@ -24,7 +24,7 @@ env:
   BUILDDIR: build
   BDJUNITOUT: junit-out
   # The development packages of the branch specific libraries.
-  DEPENDENCIES: ''
+  DEPENDENCIES: libopencv-dev zlib1g-dev nlohmann-json3-dev
 
 jobs:
   code-format:

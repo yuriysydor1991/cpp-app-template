@@ -24,7 +24,7 @@
 
 - гілка `main` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template)] один файл з функцією `main` і з усіма можливими інтеграціями для генерації одного бінарного виконуваного файлу.
 
-- гілка `app` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/app), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/app)] (**поточна**) яка містить загальні інфраструктурні класи програми для генераці одинарного бінарного виконуваного файлу.
+- гілка `app` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/app), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/app)] яка містить загальні інфраструктурні класи програми для генераці одинарного бінарного виконуваного файлу.
 
 - гілка `applib` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/applib), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/applib)] яка складається з класів банарного виконуваного файлу з додатковими інфраструктурними класами для генерації підключаємої бібліотеки і заголовкових файлів (доступні для встановлення), що призначені для поширення коду бібліотеки для повторного перевикористання іншими бінарнами файлами.
 
@@ -137,6 +137,8 @@
 
 - гілка `appWhisperCPP` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appWhisperCPP), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appWhisperCPP)] яка містить загальні інфраструктурні класи програми для генерації одинарного бінарного виконуваного файлу, що розпізнає мовлення бібліотекою [whisper.cpp](https://github.com/ggml-org/whisper.cpp): невеликий контролер захоплює типовий мікрофон системи через аудіопідсистему [SDL2](https://www.libsdl.org/), розрізає захоплене аудіо на висловлювання за паузами мовлення і розпізнає їх, тож клас Application записує кожне розпізнане висловлювання у журнал макросом `LOGI`. Конфігурування завантажує багатомовну модель (серед інших мов - англійську й українську) скриптом завантаження whisper.cpp.
 
+- гілка `appDarknetXX` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appDarknetXX), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appDarknetXX)] (**поточна**) яка містить загальні інфраструктурні класи програми для генерації одинарного бінарного виконуваного файлу, що виявляє об'єкти на зображенні засобами [darknetxx](https://github.com/yuriysydor1991/darknetxx) (порту нейронної мережі [Darknet](https://github.com/AlexeyAB/darknet) на C++): невеликий контролер завантажує мережу Darknet з cfg-файлу з вагами оригінального файлу `*.weights` або файлу `*.dxxwjz1` darknetxx, тож клас Application записує кожен виявлений об'єкт у журнал макросом `LOGI`. Конфігурування завантажує вихідні коди darknetxx, збирає її мережеве ядро у виконуваний файл і завантажує ваги мережі YOLOv4-tiny, навченої на наборі даних COCO.
+
 ## System / DBus
 
 - `appSDBusCxxClient` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSDBusCxxClient), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSDBusCxxClient)] яка містить загальні інфраструктурні класи програми для генераці одинарного бінарного виконуваного файлу з використанням [Kistler-Group's sdbus-c++](https://github.com/Kistler-Group/sdbus-cpp.git) бібліотеки для побудови клієнта сервісів розміщених на шині [DBus](https://uk.wikipedia.org/wiki/D-Bus)
@@ -244,6 +246,8 @@
         1. [Вмикання інтеграції OpenJPEG (JPEG 2000)](/doc/sections/uk_UA/5-project-build/image-libraries/5-31-enabling-the-openjpeg-library.md)
         1. [Вмикання інтеграції libavif (AVIF)](/doc/sections/uk_UA/5-project-build/image-libraries/5-32-enabling-the-libavif-library.md)
         1. [Вмикання інтеграції libheif (HEIF/HEIC)](/doc/sections/uk_UA/5-project-build/image-libraries/5-33-enabling-the-libheif-library.md)
+    1. Штучний інтелект
+        1. [Вмикання виявлення об'єктів darknetxx](/doc/sections/uk_UA/5-project-build/ai/5-61-enabling-the-darknetxx-object-detection.md)
 1. [Запуск головного виконуваного файлу](/doc/sections/uk_UA/6-run-the-executable/6-run-the-executable.md)
     1. [Запуск через IDE](/doc/sections/uk_UA/6-run-the-executable/6-1-IDE-run.md)
     1. Запуск з терміналу

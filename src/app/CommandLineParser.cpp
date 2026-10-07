@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include <map>
 #include <memory>
 #include <set>
 #include <string>
@@ -12,6 +13,31 @@
 
 namespace app
 {
+
+namespace
+{
+
+using PathSetter = void (ApplicationContext::*)(const std::string&);
+
+/// @brief The parameters of the files paths with the context setters of
+/// theirs.
+const std::map<std::string, PathSetter>& path_params()
+{
+  static const std::map<std::string, PathSetter> params{
+      {CMDParamNames::CFGW, &ApplicationContext::set_cfg_path},
+      {CMDParamNames::CFG, &ApplicationContext::set_cfg_path},
+      {CMDParamNames::WEIGHTSW, &ApplicationContext::set_weights_path},
+      {CMDParamNames::WEIGHTS, &ApplicationContext::set_weights_path},
+      {CMDParamNames::DXXWJZ1W, &ApplicationContext::set_dxxwjz1_path},
+      {CMDParamNames::NAMESW, &ApplicationContext::set_names_path},
+      {CMDParamNames::NAMES, &ApplicationContext::set_names_path},
+      {CMDParamNames::IMAGEW, &ApplicationContext::set_image_path},
+      {CMDParamNames::IMAGE, &ApplicationContext::set_image_path}};
+
+  return params;
+}
+
+}  // namespace
 
 bool CommandLineParser::parse_args(std::shared_ptr<ApplicationContext> ctx)
 {
@@ -87,6 +113,9 @@ bool CommandLineParser::parse_arg(std::shared_ptr<ApplicationContext> ctx,
     // skipping already parsed cmd params
     paramIndex++;
     return true;
+  } else if (const auto path = path_params().find(param);
+             path != path_params().cend()) {
+    ((*ctx).*(path->second))(nextParam);
   } else {
     ctx->set_print_help_and_exit(true);
     ctx->push_error("Unknown parameter: " + param);
@@ -105,8 +134,11 @@ const std::set<std::string>& CommandLineParser::get_params_requiring_data()
 {
   // Place here command line parameters that are requiring
   // some data after it.
-  static const std::set<std::string> requireNext{CMDParamNames::LOGPATHW,
-                                                 CMDParamNames::LOGPATH};
+  static const std::set<std::string> requireNext{
+      CMDParamNames::LOGPATHW, CMDParamNames::LOGPATH,  CMDParamNames::CFGW,
+      CMDParamNames::CFG,      CMDParamNames::WEIGHTSW, CMDParamNames::WEIGHTS,
+      CMDParamNames::DXXWJZ1W, CMDParamNames::NAMESW,   CMDParamNames::NAMES,
+      CMDParamNames::IMAGEW,   CMDParamNames::IMAGE};
 
   return requireNext;
 }

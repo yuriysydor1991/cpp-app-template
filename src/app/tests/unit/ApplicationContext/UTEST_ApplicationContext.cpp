@@ -34,6 +34,11 @@ TEST_F(UTEST_ApplicationContext, empty_context)
   EXPECT_EQ(appCtx->get_argc(), 0);
   EXPECT_EQ(appCtx->get_argv(), nullptr);
 
+  EXPECT_TRUE(appCtx->get_cfg_path().empty());
+  EXPECT_TRUE(appCtx->get_weights_path().empty());
+  EXPECT_TRUE(appCtx->get_dxxwjz1_path().empty());
+  EXPECT_TRUE(appCtx->get_names_path().empty());
+  EXPECT_TRUE(appCtx->get_image_path().empty());
   EXPECT_TRUE(appCtx->get_errors().empty());
   EXPECT_FALSE(appCtx->get_print_help_and_exit());
   EXPECT_FALSE(appCtx->get_print_version_and_exit());
@@ -159,6 +164,30 @@ TEST_F(UTEST_ApplicationContext, setting_the_print_version_and_exit_flag)
 
   EXPECT_FALSE(appCtx->get_print_version_and_exit());
   EXPECT_FALSE(appCtx->get_print_help_and_exit());
+}
+
+TEST_F(UTEST_ApplicationContext, setting_the_network_files_paths)
+{
+  appCtx->set_cfg_path("a.cfg");
+  appCtx->set_weights_path("a.weights");
+  appCtx->set_dxxwjz1_path("a.dxxwjz1");
+  appCtx->set_names_path("a.names");
+  appCtx->set_image_path("an-image.jpg");
+
+  EXPECT_EQ(appCtx->get_cfg_path(), "a.cfg");
+  EXPECT_EQ(appCtx->get_weights_path(), "a.weights");
+  EXPECT_EQ(appCtx->get_dxxwjz1_path(), "a.dxxwjz1");
+  EXPECT_EQ(appCtx->get_names_path(), "a.names");
+  EXPECT_EQ(appCtx->get_image_path(), "an-image.jpg");
+
+  appCtx->set_weights_path({});
+
+  EXPECT_TRUE(appCtx->get_weights_path().empty());
+  EXPECT_EQ(appCtx->get_dxxwjz1_path(), "a.dxxwjz1");
+
+  EXPECT_TRUE(appCtx->get_errors().empty());
+  EXPECT_FALSE(appCtx->get_print_help_and_exit());
+  EXPECT_FALSE(appCtx->get_print_version_and_exit());
 }
 
 TEST_F(UTEST_ApplicationContext, setting_the_stop_flag)

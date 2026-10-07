@@ -16,8 +16,11 @@ PACKAGES=(
     git
     gmock-devel
     gtest-devel
+    json-devel
     make
+    opencv-devel
     openssl-devel
+    zlib-devel
 )
 
 DNF_SUDO=""

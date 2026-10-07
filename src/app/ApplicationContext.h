@@ -66,6 +66,50 @@ class ApplicationContext
   /// @brief Pushes a new error description into the merrors field.
   void push_error(const std::string& errorDescription);
 
+  /// @brief Provides the path of the network cfg file the Application loads.
+  /// Empty while the command line carries none.
+  const std::string& get_cfg_path() const;
+
+  /// @brief Sets the path of the network cfg file for the Application to
+  /// load. The CommandLineParser fills it out of the command line.
+  void set_cfg_path(const std::string& newValue);
+
+  /// @brief Provides the path of the original Darknet weights file
+  /// (*.weights) the Application loads. Empty while the command line carries
+  /// none.
+  const std::string& get_weights_path() const;
+
+  /// @brief Sets the path of the original Darknet weights file for the
+  /// Application to load. The CommandLineParser fills it out of the command
+  /// line.
+  void set_weights_path(const std::string& newValue);
+
+  /// @brief Provides the path of the darknetxx dxxwjz1 weights file
+  /// (*.dxxwjz1) the Application loads. Empty while the command line carries
+  /// none.
+  const std::string& get_dxxwjz1_path() const;
+
+  /// @brief Sets the path of the darknetxx dxxwjz1 weights file for the
+  /// Application to load. The CommandLineParser fills it out of the command
+  /// line.
+  void set_dxxwjz1_path(const std::string& newValue);
+
+  /// @brief Provides the path of the class names file the Application labels
+  /// the detected objects with. Empty while the command line carries none.
+  const std::string& get_names_path() const;
+
+  /// @brief Sets the path of the class names file for the Application. The
+  /// CommandLineParser fills it out of the command line.
+  void set_names_path(const std::string& newValue);
+
+  /// @brief Provides the path of the image the Application detects the
+  /// objects in. Empty while the command line carries none.
+  const std::string& get_image_path() const;
+
+  /// @brief Sets the path of the image for the Application to detect the
+  /// objects in. The CommandLineParser fills it out of the command line.
+  void set_image_path(const std::string& newValue);
+
   /// @brief Tells if the application was asked to stop. Atomic, so it is safe
   /// to poll it from any thread.
   bool get_stop() const;
@@ -129,6 +173,26 @@ class ApplicationContext
 
   /// @brief Errors description.
   std::vector<std::string> merrors;
+
+  /// @brief The network cfg file path. See the
+  /// ApplicationContext::set_cfg_path setter.
+  std::string mcfg_path;
+
+  /// @brief The original Darknet weights file path. See the
+  /// ApplicationContext::set_weights_path setter.
+  std::string mweights_path;
+
+  /// @brief The darknetxx dxxwjz1 weights file path. See the
+  /// ApplicationContext::set_dxxwjz1_path setter.
+  std::string mdxxwjz1_path;
+
+  /// @brief The class names file path. See the
+  /// ApplicationContext::set_names_path setter.
+  std::string mnames_path;
+
+  /// @brief The image path. See the ApplicationContext::set_image_path
+  /// setter.
+  std::string mimage_path;
 
   /// @brief The thread safe application stop flag. See the
   /// ApplicationContext::set_stop setter.

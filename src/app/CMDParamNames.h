@@ -24,6 +24,15 @@ class CMDParamNames
   inline static const std::string VERSION{"-v"};
   inline static const std::string LOGPATHW{"--log-file"};
   inline static const std::string LOGPATH{"-l"};
+  inline static const std::string CFGW{"--cfg"};
+  inline static const std::string CFG{"-c"};
+  inline static const std::string WEIGHTSW{"--weights"};
+  inline static const std::string WEIGHTS{"-w"};
+  inline static const std::string DXXWJZ1W{"--dxxwjz1"};
+  inline static const std::string NAMESW{"--names"};
+  inline static const std::string NAMES{"-n"};
+  inline static const std::string IMAGEW{"--image"};
+  inline static const std::string IMAGE{"-i"};
 };
 
 }  // namespace app

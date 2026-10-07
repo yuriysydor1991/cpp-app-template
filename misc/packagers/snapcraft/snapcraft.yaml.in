@@ -22,3 +22,17 @@ parts:
     cmake-parameters:
       - -DCMAKE_BUILD_TYPE=Release
       - -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
+      - -DENABLE_DARKNETXX_AVX=OFF
+      - -DENABLE_DARKNETXX_WEIGHTS_DOWNLOAD=OFF
+    build-packages:
+      - git
+      - libopencv-dev
+      - nlohmann-json3-dev
+      - zlib1g-dev
+    stage-packages:
+      - libgomp1
+      - libopencv-core406t64
+      - libopencv-highgui406t64
+      - libopencv-imgcodecs406t64
+      - libopencv-imgproc406t64
+      - libopencv-videoio406t64

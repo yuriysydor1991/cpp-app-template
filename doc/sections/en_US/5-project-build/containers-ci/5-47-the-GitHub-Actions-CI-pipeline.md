@@ -22,10 +22,10 @@ env:
   BUILDDIR: build
   BDJUNITOUT: junit-out
   # The development packages of the branch specific libraries.
-  DEPENDENCIES: ''
+  DEPENDENCIES: libopencv-dev zlib1g-dev nlohmann-json3-dev
 ```
 
-That variable is the single line the branches of the template differ by, so a project which links a library of its own appends the development package of the library there. This branch asks for no package the runner image misses, so its own line stays empty.
+That variable is the single line the branches of the template differ by, so a project which links a library of its own appends the development package of the library there.
 
 ### The manual parameters
 

@@ -18,6 +18,11 @@ target_include_directories(
 )
 
 target_link_libraries(
+  TemplateHTTPSessionHandlersObj
+  PUBLIC Boost::boost
+)
+
+target_link_libraries(
   ${PROJECT_BINARY_NAME}
   TemplateHTTPSessionHandlersObj
 )

@@ -13,6 +13,11 @@ target_include_directories(
 )
 
 target_link_libraries(
+  TemplatePagesBuildersObj
+  PUBLIC Boost::boost
+)
+
+target_link_libraries(
   ${PROJECT_BINARY_NAME}
   TemplatePagesBuildersObj
 )

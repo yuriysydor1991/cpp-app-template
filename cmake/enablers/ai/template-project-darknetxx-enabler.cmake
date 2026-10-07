@@ -11,7 +11,7 @@ if (NOT ENABLE_DARKNETXX)
 endif()
 
 set(TEMPLATE_APP_DARKNETXX_GIT "https://github.com/yuriysydor1991/darknetxx.git" CACHE STRING "The darknetxx project git source repository")
-set(TEMPLATE_APP_DARKNETXX_GIT_TAG "4d5cbbd45789bb6b48ee5ce6cb18b029eb934f7c" CACHE STRING "The darknetxx project git repository commit (or branch) of interest")
+set(TEMPLATE_APP_DARKNETXX_GIT_TAG "f37cf3175d112008a6f44589552d22668629cd09" CACHE STRING "The darknetxx project git repository commit (or branch) of interest")
 
 # The darknetxx core is the original Darknet C code computing with the C++
 # network infrastructure of the darknetxx, which needs the very libraries the
@@ -29,10 +29,11 @@ template_project_default_3rdparty_enabler(
   GIT_TAG "v3.12.0"
 )
 
-# The darknetxx is an application of no library to install, and it's CMake
-# project builds as the top level one only. So the sources are fetched alone
-# (no subdirectory of them holds the CMakeLists.txt) and the darknetxx network
-# core gets built out of them right here.
+# The darknetxx shared library exports it's facade alone, which saves the
+# detected objects into the files rather than hands them over, while it's CMake
+# project installs the library beside the project one. So the sources are
+# fetched alone (no subdirectory of them holds the CMakeLists.txt) and the
+# darknetxx network core gets built out of them right here.
 include(FetchContent)
 
 FetchContent_Declare(
@@ -44,22 +45,23 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(darknetxx)
 
-set(MOD_DARKNET_SRC_ROOT "${darknetxx_SOURCE_DIR}/src/darknet-adaptor/adaptors/detector-cmake-adaptor/darknet")
+set(MOD_DARKNET_SRC_ROOT "${darknetxx_SOURCE_DIR}/src/lib/darknet-adaptor/adaptors/detector-cmake-adaptor/darknet")
 
 # The original Darknet sources the darknetxx compiles, which also configures
 # the Darknet version.h into the build directory.
-include("${MOD_DARKNET_SRC_ROOT}/../darknet-orig-sources.cmake")
+include("${MOD_DARKNET_SRC_ROOT}/../darknetxx-darknet-orig-sources.cmake")
 
 file(
   GLOB_RECURSE darknetxxCxxSources
-  "${darknetxx_SOURCE_DIR}/src/darknet-adaptor/*.cpp"
-  "${darknetxx_SOURCE_DIR}/src/helpers/*.cpp"
-  "${darknetxx_SOURCE_DIR}/src/zlib/*.cpp"
+  "${darknetxx_SOURCE_DIR}/src/lib/darknet-adaptor/*.cpp"
+  "${darknetxx_SOURCE_DIR}/src/lib/helpers/*.cpp"
+  "${darknetxx_SOURCE_DIR}/src/lib/zlib/*.cpp"
 )
 
 list(FILTER darknetxxCxxSources EXCLUDE REGEX "/tests/|/detector-cmake-adaptor/")
 
-# The logger implementation is left out: the project provides the one, which
+# The core passes the library context classes of the facade around, while
+# the logger implementation is left out: the project provides the one, which
 # forwards the darknetxx log messages into the project log (see the
 # src/DarknetXX/log directory).
 add_library(
@@ -67,7 +69,8 @@ add_library(
   ${DARKNET_ORIG_C_SOURCES}
   ${DARKNET_ORIG_CXX_SOURCES}
   ${darknetxxCxxSources}
-  "${darknetxx_SOURCE_DIR}/src/app/ApplicationContext.cpp"
+  "${darknetxx_SOURCE_DIR}/src/lib/facade/LibraryContext.cpp"
+  "${darknetxx_SOURCE_DIR}/src/lib/facade/TrainingProgress.cpp"
   "${darknetxx_SOURCE_DIR}/src/log/cpplog4c.cpp"
 )
 
@@ -75,9 +78,8 @@ add_library(
 # the headers of the same paths (src/log/log.h and the like) and declare the
 # classes of the same names. The sources compiling with the darknetxx headers
 # take the darknetxx include directories before any other one, while the
-# DARKNETXX_COMPILE_DEFINITIONS rename it's template namespaces, so the
-# project and the darknetxx classes of the same names live together in the
-# very same executable.
+# DARKNETXX_COMPILE_DEFINITIONS rename it's logger namespace, so the project
+# and the darknetxx loggers live together in the very same executable.
 set(
   DARKNETXX_INCLUDE_DIRS
   "${darknetxx_SOURCE_DIR}"
@@ -89,13 +91,18 @@ set(
 
 set(
   DARKNETXX_COMPILE_DEFINITIONS
-  app=darknetxx_app
   default_logger=darknetxx_default_logger
   OPENCV=1
   MAX_LOG_LEVEL=${MAX_LOG_LEVEL}
 )
 
-target_include_directories(darknetxx PRIVATE ${DARKNETXX_INCLUDE_DIRS})
+# the facade sources include their headers by the file names
+target_include_directories(
+  darknetxx PRIVATE
+  ${DARKNETXX_INCLUDE_DIRS}
+  "${darknetxx_SOURCE_DIR}/src/lib/facade/public"
+)
+
 target_compile_definitions(darknetxx PRIVATE ${DARKNETXX_COMPILE_DEFINITIONS})
 set_target_properties(darknetxx PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
@@ -162,9 +169,9 @@ option(
   ON
 )
 
-set(PROJECT_DARKNETXX_CFG_PATH "" CACHE STRING "The network cfg file the application loads while no --cfg parameter is given, the darknetxx yolov4-tiny.cfg one if empty")
-set(PROJECT_DARKNETXX_WEIGHTS_PATH "" CACHE STRING "The network weights file the application loads while no --weights or --dxxwjz1 parameter is given, the downloaded TEMPLATE_APP_DARKNETXX_WEIGHTS_URL one if empty")
-set(PROJECT_DARKNETXX_NAMES_PATH "" CACHE STRING "The class names file the application labels the objects with while no --names parameter is given, the darknetxx coco.names one if empty")
+set(PROJECT_DARKNETXX_CFG_PATH "" CACHE STRING "The network cfg file the application loads while neither the --cfg nor the --dxxwjz2 parameter is given, the darknetxx yolov4-tiny.cfg one if empty")
+set(PROJECT_DARKNETXX_WEIGHTS_PATH "" CACHE STRING "The network weights file the application loads while no --weights, --dxxwjz1 or --dxxwjz2 parameter is given, the downloaded TEMPLATE_APP_DARKNETXX_WEIGHTS_URL one if empty")
+set(PROJECT_DARKNETXX_NAMES_PATH "" CACHE STRING "The class names file the application labels the objects with while neither the --names nor the --dxxwjz2 parameter is given, the darknetxx coco.names one if empty")
 set(PROJECT_DARKNETXX_IMAGE_PATH "" CACHE STRING "The image the application detects the objects of while no --image parameter is given, the darknetxx dog.jpg one if empty")
 
 if (NOT PROJECT_DARKNETXX_CFG_PATH)
@@ -203,7 +210,7 @@ if (NOT PROJECT_DARKNETXX_WEIGHTS_PATH)
     # the downloaded one next time.
     if (NOT weightsCode EQUAL 0)
       file(REMOVE "${PROJECT_DARKNETXX_WEIGHTS_PATH}")
-      message(WARNING "Fail to download the ${TEMPLATE_APP_DARKNETXX_WEIGHTS_URL} weights file (${weightsStatus}), so the application needs the --weights or the --dxxwjz1 parameter")
+      message(WARNING "Fail to download the ${TEMPLATE_APP_DARKNETXX_WEIGHTS_URL} weights file (${weightsStatus}), so the application needs the --weights, the --dxxwjz1 or the --dxxwjz2 parameter")
     endif()
   endif()
 endif()

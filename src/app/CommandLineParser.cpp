@@ -29,6 +29,7 @@ const std::map<std::string, PathSetter>& path_params()
       {CMDParamNames::WEIGHTSW, &ApplicationContext::set_weights_path},
       {CMDParamNames::WEIGHTS, &ApplicationContext::set_weights_path},
       {CMDParamNames::DXXWJZ1W, &ApplicationContext::set_dxxwjz1_path},
+      {CMDParamNames::DXXWJZ2W, &ApplicationContext::set_dxxwjz2_path},
       {CMDParamNames::NAMESW, &ApplicationContext::set_names_path},
       {CMDParamNames::NAMES, &ApplicationContext::set_names_path},
       {CMDParamNames::IMAGEW, &ApplicationContext::set_image_path},
@@ -137,8 +138,8 @@ const std::set<std::string>& CommandLineParser::get_params_requiring_data()
   static const std::set<std::string> requireNext{
       CMDParamNames::LOGPATHW, CMDParamNames::LOGPATH,  CMDParamNames::CFGW,
       CMDParamNames::CFG,      CMDParamNames::WEIGHTSW, CMDParamNames::WEIGHTS,
-      CMDParamNames::DXXWJZ1W, CMDParamNames::NAMESW,   CMDParamNames::NAMES,
-      CMDParamNames::IMAGEW,   CMDParamNames::IMAGE};
+      CMDParamNames::DXXWJZ1W, CMDParamNames::DXXWJZ2W, CMDParamNames::NAMESW,
+      CMDParamNames::NAMES,    CMDParamNames::IMAGEW,   CMDParamNames::IMAGE};
 
   return requireNext;
 }

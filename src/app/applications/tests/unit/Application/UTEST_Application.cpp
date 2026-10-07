@@ -2,11 +2,13 @@
 #include <gtest/gtest.h>
 
 #include <string>
+#include <tuple>
 #include <vector>
 
 #include "project-global-decls.h"
 #include "src/DarknetXX/DarknetXXController.h"
 #include "src/DarknetXX/weights/Dxxwjz1Weights.h"
+#include "src/DarknetXX/weights/Dxxwjz2Weights.h"
 #include "src/DarknetXX/weights/OrigWeights.h"
 #include "src/app/applications/Application.h"
 
@@ -36,6 +38,7 @@ class UTEST_Application : public Test
   inline static const std::string CFG{"/tmp/a.cfg"};
   inline static const std::string WEIGHTS{"/tmp/a.weights"};
   inline static const std::string DXXWJZ1{"/tmp/a.dxxwjz1"};
+  inline static const std::string DXXWJZ2{"/tmp/a.dxxwjz2"};
   inline static const std::string NAMES{"/tmp/a.names"};
   inline static const std::string IMAGE{"/tmp/an-image.jpg"};
 
@@ -103,17 +106,52 @@ TEST_F(UTEST_Application, loads_the_dxxwjz1_weights_of_the_parameter)
   EXPECT_EQ(app->run(appCtx), 0);
 }
 
-TEST_F(UTEST_Application, both_weights_files_fail_the_run)
+TEST_F(UTEST_Application, detects_with_the_network_of_the_dxxwjz2_weights)
 {
-  appCtx->set_weights_path(WEIGHTS);
-  appCtx->set_dxxwjz1_path(DXXWJZ1);
+  appCtx->set_dxxwjz2_path(DXXWJZ2);
 
+  DarknetXXController::onMockCreate = [](DarknetXXController& darknetxx) {
+    EXPECT_CALL(darknetxx,
+                init(DXXWJZ2, weights_of<Dxxwjz2Weights>(DXXWJZ2), ""));
+    EXPECT_CALL(darknetxx, detect(project_decls::PROJECT_DARKNETXX_IMAGE_PATH));
+  };
+
+  EXPECT_EQ(app->run(appCtx), 0);
+}
+
+TEST_F(UTEST_Application, the_parameters_files_go_over_the_dxxwjz2_ones)
+{
+  appCtx->set_cfg_path(CFG);
+  appCtx->set_dxxwjz2_path(DXXWJZ2);
+  appCtx->set_names_path(NAMES);
+
+  DarknetXXController::onMockCreate = [](DarknetXXController& darknetxx) {
+    EXPECT_CALL(darknetxx,
+                init(CFG, weights_of<Dxxwjz2Weights>(DXXWJZ2), NAMES));
+  };
+
+  EXPECT_EQ(app->run(appCtx), 0);
+}
+
+TEST_F(UTEST_Application, more_weights_files_than_one_fail_the_run)
+{
   DarknetXXController::onMockCreate = [](DarknetXXController& darknetxx) {
     EXPECT_CALL(darknetxx, init(_, _, _)).Times(0);
     EXPECT_CALL(darknetxx, detect(_)).Times(0);
   };
 
-  EXPECT_NE(app->run(appCtx), 0);
+  for (const auto& [weights, dxxwjz1, dxxwjz2] :
+       {std::tuple{WEIGHTS, DXXWJZ1, std::string{}},
+        std::tuple{WEIGHTS, std::string{}, DXXWJZ2},
+        std::tuple{std::string{}, DXXWJZ1, DXXWJZ2}}) {
+    const auto ctx = std::make_shared<ApplicationContext>(argc, argv);
+
+    ctx->set_weights_path(weights);
+    ctx->set_dxxwjz1_path(dxxwjz1);
+    ctx->set_dxxwjz2_path(dxxwjz2);
+
+    EXPECT_NE(app->run(ctx), 0);
+  }
 }
 
 TEST_F(UTEST_Application, failed_init_detects_nothing)

@@ -24,6 +24,7 @@ add_executable(
   ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/StopSignalsHandler.cpp
   ${CMAKE_SOURCE_DIR}/src/DarknetXX/Detection.cpp
   ${CMAKE_SOURCE_DIR}/src/DarknetXX/weights/Dxxwjz1Weights.cpp
+  ${CMAKE_SOURCE_DIR}/src/DarknetXX/weights/Dxxwjz2Weights.cpp
   ${CMAKE_SOURCE_DIR}/src/DarknetXX/weights/NetworkWeights.cpp
   ${CMAKE_SOURCE_DIR}/src/DarknetXX/weights/OrigWeights.cpp
 )

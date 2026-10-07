@@ -23,8 +23,8 @@ namespace darknetxxi
 
 /**
  * @brief The darknetxx object detection controller. It loads a Darknet
- * network of the cfg file with the weights of any format the darknetxx reads
- * and detects the objects in the images with it.
+ * network of the cfg file (or of the dxxwjz2 one) with the weights of any
+ * format the darknetxx reads and detects the objects in the images with it.
  *
  * The header keeps the darknetxx headers out, so the project sources include
  * it the usual way, while it's implementation compiles with the darknetxx
@@ -44,10 +44,13 @@ class DarknetXXController : private WeightsLoader
   /**
    * @brief Loads the network in place of the previously loaded one.
    *
-   * @param cfg The network cfg file path, e.g. the yolov4-tiny.cfg one.
+   * @param cfg The network cfg file path, e.g. the yolov4-tiny.cfg one, or
+   * the dxxwjz2 file path (of the .dxxwjz2 extension) to load the network of
+   * the cfg text the file keeps.
    * @param weights The weights file of the network.
    * @param names The class names file path, a name per line (e.g. the
-   * coco.names one), the empty one to number the classes instead.
+   * coco.names one), the empty one to take the class names the dxxwjz2
+   * weights keep or to number the classes instead.
    *
    * @return Returns true on success and false otherwise.
    */
@@ -78,6 +81,7 @@ class DarknetXXController : private WeightsLoader
  private:
   bool load(const OrigWeights& weights) override;
   bool load(const Dxxwjz1Weights& weights) override;
+  bool load(const Dxxwjz2Weights& weights) override;
 
   inline static constexpr const float HIERARCHY_THRESHOLD = 0.5F;
   inline static constexpr const float NMS_THRESHOLD = 0.45F;

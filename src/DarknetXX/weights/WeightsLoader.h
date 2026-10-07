@@ -6,6 +6,7 @@ namespace darknetxxi
 
 class OrigWeights;
 class Dxxwjz1Weights;
+class Dxxwjz2Weights;
 
 /**
  * @brief The interface of the loaders of the network weights files. A
@@ -24,6 +25,9 @@ class WeightsLoader
 
   /// @brief Loads the darknetxx dxxwjz1 weights file.
   virtual bool load(const Dxxwjz1Weights& weights) = 0;
+
+  /// @brief Loads the darknetxx dxxwjz2 weights file.
+  virtual bool load(const Dxxwjz2Weights& weights) = 0;
 };
 
 }  // namespace darknetxxi

@@ -6,6 +6,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <fstream>
+#include <nlohmann/json.hpp>
 #include <opencv2/core.hpp>
 #include <opencv2/imgcodecs.hpp>
 #include <sstream>
@@ -14,6 +15,7 @@
 
 #include "src/DarknetXX/DarknetXXController.h"
 #include "src/DarknetXX/weights/Dxxwjz1Weights.h"
+#include "src/DarknetXX/weights/Dxxwjz2Weights.h"
 #include "src/DarknetXX/weights/OrigWeights.h"
 
 using namespace darknetxxi;
@@ -26,20 +28,16 @@ using namespace testing;
  * cell. The biases alone tell the YOLO layer outputs, so whatever the image,
  * the network detects the box of the anchor of the high objectness: the
  * centered square of the anchor size, the half or the quarter of the network
- * one.
+ * one. The dxxwjz2 files keep the network of the very cfg, the class of which
+ * they name the WIDGET one.
  */
 class UTEST_DarknetXXController : public Test
 {
  public:
   UTEST_DarknetXXController()
   {
-    std::ofstream{path(CFG)} << "[net]\nwidth=32\nheight=32\nchannels=3\n\n"
-                                "[maxpool]\nsize=32\nstride=32\n\n"
-                                "[convolutional]\nfilters=18\nsize=1\n"
-                                "stride=1\nactivation=linear\n\n"
-                                "[yolo]\nmask=0,1,2\nanchors=16,16, 8,8, 4,4\n"
-                                "classes=1\nnum=3\n";
-    std::ofstream{path(NAMES)} << "thing\n";
+    std::ofstream{path(CFG)} << CFG_TEXT;
+    std::ofstream{path(NAMES)} << THING << "\n";
     std::ofstream{path(NOT_AN_IMAGE)} << "not an image";
 
     cv::imwrite(path(IMAGE),
@@ -49,6 +47,9 @@ class UTEST_DarknetXXController : public Test
     write_gzip(DXXWJZ1, dxxwjz1(0U));
     write_gzip(OTHER_DXXWJZ1, dxxwjz1(1U));
     std::ofstream{path(PLAIN_DXXWJZ1)} << dxxwjz1(0U);
+    write_gzip(DXXWJZ2, dxxwjz2(0U));
+    write_gzip(OTHER_DXXWJZ2, dxxwjz2(1U));
+    write_gzip(NETWORK_DXXWJZ2, "{" + network_members() + "}");
   }
 
   static std::string path(const char* const name)
@@ -93,9 +94,31 @@ class UTEST_DarknetXXController : public Test
   /// @brief The dxxwjz1 document of the very arrays.
   static std::string dxxwjz1(const std::size_t anchor)
   {
+    return document(R"("format": "dxxwjz1", "version": 1)", anchor);
+  }
+
+  /// @brief The dxxwjz2 document of the network and of the very arrays.
+  static std::string dxxwjz2(const std::size_t anchor)
+  {
+    return document(network_members(), anchor);
+  }
+
+  /// @brief The leading dxxwjz2 members: the format, the version and the
+  /// network of the cfg text and the class name.
+  static std::string network_members()
+  {
+    return R"("format": "dxxwjz2", "version": 2, "network": {"cfg": )" +
+           nlohmann::json(CFG_TEXT).dump() +
+           R"(, "classes": [{"index": 0, "name": ")" + WIDGET + R"("}]})";
+  }
+
+  /// @brief The document of the given leading members and of the arrays.
+  static std::string document(const std::string& members,
+                              const std::size_t anchor)
+  {
     std::ostringstream json;
 
-    json << R"({"format": "dxxwjz1", "version": 1, "header": {"major": 0, )"
+    json << "{" << members << R"(, "header": {"major": 0, )"
          << R"("minor": 2, "revision": 5, "seen": 0}, "layers": [)"
          << R"({"index": 0, "type": "maxpool"}, {"index": 1, "type": )"
          << R"("convolutional", "arrays": {"biases": [)";
@@ -125,16 +148,24 @@ class UTEST_DarknetXXController : public Test
     gzclose(file);
   }
 
-  /// @brief Matches the detection of the "thing" class of the given box.
-  static auto thing(const int left, const int top, const int width,
-                    const int height)
+  /// @brief Matches the detection of the class and the box.
+  static auto detected(const std::string& name, const int left, const int top,
+                       const int width, const int height)
   {
-    return AllOf(Field(&Detection::name, "thing"),
+    return AllOf(Field(&Detection::name, name),
                  Field(&Detection::probability, FloatNear(PROBABILITY, 1e-4F)),
                  Field(&Detection::left, left), Field(&Detection::top, top),
                  Field(&Detection::width, width),
                  Field(&Detection::height, height));
   }
+
+  inline static constexpr const char* const CFG_TEXT =
+      "[net]\nwidth=32\nheight=32\nchannels=3\n\n"
+      "[maxpool]\nsize=32\nstride=32\n\n"
+      "[convolutional]\nfilters=18\nsize=1\nstride=1\nactivation=linear\n\n"
+      "[yolo]\nmask=0,1,2\nanchors=16,16, 8,8, 4,4\nclasses=1\nnum=3\n";
+  inline static const std::string THING{"thing"};
+  inline static const std::string WIDGET{"widget"};
 
   inline static constexpr const char* const CFG = "tiny.cfg";
   inline static constexpr const char* const NAMES = "tiny.names";
@@ -144,6 +175,9 @@ class UTEST_DarknetXXController : public Test
   inline static constexpr const char* const DXXWJZ1 = "tiny.dxxwjz1";
   inline static constexpr const char* const OTHER_DXXWJZ1 = "other.dxxwjz1";
   inline static constexpr const char* const PLAIN_DXXWJZ1 = "plain.dxxwjz1";
+  inline static constexpr const char* const DXXWJZ2 = "tiny.dxxwjz2";
+  inline static constexpr const char* const OTHER_DXXWJZ2 = "other.dxxwjz2";
+  inline static constexpr const char* const NETWORK_DXXWJZ2 = "network.dxxwjz2";
   inline static constexpr const char* const ABSENT = "an-absent-file";
 
   inline static constexpr const std::size_t ANCHORS = 3U;
@@ -184,6 +218,8 @@ TEST_F(UTEST_DarknetXXController, absent_weights_files_fail_the_init)
       controller->init(path(CFG), OrigWeights{path(ABSENT)}, path(NAMES)));
   EXPECT_FALSE(
       controller->init(path(CFG), Dxxwjz1Weights{path(ABSENT)}, path(NAMES)));
+  EXPECT_FALSE(
+      controller->init(path(CFG), Dxxwjz2Weights{path(ABSENT)}, path(NAMES)));
   EXPECT_FALSE(controller->detect(path(IMAGE)).has_value());
 }
 
@@ -206,7 +242,7 @@ TEST_F(UTEST_DarknetXXController, the_original_weights_detect_the_object)
       controller->init(path(CFG), OrigWeights{path(WEIGHTS)}, path(NAMES)));
 
   EXPECT_THAT(controller->detect(path(IMAGE)),
-              Optional(ElementsAre(thing(16, 12, 32, 24))));
+              Optional(ElementsAre(detected(THING, 16, 12, 32, 24))));
 }
 
 TEST_F(UTEST_DarknetXXController, the_dxxwjz1_weights_detect_the_same_object)
@@ -230,7 +266,7 @@ TEST_F(UTEST_DarknetXXController,
                                path(NAMES)));
 
   EXPECT_THAT(controller->detect(path(IMAGE)),
-              Optional(ElementsAre(thing(16, 12, 32, 24))));
+              Optional(ElementsAre(detected(THING, 16, 12, 32, 24))));
 }
 
 TEST_F(UTEST_DarknetXXController, the_dxxwjz1_arrays_are_the_loaded_ones)
@@ -239,7 +275,7 @@ TEST_F(UTEST_DarknetXXController, the_dxxwjz1_arrays_are_the_loaded_ones)
                                path(NAMES)));
 
   EXPECT_THAT(controller->detect(path(IMAGE)),
-              Optional(ElementsAre(thing(24, 18, 16, 12))));
+              Optional(ElementsAre(detected(THING, 24, 18, 16, 12))));
 }
 
 TEST_F(UTEST_DarknetXXController, the_classes_get_numbered_without_the_names)
@@ -277,5 +313,56 @@ TEST_F(UTEST_DarknetXXController, a_reloaded_network_replaces_the_loaded_one)
                                path(NAMES)));
 
   EXPECT_THAT(controller->detect(path(IMAGE)),
-              Optional(ElementsAre(thing(24, 18, 16, 12))));
+              Optional(ElementsAre(detected(THING, 24, 18, 16, 12))));
+}
+
+TEST_F(UTEST_DarknetXXController, the_dxxwjz2_file_alone_is_the_network)
+{
+  ASSERT_TRUE(
+      controller->init(path(DXXWJZ2), Dxxwjz2Weights{path(DXXWJZ2)}, ""));
+
+  EXPECT_THAT(controller->detect(path(IMAGE)),
+              Optional(ElementsAre(detected(WIDGET, 16, 12, 32, 24))));
+}
+
+TEST_F(UTEST_DarknetXXController, the_names_file_goes_over_the_dxxwjz2_names)
+{
+  ASSERT_TRUE(controller->init(path(DXXWJZ2), Dxxwjz2Weights{path(DXXWJZ2)},
+                               path(NAMES)));
+
+  EXPECT_THAT(controller->detect(path(IMAGE)),
+              Optional(ElementsAre(detected(THING, 16, 12, 32, 24))));
+}
+
+TEST_F(UTEST_DarknetXXController, the_dxxwjz2_arrays_load_into_the_cfg_network)
+{
+  ASSERT_TRUE(
+      controller->init(path(CFG), Dxxwjz2Weights{path(OTHER_DXXWJZ2)}, ""));
+
+  EXPECT_THAT(controller->detect(path(IMAGE)),
+              Optional(ElementsAre(detected(WIDGET, 24, 18, 16, 12))));
+}
+
+TEST_F(UTEST_DarknetXXController, the_dxxwjz2_network_takes_the_other_weights)
+{
+  ASSERT_TRUE(controller->init(path(DXXWJZ2), Dxxwjz1Weights{path(DXXWJZ1)},
+                               path(NAMES)));
+
+  EXPECT_THAT(controller->detect(path(IMAGE)),
+              Optional(ElementsAre(detected(THING, 16, 12, 32, 24))));
+}
+
+TEST_F(UTEST_DarknetXXController,
+       a_dxxwjz2_network_of_no_weights_fails_the_init)
+{
+  EXPECT_FALSE(controller->init(path(NETWORK_DXXWJZ2),
+                                Dxxwjz2Weights{path(NETWORK_DXXWJZ2)}, ""));
+  EXPECT_FALSE(controller->detect(path(IMAGE)).has_value());
+}
+
+TEST_F(UTEST_DarknetXXController,
+       a_dxxwjz1_file_given_as_the_dxxwjz2_one_fails_the_init)
+{
+  EXPECT_FALSE(
+      controller->init(path(CFG), Dxxwjz2Weights{path(DXXWJZ1)}, path(NAMES)));
 }

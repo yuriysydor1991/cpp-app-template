@@ -94,6 +94,16 @@ class ApplicationContext
   /// line.
   void set_dxxwjz1_path(const std::string& newValue);
 
+  /// @brief Provides the path of the darknetxx dxxwjz2 weights file
+  /// (*.dxxwjz2) the Application loads with the network and the class names
+  /// it keeps. Empty while the command line carries none.
+  const std::string& get_dxxwjz2_path() const;
+
+  /// @brief Sets the path of the darknetxx dxxwjz2 weights file for the
+  /// Application to load. The CommandLineParser fills it out of the command
+  /// line.
+  void set_dxxwjz2_path(const std::string& newValue);
+
   /// @brief Provides the path of the class names file the Application labels
   /// the detected objects with. Empty while the command line carries none.
   const std::string& get_names_path() const;
@@ -185,6 +195,10 @@ class ApplicationContext
   /// @brief The darknetxx dxxwjz1 weights file path. See the
   /// ApplicationContext::set_dxxwjz1_path setter.
   std::string mdxxwjz1_path;
+
+  /// @brief The darknetxx dxxwjz2 weights file path. See the
+  /// ApplicationContext::set_dxxwjz2_path setter.
+  std::string mdxxwjz2_path;
 
   /// @brief The class names file path. See the
   /// ApplicationContext::set_names_path setter.

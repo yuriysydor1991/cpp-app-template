@@ -29,6 +29,7 @@ class CMDParamNames
   inline static const std::string WEIGHTSW{"--weights"};
   inline static const std::string WEIGHTS{"-w"};
   inline static const std::string DXXWJZ1W{"--dxxwjz1"};
+  inline static const std::string DXXWJZ2W{"--dxxwjz2"};
   inline static const std::string NAMESW{"--names"};
   inline static const std::string NAMES{"-n"};
   inline static const std::string IMAGEW{"--image"};

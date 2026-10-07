@@ -13,6 +13,7 @@ add_library(
   Detection.cpp
   log/DefaultLogger.cpp
   weights/Dxxwjz1Weights.cpp
+  weights/Dxxwjz2Weights.cpp
   weights/NetworkWeights.cpp
   weights/OrigWeights.cpp
 )

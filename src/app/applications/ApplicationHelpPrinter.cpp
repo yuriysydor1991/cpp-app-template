@@ -40,8 +40,8 @@ int ApplicationHelpPrinter::run(std::shared_ptr<ApplicationContext> ctx)
                "commit and configure date"
             << std::endl
             << "\t" << CMDParamNames::CFGW << " or " << CMDParamNames::CFG
-            << " <path> - load the network of the given cfg file instead of "
-               "the "
+            << " <path> - load the network of the given cfg (or dxxwjz2) file "
+               "instead of the "
             << project_decls::PROJECT_DARKNETXX_CFG_PATH << " one" << std::endl
             << "\t" << CMDParamNames::WEIGHTSW << " or "
             << CMDParamNames::WEIGHTS
@@ -53,6 +53,11 @@ int ApplicationHelpPrinter::run(std::shared_ptr<ApplicationContext> ctx)
             << " <path> - load the given darknetxx dxxwjz1 weights file "
                "(*.dxxwjz1) instead of the original one"
             << std::endl
+            << "\t" << CMDParamNames::DXXWJZ2W
+            << " <path> - load the network, the class names and the weights of "
+               "the given darknetxx dxxwjz2 file (*.dxxwjz2), the files of the "
+            << CMDParamNames::CFGW << " and the " << CMDParamNames::NAMESW
+            << " parameters go over the ones of it" << std::endl
             << "\t" << CMDParamNames::NAMESW << " or " << CMDParamNames::NAMES
             << " <path> - label the objects with the class names of the given "
                "file instead of the "

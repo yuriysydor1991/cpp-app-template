@@ -47,6 +47,12 @@ class ApplicationContext
     mdxxwjz1_path = newValue;
   }
 
+  const std::string& get_dxxwjz2_path() const { return mdxxwjz2_path; }
+  void set_dxxwjz2_path(const std::string& newValue)
+  {
+    mdxxwjz2_path = newValue;
+  }
+
   const std::string& get_names_path() const { return mnames_path; }
   void set_names_path(const std::string& newValue) { mnames_path = newValue; }
 
@@ -85,6 +91,7 @@ class ApplicationContext
   std::string mcfg_path;
   std::string mweights_path;
   std::string mdxxwjz1_path;
+  std::string mdxxwjz2_path;
   std::string mnames_path;
   std::string mimage_path;
   std::atomic_bool mstop{false};

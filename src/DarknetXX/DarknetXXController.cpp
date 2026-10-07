@@ -1,11 +1,13 @@
 #include "src/DarknetXX/DarknetXXController.h"
 
-#include <src/darknet-adaptor/adaptors/ANetworkAdaptor/ANetworkAdaptor.h>
-#include <src/darknet-adaptor/adaptors/NetworksLoaders/OrigDefaultLoader/OrigDefaultLoader.h>
-#include <src/darknet-adaptor/adaptors/NetworksLoaders/dxxwjz1/v1/Dxxwjz1Reader.h>
-#include <src/darknet-adaptor/adaptors/NetworksLoaders/original-weights/OrigWeightsReader.h>
-#include <src/darknet-adaptor/adaptors/NetworksLoaders/original-weights/OrigWeightsValidator.h>
 #include <src/darknet.h>
+#include <src/lib/darknet-adaptor/adaptors/ANetworkAdaptor/ANetworkAdaptor.h>
+#include <src/lib/darknet-adaptor/adaptors/NetworksLoaders/OrigDefaultLoader/OrigDefaultLoader.h>
+#include <src/lib/darknet-adaptor/adaptors/NetworksLoaders/dxxwjz1/v1/Dxxwjz1Reader.h>
+#include <src/lib/darknet-adaptor/adaptors/NetworksLoaders/dxxwjz2/v2/Dxxwjz2Reader.h>
+#include <src/lib/darknet-adaptor/adaptors/NetworksLoaders/original-weights/OrigWeightsReader.h>
+#include <src/lib/darknet-adaptor/adaptors/NetworksLoaders/original-weights/OrigWeightsValidator.h>
+#include <src/lib/darknet-adaptor/adaptors/NetworksLoaders/weights-model/WeightsDocument.h>
 #include <src/log/log.h>
 
 #include <algorithm>
@@ -20,6 +22,7 @@
 #include "src/DarknetXX/DarknetImage.h"
 #include "src/DarknetXX/Detection.h"
 #include "src/DarknetXX/weights/Dxxwjz1Weights.h"
+#include "src/DarknetXX/weights/Dxxwjz2Weights.h"
 #include "src/DarknetXX/weights/OrigWeights.h"
 
 namespace darknetxxi
@@ -31,7 +34,9 @@ namespace
 using darknet_adaptor::loaders::OrigDefaultLoader;
 using darknet_adaptor::loaders::OrigWeightsReader;
 using darknet_adaptor::loaders::OrigWeightsValidator;
+using darknet_adaptor::loaders::WeightsDocument;
 using darknet_adaptor::loaders::dxxwjz1::v1::Dxxwjz1Reader;
+using darknet_adaptor::loaders::dxxwjz2::v2::Dxxwjz2Reader;
 
 /// @brief The last detection layer of the network, the way the darknetxx
 /// detector picks it, or the last layer of a network of none.
@@ -98,7 +103,8 @@ bool DarknetXXController::init(const std::string& cfg,
   }
 
   try {
-    // the single image batch inference network
+    // the single image batch inference network of the cfg file, or of the
+    // cfg text the dxxwjz2 file keeps
     mnetwork = OrigDefaultLoader{}.parse_network_cfg_custom(cfg, 1, 1);
   }
   catch (const std::exception& error) {
@@ -201,6 +207,35 @@ bool DarknetXXController::load(const OrigWeights& weights)
 bool DarknetXXController::load(const Dxxwjz1Weights& weights)
 {
   return Dxxwjz1Reader{}.load(*mnetwork->get(), weights.path());
+}
+
+bool DarknetXXController::load(const Dxxwjz2Weights& weights)
+{
+  network& net = *mnetwork->get();
+  Dxxwjz2Reader reader;
+  WeightsDocument rest;
+  bool held = false;
+
+  if (!reader.peek(weights.path(), rest, held)) {
+    return false;
+  }
+
+  // the file of no weights is the network to train, which detects nothing
+  if (!held) {
+    LOGE("The " << weights.path() << " file holds no weights to detect with");
+    return false;
+  }
+
+  if (!reader.load(net, weights.path(), net.n, rest)) {
+    return false;
+  }
+
+  // the class names file of the init goes over the ones of the file
+  if (mnames.empty()) {
+    mnames = rest.network.classes();
+  }
+
+  return true;
 }
 
 }  // namespace darknetxxi

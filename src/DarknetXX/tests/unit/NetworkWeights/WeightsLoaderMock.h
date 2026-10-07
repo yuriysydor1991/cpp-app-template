@@ -4,6 +4,7 @@
 #include <gmock/gmock.h>
 
 #include "src/DarknetXX/weights/Dxxwjz1Weights.h"
+#include "src/DarknetXX/weights/Dxxwjz2Weights.h"
 #include "src/DarknetXX/weights/OrigWeights.h"
 #include "src/DarknetXX/weights/WeightsLoader.h"
 
@@ -19,6 +20,7 @@ class WeightsLoaderMock : public WeightsLoader
  public:
   MOCK_METHOD(bool, load, (const OrigWeights& weights), (override));
   MOCK_METHOD(bool, load, (const Dxxwjz1Weights& weights), (override));
+  MOCK_METHOD(bool, load, (const Dxxwjz2Weights& weights), (override));
 };
 
 }  // namespace darknetxxi

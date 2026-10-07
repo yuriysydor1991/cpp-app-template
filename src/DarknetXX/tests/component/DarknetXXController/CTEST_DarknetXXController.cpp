@@ -102,8 +102,8 @@ TEST_F(CTEST_DarknetXXController, the_darknetxx_errors_get_into_the_log)
                                 OrigWeights{WEIGHTS}, NAMES));
 
   EXPECT_THAT(log_contents(),
-              AllOf(ContainsRegex("ERR [0-9]+ CfgSection.cpp:[0-9]+ : "
-                                  "Failure to open options file"),
+              AllOf(ContainsRegex("ERR [0-9]+ NetworkSource.cpp:[0-9]+ : "
+                                  "Couldn't open the network cfg file"),
                     ContainsRegex("ERR [0-9]+ DarknetXXController.cpp:[0-9]+ : "
                                   "Fail to load the network cfg file")));
 }

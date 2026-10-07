@@ -72,6 +72,7 @@ class UTEST_CommandLineParser : public Test
                  {"--weights", &ApplicationContext::get_weights_path},
                  {"-w", &ApplicationContext::get_weights_path},
                  {"--dxxwjz1", &ApplicationContext::get_dxxwjz1_path},
+                 {"--dxxwjz2", &ApplicationContext::get_dxxwjz2_path},
                  {"--names", &ApplicationContext::get_names_path},
                  {"-n", &ApplicationContext::get_names_path},
                  {"--image", &ApplicationContext::get_image_path},
@@ -189,8 +190,8 @@ TEST_F(UTEST_CommandLineParser, file_parameters_without_the_path_fail)
 
 TEST_F(UTEST_CommandLineParser, all_the_file_parameters_together)
 {
-  args({"-c", "a.cfg", "-w", "a.weights", "--dxxwjz1", "a.dxxwjz1", "-n",
-        "a.names", "-i", "an-image.jpg"});
+  args({"-c", "a.cfg", "-w", "a.weights", "--dxxwjz1", "a.dxxwjz1", "--dxxwjz2",
+        "a.dxxwjz2", "-n", "a.names", "-i", "an-image.jpg"});
 
   EXPECT_CALL(*appctx, push_error(_)).Times(0);
 
@@ -199,6 +200,7 @@ TEST_F(UTEST_CommandLineParser, all_the_file_parameters_together)
   EXPECT_EQ(appctx->get_cfg_path(), "a.cfg");
   EXPECT_EQ(appctx->get_weights_path(), "a.weights");
   EXPECT_EQ(appctx->get_dxxwjz1_path(), "a.dxxwjz1");
+  EXPECT_EQ(appctx->get_dxxwjz2_path(), "a.dxxwjz2");
   EXPECT_EQ(appctx->get_names_path(), "a.names");
   EXPECT_EQ(appctx->get_image_path(), "an-image.jpg");
 }

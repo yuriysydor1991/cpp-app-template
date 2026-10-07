@@ -75,6 +75,16 @@ void ApplicationContext::set_dxxwjz1_path(const std::string& newValue)
   mdxxwjz1_path = newValue;
 }
 
+const std::string& ApplicationContext::get_dxxwjz2_path() const
+{
+  return mdxxwjz2_path;
+}
+
+void ApplicationContext::set_dxxwjz2_path(const std::string& newValue)
+{
+  mdxxwjz2_path = newValue;
+}
+
 const std::string& ApplicationContext::get_names_path() const
 {
   return mnames_path;

@@ -22,6 +22,8 @@ add_executable(
   ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/PauseSignalsHandler.cpp
   ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/PosixSignalsHandler.cpp
   ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/StopSignalsHandler.cpp
+  ${CMAKE_SOURCE_DIR}/src/gettext/CatalogsLocator.cpp
+  ${CMAKE_SOURCE_DIR}/src/gettext/GettextController.cpp
 )
 
 target_include_directories(
@@ -35,7 +37,12 @@ target_include_directories(
 target_link_libraries(
   CTEST_app
   GTest::gtest_main GTest::gmock
+  Intl::Intl
 )
+
+# The application test cases translate with the project catalogs of the build
+# tree.
+add_dependencies(CTEST_app gettext-catalogs)
 
 include(GoogleTest)
 

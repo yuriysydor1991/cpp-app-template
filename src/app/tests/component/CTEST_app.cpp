@@ -1,9 +1,16 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include <array>
+#include <clocale>
 #include <csignal>
+#include <cstdlib>
+#include <iostream>
+#include <sstream>
+#include <string>
 
 #include "src/app/ApplicationFactory.h"
+#include "src/gettext/tr.h"
 
 using namespace app;
 using namespace testing;
@@ -187,4 +194,39 @@ TEST_F(CTEST_app, execute_success)
   int status = ApplicationFactory::execute(argc, argv);
 
   EXPECT_EQ(status, 0);
+}
+
+TEST_F(CTEST_app, help_printer_speaks_the_language_of_the_user)
+{
+  if (setlocale(LC_MESSAGES, "uk_UA.UTF-8") == nullptr) {
+    GTEST_SKIP() << "The uk_UA.UTF-8 locale is not installed";
+  }
+
+  static std::string program{"CppAppTemplate"};
+  static std::string help{"--help"};
+  static std::array<char*, 3> helpArgv{program.data(), help.data(), nullptr};
+
+  int helpArgc{2};
+  char** helpArgvPtr = helpArgv.data();
+
+  setenv("LC_ALL", "uk_UA.UTF-8", 1);
+  unsetenv("LANGUAGE");
+
+  std::stringstream output;
+  std::streambuf* const coutBuffer = std::cout.rdbuf(output.rdbuf());
+
+  const int status = ApplicationFactory::execute(helpArgc, helpArgvPtr);
+
+  std::cout.rdbuf(coutBuffer);
+
+  // The exact translation is the business of the po/uk.po file alone, while
+  // the gmock warnings about the log mock calls share the standard output.
+  const std::string usage{gettexti::tr("Usage:")};
+
+  unsetenv("LC_ALL");
+  setlocale(LC_MESSAGES, "C");
+
+  EXPECT_EQ(status, 0);
+  EXPECT_NE(usage, "Usage:");
+  EXPECT_THAT(output.str(), HasSubstr(usage));
 }

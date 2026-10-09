@@ -5,10 +5,13 @@
 #include <memory>
 
 #include "project-global-decls.h"
+#include "src/gettext/tr.h"
 #include "src/log/log.h"
 
 namespace app
 {
+
+using gettexti::tr;
 
 int ApplicationVersionPrinter::run(std::shared_ptr<ApplicationContext> ctx)
 {
@@ -19,11 +22,11 @@ int ApplicationVersionPrinter::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  std::cout << project_decls::PROJECT_NAME << " version "
+  std::cout << project_decls::PROJECT_NAME << " " << tr("version") << " "
             << project_decls::PROJECT_BUILD_VERSION << std::endl
-            << "configure date " << project_decls::PROJECT_CONFIGURE_DATE
-            << std::endl
-            << "git commit " << project_decls::PROJECT_BUILD_COMMIT
+            << tr("configure date") << " "
+            << project_decls::PROJECT_CONFIGURE_DATE << std::endl
+            << tr("git commit") << " " << project_decls::PROJECT_BUILD_COMMIT
             << std::endl;
 
   return 0;

@@ -13,6 +13,7 @@ PROJECT_ROOT=$(realpath "$(dirname "$0")/../..")
 PACKAGES=(
     cmake
     gcc-c++
+    gettext
     git
     gmock-devel
     gtest-devel

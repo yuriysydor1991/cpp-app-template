@@ -1,13 +1,16 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include <array>
 #include <memory>
+#include <string>
 
 #include "src/app/ApplicationFactory.h"
 #include "src/app/applications/Application.h"
 #include "src/app/applications/ApplicationHelpPrinter.h"
 #include "src/app/applications/ApplicationVersionPrinter.h"
 #include "src/app/signals-handlers/SignalsHandler.h"
+#include "src/gettext/GettextController.h"
 
 using namespace app;
 using namespace testing;
@@ -26,6 +29,7 @@ class UTEST_ApplicationFactory : public Test
     ApplicationHelpPrinter::onMockCreate = nullptr;
     ApplicationVersionPrinter::onMockCreate = nullptr;
     SignalsHandler::onMockCreate = nullptr;
+    gettexti::GettextController::onMockCreate = nullptr;
   }
 
   void expect_the_signals_handler_install()
@@ -81,6 +85,14 @@ TEST_F(UTEST_ApplicationFactory, create_default_signals_handler)
 
   EXPECT_NE(signalsHandler, nullptr);
   EXPECT_NE(std::dynamic_pointer_cast<SignalsHandler>(signalsHandler), nullptr);
+}
+
+TEST_F(UTEST_ApplicationFactory, create_default_gettext_controller)
+{
+  gettexti::GettextControllerPtr controller =
+      factory->create_default_gettext_controller();
+
+  EXPECT_NE(controller, nullptr);
 }
 
 TEST_F(UTEST_ApplicationFactory, create_default_application)
@@ -301,4 +313,47 @@ TEST_F(UTEST_ApplicationFactory, factory_execute_default_app)
   Application::onMockCreate = onMockCreateAppEnsurer.AsStdFunction();
 
   EXPECT_EQ(ApplicationFactory::execute(customArgc, customArgv), 0);
+}
+
+TEST_F(UTEST_ApplicationFactory, factory_run_goes_on_without_the_catalogs)
+{
+  static std::string execPath{"/opt/app/bin/CppAppTemplate"};
+  static std::array<char*, 2> execArgv{execPath.data(), nullptr};
+
+  int execArgc{1};
+  char** execArgvPtr = execArgv.data();
+
+  MockFunction<void(CommandLineParser & instance)> onMockCreateParserEnsurer;
+  MockFunction<void(gettexti::GettextController & instance)>
+      onMockCreateGettextEnsurer;
+  MockFunction<void(Application & instance)> onMockCreateAppEnsurer;
+
+  EXPECT_CALL(onMockCreateParserEnsurer, Call(_))
+      .Times(1)
+      .WillOnce(Invoke([](CommandLineParser& instance) {
+        EXPECT_CALL(instance, parse_args(_)).Times(1).WillOnce(Return(true));
+      }));
+
+  // The catalogs of the executable fail to bind, so the application goes on
+  // with the English messages.
+  EXPECT_CALL(onMockCreateGettextEnsurer, Call(_))
+      .Times(1)
+      .WillOnce(Invoke([](gettexti::GettextController& instance) {
+        EXPECT_CALL(instance, init(execPath)).Times(1).WillOnce(Return(false));
+      }));
+
+  EXPECT_CALL(onMockCreateAppEnsurer, Call(_))
+      .Times(1)
+      .WillOnce(Invoke([&](Application& instance) {
+        EXPECT_CALL(instance, run(_)).Times(1).WillOnce(Return(0));
+      }));
+
+  expect_the_signals_handler_install();
+
+  CommandLineParser::onMockCreate = onMockCreateParserEnsurer.AsStdFunction();
+  gettexti::GettextController::onMockCreate =
+      onMockCreateGettextEnsurer.AsStdFunction();
+  Application::onMockCreate = onMockCreateAppEnsurer.AsStdFunction();
+
+  EXPECT_EQ(factory->run(execArgc, execArgvPtr), 0);
 }

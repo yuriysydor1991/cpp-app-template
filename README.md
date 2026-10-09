@@ -24,7 +24,7 @@ Examine available branches to find your most applicable variant of the template 
 
 - `main` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template)] just the clear `main` function and all available CMake integrations with no additional app infrastructure classes.
 
-- `app` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/app), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/app)] (**current**) with just general application related classes to generate a single binary executable.
+- `app` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/app), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/app)] with just general application related classes to generate a single binary executable.
 
 - `applib` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/applib), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/applib)] for the application binary with additional separate library binary and header files (available for the installation) in order to provide library's code reusability across multiple applications.
 
@@ -158,6 +158,10 @@ Examine available branches to find your most applicable variant of the template 
 
 - `appV8` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appV8), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appV8)] with general application related classes to generate a single binary executable that embeds the [V8](https://v8.dev/) JavaScript engine: a small controller initializes the whole V8, runs the JavaScript code given by the Application and binds the JavaScript `console` object to the project logger, so the `console.log("Hello, V8! Insert your JavaScript code here!")` call of the Application prints through it.
 
+## Translations / Internationalization
+
+- `appGettext` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appGettext), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appGettext)] (**current**) with general application related classes to generate a single binary executable that speaks the language of the user through the [GNU gettext](https://www.gnu.org/software/gettext/) message catalogs: a small controller activates the messages locale of the environment and binds the catalogs compiled out of the `po` directory translations, so the help, the version and the greeting messages of the Application come out in the Ukrainian language under the `uk_UA.UTF-8` locale, while the `gettext-pot` and the `gettext-update-po` targets keep the translations in step with the sources.
+
 
 Alter current `README.md` and a `CHANGELOG.md` files to match your implementation introduced into the destination new project. Examine the `doc` directory for possible translations of a current md document:
 - `uk_UA` at [doc/README.uk_UA.md](doc/README.uk_UA.md)
@@ -245,6 +249,8 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
         1. [Enabling the OpenJPEG library (JPEG 2000)](/doc/sections/en_US/5-project-build/image-libraries/5-31-enabling-the-openjpeg-library.md)
         1. [Enabling the libavif library (AVIF)](/doc/sections/en_US/5-project-build/image-libraries/5-32-enabling-the-libavif-library.md)
         1. [Enabling the libheif library (HEIF/HEIC)](/doc/sections/en_US/5-project-build/image-libraries/5-33-enabling-the-libheif-library.md)
+    1. Translations
+        1. [Enabling the GNU gettext translations](/doc/sections/en_US/5-project-build/i18n/5-62-enabling-the-gettext-translations.md)
 1. [Run the executable](/doc/sections/en_US/6-run-the-executable/6-run-the-executable.md)
     1. [IDE run](/doc/sections/en_US/6-run-the-executable/6-1-IDE-run.md)
     1. Command line run

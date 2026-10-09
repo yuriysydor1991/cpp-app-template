@@ -11,6 +11,7 @@ PACKAGES=(
     build-essential
     cmake
     g++
+    gettext
     git
     googletest
     libgmock-dev

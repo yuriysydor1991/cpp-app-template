@@ -7,6 +7,7 @@
 #include "src/app/CommandLineParser.h"
 #include "src/app/applications/IApplication.h"
 #include "src/app/signals-handlers/ISignalsHandler.h"
+#include "src/gettext/GettextController.h"
 
 namespace app
 {
@@ -48,6 +49,24 @@ class ApplicationFactory
    * @return Returns created signals handler instance.
    */
   virtual std::shared_ptr<ISignalsHandler> create_default_signals_handler();
+
+  /**
+   * @brief Creates the GNU gettext translations controller which translates
+   * the messages into the language of the user.
+   *
+   * @return Returns created controller instance.
+   */
+  virtual gettexti::GettextControllerPtr create_default_gettext_controller();
+
+  /**
+   * @brief Binds the message catalogs of the executable through the created
+   * gettext controller, so the messages get translated into the language of
+   * the user. The application goes on with the English messages if they fail.
+   *
+   * @param gargc Count of a given command line parameters.
+   * @param gargv An array of a given command line parameters.
+   */
+  virtual void bind_message_catalogs(int& gargc, char**& gargv);
 
   /**
    * @brief Creates default instance for the application implementation.

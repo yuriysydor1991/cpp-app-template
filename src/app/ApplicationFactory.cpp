@@ -12,6 +12,7 @@
 #include "src/app/applications/IApplication.h"
 #include "src/app/signals-handlers/ISignalsHandler.h"
 #include "src/app/signals-handlers/SignalsHandler.h"
+#include "src/gettext/GettextController.h"
 #include "src/log/log.h"
 
 namespace app
@@ -33,6 +34,25 @@ std::shared_ptr<ISignalsHandler>
 ApplicationFactory::create_default_signals_handler()
 {
   return std::make_shared<SignalsHandler>();
+}
+
+gettexti::GettextControllerPtr
+ApplicationFactory::create_default_gettext_controller()
+{
+  return gettexti::GettextController::create();
+}
+
+void ApplicationFactory::bind_message_catalogs(int& gargc, char**& gargv)
+{
+  gettexti::GettextControllerPtr gettextController =
+      create_default_gettext_controller();
+
+  assert(gettextController != nullptr);
+
+  if (gettextController == nullptr ||
+      !gettextController->init(gargc > 0 ? gargv[0] : "")) {
+    LOGW("Fail to bind the message catalogs, the messages stay untranslated");
+  }
 }
 
 std::shared_ptr<ApplicationContext> ApplicationFactory::create_context(
@@ -110,6 +130,8 @@ int ApplicationFactory::run(int& gargc, char**& gargv)
   } else {
     LOG_INIT_PATH(custom_log);
   }
+
+  bind_message_catalogs(gargc, gargv);
 
   std::shared_ptr<ApplicationContext> ctx = create_context(gargc, gargv);
 

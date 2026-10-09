@@ -24,10 +24,10 @@ variables:
   # The tools every job needs on top of the bare image.
   TOOLS: build-essential cmake g++ git ca-certificates pkg-config
   # The development packages of the branch specific libraries.
-  DEPENDENCIES: ''
+  DEPENDENCIES: gettext locales-all
 ```
 
-That last variable is the single line the branches of the template differ by, so a project which links a library of its own appends the development package of the library there. This branch asks for no package besides the common tools, so its own line stays empty.
+That last variable is the single line the branches of the template differ by, so a project which links a library of its own appends the development package of the library there. This branch asks for the gettext tools, which compile the translations, and for the precompiled locales, so the test cases translating into the Ukrainian language run instead of skipping themselves.
 
 ### The manual parameters
 

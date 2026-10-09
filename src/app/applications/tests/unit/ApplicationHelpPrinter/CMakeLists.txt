@@ -18,6 +18,7 @@ target_include_directories(
 target_link_libraries(
   UTEST_ApplicationHelpPrinter
   GTest::gtest_main GTest::gmock
+  Intl::Intl
 )
 
 include(GoogleTest)

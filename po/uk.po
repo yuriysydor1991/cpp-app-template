@@ -1,0 +1,67 @@
+# Ukrainian translations for the CppAppTemplate package.
+# This file is distributed under the same license as the CppAppTemplate package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: CppAppTemplate 0.12.0\n"
+"Report-Msgid-Bugs-To: yourname@your.email.org\n"
+"POT-Creation-Date: 2026-10-09 16:58+0000\n"
+"PO-Revision-Date: 2026-10-09 20:00+0300\n"
+"Last-Translator: Yuriy Sydor <yuriysydor1991@gmail.com>\n"
+"Language-Team: Ukrainian\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: src/app/applications/Application.cpp
+msgid "Hello, gettext! Insert your translated messages here!"
+msgstr "Привіт, gettext! Вставте сюди свої перекладені повідомлення!"
+
+#: src/app/applications/ApplicationHelpPrinter.cpp
+msgid "Usage:"
+msgstr "Використання:"
+
+#: src/app/applications/ApplicationHelpPrinter.cpp
+msgid "[OPTIONS]"
+msgstr "[ПАРАМЕТРИ]"
+
+#: src/app/applications/ApplicationHelpPrinter.cpp
+msgid ""
+"Introduce a new command line flags by registering them in\n"
+"the ApplicationHelpPrinter and the CommandLineParser classes."
+msgstr ""
+"Додавайте нові параметри командного рядка, реєструючи їх\n"
+"у класах ApplicationHelpPrinter і CommandLineParser."
+
+#. TRANSLATORS: the OPTIONS of the [OPTIONS] in the usage line.
+#: src/app/applications/ApplicationHelpPrinter.cpp
+msgid "Where OPTIONS may be next:"
+msgstr "Де ПАРАМЕТРИ можуть бути такими:"
+
+#. TRANSLATORS: joins the long and the short parameter names.
+#: src/app/applications/ApplicationHelpPrinter.cpp
+msgid "or"
+msgstr "або"
+
+#: src/app/applications/ApplicationHelpPrinter.cpp
+msgid "print current help message"
+msgstr "надрукувати поточне довідкове повідомлення"
+
+#: src/app/applications/ApplicationHelpPrinter.cpp
+msgid "print application version, build git commit and configure date"
+msgstr "надрукувати версію програми, git-коміт збірки та дату конфігурування"
+
+#: src/app/applications/ApplicationVersionPrinter.cpp
+msgid "version"
+msgstr "версія"
+
+#: src/app/applications/ApplicationVersionPrinter.cpp
+msgid "configure date"
+msgstr "дата конфігурування"
+
+#: src/app/applications/ApplicationVersionPrinter.cpp
+msgid "git commit"
+msgstr "git-коміт"

@@ -4,6 +4,7 @@
   "runtime-version": "24.08",
   "sdk": "org.freedesktop.Sdk",
   "command": "${PROJECT_BINARY_NAME}",
+  "separate-locales": false,
   "modules": [
     {
       "name": "${CMAKE_PROJECT_NAME}",

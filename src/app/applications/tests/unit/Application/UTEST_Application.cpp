@@ -1,6 +1,9 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include <iostream>
+#include <sstream>
+
 #include "src/app/applications/Application.h"
 
 using namespace app;
@@ -35,4 +38,18 @@ TEST_F(UTEST_Application, normal_exit)
   EXPECT_FALSE(appCtx->get_print_help_and_exit());
   EXPECT_FALSE(appCtx->get_print_version_and_exit());
   EXPECT_FALSE(appCtx->get_stop());
+}
+
+TEST_F(UTEST_Application, prints_the_greeting)
+{
+  std::stringstream output;
+  std::streambuf* const coutBuffer = std::cout.rdbuf(output.rdbuf());
+
+  EXPECT_EQ(app->run(appCtx), 0);
+
+  std::cout.rdbuf(coutBuffer);
+
+  // No catalogs are bound, so the message stays the English one.
+  EXPECT_EQ(output.str(),
+            "Hello, gettext! Insert your translated messages here!\n");
 }

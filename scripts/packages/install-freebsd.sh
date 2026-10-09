@@ -14,6 +14,8 @@ PROJECT_ROOT=$(realpath "$(dirname "$0")/../..")
 PACKAGES="
     bash
     cmake
+    gettext-runtime
+    gettext-tools
     git
     googletest
 "

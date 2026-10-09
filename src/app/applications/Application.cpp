@@ -4,6 +4,7 @@
 #include <iostream>
 #include <memory>
 
+#include "src/gettext/tr.h"
 #include "src/log/log.h"
 
 namespace app
@@ -18,7 +19,12 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  LOGI("Your application implementation goes here!");
+  // Insert your translated messages here. The ApplicationFactory binds the
+  // catalogs of the po directory before the run, so the gettexti::tr call
+  // gives the message in the language of the user.
+  std::cout << gettexti::tr(
+                   "Hello, gettext! Insert your translated messages here!")
+            << std::endl;
 
   return 0;
 }

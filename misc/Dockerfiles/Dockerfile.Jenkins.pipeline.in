@@ -14,8 +14,8 @@ RUN apt-get update && \
   apt-get upgrade -y && \
   apt-get install -y \
     autoconf automake build-essential ccache clang-format clang-tidy cmake \
-    cppcheck doxygen file git graphviz libgmock-dev libgtest-dev meson \
-    ninja-build pkg-config python3 valgrind \
+    cppcheck doxygen file gettext git graphviz libgmock-dev libgtest-dev \
+    locales-all meson ninja-build pkg-config python3 valgrind \
     flatpak flatpak-builder fuse3 libfuse2t64 rpm \
     firebird-dev libboost-all-dev libcurl4-openssl-dev liblog4cpp5-dev \
     liblzma-dev libmysqlcppconn-dev libpqxx-dev libssl-dev libsystemd-dev \

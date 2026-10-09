@@ -156,6 +156,10 @@ Examine available branches to find your most applicable variant of the template 
 
 - `appV8` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appV8), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appV8)] with general application related classes to generate a single binary executable that embeds the [V8](https://v8.dev/) JavaScript engine: a small controller initializes the whole V8, runs the JavaScript code given by the Application and binds the JavaScript `console` object to the project logger, so the `console.log("Hello, V8! Insert your JavaScript code here!")` call of the Application prints through it.
 
+## Translations / Internationalization
+
+- `appGettext` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appGettext), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appGettext)] with general application related classes to generate a single binary executable that speaks the language of the user through the [GNU gettext](https://www.gnu.org/software/gettext/) message catalogs: a small controller activates the messages locale of the environment and binds the catalogs compiled out of the `po` directory translations, so the help, the version and the greeting messages of the Application come out in the Ukrainian language under the `uk_UA.UTF-8` locale, while the `gettext-pot` and the `gettext-update-po` targets keep the translations in step with the sources.
+
 
 Alter current `README.md` and a `CHANGELOG.md` files to match your implementation introduced into the destination new project. Examine the `doc` directory for possible translations of a current md document:
 - `uk_UA` at [doc/README.uk_UA.md](doc/README.uk_UA.md)

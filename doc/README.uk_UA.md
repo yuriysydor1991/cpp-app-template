@@ -161,6 +161,10 @@
 
 - гілка `appV8` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appV8), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appV8)] яка містить загальні класи для генерації одинарного бінарного виконуваного файлу, що вбудовує рушій JavaScript [V8](https://v8.dev/): невеликий контролер ініціалізує весь V8, виконує заданий класом Application код JavaScript і привʼязує обʼєкт JavaScript `console` до журналу проекту, тож виклик `console.log("Hello, V8! Insert your JavaScript code here!")` у класі Application друкує саме через нього.
 
+## Переклади / Інтернаціоналізація
+
+- гілка `appGettext` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appGettext), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appGettext)] яка містить загальні класи для генерації одинарного бінарного виконуваного файлу, що розмовляє мовою користувача через каталоги повідомлень [GNU gettext](https://www.gnu.org/software/gettext/): невеликий контролер вмикає локаль повідомлень середовища і прив'язує каталоги, скомпільовані з перекладів директорії `po`, тож повідомлення довідки, версії і привітання класу Application виводяться українською мовою під локаллю `uk_UA.UTF-8`, а цілі `gettext-pot` і `gettext-update-po` підтримують переклади у відповідності з вихідними кодами.
+
 
 Редагуй поточний файл `README.md` і `CHANGELOG.md` щоб документація відповідала впровадженому коду. Для перекладів даного файлу `README.md`:
 - `uk_UA` за відносною адресою doc/README.uk_UA.md

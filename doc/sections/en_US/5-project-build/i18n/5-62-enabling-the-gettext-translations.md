@@ -1,6 +1,6 @@
 ## Enabling the GNU gettext translations
 
-In order to translate the messages of the project into the language of the user with the [GNU gettext](https://www.gnu.org/software/gettext/) message catalogs set an `ON` value to the `ENABLE_GETTEXT` CMake variable (it is the default one for the `appGettext` branch):
+In order to translate the messages of the project into the language of the user with the [GNU gettext](https://savannah.gnu.org/projects/gettext) message catalogs set an `ON` value to the `ENABLE_GETTEXT` CMake variable (it is the default one for the `appGettext` branch):
 
 ```
 # Inside the source root directory

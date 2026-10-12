@@ -6,7 +6,7 @@ In order to build minimum template project install the GCC C++ compiler with CMa
 sudo apt install -y git g++ cmake
 ```
 
-The `appGettext` branch additionally needs the [GNU gettext](https://www.gnu.org/software/gettext/) tools which compile the translations, while the libintl library they are read with is a part of the GNU C library:
+The `appGettext` branch additionally needs the [GNU gettext](https://savannah.gnu.org/projects/gettext) tools which compile the translations, while the libintl library they are read with is a part of the GNU C library:
 
 ```
 sudo apt install -y gettext

@@ -6,7 +6,7 @@
 sudo apt install -y git g++ cmake
 ```
 
-Гілка `appGettext` додатково потребує інструментів [GNU gettext](https://www.gnu.org/software/gettext/), які компілюють переклади, тоді як бібліотека libintl, якою їх читають, є частиною бібліотеки GNU C:
+Гілка `appGettext` додатково потребує інструментів [GNU gettext](https://savannah.gnu.org/projects/gettext), які компілюють переклади, тоді як бібліотека libintl, якою їх читають, є частиною бібліотеки GNU C:
 
 ```
 sudo apt install -y gettext

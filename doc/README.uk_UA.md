@@ -161,7 +161,7 @@
 
 ## Переклади / Інтернаціоналізація
 
-- гілка `appGettext` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appGettext), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appGettext)] яка містить загальні класи для генерації одинарного бінарного виконуваного файлу, що розмовляє мовою користувача через каталоги повідомлень [GNU gettext](https://www.gnu.org/software/gettext/): невеликий контролер вмикає локаль повідомлень середовища і прив'язує каталоги, скомпільовані з перекладів директорії `po`, тож повідомлення довідки, версії і привітання класу Application виводяться українською мовою під локаллю `uk_UA.UTF-8`, а цілі `gettext-pot` і `gettext-update-po` підтримують переклади у відповідності з вихідними кодами.
+- гілка `appGettext` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appGettext), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appGettext)] яка містить загальні класи для генерації одинарного бінарного виконуваного файлу, що розмовляє мовою користувача через каталоги повідомлень [GNU gettext](https://savannah.gnu.org/projects/gettext): невеликий контролер вмикає локаль повідомлень середовища і прив'язує каталоги, скомпільовані з перекладів директорії `po`, тож повідомлення довідки, версії і привітання класу Application виводяться українською мовою під локаллю `uk_UA.UTF-8`, а цілі `gettext-pot` і `gettext-update-po` підтримують переклади у відповідності з вихідними кодами.
 
 
 Редагуй поточний файл `README.md` і `CHANGELOG.md` щоб документація відповідала впровадженому коду. Для перекладів даного файлу `README.md`:

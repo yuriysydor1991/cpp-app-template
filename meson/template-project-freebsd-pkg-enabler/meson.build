@@ -7,6 +7,7 @@ freebsd_pkg_name = meson.project_name() + '-' + meson.project_version()
 freebsd_pkg_output = freebsd_pkg_name + '-' + freebsd_arch + '.pkg'
 
 freebsd_manifest_path = join_paths(meson.current_build_dir(), '+MANIFEST')
+freebsd_plist_path = join_paths(meson.current_build_dir(), 'pkg-plist')
 
 configure_file(
   output: '+MANIFEST',
@@ -27,7 +28,9 @@ freebsd_pkg_cmd = [
   'rm -rf ' + freebsd_pkg_stage + ' && ' +
   'mkdir -p ' + freebsd_pkg_stage + ' && ' +
   'DESTDIR=' + freebsd_pkg_stage + ' meson install -C ' + meson.project_build_root() + ' && ' +
+  '(cd ' + freebsd_pkg_stage + ' && find . -type f -o -type l) | cut -c2- > ' + freebsd_plist_path + ' && ' +
   pkg_exec.full_path() + ' create -M ' + freebsd_manifest_path +
+    ' -p ' + freebsd_plist_path +
     ' -r ' + freebsd_pkg_stage +
     ' -o ' + meson.project_build_root() + ' && ' +
   'mv ' + join_paths(meson.project_build_root(), freebsd_pkg_name + '.pkg') + ' ' +

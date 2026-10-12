@@ -22,7 +22,7 @@
 
 ### Пакування
 
-`cmake/enablers/packagers/template-project-macos-package-enabler.cmake` (конфігуруй з `-DENABLE_MACOS_PACKAGE=ON`) під'єднує два генератори CPack: `DragNDrop` (образ диску `.dmg` з `.app` і посиланням для перетягування в Applications) і `productbuild` (інсталятор `.pkg`). Запусти `cpack` у директорії збирання, щоб отримати обидва. Встанови `TEMPLATE_PROJECT_PRODUCTBUILD_IDENTITY` у ідентичність *Developer ID Installer*, щоб підписати `.pkg`.
+`cmake/enablers/packagers/template-project-macos-package-enabler.cmake` (конфігуруй з `-DENABLE_MACOS_PACKAGE=ON`) під'єднує два генератори CPack: `DragNDrop` (образ диску `.dmg` з `.app` і посиланням для перетягування в Applications) і `productbuild` (інсталятор `.pkg`). Запусти `cpack` у директорії збирання, щоб отримати обидва. Їхні назви завершуються процесорами, для яких зібрано пакунок `.app`, наприклад `CppAppTemplate-<версія>-arm64.dmg`: `CMAKE_OSX_ARCHITECTURES`, поєднані через `-` (`arm64-x86_64` для універсального пакунку), типово - процесор хоста. Встанови `TEMPLATE_PROJECT_PRODUCTBUILD_IDENTITY` у ідентичність *Developer ID Installer*, щоб підписати `.pkg`.
 
 ### Тести
 

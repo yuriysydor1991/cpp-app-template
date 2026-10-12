@@ -52,4 +52,16 @@ if(TEMPLATE_PROJECT_PRODUCTBUILD_IDENTITY)
   set(CPACK_PRODUCTBUILD_IDENTITY_NAME "${TEMPLATE_PROJECT_PRODUCTBUILD_IDENTITY}")
 endif()
 
+# the CPUs the bundle is built for (arm64-x86_64 for a universal one), the host
+# one by default
+if(CMAKE_OSX_ARCHITECTURES)
+  string(REPLACE ";" "-" macosArchitecture "${CMAKE_OSX_ARCHITECTURES}")
+else()
+  set(macosArchitecture ${CMAKE_SYSTEM_PROCESSOR})
+endif()
+
+# the CPACK_SYSTEM_NAME of the default file name names the system alone, so the
+# destination CPU takes its place
+set(CPACK_PACKAGE_FILE_NAME ${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${macosArchitecture})
+
 include(CPack)

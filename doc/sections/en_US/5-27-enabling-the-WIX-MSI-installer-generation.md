@@ -19,6 +19,6 @@ To produce the MSI installer run the `wix` target for the build:
 meson compile -C build wix
 ```
 
-The artefact is named like `<project>-<version>-win-<arch>.msi` and lands in the build directory. The `PROJECT_MAINTAINER` option feeds the `Manufacturer` field of the WiX source. Examine and/or change the WIX generation target parameters in `meson/template-project-wix-enabler/meson.build` or in the `misc/wix.wxs.in` template.
+The artefact is named like `<project>-<version>-win-<arch>.msi` and lands in the build directory, the `<arch>` being the CPU the installer is built for in the WiX terms (`x64`, `arm64` or `x86`). The `PROJECT_MAINTAINER` option feeds the `Manufacturer` field of the WiX source. Examine and/or change the WIX generation target parameters in `meson/template-project-wix-enabler/meson.build` or in the `misc/wix.wxs.in` template.
 
 See [Optional for the WIX packager](/doc/sections/en_US/3-15-optional-for-the-WIX-packager.md) for the WiX Toolset install hints.

@@ -35,7 +35,7 @@ set(
 
 set(
   TEMPLATE_PROJECT_RPM_PACKAGE_ARCHITECTURE
-  "x86_64"
+  ${CMAKE_SYSTEM_PROCESSOR}
   CACHE STRING
   "RPM package architecture tag (e.g. x86_64, aarch64, noarch)"
 )
@@ -63,5 +63,12 @@ set(CPACK_RPM_PACKAGE_ARCHITECTURE ${TEMPLATE_PROJECT_RPM_PACKAGE_ARCHITECTURE})
 # this if you switch the liblzma enabler to a static FetchContent build instead.
 set(CPACK_RPM_PACKAGE_REQUIRES "xz-libs")
 set(CPACK_RPM_COMPONENT_INSTALL ON)
+
+# the CPACK_SYSTEM_NAME of the default file name names the system alone, so the
+# destination CPU takes its place
+set(
+  CPACK_PACKAGE_FILE_NAME
+  ${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${TEMPLATE_PROJECT_RPM_PACKAGE_ARCHITECTURE}
+)
 
 include(CPack)

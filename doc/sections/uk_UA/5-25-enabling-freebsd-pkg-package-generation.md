@@ -10,7 +10,7 @@ meson setup build -DENABLE_FREEBSD_PKG=true \
   -DPROJECT_MAINTAINER_EMAIL='you@example.com'
 ```
 
-Яка у свою чергу вмикає Meson-ціль `freebsd-pkg` (`custom_target`) що під капотом виконує `meson install` у staging-директорію і викликає системний `pkg create -M <маніфест>`.
+Яка у свою чергу вмикає Meson-ціль `freebsd-pkg` (`custom_target`) що під капотом виконує `meson install` у staging-директорію і викликає системний `pkg create -M <маніфест> -p <plist>`, де plist перелічує усі файли staging-директорії.
 
 Для генерації FreeBSD pkg-пакету необхідно побудувати ціль `freebsd-pkg`:
 

@@ -43,7 +43,7 @@
 |---|---|---|
 | `-DENABLE_DEB=true` | `<проект>-<версія>_<арх>.deb` | [Вмикання підтримки генерації DEB-пакету](/doc/sections/uk_UA/5-23-enabling-deb-package-generation.md) |
 | `-DENABLE_RPM=true` | `<проект>-<версія>-1.<арх>.rpm` | [Вмикання підтримки генерації RPM-пакету](/doc/sections/uk_UA/5-24-enabling-rpm-package-generation.md) |
-| `-DENABLE_FREEBSD_PKG=true` | `<проект>-<версія>.pkg` | [Вмикання підтримки генерації FreeBSD pkg-пакету](/doc/sections/uk_UA/5-25-enabling-freebsd-pkg-package-generation.md) |
+| `-DENABLE_FREEBSD_PKG=true` | `<проект>-<версія>-<арх>.pkg` | [Вмикання підтримки генерації FreeBSD pkg-пакету](/doc/sections/uk_UA/5-25-enabling-freebsd-pkg-package-generation.md) |
 | `-DENABLE_WIX=true` | `<проект>-<версія>-win-<арх>.msi` | [Вмикання підтримки генерації WIX MSI-інсталятора](/doc/sections/uk_UA/5-27-enabling-the-WIX-MSI-installer-generation.md) |
 
 Пакувальники DEB / RPM / FreeBSD pkg / WIX поділяють спільні опції `PROJECT_MAINTAINER` / `PROJECT_MAINTAINER_EMAIL` - див. [Опції супровідника проекту](/doc/sections/uk_UA/5-28-project-maintainer-options.md).

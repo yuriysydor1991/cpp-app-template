@@ -2,9 +2,10 @@ find_program('flatpak', required: true)
 find_program('flatpak-builder', required: true)
 
 FLATPAK_PROJECT_URL = 'ua.org.kytok.template.' + meson.project_name()
+FLATPAK_TARGET_ARCH = run_command('flatpak', '--default-arch', check: true).stdout().strip()
 FLATPAK_REPO = join_paths(meson.current_build_dir(), meson.project_name() + '-repo')
 FLATPAK_BUILD = join_paths(meson.current_build_dir(), meson.project_name() + '-flatpak-build')
-FLATPAK_DST_NAME = meson.project_name() + '-' + meson.project_version() + '.flatpak'
+FLATPAK_DST_NAME = meson.project_name() + '-' + meson.project_version() + '-' + FLATPAK_TARGET_ARCH + '.flatpak'
 flatpakConfDst = 'flatpak.conf.json'
 FLATPAK_CONF_SRC = join_paths('..', '..', 'misc', 'flatpak.conf.json.meson.in')
 FLATPAK_DEPS_REMOTE = 'flathub'

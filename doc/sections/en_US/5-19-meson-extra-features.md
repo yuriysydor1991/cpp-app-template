@@ -44,11 +44,11 @@ Each packager is a `custom_target` that internally runs `meson install` into a s
 
 | Option | Output | Subsection |
 |---|---|---|
-| `-DENABLE_FLATPAK=true` | `<project>-<version>.flatpak` | [Enabling the flatpak package generation support](/doc/sections/en_US/5-11-enabling-the-flatpak-package-generation-support.md) |
+| `-DENABLE_FLATPAK=true` | `<project>-<version>-<arch>.flatpak` | [Enabling the flatpak package generation support](/doc/sections/en_US/5-11-enabling-the-flatpak-package-generation-support.md) |
 | `-DENABLE_SNAP=true` | `<project>_<version>_<arch>.snap` | [Enabling the snap package generation support](/doc/sections/en_US/5-22-enabling-snap-package-generation.md) |
 | `-DENABLE_DEB=true` | `<project>-<version>_<arch>.deb` | [Enabling the DEB package generation support](/doc/sections/en_US/5-23-enabling-deb-package-generation.md) |
 | `-DENABLE_RPM=true` | `<project>-<version>-1.<arch>.rpm` | [Enabling the RPM package generation support](/doc/sections/en_US/5-24-enabling-rpm-package-generation.md) |
-| `-DENABLE_FREEBSD_PKG=true` | `<project>-<version>.pkg` | [Enabling the FreeBSD pkg package generation support](/doc/sections/en_US/5-25-enabling-freebsd-pkg-package-generation.md) |
+| `-DENABLE_FREEBSD_PKG=true` | `<project>-<version>-<arch>.pkg` | [Enabling the FreeBSD pkg package generation support](/doc/sections/en_US/5-25-enabling-freebsd-pkg-package-generation.md) |
 | `-DENABLE_APPIMAGE=true` | `<project>-<version>-<arch>.AppImage` | [Enabling the AppImage bundle generation support](/doc/sections/en_US/5-26-enabling-the-AppImage-bundle-generation.md) |
 | `-DENABLE_WIX=true` | `<project>-<version>-win-<arch>.msi` | [Enabling the WIX MSI installer generation support](/doc/sections/en_US/5-27-enabling-the-WIX-MSI-installer-generation.md) |
 | `-DENABLE_DOCKER=true` | container build and run | [Enabling the Docker container build and run](/doc/sections/en_US/5-12-enabling-the-docker-container-build-and-run.md) |

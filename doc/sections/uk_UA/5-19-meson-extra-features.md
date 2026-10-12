@@ -44,11 +44,11 @@
 
 | Опція | Артефакт | Підсекція |
 |---|---|---|
-| `-DENABLE_FLATPAK=true` | `<проект>-<версія>.flatpak` | [Вмикання підтримки генерації flatpak пакету](/doc/sections/uk_UA/5-11-enabling-the-flatpak-package-generation-support.md) |
+| `-DENABLE_FLATPAK=true` | `<проект>-<версія>-<арх>.flatpak` | [Вмикання підтримки генерації flatpak пакету](/doc/sections/uk_UA/5-11-enabling-the-flatpak-package-generation-support.md) |
 | `-DENABLE_SNAP=true` | `<проект>_<версія>_<арх>.snap` | [Вмикання підтримки генерації snap-пакету](/doc/sections/uk_UA/5-22-enabling-snap-package-generation.md) |
 | `-DENABLE_DEB=true` | `<проект>-<версія>_<арх>.deb` | [Вмикання підтримки генерації DEB-пакету](/doc/sections/uk_UA/5-23-enabling-deb-package-generation.md) |
 | `-DENABLE_RPM=true` | `<проект>-<версія>-1.<арх>.rpm` | [Вмикання підтримки генерації RPM-пакету](/doc/sections/uk_UA/5-24-enabling-rpm-package-generation.md) |
-| `-DENABLE_FREEBSD_PKG=true` | `<проект>-<версія>.pkg` | [Вмикання підтримки генерації FreeBSD pkg-пакету](/doc/sections/uk_UA/5-25-enabling-freebsd-pkg-package-generation.md) |
+| `-DENABLE_FREEBSD_PKG=true` | `<проект>-<версія>-<арх>.pkg` | [Вмикання підтримки генерації FreeBSD pkg-пакету](/doc/sections/uk_UA/5-25-enabling-freebsd-pkg-package-generation.md) |
 | `-DENABLE_APPIMAGE=true` | `<проект>-<версія>-<арх>.AppImage` | [Вмикання підтримки генерації AppImage-збірки](/doc/sections/uk_UA/5-26-enabling-the-AppImage-bundle-generation.md) |
 | `-DENABLE_WIX=true` | `<проект>-<версія>-win-<арх>.msi` | [Вмикання підтримки генерації WIX MSI-інсталятора](/doc/sections/uk_UA/5-27-enabling-the-WIX-MSI-installer-generation.md) |
 | `-DENABLE_DOCKER=true` | побудова і запуск контейнера | [Вмикання підтримки запуску Docker-контейнера](/doc/sections/uk_UA/5-12-enabling-the-docker-container-build-and-run.md) |

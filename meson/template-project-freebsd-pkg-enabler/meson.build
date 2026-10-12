@@ -1,8 +1,10 @@
 pkg_exec = find_program('pkg', required: true)
 
-freebsd_arch = run_command('uname', '-m', check: true).stdout().strip()
+# the uname -p names the CPU as the package ABI does (amd64, aarch64)
+freebsd_arch = run_command('uname', '-p', check: true).stdout().strip()
 freebsd_pkg_stage = join_paths(meson.project_build_root(), 'freebsd-pkg-staging')
-freebsd_pkg_output = meson.project_name() + '-' + meson.project_version() + '.pkg'
+freebsd_pkg_name = meson.project_name() + '-' + meson.project_version()
+freebsd_pkg_output = freebsd_pkg_name + '-' + freebsd_arch + '.pkg'
 
 freebsd_manifest_path = join_paths(meson.current_build_dir(), '+MANIFEST')
 
@@ -27,7 +29,9 @@ freebsd_pkg_cmd = [
   'DESTDIR=' + freebsd_pkg_stage + ' meson install -C ' + meson.project_build_root() + ' && ' +
   pkg_exec.full_path() + ' create -M ' + freebsd_manifest_path +
     ' -r ' + freebsd_pkg_stage +
-    ' -o ' + meson.project_build_root()
+    ' -o ' + meson.project_build_root() + ' && ' +
+  'mv ' + join_paths(meson.project_build_root(), freebsd_pkg_name + '.pkg') + ' ' +
+    join_paths(meson.project_build_root(), freebsd_pkg_output)
 ]
 
 freebsd_pkg_target = custom_target(

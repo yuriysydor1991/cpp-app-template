@@ -9,7 +9,9 @@ endif
 candle_exec = find_program('candle', 'candle.exe', required: false)
 light_exec = find_program('light', 'light.exe', required: false)
 
-wix_arch = host_machine.cpu_family() == 'x86_64' ? 'x64' : 'x86'
+# the WiX names of the CPUs, the 32-bit ones install into the 32-bit Program Files
+wix_arch = {'x86_64': 'x64', 'aarch64': 'arm64'}.get(host_machine.cpu_family(), host_machine.cpu_family())
+wix_program_files = wix_arch in ['x64', 'arm64'] ? 'ProgramFiles64Folder' : 'ProgramFilesFolder'
 wix_upgrade_guid = '12345678-1234-1234-1234-123456789012'
 wix_output = meson.project_name() + '-' + meson.project_version() + '-win-' + wix_arch + '.msi'
 
@@ -24,6 +26,7 @@ configure_file(
     'PROJECT_MAINTAINER': get_option('PROJECT_MAINTAINER'),
     'WIX_UPGRADE_GUID': wix_upgrade_guid,
     'WIX_ARCH': wix_arch,
+    'WIX_PROGRAM_FILES': wix_program_files,
   },
   input: join_paths(meson.project_source_root(), 'misc', 'wix.wxs.in')
 )
@@ -33,7 +36,7 @@ if candle_exec.found() and light_exec.found()
   wix_cmd = [
     'sh', '-c',
     'set -e && ' +
-    candle_exec.full_path() + ' -out ' + wix_obj + ' ' + wxs_path + ' && ' +
+    candle_exec.full_path() + ' -arch ' + wix_arch + ' -out ' + wix_obj + ' ' + wxs_path + ' && ' +
     light_exec.full_path() + ' -out ' + join_paths(meson.project_build_root(), wix_output) + ' ' + wix_obj
   ]
 

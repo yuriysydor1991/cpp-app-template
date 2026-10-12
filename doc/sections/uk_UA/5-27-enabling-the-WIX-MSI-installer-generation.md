@@ -19,6 +19,6 @@ meson setup build -DENABLE_WIX=true \
 meson compile -C build wix
 ```
 
-Артефакт іменується за шаблоном `<проект>-<версія>-win-<арх>.msi` і потрапляє у директорію побудови. Опція `PROJECT_MAINTAINER` потрапляє у поле `Manufacturer` WiX-джерела. Деталі і параметри цілі можна переглянути або змінити у файлах `meson/template-project-wix-enabler/meson.build` чи у шаблоні `misc/wix.wxs.in`.
+Артефакт іменується за шаблоном `<проект>-<версія>-win-<арх>.msi` і потрапляє у директорію побудови, де `<арх>` - процесор, для якого зібрано інсталятор, у термінах WiX (`x64`, `arm64` чи `x86`). Опція `PROJECT_MAINTAINER` потрапляє у поле `Manufacturer` WiX-джерела. Деталі і параметри цілі можна переглянути або змінити у файлах `meson/template-project-wix-enabler/meson.build` чи у шаблоні `misc/wix.wxs.in`.
 
 Деталі встановлення WiX Toolset: [Необов'язкові пакети для пакувальника WIX](/doc/sections/uk_UA/3-15-optional-for-the-WIX-packager.md).

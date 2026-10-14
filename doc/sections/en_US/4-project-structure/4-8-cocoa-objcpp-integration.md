@@ -8,13 +8,13 @@ A macOS host with the Xcode command line tools (`xcode-select --install`) provid
 
 ### Layout
 
-- `src/cocoa/CocoaIniter.{h,cpp}` - the Cocoa free orchestration object. It validates the application context and launches the GUI through the `run_cocoa_application()` launch seam (`src/cocoa/CocoaLauncher.h`). Builds and is unit/component tested on every platform.
+- `src/cocoa/CocoaController.{h,cpp}` - the Cocoa free orchestration object. It validates the application context and launches the GUI through the `run_cocoa_application()` launch seam (`src/cocoa/CocoaLauncher.h`). Builds and is unit/component tested on every platform.
 - `src/cocoa/helpers/WindowConfig.{h,cpp}` - a Cocoa independent holder for the window title / texts / sizes, unit tested in isolation.
 - `src/cocoa/app/CocoaApp.mm` - the native AppKit application delegate and the real `run_cocoa_application()` definition. **macOS only.**
 - `src/cocoa/app/CocoaAppStub.cpp` - a non-Apple definition of `run_cocoa_application()` so the executable still builds, links and runs (printing a notice) off macOS. The real Cocoa window only opens on macOS.
 - `src/cocoa/main-window/CocoaMainWindow.{h,mm}` - the AppKit `NSWindow`, built programmatically (no .xib/.nib file) from `WindowConfig`. **macOS only.**
 
-`Application::run()` (`src/app/applications/Application.cpp`) creates a `CocoaIniter` and delegates to it, exactly like the other GUI branches delegate to their initer.
+`Application::run()` (`src/app/applications/Application.cpp`) creates a `CocoaController` and delegates to it, exactly like the other GUI branches delegate to their controller.
 
 ### Building it
 
@@ -26,4 +26,4 @@ The native UI is set up by the CMake enabler `cmake/enablers/template-project-Co
 
 ### Tests
 
-`UTEST_WindowConfig`, `UTEST_CocoaIniter` (unit) and `CTEST_Cocoa` (component) exercise the Cocoa free parts through the launch seam, so they run on any platform. They are registered in the macOS `misc/Jenkinsfile` pipeline next to the application tests.
+`UTEST_WindowConfig`, `UTEST_CocoaController` (unit) and `CTEST_Cocoa` (component) exercise the Cocoa free parts through the launch seam, so they run on any platform. They are registered in the macOS `misc/Jenkinsfile` pipeline next to the application tests.

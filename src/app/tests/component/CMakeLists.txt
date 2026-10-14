@@ -28,7 +28,7 @@ target_include_directories(
   CTEST_app
   PRIVATE
     ${APP_MOCKS_ROOT}/log
-    ${APP_MOCKS_ROOT}/CocoaIniter
+    ${APP_MOCKS_ROOT}/CocoaController
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
 )

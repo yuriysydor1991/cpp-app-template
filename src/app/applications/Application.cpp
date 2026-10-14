@@ -4,7 +4,7 @@
 #include <iostream>
 #include <memory>
 
-#include "src/cocoa/CocoaIniter.h"
+#include "src/cocoa/CocoaController.h"
 #include "src/log/log.h"
 
 namespace app
@@ -19,9 +19,10 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  std::shared_ptr<cocoa::CocoaIniter> initer = create_cocoa_initer();
+  std::shared_ptr<cocoa::CocoaController> controller =
+      create_cocoa_controller();
 
-  if (initer->run(ctx) != 0) {
+  if (controller->run(ctx) != 0) {
     LOGE("The Cocoa controller returned invalid execution status");
     return INVALID;
   }
@@ -29,9 +30,9 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
   return 0;
 }
 
-std::shared_ptr<cocoa::CocoaIniter> Application::create_cocoa_initer()
+std::shared_ptr<cocoa::CocoaController> Application::create_cocoa_controller()
 {
-  return std::make_shared<cocoa::CocoaIniter>();
+  return std::make_shared<cocoa::CocoaController>();
 }
 
 }  // namespace app

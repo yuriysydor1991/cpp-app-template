@@ -7,7 +7,7 @@ endif()
 add_executable(
   CTEST_Cocoa
   CTEST_Cocoa.cpp
-  ${CMAKE_SOURCE_DIR}/src/cocoa/CocoaIniter.cpp
+  ${CMAKE_SOURCE_DIR}/src/cocoa/CocoaController.cpp
   ${CMAKE_SOURCE_DIR}/src/cocoa/helpers/WindowConfig.cpp
   ${CMAKE_SOURCE_DIR}/src/app/ApplicationContext.cpp
 )

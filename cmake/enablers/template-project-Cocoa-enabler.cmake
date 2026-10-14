@@ -8,7 +8,7 @@ cmake_minimum_required(VERSION 3.13)
 # umbrella framework: AppKit + Foundation) that the native UI links against.
 #
 # On a non-Apple host this module is a deliberate no-op: the portable Cocoa
-# orchestration (cocoa::CocoaIniter + the WindowConfig helper) and the
+# orchestration (cocoa::CocoaController + the WindowConfig helper) and the
 # cross-platform run_cocoa_application() stub are still built, so the project
 # configures, builds and runs its unit/component tests everywhere. The real
 # Cocoa window only builds on macOS. See src/cocoa and the documentation.

@@ -8,13 +8,13 @@
 
 ### Структура
 
-- `src/cocoa/CocoaIniter.{h,cpp}` - об'єкт оркестрації, вільний від Cocoa. Перевіряє контекст програми і запускає GUI через шов `run_cocoa_application()` (`src/cocoa/CocoaLauncher.h`). Збирається і тестується (модульно/компонентно) на будь-якій платформі.
+- `src/cocoa/CocoaController.{h,cpp}` - об'єкт оркестрації, вільний від Cocoa. Перевіряє контекст програми і запускає GUI через шов `run_cocoa_application()` (`src/cocoa/CocoaLauncher.h`). Збирається і тестується (модульно/компонентно) на будь-якій платформі.
 - `src/cocoa/helpers/WindowConfig.{h,cpp}` - незалежний від Cocoa тримач заголовка / текстів / розмірів вікна, тестується ізольовано.
 - `src/cocoa/app/CocoaApp.mm` - нативний делегат програми AppKit і справжнє визначення `run_cocoa_application()`. **Лише macOS.**
 - `src/cocoa/app/CocoaAppStub.cpp` - визначення `run_cocoa_application()` для не-Apple, щоб виконуваний файл усе одно збирався, лінкувався і запускався (друкуючи повідомлення) поза macOS. Справжнє вікно Cocoa відкривається лише на macOS.
 - `src/cocoa/main-window/CocoaMainWindow.{h,mm}` - вікно AppKit `NSWindow`, побудоване програмно (без файлу .xib/.nib) з `WindowConfig`. **Лише macOS.**
 
-`Application::run()` (`src/app/applications/Application.cpp`) створює `CocoaIniter` і делегує йому, так само як інші GUI-гілки делегують своєму initer.
+`Application::run()` (`src/app/applications/Application.cpp`) створює `CocoaController` і делегує йому, так само як інші GUI-гілки делегують своєму контролеру.
 
 ### Збирання
 
@@ -26,4 +26,4 @@
 
 ### Тести
 
-`UTEST_WindowConfig`, `UTEST_CocoaIniter` (модульні) і `CTEST_Cocoa` (компонентний) перевіряють вільні від Cocoa частини через шов запуску, тож виконуються на будь-якій платформі. Вони зареєстровані у конвеєрі macOS `misc/Jenkinsfile` поруч із тестами програми.
+`UTEST_WindowConfig`, `UTEST_CocoaController` (модульні) і `CTEST_Cocoa` (компонентний) перевіряють вільні від Cocoa частини через шов запуску, тож виконуються на будь-якій платформі. Вони зареєстровані у конвеєрі macOS `misc/Jenkinsfile` поруч із тестами програми.

@@ -4,7 +4,7 @@
 #include <csignal>
 
 #include "src/app/ApplicationFactory.h"
-#include "src/cocoa/CocoaIniter.h"
+#include "src/cocoa/CocoaController.h"
 
 using namespace app;
 using namespace testing;

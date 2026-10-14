@@ -99,9 +99,9 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "UTEST_WindowConfig\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_WindowConfig.junit.xml'
           }
         }
-        stage('UTEST_CocoaIniter') {
+        stage('UTEST_CocoaController') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_CocoaIniter\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_CocoaIniter.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_CocoaController\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_CocoaController.junit.xml'
           }
         }
         stage('UTEST_SignalsHandler') { 

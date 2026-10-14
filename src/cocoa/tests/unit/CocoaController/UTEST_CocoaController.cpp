@@ -4,7 +4,7 @@
 #include <memory>
 
 #include "src/app/ApplicationContext.h"
-#include "src/cocoa/CocoaIniter.h"
+#include "src/cocoa/CocoaController.h"
 #include "src/cocoa/CocoaLauncher.h"
 
 using namespace cocoa;
@@ -23,7 +23,7 @@ namespace
 
 /// @brief Test double that records the launch() invocation instead of starting
 /// a real Cocoa application.
-class TestIniter : public CocoaIniter
+class TestController : public CocoaController
 {
  public:
   int launch_calls{0};
@@ -41,37 +41,37 @@ class TestIniter : public CocoaIniter
 
 }  // namespace
 
-class UTEST_CocoaIniter : public Test
+class UTEST_CocoaController : public Test
 {
  public:
   int argc{3};
   char** argv{nullptr};
 
-  TestIniter initer;
+  TestController controller;
 
   std::shared_ptr<ApplicationContext> ctx{
       std::make_shared<ApplicationContext>(argc, argv)};
 };
 
-TEST_F(UTEST_CocoaIniter, null_context_is_rejected_without_launching)
+TEST_F(UTEST_CocoaController, null_context_is_rejected_without_launching)
 {
-  EXPECT_NE(initer.run(nullptr), 0);
-  EXPECT_EQ(initer.launch_calls, 0);
+  EXPECT_NE(controller.run(nullptr), 0);
+  EXPECT_EQ(controller.launch_calls, 0);
 }
 
-TEST_F(UTEST_CocoaIniter, valid_context_launches_and_returns_success)
+TEST_F(UTEST_CocoaController, valid_context_launches_and_returns_success)
 {
-  initer.launch_return = 0;
+  controller.launch_return = 0;
 
-  EXPECT_EQ(initer.run(ctx), 0);
-  EXPECT_EQ(initer.launch_calls, 1);
-  EXPECT_EQ(initer.seen_argc, 3);
+  EXPECT_EQ(controller.run(ctx), 0);
+  EXPECT_EQ(controller.launch_calls, 1);
+  EXPECT_EQ(controller.seen_argc, 3);
 }
 
-TEST_F(UTEST_CocoaIniter, launch_status_is_propagated)
+TEST_F(UTEST_CocoaController, launch_status_is_propagated)
 {
-  initer.launch_return = 7;
+  controller.launch_return = 7;
 
-  EXPECT_EQ(initer.run(ctx), 7);
-  EXPECT_EQ(initer.launch_calls, 1);
+  EXPECT_EQ(controller.run(ctx), 7);
+  EXPECT_EQ(controller.launch_calls, 1);
 }

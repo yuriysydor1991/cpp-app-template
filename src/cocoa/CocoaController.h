@@ -1,5 +1,5 @@
-#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_COCOAINITER_CLASS_H
-#define YOUR_CPP_APP_TEMPLATE_PROJECT_COCOAINITER_CLASS_H
+#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_COCOACONTROLLER_CLASS_H
+#define YOUR_CPP_APP_TEMPLATE_PROJECT_COCOACONTROLLER_CLASS_H
 
 #include <memory>
 
@@ -15,11 +15,11 @@ namespace cocoa
  * actual native launch is delegated to the launch() seam so the orchestration
  * may be exercised by the tests without AppKit and without a GUI.
  */
-class CocoaIniter
+class CocoaController
 {
  public:
-  virtual ~CocoaIniter() = default;
-  CocoaIniter() = default;
+  virtual ~CocoaController() = default;
+  CocoaController() = default;
 
   /**
    * @brief Starts the Cocoa application.
@@ -43,4 +43,4 @@ class CocoaIniter
 
 }  // namespace cocoa
 
-#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_COCOAINITER_CLASS_H
+#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_COCOACONTROLLER_CLASS_H

@@ -11,7 +11,7 @@ namespace cocoa
  * declaration is Cocoa free and the definition lives in the macOS-only
  * Objective-C++ app/CocoaApp.mm translation unit (and in the cross-platform
  * app/CocoaAppStub.cpp on non-Apple hosts). The component tests provide their
- * own definition of this function, so the CocoaIniter orchestration may be
+ * own definition of this function, so the CocoaController orchestration may be
  * built and run without AppKit and without launching a GUI.
  *
  * @param argc The command line arguments count.

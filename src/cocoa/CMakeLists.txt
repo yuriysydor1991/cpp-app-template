@@ -6,7 +6,7 @@ cmake_minimum_required(VERSION 3.13)
 # main-window subdirectories and only compiles on macOS.
 add_library(
   ${COCOA_OBJECT_NAME} OBJECT
-  CocoaIniter.cpp
+  CocoaController.cpp
 )
 
 target_include_directories(

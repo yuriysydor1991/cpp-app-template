@@ -1,4 +1,4 @@
-#include "src/cocoa/CocoaIniter.h"
+#include "src/cocoa/CocoaController.h"
 
 #include <cassert>
 #include <memory>
@@ -10,7 +10,7 @@
 namespace cocoa
 {
 
-int CocoaIniter::run(std::shared_ptr<app::ApplicationContext> nactx)
+int CocoaController::run(std::shared_ptr<app::ApplicationContext> nactx)
 {
   assert(nactx != nullptr);
 
@@ -26,7 +26,7 @@ int CocoaIniter::run(std::shared_ptr<app::ApplicationContext> nactx)
   return launch(actx->get_argc(), actx->get_argv());
 }
 
-int CocoaIniter::launch(int& argc, char**& argv)
+int CocoaController::launch(int& argc, char**& argv)
 {
   return run_cocoa_application(argc, argv);
 }

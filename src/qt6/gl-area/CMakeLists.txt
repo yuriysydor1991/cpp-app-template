@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 
 # The raw OpenGL calls are dispatched through the QtOpenGL module classes, so
 # the QML item below needs no GL loader of its own. The item is a plain C++
-# class registered into QML by the Qt6Initer, hence no QML module is declared
+# class registered into QML by the Qt6Controller, hence no QML module is declared
 # here.
 qt6_add_library(
   ${QT6_OBJECT_NAME}glarea STATIC

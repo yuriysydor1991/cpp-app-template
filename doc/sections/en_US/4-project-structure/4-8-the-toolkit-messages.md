@@ -2,7 +2,7 @@
 
 The application logs through the `src/log/log.h` macroses, while Qt Core, Qt Gui, Qt Quick, the QML engine, the platform plugins and every other module of the toolkit report through the Qt logging, which writes into the standard error stream of the process by it's own default message handler. So without any further ado a toolkit complaint is seen by whoever watches the terminal and by nobody else - it never reaches the log file, it carries no timestamp of the application format, no thread id and it obeys no level setting of the application.
 
-The `Qt6i::qtlog::QtLogBridge` class of the `src/qt6/log` directory takes that over. It's `install` method, called at the very start of the `Qt6i::Qt6Initer::run` before anything of the toolkit is touched, hands an own message handler over to the `qInstallMessageHandler` in the place of the default one, and that handler turns every message of the process into a call of the application logging macroses.
+The `Qt6i::qtlog::QtLogBridge` class of the `src/qt6/log` directory takes that over. It's `install` method, called at the very start of the `Qt6i::Qt6Controller::run` before anything of the toolkit is touched, hands an own message handler over to the `qInstallMessageHandler` in the place of the default one, and that handler turns every message of the process into a call of the application logging macroses.
 
 The Qt message types are mapped this way:
 

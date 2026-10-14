@@ -227,7 +227,7 @@ int main(int argc, char* argv[])
 {
   // The application has it's logger ready before the toolkit is touched, and
   // the Qt logging is taken over right after that, exactly the way the
-  // Qt6Initer does it. Both happen once for the whole binary, because the
+  // Qt6Controller does it. Both happen once for the whole binary, because the
   // bridge takes the single message handler slot of the process once.
   LOG_INIT(CTEST_QtLogBridge::test_log_file, MACRO_LVL_TRACE, false);
 

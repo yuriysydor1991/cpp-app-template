@@ -15,7 +15,7 @@ namespace Qt6i::gl_area
  * element. The drawing itself is done by the GLTriangleRenderer instance
  * returned from createRenderer().
  *
- * The Qt6Initer registers the class into the glarea QML module, so the QML
+ * The Qt6Controller registers the class into the glarea QML module, so the QML
  * files import it under its own class name.
  */
 class GLTriangleItem : public QQuickFramebufferObject

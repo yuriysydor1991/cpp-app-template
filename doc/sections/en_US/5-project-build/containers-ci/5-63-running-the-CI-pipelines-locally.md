@@ -30,6 +30,16 @@ A target fails when a job of its pipeline fails, the same way the pipeline turns
 - the [gitlab-ci-local](https://github.com/firecow/gitlab-ci-local) executable together with the `rsync` it copies the project into the job containers with for the GitLab CI/CD pipeline;
 - the network access, since the jobs download their images, their `apt` packages and the actions of the workflow.
 
+The `--local-pipelines` flag of the [packages install scripts](/scripts/packages) installs all of them on top of the project packages. No distribution packages `gitlab-ci-local` or `act`, so the `gitlab-ci-local` comes from the apt repository of its project and the `act` from its release archive, checked against the checksums the release publishes:
+
+```
+# inside the project root directory
+
+scripts/packages/install-debian.sh --local-pipelines
+```
+
+The [install-ubuntu.sh](/scripts/packages/install-ubuntu.sh) script takes the flag as well. The [install-redhat.sh](/scripts/packages/install-redhat.sh) one installs both tools out of their release archives, and the Docker of the Docker site repository at the RHEL and its rebuilds, which carry none. A Docker installed already - the `docker-ce` of the Docker site or the snap one - is left as it is. A freshly installed Docker service still needs the [setup](/doc/sections/en_US/3-requirements/3-10-optional-for-docker-container-runs.md) which lets a regular user reach it. FreeBSD has no Docker engine for the Linux job containers, so the [install-freebsd.sh](/scripts/packages/install-freebsd.sh) script refuses the flag.
+
 The configure step stops with a message naming the missing tool, so nothing is started half way.
 
 ### The committed branch tip is what is checked

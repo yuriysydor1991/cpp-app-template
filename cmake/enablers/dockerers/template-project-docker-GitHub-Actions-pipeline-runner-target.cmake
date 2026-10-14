@@ -61,7 +61,7 @@ endif()
 find_program(ACT_EXEC act)
 
 if (NOT ACT_EXEC)
-  message(FATAL_ERROR "No act executable found! Install the https://github.com/nektos/act tool to run the GitHub Actions pipeline locally.")
+  message(FATAL_ERROR "No act executable found! Install the https://github.com/nektos/act tool to run the GitHub Actions pipeline locally, e.g. with the scripts/packages/install-debian.sh --local-pipelines command.")
 endif()
 
 include(template-project-docker-local-pipeline-variables-declare)

@@ -20,7 +20,7 @@ endif()
 find_program(GITLAB_CI_LOCAL_EXEC gitlab-ci-local)
 
 if (NOT GITLAB_CI_LOCAL_EXEC)
-  message(FATAL_ERROR "No gitlab-ci-local executable found! Install the https://github.com/firecow/gitlab-ci-local tool to run the GitLab CI/CD pipeline locally.")
+  message(FATAL_ERROR "No gitlab-ci-local executable found! Install the https://github.com/firecow/gitlab-ci-local tool to run the GitLab CI/CD pipeline locally, e.g. with the scripts/packages/install-debian.sh --local-pipelines command.")
 endif()
 
 # gitlab-ci-local copies the project into the job containers with the rsync of
@@ -28,7 +28,7 @@ endif()
 find_program(RSYNC_EXEC rsync)
 
 if (NOT RSYNC_EXEC)
-  message(FATAL_ERROR "No rsync executable found! The gitlab-ci-local tool demands it to copy the project into the job containers.")
+  message(FATAL_ERROR "No rsync executable found! The gitlab-ci-local tool demands it to copy the project into the job containers. Install it, e.g. with the scripts/packages/install-debian.sh --local-pipelines command.")
 endif()
 
 include(template-project-docker-local-pipeline-variables-declare)

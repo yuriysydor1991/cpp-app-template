@@ -11,6 +11,15 @@ PROJECT_ROOT=$(realpath "$(dirname "$0")/../..")
 
 . "${PROJECT_ROOT}/scripts/common.sh"
 
+# The local CI pipelines of the scripts/docker/*-run.sh scripts run their jobs
+# inside the Linux containers of the Docker, which has no engine for FreeBSD,
+# so the --local-pipelines flag of the Linux install scripts is refused here.
+case " $* " in
+    *" --local-pipelines "*)
+        log_fatal "No local CI pipelines tools for FreeBSD: the Docker engine their Linux job containers need runs on Linux alone"
+        ;;
+esac
+
 PACKAGES="
     autoconf
     automake

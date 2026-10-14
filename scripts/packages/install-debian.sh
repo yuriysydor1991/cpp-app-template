@@ -2,10 +2,15 @@
 #
 # Installs the minimal set of packages required to build and run the project
 # locally.
+#
+# The --local-pipelines flag adds the tools the local CI pipelines of the
+# scripts/docker/*-run.sh scripts run with: the Docker, the rsync, the
+# gitlab-ci-local out of the apt repository of its project and the act out of
+# its release archive, since the distributions package neither of the two.
 
 PROJECT_ROOT=$(realpath "$(dirname "$0")/../..")
 
-. "${PROJECT_ROOT}/scripts/common.sh"
+. "${PROJECT_ROOT}/scripts/packages/common.sh"
 
 PACKAGES=(
     autoconf
@@ -104,3 +109,41 @@ ${APT_SUDO} apt-get update
 ${APT_SUDO} apt-get install -y "${PACKAGES[@]}"
 
 log "The required packages are installed"
+
+if [[ ! $* =~ --local-pipelines ]] ; then
+    exit 0
+fi
+
+LOCAL_PIPELINES_PACKAGES=(
+    gitlab-ci-local
+    rsync
+)
+
+# A Docker of another origin - the docker-ce of the Docker site or the snap
+# one - is left as it is, since the docker.io package conflicts with it.
+if ! command -v docker > /dev/null ||
+    dpkg-query -W -f '${Status}' docker.io 2> /dev/null | grep -q ' installed$' ; then
+    LOCAL_PIPELINES_PACKAGES+=(docker.io docker-buildx)
+fi
+
+log "Installing the local CI pipelines tools"
+
+# A half downloaded repository file would break every later apt-get call, so
+# it is downloaded aside first.
+GITLAB_CI_LOCAL_SOURCES=$(mktemp)
+
+curl -fsSL -o "${GITLAB_CI_LOCAL_SOURCES}" \
+    https://gitlab-ci-local-ppa.firecow.dk/gitlab-ci-local.sources
+
+${APT_SUDO} install -m 644 "${GITLAB_CI_LOCAL_SOURCES}" \
+    /etc/apt/sources.list.d/gitlab-ci-local.sources
+
+rm -f "${GITLAB_CI_LOCAL_SOURCES}"
+
+${APT_SUDO} apt-get update
+
+${APT_SUDO} apt-get install -y "${LOCAL_PIPELINES_PACKAGES[@]}"
+
+install_act_release
+
+log "The local CI pipelines tools are installed"

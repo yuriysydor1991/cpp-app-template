@@ -30,6 +30,16 @@ cmake --build build --target gitlab-ci-pipeline-docker-run
 - виконуваний файл [gitlab-ci-local](https://github.com/firecow/gitlab-ci-local) разом з `rsync`, яким він копіює проект до контейнерів завдань, для конвеєра GitLab CI/CD;
 - доступ до мережі, оскільки завдання завантажують свої образи, свої пакунки `apt` та дії (actions) робочого процесу.
 
+Прапорець `--local-pipelines` [скриптів встановлення пакунків](/scripts/packages) встановлює їх усі додатково до пакунків проекту. Жоден дистрибутив не пакує ні `gitlab-ci-local`, ні `act`, отож `gitlab-ci-local` встановлюється з apt-репозиторію його проекту, а `act` з архіву його випуску, перевіреного за контрольними сумами, що їх публікує випуск:
+
+```
+# в середині кореневої директорії проекту
+
+scripts/packages/install-debian.sh --local-pipelines
+```
+
+Скрипт [install-ubuntu.sh](/scripts/packages/install-ubuntu.sh) так само приймає цей прапорець. Скрипт [install-redhat.sh](/scripts/packages/install-redhat.sh) встановлює обидва інструменти з архівів їхніх випусків, а на RHEL та його перезбірках, які не мають Docker, ще й Docker з репозиторію сайту Docker. Вже встановлений Docker - `docker-ce` з сайту Docker чи snap - залишається як є. Щойно встановлений сервіс Docker все ще потребує [налаштування](/doc/sections/uk_UA/3-requirements/3-10-optional-for-docker-container-runs.md), яке відкриває доступ до нього звичайному користувачу. FreeBSD не має рушія Docker для Linux-контейнерів завдань, тож скрипт [install-freebsd.sh](/scripts/packages/install-freebsd.sh) відхиляє цей прапорець.
+
 Крок конфігурації зупиняється з повідомленням, що називає відсутній інструмент, отож нічого не запускається наполовину.
 
 ### Перевіряється закомічена вершина гілки

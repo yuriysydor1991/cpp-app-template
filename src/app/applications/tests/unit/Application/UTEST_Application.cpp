@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 
 #include "src/app/applications/Application.h"
-#include "src/qt6/Qt6Initer.h"
+#include "src/qt6/Qt6Controller.h"
 
 using namespace app;
 using namespace Qt6i;
@@ -17,7 +17,7 @@ class UTEST_Application : public Test
   {
   }
 
-  ~UTEST_Application() { Qt6Initer::onMockCreate = nullptr; }
+  ~UTEST_Application() { Qt6Controller::onMockCreate = nullptr; }
 
   int argc{0};
   char** argv{nullptr};
@@ -30,15 +30,15 @@ TEST_F(UTEST_Application, no_context_error) { EXPECT_NE(app->run({}), 0); }
 
 TEST_F(UTEST_Application, normal_exit)
 {
-  MockFunction<void(Qt6Initer & instance)> qt6Ensurer;
+  MockFunction<void(Qt6Controller & instance)> qt6Ensurer;
 
   EXPECT_CALL(qt6Ensurer, Call(_))
       .Times(1)
-      .WillOnce(Invoke([&](Qt6Initer& instance) {
+      .WillOnce(Invoke([&](Qt6Controller& instance) {
         EXPECT_CALL(instance, run(appCtx)).Times(1).WillOnce(Return(0));
       }));
 
-  Qt6Initer::onMockCreate = qt6Ensurer.AsStdFunction();
+  Qt6Controller::onMockCreate = qt6Ensurer.AsStdFunction();
 
   EXPECT_CALL(*appCtx, push_error(_)).Times(0);
 
@@ -52,15 +52,15 @@ TEST_F(UTEST_Application, normal_exit)
 
 TEST_F(UTEST_Application, invalid_qt6_status_fail)
 {
-  MockFunction<void(Qt6Initer & instance)> qt6Ensurer;
+  MockFunction<void(Qt6Controller & instance)> qt6Ensurer;
 
   EXPECT_CALL(qt6Ensurer, Call(_))
       .Times(1)
-      .WillOnce(Invoke([&](Qt6Initer& instance) {
+      .WillOnce(Invoke([&](Qt6Controller& instance) {
         EXPECT_CALL(instance, run(appCtx)).Times(1).WillOnce(Return(1));
       }));
 
-  Qt6Initer::onMockCreate = qt6Ensurer.AsStdFunction();
+  Qt6Controller::onMockCreate = qt6Ensurer.AsStdFunction();
 
   EXPECT_CALL(*appCtx, push_error(_)).Times(0);
 

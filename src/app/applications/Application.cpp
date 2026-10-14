@@ -5,7 +5,7 @@
 #include <memory>
 
 #include "src/log/log.h"
-#include "src/qt6/Qt6Initer.h"
+#include "src/qt6/Qt6Controller.h"
 
 namespace app
 {
@@ -19,7 +19,7 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  std::shared_ptr<Qt6i::Qt6Initer> qt6runner = create_qt6_initer();
+  std::shared_ptr<Qt6i::Qt6Controller> qt6runner = create_qt6_controller();
 
   assert(qt6runner != nullptr);
 
@@ -31,9 +31,9 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
   return 0;
 }
 
-std::shared_ptr<Qt6i::Qt6Initer> Application::create_qt6_initer()
+std::shared_ptr<Qt6i::Qt6Controller> Application::create_qt6_controller()
 {
-  return std::make_shared<Qt6i::Qt6Initer>();
+  return std::make_shared<Qt6i::Qt6Controller>();
 }
 
 }  // namespace app

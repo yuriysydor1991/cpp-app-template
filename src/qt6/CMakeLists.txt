@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 
 qt6_add_library(
   ${QT6_OBJECT_NAME} STATIC
-  Qt6Initer.cpp
+  Qt6Controller.cpp
   QMLRes.cpp
 )
 

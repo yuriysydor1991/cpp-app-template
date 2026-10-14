@@ -1,4 +1,4 @@
-#include "src/SDL2/SDL2Initer.h"
+#include "src/SDL2/SDL2Controller.h"
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
@@ -13,7 +13,7 @@
 namespace templateSDL2
 {
 
-SDL2Initer::SDL2Initer()
+SDL2Controller::SDL2Controller()
     : ctxBuilder{std::make_shared<SDL2ContextBuilder>()},
       events{std::make_shared<events::EventsController>()},
       painter3d{std::make_shared<painter::Painter>()},
@@ -24,14 +24,14 @@ SDL2Initer::SDL2Initer()
   }
 }
 
-SDL2Initer::~SDL2Initer()
+SDL2Controller::~SDL2Controller()
 {
   sdl2Context.reset();
 
   SDL_Quit();
 }
 
-int SDL2Initer::run(std::shared_ptr<app::ApplicationContext> ctx)
+int SDL2Controller::run(std::shared_ptr<app::ApplicationContext> ctx)
 {
   assert(ctx != nullptr);
 
@@ -59,7 +59,7 @@ int SDL2Initer::run(std::shared_ptr<app::ApplicationContext> ctx)
   return 0;
 }
 
-void SDL2Initer::event_loop()
+void SDL2Controller::event_loop()
 {
   assert(sdl2Context != nullptr);
   assert(sdl2Context->appCtx != nullptr);
@@ -90,7 +90,7 @@ void SDL2Initer::event_loop()
   }
 }
 
-void SDL2Initer::throw_sdl2(const std::string& errDesc)
+void SDL2Controller::throw_sdl2(const std::string& errDesc)
 {
   LOGE(errDesc << std::string{" SDL_Error: "} << SDL_GetError());
 

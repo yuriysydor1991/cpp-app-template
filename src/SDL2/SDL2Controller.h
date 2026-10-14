@@ -1,5 +1,5 @@
-#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_SDL2INITER_CLASS_H
-#define YOUR_CPP_APP_TEMPLATE_PROJECT_SDL2INITER_CLASS_H
+#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_SDL2CONTROLLER_CLASS_H
+#define YOUR_CPP_APP_TEMPLATE_PROJECT_SDL2CONTROLLER_CLASS_H
 
 #include <memory>
 
@@ -16,11 +16,11 @@ namespace templateSDL2
 /**
  * @brief The initialization and event loop runner class for the SDL2.
  */
-class SDL2Initer
+class SDL2Controller
 {
  public:
-  virtual ~SDL2Initer();
-  SDL2Initer();
+  virtual ~SDL2Controller();
+  SDL2Controller();
 
   /**
    * @brief Init and run the SDL2 event loop.
@@ -46,4 +46,4 @@ class SDL2Initer
 
 }  // namespace templateSDL2
 
-#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_SDL2INITER_CLASS_H
+#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_SDL2CONTROLLER_CLASS_H

@@ -1,7 +1,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "src/SDL2/SDL2Initer.h"
+#include "src/SDL2/SDL2Controller.h"
 #include "src/app/applications/Application.h"
 
 using namespace app;
@@ -17,7 +17,7 @@ class UTEST_Application : public Test
   {
   }
 
-  ~UTEST_Application() { SDL2Initer::onMockCreate = nullptr; }
+  ~UTEST_Application() { SDL2Controller::onMockCreate = nullptr; }
 
   int argc{0};
   char** argv{nullptr};
@@ -30,15 +30,15 @@ TEST_F(UTEST_Application, no_context_error) { EXPECT_NE(app->run({}), 0); }
 
 TEST_F(UTEST_Application, normal_exit)
 {
-  MockFunction<void(SDL2Initer & instance)> sdlEnsurer;
+  MockFunction<void(SDL2Controller & instance)> sdlEnsurer;
 
   EXPECT_CALL(sdlEnsurer, Call(_))
       .Times(1)
-      .WillOnce(Invoke([&](SDL2Initer& instance) {
+      .WillOnce(Invoke([&](SDL2Controller& instance) {
         EXPECT_CALL(instance, run(appCtx)).Times(1).WillOnce(Return(0));
       }));
 
-  SDL2Initer::onMockCreate = sdlEnsurer.AsStdFunction();
+  SDL2Controller::onMockCreate = sdlEnsurer.AsStdFunction();
 
   EXPECT_CALL(*appCtx, push_error(_)).Times(0);
 
@@ -52,15 +52,15 @@ TEST_F(UTEST_Application, normal_exit)
 
 TEST_F(UTEST_Application, invalid_exit_status)
 {
-  MockFunction<void(SDL2Initer & instance)> sdlEnsurer;
+  MockFunction<void(SDL2Controller & instance)> sdlEnsurer;
 
   EXPECT_CALL(sdlEnsurer, Call(_))
       .Times(1)
-      .WillOnce(Invoke([&](SDL2Initer& instance) {
+      .WillOnce(Invoke([&](SDL2Controller& instance) {
         EXPECT_CALL(instance, run(appCtx)).Times(1).WillOnce(Return(1));
       }));
 
-  SDL2Initer::onMockCreate = sdlEnsurer.AsStdFunction();
+  SDL2Controller::onMockCreate = sdlEnsurer.AsStdFunction();
 
   EXPECT_CALL(*appCtx, push_error(_)).Times(0);
 

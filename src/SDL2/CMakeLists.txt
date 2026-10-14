@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.13)
 
 add_library(
   TemplateSDL2Obj OBJECT
-  SDL2Initer.cpp
+  SDL2Controller.cpp
   SDL2Context.cpp
   SDL2ContextBuilder.cpp
   OpenGLIniter.cpp

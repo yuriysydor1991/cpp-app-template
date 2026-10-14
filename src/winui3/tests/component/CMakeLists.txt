@@ -7,7 +7,7 @@ endif()
 add_executable(
   CTEST_WinUI3
   CTEST_WinUI3.cpp
-  ${CMAKE_SOURCE_DIR}/src/winui3/WinUI3Initer.cpp
+  ${CMAKE_SOURCE_DIR}/src/winui3/WinUI3Controller.cpp
   ${CMAKE_SOURCE_DIR}/src/winui3/helpers/WindowConfig.cpp
   ${CMAKE_SOURCE_DIR}/src/app/ApplicationContext.cpp
 )

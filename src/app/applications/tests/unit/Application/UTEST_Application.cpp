@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 
 #include "src/app/applications/Application.h"
-#include "src/winui3/WinUI3Initer.h"
+#include "src/winui3/WinUI3Controller.h"
 
 using namespace app;
 using namespace winui3;
@@ -17,7 +17,7 @@ class UTEST_Application : public Test
   {
   }
 
-  ~UTEST_Application() { WinUI3Initer::onMockCreate = nullptr; }
+  ~UTEST_Application() { WinUI3Controller::onMockCreate = nullptr; }
 
   int argc{0};
   char** argv{nullptr};
@@ -30,15 +30,15 @@ TEST_F(UTEST_Application, no_context_error) { EXPECT_NE(app->run({}), 0); }
 
 TEST_F(UTEST_Application, normal_exit)
 {
-  MockFunction<void(WinUI3Initer & instance)> initerEnsurer;
+  MockFunction<void(WinUI3Controller & instance)> controllerEnsurer;
 
-  EXPECT_CALL(initerEnsurer, Call(_))
+  EXPECT_CALL(controllerEnsurer, Call(_))
       .Times(1)
-      .WillOnce(Invoke([&](WinUI3Initer& instance) {
+      .WillOnce(Invoke([&](WinUI3Controller& instance) {
         EXPECT_CALL(instance, run(appCtx)).Times(1).WillOnce(Return(0));
       }));
 
-  WinUI3Initer::onMockCreate = initerEnsurer.AsStdFunction();
+  WinUI3Controller::onMockCreate = controllerEnsurer.AsStdFunction();
 
   EXPECT_CALL(*appCtx, push_error(_)).Times(0);
 
@@ -52,15 +52,15 @@ TEST_F(UTEST_Application, normal_exit)
 
 TEST_F(UTEST_Application, invalid_exit_status)
 {
-  MockFunction<void(WinUI3Initer & instance)> initerEnsurer;
+  MockFunction<void(WinUI3Controller & instance)> controllerEnsurer;
 
-  EXPECT_CALL(initerEnsurer, Call(_))
+  EXPECT_CALL(controllerEnsurer, Call(_))
       .Times(1)
-      .WillOnce(Invoke([&](WinUI3Initer& instance) {
+      .WillOnce(Invoke([&](WinUI3Controller& instance) {
         EXPECT_CALL(instance, run(appCtx)).Times(1).WillOnce(Return(1));
       }));
 
-  WinUI3Initer::onMockCreate = initerEnsurer.AsStdFunction();
+  WinUI3Controller::onMockCreate = controllerEnsurer.AsStdFunction();
 
   EXPECT_CALL(*appCtx, push_error(_)).Times(0);
 

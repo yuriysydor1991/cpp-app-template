@@ -1,4 +1,4 @@
-#include "src/winui3/WinUI3Initer.h"
+#include "src/winui3/WinUI3Controller.h"
 
 #include <cassert>
 #include <memory>
@@ -10,7 +10,7 @@
 namespace winui3
 {
 
-int WinUI3Initer::run(std::shared_ptr<app::ApplicationContext> nactx)
+int WinUI3Controller::run(std::shared_ptr<app::ApplicationContext> nactx)
 {
   assert(nactx != nullptr);
 
@@ -26,7 +26,7 @@ int WinUI3Initer::run(std::shared_ptr<app::ApplicationContext> nactx)
   return launch(actx->get_argc(), actx->get_argv());
 }
 
-int WinUI3Initer::launch(int& argc, char**& argv)
+int WinUI3Controller::launch(int& argc, char**& argv)
 {
   return run_winui_application(argc, argv);
 }

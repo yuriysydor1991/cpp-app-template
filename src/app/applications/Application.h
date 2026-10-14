@@ -5,7 +5,7 @@
 
 #include "src/app/ApplicationContext.h"
 #include "src/app/applications/IApplication.h"
-#include "src/winui3/WinUI3Initer.h"
+#include "src/winui3/WinUI3Controller.h"
 
 namespace app
 {
@@ -31,7 +31,7 @@ class Application : public IApplication
   virtual int run(std::shared_ptr<ApplicationContext> ctx) override;
 
  protected:
-  virtual std::shared_ptr<winui3::WinUI3Initer> create_winui3_initer();
+  virtual std::shared_ptr<winui3::WinUI3Controller> create_winui3_controller();
 };
 
 }  // namespace app

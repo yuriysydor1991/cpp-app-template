@@ -4,7 +4,7 @@
 #include <memory>
 
 #include "src/app/ApplicationContext.h"
-#include "src/winui3/WinUI3Initer.h"
+#include "src/winui3/WinUI3Controller.h"
 #include "src/winui3/WinUI3Launcher.h"
 
 using namespace winui3;
@@ -24,7 +24,7 @@ namespace
 
 /// @brief Test double that records the launch() invocation instead of starting
 /// a real WinUI 3 application.
-class TestIniter : public WinUI3Initer
+class TestController : public WinUI3Controller
 {
  public:
   int launch_calls{0};
@@ -42,37 +42,37 @@ class TestIniter : public WinUI3Initer
 
 }  // namespace
 
-class UTEST_WinUI3Initer : public Test
+class UTEST_WinUI3Controller : public Test
 {
  public:
   int argc{3};
   char** argv{nullptr};
 
-  TestIniter initer;
+  TestController controller;
 
   std::shared_ptr<ApplicationContext> ctx{
       std::make_shared<ApplicationContext>(argc, argv)};
 };
 
-TEST_F(UTEST_WinUI3Initer, null_context_is_rejected_without_launching)
+TEST_F(UTEST_WinUI3Controller, null_context_is_rejected_without_launching)
 {
-  EXPECT_NE(initer.run(nullptr), 0);
-  EXPECT_EQ(initer.launch_calls, 0);
+  EXPECT_NE(controller.run(nullptr), 0);
+  EXPECT_EQ(controller.launch_calls, 0);
 }
 
-TEST_F(UTEST_WinUI3Initer, valid_context_launches_and_returns_success)
+TEST_F(UTEST_WinUI3Controller, valid_context_launches_and_returns_success)
 {
-  initer.launch_return = 0;
+  controller.launch_return = 0;
 
-  EXPECT_EQ(initer.run(ctx), 0);
-  EXPECT_EQ(initer.launch_calls, 1);
-  EXPECT_EQ(initer.seen_argc, 3);
+  EXPECT_EQ(controller.run(ctx), 0);
+  EXPECT_EQ(controller.launch_calls, 1);
+  EXPECT_EQ(controller.seen_argc, 3);
 }
 
-TEST_F(UTEST_WinUI3Initer, launch_status_is_propagated)
+TEST_F(UTEST_WinUI3Controller, launch_status_is_propagated)
 {
-  initer.launch_return = 7;
+  controller.launch_return = 7;
 
-  EXPECT_EQ(initer.run(ctx), 7);
-  EXPECT_EQ(initer.launch_calls, 1);
+  EXPECT_EQ(controller.run(ctx), 7);
+  EXPECT_EQ(controller.launch_calls, 1);
 }

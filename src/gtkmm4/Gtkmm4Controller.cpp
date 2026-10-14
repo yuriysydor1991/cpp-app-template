@@ -1,4 +1,4 @@
-#include "src/gtkmm4/GtkmmIniter.h"
+#include "src/gtkmm4/Gtkmm4Controller.h"
 
 #include <giomm/init.h>
 
@@ -12,7 +12,7 @@
 namespace Gtkmm4i
 {
 
-int GtkmmIniter::run(std::shared_ptr<app::ApplicationContext> nactx)
+int Gtkmm4Controller::run(std::shared_ptr<app::ApplicationContext> nactx)
 {
   // Every message the toolkit reports lands in the application log from here
   // on. It is taken over before anything of the toolkit is touched, so the

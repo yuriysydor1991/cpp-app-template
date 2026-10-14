@@ -1,5 +1,5 @@
-#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMM4INITER_CLASS_H
-#define YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMM4INITER_CLASS_H
+#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMM4CONTROLLER_CLASS_H
+#define YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMM4CONTROLLER_CLASS_H
 
 #include <memory>
 
@@ -15,11 +15,11 @@ namespace Gtkmm4i
  * drives the GDBusController that reads the general system information and logs
  * it. No GUI window is involved.
  */
-class GtkmmIniter
+class Gtkmm4Controller
 {
  public:
-  virtual ~GtkmmIniter() = default;
-  GtkmmIniter() = default;
+  virtual ~Gtkmm4Controller() = default;
+  Gtkmm4Controller() = default;
 
   /**
    * @brief Starts the gtkmm4 application: reads and logs the general system
@@ -35,4 +35,4 @@ class GtkmmIniter
 
 }  // namespace Gtkmm4i
 
-#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMM4INITER_CLASS_H
+#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMM4CONTROLLER_CLASS_H

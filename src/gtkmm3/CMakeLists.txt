@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.13)
 
 add_library(
   ${GTKMM_OBJECT_NAME} OBJECT
-  GtkmmIniter.cpp
+  Gtkmm3Controller.cpp
 )
 
 target_include_directories(

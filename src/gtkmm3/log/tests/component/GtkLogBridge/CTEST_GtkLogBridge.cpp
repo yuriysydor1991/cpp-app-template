@@ -218,8 +218,8 @@ int main(int argc, char* argv[])
 {
   // The application has it's logger ready before the toolkit is touched, and
   // the GLib logging is taken over right after that, exactly the way the
-  // GtkmmIniter does it. Both happen once for the whole binary, because the
-  // GLib accepts a writer only once in the life of a process.
+  // Gtkmm3Controller does it. Both happen once for the whole binary, because
+  // the GLib accepts a writer only once in the life of a process.
   LOG_INIT(CTEST_GtkLogBridge::test_log_file, MACRO_LVL_TRACE, false);
 
   GtkLogBridge::install();

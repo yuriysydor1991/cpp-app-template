@@ -1,4 +1,4 @@
-#include "src/gtkmm3/GtkmmIniter.h"
+#include "src/gtkmm3/Gtkmm3Controller.h"
 
 #include <cassert>
 
@@ -12,7 +12,7 @@
 namespace Gtkmm3i
 {
 
-int GtkmmIniter::run(std::shared_ptr<app::ApplicationContext> nactx)
+int Gtkmm3Controller::run(std::shared_ptr<app::ApplicationContext> nactx)
 {
   // Every message the toolkit reports lands in the application log from here
   // on. It is taken over before anything of the toolkit is touched, so the
@@ -43,7 +43,7 @@ int GtkmmIniter::run(std::shared_ptr<app::ApplicationContext> nactx)
   return app->run(*loader->window());
 }
 
-bool GtkmmIniter::create_main_window_loader()
+bool Gtkmm3Controller::create_main_window_loader()
 {
   LOGD("Creating the main window loader instance");
 
@@ -59,7 +59,7 @@ bool GtkmmIniter::create_main_window_loader()
   return true;
 }
 
-bool GtkmmIniter::prepare_main_window()
+bool Gtkmm3Controller::prepare_main_window()
 {
   assert(loader != nullptr);
 
@@ -82,7 +82,7 @@ bool GtkmmIniter::prepare_main_window()
   return true;
 }
 
-bool GtkmmIniter::create_events_handler()
+bool Gtkmm3Controller::create_events_handler()
 {
   assert(loader != nullptr);
 
@@ -108,7 +108,7 @@ bool GtkmmIniter::create_events_handler()
   return true;
 }
 
-bool GtkmmIniter::init_main_window()
+bool Gtkmm3Controller::init_main_window()
 {
   LOGD("Trying to initialize main window objects");
 

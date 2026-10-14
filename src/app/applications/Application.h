@@ -5,7 +5,7 @@
 
 #include "src/app/ApplicationContext.h"
 #include "src/app/applications/IApplication.h"
-#include "src/gtkmm3/GtkmmIniter.h"
+#include "src/gtkmm3/Gtkmm3Controller.h"
 
 namespace app
 {
@@ -31,7 +31,7 @@ class Application : public IApplication
   virtual int run(std::shared_ptr<ApplicationContext> ctx) override;
 
  protected:
-  virtual std::shared_ptr<Gtkmm3i::GtkmmIniter> create_gtkmm_initer();
+  virtual std::shared_ptr<Gtkmm3i::Gtkmm3Controller> create_gtkmm_controller();
 };
 
 }  // namespace app

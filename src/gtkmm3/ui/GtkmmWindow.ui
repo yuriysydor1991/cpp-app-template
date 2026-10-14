@@ -28,7 +28,7 @@
           <object class="GtkLabel">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="label" translatable="yes">Replace the default window implementation in GtkmmIniter class
+            <property name="label" translatable="yes">Replace the default window implementation in Gtkmm3Controller class
 and or MainWindow.glade the XML UI builder file from Glade app.</property>
           </object>
           <packing>

@@ -1,4 +1,4 @@
-#include "src/qt6/Qt6Initer.h"
+#include "src/qt6/Qt6Controller.h"
 
 #include <QApplication>
 #include <QQmlApplicationEngine>
@@ -12,7 +12,7 @@
 namespace Qt6i
 {
 
-int Qt6Initer::run(std::shared_ptr<app::ApplicationContext> actx)
+int Qt6Controller::run(std::shared_ptr<app::ApplicationContext> actx)
 {
   using QMLRes = qmlpaths::QMLRes;
 

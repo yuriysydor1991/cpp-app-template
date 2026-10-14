@@ -1,4 +1,4 @@
-#include "src/gtkmm4/GtkmmIniter.h"
+#include "src/gtkmm4/Gtkmm4Controller.h"
 
 #include <cassert>
 
@@ -13,7 +13,7 @@
 namespace Gtkmm4i
 {
 
-int GtkmmIniter::run(std::shared_ptr<app::ApplicationContext> nactx)
+int Gtkmm4Controller::run(std::shared_ptr<app::ApplicationContext> nactx)
 {
   // Every message the toolkit reports lands in the application log from here
   // on. It is taken over before anything of the toolkit is touched, so the
@@ -57,7 +57,7 @@ int GtkmmIniter::run(std::shared_ptr<app::ApplicationContext> nactx)
   return app->run(actx->get_argc(), actx->get_argv());
 }
 
-main_window::AdwaitaWindowPtr GtkmmIniter::create_main_window()
+main_window::AdwaitaWindowPtr Gtkmm4Controller::create_main_window()
 {
   return std::make_shared<main_window::AdwaitaWindow>();
 }

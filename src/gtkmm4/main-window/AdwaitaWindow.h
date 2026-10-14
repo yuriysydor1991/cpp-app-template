@@ -48,7 +48,8 @@ class AdwaitaWindow
    * widget tree and presents it.
    *
    * Requires an already initialized libadwaita - see the
-   * Gtkmm4i::GtkmmIniter::run which calls the adw_init for the whole process.
+   * Gtkmm4i::Gtkmm4Controller::run which calls the adw_init for the whole
+   * process.
    *
    * @param app The running application the window belongs to.
    *

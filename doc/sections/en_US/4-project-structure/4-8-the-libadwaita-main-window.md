@@ -56,7 +56,7 @@ logo never gets deformed. The `GTK_CONTENT_FIT_FILL` stretches it over the whole
 free area instead, and the `GTK_CONTENT_FIT_COVER` fills that area keeping the
 ratio but cropping whatever does not fit.
 
-`adw_init()` is called by the `Gtkmm4i::GtkmmIniter::run` from the application
+`adw_init()` is called by the `Gtkmm4i::Gtkmm4Controller::run` from the application
 `activate` handler and not before the `Gtk::Application::run` call, because it
 needs the GTK display that the application opens for itself.
 

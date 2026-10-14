@@ -6,4 +6,4 @@ To proceed the application implementation right away look for the `src/qtdbus/qu
 
 It's preferable to add a new `IDBusQueryHandler` descendant for a new query and to create other directories which would contain implemented components of the application, rather than put all the code inside a single handler class.
 
-Some Qt6 related code may be introduced into the `Qt6Initer` class, which creates the `QCoreApplication` instance the QtDBus module needs.
+Some Qt6 related code may be introduced into the `Qt6Controller` class, which creates the `QCoreApplication` instance the QtDBus module needs.

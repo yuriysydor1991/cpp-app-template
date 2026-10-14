@@ -1,5 +1,5 @@
-#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_QT6INITER_CLASS_H
-#define YOUR_CPP_APP_TEMPLATE_PROJECT_QT6INITER_CLASS_H
+#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_QT6CONTROLLER_CLASS_H
+#define YOUR_CPP_APP_TEMPLATE_PROJECT_QT6CONTROLLER_CLASS_H
 
 #include <memory>
 
@@ -15,11 +15,11 @@ namespace Qt6i
  * drives the QtDBusController that reads the general system information and
  * logs it. No GUI/QML is involved.
  */
-class Qt6Initer
+class Qt6Controller
 {
  public:
-  virtual ~Qt6Initer() = default;
-  Qt6Initer() = default;
+  virtual ~Qt6Controller() = default;
+  Qt6Controller() = default;
 
   /**
    * @brief Starts the Qt6 application: reads and logs the general system
@@ -35,4 +35,4 @@ class Qt6Initer
 
 }  // namespace Qt6i
 
-#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_QT6INITER_CLASS_H
+#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_QT6CONTROLLER_CLASS_H

@@ -1,0 +1,40 @@
+# syntax=docker/dockerfile:1
+#
+# The job container the act tool runs the .github/workflows jobs inside - the
+# local stand-in for the GitHub hosted ${GITHUB_ACTIONS_PIPELINE_RUNNER_LABEL_NAME} runner.
+#
+# The hosted runner comes with hundreds of preinstalled tools, while the jobs
+# of the template install their tool chain themselves, so the image carries
+# only what the workflow takes for granted: the sudo the jobs call apt-get
+# through, the git of the clang-format check and the Node.js runtime of the
+# JavaScript actions. A job which relies on a tool the hosted runner happens
+# to preinstall fails here, so the local run is the stricter of the two.
+FROM ${GITHUB_ACTIONS_PIPELINE_BASE_IMAGE}
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+# The jobs call a plain `sudo apt-get install`, which drops the DEBIAN_FRONTEND
+# variable on its way, so the debconf is told to ask no question by itself -
+# just as it is at the hosted runner.
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
+
+RUN apt-get update && \
+  apt-get install -y ca-certificates curl git sudo tzdata xz-utils && \
+  apt-get clean && \
+  rm -fr /var/lib/apt/lists/*
+
+# The JavaScript actions of the workflow declare the node${GITHUB_ACTIONS_PIPELINE_NODE_MAJOR} runtime, newer
+# than the nodejs package of the distribution, so the latest release of that
+# line comes from the Node.js site, checked against its published checksum.
+RUN arch="$(uname -m)" && \
+  case "$arch" in x86_64) arch=x64 ;; aarch64) arch=arm64 ;; esac && \
+  dist=https://nodejs.org/dist/latest-v${GITHUB_ACTIONS_PIPELINE_NODE_MAJOR}.x && \
+  cd /tmp && \
+  curl -fsSL -o SHASUMS256.txt "$dist/SHASUMS256.txt" && \
+  tarball="$(grep -oE "node-v[0-9.]+-linux-$arch\.tar\.xz" SHASUMS256.txt | head -n1)" && \
+  curl -fsSL -o "$tarball" "$dist/$tarball" && \
+  grep " $tarball\$" SHASUMS256.txt | sha256sum -c - && \
+  tar -xJf "$tarball" -C /usr/local --strip-components=1 --no-same-owner \
+    --exclude='*.md' --exclude=LICENSE && \
+  rm -f "$tarball" SHASUMS256.txt && \
+  node --version

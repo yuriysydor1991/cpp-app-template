@@ -1,5 +1,5 @@
-#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_WINUI3INITER_CLASS_H
-#define YOUR_CPP_APP_TEMPLATE_PROJECT_WINUI3INITER_CLASS_H
+#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_WINUI3CONTROLLER_CLASS_H
+#define YOUR_CPP_APP_TEMPLATE_PROJECT_WINUI3CONTROLLER_CLASS_H
 
 #include <memory>
 
@@ -15,11 +15,11 @@ namespace winui3
  * actual native launch is delegated to the launch() seam so the orchestration
  * may be exercised by the tests without the Windows App SDK and without a GUI.
  */
-class WinUI3Initer
+class WinUI3Controller
 {
  public:
-  virtual ~WinUI3Initer() = default;
-  WinUI3Initer() = default;
+  virtual ~WinUI3Controller() = default;
+  WinUI3Controller() = default;
 
   /**
    * @brief Starts the WinUI 3 application.
@@ -43,4 +43,4 @@ class WinUI3Initer
 
 }  // namespace winui3
 
-#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_WINUI3INITER_CLASS_H
+#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_WINUI3CONTROLLER_CLASS_H

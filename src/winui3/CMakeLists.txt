@@ -6,7 +6,7 @@ cmake_minimum_required(VERSION 3.13)
 # main-window subdirectories and only compiles on Windows.
 add_library(
   ${WINUI3_OBJECT_NAME} OBJECT
-  WinUI3Initer.cpp
+  WinUI3Controller.cpp
 )
 
 target_include_directories(

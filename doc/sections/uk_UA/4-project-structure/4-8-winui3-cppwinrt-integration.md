@@ -4,13 +4,13 @@
 
 ### Структура
 
-- `src/winui3/WinUI3Initer.{h,cpp}` - об'єкт оркестрації, вільний від WinUI. Перевіряє контекст програми і запускає GUI через шов `run_winui_application()` (`src/winui3/WinUI3Launcher.h`). Збирається і тестується (модульно/компонентно) на будь-якій платформі.
+- `src/winui3/WinUI3Controller.{h,cpp}` - об'єкт оркестрації, вільний від WinUI. Перевіряє контекст програми і запускає GUI через шов `run_winui_application()` (`src/winui3/WinUI3Launcher.h`). Збирається і тестується (модульно/компонентно) на будь-якій платформі.
 - `src/winui3/helpers/WindowConfig.{h,cpp}` - незалежний від WinUI тримач заголовка / текстів / розмірів вікна, тестується ізольовано.
 - `src/winui3/app/WinUI3App.{h,cpp}` - нативний об'єкт програми C++/WinRT і справжнє визначення `run_winui_application()`. **Лише Windows.**
 - `src/winui3/app/WinUI3AppStub.cpp` - визначення `run_winui_application()` для не-Windows, щоб виконуваний файл усе одно збирався, лінкувався і запускався (друкуючи повідомлення) поза Windows. Справжнє вікно WinUI 3 відкривається лише на Windows.
 - `src/winui3/main-window/WinUI3MainWindow.{h,cpp}` - вікно WinUI 3, побудоване програмно (без XAML-файлу) з `WindowConfig`. **Лише Windows.**
 
-`Application::run()` (`src/app/applications/Application.cpp`) створює `WinUI3Initer` і делегує йому, так само як інші GUI-гілки делегують своєму initer.
+`Application::run()` (`src/app/applications/Application.cpp`) створює `WinUI3Controller` і делегує йому, так само як інші GUI-гілки делегують своєму контролеру.
 
 ### Збирання
 
@@ -25,4 +25,4 @@
 
 ### Тести
 
-`UTEST_WindowConfig`, `UTEST_WinUI3Initer` (модульні) і `CTEST_WinUI3` (компонентний) перевіряють вільні від WinUI частини через шов запуску, тож виконуються на будь-якій платформі. Вони зареєстровані у конвеєрі Windows `misc/Jenkinsfile` поруч із тестами програми.
+`UTEST_WindowConfig`, `UTEST_WinUI3Controller` (модульні) і `CTEST_WinUI3` (компонентний) перевіряють вільні від WinUI частини через шов запуску, тож виконуються на будь-якій платформі. Вони зареєстровані у конвеєрі Windows `misc/Jenkinsfile` поруч із тестами програми.

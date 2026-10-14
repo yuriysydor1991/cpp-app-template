@@ -4,13 +4,13 @@ This branch fast-starts a [Microsoft WinUI 3](https://learn.microsoft.com/window
 
 ### Layout
 
-- `src/winui3/WinUI3Initer.{h,cpp}` - the WinUI free orchestration object. It validates the application context and launches the GUI through the `run_winui_application()` launch seam (`src/winui3/WinUI3Launcher.h`). Builds and is unit/component tested on every platform.
+- `src/winui3/WinUI3Controller.{h,cpp}` - the WinUI free orchestration object. It validates the application context and launches the GUI through the `run_winui_application()` launch seam (`src/winui3/WinUI3Launcher.h`). Builds and is unit/component tested on every platform.
 - `src/winui3/helpers/WindowConfig.{h,cpp}` - a WinUI independent holder for the window title / texts / sizes, unit tested in isolation.
 - `src/winui3/app/WinUI3App.{h,cpp}` - the native C++/WinRT application object and the real `run_winui_application()` definition. **Windows only.**
 - `src/winui3/app/WinUI3AppStub.cpp` - a non-Windows definition of `run_winui_application()` so the executable still builds, links and runs (printing a notice) off Windows. The real WinUI 3 window only opens on Windows.
 - `src/winui3/main-window/WinUI3MainWindow.{h,cpp}` - the WinUI 3 window, built programmatically (no XAML file) from `WindowConfig`. **Windows only.**
 
-`Application::run()` (`src/app/applications/Application.cpp`) creates a `WinUI3Initer` and delegates to it, exactly like the other GUI branches delegate to their initer.
+`Application::run()` (`src/app/applications/Application.cpp`) creates a `WinUI3Controller` and delegates to it, exactly like the other GUI branches delegate to their controller.
 
 ### Building it
 
@@ -25,4 +25,4 @@ On Windows the enabler restores the Windows App SDK + C++/WinRT NuGet packages (
 
 ### Tests
 
-`UTEST_WindowConfig`, `UTEST_WinUI3Initer` (unit) and `CTEST_WinUI3` (component) exercise the WinUI free parts through the launch seam, so they run on any platform. They are registered in the Windows `misc/Jenkinsfile` pipeline next to the application tests.
+`UTEST_WindowConfig`, `UTEST_WinUI3Controller` (unit) and `CTEST_WinUI3` (component) exercise the WinUI free parts through the launch seam, so they run on any platform. They are registered in the Windows `misc/Jenkinsfile` pipeline next to the application tests.

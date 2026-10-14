@@ -11,7 +11,7 @@ namespace winui3
  * (Windows App SDK) stack: the declaration is WinUI free and the definition
  * lives in the Windows-only app/WinUI3App.cpp translation unit (and in the
  * cross-platform app/WinUI3AppStub.cpp on non-Windows hosts). The component
- * tests provide their own definition of this function, so the WinUI3Initer
+ * tests provide their own definition of this function, so the WinUI3Controller
  * orchestration may be built and run without the Windows App SDK and without
  * launching a GUI.
  *

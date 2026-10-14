@@ -4,7 +4,7 @@
 #include <csignal>
 
 #include "src/app/ApplicationFactory.h"
-#include "src/winui3/WinUI3Initer.h"
+#include "src/winui3/WinUI3Controller.h"
 
 using namespace app;
 using namespace testing;

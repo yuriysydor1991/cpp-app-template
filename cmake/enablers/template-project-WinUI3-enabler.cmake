@@ -8,7 +8,7 @@ cmake_minimum_required(VERSION 3.13)
 # winui3::sdk interface target the native UI links against.
 #
 # On a non-Windows host this module is a deliberate no-op: the portable WinUI3
-# orchestration (winui3::WinUI3Initer + the WindowConfig helper) and the
+# orchestration (winui3::WinUI3Controller + the WindowConfig helper) and the
 # cross-platform run_winui_application() stub are still built, so the project
 # configures, builds and runs its unit/component tests everywhere (handy for the
 # CI of the platform-independent logic). The real WinUI 3 window only builds on

@@ -96,9 +96,9 @@ pipeline {
             bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_WindowConfig\\." --output-on-failure --output-junit %BDJUNITOUT%/UTEST_WindowConfig.junit.xml'
           }
         }
-        stage('UTEST_WinUI3Initer') {
+        stage('UTEST_WinUI3Controller') {
           steps {
-            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_WinUI3Initer\\." --output-on-failure --output-junit %BDJUNITOUT%/UTEST_WinUI3Initer.junit.xml'
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_WinUI3Controller\\." --output-on-failure --output-junit %BDJUNITOUT%/UTEST_WinUI3Controller.junit.xml'
           }
         }
         stage('UTEST_SignalsHandler') { 

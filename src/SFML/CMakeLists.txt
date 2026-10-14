@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.13)
 
 add_library(
   TemplateSFMLObj OBJECT
-  SFMLIniter.cpp
+  SFMLController.cpp
   SFMLContext.cpp
   SFMLContextBuilder.cpp
 )

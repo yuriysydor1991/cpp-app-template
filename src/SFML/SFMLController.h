@@ -1,5 +1,5 @@
-#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_SFMLINITER_CLASS_H
-#define YOUR_CPP_APP_TEMPLATE_PROJECT_SFMLINITER_CLASS_H
+#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_SFMLCONTROLLER_CLASS_H
+#define YOUR_CPP_APP_TEMPLATE_PROJECT_SFMLCONTROLLER_CLASS_H
 
 #include <memory>
 
@@ -15,11 +15,11 @@ namespace templateSFML
 /**
  * @brief The initialization and event loop runner class for the SFML.
  */
-class SFMLIniter
+class SFMLController
 {
  public:
-  virtual ~SFMLIniter();
-  SFMLIniter();
+  virtual ~SFMLController();
+  SFMLController();
 
   /**
    * @brief Init and run the SFML event loop.
@@ -43,4 +43,4 @@ class SFMLIniter
 
 }  // namespace templateSFML
 
-#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_SFMLINITER_CLASS_H
+#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_SFMLCONTROLLER_CLASS_H

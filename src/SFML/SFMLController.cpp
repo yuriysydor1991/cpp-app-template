@@ -1,4 +1,4 @@
-#include "src/SFML/SFMLIniter.h"
+#include "src/SFML/SFMLController.h"
 
 #include <cassert>
 #include <memory>
@@ -11,16 +11,16 @@
 namespace templateSFML
 {
 
-SFMLIniter::SFMLIniter()
+SFMLController::SFMLController()
     : ctxBuilder{std::make_shared<SFMLContextBuilder>()},
       events{std::make_shared<events::EventsController>()},
       painter2d{std::make_shared<painter::Painter>()}
 {
 }
 
-SFMLIniter::~SFMLIniter() { sfmlContext.reset(); }
+SFMLController::~SFMLController() { sfmlContext.reset(); }
 
-int SFMLIniter::run(std::shared_ptr<app::ApplicationContext> ctx)
+int SFMLController::run(std::shared_ptr<app::ApplicationContext> ctx)
 {
   assert(ctx != nullptr);
 
@@ -43,7 +43,7 @@ int SFMLIniter::run(std::shared_ptr<app::ApplicationContext> ctx)
   return 0;
 }
 
-void SFMLIniter::event_loop()
+void SFMLController::event_loop()
 {
   assert(sfmlContext != nullptr);
   assert(sfmlContext->appCtx != nullptr);

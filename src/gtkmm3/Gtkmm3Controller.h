@@ -1,5 +1,5 @@
-#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMMINITER_CLASS_H
-#define YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMMINITER_CLASS_H
+#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMM3CONTROLLER_CLASS_H
+#define YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMM3CONTROLLER_CLASS_H
 
 #include <memory>
 
@@ -12,11 +12,11 @@ namespace Gtkmm3i
  * @brief The root GTKmm window class to show
  * templated GUI window.
  */
-class GtkmmIniter
+class Gtkmm3Controller
 {
  public:
-  virtual ~GtkmmIniter() = default;
-  GtkmmIniter() = default;
+  virtual ~Gtkmm3Controller() = default;
+  Gtkmm3Controller() = default;
 
   virtual int run(std::shared_ptr<app::ApplicationContext> nactx);
 
@@ -26,4 +26,4 @@ class GtkmmIniter
 
 }  // namespace Gtkmm3i
 
-#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMMINITER_CLASS_H
+#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMM3CONTROLLER_CLASS_H

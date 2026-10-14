@@ -4,7 +4,7 @@
 #include <iostream>
 #include <memory>
 
-#include "src/gtkmm3/GtkmmIniter.h"
+#include "src/gtkmm3/Gtkmm3Controller.h"
 #include "src/log/log.h"
 
 namespace app
@@ -19,9 +19,10 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  std::shared_ptr<Gtkmm3i::GtkmmIniter> gtkmmIniter = create_gtkmm_initer();
+  std::shared_ptr<Gtkmm3i::Gtkmm3Controller> gtkmmController =
+      create_gtkmm_controller();
 
-  if (gtkmmIniter->run(ctx) != 0) {
+  if (gtkmmController->run(ctx) != 0) {
     LOGE("The gtkmm controller returned invalid execution status");
     return INVALID;
   }
@@ -29,9 +30,10 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
   return 0;
 }
 
-std::shared_ptr<Gtkmm3i::GtkmmIniter> Application::create_gtkmm_initer()
+std::shared_ptr<Gtkmm3i::Gtkmm3Controller>
+Application::create_gtkmm_controller()
 {
-  return std::make_shared<Gtkmm3i::GtkmmIniter>();
+  return std::make_shared<Gtkmm3i::Gtkmm3Controller>();
 }
 
 }  // namespace app

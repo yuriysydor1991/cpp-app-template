@@ -2,7 +2,7 @@
 
 The application logs through the `src/log/log.h` macroses, while GTK, GDK, GIO, Pango, gtkmm and GLib itself report through the GLib logging, which writes into the standard output and the standard error streams of the process by it's own default writer. So without any further ado a toolkit complaint is seen by whoever watches the terminal and by nobody else - it never reaches the log file, it carries no timestamp of the application format, no thread id and it obeys no level setting of the application.
 
-The `Gtkmm3i::gtklog::GtkLogBridge` class of the `src/gtkmm3/log` directory takes that over. It's `install` method, called at the very start of the `Gtkmm3i::GtkmmIniter::run` before anything of the toolkit is touched, puts three things in place:
+The `Gtkmm3i::gtklog::GtkLogBridge` class of the `src/gtkmm3/log` directory takes that over. It's `install` method, called at the very start of the `Gtkmm3i::Gtkmm3Controller::run` before anything of the toolkit is touched, puts three things in place:
 
 - an own GLib writer, in the place of the default one, which converts every message field set into a call of the application logging macroses;
 - a `g_print` handler, which logs the printed text with the info level;

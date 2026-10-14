@@ -1,4 +1,4 @@
-#include "src/gtkmm3/GtkmmIniter.h"
+#include "src/gtkmm3/Gtkmm3Controller.h"
 
 #include <cassert>
 
@@ -12,7 +12,7 @@
 namespace Gtkmm3i
 {
 
-int GtkmmIniter::run(std::shared_ptr<app::ApplicationContext> nactx)
+int Gtkmm3Controller::run(std::shared_ptr<app::ApplicationContext> nactx)
 {
   // Every message the toolkit reports lands in the application log from here
   // on. It is taken over before anything of the toolkit is touched, so the

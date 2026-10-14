@@ -4,7 +4,7 @@
 #include <iostream>
 #include <memory>
 
-#include "src/freeglut/FreeGlutIniter.h"
+#include "src/freeglut/FreeGlutController.h"
 #include "src/log/log.h"
 
 namespace app
@@ -19,7 +19,7 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  templateFreeGlut::FreeGlutIniter opengl;
+  templateFreeGlut::FreeGlutController opengl;
 
   if (opengl.run(ctx) != 0) {
     LOGE("The freeglut controller returned invalid status");

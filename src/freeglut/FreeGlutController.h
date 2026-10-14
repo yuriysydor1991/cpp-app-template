@@ -1,5 +1,5 @@
-#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_FREEGLUT_OPENGL_INITER_CLASS_H
-#define YOUR_CPP_APP_TEMPLATE_PROJECT_FREEGLUT_OPENGL_INITER_CLASS_H
+#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_FREEGLUTCONTROLLER_CLASS_H
+#define YOUR_CPP_APP_TEMPLATE_PROJECT_FREEGLUTCONTROLLER_CLASS_H
 
 #include <memory>
 
@@ -13,11 +13,11 @@ namespace templateFreeGlut
  * Contains also the default display method to place
  * the OpenGL scene draw code.
  */
-class FreeGlutIniter
+class FreeGlutController
 {
  public:
-  virtual ~FreeGlutIniter() = default;
-  FreeGlutIniter() = default;
+  virtual ~FreeGlutController() = default;
+  FreeGlutController() = default;
 
   /**
    * @brief Init and run the FreeGlut' OpenGL scene render pipeline.
@@ -36,4 +36,4 @@ class FreeGlutIniter
 
 }  // namespace templateFreeGlut
 
-#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_FREEGLUT_OPENGL_INITER_CLASS_H
+#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_FREEGLUTCONTROLLER_CLASS_H

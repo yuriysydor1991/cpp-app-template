@@ -1,4 +1,4 @@
-#include "src/freeglut/FreeGlutIniter.h"
+#include "src/freeglut/FreeGlutController.h"
 
 #include <GL/freeglut.h>
 #include <GL/gl.h>
@@ -22,7 +22,7 @@ int current_width{0};
 int current_height{0};
 }  // namespace
 
-void FreeGlutIniter::display()
+void FreeGlutController::display()
 {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glPushMatrix();
@@ -41,13 +41,13 @@ void FreeGlutIniter::display()
   glutSwapBuffers();
 }
 
-void FreeGlutIniter::init()
+void FreeGlutController::init()
 {
   glClearColor(0.0, 0.0, 0.0, 0.0);
   glEnable(GL_DEPTH_TEST);
 }
 
-int FreeGlutIniter::run(std::shared_ptr<app::ApplicationContext> ctx)
+int FreeGlutController::run(std::shared_ptr<app::ApplicationContext> ctx)
 {
   glutInit(&ctx->get_argc(), ctx->get_argv());
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
@@ -56,15 +56,15 @@ int FreeGlutIniter::run(std::shared_ptr<app::ApplicationContext> ctx)
 
   init();
 
-  glutDisplayFunc(&FreeGlutIniter::display);
-  glutReshapeFunc(&FreeGlutIniter::reshape);
+  glutDisplayFunc(&FreeGlutController::display);
+  glutReshapeFunc(&FreeGlutController::reshape);
 
   glutMainLoop();
 
   return 0;
 }
 
-void FreeGlutIniter::reshape(int w, int h)
+void FreeGlutController::reshape(int w, int h)
 {
   current_width = w;
   current_height = h;

@@ -28,7 +28,7 @@ target_include_directories(
   CTEST_app
   PRIVATE
     ${APP_MOCKS_ROOT}/log
-    ${APP_MOCKS_ROOT}/FreeGlutIniter
+    ${APP_MOCKS_ROOT}/FreeGlutController
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
 )

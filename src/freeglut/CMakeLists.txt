@@ -5,7 +5,7 @@ find_package(OpenGL REQUIRED)
 
 add_library(
   TemplateFreeGlutObj OBJECT
-  FreeGlutIniter.cpp
+  FreeGlutController.cpp
 )
 
 target_include_directories(

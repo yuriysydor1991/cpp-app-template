@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 
 #include "src/app/applications/Application.h"
-#include "src/freeglut/FreeGlutIniter.h"
+#include "src/freeglut/FreeGlutController.h"
 
 using namespace app;
 using namespace templateFreeGlut;
@@ -17,7 +17,7 @@ class UTEST_Application : public Test
   {
   }
 
-  ~UTEST_Application() { FreeGlutIniter::onMockCreate = nullptr; }
+  ~UTEST_Application() { FreeGlutController::onMockCreate = nullptr; }
 
   int argc{0};
   char** argv{nullptr};
@@ -30,15 +30,15 @@ TEST_F(UTEST_Application, no_context_error) { EXPECT_NE(app->run({}), 0); }
 
 TEST_F(UTEST_Application, normal_exit)
 {
-  MockFunction<void(FreeGlutIniter&)> freeGlutEnsurer;
+  MockFunction<void(FreeGlutController&)> freeGlutEnsurer;
 
   EXPECT_CALL(freeGlutEnsurer, Call(_))
       .Times(1)
-      .WillOnce(Invoke([&](FreeGlutIniter& instance) {
+      .WillOnce(Invoke([&](FreeGlutController& instance) {
         EXPECT_CALL(instance, run(appCtx)).Times(1).WillOnce(Return(0));
       }));
 
-  FreeGlutIniter::onMockCreate = freeGlutEnsurer.AsStdFunction();
+  FreeGlutController::onMockCreate = freeGlutEnsurer.AsStdFunction();
 
   EXPECT_CALL(*appCtx, push_error(_)).Times(0);
 
@@ -52,15 +52,15 @@ TEST_F(UTEST_Application, normal_exit)
 
 TEST_F(UTEST_Application, freeglut_invalid_state)
 {
-  MockFunction<void(FreeGlutIniter&)> freeGlutEnsurer;
+  MockFunction<void(FreeGlutController&)> freeGlutEnsurer;
 
   EXPECT_CALL(freeGlutEnsurer, Call(_))
       .Times(1)
-      .WillOnce(Invoke([&](FreeGlutIniter& instance) {
+      .WillOnce(Invoke([&](FreeGlutController& instance) {
         EXPECT_CALL(instance, run(appCtx)).Times(1).WillOnce(Return(1));
       }));
 
-  FreeGlutIniter::onMockCreate = freeGlutEnsurer.AsStdFunction();
+  FreeGlutController::onMockCreate = freeGlutEnsurer.AsStdFunction();
 
   EXPECT_CALL(*appCtx, push_error(_)).Times(0);
 

@@ -42,3 +42,13 @@ variables:
 ### Що лишається конвеєру Jenkins
 
 Перевірки шаблону з [misc/Jenkinsfile](/misc/Jenkinsfile) - розділи документації та їхні посилання у README, посилання markdown, зовнішні URL документації, зареєстровані enabler-модулі та зареєстровані тести - не мають тут відповідника, як і його перевірки пакувальників: конвеєр обмежується стадіями, які покриває звичайний контейнер, тоді як пакувальники потребують середовищ виконання та інструментів, які містить [контейнер конвеєра Jenkins](/doc/sections/uk_UA/5-project-build/containers-ci/5-17-enabling-Jenkins-pipeline-inside-Docker-container.md).
+
+### Локальний запуск перед push
+
+Розділ [Локальний запуск конвеєрів CI](/doc/sections/uk_UA/5-project-build/containers-ci/5-63-running-the-CI-pipelines-locally.md) запускає цей самий конвеєр один раз на локальній машині інструментом [gitlab-ci-local](https://github.com/firecow/gitlab-ci-local), отож зламаний конвеєр видно ще до push:
+
+```
+# в середині кореневої директорії проекту
+
+scripts/docker/gitlab-ci-run.sh
+```

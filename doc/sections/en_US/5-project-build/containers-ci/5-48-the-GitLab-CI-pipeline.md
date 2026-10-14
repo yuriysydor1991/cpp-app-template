@@ -42,3 +42,13 @@ It stays `false` by default, since the check costs minutes of the runner time wh
 ### What stays at the Jenkins pipeline
 
 The template self-checks of the [misc/Jenkinsfile](/misc/Jenkinsfile) - the doc sections and their README links, the markdown links, the external documentation URLs, the registered enablers and the registered tests - have no counterpart here, and neither have its packager checks: the pipeline keeps to the stages a plain container covers, while the packagers ask for the runtimes and the tools the [Jenkins pipeline container](/doc/sections/en_US/5-project-build/containers-ci/5-17-enabling-Jenkins-pipeline-inside-Docker-container.md) carries.
+
+### The local run before the push
+
+The [Running the CI pipelines locally](/doc/sections/en_US/5-project-build/containers-ci/5-63-running-the-CI-pipelines-locally.md) section runs this very pipeline once on the local machine with the [gitlab-ci-local](https://github.com/firecow/gitlab-ci-local) tool, so a broken pipeline shows up before the push does:
+
+```
+# inside the project root directory
+
+scripts/docker/gitlab-ci-run.sh
+```

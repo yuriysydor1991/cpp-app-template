@@ -1,5 +1,5 @@
-#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMM4INITER_CLASS_H
-#define YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMM4INITER_CLASS_H
+#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMM4CONTROLLER_CLASS_H
+#define YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMM4CONTROLLER_CLASS_H
 
 #include <memory>
 
@@ -17,11 +17,11 @@ namespace Gtkmm4i
  * loop. GTK4 exposes no Vulkan rendering widget, so the Vulkan work and the
  * window are kept independent.
  */
-class GtkmmIniter
+class Gtkmm4Controller
 {
  public:
-  virtual ~GtkmmIniter() = default;
-  GtkmmIniter() = default;
+  virtual ~Gtkmm4Controller() = default;
+  Gtkmm4Controller() = default;
 
   /**
    * @brief Enumerates the Vulkan physical devices and starts the GTK4 window.
@@ -39,4 +39,4 @@ class GtkmmIniter
 
 }  // namespace Gtkmm4i
 
-#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMM4INITER_CLASS_H
+#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMM4CONTROLLER_CLASS_H

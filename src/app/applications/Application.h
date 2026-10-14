@@ -5,7 +5,7 @@
 
 #include "src/app/ApplicationContext.h"
 #include "src/app/applications/IApplication.h"
-#include "src/wxwidgets/WxWidgetsIniter.h"
+#include "src/wxwidgets/WxWidgetsController.h"
 
 namespace app
 {
@@ -31,7 +31,7 @@ class Application : public IApplication
   virtual int run(std::shared_ptr<ApplicationContext> ctx) override;
 
  protected:
-  virtual std::shared_ptr<wxwi::WxWidgetsIniter> create_wx_initer();
+  virtual std::shared_ptr<wxwi::WxWidgetsController> create_wx_controller();
 };
 
 }  // namespace app

@@ -6,7 +6,7 @@
 
 #include "src/app/ApplicationContext.h"
 #include "src/wxwidgets/WxLauncher.h"
-#include "src/wxwidgets/WxWidgetsIniter.h"
+#include "src/wxwidgets/WxWidgetsController.h"
 #include "src/wxwidgets/helpers/WindowConfig.h"
 
 using namespace wxwi;
@@ -16,7 +16,7 @@ using namespace testing;
 namespace
 {
 // Records what the (simulated) wxWidgets application does when the real
-// WxWidgetsIniter launches it. This keeps the real run() -> launch() ->
+// WxWidgetsController launches it. This keeps the real run() -> launch() ->
 // run_wx_application() seam intact while building a real WindowConfig the way
 // WxApp::OnInit() would, so the whole wxWidgets free part of the component is
 // exercised together without launching a GUI.
@@ -49,7 +49,7 @@ class CTEST_WxWidgets : public Test
   int argc{4};
   char** argv{nullptr};
 
-  WxWidgetsIniter initer;
+  WxWidgetsController controller;
 
   std::shared_ptr<ApplicationContext> ctx{
       std::make_shared<ApplicationContext>(argc, argv)};
@@ -57,7 +57,7 @@ class CTEST_WxWidgets : public Test
 
 TEST_F(CTEST_WxWidgets, run_launches_app_and_forwards_arguments)
 {
-  EXPECT_EQ(initer.run(ctx), 0);
+  EXPECT_EQ(controller.run(ctx), 0);
 
   EXPECT_EQ(g_seen_argc, 4);
   EXPECT_EQ(g_built_title, "ComponentApp 9.9.9");
@@ -67,7 +67,7 @@ TEST_F(CTEST_WxWidgets, run_forwards_the_current_argument_count)
 {
   argc = 1;  // ctx->get_argc() is a reference to this fixture member
 
-  EXPECT_EQ(initer.run(ctx), 0);
+  EXPECT_EQ(controller.run(ctx), 0);
 
   EXPECT_EQ(g_seen_argc, 1);
   EXPECT_EQ(g_built_title, "ComponentApp 9.9.9");

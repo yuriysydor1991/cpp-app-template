@@ -10,8 +10,8 @@ namespace wxwi
  * This is the single link-time seam that pulls in the wxWidgets library: the
  * declaration is wxWidgets free and the definition lives in the wxWidgets
  * dependent app/WxApp.cpp translation unit. The component tests provide their
- * own definition of this function, so the WxWidgetsIniter orchestration may be
- * built and run without the wxWidgets library and without launching a GUI.
+ * own definition of this function, so the WxWidgetsController orchestration may
+ * be built and run without the wxWidgets library and without launching a GUI.
  *
  * @param argc The command line arguments count (forwarded to wxEntry).
  * @param argv The command line arguments array (forwarded to wxEntry).

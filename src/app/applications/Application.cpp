@@ -5,7 +5,7 @@
 #include <memory>
 
 #include "src/log/log.h"
-#include "src/wxwidgets/WxWidgetsIniter.h"
+#include "src/wxwidgets/WxWidgetsController.h"
 
 namespace app
 {
@@ -19,9 +19,10 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  std::shared_ptr<wxwi::WxWidgetsIniter> wxIniter = create_wx_initer();
+  std::shared_ptr<wxwi::WxWidgetsController> wxController =
+      create_wx_controller();
 
-  if (wxIniter->run(ctx) != 0) {
+  if (wxController->run(ctx) != 0) {
     LOGE("The wxWidgets controller returned invalid execution status");
     return INVALID;
   }
@@ -29,9 +30,9 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
   return 0;
 }
 
-std::shared_ptr<wxwi::WxWidgetsIniter> Application::create_wx_initer()
+std::shared_ptr<wxwi::WxWidgetsController> Application::create_wx_controller()
 {
-  return std::make_shared<wxwi::WxWidgetsIniter>();
+  return std::make_shared<wxwi::WxWidgetsController>();
 }
 
 }  // namespace app

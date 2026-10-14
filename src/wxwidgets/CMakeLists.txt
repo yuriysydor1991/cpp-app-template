@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.13)
 # code lives in the app and main-window subdirectories.
 add_library(
   ${WXWIDGETS_OBJECT_NAME} OBJECT
-  WxWidgetsIniter.cpp
+  WxWidgetsController.cpp
 )
 
 target_include_directories(

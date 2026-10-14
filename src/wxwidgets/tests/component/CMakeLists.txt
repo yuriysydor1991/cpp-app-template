@@ -7,7 +7,7 @@ endif()
 add_executable(
   CTEST_WxWidgets
   CTEST_WxWidgets.cpp
-  ${CMAKE_SOURCE_DIR}/src/wxwidgets/WxWidgetsIniter.cpp
+  ${CMAKE_SOURCE_DIR}/src/wxwidgets/WxWidgetsController.cpp
   ${CMAKE_SOURCE_DIR}/src/wxwidgets/helpers/WindowConfig.cpp
   ${CMAKE_SOURCE_DIR}/src/app/ApplicationContext.cpp
 )

@@ -1,27 +1,27 @@
 cmake_minimum_required(VERSION 3.13)
 
 add_executable(
-  UTEST_WxWidgetsIniter
-  UTEST_WxWidgetsIniter.cpp
-  ${CMAKE_SOURCE_DIR}/src/wxwidgets/WxWidgetsIniter.cpp
+  UTEST_WxWidgetsController
+  UTEST_WxWidgetsController.cpp
+  ${CMAKE_SOURCE_DIR}/src/wxwidgets/WxWidgetsController.cpp
   ${CMAKE_SOURCE_DIR}/src/app/ApplicationContext.cpp
 )
 
 target_include_directories(
-  UTEST_WxWidgetsIniter
+  UTEST_WxWidgetsController
   PRIVATE ${APP_MOCKS_ROOT}/log
   PRIVATE ${CMAKE_SOURCE_DIR}
 )
 
 target_link_libraries(
-  UTEST_WxWidgetsIniter
+  UTEST_WxWidgetsController
   GTest::gtest_main GTest::gmock
 )
 
 include(GoogleTest)
 
 gtest_add_tests(
-  TARGET UTEST_WxWidgetsIniter
+  TARGET UTEST_WxWidgetsController
   TEST_SUFFIX .noArgs
   TEST_LIST noArgsTests
 )

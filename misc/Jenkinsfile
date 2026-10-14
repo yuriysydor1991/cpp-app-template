@@ -134,9 +134,9 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "UTEST_WindowConfig\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_WindowConfig.junit.xml'
           }
         }
-        stage('UTEST_WxWidgetsIniter') {
+        stage('UTEST_WxWidgetsController') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_WxWidgetsIniter\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_WxWidgetsIniter.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_WxWidgetsController\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_WxWidgetsController.junit.xml'
           }
         }
         stage('UTEST_SignalsHandler') { 

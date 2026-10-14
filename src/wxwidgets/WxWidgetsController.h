@@ -1,5 +1,5 @@
-#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_WXWIDGETSINITER_CLASS_H
-#define YOUR_CPP_APP_TEMPLATE_PROJECT_WXWIDGETSINITER_CLASS_H
+#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_WXWIDGETSCONTROLLER_CLASS_H
+#define YOUR_CPP_APP_TEMPLATE_PROJECT_WXWIDGETSCONTROLLER_CLASS_H
 
 #include <memory>
 
@@ -15,11 +15,11 @@ namespace wxwi
  * The actual native launch is delegated to the launch() seam so the
  * orchestration may be exercised by the tests without a GUI.
  */
-class WxWidgetsIniter
+class WxWidgetsController
 {
  public:
-  virtual ~WxWidgetsIniter() = default;
-  WxWidgetsIniter() = default;
+  virtual ~WxWidgetsController() = default;
+  WxWidgetsController() = default;
 
   /**
    * @brief Starts the wxWidgets application.
@@ -43,4 +43,4 @@ class WxWidgetsIniter
 
 }  // namespace wxwi
 
-#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_WXWIDGETSINITER_CLASS_H
+#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_WXWIDGETSCONTROLLER_CLASS_H

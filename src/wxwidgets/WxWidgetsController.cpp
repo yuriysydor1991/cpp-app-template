@@ -1,4 +1,4 @@
-#include "src/wxwidgets/WxWidgetsIniter.h"
+#include "src/wxwidgets/WxWidgetsController.h"
 
 #include <cassert>
 #include <memory>
@@ -10,7 +10,7 @@
 namespace wxwi
 {
 
-int WxWidgetsIniter::run(std::shared_ptr<app::ApplicationContext> nactx)
+int WxWidgetsController::run(std::shared_ptr<app::ApplicationContext> nactx)
 {
   assert(nactx != nullptr);
 
@@ -26,7 +26,7 @@ int WxWidgetsIniter::run(std::shared_ptr<app::ApplicationContext> nactx)
   return launch(actx->get_argc(), actx->get_argv());
 }
 
-int WxWidgetsIniter::launch(int& argc, char**& argv)
+int WxWidgetsController::launch(int& argc, char**& argv)
 {
   return run_wx_application(argc, argv);
 }

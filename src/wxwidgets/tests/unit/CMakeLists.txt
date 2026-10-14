@@ -8,4 +8,4 @@ endif()
 add_compile_options(-DNDEBUG=1)
 
 add_subdirectory(WindowConfig)
-add_subdirectory(WxWidgetsIniter)
+add_subdirectory(WxWidgetsController)

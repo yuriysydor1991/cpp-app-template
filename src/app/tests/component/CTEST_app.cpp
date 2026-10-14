@@ -4,7 +4,7 @@
 #include <csignal>
 
 #include "src/app/ApplicationFactory.h"
-#include "src/wxwidgets/WxWidgetsIniter.h"
+#include "src/wxwidgets/WxWidgetsController.h"
 
 using namespace app;
 using namespace testing;

@@ -5,7 +5,7 @@
 
 #include "src/app/ApplicationContext.h"
 #include "src/wxwidgets/WxLauncher.h"
-#include "src/wxwidgets/WxWidgetsIniter.h"
+#include "src/wxwidgets/WxWidgetsController.h"
 
 using namespace wxwi;
 using namespace app;
@@ -23,7 +23,7 @@ namespace
 
 /// @brief Test double that records the launch() invocation instead of starting
 /// a real wxWidgets event loop.
-class TestIniter : public WxWidgetsIniter
+class TestController : public WxWidgetsController
 {
  public:
   int launch_calls{0};
@@ -41,37 +41,37 @@ class TestIniter : public WxWidgetsIniter
 
 }  // namespace
 
-class UTEST_WxWidgetsIniter : public Test
+class UTEST_WxWidgetsController : public Test
 {
  public:
   int argc{3};
   char** argv{nullptr};
 
-  TestIniter initer;
+  TestController controller;
 
   std::shared_ptr<ApplicationContext> ctx{
       std::make_shared<ApplicationContext>(argc, argv)};
 };
 
-TEST_F(UTEST_WxWidgetsIniter, null_context_is_rejected_without_launching)
+TEST_F(UTEST_WxWidgetsController, null_context_is_rejected_without_launching)
 {
-  EXPECT_NE(initer.run(nullptr), 0);
-  EXPECT_EQ(initer.launch_calls, 0);
+  EXPECT_NE(controller.run(nullptr), 0);
+  EXPECT_EQ(controller.launch_calls, 0);
 }
 
-TEST_F(UTEST_WxWidgetsIniter, valid_context_launches_and_returns_success)
+TEST_F(UTEST_WxWidgetsController, valid_context_launches_and_returns_success)
 {
-  initer.launch_return = 0;
+  controller.launch_return = 0;
 
-  EXPECT_EQ(initer.run(ctx), 0);
-  EXPECT_EQ(initer.launch_calls, 1);
-  EXPECT_EQ(initer.seen_argc, 3);
+  EXPECT_EQ(controller.run(ctx), 0);
+  EXPECT_EQ(controller.launch_calls, 1);
+  EXPECT_EQ(controller.seen_argc, 3);
 }
 
-TEST_F(UTEST_WxWidgetsIniter, launch_status_is_propagated)
+TEST_F(UTEST_WxWidgetsController, launch_status_is_propagated)
 {
-  initer.launch_return = 7;
+  controller.launch_return = 7;
 
-  EXPECT_EQ(initer.run(ctx), 7);
-  EXPECT_EQ(initer.launch_calls, 1);
+  EXPECT_EQ(controller.run(ctx), 7);
+  EXPECT_EQ(controller.launch_calls, 1);
 }

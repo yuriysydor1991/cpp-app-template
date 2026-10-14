@@ -1,4 +1,4 @@
-#include "src/SDL3/SDL3Initer.h"
+#include "src/SDL3/SDL3Controller.h"
 
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_opengl.h>
@@ -13,7 +13,7 @@
 namespace templateSDL3
 {
 
-SDL3Initer::SDL3Initer()
+SDL3Controller::SDL3Controller()
     : ctxBuilder{std::make_shared<SDL3ContextBuilder>()},
       events{std::make_shared<events::EventsController>()},
       painter3d{std::make_shared<painter::Painter>()},
@@ -24,14 +24,14 @@ SDL3Initer::SDL3Initer()
   }
 }
 
-SDL3Initer::~SDL3Initer()
+SDL3Controller::~SDL3Controller()
 {
   sdl3Context.reset();
 
   SDL_Quit();
 }
 
-int SDL3Initer::run(std::shared_ptr<app::ApplicationContext> ctx)
+int SDL3Controller::run(std::shared_ptr<app::ApplicationContext> ctx)
 {
   assert(ctx != nullptr);
 
@@ -59,7 +59,7 @@ int SDL3Initer::run(std::shared_ptr<app::ApplicationContext> ctx)
   return 0;
 }
 
-void SDL3Initer::event_loop()
+void SDL3Controller::event_loop()
 {
   assert(sdl3Context != nullptr);
   assert(sdl3Context->appCtx != nullptr);
@@ -90,7 +90,7 @@ void SDL3Initer::event_loop()
   }
 }
 
-void SDL3Initer::throw_sdl3(const std::string& errDesc)
+void SDL3Controller::throw_sdl3(const std::string& errDesc)
 {
   LOGE(errDesc << std::string{" SDL_Error: "} << SDL_GetError());
 

@@ -4,7 +4,7 @@
 #include <iostream>
 #include <memory>
 
-#include "src/SDL3/SDL3Initer.h"
+#include "src/SDL3/SDL3Controller.h"
 #include "src/log/log.h"
 
 namespace app
@@ -19,7 +19,7 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  templateSDL3::SDL3Initer opengl;
+  templateSDL3::SDL3Controller opengl;
 
   if (opengl.run(ctx) != 0) {
     LOGE("The SDL3 controller returned invalid state");

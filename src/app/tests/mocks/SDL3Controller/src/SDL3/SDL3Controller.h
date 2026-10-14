@@ -1,5 +1,5 @@
-#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_SDL3INITER_CLASS_H
-#define YOUR_CPP_APP_TEMPLATE_PROJECT_SDL3INITER_CLASS_H
+#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_SDL3CONTROLLER_CLASS_H
+#define YOUR_CPP_APP_TEMPLATE_PROJECT_SDL3CONTROLLER_CLASS_H
 
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_opengl.h>
@@ -13,22 +13,22 @@
 namespace templateSDL3
 {
 
-class SDL3Initer
+class SDL3Controller
 {
  public:
-  virtual ~SDL3Initer() = default;
-  SDL3Initer()
+  virtual ~SDL3Controller() = default;
+  SDL3Controller()
   {
     if (onMockCreate) {
       onMockCreate(*this);
     }
   }
 
-  inline static std::function<void(SDL3Initer& instance)> onMockCreate;
+  inline static std::function<void(SDL3Controller& instance)> onMockCreate;
 
   MOCK_METHOD(int, run, (std::shared_ptr<app::ApplicationContext> ctx));
 };
 
 }  // namespace templateSDL3
 
-#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_SDL3INITER_CLASS_H
+#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_SDL3CONTROLLER_CLASS_H

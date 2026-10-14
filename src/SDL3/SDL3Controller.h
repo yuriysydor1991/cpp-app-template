@@ -1,5 +1,5 @@
-#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_SDL3INITER_CLASS_H
-#define YOUR_CPP_APP_TEMPLATE_PROJECT_SDL3INITER_CLASS_H
+#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_SDL3CONTROLLER_CLASS_H
+#define YOUR_CPP_APP_TEMPLATE_PROJECT_SDL3CONTROLLER_CLASS_H
 
 #include <memory>
 
@@ -16,11 +16,11 @@ namespace templateSDL3
 /**
  * @brief The initialization and event loop runner class for the SDL3.
  */
-class SDL3Initer
+class SDL3Controller
 {
  public:
-  virtual ~SDL3Initer();
-  SDL3Initer();
+  virtual ~SDL3Controller();
+  SDL3Controller();
 
   /**
    * @brief Init and run the SDL3 event loop.
@@ -46,4 +46,4 @@ class SDL3Initer
 
 }  // namespace templateSDL3
 
-#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_SDL3INITER_CLASS_H
+#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_SDL3CONTROLLER_CLASS_H

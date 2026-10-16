@@ -10,7 +10,7 @@ namespace pgsqli::helpers
 {
 
 std::string PgConnStringMaker::make_conn_string(
-    std::shared_ptr<app::ApplicationContext> actx)
+    const std::shared_ptr<app::ApplicationContext>& actx)
 {
   assert(actx != nullptr);
 
@@ -20,7 +20,7 @@ std::string PgConnStringMaker::make_conn_string(
 
   std::string connStr;
 
-  // "dbname=test user=postgres password=secret host=localhost port=5432"
+  // dbname='test' user='postgres' password='se cr\'et' host='localhost'
 
   append("dbname", actx->get_pg_dbname(), connStr);
   append("user", actx->get_pg_user(), connStr);
@@ -44,7 +44,22 @@ void PgConnStringMaker::append(const std::string& field,
     dst += " ";
   }
 
-  dst += field + "=" + value;
+  dst += field + "=" + quote(value);
+}
+
+std::string PgConnStringMaker::quote(const std::string& value)
+{
+  std::string quoted{"'"};
+
+  for (const char c : value) {
+    if (c == '\\' || c == '\'') {
+      quoted += '\\';
+    }
+
+    quoted += c;
+  }
+
+  return quoted + "'";
 }
 
 }  // namespace pgsqli::helpers

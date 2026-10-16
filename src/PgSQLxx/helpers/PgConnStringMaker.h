@@ -18,12 +18,20 @@ class PgConnStringMaker
   virtual ~PgConnStringMaker() = default;
   PgConnStringMaker() = default;
 
+  /**
+   * @brief Builds the libpq key=value connection string out of the context
+   * credentials. Every value is single-quoted with the backslashes and quotes
+   * escaped, so values with spaces or quotes stay intact and can't inject
+   * other connection keywords.
+   */
   virtual std::string make_conn_string(
-      std::shared_ptr<app::ApplicationContext> actx);
+      const std::shared_ptr<app::ApplicationContext>& actx);
 
  private:
   static void append(const std::string& field, const std::string& value,
                      std::string& dst);
+
+  static std::string quote(const std::string& value);
 };
 
 }  // namespace pgsqli::helpers

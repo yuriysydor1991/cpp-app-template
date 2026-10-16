@@ -10,38 +10,13 @@
 #include <thread>
 
 #include "HTTPHelper.h"
+#include "LimitedController.h"
 #include "src/app/ApplicationContext.h"
 #include "src/beasthttp/HttpController.h"
 
 using namespace app;
 using namespace testing;
 using namespace beasthttp;
-
-/**
- * @brief The controller handing every session the hardening constraints the
- * test needs, so no oversized request and no timeout of a real deployment
- * size has to be produced to check them.
- */
-class LimitedController : public HttpController
-{
- public:
-  inline static constexpr const std::uint64_t body_limit = 1024U;
-  inline static constexpr const std::uint32_t header_limit = 256U;
-  inline static const std::chrono::seconds request_timeout{1};
-
- protected:
-  virtual std::shared_ptr<rhandlers::HTTPSessionContext>
-  create_http_session_context() override
-  {
-    auto sctx = HttpController::create_http_session_context();
-
-    sctx->maxBodyBytes = body_limit;
-    sctx->maxHeaderBytes = header_limit;
-    sctx->requestTimeout = request_timeout;
-
-    return sctx;
-  }
-};
 
 class CTEST_beasthttp : public Test, virtual public HTTPHelper
 {

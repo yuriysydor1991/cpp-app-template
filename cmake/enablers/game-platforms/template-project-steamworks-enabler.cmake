@@ -86,6 +86,16 @@ install(
   DESTINATION ${PROJECT_BINARY_INSTALLATION_DIR}
 )
 
+# GNU/Linux searches no executable directory by itself (MS Windows does, the
+# macOS library names itself @loader_path relative), so the installed binary
+# carries an $ORIGIN RPATH to find the library next to it.
+if (UNIX AND NOT APPLE)
+  set_property(
+    TARGET ${PROJECT_BINARY_NAME}
+    APPEND PROPERTY INSTALL_RPATH "$ORIGIN"
+  )
+endif()
+
 # Link the following Steamworks target to your target(s) of interest (e.g. the
 # ${PROJECT_BINARY_NAME} executable or any of your own libraries):
 #   - local SDK directory only: Steamworks::Steamworks

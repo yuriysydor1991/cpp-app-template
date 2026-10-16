@@ -23,3 +23,5 @@ sudo apt install -y mesa-vulkan-drivers
 ```
 
 When no usable Vulkan instance can be created (no driver, or a platform plugin without Vulkan support) the executable logs the corresponding error and exits with a non-zero status; otherwise it logs the enumerated physical devices and their properties through its LOGI logging calls.
+
+The Qt6 is mandatory on this branch: the `Application` class runs the `Qt6Controller`, so configuring with the `-DENABLE_QT6=OFF` stops with an error. Take the `app` branch for an application with no Qt6 in it.

@@ -24,4 +24,4 @@ template_project_default_3rdparty_enabler(
 #   - system install, via find_package(OpenJPEG): openjp2
 #   - FetchContent source build:                  openjp2
 # For example:
-#   target_link_libraries(${PROJECT_BINARY_NAME} openjp2)
+#   target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE openjp2)

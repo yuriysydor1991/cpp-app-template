@@ -1,9 +1,8 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include <atomic>
 #include <chrono>
-#include <csignal>
-#include <cstdint>
 #include <memory>
 #include <set>
 #include <string>
@@ -23,67 +22,83 @@ class CTEST_beasthttp : public Test, virtual public HTTPHelper
  public:
   inline static const unsigned int tests_reps = 1000U;
 
-  virtual ~CTEST_beasthttp() {}
+  /// @brief The time the stopped server may take to return. Covers a few
+  /// stop flag check periods of the sanitized build.
+  inline static const std::chrono::seconds stop_deadline{2};
 
-  CTEST_beasthttp() : http{HttpController::create()}
-  {
-    EXPECT_NE(http, nullptr);
-  }
+  ~CTEST_beasthttp() override { stop_server(); }
 
-  void signal_ready()
+  /**
+   * @brief Starts the given controller in a thread of it's own on a port the
+   * OS chooses, so no two tests ever compete for the same one.
+   *
+   * @return Returns the port the started server listens on.
+   */
+  unsigned short start_server(std::shared_ptr<HttpController> controller)
   {
-    {
-      std::lock_guard<std::mutex> lock(mtx);
-      server_ready.store(true);
+    actx->set_http_address(tests_address);
+    actx->set_http_port(0U);
+
+    server = std::thread{
+        [this, controller]() { served.store(controller->serve(actx)); }};
+
+    const auto deadline =
+        std::chrono::steady_clock::now() + std::chrono::seconds(10);
+
+    while (controller->bound_port() == 0U &&
+           std::chrono::steady_clock::now() < deadline) {
+      std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
-    cv.notify_all();
-  }
 
-  void wait_server()
-  {
-    std::unique_lock<std::mutex> lock(mtx);
-    cv.wait(lock, [&] { return server_ready.load(); });
-    std::this_thread::yield();
+    EXPECT_NE(controller->bound_port(), 0U);
+
+    return controller->bound_port();
   }
 
   /**
-   * @brief Serves a single session by the given limited controller and gives
-   * back whatever the given raw request is answered with.
+   * @brief Raises the stop flag with no request sent afterwards and waits for
+   * the server to return.
+   *
+   * @return Returns the time the server took to return.
    */
-  std::string serve_once(std::shared_ptr<LimitedController> limited,
-                         const unsigned short port, const std::string& request)
+  std::chrono::steady_clock::duration stop_server()
   {
-    int argc{0};
-    char** argv{nullptr};
+    const auto start = std::chrono::steady_clock::now();
 
-    auto actx = std::make_shared<ApplicationContext>(argc, argv);
+    actx->set_stop(true);
 
-    actx->set_http_address(tests_address);
-    actx->set_http_port(port);
+    if (server.joinable()) {
+      server.join();
+    }
 
-    EXPECT_CALL(*actx, get_stop()).Times(1).WillOnce(Invoke([&]() -> bool {
-      EXPECT_CALL(*actx, get_stop()).Times(1).WillOnce(Return(true));
-      signal_ready();
-      return false;
-    }));
+    return std::chrono::steady_clock::now() - start;
+  }
 
-    std::thread httpThread{
-        [&limited, &actx]() { EXPECT_TRUE(limited->serve(actx)); }};
+  /**
+   * @brief Serves the given raw request by a limited controller and gives
+   * back whatever the request is answered with.
+   */
+  std::string serve_once(const std::string& request)
+  {
+    const auto response = raw_request(
+        start_server(std::make_shared<LimitedController>()), request);
 
-    wait_server();
+    stop_server();
 
-    auto response = raw_request(port, request);
-
-    httpThread.join();
+    EXPECT_TRUE(served);
 
     return response;
   }
 
-  std::shared_ptr<HttpController> http;
+  int argc{0};
+  char** argv{nullptr};
 
-  std::mutex mtx;
-  std::condition_variable cv;
-  std::atomic_bool server_ready = false;
+  std::shared_ptr<ApplicationContext> actx{
+      std::make_shared<ApplicationContext>(argc, argv)};
+  std::shared_ptr<HttpController> http{HttpController::create()};
+
+  std::thread server;
+  std::atomic_bool served{false};
 };
 
 TEST_F(CTEST_beasthttp, invalid_context_pointer_failure)
@@ -93,94 +108,46 @@ TEST_F(CTEST_beasthttp, invalid_context_pointer_failure)
 
 TEST_F(CTEST_beasthttp, bootstrap_success)
 {
-  static constexpr const unsigned short used_http_port = 9999U;
-
-  int argc{0};
-  char** argv{nullptr};
-
-  auto actx = std::make_shared<ApplicationContext>(argc, argv);
-
   actx->set_http_address(tests_address);
-  actx->set_http_port(used_http_port);
+  actx->set_stop(true);
 
-  EXPECT_CALL(*actx, get_stop()).Times(1).WillOnce(Return(true));
+  EXPECT_TRUE(http->serve(actx));
+}
 
-  std::thread httpThread{[this, actx]() { EXPECT_TRUE(http->serve(actx)); }};
+TEST_F(CTEST_beasthttp, a_raised_stop_flag_ends_the_waiting_server)
+{
+  start_server(http);
 
-  httpThread.join();
+  EXPECT_LT(stop_server(), stop_deadline);
+  EXPECT_TRUE(served);
 }
 
 TEST_F(CTEST_beasthttp, accept_wait_success)
 {
-  static constexpr const unsigned short used_http_port = 10000U;
+  const auto port = start_server(http);
 
-  int argc{0};
-  char** argv{nullptr};
-
-  auto actx = std::make_shared<ApplicationContext>(argc, argv);
-
-  actx->set_http_address(tests_address);
-  actx->set_http_port(used_http_port);
-
-  EXPECT_CALL(*actx, get_stop()).Times(1).WillOnce(Invoke([&]() -> bool {
-    EXPECT_CALL(*actx, get_stop()).Times(1).WillOnce(Return(true));
-    signal_ready();
-    return false;
-  }));
-  EXPECT_CALL(*actx, set_stop(_)).Times(0);
-
-  std::thread httpThread{[this, actx]() { EXPECT_TRUE(http->serve(actx)); }};
-
-  wait_server();
-
-  auto response = http_request(used_http_port);
+  auto response = http_request(port);
 
   EXPECT_FALSE(response.empty());
   EXPECT_EQ(response, expected_standard_response);
 
-  httpThread.join();
+  EXPECT_LT(stop_server(), stop_deadline);
+  EXPECT_TRUE(served);
 }
 
 TEST_F(CTEST_beasthttp, multithread_accept_wait_success)
 {
-  static constexpr const unsigned short used_http_port = 10001U;
   static const unsigned int expected_threads =
       std::thread::hardware_concurrency() * 2U;
-  static const int expected_reps =
-      static_cast<int>(expected_threads) * static_cast<int>(tests_reps) + 1;
 
-  int argc{0};
-  char** argv{nullptr};
-
-  auto actx = std::make_shared<ApplicationContext>(argc, argv);
-
-  actx->set_http_address(tests_address);
-  actx->set_http_port(used_http_port);
-
-  {
-    // The stop answer waits for every requester call, however late it comes.
-    InSequence stopSequence;
-
-    EXPECT_CALL(*actx, get_stop())
-        .Times(expected_reps)
-        .WillRepeatedly(Invoke([&]() -> bool {
-          signal_ready();
-          return false;
-        }));
-    EXPECT_CALL(*actx, get_stop()).WillOnce(Return(true));
-  }
-  EXPECT_CALL(*actx, set_stop(_)).Times(0);
-
-  std::thread httpThread{[this, actx]() { EXPECT_TRUE(http->serve(actx)); }};
-
-  wait_server();
+  const auto port = start_server(http);
 
   std::set<std::shared_ptr<std::thread>> requestersThs;
 
   for (auto iter = 0U; iter < expected_threads; ++iter) {
-    auto th = std::make_shared<std::thread>([&]() {
-      auto response = http_request_repeat(used_http_port, tests_reps,
-                                          expected_standard_response);
+    auto th = std::make_shared<std::thread>([port]() {
+      auto response =
+          http_request_repeat(port, tests_reps, expected_standard_response);
       EXPECT_FALSE(response.empty());
       EXPECT_EQ(response, expected_standard_response);
     });
@@ -195,61 +162,46 @@ TEST_F(CTEST_beasthttp, multithread_accept_wait_success)
 
   requestersThs.clear();
 
-  auto response = http_request(used_http_port);
-
-  EXPECT_FALSE(response.empty());
-  EXPECT_EQ(response, expected_standard_response);
-
-  httpThread.join();
+  EXPECT_LT(stop_server(), stop_deadline);
+  EXPECT_TRUE(served);
 }
 
 TEST_F(CTEST_beasthttp, an_oversized_request_body_is_refused)
 {
-  static constexpr const unsigned short used_http_port = 10002U;
   static const std::string body(LimitedController::body_limit * 2U, 'a');
   static const std::string request =
       "POST / HTTP/1.1\r\nHost: " + tests_address +
       "\r\nContent-Length: " + std::to_string(body.size()) + "\r\n\r\n" + body;
 
-  EXPECT_TRUE(
-      serve_once(std::make_shared<LimitedController>(), used_http_port, request)
-          .empty());
+  EXPECT_TRUE(serve_once(request).empty());
 }
 
 TEST_F(CTEST_beasthttp, oversized_request_headers_are_refused)
 {
-  static constexpr const unsigned short used_http_port = 10003U;
   static const std::string request =
       "GET / HTTP/1.1\r\nHost: " + tests_address +
       "\r\nX-Big: " + std::string(LimitedController::header_limit * 2U, 'b') +
       "\r\n\r\n";
 
-  EXPECT_TRUE(
-      serve_once(std::make_shared<LimitedController>(), used_http_port, request)
-          .empty());
+  EXPECT_TRUE(serve_once(request).empty());
 }
 
 TEST_F(CTEST_beasthttp, an_unfinished_request_times_out)
 {
-  static constexpr const unsigned short used_http_port = 10004U;
   // The terminating empty line is missing on purpose, so the server waits for
   // the rest of the request that never arrives.
   static const std::string request =
       "GET / HTTP/1.1\r\nHost: " + tests_address + "\r\n";
 
-  EXPECT_TRUE(
-      serve_once(std::make_shared<LimitedController>(), used_http_port, request)
-          .empty());
+  EXPECT_TRUE(serve_once(request).empty());
 }
 
 TEST_F(CTEST_beasthttp, a_request_within_the_limits_is_answered)
 {
-  static constexpr const unsigned short used_http_port = 10005U;
   static const std::string request =
       "GET / HTTP/1.1\r\nHost: " + tests_address + "\r\n\r\n";
 
-  const auto response = serve_once(std::make_shared<LimitedController>(),
-                                   used_http_port, request);
+  const auto response = serve_once(request);
 
   EXPECT_THAT(response, HasSubstr("200 OK"));
   EXPECT_THAT(response, HasSubstr(expected_standard_response));

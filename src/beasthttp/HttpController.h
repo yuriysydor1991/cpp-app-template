@@ -1,6 +1,8 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_HTTPCONTROLLER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_HTTPCONTROLLER_CLASS_H
 
+#include <atomic>
+#include <chrono>
 #include <future>
 #include <memory>
 #include <unordered_set>
@@ -39,7 +41,20 @@ class HttpController
    */
   virtual bool serve(std::shared_ptr<app::ApplicationContext> actx);
 
+  /**
+   * @brief Returns the port the server listens on, which is the one the OS
+   * has chosen when the context asks for the port 0.
+   *
+   * @return Returns the bound port or 0 while the server isn't listening yet.
+   */
+  unsigned short bound_port() const;
+
   static HttpControllerPtr create();
+
+  /// @brief The period the server waits for a connection before it checks the
+  /// stop flag of the application context again.
+  inline static constexpr const std::chrono::milliseconds stop_check_period{
+      100};
 
  protected:
   /**
@@ -66,6 +81,22 @@ class HttpController
   create_http_session_context();
 
   /**
+   * @brief Accepts the next connection into the given session context. Waits
+   * a stop_check_period at a time, so the raised stop flag of the application
+   * context ends the wait with no further connection to come.
+   *
+   * @param ioc The execution context of the acceptor.
+   * @param acceptor The listening acceptor.
+   * @param sctx The context to accept the connection into.
+   *
+   * @return Returns a true boolean value when a connection is accepted and
+   * false when the server is stopped or the accept fails.
+   */
+  virtual bool accept_session(
+      boost::asio::io_context& ioc, tcp::acceptor& acceptor,
+      std::shared_ptr<rhandlers::HTTPSessionContext> sctx);
+
+  /**
    * @brief The new session starter routine. Creates the appropriate session
    * handler for the given context and calls it's handle_session method.
    *
@@ -90,6 +121,8 @@ class HttpController
   std::shared_ptr<rhandlers::HandlersFactory> rhFactory;
 
   std::unordered_set<std::shared_ptr<std::future<bool>>> handlersThs;
+
+  std::atomic<unsigned short> mbound_port{0U};
 };
 
 using HttpControllerPtr = HttpController::HttpControllerPtr;

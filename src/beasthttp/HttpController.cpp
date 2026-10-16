@@ -35,20 +35,23 @@ bool HttpController::serve(std::shared_ptr<app::ApplicationContext> actx)
   try {
     const auto address =
         boost::asio::ip::make_address(mcontext->http_address());
-    const unsigned short port = mcontext->http_port();
 
     boost::asio::io_context ioc{1};
-    tcp::acceptor acceptor{ioc, {address, port}};
+    tcp::acceptor acceptor{ioc, {address, mcontext->http_port()}};
 
     acceptor.listen(mcontext->listen_backlog());
 
+    mbound_port.store(acceptor.local_endpoint().port());
+
     LOGI("Listening on http://" << mcontext->http_address() << ":"
-                                << mcontext->http_port());
+                                << bound_port());
 
     while (!mcontext->stop()) {
       auto sctx = create_http_session_context();
 
-      acceptor.accept(sctx->stream->socket());
+      if (!accept_session(ioc, acceptor, sctx)) {
+        continue;
+      }
 
       clean_threads();
 
@@ -71,6 +74,52 @@ bool HttpController::serve(std::shared_ptr<app::ApplicationContext> actx)
   }
   catch (const std::exception& e) {
     LOGE("Server error: " << e.what());
+    return false;
+  }
+
+  return true;
+}
+
+unsigned short HttpController::bound_port() const
+{
+  return mbound_port.load();
+}
+
+bool HttpController::accept_session(
+    boost::asio::io_context& ioc, tcp::acceptor& acceptor,
+    std::shared_ptr<rhandlers::HTTPSessionContext> sctx)
+{
+  assert(sctx != nullptr);
+  assert(mcontext != nullptr);
+
+  boost::system::error_code ec;
+  bool accepted{false};
+
+  acceptor.async_accept(sctx->stream->socket(),
+                        [&ec, &accepted](const boost::system::error_code& nec) {
+                          ec = nec;
+                          accepted = true;
+                        });
+
+  ioc.restart();
+
+  while (!accepted && !mcontext->stop()) {
+    ioc.run_for(stop_check_period);
+  }
+
+  if (!accepted) {
+    // The cancelled accept completes right away and leaves no handler behind
+    // that would refer to the locals of this method.
+    acceptor.cancel();
+    ioc.restart();
+    ioc.run();
+  }
+
+  if (ec) {
+    if (ec != boost::asio::error::operation_aborted) {
+      LOGE("Fail to accept a connection: " << ec.message());
+    }
+
     return false;
   }
 

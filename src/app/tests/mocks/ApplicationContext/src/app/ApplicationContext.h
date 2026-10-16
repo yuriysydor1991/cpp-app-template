@@ -34,8 +34,8 @@ class ApplicationContext
 
   const std::vector<std::string>& get_errors() const { return merrors; }
 
-  MOCK_METHOD(bool, get_stop, (), (const));
-  MOCK_METHOD(void, set_stop, (const bool newValue));
+  bool get_stop() const { return mstop.load(); }
+  void set_stop(const bool newValue) { mstop.store(newValue); }
 
   bool get_pause() const { return mpause.load(); }
   void set_pause(const bool newValue) { mpause.store(newValue); }
@@ -83,7 +83,7 @@ class ApplicationContext
   std::atomic_bool mfirst_user_request{false};
   std::atomic_bool msecond_user_request{false};
   std::string mhttp_address;
-  unsigned short mhttp_port;
+  unsigned short mhttp_port{0U};
 };
 
 }  // namespace app

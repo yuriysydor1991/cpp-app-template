@@ -8,7 +8,6 @@
 
 using namespace app;
 using namespace testing;
-using namespace testing;
 using namespace firebirdi;
 
 class CTEST_app : public Test

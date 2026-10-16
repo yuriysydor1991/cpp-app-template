@@ -20,11 +20,12 @@ using namespace testing;
  * branches that swap the underlying logger (appLog4Cpp5, appBoostBeast, ...).
  *
  * The runtime level (the second LOG_INIT argument) is driven through the
- * branch-agnostic MACRO_LVL_* severities. Presence is asserted only for ERROR
- * and WARNING messages, because the facade exposes no flush and a logger is
- * only required to flush at the WARNING severity or above; the lower severities
- * are exercised through their absence when the runtime level drops them, which
- * needs no flush.
+ * branch-agnostic MACRO_LVL_* severities. The facade exposes no flush and a
+ * logger is only required to flush at the WARNING severity or above, so a
+ * lower severity message is absent from the log file even when it is logged.
+ * That is why every dropped message is followed by an ERROR sentinel, which
+ * flushes whatever was logged in front of it: the sentinel must be present and
+ * the dropped message absent.
  */
 class CTEST_log : public Test
 {
@@ -63,6 +64,18 @@ class CTEST_log : public Test
 
     log.close();
   }
+
+  void expect_dropped(const std::string& dropped)
+  {
+    static const std::string sentinel = "the flushing error sentinel";
+
+    LOGE(sentinel);
+
+    const auto logs = log_contents();
+
+    EXPECT_THAT(logs, EndsWith(sentinel + "\n"));
+    EXPECT_THAT(logs, Not(HasSubstr(dropped)));
+  }
 };
 
 TEST_F(CTEST_log, error_message_is_written)
@@ -81,16 +94,23 @@ TEST_F(CTEST_log, error_message_is_written)
 
 TEST_F(CTEST_log, warning_is_dropped_when_runtime_level_is_error)
 {
+  static const std::string dropped =
+      "must be dropped at the error runtime level";
+
   init(MACRO_LVL_ERROR);
 
-  LOGW("must be dropped at the error runtime level");
+  LOGW(dropped);
 
-  EXPECT_TRUE(log_contents().empty());
+  expect_dropped(dropped);
 }
 
 TEST_F(CTEST_log, warning_is_written_when_runtime_level_is_warning)
 {
   static const std::string expect = "facade warning is present";
+
+  if (MAX_LOG_LEVEL < MACRO_LVL_WARNING) {
+    GTEST_SKIP() << "The LOGW macro is compiled out";
+  }
 
   init(MACRO_LVL_WARNING);
 
@@ -101,29 +121,38 @@ TEST_F(CTEST_log, warning_is_written_when_runtime_level_is_warning)
 
 TEST_F(CTEST_log, info_is_dropped_when_runtime_level_is_warning)
 {
+  static const std::string dropped =
+      "must be dropped at the warning runtime level";
+
   init(MACRO_LVL_WARNING);
 
-  LOGI("must be dropped at the warning runtime level");
+  LOGI(dropped);
 
-  EXPECT_TRUE(log_contents().empty());
+  expect_dropped(dropped);
 }
 
 TEST_F(CTEST_log, debug_is_dropped_when_runtime_level_is_info)
 {
+  static const std::string dropped =
+      "must be dropped at the info runtime level";
+
   init(MACRO_LVL_INFO);
 
-  LOGD("must be dropped at the info runtime level");
+  LOGD(dropped);
 
-  EXPECT_TRUE(log_contents().empty());
+  expect_dropped(dropped);
 }
 
 TEST_F(CTEST_log, trace_is_dropped_when_runtime_level_is_debug)
 {
+  static const std::string dropped =
+      "must be dropped at the debug runtime level";
+
   init(MACRO_LVL_DEBUG);
 
-  LOGT("must be dropped at the debug runtime level");
+  LOGT(dropped);
 
-  EXPECT_TRUE(log_contents().empty());
+  expect_dropped(dropped);
 }
 
 TEST_F(CTEST_log, macros_are_single_statements)

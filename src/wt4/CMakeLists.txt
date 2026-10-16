@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.13)
 
 add_library(
   TemplateWt4Obj OBJECT
+  Wt4ArgsFilter.cpp
   Wt4Server.cpp
   Wt4Context.cpp
 )
@@ -27,3 +28,5 @@ target_link_libraries(
 )
 
 add_subdirectory(widgets)
+
+add_subdirectory(tests)

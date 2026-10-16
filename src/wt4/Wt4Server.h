@@ -27,6 +27,9 @@ class Wt4Server : public Wt::WApplication
   /**
    * @brief Starts the Wt4 application http service.
    *
+   * The Wt server receives the command line arguments without the
+   * application own parameters (see the Wt4ArgsFilter class).
+   *
    * @param ctx Application's run context with provided data to run the Wt site.
    *
    * @return Returns the application return status. A zero value on the success

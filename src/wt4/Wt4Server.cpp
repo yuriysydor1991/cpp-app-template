@@ -3,6 +3,8 @@
 #include <cassert>
 #include <memory>
 
+#include "src/wt4/Wt4ArgsFilter.h"
+
 namespace wt4server
 {
 
@@ -20,8 +22,10 @@ Wt4Server::Wt4Server(const Wt::WEnvironment& env,
 
 int Wt4Server::run(std::shared_ptr<app::ApplicationContext> ctx)
 {
+  Wt4ArgsFilter argsFilter;
+
   return Wt::WRun(
-      ctx->get_argc(), ctx->get_argv(),
+      ctx->get_argv()[0], argsFilter.filter(ctx->get_argc(), ctx->get_argv()),
       [ctx](const Wt::WEnvironment& env) { return build_server(env, ctx); });
 }
 

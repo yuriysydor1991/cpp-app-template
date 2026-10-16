@@ -41,12 +41,6 @@ set(
 )
 
 option(
-  ENABLE_LOGS_MICROSECONDS_TIME
-  "Set to OFF to disable the microseconds fields included into the log messages"
-  ON
-)
-
-option(
   ENABLE_DESKTOP_APPLICATION
   "Set to ON when the project binary is a windowed application: the packages then install its desktop entry and mark it as a desktop application"
   OFF

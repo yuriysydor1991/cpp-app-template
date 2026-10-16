@@ -4,6 +4,7 @@ add_executable(
   UTEST_CURLController
   UTEST_CURLController.cpp
   ${CMAKE_SOURCE_DIR}/src/CURL/CURLController.cpp
+  ${CMAKE_SOURCE_DIR}/src/CURL/HeadersList.cpp
 )
 
 target_include_directories(

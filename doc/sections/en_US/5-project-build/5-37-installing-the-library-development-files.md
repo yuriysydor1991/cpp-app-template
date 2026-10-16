@@ -30,12 +30,32 @@ What each mode installs for a `0.12.0` project named `CppAppTemplate`:
 
 | Installed artefact | `ON` | `OFF` |
 |---|---|---|
-| `<prefix>/lib/libCppAppTemplate-0.12.so.0.12.0` - the library binary | yes | yes |
-| `<prefix>/lib/libCppAppTemplate-0.12.so.0` - the SONAME symlink the loader resolves | yes | yes |
-| `<prefix>/lib/libCppAppTemplate-0.12.so` - the namelink the linker resolves | yes | no |
+| `<libdir>/libCppAppTemplate-0.12.so.0.12.0` - the library binary | yes | yes |
+| `<libdir>/libCppAppTemplate-0.12.so.0` - the SONAME symlink the loader resolves | yes | yes |
+| `<libdir>/libCppAppTemplate-0.12.so` - the namelink the linker resolves | yes | no |
 | `<prefix>/include/CppAppTemplate-0.12/*.h` - the public headers | yes | no |
-| `<prefix>/lib/cmake/CppAppTemplate-0.12/*.cmake` - the `find_package` integration | yes | no |
+| `<libdir>/cmake/CppAppTemplate-0.12/*.cmake` - the `find_package` integration | yes | no |
 | the debug symbols, if the project installs any | yes | no |
+
+The `<libdir>` is the `<prefix>/${CMAKE_INSTALL_LIBDIR}` directory of the
+[GNUInstallDirs](https://cmake.org/cmake/help/latest/module/GNUInstallDirs.html)
+CMake module: `<prefix>/lib` by default, `<prefix>/lib64` on the 64-bit RPM based
+distributions and `/usr/lib/<multiarch>` (e.g. `/usr/lib/x86_64-linux-gnu`) for
+the `/usr` prefix on Debian and Ubuntu.
+
+The installed `CppAppTemplate-0.12Config.cmake` and
+`CppAppTemplate-0.12ConfigVersion.cmake` files let a downstream CMake project
+request the library by its name and version:
+
+```
+find_package(CppAppTemplate-0.12 0.12 CONFIG REQUIRED)
+target_link_libraries(consumer PRIVATE CppAppTemplate-0.12::CppAppTemplate-0.12)
+```
+
+Only the very same minor version is accepted, because the public namespace of
+the library (`CppAppTemplate012`) changes with every minor version. Pass the
+installation prefix through the `CMAKE_PREFIX_PATH` variable when it is not a
+system one.
 
 The template installs no separate debug symbol files of its own - a `Debug`
 build carries its debug info inside the library binary itself. The option is

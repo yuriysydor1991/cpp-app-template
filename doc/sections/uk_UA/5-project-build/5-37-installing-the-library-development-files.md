@@ -31,12 +31,32 @@ cmake --install build --prefix /usr/local
 
 | Встановлюваний артефакт | `ON` | `OFF` |
 |---|---|---|
-| `<prefix>/lib/libCppAppTemplate-0.12.so.0.12.0` - бінарний файл бібліотеки | так | так |
-| `<prefix>/lib/libCppAppTemplate-0.12.so.0` - символьне посилання SONAME для завантажувача | так | так |
-| `<prefix>/lib/libCppAppTemplate-0.12.so` - символьне посилання для лінкера | так | ні |
+| `<libdir>/libCppAppTemplate-0.12.so.0.12.0` - бінарний файл бібліотеки | так | так |
+| `<libdir>/libCppAppTemplate-0.12.so.0` - символьне посилання SONAME для завантажувача | так | так |
+| `<libdir>/libCppAppTemplate-0.12.so` - символьне посилання для лінкера | так | ні |
 | `<prefix>/include/CppAppTemplate-0.12/*.h` - публічні заголовкові файли | так | ні |
-| `<prefix>/lib/cmake/CppAppTemplate-0.12/*.cmake` - інтеграція з `find_package` | так | ні |
+| `<libdir>/cmake/CppAppTemplate-0.12/*.cmake` - інтеграція з `find_package` | так | ні |
 | символи зневадження, якщо проект їх встановлює | так | ні |
+
+`<libdir>` - це директорія `<prefix>/${CMAKE_INSTALL_LIBDIR}` модуля CMake
+[GNUInstallDirs](https://cmake.org/cmake/help/latest/module/GNUInstallDirs.html):
+типово `<prefix>/lib`, `<prefix>/lib64` на 64-бітних дистрибутивах на основі RPM
+і `/usr/lib/<multiarch>` (наприклад, `/usr/lib/x86_64-linux-gnu`) для префікса
+`/usr` у Debian та Ubuntu.
+
+Встановлені файли `CppAppTemplate-0.12Config.cmake` і
+`CppAppTemplate-0.12ConfigVersion.cmake` дозволяють проекту-споживачу на CMake
+запитати бібліотеку за її іменем і версією:
+
+```
+find_package(CppAppTemplate-0.12 0.12 CONFIG REQUIRED)
+target_link_libraries(consumer PRIVATE CppAppTemplate-0.12::CppAppTemplate-0.12)
+```
+
+Приймається лише та сама другорядна (minor) версія, бо публічний простір імен
+бібліотеки (`CppAppTemplate012`) змінюється з кожною другорядною версією. Якщо
+префікс встановлення не системний, його необхідно передати через змінну
+`CMAKE_PREFIX_PATH`.
 
 Даний шаблон не встановлює власних окремих файлів символів зневадження -
 побудова у режимі `Debug` утримує інформацію зневадження всередині самого

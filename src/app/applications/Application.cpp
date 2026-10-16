@@ -35,11 +35,12 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
   LOGI("Compressed to " << compressed.size() << " bytes; restored ("
                         << restored.size() << " bytes): " << restoredSentence);
 
-  if (restoredSentence == sentence) {
-    LOGI("liblzma compress / uncompress round-trip succeeded");
-  } else {
+  if (restoredSentence != sentence) {
     LOGE("liblzma compress / uncompress round-trip mismatch");
+    return INVALID;
   }
+
+  LOGI("liblzma compress / uncompress round-trip succeeded");
 
   return 0;
 }

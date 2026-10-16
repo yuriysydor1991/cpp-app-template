@@ -2,6 +2,7 @@
 #include <gtest/gtest.h>
 
 #include "src/app/applications/Application.h"
+#include "src/lzma/LzmaController.h"
 
 using namespace app;
 using namespace testing;
@@ -14,6 +15,8 @@ class UTEST_Application : public Test
         appCtx{std::make_shared<ApplicationContext>(argc, argv)}
   {
   }
+
+  ~UTEST_Application() override { lzmai::LzmaController::instance.reset(); }
 
   int argc{0};
   char** argv{nullptr};
@@ -34,5 +37,18 @@ TEST_F(UTEST_Application, normal_exit)
 
   EXPECT_FALSE(appCtx->get_print_help_and_exit());
   EXPECT_FALSE(appCtx->get_print_version_and_exit());
+  EXPECT_FALSE(appCtx->get_stop());
+}
+
+TEST_F(UTEST_Application, round_trip_mismatch)
+{
+  lzmai::LzmaController::instance = std::make_shared<lzmai::LzmaController>();
+
+  EXPECT_CALL(*lzmai::LzmaController::instance, compress(_)).Times(1);
+  EXPECT_CALL(*lzmai::LzmaController::instance, uncompress(_))
+      .WillOnce(Return(lzmai::LzmaController::buffer{0x00}));
+
+  EXPECT_NE(app->run(appCtx), 0);
+
   EXPECT_FALSE(appCtx->get_stop());
 }

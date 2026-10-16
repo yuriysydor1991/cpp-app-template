@@ -5,3 +5,11 @@
 ```
 sudo apt install -y git g++ cmake
 ```
+
+Гілка `appLZMA` додатково використовує системні файли розробки [liblzma](https://tukaani.org/xz/) (XZ Utils), тому їх також необхідно встановити:
+
+```
+sudo apt install -y liblzma-dev
+```
+
+На дистрибутивах на базі RPM відповідний пакет називається `xz-devel`; базова система FreeBSD вже містить бібліотеку liblzma.

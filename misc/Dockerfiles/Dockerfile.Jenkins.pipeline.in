@@ -12,6 +12,9 @@ RUN apt install -y clang-tidy
 RUN apt install -y libgtest-dev
 RUN apt install -y libgmock-dev
 
+# the liblzma development files the src/lzma sources are built against
+RUN apt install -y liblzma-dev
+
 USER jenkins
 
 CMD ["jenkins.sh"]

@@ -26,4 +26,4 @@ template_project_default_3rdparty_enabler(
 #     (shared) for the libjpeg API, turbojpeg / turbojpeg-static for the
 #     TurboJPEG API
 # For example:
-#   target_link_libraries(${PROJECT_BINARY_NAME} JPEG::JPEG)
+#   target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE JPEG::JPEG)

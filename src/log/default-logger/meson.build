@@ -5,6 +5,7 @@ loglib = static_library(
   ['DefaultLogger.cpp'] + real_default_logger_sources,
   include_directories: configuration_inc,
   pic: true,
+  dependencies: template_project_extra_deps,
 )
 
 if get_option('ENABLE_COMPONENT_TESTS')

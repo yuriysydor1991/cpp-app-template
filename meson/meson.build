@@ -3,6 +3,8 @@ find_program('git', required: true)
 template_project_extra_deps = []
 template_project_extra_cpp_args = []
 template_project_extra_link_args = []
+# The sanitizers instrumentation every target, the tests among them, carries.
+template_project_sanitizers_deps = []
 
 subdir('template-project-hardening')
 

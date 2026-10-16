@@ -13,11 +13,14 @@ else
   message('Sanitizers enabled: thread')
 endif
 
-# The project wide arguments reach every target, the tests and the internal
-# libraries among them, so the sanitized build checks the very code it runs.
-add_project_arguments(
-  sanitizers_flags + ['-fno-omit-frame-pointer', '-g'],
-  language: 'cpp'
+# A dependency object instead of the project arguments, which Meson would
+# advise against in favour of the b_sanitize built-in option. Every target
+# takes it through the template_project_extra_deps, the tests through the
+# template_project_sanitizers_deps, so the sanitized build checks the very code
+# it runs.
+template_project_sanitizers_deps += declare_dependency(
+  compile_args: sanitizers_flags + ['-fno-omit-frame-pointer', '-g'],
+  link_args: sanitizers_flags,
 )
 
-add_project_link_arguments(sanitizers_flags, language: 'cpp')
+template_project_extra_deps += template_project_sanitizers_deps

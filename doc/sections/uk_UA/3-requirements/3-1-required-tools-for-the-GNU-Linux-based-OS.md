@@ -5,3 +5,11 @@
 ```
 sudo apt install -y git g++ cmake
 ```
+
+Гілка `appZlib` додатково використовує системні файли розробки [zlib](https://www.zlib.net/), тому їх також необхідно встановити:
+
+```
+sudo apt install -y zlib1g-dev
+```
+
+На дистрибутивах на базі RPM відповідний пакет називається `zlib-devel`; базова система FreeBSD вже містить бібліотеку zlib.

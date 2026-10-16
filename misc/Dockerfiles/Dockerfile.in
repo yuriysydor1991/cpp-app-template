@@ -3,6 +3,9 @@ FROM ${DOCKERFILE_SINGLE_RUN_BASE_IMAGE_STRING}
 RUN apt update
 RUN apt install -y libstdc++6 build-essential git cmake g++
 
+# the zlib development files the src/zlib sources are built against
+RUN apt install -y zlib1g-dev
+
 ARG BUILDDIR=/src/${PROJECT_BINARY_NAME}-build-docker-singlerun
 
 # The sources come in through a bind mount and the build tree is erased right

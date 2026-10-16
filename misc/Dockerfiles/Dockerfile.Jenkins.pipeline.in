@@ -12,6 +12,9 @@ RUN apt install -y clang-tidy
 RUN apt install -y libgtest-dev
 RUN apt install -y libgmock-dev
 
+# the zlib development files the src/zlib sources are built against
+RUN apt install -y zlib1g-dev
+
 USER jenkins
 
 CMD ["jenkins.sh"]

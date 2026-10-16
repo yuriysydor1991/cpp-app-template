@@ -17,6 +17,7 @@ PACKAGES=(
     libgtest-dev
     libssl-dev
     libstdc++6
+    zlib1g-dev
 )
 
 APT_SUDO=""

@@ -18,6 +18,7 @@ PACKAGES=(
     gtest-devel
     make
     openssl-devel
+    zlib-devel
 )
 
 DNF_SUDO=""

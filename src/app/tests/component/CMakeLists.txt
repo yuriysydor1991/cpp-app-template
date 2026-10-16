@@ -16,7 +16,6 @@ add_executable(
   ${CMAKE_SOURCE_DIR}/src/app/applications/ApplicationHelpPrinter.cpp
   ${CMAKE_SOURCE_DIR}/src/app/CommandLineParser.cpp
   ${CMAKE_SOURCE_DIR}/src/app/applications/ApplicationVersionPrinter.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/applications/ApplicationVersionPrinter.cpp
   ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/SignalsHandler.cpp
   ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/handlers/ASignalsHandler.cpp
   ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/ContinueSignalsHandler.cpp

@@ -10,8 +10,9 @@ PROJECT_ROOT=$(realpath "$(dirname "$0")/../..")
 PACKAGES=(
     g++
     git
-    googletest
     libcurl4-openssl-dev
+    libgmock-dev
+    libgtest-dev
     libopencv-dev
     libxml2-dev
     meson

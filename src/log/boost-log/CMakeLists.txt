@@ -18,7 +18,7 @@ target_compile_definitions(TemplateBoostLogControllerObj PRIVATE BOOST_LOG_DYN_L
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  TemplateBoostLogControllerObj
+  PRIVATE TemplateBoostLogControllerObj
   Boost::log
   Boost::log_setup
   Boost::thread

@@ -16,7 +16,7 @@
           "commit": "5ce81a79fe9368e984165318d9ddb1f383e235dc"
         }
       ],
-      "cleanup": ["/bin", "/sbin", "/share/man", "/share/doc"]
+      "cleanup": ["/bin", "/sbin", "/include", "/lib/pkgconfig", "*.a", "*.la", "/share/aclocal", "/share/man", "/share/doc", "/doc"]
     },
     {
       "name": "${CMAKE_PROJECT_NAME}",

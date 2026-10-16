@@ -17,7 +17,13 @@ class ZlibController
   using ZlibControllerPtr = std::shared_ptr<ZlibController>;
 
   virtual ~ZlibController() = default;
-  ZlibController() = default;
+
+  // Round trips by default, so a run with no expectation set succeeds.
+  ZlibController()
+  {
+    ON_CALL(*this, compress).WillByDefault(testing::ReturnArg<0>());
+    ON_CALL(*this, uncompress).WillByDefault(testing::ReturnArg<0>());
+  }
 
   MOCK_METHOD(buffer, compress, (const buffer& input));
   MOCK_METHOD(buffer, uncompress, (const buffer& input));
@@ -25,9 +31,14 @@ class ZlibController
               (const std::string& path, const buffer& input));
   MOCK_METHOD(buffer, uncompress_from_file, (const std::string& path));
 
+  /// @brief The instance the create() hands out instead of a fresh one.
+  inline static ZlibControllerPtr instance;
+
   inline static ZlibControllerPtr create()
   {
-    return std::make_shared<ZlibController>();
+    return instance != nullptr
+               ? instance
+               : std::make_shared<testing::NiceMock<ZlibController>>();
   }
 };
 

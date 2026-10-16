@@ -43,6 +43,10 @@ else()
     include(FetchContent)
     FetchContent_GetProperties(log4cpp)
 
+    # Keeps the headers and the static library of the fetched sources out of
+    # the project installation and so out of its packages.
+    set_property(DIRECTORY "${log4cpp_SOURCE_DIR}" PROPERTY EXCLUDE_FROM_ALL TRUE)
+
     # The Debug builds of the fetched sources rename their library target.
     if (TARGET log4cpp)
       set(LOG4CPP_FETCHED_TARGET log4cpp)

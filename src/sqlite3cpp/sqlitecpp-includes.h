@@ -1,14 +1,13 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_SQLITECPP_INCLUDES_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_SQLITECPP_INCLUDES_H
 
+// Marks the rest of the file as a system header, so GCC emits no warnings
+// for the SQLiteCpp headers included below.
 #pragma GCC system_header
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wall -Wextra -Werror -Wunknown-pragmas"
 #pragma warning(push, 0)  // MSVC
 
 #include <SQLiteCpp/SQLiteCpp.h>
 
 #pragma warning(pop)
-#pragma GCC diagnostic pop
 
 #endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_SQLITECPP_INCLUDES_H

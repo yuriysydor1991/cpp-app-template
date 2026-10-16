@@ -8,7 +8,7 @@ In order to be able to use the Qt6 resources install them with command that may 
 sudo apt install -y qt6-base-dev qt6-base-dev-tools
 ```
 
-This branch reaches Vulkan through the native [Qt6](https://www.qt.io/development/qt-framework/qt6) [QVulkanInstance](https://doc.qt.io/qt-6/qvulkaninstance.html) which lives in the Qt GUI module (`Qt6::Gui`): only the Qt6 Core and Gui modules are used, both of which ship with the `qt6-base-dev` package above - no Qt Quick/QML modules are required.
+This branch reaches Vulkan through the native [Qt6](https://www.qt.io/development/qt-framework/qt6) [QVulkanInstance](https://doc.qt.io/qt-6/qvulkaninstance.html) which lives in the Qt GUI module (`Qt6::Gui`), and hosts the Vulkan window inside a top level Qt widget (`Qt6::Widgets`): only the Qt6 Core, Gui and Widgets modules are used, all of which ship with the `qt6-base-dev` package above - no Qt Quick/QML modules are required.
 
 The Vulkan headers (the core `VkInstance`/`VkPhysicalDevice` types referenced by the sources, located by CMake's `FindVulkan`) are provided by the Vulkan loader development package:
 

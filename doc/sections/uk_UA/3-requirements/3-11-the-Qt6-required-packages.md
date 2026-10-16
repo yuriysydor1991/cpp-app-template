@@ -8,7 +8,7 @@
 sudo apt install -y qt6-base-dev qt6-base-dev-tools
 ```
 
-Ця гілка використовує Vulkan через нативний [Qt6](https://www.qt.io/development/qt-framework/qt6) [QVulkanInstance](https://doc.qt.io/qt-6/qvulkaninstance.html), який знаходиться у модулі Qt GUI (`Qt6::Gui`): використовуються лише модулі Qt6 Core та Gui, обидва з яких постачаються разом з пакетом `qt6-base-dev` вище — модулі Qt Quick/QML не потрібні.
+Ця гілка використовує Vulkan через нативний [Qt6](https://www.qt.io/development/qt-framework/qt6) [QVulkanInstance](https://doc.qt.io/qt-6/qvulkaninstance.html), який знаходиться у модулі Qt GUI (`Qt6::Gui`), і розміщує вікно Vulkan всередині віджета Qt верхнього рівня (`Qt6::Widgets`): використовуються лише модулі Qt6 Core, Gui та Widgets, усі з яких постачаються разом з пакетом `qt6-base-dev` вище — модулі Qt Quick/QML не потрібні.
 
 Заголовкові файли Vulkan (базові типи `VkInstance`/`VkPhysicalDevice`, на які посилається код, знаходяться за допомогою `FindVulkan` від CMake) надаються пакетом розробки завантажувача Vulkan:
 

@@ -71,10 +71,5 @@
   ],
   "finish-args": [
     "--share=network"
-  ],
-  "extra-args": [
-    "--docroot /app/share/Wt/resources",
-    "--http-listen 127.0.0.1:8000",
-    "--accesslog ${PROJECT_BINARY_NAME}-http-access.log"
   ]
 }

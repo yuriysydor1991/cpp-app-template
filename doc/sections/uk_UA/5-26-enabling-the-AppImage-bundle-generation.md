@@ -5,10 +5,10 @@
 ```
 # всередині кореневої директорії проекту
 
-meson setup build -DENABLE_APPIMAGE=true
+meson setup build --prefix=/usr -DENABLE_APPIMAGE=true
 ```
 
-Яка у свою чергу вмикає Meson-ціль `AppImage` (`custom_target`). Вона виконує `meson install` у staging-дерево `AppDir`, копіює згенеровані файли `AppRun`-запускача і `*.desktop` у відповідні місця, і формує переносну збірку.
+Яка у свою чергу вмикає Meson-ціль `AppImage` (`custom_target`). Вона виконує `meson install` у staging-дерево `AppDir`, копіює згенеровані `AppRun`-запускач, файл `*.desktop` і вказану ним піктограму у корінь `AppDir` і пакує це дерево у переносну збірку програмою `appimagetool`. Параметр `--prefix=/usr` надає збірці стандартну структуру `AppDir/usr/bin` (запускач `AppRun` знаходить виконуваний файл і з типовим префіксом `/usr/local`).
 
 Для генерації AppImage-збірки необхідно побудувати ціль `AppImage`:
 
@@ -18,6 +18,8 @@ meson setup build -DENABLE_APPIMAGE=true
 meson compile -C build AppImage
 ```
 
-Артефакт іменується за шаблоном `<проект>-<версія>-<арх>.AppImage` і потрапляє у директорію побудови. Деталі і параметри цілі можна переглянути або змінити у файлах `meson/template-project-AppImage-enabler/meson.build`, `misc/AppRun.meson.in` або у шаблоні `misc/template-project.desktop.meson.in`.
+Артефакт іменується за шаблоном `<проект>-<версія>-<арх>.AppImage` і потрапляє у директорію побудови. Деталі і параметри цілі можна переглянути або змінити у файлах `meson/template-project-AppImage-enabler/meson.build`, `misc/AppRun.meson.in` або у шаблонах `misc/template-project.desktop.meson.in` і `misc/template-project.icon.svg.meson.in`.
 
-Дана ціль не вимагає окремого AppImage-інструментарію - збірка формується вбудованою у систему командою `tar`.
+Згенерована збірка запускається як будь-який інший виконуваний файл (наприклад, `./build/CppAppTemplate-0.11.0-x86_64.AppImage --version`). Скрипт `scripts/build/build-appimage.sh` виконує всю послідовність конфігурування і побудови, а його прапорець `--install` копіює збірку у директорію `${HOME}/.local/bin`.
+
+Команди встановлення `appimagetool`: [Необов'язкові програми для генерації AppImage-збірки](/doc/sections/uk_UA/3-18-optional-for-the-AppImage-packager.md).

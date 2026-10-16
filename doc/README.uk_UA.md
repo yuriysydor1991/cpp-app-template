@@ -189,6 +189,7 @@
     1. [Необов'язкові пакети для пакувальника WIX](/doc/sections/uk_UA/3-15-optional-for-the-WIX-packager.md)
     1. [Необов'язкові пакети для інтеграції libcurl](/doc/sections/uk_UA/3-16-optional-for-the-libcurl-integration.md)
     1. [Необов'язкові пакети для інтеграції nlohmann JSON](/doc/sections/uk_UA/3-17-optional-for-the-nlohmann-json-integration.md)
+    1. [Необов'язкові програми для генерації AppImage-збірки](/doc/sections/uk_UA/3-18-optional-for-the-AppImage-packager.md)
 1. [Структура проекту](/doc/sections/uk_UA/4-project-structure.md)
     1. [Діаграми проекту](/doc/sections/uk_UA/4-0-project-diagrams.md)
     1. [Реалізуй код одразу!](/doc/sections/uk_UA/4-1-implement-code-straight-away.md)

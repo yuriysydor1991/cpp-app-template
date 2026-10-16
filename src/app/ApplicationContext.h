@@ -147,11 +147,30 @@ class ApplicationContext
   /// @brief Sets the the db port value.
   void set_db_port(const std::string& newValue);
 
+  /// @brief The db TLS usage, the "true" or the "false" one. An empty value
+  /// turns the TLS on for the authenticated connections only. Initialized
+  /// from the MONGODB_TLS environment variable, if set.
+  const std::string& get_db_tls() const;
+
+  /// @brief Sets the db TLS usage value.
+  void set_db_tls(const std::string& newValue);
+
+  /// @brief The db server selection and connect timeout in milliseconds, an
+  /// empty one leaves the driver defaults. Initialized from the
+  /// MONGODB_TIMEOUT_MS environment variable, if set.
+  const std::string& get_db_timeout_ms() const;
+
+  /// @brief Sets the db server selection and connect timeout value.
+  void set_db_timeout_ms(const std::string& newValue);
+
   /// @brief The db connection value.
   const std::shared_ptr<IDBConnection>& get_db_connection() const;
 
   /// @brief Sets the the db connection value.
   void set_db_connection(const std::shared_ptr<IDBConnection>& newValue);
+
+  /// @brief The default db server selection and connect timeout.
+  static const std::string default_db_timeout_ms;
 
  private:
   /// @brief Command line arguments count passed by the OS through the main
@@ -202,6 +221,10 @@ class ApplicationContext
   std::string mdb_host;
 
   std::string mdb_port;
+
+  std::string mdb_tls;
+
+  std::string mdb_timeout_ms;
 
   std::shared_ptr<IDBConnection> mdb_connection;
 };

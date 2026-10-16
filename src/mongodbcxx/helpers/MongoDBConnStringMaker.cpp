@@ -38,8 +38,22 @@ std::string MongoDBConnStringMaker::make_conn_string(
              value_or(actx->get_db_port(), defaultPort);
   connUrl += "/" + percent_encode(actx->get_db_name());
 
-  if (authenticated) {
-    connUrl += "?tls=true";
+  std::string options;
+
+  if (!actx->get_db_timeout_ms().empty()) {
+    options += "&serverSelectionTimeoutMS=" + actx->get_db_timeout_ms() +
+               "&connectTimeoutMS=" + actx->get_db_timeout_ms();
+  }
+
+  const std::string& tls =
+      value_or(actx->get_db_tls(), authenticated ? tlsOn : tlsAuto);
+
+  if (!tls.empty()) {
+    options += "&tls=" + tls;
+  }
+
+  if (!options.empty()) {
+    connUrl += "?" + options.substr(1);
   }
 
   return connUrl;

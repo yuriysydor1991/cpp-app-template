@@ -43,11 +43,13 @@ bool MongoDBController::connect(std::shared_ptr<app::ApplicationContext> nctx)
     dbconnection = dbclient["admin"];
   }
   catch (const std::exception& e) {
-    LOGE("Error during query execution: " << e.what());
+    LOGE("Error during the connection creation: " << e.what());
     return false;
   }
 
-  return true;
+  // the client connects lazily, so the ping reveals an unreachable server
+  // within the connection string timeouts
+  return connected();
 }
 
 bool MongoDBController::connected()

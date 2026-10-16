@@ -22,7 +22,11 @@ The connection settings are taken from the next environment variables, when set:
 - `MONGODB_PORT` - the server port (`27017` by default);
 - `MONGODB_USER` - the user name; the credentials part of the connection string is added only when it is set;
 - `MONGODB_PASSWORD` - the user password;
-- `MONGODB_DATABASE` - the database the user is authenticated against.
+- `MONGODB_DATABASE` - the database the user is authenticated against;
+- `MONGODB_TLS` - the `true` or the `false` value to turn the TLS on or off; when unset the TLS is used for the connections with credentials only;
+- `MONGODB_TIMEOUT_MS` - the server selection and connect timeout in milliseconds (`5000` by default).
+
+The driver connects lazily, so the executable pings the server right after the connection creation, and an unreachable server fails the start within the `MONGODB_TIMEOUT_MS` time instead of the 30 seconds of the driver default server selection timeout.
 
 The user name, the password and the database name are percent-encoded, so any characters may be used in them. To create a user for the template on the server execute a next command:
 

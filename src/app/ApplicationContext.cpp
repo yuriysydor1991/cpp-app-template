@@ -21,6 +21,8 @@ std::string env_or(const char* name, const std::string& fallback)
 namespace app
 {
 
+const std::string ApplicationContext::default_db_timeout_ms{"5000"};
+
 ApplicationContext::ApplicationContext(int& gargc, char**& gargv)
     : margc{gargc},
       margv{gargv},
@@ -28,7 +30,9 @@ ApplicationContext::ApplicationContext(int& gargc, char**& gargv)
       mdb_username{env_or("MONGODB_USER", {})},
       mdb_password{env_or("MONGODB_PASSWORD", {})},
       mdb_host{env_or("MONGODB_HOST", {})},
-      mdb_port{env_or("MONGODB_PORT", {})}
+      mdb_port{env_or("MONGODB_PORT", {})},
+      mdb_tls{env_or("MONGODB_TLS", {})},
+      mdb_timeout_ms{env_or("MONGODB_TIMEOUT_MS", default_db_timeout_ms)}
 {
 }
 
@@ -146,6 +150,23 @@ const std::string& ApplicationContext::get_db_port() const { return mdb_port; }
 void ApplicationContext::set_db_port(const std::string& newValue)
 {
   mdb_port = newValue;
+}
+
+const std::string& ApplicationContext::get_db_tls() const { return mdb_tls; }
+
+void ApplicationContext::set_db_tls(const std::string& newValue)
+{
+  mdb_tls = newValue;
+}
+
+const std::string& ApplicationContext::get_db_timeout_ms() const
+{
+  return mdb_timeout_ms;
+}
+
+void ApplicationContext::set_db_timeout_ms(const std::string& newValue)
+{
+  mdb_timeout_ms = newValue;
 }
 
 const std::shared_ptr<IDBConnection>& ApplicationContext::get_db_connection()

@@ -71,6 +71,15 @@ class ApplicationContext
   const std::string& get_db_port() const { return mdb_port; }
   void set_db_port(const std::string& newValue) { mdb_port = newValue; }
 
+  const std::string& get_db_tls() const { return mdb_tls; }
+  void set_db_tls(const std::string& newValue) { mdb_tls = newValue; }
+
+  const std::string& get_db_timeout_ms() const { return mdb_timeout_ms; }
+  void set_db_timeout_ms(const std::string& newValue)
+  {
+    mdb_timeout_ms = newValue;
+  }
+
   const std::shared_ptr<IDBConnection>& get_db_connection() const
   {
     return mdb_connection;
@@ -98,6 +107,8 @@ class ApplicationContext
   std::string mdb_password;
   std::string mdb_host;
   std::string mdb_port;
+  std::string mdb_tls;
+  std::string mdb_timeout_ms;
   std::shared_ptr<IDBConnection> mdb_connection;
 };
 

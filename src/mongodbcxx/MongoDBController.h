@@ -28,7 +28,9 @@ class MongoDBController : public app::IDBConnection
 
   /**
    * @brief Tries to connect to the specified database server.
-   * The credentials are taken from the ApplicationContext instance.
+   * The credentials are taken from the ApplicationContext instance, which is
+   * not stored. Pings the server, since the driver connects lazily, so an
+   * unreachable server fails the call within the context timeout.
    *
    * @param nctx The ApplicationContext for connection credentials etc.
    *

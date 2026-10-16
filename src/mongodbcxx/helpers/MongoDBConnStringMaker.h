@@ -24,6 +24,9 @@ class MongoDBConnStringMaker
    * An empty host or port is replaced by the localhost and the standard
    * 27017 port, the credentials part is added for a non-empty username only,
    * and the user name, the password and the database name are percent-encoded.
+   * The context timeout limits the server selection and the connect time, and
+   * the TLS is turned on for the authenticated connections unless the context
+   * TLS value says otherwise.
    *
    * @param actx the app::ApplicationContext instance with
    * appropriate data.
@@ -52,6 +55,8 @@ class MongoDBConnStringMaker
 
   inline static const std::string defaultHost{"localhost"};
   inline static const std::string defaultPort{"27017"};
+  inline static const std::string tlsOn{"true"};
+  inline static const std::string tlsAuto{};
 };
 
 }  // namespace mongodbcxxi::helpers

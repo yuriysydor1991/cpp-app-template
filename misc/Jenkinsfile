@@ -218,6 +218,9 @@ pipeline {
     }
     
     stage('Debug build (clang-tidy)') {
+      when {
+        expression { params.RUN_CLANGTIDY }
+      }
       steps {
         sh '''
           cmake --build $BUILDDIR -j$(nproc)

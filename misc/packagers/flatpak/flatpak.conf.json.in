@@ -13,7 +13,8 @@
         {
           "type": "git",
           "url": "https://git.code.sf.net/p/gnuplot/gnuplot-main",
-          "tag": "branch-5-4-stable"
+          "tag": "5.4.10",
+          "commit": "9c8f74b1b686911ed68504aacb45c96a26327135"
         }
       ],
        "build-commands": [
@@ -38,7 +39,8 @@
         {
           "type": "git",
           "url": "https://github.com/alandefreitas/matplotplusplus.git",
-          "tag": "master"
+          "tag": "v1.2.2",
+          "commit": "fe308e13f6c3ac7c5bd2b2f4717961d1d56d07ea"
         }
       ]
     },

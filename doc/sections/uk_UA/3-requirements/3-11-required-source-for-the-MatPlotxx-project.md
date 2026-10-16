@@ -10,7 +10,7 @@ sudo apt install -y gnuplot
 
 ```
 # клонування проекту MatPlot++ у локальну директорію
-git clone https://github.com/alandefreitas/matplotplusplus.git
+git clone --branch v1.2.2 https://github.com/alandefreitas/matplotplusplus.git
 
 # конфігурування проекту
 cmake -B matplotplusplus-build -S matplotplusplus \

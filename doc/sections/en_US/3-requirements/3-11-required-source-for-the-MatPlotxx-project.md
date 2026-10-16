@@ -10,7 +10,7 @@ Now clone and compile the MatPlot++ project with help of the next commands:
 
 ```
 # clone the MatPlot++ project into local directory
-git clone https://github.com/alandefreitas/matplotplusplus.git
+git clone --branch v1.2.2 https://github.com/alandefreitas/matplotplusplus.git
 
 # configure the project
 cmake -B matplotplusplus-build -S matplotplusplus \

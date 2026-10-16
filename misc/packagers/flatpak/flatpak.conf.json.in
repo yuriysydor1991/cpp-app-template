@@ -12,7 +12,8 @@
         {
           "type": "git",
           "url": "https://github.com/mongodb/mongo-c-driver.git",
-          "commit": "1b0e008d3aab07431827433c783f92680cb0cffe"
+          "tag": "2.0.0",
+          "commit": "67817df0a9ed11b07e457477e6db1384da9421c4"
         }
       ],
       "config-opts": [

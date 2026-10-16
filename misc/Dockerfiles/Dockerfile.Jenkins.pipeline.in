@@ -20,13 +20,15 @@ WORKDIR $SRCD
 
 # Each driver is cloned, built and erased inside a layer of its own, so neither
 # the sources nor the build trees reach the image.
-RUN git clone --single-branch --progress --branch master --depth 1  https://github.com/mongodb/mongo-c-driver.git mongo-c-driver && \
+# The tags match the TEMPLATE_APP_MONGOCXX_GIT_TAG enabler default and the C
+# driver version that C++ driver release downloads itself.
+RUN git clone --single-branch --progress --branch 2.0.0 --depth 1 https://github.com/mongodb/mongo-c-driver.git mongo-c-driver && \
   cmake -B $SRCD/mongo-c-driver/build -S $SRCD/mongo-c-driver -DENABLE_TESTS=OFF -DENABLE_EXAMPLES=OFF -DCMAKE_INSTALL_LIBDIR=lib && \
   cmake --build $SRCD/mongo-c-driver/build -j$(nproc) --target all && \
   cmake --install $SRCD/mongo-c-driver/build --prefix /usr && \
   rm -fr $SRCD/mongo-c-driver
 
-RUN git clone --progress https://github.com/mongodb/mongo-cxx-driver.git mongo-cxx-driver && \
+RUN git clone --single-branch --progress --branch r4.1.0 --depth 1 https://github.com/mongodb/mongo-cxx-driver.git mongo-cxx-driver && \
   cmake -B $SRCD/mongo-cxx-driver/build -S $SRCD/mongo-cxx-driver -DCMAKE_INSTALL_LIBDIR=lib \
     -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE=Release -DENABLE_TESTS=OFF -DCMAKE_INSTALL_PREFIX=/usr && \
   cmake --build $SRCD/mongo-cxx-driver/build -j$(nproc) --target all && \

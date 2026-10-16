@@ -3,6 +3,7 @@ pragma Singleton
 import QtQuick
 
 QtObject {
-    readonly property string mainURI: "ua.org.kytok.template.Qt6.CppAppTemplate"
-    readonly property string mainImageSource: "qrc:/" + mainURI + "/resources/images/kytok.org.ua-logo.png"
+    // Resolved against this file, so the logo follows the PROJECT_URI resource
+    // prefix of every QML module of the project.
+    readonly property url mainImageSource: Qt.resolvedUrl("../resources/images/kytok.org.ua-logo.png")
 }

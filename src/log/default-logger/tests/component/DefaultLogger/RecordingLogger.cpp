@@ -18,9 +18,11 @@ void RecordingLogger::log(const unsigned short& loglvl,
   log(loglvl, msg);
 }
 
-void RecordingLogger::logfile(const std::string& filepath)
+bool RecordingLogger::logfile(const std::string& filepath)
 {
   lastLogfile = filepath;
+
+  return true;
 }
 
 void RecordingLogger::print(const bool toPrintValue)
@@ -37,10 +39,11 @@ const std::string& RecordingLogger::lvl_repr(const unsigned short& glvl)
   return lvlRepr;
 }
 
-void RecordingLogger::init(const std::string& filepath,
+bool RecordingLogger::init(const std::string& filepath,
                            const unsigned short& nlvl, const bool toPrintValue)
 {
-  logfile(filepath);
   level(nlvl);
   print(toPrintValue);
+
+  return logfile(filepath);
 }

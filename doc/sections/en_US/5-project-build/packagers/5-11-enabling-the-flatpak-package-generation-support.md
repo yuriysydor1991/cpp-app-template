@@ -28,5 +28,7 @@ Refer to the flatpak documentation on how to install and run applications distri
 flatpak install --user CppAppTemplate-0.9.0-x86_64.flatpak
 
 # to run the application
-flatpak run ua.org.kytok.template.wt4.CppAppTemplate --docroot "/app/share/Wt/resources" --http-listen 127.0.0.1:8000 --accesslog CppAppTemplate-http-access.log
+flatpak run ua.org.kytok.template.wt4.CppAppTemplate --docroot "/app/share/Wt;/resources" --http-listen 127.0.0.1:8000 --accesslog CppAppTemplate-http-access.log
 ```
+
+The `--docroot` value names the directory that holds the Wt `resources` one, while the `/resources` after the semicolon tells the Wt to serve the URLs under it as static files (the themes, the stylesheets and the images of the widgets).

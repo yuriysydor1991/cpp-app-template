@@ -28,5 +28,7 @@ cmake --build . --target flatpak
 flatpak install --user CppAppTemplate-0.9.0-x86_64.flatpak
 
 # для запуску встановленої програми
-flatpak run ua.org.kytok.template.wt4.CppAppTemplate --docroot "/app/share/Wt/resources" --http-listen 127.0.0.1:8000 --accesslog CppAppTemplate-http-access.log
+flatpak run ua.org.kytok.template.wt4.CppAppTemplate --docroot "/app/share/Wt;/resources" --http-listen 127.0.0.1:8000 --accesslog CppAppTemplate-http-access.log
 ```
+
+Значення параметра `--docroot` вказує на директорію, що містить директорію `resources` фреймворку Wt, а `/resources` після крапки з комою вказує Wt роздавати адреси під нею як статичні файли (теми, таблиці стилів і зображення віджетів).

@@ -4,7 +4,6 @@
 1. [Command line build](/doc/sections/en_US/5-2-command-line-build.md)
 1. Enabling testing
     1. [Enabling unit testing](/doc/sections/en_US/5-3-1-enabling-unit-testing.md)
-    1. [Disabling system GTest probe](/doc/sections/en_US/5-3-2-disabling-system-GTest-probe.md)
     1. [Enabling component testing](/doc/sections/en_US/5-3-3-enabling-component-testing.md)
 1. [Documentation build](/doc/sections/en_US/5-4-documentation-build.md)
 1. [Configuring the documentation install support](/doc/sections/en_US/5-5-configuring-the-documentation-install-support.md)

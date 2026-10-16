@@ -1,7 +1,30 @@
 cmake_minimum_required(VERSION 3.13)
 
-set(MySQL_INCLUDE_DIRS "/usr/include/cppconn" CACHE STRING "The MySQLCppConn includes path")
-set(MySQL_LIBRARIES "mysqlcppconn" CACHE STRING "The MySQLCppConn libraries")
+# The legacy JDBC API headers of the MySQL Connector/C++: /usr/include on the
+# Debian based OS (libmysqlcppconn-dev), the jdbc subdirectory of the include
+# directory for the 8.0+ Connector/C++ builds (FreeBSD, the MySQL repository).
+find_path(
+  MySQL_INCLUDE_DIRS
+  NAMES mysql_driver.h
+  PATH_SUFFIXES jdbc mysql-cppconn/jdbc mysql-cppconn-8/jdbc
+  DOC "The MySQLCppConn includes path"
+)
+
+find_library(
+  MySQL_LIBRARIES
+  NAMES mysqlcppconn
+  DOC "The MySQLCppConn libraries"
+)
+
+if (NOT MySQL_INCLUDE_DIRS OR NOT MySQL_LIBRARIES)
+  message(
+    FATAL_ERROR
+    "No MySQL Connector/C++ found. "
+    "Install it by using command (GNU/Linux based):\n"
+    "sudo apt install -y libmysqlcppconn-dev\n"
+    "or point the MySQL_INCLUDE_DIRS and MySQL_LIBRARIES variables to it."
+  )
+endif()
 
 add_library(
   TemplateMySQLCppConnObj OBJECT

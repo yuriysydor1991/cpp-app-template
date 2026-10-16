@@ -12,7 +12,7 @@ cmake -S . -B build -DENABLE_HARFBUZZ=ON
 
 Версія, що завантажується, визначається CMake змінною `TEMPLATE_APP_HARFBUZZ_GIT_TAG` (типово `14.4.0`). Основною системою побудови HarfBuzz є Meson, тож її CMake побудова, яку підтримує спільнота, виводить про це попередження під час конфігурації FetchContent. Модуль створює для завантаженої цілі `harfbuzz` псевдонім `harfbuzz::harfbuzz` (ім'я системної версії) та позначає її як `SYSTEM`, щоб уберегти її заголовки від попереджень проекту.
 
-HarfBuzz формує текст власною реалізацією OpenType і не потребує для цього FreeType. Проте побудова через FetchContent додає зв'язку з FreeType `<hb-ft.h>`, коли `ENABLE_FREETYPE` також будує FreeType.
+HarfBuzz формує текст власною реалізацією OpenType і не потребує для цього FreeType. Проте побудова через FetchContent додає зв'язку з FreeType `<hb-ft.h>`, коли `ENABLE_FREETYPE` також має значення `ON` (тоді модуль вмикає налаштування HarfBuzz `HB_HAVE_FREETYPE` як для системної, так і для завантаженої FreeType).
 
 ### Формування потрібного тексту (приклади для копіювання)
 

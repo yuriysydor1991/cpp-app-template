@@ -274,6 +274,21 @@ TEST_F(UTEST_ApplicationContext, raising_the_reload_flag_from_another_thread)
   EXPECT_FALSE(appCtx->get_pause());
 }
 
+TEST_F(UTEST_ApplicationContext, setting_the_mysql_credentials)
+{
+  appCtx->set_mysql_dbname("random_db");
+  appCtx->set_mysql_user("random_user");
+  appCtx->set_mysql_password("random_password");
+  appCtx->set_mysql_host("random_host");
+  appCtx->set_mysql_port("12345");
+
+  EXPECT_EQ(appCtx->get_mysql_dbname(), "random_db");
+  EXPECT_EQ(appCtx->get_mysql_user(), "random_user");
+  EXPECT_EQ(appCtx->get_mysql_password(), "random_password");
+  EXPECT_EQ(appCtx->get_mysql_host(), "random_host");
+  EXPECT_EQ(appCtx->get_mysql_port(), "12345");
+}
+
 TEST_F(UTEST_ApplicationContext, default_mysql_credentials)
 {
   for (const char* name : {"MYSQL_DATABASE", "MYSQL_USER", "MYSQL_PASSWORD",

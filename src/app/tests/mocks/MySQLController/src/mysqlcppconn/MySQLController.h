@@ -16,7 +16,7 @@ namespace mysqli
 class MySQLController : public app::IDBConnection
 {
  public:
-  virtual ~MySQLController() = default;
+  ~MySQLController() override = default;
   MySQLController()
   {
     if (onMockCreate != nullptr) {

@@ -12,7 +12,6 @@ add_executable(
 target_include_directories(
   UTEST_MySQLController
   PRIVATE ${APP_MOCKS_ROOT}/log
-  PRIVATE ${MYSQL_MOCKS_ROOT}
   PRIVATE ${CMAKE_SOURCE_DIR}
   PRIVATE ${MySQL_INCLUDE_DIRS}
 )

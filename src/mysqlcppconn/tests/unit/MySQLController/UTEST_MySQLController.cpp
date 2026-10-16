@@ -4,8 +4,8 @@
 
 #include <memory>
 
-#include "MySQLControllerSpy.h"
 #include "src/app/ApplicationContext.h"
+#include "src/mysqlcppconn/tests/mocks/MySQLControllerSpy.h"
 
 using namespace app;
 using namespace mysqli;

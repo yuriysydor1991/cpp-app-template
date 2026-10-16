@@ -23,15 +23,15 @@ add_executable(
   ${CMAKE_SOURCE_DIR}/src/beasthttp/rhandlers/HandlersFactory.cpp
   ${CMAKE_SOURCE_DIR}/src/beasthttp/rhandlers/DefaultHandler.cpp
   ${CMAKE_SOURCE_DIR}/src/beasthttp/pages/PageBuilder.cpp
-  ${GLOBAL_MOCKS_ROOT}/ApplicationContext/src/app/ApplicationContext.cpp
+  ${APP_MOCKS_ROOT}/ApplicationContext/src/app/ApplicationContext.cpp
 )
 
 # TODO: introduce mocks for the external components
 target_include_directories(
   CTEST_beasthttp
   PRIVATE
-    ${GLOBAL_MOCKS_ROOT}/ApplicationContext
-    ${GLOBAL_MOCKS_ROOT}/log
+    ${APP_MOCKS_ROOT}/ApplicationContext
+    ${APP_MOCKS_ROOT}/log
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
 )

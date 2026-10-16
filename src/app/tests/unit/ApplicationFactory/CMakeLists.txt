@@ -4,19 +4,19 @@ add_executable(
   UTEST_ApplicationFactory  
   UTEST_ApplicationFactory.cpp
   ${CMAKE_SOURCE_DIR}/src/app/ApplicationFactory.cpp
-  ${GLOBAL_MOCKS_ROOT}/ApplicationContext/src/app/ApplicationContext.cpp
+  ${APP_MOCKS_ROOT}/ApplicationContext/src/app/ApplicationContext.cpp
 )
 
 target_include_directories(
   UTEST_ApplicationFactory
-  PRIVATE ${GLOBAL_MOCKS_ROOT}/ApplicationContext
+  PRIVATE ${APP_MOCKS_ROOT}/ApplicationContext
   PRIVATE ${APPLICATIONS_MOCKS_ROOT}/Application
   PRIVATE ${APPLICATIONS_MOCKS_ROOT}/ApplicationHelpPrinter
   PRIVATE ${APPLICATIONS_MOCKS_ROOT}/ApplicationVersionPrinter
   PRIVATE ${APP_MOCKS_ROOT}/CommandLineParser
   PRIVATE ${SIGNALS_HANDLERS_MOCKS_ROOT}/SignalsHandler
   PRIVATE ${APP_MOCKS_ROOT}/project-global-decls
-  PRIVATE ${GLOBAL_MOCKS_ROOT}/log
+  PRIVATE ${APP_MOCKS_ROOT}/log
   PRIVATE ${CMAKE_SOURCE_DIR}
 )
 

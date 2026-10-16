@@ -6,13 +6,13 @@ add_executable(
   ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/IgnoredSignalsHandler.cpp
   ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/PosixSignalsHandler.cpp
   ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/handlers/ASignalsHandler.cpp
-  ${GLOBAL_MOCKS_ROOT}/ApplicationContext/src/app/ApplicationContext.cpp
+  ${APP_MOCKS_ROOT}/ApplicationContext/src/app/ApplicationContext.cpp
 )
 
 target_include_directories(
   UTEST_IgnoredSignalsHandler
-  PRIVATE ${GLOBAL_MOCKS_ROOT}/ApplicationContext
-  PRIVATE ${GLOBAL_MOCKS_ROOT}/log
+  PRIVATE ${APP_MOCKS_ROOT}/ApplicationContext
+  PRIVATE ${APP_MOCKS_ROOT}/log
   PRIVATE ${CMAKE_SOURCE_DIR}
   PRIVATE ${CMAKE_BINARY_DIR}
 )

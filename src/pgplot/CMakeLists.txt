@@ -32,3 +32,5 @@ target_link_libraries(
   TemplateProjectPGPLOTControllerObj
   PGPLOT::cpgplot
 )
+
+add_subdirectory(tests)

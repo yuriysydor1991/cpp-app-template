@@ -1,0 +1,3 @@
+# The fontconfig library keeps its configuration and font caches for the whole
+# process lifetime, which the leak sanitizer reports at the exit.
+leak:libfontconfig.so

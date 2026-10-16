@@ -6,6 +6,8 @@
 #include <cassert>
 #include <cmath>
 #include <memory>
+#include <string>
+#include <utility>
 #include <vector>
 
 #include "src/log/log.h"
@@ -13,19 +15,10 @@
 namespace pgploti
 {
 
-namespace
+PGPLOTController::PGPLOTController(std::string device)
+    : plotDevice{std::move(device)}
 {
-
-/**
- * @brief The PGPLOT device to draw the plots onto.
- *
- * The "/XWINDOW" one is the interactive X11 window device. Replace it with any
- * other device supported by your PGPLOT installation ("/PNG", "/PS", "/SVG",
- * "/NULL" and so on) in order to store the plots into a file instead.
- */
-constexpr const char* const plotDevice = "/XWINDOW";
-
-}  // namespace
+}
 
 bool PGPLOTController::run(std::shared_ptr<app::ApplicationContext> ctx)
 {
@@ -62,7 +55,7 @@ bool PGPLOTController::draw_simple_plot()
 
   LOGI("Showing the default example exponential logarithmic plot");
 
-  const int deviceId = cpgopen(plotDevice);
+  const int deviceId = cpgopen(plotDevice.c_str());
 
   if (deviceId <= 0) {
     LOGE("Fail to open the " << plotDevice << " PGPLOT device");

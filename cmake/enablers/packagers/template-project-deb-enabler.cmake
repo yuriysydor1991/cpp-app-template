@@ -36,10 +36,8 @@ set(CPACK_DEBIAN_PACKAGE_MAINTAINER "${PROJECT_MAINTAINER} ${PROJECT_MAINTAINER_
 set(CPACK_DEB_COMPONENT_INSTALL ON)
 set(CPACK_PACKAGE_DESCRIPTION ${CMAKE_PROJECT_DESCRIPTION})
 set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE ${TEMPLATE_PROJECT_DEB_PACKAGE_ARCHITECTURE})
-set(CPACK_DEBIAN_PACKAGE_DEPENDS
-  "libsdl3-dev, libsdl3-doc,
-  libsdl3-image0, libsdl3-image-dev,
-  libsdl3-ttf0, libsdl3-ttf-dev")
+# the runtime libraries the binary links: SDL3 and the GLVND OpenGL one
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "libsdl3-0, libopengl0")
 
 # the CPACK_SYSTEM_NAME of the default file name names the system alone, so the
 # destination CPU takes its place

@@ -2,10 +2,13 @@
 #include <gtest/gtest.h>
 
 #include <algorithm>
+#include <filesystem>
 #include <fstream>
+#include <iostream>
 #include <locale>
 #include <memory>
 #include <set>
+#include <sstream>
 #include <string>
 #include <thread>
 
@@ -181,6 +184,46 @@ TEST_F(CTEST_DefaultLogger, error_with_max_warning_log_present)
 
   EXPECT_FALSE(logs.empty());
   EXPECT_THAT(logs, EndsWith(expect + "\n"));
+}
+
+TEST_F(CTEST_DefaultLogger, unopenable_log_file_is_reported_without_throwing)
+{
+  static const std::string missingDirLog =
+      CTEST_DefaultLogger_DATA_DIR "/no-such-directory/CTEST_DefaultLogger.log";
+
+  EXPECT_FALSE(
+      DefaultLogger::init(missingDirLog, DefaultLogger::LVL_TRACE, false));
+  EXPECT_NO_THROW(DefaultLogger::log(DefaultLogger::LVL_ERROR, "no file"));
+
+  EXPECT_TRUE(DefaultLogger::init(test_default_log_file,
+                                  DefaultLogger::LVL_TRACE, false));
+}
+
+TEST_F(CTEST_DefaultLogger, unwritable_default_log_file_gives_a_warning_only)
+{
+  namespace fs = std::filesystem;
+
+  // Nobody, the root included, creates files in the /proc directory.
+  static const fs::path readOnlyDir{"/proc"};
+
+  if (!fs::is_directory(readOnlyDir) ||
+      fs::path{RealDefaultLogger::get_default_full_log_path()}.is_absolute()) {
+    GTEST_SKIP() << "No read only directory for the relative default log";
+  }
+
+  const fs::path previousDir = fs::current_path();
+  std::ostringstream captured;
+  std::streambuf* const previousCerr = std::cerr.rdbuf(captured.rdbuf());
+
+  fs::current_path(readOnlyDir);
+
+  EXPECT_NO_THROW(DefaultLogger::init_defaults());
+
+  fs::current_path(previousDir);
+  std::cerr.rdbuf(previousCerr);
+
+  EXPECT_THAT(captured.str(), HasSubstr("logging into the console only"));
+  EXPECT_FALSE(fs::exists(readOnlyDir / DefaultLogger::default_log_name));
 }
 
 TEST_F(CTEST_DefaultLogger, multithread_logs)

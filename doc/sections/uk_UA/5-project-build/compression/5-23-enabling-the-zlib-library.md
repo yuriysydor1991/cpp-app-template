@@ -10,6 +10,8 @@ cmake -S . -B build -DENABLE_ZLIB=ON
 
 Дивись модуль `cmake/enablers/compression/template-project-zlib-enabler.cmake` щодо цілей (`ZLIB::ZLIB` для системної версії, `zlibstatic`/`zlib` для побудови через FetchContent), які слід прилінкувати до твоїх цільових об'єктів.
 
+У гілці `appZlib` змінна типово має значення `ON`, оскільки приклад `src/zlib` потребує бібліотеки: значення `OFF` зупиняє конфігурацію з поясненням, доки з файлу `src/CMakeLists.txt` не буде вилучено виклик `add_subdirectory(zlib)` разом з підкаталогом `src/zlib` і прикладом zlib у файлі `src/app/applications/Application.cpp`.
+
 ### Стиснення потрібних даних (приклади для копіювання)
 
 Після `ENABLE_ZLIB=ON` та прилінкування цілі zlib (наприклад `target_link_libraries(${PROJECT_BINARY_NAME} ZLIB::ZLIB)`) підключи `<zlib.h>` і скопіюй будь-який зі сніпетів нижче.

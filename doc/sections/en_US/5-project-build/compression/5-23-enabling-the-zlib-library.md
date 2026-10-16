@@ -10,6 +10,8 @@ cmake -S . -B build -DENABLE_ZLIB=ON
 
 See the `cmake/enablers/compression/template-project-zlib-enabler.cmake` module for the targets (`ZLIB::ZLIB` for a system install, `zlibstatic`/`zlib` for the FetchContent build) to link to your targets of interest.
 
+On the `appZlib` branch the option is `ON` by default, since the `src/zlib` example requires the library: turning it `OFF` stops the configuration with an explanation, until the `add_subdirectory(zlib)` call of the `src/CMakeLists.txt` file is dropped together with the `src/zlib` subdirectory and the zlib example of the `src/app/applications/Application.cpp` file.
+
 ### Compressing data of interest (copy-paste examples)
 
 After `ENABLE_ZLIB=ON` and linking a zlib target (e.g. `target_link_libraries(${PROJECT_BINARY_NAME} ZLIB::ZLIB)`), include `<zlib.h>` and copy-paste any of the snippets below.

@@ -1,12 +1,6 @@
 ## Вмикання інтеграції бібліотеки liboai
 
-Неофіційна C++17 бібліотека [liboai](https://github.com/d7ead/liboai) для [OpenAI API](https://platform.openai.com/docs/api-reference/chat) увімкнена у цій гілці за замовчуванням через CMake-змінну `ENABLE_LIBOAI`. Встановіть їй значення `OFF` щоб побудувати проект без інтеграції з ChatGPT:
-
-```
-# в середині кореневої директорії проекту
-
-cmake -S . -B build -DENABLE_LIBOAI=OFF
-```
+Неофіційна C++17 бібліотека [liboai](https://github.com/d7ead/liboai) для [OpenAI API](https://platform.openai.com/docs/api-reference/chat) вмикається у цій гілці CMake-змінною `ENABLE_LIBOAI`, яка за замовчуванням має значення `ON`. Бібліотека є обов'язковою для гілки, адже програма звертається до ChatGPT саме через неї, тому крок конфігурування CMake зупиняється з помилкою, якщо змінній встановлено значення `OFF`. Щоб побудувати проект без неї, видаліть директорію `src/liboai` разом з її використанням у класах `app::Application` та `app::ApplicationHelpPrinter`.
 
 Використовується встановлена у системі бібліотека, якщо її знайдено, інакше береться копія з git-репозиторію. Сам репозиторій та його теґ задаються CMake-змінними `TEMPLATE_APP_LIBOAI_GIT` та `TEMPLATE_APP_LIBOAI_GIT_TAG`:
 

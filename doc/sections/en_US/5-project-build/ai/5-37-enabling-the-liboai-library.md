@@ -1,12 +1,6 @@
 ## Enabling the liboai library
 
-The [liboai](https://github.com/d7ead/liboai) unofficial C++17 [OpenAI API](https://platform.openai.com/docs/api-reference/chat) library is enabled by default on this branch through the `ENABLE_LIBOAI` CMake variable. Set it to `OFF` to build the project without the ChatGPT integration:
-
-```
-# Inside the source root directory
-
-cmake -S . -B build -DENABLE_LIBOAI=OFF
-```
+The [liboai](https://github.com/d7ead/liboai) unofficial C++17 [OpenAI API](https://platform.openai.com/docs/api-reference/chat) library is enabled on this branch through the `ENABLE_LIBOAI` CMake variable, which is `ON` by default. The library is a hard requirement of the branch, because the application asks the ChatGPT through it, so the CMake configure step stops with an error when the variable is set to `OFF`. Drop the `src/liboai` directory together with its usage in the `app::Application` and the `app::ApplicationHelpPrinter` classes to build the project without it.
 
 The system wide installed library is used when it is found, and the one from the git repository is taken otherwise. Both the repository and it's tag are the `TEMPLATE_APP_LIBOAI_GIT` and the `TEMPLATE_APP_LIBOAI_GIT_TAG` CMake variables:
 

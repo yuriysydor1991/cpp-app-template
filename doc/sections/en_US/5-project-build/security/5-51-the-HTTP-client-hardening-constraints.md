@@ -29,7 +29,7 @@ An answer announcing a size above the allowed one is refused by the `CURLOPT_MAX
 ERR CURLController.cpp:112 : The response has outgrown the allowed 8388608 bytes
 ```
 
-The received buffer is left empty in both cases and the `last_response_successfull` call reports a failure, so a partially received answer is never mistaken for a complete one.
+The received buffer is left empty in both cases and the `last_response_successful` call reports a failure, so a partially received answer is never mistaken for a complete one.
 
 ### The timeouts
 

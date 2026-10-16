@@ -135,7 +135,7 @@ TEST_F(CTEST_CURLController, a_response_over_the_allowed_size_is_refused)
 
   EXPECT_TRUE(
       controller->download(file_url_with("oversized.data", contents)).empty());
-  EXPECT_FALSE(controller->last_response_successfull());
+  EXPECT_FALSE(controller->last_response_successful());
 }
 
 TEST_F(CTEST_CURLController, the_additional_headers_break_no_transfer)
@@ -163,25 +163,25 @@ TEST_F(CTEST_CURLController, a_protocol_with_no_statuses_reports_no_status)
 
   // the zero code of a protocol carrying no statuses still counts as the
   // success of a performed transfer.
-  EXPECT_TRUE(controller->last_response_successfull());
+  EXPECT_TRUE(controller->last_response_successful());
 }
 
 TEST_F(CTEST_CURLController, a_failed_transfer_reports_no_success)
 {
-  ASSERT_FALSE(controller->last_response_successfull());
+  ASSERT_FALSE(controller->last_response_successful());
 
   ASSERT_FALSE(
-      controller->download(file_url_with("successfull.data", "The contents."))
+      controller->download(file_url_with("successful.data", "The contents."))
           .empty());
 
-  ASSERT_TRUE(controller->last_response_successfull());
+  ASSERT_TRUE(controller->last_response_successful());
 
   EXPECT_TRUE(controller->download(absent_file_url()).empty());
 
   // the failed transfer reports the very same zero code as the successful one
   // above, so the status code alone tells the two apart in no way.
   EXPECT_EQ(controller->last_response_code(), 0L);
-  EXPECT_FALSE(controller->last_response_successfull());
+  EXPECT_FALSE(controller->last_response_successful());
 }
 
 TEST_F(CTEST_CURLController, every_request_drops_the_previous_data)

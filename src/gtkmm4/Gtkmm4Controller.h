@@ -13,9 +13,8 @@ namespace Gtkmm4i
  *
  * Drives the headless Vulkan physical device enumeration (logging the device
  * properties through the application logger) and then brings up the GTK4
- * application showing a blank, black window for the lifetime of the GTK main
- * loop. GTK4 exposes no Vulkan rendering widget, so the Vulkan work and the
- * window are kept independent.
+ * application, whose window shows the Vulkan frame (or the plain black
+ * fallback) until the window is closed or the application stop is requested.
  */
 class Gtkmm4Controller
 {

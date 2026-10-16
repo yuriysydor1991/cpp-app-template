@@ -8,7 +8,7 @@ The system wide installed library is used when it is found, and the one from the
 cmake -S . -B build -DTEMPLATE_APP_LIBOAI_GIT_TAG=main
 ```
 
-The library asks for the libcurl and the nlohmann JSON packages with the `find_package` command, so both of them have to be installed system wide as the [Required packages for the liboai](/doc/sections/en_US/3-requirements/3-12-required-packages-for-the-liboai.md) section describes. The CMake configure step stops with a message naming them when any is absent.
+The library asks for the libcurl and the nlohmann JSON packages with the `find_package` command. The system wide installed ones are used when found, as the [Required packages for the liboai](/doc/sections/en_US/3-requirements/3-12-required-packages-for-the-liboai.md) section describes, and every absent one is taken from the git repository and tag named by the `TEMPLATE_APP_CURL_GIT`/`TEMPLATE_APP_CURL_GIT_TAG` (libcurl) or the `TEMPLATE_APP_NLOHMANN_GIT`/`TEMPLATE_APP_NLOHMANN_GIT_TAG` (nlohmann JSON) CMake variables. The fetched copies reach the liboai `find_package` calls with the CMake 3.24 or newer only.
 
 ### Asking the ChatGPT
 

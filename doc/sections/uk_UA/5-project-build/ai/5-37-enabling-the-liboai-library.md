@@ -8,7 +8,7 @@
 cmake -S . -B build -DTEMPLATE_APP_LIBOAI_GIT_TAG=main
 ```
 
-Бібліотека запитує пакети libcurl та nlohmann JSON командою `find_package`, тому обидва мають бути встановлені у системі, як описано у секції [Необхідні пакети для liboai](/doc/sections/uk_UA/3-requirements/3-12-required-packages-for-the-liboai.md). Крок конфігурування CMake зупиняється з повідомленням про них, якщо якогось бракує.
+Бібліотека запитує пакети libcurl та nlohmann JSON командою `find_package`. Встановлені у системі використовуються, якщо їх знайдено, як описано у секції [Необхідні пакети для liboai](/doc/sections/uk_UA/3-requirements/3-12-required-packages-for-the-liboai.md), а кожен відсутній завантажується з git-репозиторію та теґу, заданих CMake-змінними `TEMPLATE_APP_CURL_GIT`/`TEMPLATE_APP_CURL_GIT_TAG` (libcurl) або `TEMPLATE_APP_NLOHMANN_GIT`/`TEMPLATE_APP_NLOHMANN_GIT_TAG` (nlohmann JSON). Завантажені копії доходять до викликів `find_package` бібліотеки liboai лише з CMake версії 3.24 або новішим.
 
 ### Запит до ChatGPT
 

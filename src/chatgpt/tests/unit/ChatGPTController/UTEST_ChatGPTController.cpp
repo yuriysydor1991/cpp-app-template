@@ -53,7 +53,7 @@ class UTEST_ChatGPTController : public Test
         .WillOnce(DoAll(SaveArg<1>(&sentBody), SaveArg<2>(&sentHeaders),
                         Return(as_buffer(response))));
 
-    EXPECT_CALL(*curl, last_response_successfull())
+    EXPECT_CALL(*curl, last_response_successful())
         .WillRepeatedly(Return(true));
   }
 
@@ -113,7 +113,7 @@ TEST_F(UTEST_ChatGPTController, the_responses_endpoint_is_asked)
   EXPECT_CALL(*curl, post(ChatGPTController::API_URL, _, _))
       .WillOnce(Return(as_buffer(answer_with("An answer."))));
 
-  EXPECT_CALL(*curl, last_response_successfull()).WillRepeatedly(Return(true));
+  EXPECT_CALL(*curl, last_response_successful()).WillRepeatedly(Return(true));
 
   EXPECT_EQ(controller->ask(question, {}), "An answer.");
 }
@@ -194,7 +194,7 @@ TEST_F(UTEST_ChatGPTController, reported_api_error_gives_no_answer)
           Return(as_buffer(R"({"error":{"code":"invalid_api_key",)"
                            R"("message":"Incorrect API key provided"}})")));
 
-  EXPECT_CALL(*curl, last_response_successfull()).WillRepeatedly(Return(false));
+  EXPECT_CALL(*curl, last_response_successful()).WillRepeatedly(Return(false));
   EXPECT_CALL(*curl, last_response_code()).WillRepeatedly(Return(401L));
 
   EXPECT_TRUE(controller->ask(question, {}).empty());

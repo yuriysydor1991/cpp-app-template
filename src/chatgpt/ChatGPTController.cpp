@@ -194,7 +194,7 @@ std::string ChatGPTController::ask(const std::string& question,
     return {};
   }
 
-  if (!curl->last_response_successfull()) {
+  if (!curl->last_response_successful()) {
     LOGE("The OpenAI API answered with the " << curl->last_response_code()
                                              << " HTTP status code");
   }

@@ -92,7 +92,7 @@ class CURLController
    * false when the request has failed or the status reports anything but a
    * success, a redirect included.
    */
-  virtual bool last_response_successfull() const;
+  virtual bool last_response_successful() const;
 
   /**
    * @brief Gives the HTTP status code of the last performed request.

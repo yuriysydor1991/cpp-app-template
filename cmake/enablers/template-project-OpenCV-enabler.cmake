@@ -21,7 +21,9 @@ find_package(OpenCV REQUIRED COMPONENTS ${TEMPLATE_APP_OPENCV_COMPONENTS})
 
 message(STATUS "OpenCV ${OpenCV_VERSION} found at ${OpenCV_INCLUDE_DIRS}")
 
+# the library target holds the whole project code
 target_link_libraries(
-  ${PROJECT_BINARY_NAME}
-  PUBLIC ${OpenCV_LIBS}
+  ${PROJECT_LIBRARY_NAME}
+  PRIVATE
+    ${OpenCV_LIBS}
 )

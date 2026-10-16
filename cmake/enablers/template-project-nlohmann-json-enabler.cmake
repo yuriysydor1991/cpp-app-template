@@ -19,7 +19,9 @@ template_project_default_3rdparty_enabler(
   GIT_TAG ${TEMPLATE_APP_NLOHMANN_GIT_TAG}
 )
 
+# the library target holds the whole project code
 target_link_libraries(
   ${PROJECT_LIBRARY_NAME}
-  nlohmann_json::nlohmann_json
+  PRIVATE
+    nlohmann_json::nlohmann_json
 )

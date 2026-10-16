@@ -21,7 +21,7 @@ See the `cmake/enablers/template-project-openssl-enabler.cmake` module for the C
 - `OpenSSL::SSL` — TLS/SSL/DTLS sockets and handshake support
 - `OpenSSL::Crypto` — standalone cryptographic primitives (SHA, AES, RSA, HMAC, EVP API, etc.)
 
-Both targets are linked to `${PROJECT_BINARY_NAME}` when `ENABLE_OPENSSL=ON`.
+Both targets are linked to the `${PROJECT_LIBRARY_NAME}` library when `ENABLE_OPENSSL=ON`.
 
 ### Computing a SHA-256 hash (copy-paste example)
 

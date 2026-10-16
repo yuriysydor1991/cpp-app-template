@@ -27,9 +27,10 @@ template_project_default_3rdparty_enabler(
 # standalone cryptographic primitives (SHA, AES, RSA, HMAC, EVP API, etc.).
 # See doc/sections/en_US/5-35-enabling-the-openssl-library.md (and the uk_UA
 # copy) for copy-paste C++ usage examples: SHA-256, HMAC-SHA256, and a
-# minimal HTTPS/TLS client.
+# minimal HTTPS/TLS client. The library target holds the whole project code.
 target_link_libraries(
-  ${PROJECT_BINARY_NAME}
-  OpenSSL::SSL
-  OpenSSL::Crypto
+  ${PROJECT_LIBRARY_NAME}
+  PRIVATE
+    OpenSSL::SSL
+    OpenSSL::Crypto
 )

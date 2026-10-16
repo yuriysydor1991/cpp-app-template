@@ -21,7 +21,7 @@ OpenSSL використовує Perl-скрипт `Configure` як систем
 - `OpenSSL::SSL` — TLS/SSL/DTLS сокети та підтримка рукостискання
 - `OpenSSL::Crypto` — автономні криптографічні примітиви (SHA, AES, RSA, HMAC, EVP API тощо)
 
-Обидві цілі прилінковуються до `${PROJECT_BINARY_NAME}` при `ENABLE_OPENSSL=ON`.
+Обидві цілі прилінковуються до бібліотеки `${PROJECT_LIBRARY_NAME}` при `ENABLE_OPENSSL=ON`.
 
 ### Обчислення хешу SHA-256 (приклад для копіювання)
 

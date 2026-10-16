@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
 function(template_project_default_3rdparty_enabler)
-  set(FCN_KEYWORDS_FLAGS DISABLE_SYSTEM_PROBE)
+  set(FCN_KEYWORDS_FLAGS DISABLE_SYSTEM_PROBE OVERRIDE_FIND_PACKAGE)
   set(FCN_KEYWORDS_SINGLE NAME GIT_REPOSITORY GIT_TAG)
   set(FCN_KEYWORDS_MULTI COMPONENTS)
 
@@ -34,8 +34,9 @@ function(template_project_default_3rdparty_enabler)
 
     # A fetched copy stays invisible to the find_package call of a nested
     # project (like the liboai one asking for it's own dependencies) unless the
-    # CMake is told to redirect that call into the fetched copy.
-    if (CMAKE_VERSION VERSION_GREATER_EQUAL 3.24)
+    # CMake is told to redirect that call into the fetched copy, so the callers
+    # that need it ask for it with the OVERRIDE_FIND_PACKAGE flag.
+    if (ARG_OVERRIDE_FIND_PACKAGE AND CMAKE_VERSION VERSION_GREATER_EQUAL 3.24)
       set(FIND_PACKAGE_OVERRIDE OVERRIDE_FIND_PACKAGE)
     endif()
 

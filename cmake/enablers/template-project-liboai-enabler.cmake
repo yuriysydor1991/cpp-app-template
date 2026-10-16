@@ -24,8 +24,8 @@ set(TEMPLATE_APP_NLOHMANN_GIT_TAG "master" CACHE STRING "The Nlohmann JSON proje
 
 # The liboai CMake project requests both of it's dependencies through the
 # find_package call, so they are made available before it. A fetched copy
-# answers such a call too, because the CMake redirects the package config of
-# every FetchContent populated dependency since it's 3.24 version.
+# answers such a call too, because their OVERRIDE_FIND_PACKAGE flag makes the
+# CMake (since it's 3.24 version) redirect that call into the fetched copy.
 # A fetched nlohmann JSON keeps it's install rules off by default, which makes
 # the liboai own install(EXPORT) call fail on the target it links.
 set(JSON_Install ON CACHE BOOL "Install the nlohmann JSON CMake targets")
@@ -34,12 +34,14 @@ template_project_default_3rdparty_enabler(
   NAME nlohmann_json
   GIT_REPOSITORY ${TEMPLATE_APP_NLOHMANN_GIT}
   GIT_TAG ${TEMPLATE_APP_NLOHMANN_GIT_TAG}
+  OVERRIDE_FIND_PACKAGE
 )
 
 template_project_default_3rdparty_enabler(
   NAME CURL
   GIT_REPOSITORY ${TEMPLATE_APP_CURL_GIT}
   GIT_TAG ${TEMPLATE_APP_CURL_GIT_TAG}
+  OVERRIDE_FIND_PACKAGE
 )
 
 template_project_default_3rdparty_enabler(

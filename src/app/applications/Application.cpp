@@ -1,9 +1,9 @@
 #include "src/app/applications/Application.h"
 
 #include <cassert>
-#include <fstream>
 #include <iostream>
 #include <memory>
+#include <string>
 
 #include "project-global-decls.h"
 #include "src/CURL/CURLController.h"
@@ -25,10 +25,22 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
 
   assert(curl != nullptr);
 
-  auto data = curl->download(project_decls::PROJECT_HOME_URL);
+  const auto& data = curl->download(project_decls::PROJECT_HOME_URL);
 
-  LOGI("Downloaded " << project_decls::PROJECT_HOME_URL
-                     << " URL data: " << std::string(data.begin(), data.end()));
+  if (!curl->last_response_successful()) {
+    ctx->push_error("Fail to download the " + project_decls::PROJECT_HOME_URL +
+                    " URL data.");
+    LOGE("Fail to download the "
+         << project_decls::PROJECT_HOME_URL
+         << " URL data, HTTP status code: " << curl->last_response_code());
+    return INVALID;
+  }
+
+  LOGI("Downloaded " << data.size() << " bytes of the "
+                     << project_decls::PROJECT_HOME_URL << " URL data");
+
+  std::cout.write(data.data(), static_cast<std::streamsize>(data.size()));
+  std::cout << std::endl;
 
   return 0;
 }

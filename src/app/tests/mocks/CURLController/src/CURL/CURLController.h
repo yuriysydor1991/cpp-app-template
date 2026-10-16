@@ -37,9 +37,17 @@ class CURLController
 
   MOCK_METHOD(download_buffer, get, ());
 
+  /// @brief The instance handed out by the create method, so a test may set
+  /// it's expectations before the tested code asks for a controller.
+  inline static CURLControllerPtr instance{};
+
   inline static CURLControllerPtr create()
   {
-    return std::make_shared<CURLController>();
+    if (instance == nullptr) {
+      instance = std::make_shared<CURLController>();
+    }
+
+    return instance;
   }
 };
 

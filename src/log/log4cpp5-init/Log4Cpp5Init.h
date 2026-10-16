@@ -9,8 +9,8 @@
 
 /**
  * @brief The namespace to encapsulate the log4cpp v5 init and log
- * code. Create an instance of the Log4Cpp5Init with appropriate parameters
- * values given to it's constructor to achieve desired log storage and output.
+ * code. Call the Log4Cpp5Init::init with appropriate parameters values to
+ * achieve desired log storage and output.
  */
 namespace log4cpp5i
 {
@@ -28,11 +28,10 @@ class Log4Cpp5Init
   inline static const std::string default_conversation_pattern =
       "%d{%Y-%m-%d %H:%M:%S.%l} [%p] %m%n";
 
-  ~Log4Cpp5Init();
-
   /**
-   * @brief Create an instance of the Log4Cpp5Init with appropriate parameters
-   * values given to it's constructor to achieve desired log storage and output.
+   * @brief (Re)initializes the log4cpp root category: the appenders of any
+   * previous call are replaced, so the log storage and output follow the last
+   * call only.
    *
    * @param filepath The file path or name for the new log file to create or to
    * append new log messages. Defaults to Log4Cpp5Init::default_log_name.
@@ -41,44 +40,24 @@ class Log4Cpp5Init
    * @param toPrintValue If the true boolean value passed - all the log message
    * will be printed into the stdout also.
    */
-  explicit Log4Cpp5Init(
-      const std::string& filepath = get_default_full_log_path(),
-      const unsigned short& nlvl = default_priority, bool toPrintValue = true);
+  static void init(const std::string& filepath = get_default_full_log_path(),
+                   const unsigned short& nlvl = default_priority,
+                   bool toPrintValue = true);
 
   static std::string get_filename_only(const char* filePath);
 
- protected:
-  /**
-   * @brief The log4cpp v5 initer.
-   */
-  void init();
-
-  /**
-   * @brief Inits the log4cpp5 file log storing.
-   */
-  void init_file();
-
-  /**
-   * @brief Inits the console log output if print specified.
-   */
-  void init_console();
-
-  /**
-   * @brief The graceful log4cpp deiniter.
-   */
-  static void deinit();
-
-  static log4cpp::Priority::PriorityLevel get_log4cpp_priority(
+  static log4cpp::Priority::Value get_log4cpp_priority(
       const unsigned short& prjsev);
 
  private:
+  static void add_file_appender(log4cpp::Category& root,
+                                const std::string& filepath);
+
+  static void add_console_appender(log4cpp::Category& root);
+
   static std::string get_full_log_path(const std::string& logname);
 
   static std::string get_default_full_log_path();
-
-  bool print{false};
-  std::string log_name;
-  log4cpp::Priority::PriorityLevel log_lvl;
 };
 
 }  // namespace log4cpp5i

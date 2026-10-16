@@ -11,26 +11,18 @@
 /**
  * @brief The logging init macros. Use them in the main function or
  * as by default is used in the app::ApplicationFactory::execute method.
+ * Each call replaces the log storage and output of the previous one.
  */
-#define LOG_INIT(filepath, logLvl, printMessages)                       \
-  {                                                                     \
-    static log4cpp5i::Log4Cpp5Init log4cpp5initer{(filepath), (logLvl), \
-                                                  (printMessages)};     \
-  }
+#define LOG_INIT(filepath, logLvl, printMessages) \
+  log4cpp5i::Log4Cpp5Init::init(filepath, logLvl, printMessages);
 #endif  // LOG_INIT
 
 #ifndef LOG_INIT_PATH
-#define LOG_INIT_PATH(filepath)                                \
-  {                                                            \
-    static log4cpp5i::Log4Cpp5Init log4cpp5initer{(filepath)}; \
-  }
+#define LOG_INIT_PATH(filepath) log4cpp5i::Log4Cpp5Init::init(filepath);
 #endif  // LOG_INIT_PATH
 
 #ifndef LOG_INIT_DEFAULTS
-#define LOG_INIT_DEFAULTS()                        \
-  {                                                \
-    static log4cpp5i::Log4Cpp5Init log4cpp5initer; \
-  }
+#define LOG_INIT_DEFAULTS() log4cpp5i::Log4Cpp5Init::init();
 #endif  // LOG_INIT_DEFAULTS
 
 #ifndef LOG_BODY

@@ -3,7 +3,6 @@
 #include <array>
 #include <filesystem>
 #include <iostream>
-#include <log4cpp/Category.hh>
 #include <log4cpp/FileAppender.hh>
 #include <log4cpp/OstreamAppender.hh>
 #include <log4cpp/PatternLayout.hh>
@@ -11,53 +10,38 @@
 namespace log4cpp5i
 {
 
-Log4Cpp5Init::~Log4Cpp5Init() { deinit(); }
-
-Log4Cpp5Init::Log4Cpp5Init(const std::string& filepath,
-                           const unsigned short& nlvl, const bool toPrintValue)
-    : print{toPrintValue},
-      log_name{filepath},
-      log_lvl{get_log4cpp_priority(nlvl)}
+void Log4Cpp5Init::init(const std::string& filepath, const unsigned short& nlvl,
+                        const bool toPrintValue)
 {
-  init();
-}
-
-void Log4Cpp5Init::init()
-{
-  init_file();
-  init_console();
-}
-
-void Log4Cpp5Init::init_file()
-{
-  auto* layout = new log4cpp::PatternLayout();
-  layout->setConversionPattern(default_conversation_pattern);
-
-  auto* fileAppender = new log4cpp::FileAppender("fileAppender", log_name);
-  fileAppender->setLayout(layout);
-
   log4cpp::Category& root = log4cpp::Category::getRoot();
 
-  root.setPriority(log_lvl);
+  root.removeAllAppenders();
+  root.setPriority(get_log4cpp_priority(nlvl));
+
+  add_file_appender(root, filepath);
+
+  if (toPrintValue) {
+    add_console_appender(root);
+  }
+}
+
+void Log4Cpp5Init::add_file_appender(log4cpp::Category& root,
+                                     const std::string& filepath)
+{
+  auto* fileAppender = new log4cpp::FileAppender("file", filepath);
+  auto* layout = new log4cpp::PatternLayout();
+  layout->setConversionPattern(default_conversation_pattern);
+  fileAppender->setLayout(layout);
 
   root.addAppender(fileAppender);
 }
 
-void Log4Cpp5Init::init_console()
+void Log4Cpp5Init::add_console_appender(log4cpp::Category& root)
 {
-  if (!print) {
-    return;
-  }
-
-  auto* consoleLayout = new log4cpp::PatternLayout();
-  consoleLayout->setConversionPattern(default_conversation_pattern);
-
   auto* consoleAppender = new log4cpp::OstreamAppender("console", &std::cout);
-  consoleAppender->setLayout(consoleLayout);
-
-  log4cpp::Category& root = log4cpp::Category::getRoot();
-
-  root.setPriority(log_lvl);
+  auto* layout = new log4cpp::PatternLayout();
+  layout->setConversionPattern(default_conversation_pattern);
+  consoleAppender->setLayout(layout);
 
   root.addAppender(consoleAppender);
 }
@@ -69,23 +53,19 @@ std::string Log4Cpp5Init::get_filename_only(const char* const filePath)
   return fullPath.filename().string();
 }
 
-void Log4Cpp5Init::deinit() { log4cpp::Category::shutdown(); }
-
-log4cpp::Priority::PriorityLevel Log4Cpp5Init::get_log4cpp_priority(
+log4cpp::Priority::Value Log4Cpp5Init::get_log4cpp_priority(
     const unsigned short& prjsev)
 {
-  static const unsigned short max_prio = 5U;
-
-  static const std::array<log4cpp::Priority::PriorityLevel, max_prio>
+  static const std::array<log4cpp::Priority::Value, MACRO_LVL_TRACE>
       log4cpp_prio{log4cpp::Priority::ERROR, log4cpp::Priority::WARN,
                    log4cpp::Priority::NOTICE, log4cpp::Priority::INFO,
                    log4cpp::Priority::DEBUG};
 
-  if (prjsev <= 1U) {
+  if (prjsev <= MACRO_LVL_ERROR) {
     return log4cpp_prio.front();
   }
 
-  if (prjsev >= max_prio) {
+  if (prjsev >= MACRO_LVL_TRACE) {
     return log4cpp_prio.back();
   }
 

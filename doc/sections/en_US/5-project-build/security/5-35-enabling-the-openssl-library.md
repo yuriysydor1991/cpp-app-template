@@ -8,7 +8,7 @@ In order to enable [OpenSSL](https://www.openssl.org/) (TLS/SSL connections, cry
 cmake -S . -B build -DENABLE_OPENSSL=ON
 ```
 
-OpenSSL uses the Perl-based `Configure` build system and is **not** compatible with CMake FetchContent, so a system package is required before configuring:
+OpenSSL uses the Perl-based `Configure` build system and is **not** compatible with CMake FetchContent, so there is no download fallback and a system package is required before configuring. Without it the configure stops with an error which names the package to install:
 
 | Platform | Install command |
 |---|---|

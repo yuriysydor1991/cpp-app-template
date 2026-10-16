@@ -88,8 +88,8 @@ class ChatGPTController
    *
    * @return Returns the serialized JSON request body.
    */
-  std::string build_request(const std::string& question,
-                            const std::string& model) const;
+  static std::string build_request(const std::string& question,
+                                   const std::string& model);
 
   /**
    * @brief Builds the HTTP headers the responses endpoint requires.
@@ -110,7 +110,7 @@ class ChatGPTController
    *
    * @return Returns the answer text or an empty string in case of any error.
    */
-  std::string extract_answer(const std::string& response) const;
+  static std::string extract_answer(const std::string& response);
 
   curli::CURLControllerPtr curl;
   std::string token;

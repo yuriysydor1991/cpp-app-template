@@ -86,7 +86,7 @@ bool ChatGPTController::set_token_from_env()
 }
 
 std::string ChatGPTController::build_request(const std::string& question,
-                                             const std::string& model) const
+                                             const std::string& model)
 {
   nlohmann::json request;
 
@@ -101,7 +101,7 @@ std::vector<std::string> ChatGPTController::build_headers() const
   return {"content-type: application/json", "authorization: Bearer " + token};
 }
 
-std::string ChatGPTController::extract_answer(const std::string& response) const
+std::string ChatGPTController::extract_answer(const std::string& response)
 {
   const auto parsed = nlohmann::json::parse(response, nullptr, false);
 

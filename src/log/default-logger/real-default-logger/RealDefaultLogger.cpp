@@ -18,7 +18,7 @@ namespace default_logger
 void RealDefaultLogger::log(const unsigned short& loglvl,
                             const std::string& msg)
 {
-  if (loglvl > lvl) {
+  if (loglvl > lvl.load()) {
     return;
   }
 
@@ -81,6 +81,8 @@ bool RealDefaultLogger::logfile(const std::string& filepath)
     return true;
   }
 
+  std::lock_guard<std::mutex> alogfile_m_guard{alogfile_m};
+
   if (alogfile.is_open()) {
     alogfile.close();
   }
@@ -95,7 +97,7 @@ void RealDefaultLogger::print(const bool toPrintValue)
   toPrintMsgs.store(toPrintValue);
 }
 
-void RealDefaultLogger::level(const unsigned short& nlvl) { lvl = nlvl; }
+void RealDefaultLogger::level(const unsigned short& nlvl) { lvl.store(nlvl); }
 
 bool RealDefaultLogger::init(const std::string& filepath,
                              const unsigned short& nlvl,

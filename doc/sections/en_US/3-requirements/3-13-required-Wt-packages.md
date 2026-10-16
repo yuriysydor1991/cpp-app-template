@@ -6,6 +6,6 @@ Refer to the [Wt C++ framework](https://www.webtoolkit.eu/wt) documentation for 
 
 Other possible methods described in next subsections.
 
-1. [Cloning and building from sources](/doc/sections/en_US/3-requirements/3-11-1-cloning-and-building-from-sources.md)
-1. [Installing via the command line](/doc/sections/en_US/3-requirements/3-11-2-installing-via-the-command-line.md)
-1. [Packages required to build the Wt](/doc/sections/en_US/3-requirements/3-11-3-packages-required-to-build-the-Wt.md)
+1. [Cloning and building from sources](/doc/sections/en_US/3-requirements/3-13-1-cloning-and-building-from-sources.md)
+1. [Installing via the command line](/doc/sections/en_US/3-requirements/3-13-2-installing-via-the-command-line.md)
+1. [Packages required to build the Wt](/doc/sections/en_US/3-requirements/3-13-3-packages-required-to-build-the-Wt.md)

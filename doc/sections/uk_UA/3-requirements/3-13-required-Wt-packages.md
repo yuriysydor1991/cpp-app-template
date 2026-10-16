@@ -6,6 +6,6 @@
 
 У наступних підсекціях описуються деякі можливі способи встановлення.
 
-1. [Клонування і будування з вихідного джерельного коду](/doc/sections/uk_UA/3-requirements/3-11-1-cloning-and-building-from-sources.md)
-1. [Встановлення за допомогою пакетного менеджера](/doc/sections/uk_UA/3-requirements/3-11-2-installing-via-the-command-line.md)
-1. [Пакети необхідні для побудови Wt](/doc/sections/uk_UA/3-requirements/3-11-3-packages-required-to-build-the-Wt.md)
+1. [Клонування і будування з вихідного джерельного коду](/doc/sections/uk_UA/3-requirements/3-13-1-cloning-and-building-from-sources.md)
+1. [Встановлення за допомогою пакетного менеджера](/doc/sections/uk_UA/3-requirements/3-13-2-installing-via-the-command-line.md)
+1. [Пакети необхідні для побудови Wt](/doc/sections/uk_UA/3-requirements/3-13-3-packages-required-to-build-the-Wt.md)

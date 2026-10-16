@@ -1,8 +1,8 @@
 #include "src/sqlite3cpp/SQLiteController.h"
 
 #include <cassert>
-#include <iostream>
 #include <memory>
+#include <string>
 
 #include "src/app/ApplicationContext.h"
 #include "src/app/IDBConnection.h"
@@ -42,48 +42,33 @@ bool SQLiteController::connected()
 
 std::string SQLiteController::get_current_date()
 {
-  assert(db != nullptr);
-  assert(qmaker != nullptr);
-
-  auto qdate = execute_select_query(qmaker->make_date_query());
-
-  assert(qdate != nullptr);
-
-  if (qdate == nullptr) {
-    return {};
-  }
-
-  return qdate->getColumn(0);
-}
-
-std::shared_ptr<SQLite::Statement> SQLiteController::execute_select_query(
-    const std::string& query)
-{
-  assert(db != nullptr);
-  assert(!query.empty());
-
-  if (!connected()) {
+  if (!connected() || qmaker == nullptr) {
     LOGE("No connection available");
     return {};
   }
 
-  if (query.empty()) {
-    LOGE("Empty query string provided");
-    return {};
-  }
+  return select_scalar(qmaker->make_date_query());
+}
 
-  std::shared_ptr<SQLite::Statement> squery;
+std::string SQLiteController::select_scalar(const std::string& query)
+{
+  assert(db != nullptr);
+  assert(!query.empty());
 
   try {
-    squery = std::make_shared<SQLite::Statement>(*db, query);
+    SQLite::Statement squery{*db, query};
 
-    squery->executeStep();
+    if (squery.executeStep()) {
+      return squery.getColumn(0).getString();
+    }
+
+    LOGE("No rows returned for the query: " << query);
   }
   catch (const std::exception& e) {
-    LOGE("SQLite exception: " << e.what());
+    LOGE("SQLite exception: " << e.what() << "; query: " << query);
   }
 
-  return squery;
+  return {};
 }
 
 }  // namespace sqlite3i

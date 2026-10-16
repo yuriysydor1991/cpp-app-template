@@ -51,8 +51,16 @@ class SQLiteController : public app::IDBConnection
   virtual std::string get_current_date() override;
 
  private:
-  std::shared_ptr<SQLite::Statement> execute_select_query(
-      const std::string& query);
+  /**
+   * @brief Executes the given query and returns the first column of its first
+   * row as a string.
+   *
+   * @param query The SQL query to execute.
+   *
+   * @returns Returns the selected value or an empty string in case of any
+   * error.
+   */
+  std::string select_scalar(const std::string& query);
 
   std::shared_ptr<SQLite::Database> db;
   std::shared_ptr<sqlmaker::QueryMaker> qmaker;

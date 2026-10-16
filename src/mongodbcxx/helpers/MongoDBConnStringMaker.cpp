@@ -14,33 +14,65 @@ std::string MongoDBConnStringMaker::make_conn_string(
 {
   assert(actx != nullptr);
 
-  // "mongodb://dbuser:dbpass@192.168.1.100:27017/databasename?options"
-
-  static const std::string mongodbStarter = "mongodb://";
-  static const std::string mongodbDefault = "localhost:27017";
-
-  std::string connUrl{mongodbStarter};
-
-  if (!filledConns(actx)) {
-    return mongodbStarter + mongodbDefault;
+  if (actx == nullptr) {
+    return {};
   }
 
-  connUrl += actx->get_db_username() + ":" + actx->get_db_password();
-  connUrl += "@" + actx->get_db_host() + ":" + actx->get_db_port();
-  connUrl += "/" + actx->get_db_name();
-  connUrl += "?";
-  connUrl += "tls=true";
+  // "mongodb://dbuser:dbpass@192.168.1.100:27017/databasename?options"
+
+  std::string connUrl{"mongodb://"};
+
+  const bool authenticated = !actx->get_db_username().empty();
+
+  if (authenticated) {
+    connUrl += percent_encode(actx->get_db_username());
+
+    if (!actx->get_db_password().empty()) {
+      connUrl += ":" + percent_encode(actx->get_db_password());
+    }
+
+    connUrl += "@";
+  }
+
+  connUrl += value_or(actx->get_db_host(), defaultHost) + ":" +
+             value_or(actx->get_db_port(), defaultPort);
+  connUrl += "/" + percent_encode(actx->get_db_name());
+
+  if (authenticated) {
+    connUrl += "?tls=true";
+  }
 
   return connUrl;
 }
 
-bool MongoDBConnStringMaker::filledConns(
-    std::shared_ptr<app::ApplicationContext> actx)
+std::string MongoDBConnStringMaker::percent_encode(const std::string& value)
 {
-  return actx != nullptr && !actx->get_db_username().empty() &&
-         !actx->get_db_username().empty() && !actx->get_db_password().empty() &&
-         !actx->get_db_host().empty() && !actx->get_db_port().empty() &&
-         !actx->get_db_name().empty();
+  static const std::string unreserved{
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~"};
+  static const std::string hexDigits{"0123456789ABCDEF"};
+
+  std::string encoded;
+
+  for (const char symbol : value) {
+    if (unreserved.find(symbol) != std::string::npos) {
+      encoded += symbol;
+      continue;
+    }
+
+    const auto code = static_cast<unsigned char>(symbol);
+
+    encoded += '%';
+    encoded += hexDigits[code >> 4U];
+    encoded += hexDigits[code & 0x0FU];
+  }
+
+  return encoded;
+}
+
+const std::string& MongoDBConnStringMaker::value_or(
+    const std::string& value, const std::string& fallback)
+{
+  return value.empty() ? fallback : value;
 }
 
 }  // namespace mongodbcxxi::helpers

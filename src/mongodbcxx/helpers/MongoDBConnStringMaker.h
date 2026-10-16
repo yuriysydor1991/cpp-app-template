@@ -21,26 +21,37 @@ class MongoDBConnStringMaker
   /**
    * @brief Creates the MongoDB connection string URI based on
    * the data provided in the app::ApplicationContext instance.
-   * If no data provided - returns the default connection string
-   * to a localhost and standard port of 27017.
+   * An empty host or port is replaced by the localhost and the standard
+   * 27017 port, the credentials part is added for a non-empty username only,
+   * and the user name, the password and the database name are percent-encoded.
    *
    * @param actx the app::ApplicationContext instance with
    * appropriate data.
    *
-   * @return Returns valid MongoDB server connection string.
+   * @return Returns valid MongoDB server connection string or an empty one
+   * for no context given.
    */
   static std::string make_conn_string(
       std::shared_ptr<app::ApplicationContext> actx);
 
  protected:
   /**
-   * @brief Checks whenever given app::ApplicationContext class instance
-   * contains enough data to assemble the new MongoDB connection string.
+   * @brief Percent-encodes every character of the given value except the
+   * RFC 3986 unreserved ones, so the @, :, /, %, ? and # characters of the
+   * credentials can't break the connection string.
    *
-   * @return Returns a true boolean value if context contains enough of data
-   * to assemble a new MongoDB connection string.
+   * @param value The value to encode.
+   *
+   * @return Returns the percent-encoded value.
    */
-  static bool filledConns(std::shared_ptr<app::ApplicationContext> actx);
+  static std::string percent_encode(const std::string& value);
+
+  /// @brief Returns the value or the fallback one for an empty value.
+  static const std::string& value_or(const std::string& value,
+                                     const std::string& fallback);
+
+  inline static const std::string defaultHost{"localhost"};
+  inline static const std::string defaultPort{"27017"};
 };
 
 }  // namespace mongodbcxxi::helpers

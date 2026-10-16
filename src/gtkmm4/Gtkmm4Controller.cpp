@@ -1,5 +1,6 @@
 #include "src/gtkmm4/Gtkmm4Controller.h"
 
+#include <algorithm>
 #include <cassert>
 
 #include "project-global-decls.h"
@@ -54,7 +55,9 @@ int Gtkmm4Controller::run(std::shared_ptr<app::ApplicationContext> nactx)
 
   LOGD("Starting the GTK4 app with the libadwaita widgets");
 
-  return app->run(actx->get_argc(), actx->get_argv());
+  // The command line belongs to the CommandLineParser alone, so the toolkit
+  // gets the program name only and never rejects the application parameters.
+  return app->run(std::min(actx->get_argc(), 1), actx->get_argv());
 }
 
 main_window::AdwaitaWindowPtr Gtkmm4Controller::create_main_window()

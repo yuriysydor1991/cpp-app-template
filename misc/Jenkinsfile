@@ -129,6 +129,11 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "UTEST_CommandLineParser\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_CommandLineParser.junit.xml'
           }
         }
+        stage('UTEST_EventWindowResizedHandler') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_EventWindowResizedHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_EventWindowResizedHandler.junit.xml'
+          }
+        }
         stage('UTEST_SignalsHandler') { 
           steps { 
             sh 'cd $BUILDDIR && ctest -R "UTEST_SignalsHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_SignalsHandler.junit.xml'

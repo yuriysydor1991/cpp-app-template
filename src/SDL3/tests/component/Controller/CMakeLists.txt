@@ -10,6 +10,7 @@ add_executable(
   ${CMAKE_SOURCE_DIR}/src/SDL3/Painter/Painter.cpp
   ${CMAKE_SOURCE_DIR}/src/SDL3/Eventer/EventsController.cpp
   ${CMAKE_SOURCE_DIR}/src/SDL3/Eventer/EventsHandlers/EventQuitHandler.cpp
+  ${CMAKE_SOURCE_DIR}/src/SDL3/Eventer/EventsHandlers/EventWindowResizedHandler.cpp
   ${CMAKE_SOURCE_DIR}/src/SDL3/Eventer/EventsHandlers/EventsHandlersFactory.cpp
   ${CMAKE_SOURCE_DIR}/src/app/ApplicationContext.cpp
 )

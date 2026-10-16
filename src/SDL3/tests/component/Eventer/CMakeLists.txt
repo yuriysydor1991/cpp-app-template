@@ -5,8 +5,11 @@ add_executable(
   CTEST_eventer.cpp
   ${CMAKE_SOURCE_DIR}/src/SDL3/Eventer/EventsController.cpp
   ${CMAKE_SOURCE_DIR}/src/SDL3/Eventer/EventsHandlers/EventQuitHandler.cpp
+  ${CMAKE_SOURCE_DIR}/src/SDL3/Eventer/EventsHandlers/EventWindowResizedHandler.cpp
   ${CMAKE_SOURCE_DIR}/src/SDL3/Eventer/EventsHandlers/EventsHandlersFactory.cpp
   ${CMAKE_SOURCE_DIR}/src/SDL3/SDL3Context.cpp
+  ${CMAKE_SOURCE_DIR}/src/SDL3/SDL3ContextBuilder.cpp
+  ${CMAKE_SOURCE_DIR}/src/SDL3/OpenGLIniter.cpp
   ${CMAKE_SOURCE_DIR}/src/app/ApplicationContext.cpp
 )
 
@@ -20,6 +23,7 @@ target_include_directories(
 target_link_libraries(
   CTEST_eventer
   SDL3::SDL3
+  ${OPENGL_LIBRARIES}
   GTest::gtest_main GTest::gmock
 )
 

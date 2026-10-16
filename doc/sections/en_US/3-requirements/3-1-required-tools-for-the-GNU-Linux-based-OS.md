@@ -13,3 +13,9 @@ sudo apt install -y gettext
 ```
 
 The `scripts/packages/install-ubuntu.sh` (or the `scripts/packages/install-debian.sh`) script installs it together with the rest of the required packages. On RPM-based distributions the equivalent package is `gettext`; on FreeBSD they are `devel/gettext-runtime` and `devel/gettext-tools` from `pkg`. The translations show up under an installed locale only, see the [Enabling the GNU gettext translations](/doc/sections/en_US/5-project-build/i18n/5-62-enabling-the-gettext-translations.md) section.
+
+The [scripts/packages](/scripts/packages) directory holds the scripts which install every package the project needs in one go. The [install-ubuntu.sh](/scripts/packages/install-ubuntu.sh) and [install-debian.sh](/scripts/packages/install-debian.sh) ones run the script of the running release - the [install-ubuntu-24-04.sh](/scripts/packages/install-ubuntu-24-04.sh), the [install-ubuntu-26-04.sh](/scripts/packages/install-ubuntu-26-04.sh) or the [install-debian-13.sh](/scripts/packages/install-debian-13.sh) one - since every release names and versions its packages its own way, and fail with the list of the supported releases on any other one. A dependency a release packages no usable version of is built by its script out of a pinned release tag of the dependency sources. The [install-redhat.sh](/scripts/packages/install-redhat.sh) script covers Fedora, RHEL and its rebuilds, and the [install-freebsd.sh](/scripts/packages/install-freebsd.sh) one covers FreeBSD:
+
+```
+scripts/packages/install-ubuntu.sh
+```

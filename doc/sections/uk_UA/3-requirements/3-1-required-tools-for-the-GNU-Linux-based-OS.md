@@ -13,3 +13,9 @@ sudo apt install -y gettext
 ```
 
 Скрипт `scripts/packages/install-ubuntu.sh` (або `scripts/packages/install-debian.sh`) встановлює його разом з рештою необхідних пакетів. На дистрибутивах на базі RPM відповідний пакет називається `gettext`, а на FreeBSD це `devel/gettext-runtime` і `devel/gettext-tools` з `pkg`. Переклади з'являються лише під встановленою локаллю, дивись розділ [Вмикання перекладів GNU gettext](/doc/sections/uk_UA/5-project-build/i18n/5-62-enabling-the-gettext-translations.md).
+
+Каталог [scripts/packages](/scripts/packages) містить скрипти, які встановлюють усі необхідні проекту пакунки за один раз. Скрипти [install-ubuntu.sh](/scripts/packages/install-ubuntu.sh) та [install-debian.sh](/scripts/packages/install-debian.sh) запускають скрипт поточного випуску системи - [install-ubuntu-24-04.sh](/scripts/packages/install-ubuntu-24-04.sh), [install-ubuntu-26-04.sh](/scripts/packages/install-ubuntu-26-04.sh) чи [install-debian-13.sh](/scripts/packages/install-debian-13.sh) - оскільки кожен випуск по-своєму називає та версіонує свої пакунки, а на будь-якому іншому випуску завершуються з помилкою та переліком підтримуваних випусків. Залежність, придатної версії якої випуск не пакує, його скрипт будує з вихідних кодів закріпленого тегу її випуску. Скрипт [install-redhat.sh](/scripts/packages/install-redhat.sh) охоплює Fedora, RHEL та його перезбірки, а скрипт [install-freebsd.sh](/scripts/packages/install-freebsd.sh) - FreeBSD:
+
+```
+scripts/packages/install-ubuntu.sh
+```

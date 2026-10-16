@@ -1,6 +1,7 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_WT4SERVER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_WT4SERVER_CLASS_H
 
+#include <chrono>
 #include <memory>
 
 #include "src/app/ApplicationContext.h"
@@ -25,7 +26,9 @@ class Wt4Server : public Wt::WApplication
   Wt4Server(const Wt::WEnvironment& env, std::shared_ptr<Wt4Context> nwt4ctx);
 
   /**
-   * @brief Starts the Wt4 application http service.
+   * @brief Starts the Wt4 application http service and serves the requests
+   * until the application stop flag is raised (see the
+   * app::ApplicationContext::get_stop), e.g. by the SIGINT or the SIGTERM.
    *
    * The Wt server receives the command line arguments without the
    * application own parameters (see the Wt4ArgsFilter class).
@@ -38,6 +41,11 @@ class Wt4Server : public Wt::WApplication
   static int run(std::shared_ptr<app::ApplicationContext> ctx);
 
  protected:
+  /// @brief The period of the application stop flag checks.
+  inline static constexpr const std::chrono::milliseconds stopCheckPeriod{100};
+
+  static int serve(std::shared_ptr<app::ApplicationContext> ctx);
+  static void wait_for_stop(std::shared_ptr<app::ApplicationContext> ctx);
   static std::unique_ptr<Wt4Server> build_server(
       const Wt::WEnvironment& env,
       std::shared_ptr<app::ApplicationContext> ctx);

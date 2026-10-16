@@ -1,8 +1,12 @@
 #include "src/wt4/Wt4Server.h"
 
 #include <cassert>
+#include <exception>
 #include <memory>
+#include <string>
+#include <thread>
 
+#include "src/log/log.h"
 #include "src/wt4/Wt4ArgsFilter.h"
 
 namespace wt4server
@@ -22,11 +26,58 @@ Wt4Server::Wt4Server(const Wt::WEnvironment& env,
 
 int Wt4Server::run(std::shared_ptr<app::ApplicationContext> ctx)
 {
+  assert(ctx != nullptr);
+
+  if (ctx == nullptr || ctx->get_argc() < 1 || ctx->get_argv() == nullptr) {
+    LOGE("No valid application context provided");
+    return app::IApplication::INVALID;
+  }
+
+  try {
+    return serve(ctx);
+  }
+  catch (const std::exception& e) {
+    LOGE("Wt server failure: " << e.what());
+  }
+
+  return app::IApplication::INVALID;
+}
+
+int Wt4Server::serve(std::shared_ptr<app::ApplicationContext> ctx)
+{
+  const std::string appPath{ctx->get_argv()[0]};
+
   Wt4ArgsFilter argsFilter;
 
-  return Wt::WRun(
-      ctx->get_argv()[0], argsFilter.filter(ctx->get_argc(), ctx->get_argv()),
+  Wt::WServer server{appPath};
+
+  server.setServerConfiguration(
+      appPath, argsFilter.filter(ctx->get_argc(), ctx->get_argv()),
+      WTHTTP_CONFIGURATION);
+
+  server.addEntryPoint(
+      Wt::EntryPointType::Application,
       [ctx](const Wt::WEnvironment& env) { return build_server(env, ctx); });
+
+  if (!server.start()) {
+    LOGE("Failure to start the Wt server");
+    return app::IApplication::INVALID;
+  }
+
+  wait_for_stop(ctx);
+
+  LOGI("Stopping the Wt server");
+
+  server.stop();
+
+  return 0;
+}
+
+void Wt4Server::wait_for_stop(std::shared_ptr<app::ApplicationContext> ctx)
+{
+  while (!ctx->get_stop()) {
+    std::this_thread::sleep_for(stopCheckPeriod);
+  }
 }
 
 std::unique_ptr<Wt4Server> Wt4Server::build_server(

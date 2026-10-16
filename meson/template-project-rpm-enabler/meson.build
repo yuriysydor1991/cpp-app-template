@@ -2,7 +2,8 @@ find_program('rpmbuild', required: true)
 
 rpm_arch = run_command('uname', '-m', check: true).stdout().strip()
 rpm_topdir = join_paths(meson.project_build_root(), 'rpm-build')
-rpm_buildroot = join_paths(rpm_topdir, 'BUILDROOT', meson.project_name() + '-' + meson.project_version())
+rpm_stage_dir = join_paths(rpm_topdir, 'STAGE')
+rpm_file_list = join_paths(rpm_topdir, 'files.list')
 rpm_output = meson.project_name() + '-' + meson.project_version() + '-1.' + rpm_arch + '.rpm'
 
 rpm_spec_path = join_paths(meson.current_build_dir(), meson.project_name() + '.spec')
@@ -15,21 +16,27 @@ configure_file(
     'PROJECT_DESCRIPTION': project_description,
     'PROJECT_MAINTAINER': get_option('PROJECT_MAINTAINER'),
     'PROJECT_MAINTAINER_EMAIL': get_option('PROJECT_MAINTAINER_EMAIL'),
+    'RPM_STAGE_DIR': rpm_stage_dir,
+    'RPM_FILE_LIST': rpm_file_list,
   },
   input: join_paths(meson.project_source_root(), 'misc', 'rpm.spec.in')
 )
 
+# The spec copies the staged tree into its buildroot and packs the files the
+# list below names, so any configured prefix works. The directories carrying
+# the project name (the headers, the CMake package and the docs ones) belong
+# to the package as well, the shared system ones do not.
 rpm_cmd = [
   'sh', '-c',
   'set -e && ' +
   'rm -rf ' + rpm_topdir + ' && ' +
-  'mkdir -p ' + rpm_topdir + '/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS} && ' +
-  'mkdir -p ' + rpm_buildroot + ' && ' +
-  'DESTDIR=' + rpm_buildroot + ' meson install -C ' + meson.project_build_root() + ' && ' +
-  'rpmbuild --define "_topdir ' + rpm_topdir + '"' +
-    ' --define "_buildrootdir ' + rpm_topdir + '/BUILDROOT"' +
-    ' --buildroot ' + rpm_buildroot +
-    ' -bb ' + rpm_spec_path + ' && ' +
+  'mkdir -p ' + rpm_stage_dir + ' ' + rpm_topdir + '/BUILD ' + rpm_topdir + '/RPMS ' +
+    rpm_topdir + '/SOURCES ' + rpm_topdir + '/SPECS ' + rpm_topdir + '/SRPMS && ' +
+  'DESTDIR=' + rpm_stage_dir + ' meson install -C ' + meson.project_build_root() + ' && ' +
+  '(cd ' + rpm_stage_dir + ' && (find . -type f -o -type l) | cut -c2- && ' +
+    'find . -type d -path "*' + meson.project_name() + '*" | cut -c2- | sed "s/^/%dir /") > ' +
+    rpm_file_list + ' && ' +
+  'rpmbuild --define "_topdir ' + rpm_topdir + '" -bb ' + rpm_spec_path + ' && ' +
   'cp ' + rpm_topdir + '/RPMS/' + rpm_arch + '/*.rpm ' + meson.project_build_root() + '/'
 ]
 

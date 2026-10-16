@@ -3,11 +3,11 @@
 
 #include <vulkan/vulkan.h>
 
-#include <cstdint>
 #include <string>
 #include <vector>
 
 #include "src/qtvulkan/device-info/IDeviceInfoHandler.h"
+#include "src/qtvulkan/device-info/PhysicalDeviceInfo.h"
 
 class QVulkanInstance;
 
@@ -49,19 +49,6 @@ class PhysicalDeviceInfoHandler : public IDeviceInfoHandler
   static std::string device_type_to_string(VkPhysicalDeviceType type);
 
  protected:
-  /**
-   * @brief The condensed set of properties read for a single physical device.
-   */
-  struct PhysicalDeviceInfo
-  {
-    std::string name;
-    VkPhysicalDeviceType type{VK_PHYSICAL_DEVICE_TYPE_OTHER};
-    std::uint32_t apiVersion{0};
-    std::uint32_t driverVersion{0};
-    std::uint32_t vendorID{0};
-    std::uint32_t deviceID{0};
-  };
-
   /**
    * @brief Enumerates the physical devices and reads the well known properties
    * of each of them through the QVulkanInstance's QVulkanFunctions.

@@ -47,8 +47,8 @@ bool PhysicalDeviceInfoHandler::handle(QVulkanInstance* instance)
   return true;
 }
 
-std::vector<PhysicalDeviceInfoHandler::PhysicalDeviceInfo>
-PhysicalDeviceInfoHandler::fetch_devices(QVulkanInstance* instance)
+std::vector<PhysicalDeviceInfo> PhysicalDeviceInfoHandler::fetch_devices(
+    QVulkanInstance* instance)
 {
   // The native Qt QVulkanFunctions wrapper resolves and dispatches the core
   // instance level Vulkan commands for the underlying VkInstance handle.

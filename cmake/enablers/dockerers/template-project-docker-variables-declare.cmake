@@ -47,7 +47,12 @@ set(
   "The Dockerfile destination name"
 )
 
-set(WT4_DOCKER_PORT 8000 CACHE STRING "The Wt4 HTTp server listen port number")
+set(
+  PROJECT_BINARY_PATH
+  ${CMAKE_BINARY_DIR}/src/${PROJECT_BINARY_NAME}
+)
+
+set(WT4_DOCKER_PORT 8000 CACHE STRING "The Wt4 HTTP server listen port number")
 
 message(STATUS "Docker executable: ${DOCKER_EXEC}")
 message(STATUS "Dockerfile configure source full path: ${DOCKERFILE_SRC}")

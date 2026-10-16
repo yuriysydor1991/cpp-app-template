@@ -21,5 +21,5 @@ template_project_default_3rdparty_enabler(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  nlohmann_json::nlohmann_json
+  PRIVATE nlohmann_json::nlohmann_json
 )

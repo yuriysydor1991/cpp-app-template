@@ -1,9 +1,12 @@
 ### Cloning and building from sources
 
-In order to build the [Wt C++ framework](https://www.webtoolkit.eu/wt) from the sources located at it's GitHub repository located at [https://github.com/emweb/wt](https://github.com/emweb/wt) clone it into the local directory using next command:
+In order to install the [Wt C++ framework](https://www.webtoolkit.eu/wt) system wide out of its sources located at the [https://github.com/emweb/wt](https://github.com/emweb/wt) repository, clone the release the project is tested with and build it with next commands:
 
 ```
-git clone https://github.com/emweb/wt.git
+git clone --branch 4.11.4 --depth 1 https://github.com/emweb/wt.git
+cmake -S wt -B wt/build -DCMAKE_BUILD_TYPE=Release -DENABLE_LIBWTDBO=OFF -DBUILD_EXAMPLES=OFF -DBUILD_TESTS=OFF
+cmake --build wt/build -j$(nproc)
+sudo cmake --install wt/build
 ```
 
-Next, follow the building and installing instructions from the [Wt C++ framework](https://www.webtoolkit.eu/wt) README.md or INSTALL files.
+The project configure finds the installed Wt then (see the `WT4_TRY_SYSTEM_PROBE` option). The [Dockerfile.in](/misc/Dockerfiles/Dockerfile.in) builds the Wt the same way with the whole list of the disabled features. Refer to the Wt README.md and INSTALL files for the other build options.

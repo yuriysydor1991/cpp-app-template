@@ -1,11 +1,9 @@
 ### Installing via the command line
 
-Official page describes how to install the [Wt C++ framework](https://www.webtoolkit.eu/wt) using command line:
+The Wt used to be packaged as the `witty` and `witty-dev` packages, but no Ubuntu 24.04/26.04 or Debian 13 release has them any more, so the project configure builds the fetched Wt sources there.
+
+FreeBSD packages the Wt as the `wt` port:
 
 ```
-# may not work
-
-sudo apt-get install witty witty-dev witty-doc witty-dbg witty-examples
+sudo pkg install -y wt
 ```
-
-**Although, not all OS distributions are supporting the Wt packages in their repositories.**

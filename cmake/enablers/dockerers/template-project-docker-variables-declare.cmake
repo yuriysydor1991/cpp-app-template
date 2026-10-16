@@ -48,7 +48,10 @@ set(
   "The Dockerfile destination name"
 )
 
-find_program(ECHO_EXEC echo REQUIRED)
+set(
+  PROJECT_BINARY_PATH
+  ${CMAKE_BINARY_DIR}/src/${PROJECT_BINARY_NAME}
+)
 
 message(STATUS "Docker executable: ${DOCKER_EXEC}")
 message(STATUS "Dockerfile configure source full path: ${DOCKERFILE_SRC}")

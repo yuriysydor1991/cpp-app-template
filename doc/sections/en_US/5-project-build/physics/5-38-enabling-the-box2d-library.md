@@ -10,7 +10,7 @@ cmake -S . -B build -DENABLE_BOX2D=ON
 
 See the `cmake/enablers/physics/template-project-box2d-enabler.cmake` module for the target (`box2d::box2d` for both a system install and the FetchContent build) to link to your targets of interest.
 
-The fetched revision is driven by the `TEMPLATE_APP_BOX2D_GIT_TAG` CMake variable (`v3.1.1` by default). Note that the `3.x` line of Box2D exposes a plain C API built around opaque `b2WorldId` / `b2BodyId` handles, unlike the C++ classes of the `2.x` line.
+The fetched revision is driven by the `TEMPLATE_APP_BOX2D_GIT_TAG` CMake variable (`v3.1.1` by default). Note that the `3.x` line of Box2D exposes a plain C API built around opaque `b2WorldId` / `b2BodyId` handles, unlike the C++ classes of the `2.x` line. That is why the system probe takes only a `3.x` install (`find_package(box2d 3.1)`) and fetches the sources over a `2.x` one, such as the `libbox2d-dev` 2.4 package of the Debian and Ubuntu releases.
 
 ### Simulating the bodies of interest (copy-paste examples)
 

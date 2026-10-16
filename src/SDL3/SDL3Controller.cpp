@@ -42,15 +42,15 @@ int SDL3Controller::run(std::shared_ptr<app::ApplicationContext> ctx)
     return app::IApplication::INVALID;
   }
 
+  if (!oglIniter->init_opengl()) {
+    LOGE("Fail to initiate the OpenGL");
+    return app::IApplication::INVALID;
+  }
+
   sdl3Context = ctxBuilder->build_context(ctx);
 
   if (sdl3Context == nullptr) {
     LOGE("Fail to create the SDL3 context");
-    return app::IApplication::INVALID;
-  }
-
-  if (!oglIniter->init_opengl(sdl3Context)) {
-    LOGE("Fail to initiate the OpenGL");
     return app::IApplication::INVALID;
   }
 

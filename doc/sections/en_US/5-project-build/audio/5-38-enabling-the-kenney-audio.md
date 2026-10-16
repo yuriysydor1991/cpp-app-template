@@ -19,15 +19,18 @@ The `cmake/enablers/audio/template-project-kenney-audio-enabler.cmake` module de
 | Variable | Default | Meaning |
 | --- | --- | --- |
 | `ENABLE_KENNEY_AUDIO` | `ON` | enables the whole integration |
-| `KENNEY_AUDIO_PACKS` | `interface-sounds;impact-sounds;digital-audio;ui-audio` | the packs to make available |
-| `TEMPLATE_APP_KENNEY_AUDIO_PAGE_TEMPLATE` | the upstream page | the per pack page the archive address is read out of, the `<pack>` placeholder standing for the pack name |
+| `TEMPLATE_APP_KENNEY_AUDIO_MANIFEST` | `misc/kenney-packs.txt` | the manifest naming every pack with it's archive address and checksum |
 | `TEMPLATE_APP_KENNEY_AUDIO_DIR` | empty | an already available packs directory to reuse instead of downloading one |
 | `KENNEY_AUDIO_EXTENSIONS` | `ogg;wav;mp3` | the sound file extensions to pick out of the packs |
 | `KENNEY_AUDIO_QT_RESOURCE_PREFIX` | `/sounds` | the prefix of the generated `.qrc` manifests |
 | `KENNEY_AUDIO_GRESOURCE_PREFIX` | `/ua/org/kytok/template/<binary>/sounds` | the prefix of the generated `.gresource.xml` manifests |
 | `KENNEY_AUDIO_GENERATE_FULL_MANIFESTS` | `ON` | generates the manifests carrying every available sound |
 
-**The archive address is read out of the pack's own page rather than written down here**: it carries a content hash the site regenerates whenever the pack is updated, so a hand written address goes stale instead of downloading anything, while the page naming it stays reachable under the pack name.
+### The packs manifest
+
+The packs to make available are listed in the `misc/kenney-packs.txt` manifest, one `<pack>|<archive URL>|<archive SHA-256>` line each. The pack name becomes the subdirectory the archive is unpacked into and the first part of every sound alias, while **the SHA-256 checksum pins the very archive the build accepts**: a download carrying anything else stops the configure instead of slipping different sounds into the binary, and an interrupted download or extraction leaves nothing behind to be taken for a complete pack.
+
+The archive address carries a content hash kenney.nl regenerates whenever a pack is updated, so an updated pack shows up as a failing download. Take the new address from the pack's own page (`https://kenney.nl/assets/<pack>`), download the archive, check it, and record it's `sha256sum` output on the pack's line. Point the `TEMPLATE_APP_KENNEY_AUDIO_MANIFEST` variable at a manifest of your own to pick a different set of packs.
 
 ### Downloading the packs by hand
 
@@ -39,7 +42,7 @@ misc/scripts/fetch-kenney-audio.sh ~/kenney-audio
 cmake -S . -B build -DTEMPLATE_APP_KENNEY_AUDIO_DIR=~/kenney-audio
 ```
 
-The script takes the target directory as it's single argument, obeys the `KENNEY_AUDIO_PACKS` and the `KENNEY_AUDIO_PAGE_TEMPLATE` environment variables, downloads through `curl` or `wget` (whichever is available) and leaves an already unpacked pack alone.
+The script takes the target directory as it's single argument, reads the packs out of the very same manifest (or out of the one the `KENNEY_AUDIO_MANIFEST` environment variable names), downloads through `curl` or `wget` (whichever is available), refuses an archive of any other SHA-256 checksum and leaves an already unpacked pack alone.
 
 ### Reaching the sounds from the C++ code
 

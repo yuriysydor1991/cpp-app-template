@@ -6,16 +6,11 @@ option(
   ON
 )
 
-# The packager manifests carry the very same packs, so their coordinates stay
-# declared even with the enabler itself switched off.
+# The packs are read out of the manifest rather than listed here, so the single
+# place naming a pack also pins the very archive it comes from.
 set(
-  KENNEY_AUDIO_PACKS "interface-sounds;impact-sounds;digital-audio;ui-audio"
-  CACHE STRING "The Kenney CC0 sound effect packs to make available"
-)
-
-set(
-  TEMPLATE_APP_KENNEY_AUDIO_PAGE_TEMPLATE "https://kenney.nl/assets/<pack>"
-  CACHE STRING "The per pack page the archive address is read out of, the <pack> placeholder standing for the pack name"
+  TEMPLATE_APP_KENNEY_AUDIO_MANIFEST "${CMAKE_SOURCE_DIR}/misc/kenney-packs.txt"
+  CACHE FILEPATH "The manifest naming every pack together with it's archive URL and the archive SHA-256 checksum"
 )
 
 if (NOT ENABLE_KENNEY_AUDIO)
@@ -51,6 +46,8 @@ set(
 # the add_subdirectory of the fetched project) has nothing to do here. Each
 # pack is an own ZIP rather than a single checkout, hence the per pack download
 # below and the escape hatch for an already present copy.
+template_project_kenney_audio_read_manifest()
+
 if (TEMPLATE_APP_KENNEY_AUDIO_DIR)
   message(STATUS "Reusing the Kenney sound packs directory: ${TEMPLATE_APP_KENNEY_AUDIO_DIR}")
 

@@ -1,6 +1,7 @@
 #!/bin/sh
-# Downloads and unpacks the Kenney CC0 sound packs into a directory the build
-# then reuses through the TEMPLATE_APP_KENNEY_AUDIO_DIR CMake variable:
+# Downloads and unpacks the Kenney CC0 sound packs the misc/kenney-packs.txt
+# manifest names into a directory the build then reuses through the
+# TEMPLATE_APP_KENNEY_AUDIO_DIR CMake variable:
 #
 #   misc/scripts/fetch-kenney-audio.sh ~/kenney-audio
 #   cmake -S . -B build -DTEMPLATE_APP_KENNEY_AUDIO_DIR=~/kenney-audio
@@ -11,8 +12,12 @@
 set -eu
 
 TARGET_DIR="${1:-./resources/kenney-audio}"
-PACKS="${KENNEY_AUDIO_PACKS:-interface-sounds impact-sounds digital-audio ui-audio}"
-PAGE_TEMPLATE="${KENNEY_AUDIO_PAGE_TEMPLATE:-https://kenney.nl/assets/<pack>}"
+MANIFEST="${KENNEY_AUDIO_MANIFEST:-misc/kenney-packs.txt}"
+
+if [ ! -f "$MANIFEST" ]; then
+  echo "No $MANIFEST packs manifest to read the packs of" >&2
+  exit 1
+fi
 
 if command -v curl >/dev/null 2>&1; then
   download() { curl -fsSL -o "$2" "$1"; }
@@ -23,24 +28,16 @@ else
   exit 1
 fi
 
-# The archive address carries a content hash the site regenerates whenever the
-# pack is updated, so it is read out of the pack's own page instead of being
-# written down here.
-pack_url()
-{
-  packPage=$(echo "$PAGE_TEMPLATE" | sed "s|<pack>|$1|g")
-  pageFile="$TARGET_DIR/$1.html"
-
-  if ! download "$packPage" "$pageFile" ; then
-    rm -f "$pageFile"
-    echo "Fail to read the $1 pack page at $packPage." >&2
-    exit 1
-  fi
-
-  grep -oE "https://[^\"'[:space:]]*/assets/$1/[^\"'[:space:]]*\\.zip" "$pageFile" | head -n1
-
-  rm -f "$pageFile"
-}
+if command -v sha256sum >/dev/null 2>&1; then
+  checksum() { sha256sum "$1" | cut -d ' ' -f 1; }
+elif command -v shasum >/dev/null 2>&1; then
+  checksum() { shasum -a 256 "$1" | cut -d ' ' -f 1; }
+elif command -v sha256 >/dev/null 2>&1; then
+  checksum() { sha256 -q "$1"; }
+else
+  echo "No sha256sum, shasum or sha256 available to check the downloads with" >&2
+  exit 1
+fi
 
 if ! command -v unzip >/dev/null 2>&1; then
   echo "No unzip available to unpack the downloaded archives with" >&2
@@ -49,7 +46,21 @@ fi
 
 mkdir -p "$TARGET_DIR"
 
-for pack in $PACKS; do
+packsSeen=0
+
+while IFS='|' read -r pack packUrl packHash; do
+  case "$pack" in ''|\#*) continue ;; esac
+
+  pack=$(echo "$pack" | tr -d ' ')
+  packUrl=$(echo "$packUrl" | tr -d ' ')
+  packHash=$(echo "$packHash" | tr -d ' ' | tr 'A-F' 'a-f')
+
+  if [ -z "$packUrl" ] || [ ${#packHash} -ne 64 ]; then
+    echo "The '$pack' line of $MANIFEST follows no <pack>|<archive URL>|<archive SHA-256> form" >&2
+    exit 1
+  fi
+
+  packsSeen=$((packsSeen + 1))
   packDir="$TARGET_DIR/$pack"
 
   if [ -d "$packDir" ]; then
@@ -57,40 +68,48 @@ for pack in $PACKS; do
     continue
   fi
 
-  packUrl=$(pack_url "$pack")
-  packArchive="$TARGET_DIR/$pack.zip"
-
-  if [ -z "$packUrl" ] ; then
-    echo "The $pack pack page names no archive to download." >&2
-    echo "Check the pack name against https://kenney.nl/assets" >&2
-    exit 1
-  fi
+  packArchive="$packDir.zip"
 
   echo "Downloading $pack: $packUrl"
 
   if ! download "$packUrl" "$packArchive"; then
     rm -f "$packArchive"
     echo "Fail to download the $pack pack from $packUrl." >&2
-    echo "Correct the KENNEY_AUDIO_PAGE_TEMPLATE environment variable or download the pack by hand from https://kenney.nl/assets" >&2
+    echo "Correct it's line of $MANIFEST or download the pack by hand from https://kenney.nl/assets/$pack" >&2
     exit 1
   fi
 
-  mkdir -p "$packDir"
+  actualHash=$(checksum "$packArchive")
 
-  if ! unzip -q "$packArchive" -d "$packDir"; then
-    rm -rf "$packDir" "$packArchive"
+  if [ "$actualHash" != "$packHash" ]; then
+    rm -f "$packArchive"
+    echo "The $pack pack archive carries the $actualHash SHA-256 checksum instead of the $packHash one $MANIFEST pins" >&2
+    exit 1
+  fi
+
+  # The pack directory appears only once the whole archive is out, so an
+  # interrupted run leaves no half unpacked pack behind. The archives are
+  # Windows made ones and carry the DOS read-only attribute on a directory of
+  # their own (the Audio one of the digital-audio pack), which the extraction
+  # turns into a directory no file may be created inside any more: the packs
+  # are a build input and not a read-only tree, so the write permission goes
+  # back on.
+  rm -rf "${packDir:?}.unpacked"
+
+  if ! unzip -q "$packArchive" -d "$packDir.unpacked"; then
+    rm -rf "${packDir:?}.unpacked" "$packArchive"
     echo "Fail to unpack the downloaded $pack pack archive" >&2
     exit 1
   fi
 
-  # The archives are Windows made ones and carry the DOS read-only attribute on
-  # a directory of their own (the Audio one of the digital-audio pack), which
-  # the extraction turns into a directory no file may be created inside any
-  # more: the packs are a build input and not a read-only tree, so the write
-  # permission goes back on.
-  chmod -R u+w "$packDir"
-
+  chmod -R u+w "$packDir.unpacked"
+  mv "$packDir.unpacked" "$packDir"
   rm -f "$packArchive"
-done
+done < "$MANIFEST"
+
+if [ "$packsSeen" -eq 0 ]; then
+  echo "The $MANIFEST manifest names no pack at all" >&2
+  exit 1
+fi
 
 echo "The Kenney sound packs are available under $TARGET_DIR"

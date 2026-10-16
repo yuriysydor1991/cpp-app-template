@@ -1,58 +1,162 @@
 cmake_minimum_required(VERSION 3.13)
 
-# Gives the address of the given pack's archive back, read out of the pack's
-# own page at kenney.nl.
-#
-# The archive address carries a content hash the site regenerates whenever the
-# pack is updated, so a hand written address goes stale instead of downloading
-# anything, while the page naming it stays reachable under the pack name.
-function(template_project_kenney_audio_pack_url pack outVar)
-  string(REPLACE "<pack>" "${pack}" packPage "${TEMPLATE_APP_KENNEY_AUDIO_PAGE_TEMPLATE}")
-
-  set(pageFile "${KENNEY_AUDIO_ROOT_DIR}/${pack}.html")
-
-  file(DOWNLOAD "${packPage}" "${pageFile}" STATUS pageStatus TLS_VERIFY ON)
-
-  list(GET pageStatus 0 pageCode)
-
-  if (NOT pageCode EQUAL 0)
-    list(GET pageStatus 1 pageError)
-    file(REMOVE "${pageFile}")
-
+# Reads the manifest naming every pack together with it's archive URL and the
+# SHA-256 checksum of that archive, filling the KENNEY_AUDIO_PACKS list and the
+# KENNEY_AUDIO_PACK_URLS and KENNEY_AUDIO_PACK_HASHES ones of the same order out
+# of it. All three are rewritten on every configure run, so a pack dropped from
+# the manifest leaves nothing behind.
+function(template_project_kenney_audio_read_manifest)
+  if (NOT EXISTS "${TEMPLATE_APP_KENNEY_AUDIO_MANIFEST}")
     message(
       FATAL_ERROR
-      "Fail to read the Kenney ${pack} pack page at ${packPage}: ${pageError}. Correct the TEMPLATE_APP_KENNEY_AUDIO_PAGE_TEMPLATE variable, run the misc/scripts/fetch-kenney-audio.sh script by hand, or point the TEMPLATE_APP_KENNEY_AUDIO_DIR one to an already downloaded packs directory."
+      "No ${TEMPLATE_APP_KENNEY_AUDIO_MANIFEST} Kenney packs manifest. Point the TEMPLATE_APP_KENNEY_AUDIO_MANIFEST variable at one or fill the misc/kenney-packs.txt file with the packs of interest."
     )
   endif()
 
-  file(READ "${pageFile}" pageText)
-  file(REMOVE "${pageFile}")
+  file(STRINGS "${TEMPLATE_APP_KENNEY_AUDIO_MANIFEST}" manifestLines)
 
-  string(REGEX MATCH "https://[^\"' \t\r\n]*/assets/${pack}/[^\"' \t\r\n]*\\.zip" packUrl "${pageText}")
+  set(packs "")
+  set(urls "")
+  set(hashes "")
 
-  if (NOT packUrl)
+  foreach(manifestLine IN LISTS manifestLines)
+    string(STRIP "${manifestLine}" manifestLine)
+
+    if (manifestLine STREQUAL "" OR manifestLine MATCHES "^#")
+      continue()
+    endif()
+
+    if (NOT manifestLine MATCHES "^([^|]+)\\|([^|]+)\\|([0-9A-Fa-f]+)$")
+      message(
+        FATAL_ERROR
+        "The '${manifestLine}' line of the ${TEMPLATE_APP_KENNEY_AUDIO_MANIFEST} manifest follows no <pack>|<archive URL>|<archive SHA-256> form"
+      )
+    endif()
+
+    string(STRIP "${CMAKE_MATCH_1}" pack)
+    string(STRIP "${CMAKE_MATCH_2}" packUrl)
+    string(TOLOWER "${CMAKE_MATCH_3}" packHash)
+    string(LENGTH "${packHash}" packHashLength)
+
+    if (NOT packHashLength EQUAL 64 OR pack IN_LIST packs)
+      message(
+        FATAL_ERROR
+        "The '${manifestLine}' line of the ${TEMPLATE_APP_KENNEY_AUDIO_MANIFEST} manifest carries no 64 digits SHA-256 checksum or names an already named pack"
+      )
+    endif()
+
+    list(APPEND packs "${pack}")
+    list(APPEND urls "${packUrl}")
+    list(APPEND hashes "${packHash}")
+  endforeach()
+
+  if (NOT packs)
     message(
       FATAL_ERROR
-      "The Kenney ${pack} pack page at ${packPage} names no pack archive to download. Check the pack name of the KENNEY_AUDIO_PACKS list against kenney.nl/assets or point the TEMPLATE_APP_KENNEY_AUDIO_DIR variable to an already downloaded packs directory."
+      "The ${TEMPLATE_APP_KENNEY_AUDIO_MANIFEST} manifest names no pack at all. Fill it with the Kenney packs of interest, one <pack>|<archive URL>|<archive SHA-256> line each."
     )
   endif()
 
-  set(${outVar} "${packUrl}" PARENT_SCOPE)
+  set(KENNEY_AUDIO_PACKS "${packs}" CACHE INTERNAL "The Kenney sound packs the manifest names")
+  set(KENNEY_AUDIO_PACK_URLS "${urls}" CACHE INTERNAL "The archive URLs of the KENNEY_AUDIO_PACKS packs")
+  set(KENNEY_AUDIO_PACK_HASHES "${hashes}" CACHE INTERNAL "The archive SHA-256 checksums of the KENNEY_AUDIO_PACKS packs")
+
+  list(LENGTH packs packsCount)
+
+  message(STATUS "Kenney packs named by the manifest: ${packsCount}")
 endfunction()
 
-# Downloads and unpacks every pack of the KENNEY_AUDIO_PACKS list into the
+# Downloads the given URL into the given file through a temporary file of it's
+# own and accepts the download only when it's SHA-256 checksum is the expected
+# one, so neither an interrupted nor an altered download is ever taken for the
+# pinned archive.
+function(template_project_kenney_audio_download url destination expectedHash)
+  file(
+    DOWNLOAD "${url}" "${destination}.part"
+    STATUS downloadStatus
+    SHOW_PROGRESS
+    TLS_VERIFY ON
+  )
+
+  list(GET downloadStatus 0 downloadCode)
+
+  if (NOT downloadCode EQUAL 0)
+    list(GET downloadStatus 1 downloadError)
+    file(REMOVE "${destination}.part")
+
+    message(
+      FATAL_ERROR
+      "Fail to download ${url}: ${downloadError}. Correct it's line of the ${TEMPLATE_APP_KENNEY_AUDIO_MANIFEST} manifest, run the misc/scripts/fetch-kenney-audio.sh script by hand, or point the TEMPLATE_APP_KENNEY_AUDIO_DIR variable to an already downloaded packs directory."
+    )
+  endif()
+
+  file(SHA256 "${destination}.part" actualHash)
+
+  if (NOT actualHash STREQUAL expectedHash)
+    file(REMOVE "${destination}.part")
+
+    message(
+      FATAL_ERROR
+      "The ${url} download carries the ${actualHash} SHA-256 checksum instead of the ${expectedHash} one the ${TEMPLATE_APP_KENNEY_AUDIO_MANIFEST} manifest pins. Update it's manifest line only once the new archive is checked to be the expected one."
+    )
+  endif()
+
+  file(RENAME "${destination}.part" "${destination}")
+endfunction()
+
+# Unpacks the given archive into the given directory, which appears only once
+# the whole archive is out, so an interrupted run never leaves a half unpacked
+# pack behind to be taken for a complete one on the next configure run.
+#
+# The archives are Windows made ones and carry the DOS read-only attribute on a
+# directory of their own (the Audio one of the digital-audio pack), which the
+# extraction turns into a directory no file may be created inside any more: the
+# build tree stops being removable and copyable, the flatpak-builder source copy
+# failing on it. Hence the extraction into a directory of it's own and the copy
+# dropping the archive permissions.
+#
+# The extraction goes through "cmake -E tar" and not through the
+# file(ARCHIVE_EXTRACT) command, because the latter needs CMake 3.18 while this
+# project stays buildable with 3.13.
+function(template_project_kenney_audio_unpack archive destination)
+  set(unpackDir "${destination}.unpacked")
+  set(copyDir "${destination}.partial")
+
+  file(REMOVE_RECURSE "${unpackDir}" "${copyDir}")
+  file(MAKE_DIRECTORY "${unpackDir}")
+
+  execute_process(
+    COMMAND "${CMAKE_COMMAND}" -E tar xf "${archive}"
+    WORKING_DIRECTORY "${unpackDir}"
+    RESULT_VARIABLE extractResult
+  )
+
+  if (NOT extractResult EQUAL 0)
+    file(REMOVE_RECURSE "${unpackDir}")
+    message(FATAL_ERROR "Fail to unpack the ${archive} archive")
+  endif()
+
+  file(COPY "${unpackDir}/" DESTINATION "${copyDir}" NO_SOURCE_PERMISSIONS)
+  file(REMOVE_RECURSE "${unpackDir}")
+  file(RENAME "${copyDir}" "${destination}")
+endfunction()
+
+# Downloads and unpacks every pack the manifest names into the
 # KENNEY_AUDIO_ROOT_DIR directory, one subdirectory per pack. An already
 # unpacked pack is left alone, so a reconfigure costs no download at all.
 #
 # The archives are plain ZIP files rather than a git checkout, hence the
-# file(DOWNLOAD) and the "cmake -E tar" extraction instead of a FetchContent
-# declaration. The extraction goes through "cmake -E tar" and not through the
-# file(ARCHIVE_EXTRACT) command, because the latter needs CMake 3.18 while this
-# project stays buildable with 3.13.
+# file(DOWNLOAD) and the archive extraction instead of a FetchContent
+# declaration.
 function(template_project_kenney_audio_fetch_packs)
   file(MAKE_DIRECTORY "${KENNEY_AUDIO_ROOT_DIR}")
 
-  foreach(pack IN LISTS KENNEY_AUDIO_PACKS)
+  list(LENGTH KENNEY_AUDIO_PACKS packsCount)
+  math(EXPR lastPackIndex "${packsCount} - 1")
+
+  foreach(packIndex RANGE ${lastPackIndex})
+    list(GET KENNEY_AUDIO_PACKS ${packIndex} pack)
+
     set(packDir "${KENNEY_AUDIO_ROOT_DIR}/${pack}")
 
     if (EXISTS "${packDir}")
@@ -60,57 +164,15 @@ function(template_project_kenney_audio_fetch_packs)
       continue()
     endif()
 
-    template_project_kenney_audio_pack_url("${pack}" packUrl)
-
-    set(packArchive "${KENNEY_AUDIO_ROOT_DIR}/${pack}.zip")
+    list(GET KENNEY_AUDIO_PACK_URLS ${packIndex} packUrl)
+    list(GET KENNEY_AUDIO_PACK_HASHES ${packIndex} packHash)
 
     message(STATUS "Downloading the Kenney ${pack} pack: ${packUrl}")
 
-    file(
-      DOWNLOAD "${packUrl}" "${packArchive}"
-      STATUS downloadStatus
-      SHOW_PROGRESS
-      TLS_VERIFY ON
-    )
+    template_project_kenney_audio_download("${packUrl}" "${packDir}.zip" "${packHash}")
+    template_project_kenney_audio_unpack("${packDir}.zip" "${packDir}")
 
-    list(GET downloadStatus 0 downloadCode)
-
-    if (NOT downloadCode EQUAL 0)
-      list(GET downloadStatus 1 downloadError)
-      file(REMOVE "${packArchive}")
-
-      message(
-        FATAL_ERROR
-        "Fail to download the Kenney ${pack} pack from ${packUrl}: ${downloadError}. Correct the TEMPLATE_APP_KENNEY_AUDIO_PAGE_TEMPLATE variable, run the misc/scripts/fetch-kenney-audio.sh script by hand, or point the TEMPLATE_APP_KENNEY_AUDIO_DIR one to an already downloaded packs directory."
-      )
-    endif()
-
-    set(packUnpackDir "${packDir}.unpacked")
-
-    file(MAKE_DIRECTORY "${packUnpackDir}")
-
-    execute_process(
-      COMMAND "${CMAKE_COMMAND}" -E tar xf "${packArchive}"
-      WORKING_DIRECTORY "${packUnpackDir}"
-      RESULT_VARIABLE extractResult
-    )
-
-    file(REMOVE "${packArchive}")
-
-    if (NOT extractResult EQUAL 0)
-      file(REMOVE_RECURSE "${packUnpackDir}")
-      message(FATAL_ERROR "Fail to unpack the downloaded Kenney ${pack} pack archive")
-    endif()
-
-    # The archives are Windows made ones and carry the DOS read-only attribute
-    # on a directory of their own (the Audio one of the digital-audio pack),
-    # which the extraction turns into a directory no file may be created inside
-    # any more: the build tree stops being removable and copyable, the
-    # flatpak-builder source copy failing on it. Hence the extraction into a
-    # directory of it's own and the copy dropping the archive permissions.
-    file(COPY "${packUnpackDir}/" DESTINATION "${packDir}" NO_SOURCE_PERMISSIONS)
-
-    file(REMOVE_RECURSE "${packUnpackDir}")
+    file(REMOVE "${packDir}.zip")
   endforeach()
 endfunction()
 

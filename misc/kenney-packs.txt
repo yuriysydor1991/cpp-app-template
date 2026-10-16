@@ -1,0 +1,21 @@
+# The Kenney sound packs this project makes available.
+#
+# Kenney publishes every pack under the CC0 terms. Every line follows the
+#
+#   <pack>|<archive URL>|<archive SHA-256>
+#
+# form, the '#' starting a comment and the empty lines being skipped. The pack
+# name becomes the subdirectory the archive is unpacked into and the first part
+# of every sound alias, while the SHA-256 checksum pins the very archive the
+# build accepts: a download carrying anything else stops the configure instead
+# of slipping different sounds into the binary.
+#
+# The archive address carries a content hash kenney.nl regenerates whenever a
+# pack is updated, so an updated pack shows up as a failing download here. Take
+# the new address from the pack's own page (https://kenney.nl/assets/<pack>),
+# download the archive and record it's "sha256sum" output next to it.
+
+interface-sounds|https://kenney.nl/media/pages/assets/interface-sounds/fa43c1dd4d-1677589452/kenney_interface-sounds.zip|f2193d072726d6758a5f7871b2dcc54dcce0d5c35c6f0a62f92549b327c81232
+impact-sounds|https://kenney.nl/media/pages/assets/impact-sounds/87b4ddecda-1677589768/kenney_impact-sounds.zip|029d734af1582474edf3a694d1b0cebc97c1c152f2f39fa34d4c2bafc5de77f8
+digital-audio|https://kenney.nl/media/pages/assets/digital-audio/216eac4753-1677590265/kenney_digital-audio.zip|24e6ce28b76a6d8c89cff4d331e0965ff5c3de8a73c612028e9d363cc64e4f06
+ui-audio|https://kenney.nl/media/pages/assets/ui-audio/490d233f68-1677590494/kenney_ui-audio.zip|946fc23a63d535d693eb31b2eabb80c8c28d6351e2186b344ceb71b2cb1d5eb6

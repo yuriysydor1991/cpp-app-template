@@ -17,7 +17,7 @@ using namespace testing;
  * @brief Component test for the top-level log.h facilities (the LOG_INIT and
  * LOGx macros), exercised through the public facade only - it never names a
  * concrete logger implementation, so the same source can be reused on the
- * branches that swap the underlying logger (appLog4Cpp5, appBoostBeast, ...).
+ * branches that swap the underlying logger (appLog4Cpp5, appBoostLog, ...).
  *
  * The runtime level (the second LOG_INIT argument) is driven through the
  * branch-agnostic MACRO_LVL_* severities. Presence is asserted only for ERROR

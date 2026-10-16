@@ -214,13 +214,24 @@ TEST_F(CTEST_QtLogBridge, debug_message_obeys_the_gate_of_the_build)
 
 TEST_F(CTEST_QtLogBridge, repeated_install_is_ignored)
 {
-  QtLogBridge::install();
+  static std::string received;
+
+  // A handler the application installs for itself after the bridge, which a
+  // repeated install must not take the single handler slot away from.
+  const QtMessageHandler bridge = qInstallMessageHandler(
+      [](QtMsgType, const QMessageLogContext&, const QString& message) {
+        received = message.toStdString();
+      });
+
   QtLogBridge::install();
 
   qWarning("a warning after the repeated install");
 
+  qInstallMessageHandler(bridge);
+
+  EXPECT_EQ(received, "a warning after the repeated install");
   EXPECT_THAT(log_contents(),
-              HasSubstr("a warning after the repeated install"));
+              Not(HasSubstr("a warning after the repeated install")));
 }
 
 int main(int argc, char* argv[])

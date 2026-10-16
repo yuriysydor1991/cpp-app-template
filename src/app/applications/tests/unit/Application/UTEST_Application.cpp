@@ -17,6 +17,9 @@ class UTEST_Application : public Test
   {
   }
 
+  // the mock function the hook refers to dies with the test case
+  ~UTEST_Application() override { Wt4Server::run_mock = nullptr; }
+
   int argc{0};
   char** argv{nullptr};
 

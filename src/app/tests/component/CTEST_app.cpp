@@ -15,6 +15,9 @@ class CTEST_app : public Test
  public:
   CTEST_app() = default;
 
+  // the mock function the hook refers to dies with the test case
+  ~CTEST_app() override { Wt4Server::run_mock = nullptr; }
+
   int argc{0};
   char** argv{nullptr};
 

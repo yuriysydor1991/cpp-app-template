@@ -31,3 +31,5 @@ sudo mysql -e "GRANT ALL PRIVILEGES ON template_test_db.* TO 'template_test_user
 ```
 MYSQL_USER=my_user MYSQL_PASSWORD=my_password MYSQL_DATABASE=template_test_db ./CppAppTemplate
 ```
+
+Ці ж змінні використовують компонентні тести `CTEST_MySQLController`, котрі пропускаються, якщо з ними не вдається підключитись до жодного сервера.

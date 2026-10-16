@@ -31,3 +31,5 @@ The next environment variables override the defaults at the application start:
 ```
 MYSQL_USER=my_user MYSQL_PASSWORD=my_password MYSQL_DATABASE=template_test_db ./CppAppTemplate
 ```
+
+The same variables are used by the `CTEST_MySQLController` component tests, which are skipped when no server is reachable with them.

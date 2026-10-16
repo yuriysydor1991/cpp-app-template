@@ -57,6 +57,19 @@ class MySQLController : public app::IDBConnection
   virtual std::string get_current_date() override;
 
  protected:
+  /**
+   * @brief Opens the Connector/C++ connection to the given server URL with
+   * the given credentials. Throws the sql::SQLException on a failure.
+   */
+  virtual std::unique_ptr<sql::Connection> open_connection(
+      const std::string& url, const std::string& user,
+      const std::string& password);
+
+  /**
+   * @brief Executes the given query over the present connection.
+   *
+   * @returns Returns the query result or nullptr in case of any error.
+   */
   virtual std::unique_ptr<sql::ResultSet> execute_query(
       const std::string& query);
 

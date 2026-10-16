@@ -19,7 +19,8 @@ BUILD_SCRIPTS_ROOT=$(realpath "$(dirname "$0")")
 
 filter_script_args "$@"
 
-SETUP_ARGS=(--buildtype=release "-DENABLE_DEB=true")
+# The distribution packages install into the /usr prefix.
+SETUP_ARGS=(--buildtype=release --prefix=/usr "-DENABLE_DEB=true")
 
 if [[ -d "${BUILD_DIR}" ]] ; then
     SETUP_ARGS+=(--reconfigure)

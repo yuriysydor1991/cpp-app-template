@@ -21,6 +21,17 @@ configure_file(
   input: join_paths(meson.project_source_root(), 'misc', 'deb-control.in')
 )
 
+if get_option('prefix') != '/usr'
+  message(
+    'The deb package installs into the ' + get_option('prefix') + ' prefix, ' +
+    'configure with the --prefix=/usr for a Debian policy conforming package.'
+  )
+endif
+
+# A package shipping a shared library refreshes the dynamic linker cache
+# through the ldconfig trigger, so the installed binaries find it right away.
+# The --root-owner-group hands the payload to the root instead of the user
+# who happens to build the package.
 deb_cmd = [
   'sh', '-c',
   'set -e && ' +
@@ -28,7 +39,10 @@ deb_cmd = [
   'mkdir -p ' + deb_stage_dir + '/DEBIAN && ' +
   'cp ' + deb_control_path + ' ' + deb_stage_dir + '/DEBIAN/control && ' +
   'DESTDIR=' + deb_stage_dir + ' meson install -C ' + meson.project_build_root() + ' && ' +
-  'dpkg-deb --build ' + deb_stage_dir + ' ' + join_paths(meson.project_build_root(), deb_output)
+  'if [ -n "$(find ' + deb_stage_dir + ' -name "lib*.so*" -print)" ]; then ' +
+    'echo "activate-noawait ldconfig" > ' + deb_stage_dir + '/DEBIAN/triggers; fi && ' +
+  'dpkg-deb --root-owner-group --build ' + deb_stage_dir + ' ' +
+    join_paths(meson.project_build_root(), deb_output)
 ]
 
 deb_target = custom_target(

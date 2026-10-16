@@ -49,12 +49,15 @@ endif()
 # The clang-tidy checks are for the project code, not the fetched library one.
 set_target_properties(PlotGenCpp PROPERTIES CXX_CLANG_TIDY "" SYSTEM ON)
 
-# install(TARGETS PlotGenCpp
-#     EXPORT PlotGenCpp
-#     ARCHIVE DESTINATION lib
-#     LIBRARY DESTINATION lib
-#     RUNTIME DESTINATION bin
-#   )
+# The library installs itself next to the executable and the fetched SFML into
+# the lib directory, while GNU/Linux searches neither of them by itself, so the
+# installed binary carries the RPATH to both.
+if (UNIX AND NOT APPLE)
+  set_property(
+    TARGET ${PROJECT_BINARY_NAME}
+    APPEND PROPERTY INSTALL_RPATH "$ORIGIN" "$ORIGIN/../lib"
+  )
+endif()
 
 target_link_libraries(
   TemplateProjectPlotGenCppControllerObj

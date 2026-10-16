@@ -16,6 +16,8 @@ PACKAGES="
     cmake
     git
     googletest
+    sdl2
+    sdl2_mixer
 "
 
 PKG_SUDO=""

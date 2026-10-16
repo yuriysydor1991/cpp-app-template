@@ -21,3 +21,5 @@ sudo apt install -y qt6-base-dev qt6-base-dev-tools \
 ```
 
 Пакети `qt6-location-dev`, `qt6-positioning-dev`, `qml6-module-qtlocation` і `qml6-module-qtpositioning` надають модулі [Qt Location](https://doc.qt.io/qt-6/qtlocation-index.html) та [Qt Positioning](https://doc.qt.io/qt-6/qtpositioning-index.html), що містять рідний QML-елемент [Map](https://doc.qt.io/qt-6/qml-qtlocation-map.html) (разом із вбудованим втулком геосервісів `osm` для мап OpenStreetMap), який використовується у цій гілці. Вони потребують Qt 6.5 або новішої версії, у якій модуль Qt Location було повернуто.
+
+Qt6 є обов'язковою для цієї гілки: клас `Application` запускає `Qt6Controller`, тож конфігурування з параметром `-DENABLE_QT6=OFF` завершується помилкою. Для програми без Qt6 скористайтеся гілкою `app`.

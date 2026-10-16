@@ -5,6 +5,7 @@
 
 #include "project-global-decls.h"
 #include "src/app/applications/IApplication.h"
+#include "src/gtkmm4/StopFlagWatcher.h"
 #include "src/gtkmm4/gtkmm4_includes.h"
 #include "src/gtkmm4/log/GtkLogBridge.h"
 #include "src/gtkmm4/main-window/GtkmmWindow.h"
@@ -32,6 +33,8 @@ int Gtkmm4Controller::run(std::shared_ptr<app::ApplicationContext> nactx)
   LOGD("Trying to create the GTK4 app instance");
 
   auto app = Gtk::Application::create(project_decls::PROJECT_REVERSE_URL);
+
+  const StopFlagWatcher stopWatcher{actx, *app};
 
   LOGD("Starting the GTK4 app");
 

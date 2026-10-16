@@ -100,7 +100,7 @@ bool CURLController::append(const char* const data, const std::size_t size)
 
 long CURLController::last_response_code() const { return responseCode; }
 
-bool CURLController::last_response_successfull() const
+bool CURLController::last_response_successful() const
 {
   if (!responseReceived) {
     return false;

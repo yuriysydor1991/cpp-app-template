@@ -7,10 +7,10 @@
 #include <memory>
 #include <string>
 
-#include "MongoDBControllerSpy.h"
 #include "src/app/ApplicationContext.h"
 #include "src/mongodbcxx/MongoDBController.h"
 #include "src/mongodbcxx/mongocxx-includes.h"
+#include "src/mongodbcxx/tests/mocks/MongoDBControllerSpy.h"
 
 using namespace mongodbcxxi;
 using namespace app;

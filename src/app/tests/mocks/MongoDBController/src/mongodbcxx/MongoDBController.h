@@ -15,7 +15,7 @@ namespace mongodbcxxi
 class MongoDBController : public app::IDBConnection
 {
  public:
-  virtual ~MongoDBController() = default;
+  ~MongoDBController() override = default;
   MongoDBController()
   {
     if (onMockCreate) {

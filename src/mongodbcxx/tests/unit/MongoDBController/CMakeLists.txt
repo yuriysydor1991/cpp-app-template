@@ -13,7 +13,6 @@ add_executable(
 target_include_directories(
   UTEST_MongoDBController
   PRIVATE ${APP_MOCKS_ROOT}/log
-  PRIVATE ${MONGODB_MOCKS_ROOT}
   PRIVATE ${CMAKE_SOURCE_DIR}
 )
 

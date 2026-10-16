@@ -23,7 +23,7 @@ class MongoDBController : public app::IDBConnection
   using JsonDoc = helpers::QueryMaker::JsonDoc;
   using DBJsonRes = bsoncxx::document::value;
 
-  virtual ~MongoDBController() = default;
+  ~MongoDBController() override = default;
   MongoDBController();
 
   /**

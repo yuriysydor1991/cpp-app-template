@@ -25,6 +25,6 @@ template_project_default_3rdparty_enabler(
 if (TARGET ${PROJECT_BINARY_NAME})
   target_link_libraries(
     ${PROJECT_BINARY_NAME}
-    nlohmann_json::nlohmann_json
+    PRIVATE nlohmann_json::nlohmann_json
   )
 endif()

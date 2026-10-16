@@ -1,6 +1,8 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include <memory>
+#include <string>
 #include <thread>
 
 #include "src/app/ApplicationContext.h"
@@ -35,6 +37,7 @@ TEST_F(UTEST_ApplicationContext, empty_context)
   EXPECT_TRUE(appCtx->get_errors().empty());
   EXPECT_FALSE(appCtx->get_print_help_and_exit());
   EXPECT_FALSE(appCtx->get_print_version_and_exit());
+  EXPECT_FALSE(appCtx->get_stop());
   EXPECT_FALSE(appCtx->get_pause());
   EXPECT_FALSE(appCtx->get_reload());
   EXPECT_FALSE(appCtx->get_first_user_request());
@@ -53,6 +56,7 @@ TEST_F(UTEST_ApplicationContext, custom_argc)
   EXPECT_TRUE(appCtx->get_errors().empty());
   EXPECT_FALSE(appCtx->get_print_help_and_exit());
   EXPECT_FALSE(appCtx->get_print_version_and_exit());
+  EXPECT_FALSE(appCtx->get_stop());
   EXPECT_FALSE(appCtx->get_pause());
   EXPECT_FALSE(appCtx->get_reload());
   EXPECT_FALSE(appCtx->get_first_user_request());
@@ -72,10 +76,28 @@ TEST_F(UTEST_ApplicationContext, custom_argv)
   EXPECT_TRUE(appCtx->get_errors().empty());
   EXPECT_FALSE(appCtx->get_print_help_and_exit());
   EXPECT_FALSE(appCtx->get_print_version_and_exit());
+  EXPECT_FALSE(appCtx->get_stop());
   EXPECT_FALSE(appCtx->get_pause());
   EXPECT_FALSE(appCtx->get_reload());
   EXPECT_FALSE(appCtx->get_first_user_request());
   EXPECT_FALSE(appCtx->get_second_user_request());
+}
+
+TEST_F(UTEST_ApplicationContext, args_are_referenced_and_not_copied)
+{
+  char* pcustomArgv{nullptr};
+  char** customArgv{&pcustomArgv};
+
+  auto customCtx = create_context(argc, customArgv);
+
+  EXPECT_EQ(&customCtx->get_argc(), &argc);
+  EXPECT_EQ(&customCtx->get_argv(), &customArgv);
+
+  argc = expectedRandomInt;
+  customArgv = nullptr;
+
+  EXPECT_EQ(customCtx->get_argc(), expectedRandomInt);
+  EXPECT_EQ(customCtx->get_argv(), nullptr);
 }
 
 TEST_F(UTEST_ApplicationContext, pushing_an_error)
@@ -107,6 +129,62 @@ TEST_F(UTEST_ApplicationContext, pushing_multiple_errors)
     EXPECT_EQ(error, expectedError);
   }
 
+  EXPECT_FALSE(appCtx->get_print_help_and_exit());
+  EXPECT_FALSE(appCtx->get_print_version_and_exit());
+}
+
+TEST_F(UTEST_ApplicationContext, setting_the_print_help_and_exit_flag)
+{
+  EXPECT_FALSE(appCtx->get_print_help_and_exit());
+
+  appCtx->set_print_help_and_exit(true);
+
+  EXPECT_TRUE(appCtx->get_print_help_and_exit());
+
+  appCtx->set_print_help_and_exit(false);
+
+  EXPECT_FALSE(appCtx->get_print_help_and_exit());
+  EXPECT_FALSE(appCtx->get_print_version_and_exit());
+}
+
+TEST_F(UTEST_ApplicationContext, setting_the_print_version_and_exit_flag)
+{
+  EXPECT_FALSE(appCtx->get_print_version_and_exit());
+
+  appCtx->set_print_version_and_exit(true);
+
+  EXPECT_TRUE(appCtx->get_print_version_and_exit());
+
+  appCtx->set_print_version_and_exit(false);
+
+  EXPECT_FALSE(appCtx->get_print_version_and_exit());
+  EXPECT_FALSE(appCtx->get_print_help_and_exit());
+}
+
+TEST_F(UTEST_ApplicationContext, setting_the_stop_flag)
+{
+  EXPECT_FALSE(appCtx->get_stop());
+
+  appCtx->set_stop(true);
+
+  EXPECT_TRUE(appCtx->get_stop());
+
+  appCtx->set_stop(false);
+
+  EXPECT_FALSE(appCtx->get_stop());
+}
+
+TEST_F(UTEST_ApplicationContext, raising_the_stop_flag_from_another_thread)
+{
+  EXPECT_FALSE(appCtx->get_stop());
+
+  std::thread stopper{[this]() { appCtx->set_stop(true); }};
+
+  stopper.join();
+
+  EXPECT_TRUE(appCtx->get_stop());
+
+  EXPECT_TRUE(appCtx->get_errors().empty());
   EXPECT_FALSE(appCtx->get_print_help_and_exit());
   EXPECT_FALSE(appCtx->get_print_version_and_exit());
 }

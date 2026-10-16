@@ -12,7 +12,6 @@ PACKAGES=(
     cmake
     g++
     git
-    glade
     googletest
     libadwaita-1-dev
     libglib2.0-dev-bin

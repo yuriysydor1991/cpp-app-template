@@ -11,10 +11,3 @@ sudo apt install -y git g++ cmake
 ```
 sudo apt install -y pkg-config libgtkmm-4.0-dev libglib2.0-dev-bin libadwaita-1-dev
 ```
-
-
-Для того щоб мати змогу розробляти візуальний інтерфейс необіхдно встановити спеціалізований інструмент розробки [Glade](https://en.wikipedia.org/wiki/Glade_Interface_Designer) за допомогою команди:
-
-```
-sudo apt install -y glade
-```

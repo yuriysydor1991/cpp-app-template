@@ -16,7 +16,7 @@ target_include_directories(
   PRIVATE ${APP_MOCKS_ROOT}/CommandLineParser
   PRIVATE ${SIGNALS_HANDLERS_MOCKS_ROOT}/SignalsHandler
   PRIVATE ${APP_MOCKS_ROOT}/project-global-decls
-  PRIVATE ${GENERAL_MOCKS_ROOT}/log
+  PRIVATE ${APP_MOCKS_ROOT}/log
   PRIVATE ${CMAKE_SOURCE_DIR}
 )
 

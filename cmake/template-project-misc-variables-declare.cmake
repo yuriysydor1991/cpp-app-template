@@ -90,7 +90,7 @@ set(
 set(
   MAX_LOG_LEVEL "3"
   CACHE STRING 
-  "Sets the maximum severity of the compiled log messages. Error=0. Trace=5. By default Info=3"
+  "Sets the maximum severity of the compiled log messages. Error=1. Trace=5. By default Info=3"
 )
 
 set(

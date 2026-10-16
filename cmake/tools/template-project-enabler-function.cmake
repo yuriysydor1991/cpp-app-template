@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.13)
 
 function(template_project_default_3rdparty_enabler)
   set(FCN_KEYWORDS_FLAGS DISABLE_SYSTEM_PROBE)
-  set(FCN_KEYWORDS_SINGLE NAME GIT_REPOSITORY GIT_TAG)
+  set(FCN_KEYWORDS_SINGLE NAME VERSION GIT_REPOSITORY GIT_TAG)
   set(FCN_KEYWORDS_MULTI COMPONENTS)
 
   cmake_parse_arguments(
@@ -18,7 +18,8 @@ function(template_project_default_3rdparty_enabler)
 
   if (NOT ARG_DISABLE_SYSTEM_PROBE)
     message(STATUS "Trying to probe system installed ${ARG_NAME}")
-    find_package(${ARG_NAME} QUIET ${COMPONENTS_STR})
+    # a VERSION skips the system installs of an incompatible release line
+    find_package(${ARG_NAME} ${ARG_VERSION} QUIET ${COMPONENTS_STR})
   endif()
 
   if (${ARG_NAME}_FOUND)

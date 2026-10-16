@@ -14,7 +14,7 @@ cmake -S . -B build -DENABLE_ZLIB=ON
 
 ### Стиснення потрібних даних (приклади для копіювання)
 
-Після `ENABLE_ZLIB=ON` та прилінкування цілі zlib (наприклад `target_link_libraries(${PROJECT_BINARY_NAME} ZLIB::ZLIB)`) підключи `<zlib.h>` і скопіюй будь-який зі сніпетів нижче.
+Після `ENABLE_ZLIB=ON` та прилінкування цілі zlib (наприклад `target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE ZLIB::ZLIB)`) підключи `<zlib.h>` і скопіюй будь-який зі сніпетів нижче.
 
 Найшвидший спосіб стиснути потрібний буфер — за один виклик, у пам'яті, з використанням обгортки zlib/deflate (RFC 1950):
 

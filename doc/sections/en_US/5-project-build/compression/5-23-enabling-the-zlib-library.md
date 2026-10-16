@@ -14,7 +14,7 @@ On the `appZlib` branch the option is `ON` by default, since the `src/zlib` exam
 
 ### Compressing data of interest (copy-paste examples)
 
-After `ENABLE_ZLIB=ON` and linking a zlib target (e.g. `target_link_libraries(${PROJECT_BINARY_NAME} ZLIB::ZLIB)`), include `<zlib.h>` and copy-paste any of the snippets below.
+After `ENABLE_ZLIB=ON` and linking a zlib target (e.g. `target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE ZLIB::ZLIB)`), include `<zlib.h>` and copy-paste any of the snippets below.
 
 The quickest way to compress a buffer of interest — one-shot, in-memory, using the zlib/deflate wrapper (RFC 1950):
 

@@ -58,7 +58,8 @@ std::string TestHttpClient::get(const int port, const std::string& path)
         static_cast<ssize_t>(request.size())) {
       std::array<char, 4096> buf{};
 
-      for (ssize_t got = 0; (got = recv(sock, buf.data(), buf.size(), 0)) > 0;) {
+      for (ssize_t got = 0;
+           (got = recv(sock, buf.data(), buf.size(), 0)) > 0;) {
         response.append(buf.data(), static_cast<size_t>(got));
       }
     }

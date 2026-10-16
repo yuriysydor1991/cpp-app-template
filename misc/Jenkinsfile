@@ -98,6 +98,11 @@ pipeline {
     
     stage('Unit Tests') {
       parallel {
+        stage('UTEST_DisabledFbClient') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_DisabledFbClient\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_DisabledFbClient.junit.xml'
+          }
+        }
         stage('UTEST_FbConnStringMaker') {
           steps {
             sh 'cd $BUILDDIR && ctest -R "UTEST_FbConnStringMaker\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_FbConnStringMaker.junit.xml'

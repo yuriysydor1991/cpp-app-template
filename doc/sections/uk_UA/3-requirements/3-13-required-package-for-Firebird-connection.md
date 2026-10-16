@@ -12,6 +12,8 @@ sudo apt install -y firebird-dev
 sudo apt install -y autoconf automake libtool-bin make unzip zlib1g-dev libicu-dev libncurses-dev
 ```
 
+Параметр CMake `ENABLE_FIREBIRD` (типово `ON`) керує клієнтською бібліотекою. Якщо сконфігурувати проект з `-DENABLE_FIREBIRD=OFF`, то бібліотека fbclient не шукається і не завантажується, а проект збирається без неї: місце драйвера займає клас `DisabledFbClient`, тож виконуваний файл повідомляє, що підтримку Firebird вимкнено, і завершується зі статусом помилки.
+
 Для встановлення самого сервера СКБД [Firebird](https://firebirdsql.org/) (разом з ним встановлюється і бібліотека часу виконання `libfbclient2`) можна використати наступну команду (ОС на базі GNU/Linux, суфікс версії може відрізнятись у різних дистрибутивах):
 
 ```

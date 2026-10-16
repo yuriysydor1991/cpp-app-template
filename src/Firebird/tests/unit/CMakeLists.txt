@@ -7,6 +7,7 @@ endif()
 # disabling the asserts for the tests
 add_compile_options(-DNDEBUG=1)
 
+add_subdirectory(DisabledFbClient)
 add_subdirectory(QueryMaker)
 add_subdirectory(FbConnStringMaker)
 add_subdirectory(FbDpbBuilder)

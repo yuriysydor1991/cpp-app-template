@@ -25,4 +25,4 @@ template_project_default_3rdparty_enabler(
 #   - FetchContent source build:                 heif
 #     (enable a codec for the FetchContent build to decode, e.g. libde265)
 # For example:
-#   target_link_libraries(${PROJECT_BINARY_NAME} heif)
+#   target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE heif)

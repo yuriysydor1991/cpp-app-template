@@ -1,13 +1,34 @@
 #include "src/app/ApplicationContext.h"
 
+#include <cstdlib>
 #include <string>
 #include <vector>
+
+namespace
+{
+
+/// @brief Returns the given environment variable value or the fallback one
+/// for an unset variable.
+std::string env_or(const char* name, const std::string& fallback)
+{
+  const char* value = std::getenv(name);
+
+  return value != nullptr ? std::string{value} : fallback;
+}
+
+}  // namespace
 
 namespace app
 {
 
 ApplicationContext::ApplicationContext(int& gargc, char**& gargv)
-    : margc{gargc}, margv{gargv}
+    : margc{gargc},
+      margv{gargv},
+      mdb_name{env_or("MONGODB_DATABASE", {})},
+      mdb_username{env_or("MONGODB_USER", {})},
+      mdb_password{env_or("MONGODB_PASSWORD", {})},
+      mdb_host{env_or("MONGODB_HOST", {})},
+      mdb_port{env_or("MONGODB_PORT", {})}
 {
 }
 

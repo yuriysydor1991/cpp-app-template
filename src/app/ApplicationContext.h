@@ -112,31 +112,36 @@ class ApplicationContext
   /// ApplicationContext::set_first_user_request setter.
   void set_second_user_request(const bool newValue);
 
-  /// @brief The db name value.
+  /// @brief The db name value. Initialized from the MONGODB_DATABASE
+  /// environment variable, if set.
   const std::string& get_db_name() const;
 
   /// @brief Sets the the db name value.
   void set_db_name(const std::string& newValue);
 
-  /// @brief The db username value.
+  /// @brief The db username value. Initialized from the MONGODB_USER
+  /// environment variable, if set.
   const std::string& get_db_username() const;
 
   /// @brief Sets the the db username value.
   void set_db_username(const std::string& newValue);
 
-  /// @brief The db password value.
+  /// @brief The db password value. Initialized from the MONGODB_PASSWORD
+  /// environment variable, if set.
   const std::string& get_db_password() const;
 
   /// @brief Sets the the db password value.
   void set_db_password(const std::string& newValue);
 
-  /// @brief The db host value.
+  /// @brief The db host value. Initialized from the MONGODB_HOST
+  /// environment variable, if set.
   const std::string& get_db_host() const;
 
   /// @brief Sets the the db host value.
   void set_db_host(const std::string& newValue);
 
-  /// @brief The db port value.
+  /// @brief The db port value. Initialized from the MONGODB_PORT
+  /// environment variable, if set.
   const std::string& get_db_port() const;
 
   /// @brief Sets the the db port value.

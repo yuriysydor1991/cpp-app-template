@@ -7,3 +7,31 @@ sudo apt install -y libmongoc-dev libbson-dev
 ```
 
 Архіви більшості дистрибутивів взагалі не містять пакету драйвера MongoDB для C++, тому [модуль вмикання mongocxx](/doc/sections/uk_UA/5-project-build/5-38-enabling-the-mongocxx-library.md) самостійно завантажує та збирає цей драйвер, якщо у системі його немає. Наведені вище пакети драйвера для C є необов'язковими та звільняють завантажені вихідні коди від цієї частини побудови.
+
+### Підключення до сервера MongoDB
+
+За замовчуванням виконуваний файл підключається до сервера [MongoDB](https://www.mongodb.com/) за адресою `localhost:27017` без облікових даних. Архіви дистрибутивів не містять пакету сервера MongoDB, тому встанови його з репозиторіїв [MongoDB Community Edition](https://www.mongodb.com/docs/manual/administration/install-community/) або запусти офіційний образ контейнера, наприклад:
+
+```
+docker run --rm -d -p 27017:27017 --name mongodb mongo
+```
+
+Налаштування підключення беруться з наступних змінних середовища, якщо їх встановлено:
+
+- `MONGODB_HOST` - ім'я хоста сервера (за замовчуванням `localhost`);
+- `MONGODB_PORT` - порт сервера (за замовчуванням `27017`);
+- `MONGODB_USER` - ім'я користувача; частина рядка підключення з обліковими даними додається лише тоді, коли його встановлено;
+- `MONGODB_PASSWORD` - пароль користувача;
+- `MONGODB_DATABASE` - база даних, щодо якої автентифікується користувач.
+
+Ім'я користувача, пароль та назва бази даних кодуються відсотковим кодуванням, тому вони можуть містити будь-які символи. Щоб створити на сервері користувача для шаблону, виконай наступну команду:
+
+```
+mongosh --eval 'db.getSiblingDB("templatedb").createUser({user: "template_user", pwd: "template_password", roles: [{role: "readWrite", db: "templatedb"}]})'
+```
+
+та запусти виконуваний файл з відповідними налаштуваннями:
+
+```
+MONGODB_USER=template_user MONGODB_PASSWORD=template_password MONGODB_DATABASE=templatedb ./CppAppTemplate
+```

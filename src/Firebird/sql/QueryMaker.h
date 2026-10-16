@@ -1,10 +1,7 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_FIREBIRD_QUERYMAKER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_FIREBIRD_QUERYMAKER_CLASS_H
 
-#include <memory>
 #include <string>
-
-#include "src/app/ApplicationContext.h"
 
 namespace firebirdi::sql
 {
@@ -16,7 +13,7 @@ class QueryMaker
 {
  public:
   virtual ~QueryMaker() = default;
-  explicit QueryMaker(std::shared_ptr<app::ApplicationContext> nctx);
+  QueryMaker() = default;
 
   /**
    * @brief Returns the build date query for Firebird.
@@ -26,9 +23,6 @@ class QueryMaker
    * driver may fetch it as a plain string.
    */
   virtual std::string make_date_query();
-
- protected:
-  std::shared_ptr<app::ApplicationContext> actx;
 };
 
 }  // namespace firebirdi::sql

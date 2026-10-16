@@ -111,3 +111,18 @@ TEST_F(UTEST_Firebird, get_current_date_without_connection_is_empty)
 
   EXPECT_TRUE(fb->get_current_date().empty());
 }
+
+TEST_F(UTEST_Firebird, connection_does_not_keep_the_context_alive)
+{
+  EXPECT_CALL(*client, attach(_, _, _)).WillOnce(Return(true));
+
+  ctx->set_db_connection(fb);
+
+  EXPECT_TRUE(fb->connect(ctx));
+
+  const std::weak_ptr<ApplicationContext> weakCtx = ctx;
+
+  ctx.reset();
+
+  EXPECT_TRUE(weakCtx.expired());
+}

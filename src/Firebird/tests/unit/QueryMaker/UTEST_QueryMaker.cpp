@@ -11,7 +11,7 @@ using namespace testing;
 class UTEST_QueryMaker : public Test
 {
  public:
-  UTEST_QueryMaker() : qmaker{std::make_shared<QueryMaker>(nullptr)} {}
+  UTEST_QueryMaker() : qmaker{std::make_shared<QueryMaker>()} {}
 
   std::shared_ptr<QueryMaker> qmaker;
 };

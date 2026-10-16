@@ -21,8 +21,6 @@ bool Firebird::connect(std::shared_ptr<app::ApplicationContext> nctx)
     return false;
   }
 
-  actx = nctx;
-
   qmaker = create_query_maker();
   client = create_client();
 
@@ -33,8 +31,8 @@ bool Firebird::connect(std::shared_ptr<app::ApplicationContext> nctx)
     return false;
   }
 
-  return client->attach(make_conn_string(), actx->get_fb_user(),
-                        actx->get_fb_password());
+  return client->attach(make_conn_string(nctx), nctx->get_fb_user(),
+                        nctx->get_fb_password());
 }
 
 std::shared_ptr<IFbClient> Firebird::create_client()
@@ -44,14 +42,15 @@ std::shared_ptr<IFbClient> Firebird::create_client()
 
 std::shared_ptr<sql::QueryMaker> Firebird::create_query_maker()
 {
-  return std::make_shared<sql::QueryMaker>(actx);
+  return std::make_shared<sql::QueryMaker>();
 }
 
-std::string Firebird::make_conn_string()
+std::string Firebird::make_conn_string(
+    std::shared_ptr<app::ApplicationContext> nctx)
 {
   auto csmaker = std::make_shared<helpers::FbConnStringMaker>();
 
-  return csmaker->make_conn_string(actx);
+  return csmaker->make_conn_string(nctx);
 }
 
 bool Firebird::connected() { return client != nullptr && client->attached(); }

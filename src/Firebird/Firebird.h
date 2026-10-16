@@ -54,7 +54,8 @@ class Firebird : public app::IDBConnection
   virtual std::string get_current_date() override;
 
  protected:
-  virtual std::string make_conn_string();
+  virtual std::string make_conn_string(
+      std::shared_ptr<app::ApplicationContext> nctx);
 
   /**
    * @brief Creates the IFbClient implementation used to talk to Firebird.
@@ -66,8 +67,6 @@ class Firebird : public app::IDBConnection
   virtual std::shared_ptr<sql::QueryMaker> create_query_maker();
 
  private:
-  std::shared_ptr<app::ApplicationContext> actx;
-
   std::shared_ptr<IFbClient> client;
   std::shared_ptr<sql::QueryMaker> qmaker;
 };

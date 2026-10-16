@@ -8,9 +8,11 @@ set(
       -t ${DOCKER_SINGLE_RUN_NAME} .
 )
 
+# the X server access is revoked on the shell exit, so a failed run drops it too
 set(
   DOCKER_SINGLE_RUN_CMD
     xhost +local: &&
+    trap "xhost -local:" EXIT &&
     ${DOCKER_EXEC} run --rm
     --env DISPLAY=$$DISPLAY
     --env QT_X11_NO_MITSHM=1
@@ -18,8 +20,7 @@ set(
     --volume $$HOME/.Xauthority:/home/${DOCKERFILE_SINGLE_RUN_USER_NAME}/.Xauthority
     -v $$XDG_RUNTIME_DIR:$$XDG_RUNTIME_DIR
     --network host
-    ${DOCKER_SINGLE_RUN_NAME} &&
-    xhost -local:
+    ${DOCKER_SINGLE_RUN_NAME}
 )
 
 message(STATUS "docker single build command: ${DOCKER_SINGLE_BUILD_CMD}")

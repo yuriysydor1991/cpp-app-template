@@ -9,7 +9,8 @@
 #ifndef LOG_INIT
 /**
  * @brief The logging init macros. Use them in the main function or
- * as by default is used in the app::ApplicationFactory::execute method.
+ * as by default is used in the app::ApplicationFactory::execute method. They
+ * give a false value if the log file can not be opened.
  */
 #define LOG_INIT(filepath, logLvl, printMessages) \
   boost_log::BoostLogController::init(filepath, logLvl, printMessages)
@@ -31,11 +32,13 @@
 /**
  * @brief The internal logger macro to define the general logging code body.
  */
-#define LOG_BODY(sev, msg)                                            \
-  BOOST_LOG_SEV(boost_log::BoostLogController::get_lg(),              \
-                boost_log::logging::trivial::sev)                     \
-      << boost_log::BoostLogController::get_filename(__FILE__) << ":" \
-      << __LINE__ << " : " << msg
+#define LOG_BODY(sev, msg)                                              \
+  do {                                                                  \
+    BOOST_LOG_SEV(boost_log::BoostLogController::get_lg(),              \
+                  boost_log::logging::trivial::sev)                     \
+        << boost_log::BoostLogController::get_filename(__FILE__) << ":" \
+        << __LINE__ << " : " << msg;                                    \
+  } while (0)
 #endif  // LOG_BODY
 
 #ifndef LOGE
@@ -58,7 +61,9 @@
  */
 #define LOGI(msg) LOG_BODY(info, msg)
 #else
-#define LOGI(msg)
+#define LOGI(msg) \
+  do {            \
+  } while (0)
 #endif  // MAX_LOG_LEVEL
 #endif  // LOGI
 
@@ -72,7 +77,9 @@
  */
 #define LOGW(msg) LOG_BODY(warning, msg)
 #else
-#define LOGW(msg)
+#define LOGW(msg) \
+  do {            \
+  } while (0)
 #endif  // MAX_LOG_LEVEL
 #endif  // LOGW
 
@@ -86,7 +93,9 @@
  */
 #define LOGD(msg) LOG_BODY(debug, msg)
 #else
-#define LOGD(msg)
+#define LOGD(msg) \
+  do {            \
+  } while (0)
 #endif  // MAX_LOG_LEVEL
 #endif  // LOGD
 
@@ -100,7 +109,9 @@
  */
 #define LOGT(msg) LOG_BODY(trace, msg)
 #else
-#define LOGT(msg)
+#define LOGT(msg) \
+  do {            \
+  } while (0)
 #endif  // MAX_LOG_LEVEL
 #endif  // LOGT
 

@@ -126,6 +126,25 @@ TEST_F(CTEST_log, trace_is_dropped_when_runtime_level_is_debug)
   EXPECT_TRUE(log_contents().empty());
 }
 
+TEST_F(CTEST_log, macros_are_single_statements)
+{
+  static const std::string expect = "the else branch message";
+
+  init(MACRO_LVL_TRACE);
+
+  // Every macro must expand into a single statement, which an unbraced if and
+  // else pair accepts, the compiled out ones included.
+  if (test_log_file.empty()) LOGE("the if branch message");
+  else
+    LOGE(expect);
+
+  if (test_log_file.empty()) LOGT("the if branch message");
+  else
+    LOGE(expect);
+
+  EXPECT_THAT(log_contents(), EndsWith(expect + "\n"));
+}
+
 TEST_F(CTEST_log, multithread_error_logs)
 {
   static constexpr const unsigned int iters_per_thread = 1000U;

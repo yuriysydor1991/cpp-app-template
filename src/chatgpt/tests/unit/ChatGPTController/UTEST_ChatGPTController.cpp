@@ -53,8 +53,7 @@ class UTEST_ChatGPTController : public Test
         .WillOnce(DoAll(SaveArg<1>(&sentBody), SaveArg<2>(&sentHeaders),
                         Return(as_buffer(response))));
 
-    EXPECT_CALL(*curl, last_response_successful())
-        .WillRepeatedly(Return(true));
+    EXPECT_CALL(*curl, last_response_successful()).WillRepeatedly(Return(true));
   }
 
   static constexpr const char* const question = "What is the point of taxes?";

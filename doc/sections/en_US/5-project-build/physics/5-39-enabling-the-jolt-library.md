@@ -12,13 +12,14 @@ See the `cmake/enablers/physics/template-project-jolt-enabler.cmake` module for 
 
 The fetched revision is driven by the `TEMPLATE_APP_JOLT_GIT_TAG` CMake variable (`v5.6.0` by default). The Jolt CMake project lives in the `Build` subdirectory of its repository, so the enabler passes a `SOURCE_SUBDIR` to the FetchContent declaration.
 
-The enabler also defaults three Jolt options that upstream turns on and that break a plain consumer build:
+The enabler also defaults four Jolt options that upstream turns on and that break a plain consumer build:
 
 - `INTERPROCEDURAL_OPTIMIZATION` is switched `OFF`, since the Jolt objects built with the link time optimization are not linkable unless the whole project enables the LTO as well;
 - `ENABLE_ALL_WARNINGS` is switched `OFF`, since it compiles Jolt with the warnings treated as errors;
-- `JPH_USE_VK` is switched `OFF`, since the Jolt Vulkan compute backend compiles its shaders with the `dxc` compiler of the Vulkan SDK, which the plain Vulkan runtime does not ship.
+- `JPH_USE_VK` is switched `OFF`, since the Jolt Vulkan compute backend compiles its shaders with the `dxc` compiler of the Vulkan SDK, which the plain Vulkan runtime does not ship;
+- `USE_STATIC_MSVC_RUNTIME_LIBRARY` is switched `OFF`, since the static MSVC runtime (`/MT`) Jolt picks by default does not link with the DLL runtime (`/MD`) the project uses (the `LNK2038` mismatch errors).
 
-All three stay ordinary cache variables, so pass e.g. `-DINTERPROCEDURAL_OPTIMIZATION=ON` if the project itself is built with the LTO enabled, or `-DJPH_USE_VK=ON` on a host with the full Vulkan SDK installed. The CPU compute backend (`JPH_USE_CPU_COMPUTE`) stays on either way.
+All four stay ordinary cache variables, so pass e.g. `-DINTERPROCEDURAL_OPTIMIZATION=ON` if the project itself is built with the LTO enabled, or `-DJPH_USE_VK=ON` on a host with the full Vulkan SDK installed. The CPU compute backend (`JPH_USE_CPU_COMPUTE`) stays on either way.
 
 ### Simulating the bodies of interest (copy-paste examples)
 

@@ -20,7 +20,7 @@ Or compile the giza replacement manually by commands that may look like next:
 
 ```
 # clone the project into current directory
-git clone https://github.com/danieljprice/giza.git giza
+git clone --branch v1.5.0 https://github.com/danieljprice/giza.git giza
 
 # configure the project
 cd giza && ./configure --prefix=/usr

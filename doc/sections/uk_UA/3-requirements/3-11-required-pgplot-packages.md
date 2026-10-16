@@ -20,7 +20,7 @@ sudo apt install -y giza-dev
 
 ```
 # клонування проекту у поточну директорію
-git clone https://github.com/danieljprice/giza.git giza
+git clone --branch v1.5.0 https://github.com/danieljprice/giza.git giza
 
 # конфігурування проекту
 cd giza && ./configure --prefix=/usr

@@ -25,9 +25,3 @@ The dma-buf display additionally needs GTK / gtkmm 4.14 or newer (for the
 `Gdk::DmabufTexture`). With only a software Vulkan driver (e.g. lavapipe), the
 dma-buf export is unavailable and the window falls back to a plain black
 background.
-
-To be able to develop UI in the specialized [Glade](https://en.wikipedia.org/wiki/Glade_Interface_Designer) IDE install it with the command:
-
-```
-sudo apt install -y glade
-```

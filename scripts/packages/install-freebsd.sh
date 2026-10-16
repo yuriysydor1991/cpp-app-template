@@ -15,7 +15,6 @@ PACKAGES="
     bash
     cmake
     git
-    glade
     glib
     googletest
     gtkmm40

@@ -19,10 +19,3 @@ sudo apt install -y libvulkan-dev mesa-vulkan-drivers
 ```
 
 Для показу через dma-buf додатково потрібен GTK / gtkmm версії 4.14 або новішої (для `Gdk::DmabufTexture`). За наявності лише програмного драйвера Vulkan (наприклад lavapipe) експорт dma-buf недоступний, і вікно повертається до простого чорного тла.
-
-
-Для того щоб мати змогу розробляти візуальний інтерфейс необіхдно встановити спеціалізований інструмент розробки [Glade](https://en.wikipedia.org/wiki/Glade_Interface_Designer) за допомогою команди:
-
-```
-sudo apt install -y glade
-```

@@ -14,7 +14,6 @@ PACKAGES=(
     cmake
     gcc-c++
     git
-    glade
     glib2-devel
     gmock-devel
     gtest-devel

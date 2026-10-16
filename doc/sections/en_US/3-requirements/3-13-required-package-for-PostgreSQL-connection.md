@@ -29,3 +29,5 @@ sudo -u postgres psql -c "CREATE ROLE template_test_user LOGIN PASSWORD 'templat
 ```
 
 The `postgres` database accepts every user by default, which is enough for the demonstration `SELECT CURRENT_DATE;` query. For a database of your own run `sudo -u postgres createdb -O template_test_user <name>` and pass the `<name>` through the `PGDATABASE` variable.
+
+The `CTEST_PgSQL` component test connects the same way and gets skipped when no server is reachable.

@@ -45,3 +45,4 @@ target_link_libraries(
 
 add_subdirectory(helpers)
 add_subdirectory(sql)
+add_subdirectory(tests)

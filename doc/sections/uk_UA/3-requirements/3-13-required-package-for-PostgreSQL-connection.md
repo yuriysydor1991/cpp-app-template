@@ -29,3 +29,5 @@ sudo -u postgres psql -c "CREATE ROLE template_test_user LOGIN PASSWORD 'templat
 ```
 
 База даних `postgres` типово приймає будь-якого користувача, чого достатньо для демонстраційного запиту `SELECT CURRENT_DATE;`. Для власної бази даних виконай `sudo -u postgres createdb -O template_test_user <назва>` і передай `<назва>` через змінну `PGDATABASE`.
+
+Компонентний тест `CTEST_PgSQL` підключається так само і пропускається, коли жоден сервер не доступний.

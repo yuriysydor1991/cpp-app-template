@@ -1,4 +1,4 @@
-#include "Painter.h"
+#include "src/SDL3/Painter/Painter.h"
 
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_opengl.h>

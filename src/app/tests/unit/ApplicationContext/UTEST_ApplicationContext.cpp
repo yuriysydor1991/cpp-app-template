@@ -1,6 +1,8 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include <memory>
+#include <string>
 #include <thread>
 
 #include "src/app/ApplicationContext.h"
@@ -271,4 +273,19 @@ TEST_F(UTEST_ApplicationContext, raising_the_reload_flag_from_another_thread)
   EXPECT_TRUE(appCtx->get_errors().empty());
   EXPECT_FALSE(appCtx->get_stop());
   EXPECT_FALSE(appCtx->get_pause());
+}
+
+TEST_F(UTEST_ApplicationContext, chatgpt_parameters)
+{
+  EXPECT_TRUE(appCtx->get_chatgpt_token().empty());
+  EXPECT_TRUE(appCtx->get_chatgpt_question().empty());
+  EXPECT_TRUE(appCtx->get_chatgpt_model().empty());
+
+  appCtx->set_chatgpt_token("an-openai-api-token");
+  appCtx->set_chatgpt_question("What is the point of taxes?");
+  appCtx->set_chatgpt_model("a-model");
+
+  EXPECT_EQ(appCtx->get_chatgpt_token(), "an-openai-api-token");
+  EXPECT_EQ(appCtx->get_chatgpt_question(), "What is the point of taxes?");
+  EXPECT_EQ(appCtx->get_chatgpt_model(), "a-model");
 }

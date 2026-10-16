@@ -14,10 +14,10 @@ endif()
 # system and provides neither a CMake package config nor a CMake buildable
 # source tree, so there is nothing to make available through the Internet by
 # the template_project_default_3rdparty_enabler and the library is probed from
-# the system exclusively. Install the pgplot5-dev (Debian/Ubuntu),
-# pgplot-devel (Fedora/openSUSE) package with the original PGPLOT library or
-# the giza-dev (Debian/Ubuntu), giza-devel (Fedora) one with it's free
-# drop-in cpgplot/PGPLOT replacement. Consult the
+# the system exclusively. Install the pgplot5-dev (Debian/Ubuntu) package with
+# the original PGPLOT library or the giza-dev (Debian/Ubuntu) one with it's
+# free drop-in cpgplot/PGPLOT replacement. Neither of them is a Fedora (or an
+# EPEL) package, so the giza gets built from it's sources there. Consult the
 # doc/sections/en_US/3-requirements/3-11-required-pgplot-packages.md file for
 # the details.
 

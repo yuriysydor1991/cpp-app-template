@@ -1,35 +1,11 @@
 #!/bin/bash -e
 #
-# Installs the minimal set of packages required to build and run the project
-# locally.
+# Installs the packages required to build and develop the project on Debian by
+# running the install-debian-<version>.sh script of the running release, e.g.
+# the install-debian-13.sh one on the Debian 13.
 
 PROJECT_ROOT=$(realpath "$(dirname "$0")/../..")
 
-. "${PROJECT_ROOT}/scripts/common.sh"
+. "${PROJECT_ROOT}/scripts/packages/common.sh"
 
-PACKAGES=(
-    build-essential
-    cmake
-    g++
-    git
-    googletest
-    libboost-all-dev
-    libgmock-dev
-    libgtest-dev
-    libssl-dev
-    libstdc++6
-)
-
-APT_SUDO=""
-
-if [[ ${EUID} -ne 0 ]] ; then
-    APT_SUDO="sudo"
-fi
-
-log "Installing ${#PACKAGES[@]} packages"
-
-${APT_SUDO} apt-get update
-
-${APT_SUDO} apt-get install -y "${PACKAGES[@]}"
-
-log "The required packages are installed"
+exec_release_script "$@"

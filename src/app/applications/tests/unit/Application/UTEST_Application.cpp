@@ -62,7 +62,7 @@ TEST_F(UTEST_Application, token_from_env_when_no_token_given)
 
 TEST_F(UTEST_Application, given_token_and_model_are_asked_with)
 {
-  static const std::string model{"gpt-4o"};
+  static const std::string model{"gpt-5.6-terra"};
 
   appCtx->set_openai_question(question);
   appCtx->set_openai_token(token);

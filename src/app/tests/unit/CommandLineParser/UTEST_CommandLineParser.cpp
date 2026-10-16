@@ -203,7 +203,7 @@ TEST_F(UTEST_CommandLineParser, question_short)
 
 TEST_F(UTEST_CommandLineParser, model_long)
 {
-  static const std::string model{"gpt-4o"};
+  static const std::string model{"gpt-5.6-terra"};
 
   three_args("--model", model.c_str());
 
@@ -216,7 +216,7 @@ TEST_F(UTEST_CommandLineParser, model_long)
 
 TEST_F(UTEST_CommandLineParser, model_short)
 {
-  static const std::string model{"gpt-4o"};
+  static const std::string model{"gpt-5.6-terra"};
 
   three_args("-m", model.c_str());
 

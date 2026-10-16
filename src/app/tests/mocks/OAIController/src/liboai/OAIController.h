@@ -14,7 +14,7 @@ class OAIController
  public:
   using OAIControllerPtr = std::shared_ptr<OAIController>;
 
-  inline static const std::string DEFAULT_MODEL{"gpt-4o-mini"};
+  inline static const std::string DEFAULT_MODEL{"gpt-5.6"};
   inline static const std::string TOKEN_ENV_VAR{"OPENAI_API_KEY"};
 
   virtual ~OAIController() = default;

@@ -21,7 +21,7 @@ class OAIController
   using OAIControllerPtr = std::shared_ptr<OAIController>;
 
   /// @brief The chat completion model asked when no other one is requested.
-  inline static const std::string DEFAULT_MODEL{"gpt-4o-mini"};
+  inline static const std::string DEFAULT_MODEL{"gpt-5.6"};
 
   /// @brief The environment variable holding the OpenAI API token when no
   /// token is given in the command line.

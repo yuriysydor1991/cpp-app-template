@@ -26,10 +26,10 @@ export OPENAI_API_KEY=<your-openai-api-token>
 ./build/src/CppAppTemplate --question "What is the point of taxes?"
 ```
 
-The `gpt-4o-mini` chat completion model is asked by default. Any other one available for the used token is requested with the `--model` (or `-m`) parameter:
+The `gpt-5.6` chat completion model is asked by default, which is the alias of the flagship model of the family. Any other one available for the used token is requested with the `--model` (or `-m`) parameter:
 
 ```
-./build/src/CppAppTemplate --model gpt-4o --question "What is the point of taxes?"
+./build/src/CppAppTemplate --model gpt-5.6-terra --question "What is the point of taxes?"
 ```
 
 The executable exits with a non zero status and an error description when the token is rejected or no answer is received. Without a question it only prints the hint on how to provide one, so the component tests keep passing with no token available.

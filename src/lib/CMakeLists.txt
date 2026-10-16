@@ -64,8 +64,10 @@ target_compile_definitions(
 )
 
 if(LIB_INSTALL_DEV_FILES)
+  # the export set feeds the CMake package the lib-cmake-module-gen installs
   install(
     TARGETS ${PROJECT_LIBRARY_NAME}
+    EXPORT ${PROJECT_LIBRARY_NAME}
     LIBRARY
       DESTINATION lib
       COMPONENT Runtime

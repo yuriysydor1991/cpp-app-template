@@ -44,7 +44,9 @@ The scripts accept the very same parameters as the [Quick build scripts](/doc/se
 scripts/docker/single-run.sh --no-reconfigure
 
 # an additional CMake option for the configure step
-scripts/docker/single-run.sh -DDOCKERFILE_SINGLE_RUN_BASE_IMAGE_VERSION=22.04
+scripts/docker/single-run.sh -DDOCKERFILE_SINGLE_RUN_BASE_IMAGE_VERSION=rolling
 ```
+
+The image is based on `ubuntu:26.04` by default, since the older Ubuntu releases (24.04, 22.04) package no SDL3 the image installs, so pick a base with the `libsdl3-dev` package when changing it.
 
 Keep in mind that the `ENABLE_DOCKER` option makes the configure step require the `docker` executable to be present in the system, so the scripts fail the configure step on a machine with no Docker installed (see the [Optional for the Docker container runs](/doc/sections/en_US/3-requirements/3-10-optional-for-docker-container-runs.md) requirements section).

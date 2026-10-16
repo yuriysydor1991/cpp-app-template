@@ -12,9 +12,10 @@ set(
   "The Dockerfile source environment name (FROM ubuntu, debian, jenkins etc.)"
 )
 
+# the SDL3 packages come with Ubuntu 25.04 onwards
 set(
   DOCKERFILE_SINGLE_RUN_BASE_IMAGE_VERSION
-  "24.04"
+  "26.04"
   CACHE STRING 
   "The Dockerfile source environment version"
 )

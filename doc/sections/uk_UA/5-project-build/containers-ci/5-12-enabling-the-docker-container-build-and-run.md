@@ -44,7 +44,9 @@ scripts/docker/single-run.sh
 scripts/docker/single-run.sh --no-reconfigure
 
 # додатковий параметр CMake для кроку конфігурації
-scripts/docker/single-run.sh -DDOCKERFILE_SINGLE_RUN_BASE_IMAGE_VERSION=22.04
+scripts/docker/single-run.sh -DDOCKERFILE_SINGLE_RUN_BASE_IMAGE_VERSION=rolling
 ```
+
+Типово образ базується на `ubuntu:26.04`, оскільки старіші випуски Ubuntu (24.04, 22.04) не містять пакетів SDL3, які встановлює образ, тож при його зміні обирай основу з пакетом `libsdl3-dev`.
 
 Слід пам'ятати, що параметр `ENABLE_DOCKER` робить наявність виконуваного файлу `docker` у системі обов'язковою для кроку конфігурації, отож на машині без встановленого Docker скрипти завершать крок конфігурації помилкою (див. секцію вимог [Необов'язкові пакети для запуску контейнера Docker](/doc/sections/uk_UA/3-requirements/3-10-optional-for-docker-container-runs.md)).

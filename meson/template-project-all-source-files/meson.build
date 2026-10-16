@@ -13,5 +13,6 @@ for i in sources:
 all_CPP_sources = run_command(
   python3, 
   '-c', 
-  cmd_py
+  cmd_py,
+  check: true
 ).stdout().strip().split('\n')

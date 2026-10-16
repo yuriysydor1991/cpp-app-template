@@ -22,3 +22,8 @@ parts:
     cmake-parameters:
       - -DCMAKE_BUILD_TYPE=Release
       - -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
+    build-packages:
+      - pkg-config
+      - liblog4cpp5-dev
+    stage-packages:
+      - liblog4cpp5v5

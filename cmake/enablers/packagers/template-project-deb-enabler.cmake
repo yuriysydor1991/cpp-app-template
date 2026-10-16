@@ -36,7 +36,12 @@ set(CPACK_DEBIAN_PACKAGE_MAINTAINER "${PROJECT_MAINTAINER} ${PROJECT_MAINTAINER_
 set(CPACK_DEB_COMPONENT_INSTALL ON)
 set(CPACK_PACKAGE_DESCRIPTION ${CMAKE_PROJECT_DESCRIPTION})
 set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE ${TEMPLATE_PROJECT_DEB_PACKAGE_ARCHITECTURE})
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "")
+# the system log4cpp is linked as a shared library, the fetched one statically
+if(TARGET PkgConfig::LOG4CPP)
+  set(CPACK_DEBIAN_PACKAGE_DEPENDS "liblog4cpp5v5")
+else()
+  set(CPACK_DEBIAN_PACKAGE_DEPENDS "")
+endif()
 
 # the CPACK_SYSTEM_NAME of the default file name names the system alone, so the
 # destination CPU takes its place

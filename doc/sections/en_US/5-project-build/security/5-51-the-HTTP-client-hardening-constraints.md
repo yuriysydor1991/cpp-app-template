@@ -26,7 +26,7 @@ cmake -S . -B build -DCMAKE_BUILD_TYPE=Release \
 An answer announcing a size above the allowed one is refused by the `CURLOPT_MAXFILESIZE_LARGE` option of the libcurl before a single byte of it is transferred. An answer announcing no size at all - a chunked one, for example - is cut by the write callback instead, which stops appending as soon as the buffer would outgrow the limit and thereby aborts the whole transfer:
 
 ```
-ERR CURLController.cpp:112 : The response has outgrown the allowed 8388608 bytes
+ERR CURLController.cpp:88 : The response has outgrown the allowed 8388608 bytes
 ```
 
 The received buffer is left empty in both cases and the `last_response_successful` call reports a failure, so a partially received answer is never mistaken for a complete one.
@@ -44,7 +44,7 @@ The `CURLOPT_PROTOCOLS_STR` option limits the request to the protocols of the `P
 The option arrived with the libcurl 7.85.0 release and is applied by the newer one only, so an older libcurl keeps the protocols of it's own build. A protocol name the libcurl does not know fails the request with the message naming the variable to correct:
 
 ```
-ERR CURLController.cpp:194 : Fail to allow the htttp protocols only. Check the PROJECT_CURL_ALLOWED_PROTOCOLS value
+ERR CURLController.cpp:170 : Fail to allow the htttp protocols only. Check the PROJECT_CURL_ALLOWED_PROTOCOLS value
 ```
 
 ### The TLS constraints

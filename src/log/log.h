@@ -11,10 +11,11 @@
 /**
  * @brief The logging init macros. Use them in the main function or
  * as by default is used in the app::ApplicationFactory::execute method.
- * Each call replaces the log storage and output of the previous one.
+ * Each call replaces the log storage and output of the previous one. They
+ * give a false value if the log file can not be opened.
  */
 #define LOG_INIT(filepath, logLvl, printMessages) \
-  log4cpp5i::Log4Cpp5Init::init(filepath, logLvl, printMessages);
+  log4cpp5i::Log4Cpp5Init::init(filepath, logLvl, printMessages)
 #endif  // LOG_INIT
 
 #ifndef LOG_INIT_PATH
@@ -22,18 +23,20 @@
 #endif  // LOG_INIT_PATH
 
 #ifndef LOG_INIT_DEFAULTS
-#define LOG_INIT_DEFAULTS() log4cpp5i::Log4Cpp5Init::init_defaults();
+#define LOG_INIT_DEFAULTS() log4cpp5i::Log4Cpp5Init::init_defaults()
 #endif  // LOG_INIT_DEFAULTS
 
 #ifndef LOG_BODY
 /**
  * @brief The internal logger macro to define the general logging code body.
  */
-#define LOG_BODY(priority, msg)                                      \
-  log4cpp::Category::getRoot().getStream(priority)                   \
-      << std::this_thread::get_id() << " "                           \
-      << log4cpp5i::Log4Cpp5Init::get_filename_only(__FILE__) << ":" \
-      << __LINE__ << " - " << msg
+#define LOG_BODY(priority, msg)                                        \
+  do {                                                                 \
+    log4cpp::Category::getRoot().getStream(priority)                   \
+        << std::this_thread::get_id() << " "                           \
+        << log4cpp5i::Log4Cpp5Init::get_filename_only(__FILE__) << ":" \
+        << __LINE__ << " - " << msg;                                   \
+  } while (0)
 #endif  // LOG_BODY
 
 #ifndef LOGE
@@ -56,7 +59,9 @@
  */
 #define LOGI(msg) LOG_BODY(log4cpp::Priority::INFO, msg)
 #else
-#define LOGI(msg)
+#define LOGI(msg) \
+  do {            \
+  } while (0)
 #endif  // MAX_LOG_LEVEL
 #endif  // LOGI
 
@@ -70,7 +75,9 @@
  */
 #define LOGW(msg) LOG_BODY(log4cpp::Priority::WARN, msg)
 #else
-#define LOGW(msg)
+#define LOGW(msg) \
+  do {            \
+  } while (0)
 #endif  // MAX_LOG_LEVEL
 #endif  // LOGW
 
@@ -84,7 +91,9 @@
  */
 #define LOGD(msg) LOG_BODY(log4cpp::Priority::DEBUG, msg)
 #else
-#define LOGD(msg)
+#define LOGD(msg) \
+  do {            \
+  } while (0)
 #endif  // MAX_LOG_LEVEL
 #endif  // LOGD
 
@@ -98,7 +107,9 @@
  */
 #define LOGT(msg) LOG_BODY(log4cpp5i::Log4Cpp5Init::trace_priority, msg)
 #else
-#define LOGT(msg)
+#define LOGT(msg) \
+  do {            \
+  } while (0)
 #endif  // MAX_LOG_LEVEL
 #endif  // LOGT
 

@@ -133,7 +133,9 @@ std::string FbClient::query_scalar(const std::string& query)
   var.sqlind = &null_flag;
 
   isc_dsql_execute(handles->status, &trans, &stmt, SQL_DIALECT_V6, nullptr);
-  if (has_error(handles->status)) {
+  const bool failed = has_error(handles->status);
+
+  if (failed) {
     LOGE("Failure to execute the Firebird query: " << query);
   } else if (isc_dsql_fetch(handles->status, &stmt, SQL_DIALECT_V6,
                             &out_sqlda) == 0 &&
@@ -145,7 +147,13 @@ std::string FbClient::query_scalar(const std::string& query)
   }
 
   isc_dsql_free_statement(handles->status, &stmt, DSQL_drop);
-  isc_commit_transaction(handles->status, &trans);
+
+  // A failed statement leaves nothing to keep, so its work is rolled back.
+  if (failed) {
+    isc_rollback_transaction(handles->status, &trans);
+  } else {
+    isc_commit_transaction(handles->status, &trans);
+  }
 
   return result;
 }

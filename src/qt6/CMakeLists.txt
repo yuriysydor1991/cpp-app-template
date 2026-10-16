@@ -32,3 +32,4 @@ target_link_libraries(
 
 add_subdirectory(log)
 add_subdirectory(ui)
+add_subdirectory(tests)

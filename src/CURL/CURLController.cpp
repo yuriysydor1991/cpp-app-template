@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "project-global-decls.h"
+#include "src/CURL/HeadersList.h"
 #include "src/log/log.h"
 
 namespace curli
@@ -48,31 +49,6 @@ size_t wcallback(void* contents, size_t size, size_t nmemb, void* userp)
 
   return givenSize;
 }
-
-/**
- * @brief Keeps the libcurl headers list alive during the request and releases
- * it afterwards, so every request kind builds it's headers the same way.
- */
-class HeadersList
-{
- public:
-  explicit HeadersList(const std::vector<std::string>& headers)
-  {
-    for (const auto& header : headers) {
-      list = curl_slist_append(list, header.c_str());
-    }
-  }
-
-  ~HeadersList() { curl_slist_free_all(list); }
-
-  HeadersList(const HeadersList&) = delete;
-  HeadersList(HeadersList&&) = delete;
-
-  struct curl_slist* raw() const { return list; }
-
- private:
-  struct curl_slist* list{nullptr};
-};
 
 }  // namespace
 
@@ -236,6 +212,10 @@ CURLController::download_buffer& CURLController::download(
 
   const HeadersList headerList{headers};
 
+  if (!headerList.complete()) {
+    return cbuff;
+  }
+
   curl_easy_setopt(curl, CURLOPT_TIMEOUT, DEFAULT_TIMEOUT);
   curl_easy_setopt(curl, CURLOPT_LOW_SPEED_TIME, DEFAULT_LOWSPEEDSECS);
   curl_easy_setopt(curl, CURLOPT_LOW_SPEED_LIMIT, DEFAULT_LOWSPEEDLIMIT);
@@ -257,6 +237,10 @@ CURLController::download_buffer& CURLController::post(
   }
 
   const HeadersList headerList{headers};
+
+  if (!headerList.complete()) {
+    return cbuff;
+  }
 
   // No low speed abort here: a server that is still composing it's answer
   // sends nothing meanwhile, which the low speed limit takes for a stall.

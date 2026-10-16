@@ -2,7 +2,9 @@
 #include <gtest/gtest.h>
 
 #include <csignal>
+#include <memory>
 
+#include "src/CURL/CURLController.h"
 #include "src/app/ApplicationFactory.h"
 
 using namespace app;
@@ -11,7 +13,15 @@ using namespace testing;
 class CTEST_app : public Test
 {
  public:
-  CTEST_app() = default;
+  /// @brief The application downloads through the CURLController mock, so
+  /// no test case reaches the network.
+  CTEST_app()
+  {
+    curli::CURLController::instance =
+        std::make_shared<NiceMock<curli::CURLController>>();
+  }
+
+  ~CTEST_app() override { curli::CURLController::instance.reset(); }
 
   int argc{0};
   char** argv{nullptr};
@@ -184,7 +194,15 @@ TEST_F(CTEST_app, signals_handler_ignores_the_broken_pipe)
 
 TEST_F(CTEST_app, execute_success)
 {
+  ON_CALL(*curli::CURLController::instance, last_response_successful())
+      .WillByDefault(Return(true));
+
   int status = ApplicationFactory::execute(argc, argv);
 
   EXPECT_EQ(status, 0);
+}
+
+TEST_F(CTEST_app, execute_fails_on_a_failed_download)
+{
+  EXPECT_NE(ApplicationFactory::execute(argc, argv), 0);
 }

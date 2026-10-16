@@ -16,8 +16,8 @@ namespace qtvulkani
  * @brief Owns the QVulkanInstance and drives the physical device enumeration
  * through a device info handler.
  *
- * The native Qt Vulkan (Qt6::Gui QVulkanInstance) counterpart of the app-based
- * appVulkan branch VulkanController. Created through the static create()
+ * The native Qt Vulkan (Qt6::Gui QVulkanInstance) counterpart of the
+ * appGtkmm4Vulkan branch VulkanController. Created through the static create()
  * factory method which brings up the Vulkan instance up front, so a non-null
  * instance is always usable. A living QGuiApplication is required by the
  * platform Vulkan integration before create() is called.

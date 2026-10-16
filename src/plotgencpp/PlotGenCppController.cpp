@@ -1,5 +1,6 @@
 #include "src/plotgencpp/PlotGenCppController.h"
 
+#include <algorithm>
 #include <cassert>
 #include <cmath>
 #include <memory>
@@ -36,7 +37,7 @@ bool PlotGenCppController::drawTheExamplePlot()
   static constexpr const unsigned int width = 1024;
   static constexpr const unsigned int height = 724;
 
-  // Create an 800x600 window
+  // Create the plot of the width x height pixels size
   PlotGen plt(width, height);
 
   std::vector<double> x(n), y(n);

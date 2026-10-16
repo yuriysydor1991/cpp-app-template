@@ -7,6 +7,8 @@
 #include "src/Firebird/Firebird.h"
 #include "src/Firebird/IFbClient.h"
 #include "src/Firebird/driver/FbClient.h"
+#include "src/Firebird/tests/mocks/FakeFbClient.h"
+#include "src/Firebird/tests/mocks/InjectedFirebird.h"
 #include "src/app/ApplicationContext.h"
 
 using namespace firebirdi;
@@ -20,69 +22,12 @@ namespace firebirdi::driver
 std::shared_ptr<IFbClient> create_fb_client() { return nullptr; }
 }  // namespace firebirdi::driver
 
-namespace
-{
-
-/// @brief Records what the Firebird orchestration hands to the native driver
-/// and returns canned responses, so the whole component pipeline (connection
-/// string maker + query maker + orchestration) can be verified end to end
-/// without a running Firebird server.
-class FakeFbClient : public IFbClient
-{
- public:
-  bool attach(const std::string& database, const std::string& user,
-              const std::string& password) override
-  {
-    last_database = database;
-    last_user = user;
-    last_password = password;
-    is_attached = attach_result;
-    return attach_result;
-  }
-
-  void detach() override { is_attached = false; }
-  bool attached() const override { return is_attached; }
-
-  std::string query_scalar(const std::string& query) override
-  {
-    last_query = query;
-    return scalar_result;
-  }
-
-  bool attach_result{true};
-  std::string scalar_result;
-  bool is_attached{false};
-
-  std::string last_database;
-  std::string last_user;
-  std::string last_password;
-  std::string last_query;
-};
-
-/// @brief Wires the fake driver into the real Firebird component.
-class ComponentFirebird : public Firebird
-{
- public:
-  explicit ComponentFirebird(std::shared_ptr<IFbClient> nclient)
-      : injected{nclient}
-  {
-  }
-
- protected:
-  std::shared_ptr<IFbClient> create_client() override { return injected; }
-
- private:
-  std::shared_ptr<IFbClient> injected;
-};
-
-}  // namespace
-
 class CTEST_Firebird : public Test
 {
  public:
   CTEST_Firebird()
       : fake{std::make_shared<FakeFbClient>()},
-        fb{std::make_shared<ComponentFirebird>(fake)},
+        fb{std::make_shared<InjectedFirebird>(fake)},
         ctx{std::make_shared<ApplicationContext>(argc, argv)}
   {
     ctx->set_fb_host("localhost");
@@ -96,7 +41,7 @@ class CTEST_Firebird : public Test
   char** argv{nullptr};
 
   std::shared_ptr<FakeFbClient> fake;
-  std::shared_ptr<ComponentFirebird> fb;
+  std::shared_ptr<InjectedFirebird> fb;
   std::shared_ptr<ApplicationContext> ctx;
 };
 

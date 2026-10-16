@@ -7,6 +7,7 @@
 #include "src/Firebird/Firebird.h"
 #include "src/Firebird/driver/FbClient.h"
 #include "src/Firebird/tests/mocks/IFbClientMock.h"
+#include "src/Firebird/tests/mocks/InjectedFirebird.h"
 #include "src/app/ApplicationContext.h"
 
 using namespace firebirdi;
@@ -20,32 +21,12 @@ namespace firebirdi::driver
 std::shared_ptr<IFbClient> create_fb_client() { return nullptr; }
 }  // namespace firebirdi::driver
 
-namespace
-{
-
-/// @brief Test double exposing the injected IFbClient to the Firebird class.
-class TestFirebird : public Firebird
-{
- public:
-  explicit TestFirebird(std::shared_ptr<IFbClient> nclient) : injected{nclient}
-  {
-  }
-
- protected:
-  std::shared_ptr<IFbClient> create_client() override { return injected; }
-
- private:
-  std::shared_ptr<IFbClient> injected;
-};
-
-}  // namespace
-
 class UTEST_Firebird : public Test
 {
  public:
   UTEST_Firebird()
       : client{std::make_shared<IFbClientMock>()},
-        fb{std::make_shared<TestFirebird>(client)},
+        fb{std::make_shared<InjectedFirebird>(client)},
         ctx{std::make_shared<ApplicationContext>(argc, argv)}
   {
   }
@@ -54,7 +35,7 @@ class UTEST_Firebird : public Test
   char** argv{nullptr};
 
   std::shared_ptr<IFbClientMock> client;
-  std::shared_ptr<TestFirebird> fb;
+  std::shared_ptr<InjectedFirebird> fb;
   std::shared_ptr<ApplicationContext> ctx;
 };
 

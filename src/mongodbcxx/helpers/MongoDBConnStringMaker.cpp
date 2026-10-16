@@ -83,8 +83,8 @@ std::string MongoDBConnStringMaker::percent_encode(const std::string& value)
   return encoded;
 }
 
-const std::string& MongoDBConnStringMaker::value_or(
-    const std::string& value, const std::string& fallback)
+const std::string& MongoDBConnStringMaker::value_or(const std::string& value,
+                                                    const std::string& fallback)
 {
   return value.empty() ? fallback : value;
 }

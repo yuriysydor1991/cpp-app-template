@@ -25,4 +25,4 @@ template_project_default_3rdparty_enabler(
 #   - FetchContent source build:                 lunasvg
 # (the v3.x line additionally pulls the plutovg rendering backend automatically)
 # For example:
-#   target_link_libraries(${PROJECT_BINARY_NAME} lunasvg::lunasvg)
+#   target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE lunasvg::lunasvg)

@@ -12,8 +12,8 @@
         {
           "type": "git",
           "url": "https://git.code.sf.net/p/log4cpp/codegit",
-          "tag": "REL_1.1.5rc1_Aug_23_2024",
-          "commit": "2d617ba9bdf1d994a3f0b4c3af70c17d04fed29a"
+          "tag": "REL_1.1.6_Mar_12_2026",
+          "commit": "5ce81a79fe9368e984165318d9ddb1f383e235dc"
         }
       ],
       "cleanup": ["/bin", "/sbin", "/share/man", "/share/doc"]

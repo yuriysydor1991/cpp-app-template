@@ -11,7 +11,7 @@ cmake --build build --target all
 
 The [cmake/enablers/template-project-log4cpp-enabler.cmake](/cmake/enablers/template-project-log4cpp-enabler.cmake) module probes the system installation with `pkg-config`, since the autotools build of the log4cpp ships a `log4cpp.pc` file alone. When no system installation is found the sources of the `TEMPLATE_APP_LOG4CPP_GIT_TAG` tag get fetched from the `TEMPLATE_APP_LOG4CPP_GIT` repository instead, so a host with no [log4cpp development package](/doc/sections/en_US/3-requirements/3-11-required-packages-for-the-log4cpp.md) installed still configures and builds.
 
-The CMake build of the fetched sources gets completed by the enabler with the `log4cpp/config.h` header of the POSIX values, with the include directories of the library and with the threading library to link, since the autotools configure step is the one writing all of that. The static library of such a build gets linked into the project executable, while its headers and the library itself stay out of the project install and its packages; a system installation is linked and left alone.
+The CMake build of the fetched sources (the `REL_1.1.6_Mar_12_2026` release by default) generates its own `log4cpp/config.h` header and carries the include directories and the threading library within its `log4cpp_static` target, so the enabler links that static library and keeps the tests of the fetched sources out of the project `ctest` runs. The static library of such a build gets linked into the project executable, while its headers and the library itself stay out of the project install and its packages; a system installation is linked and left alone.
 
 Both of the paths provide the very same `LOG4CPP::log4cpp` target, so link it to your target(s) of interest:
 

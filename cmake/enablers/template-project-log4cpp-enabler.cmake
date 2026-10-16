@@ -11,7 +11,7 @@ if (NOT ENABLE_LOG4CPP)
 endif()
 
 set(TEMPLATE_APP_LOG4CPP_GIT "https://git.code.sf.net/p/log4cpp/codegit" CACHE STRING "The log4cpp library git source repository")
-set(TEMPLATE_APP_LOG4CPP_GIT_TAG "REL_1.1.5rc1_Aug_23_2024" CACHE STRING "The log4cpp project git repository tag of interest")
+set(TEMPLATE_APP_LOG4CPP_GIT_TAG "REL_1.1.6_Mar_12_2026" CACHE STRING "The log4cpp project git repository tag of interest")
 
 # The autotools build of the log4cpp ships a log4cpp.pc file only, so the system
 # probe here is a pkg-config one instead of the find_package based probe of the
@@ -27,10 +27,6 @@ if (TARGET PkgConfig::LOG4CPP)
 
     add_library(LOG4CPP::log4cpp ALIAS PkgConfig::LOG4CPP)
 else()
-    # The CMakeLists.txt of the fetched sources installs the headers into the
-    # CMAKE_INSTALL_INCLUDEDIR one, which the GNUInstallDirs module declares.
-    include(GNUInstallDirs)
-
     template_project_default_3rdparty_enabler(
       NAME log4cpp
       GIT_REPOSITORY ${TEMPLATE_APP_LOG4CPP_GIT}
@@ -43,54 +39,24 @@ else()
     include(FetchContent)
     FetchContent_GetProperties(log4cpp)
 
-    # Keeps the headers and the static library of the fetched sources out of
-    # the project installation and so out of its packages.
+    # Keeps the headers, the libraries and the tests of the fetched sources out
+    # of the project installation, its packages and its ctest run; the static
+    # library is still built, since the project links it.
     set_property(DIRECTORY "${log4cpp_SOURCE_DIR}" PROPERTY EXCLUDE_FROM_ALL TRUE)
 
-    # The Debug builds of the fetched sources rename their library target.
-    if (TARGET log4cpp)
-      set(LOG4CPP_FETCHED_TARGET log4cpp)
-    else()
-      set(LOG4CPP_FETCHED_TARGET log4cppD)
-    endif()
-
-    # The log4cpp/config.h is a configure step product of the autotools build,
-    # which the CMake one of the fetched sources leaves out entirely, so the
-    # POSIX values of it are written here.
-    set(LOG4CPP_CONFIG_INCLUDE_DIR "${CMAKE_CURRENT_BINARY_DIR}/log4cpp-config-include")
+    # The fetched sources register their tests unconditionally, so the ctest
+    # runs of the project ignore them by the CTestCustom.cmake of the build.
+    get_property(LOG4CPP_FETCHED_TESTS DIRECTORY "${log4cpp_SOURCE_DIR}/tests" PROPERTY TESTS)
 
     file(
-      GENERATE
-      OUTPUT "${LOG4CPP_CONFIG_INCLUDE_DIR}/log4cpp/config.h"
-      CONTENT
-"#define LOG4CPP_HAVE_SSTREAM 1
-#define LOG4CPP_HAVE_UNISTD_H 1
-#define LOG4CPP_HAVE_STDINT_H 1
-#define LOG4CPP_HAVE_INT64_T 1
-#define LOG4CPP_HAVE_IN_ADDR_T 1
-#define LOG4CPP_HAVE_SNPRINTF 1
-#define LOG4CPP_HAVE_LOCALTIME_R 1
-#define LOG4CPP_HAVE_GETTIMEOFDAY 1
-#define LOG4CPP_HAVE_SYSLOG 1
-#define LOG4CPP_HAVE_THREADING 1
-#define LOG4CPP_USE_PTHREADS 1
-"
+      WRITE "${CMAKE_BINARY_DIR}/CTestCustom.cmake"
+      "set(CTEST_CUSTOM_TESTS_IGNORE ${LOG4CPP_FETCHED_TESTS})\n"
     )
 
-    # The fetched CMakeLists.txt keeps its include directories directory scoped
-    # and links no threading library at all.
-    target_include_directories(
-      ${LOG4CPP_FETCHED_TARGET}
-      PUBLIC
-        "${log4cpp_SOURCE_DIR}/include"
-        "${LOG4CPP_CONFIG_INCLUDE_DIR}"
-    )
-
-    find_package(Threads REQUIRED)
-
-    target_link_libraries(${LOG4CPP_FETCHED_TARGET} PUBLIC Threads::Threads)
-
-    add_library(LOG4CPP::log4cpp ALIAS ${LOG4CPP_FETCHED_TARGET})
+    # The CMake build of the log4cpp 1.1.6 generates its own log4cpp/config.h
+    # and carries the include directories and the threading library within its
+    # targets.
+    add_library(LOG4CPP::log4cpp ALIAS log4cpp_static)
 endif()
 
 # Both of the paths above provide the very same LOG4CPP::log4cpp target, so

@@ -24,11 +24,6 @@ PACKAGES=(
     libqt6quickcontrols2-6
     libssl-dev
     libstdc++6
-    qml-module-qtquick-controls2
-    qml-module-qtquick-dialogs
-    qml-module-qtquick-layouts
-    qml-module-qtquick-shapes
-    qml-module-qtquick2
     qml6-module-qtlocation
     qml6-module-qtpositioning
     qml6-module-qtqml-workerscript
@@ -37,7 +32,6 @@ PACKAGES=(
     qml6-module-qtquick-dialogs
     qml6-module-qtquick-layouts
     qml6-module-qtquick-localstorage
-    qml6-module-qtquick-nativestyle
     qml6-module-qtquick-particles
     qml6-module-qtquick-pdf
     qml6-module-qtquick-scene2d
@@ -55,7 +49,6 @@ PACKAGES=(
     qt6-positioning-dev
     qt6-tools-dev
     qt6-tools-dev-tools
-    qtquickcontrols2-5-dev
 )
 
 APT_SUDO=""

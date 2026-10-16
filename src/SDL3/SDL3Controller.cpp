@@ -4,7 +4,6 @@
 #include <SDL3/SDL_opengl.h>
 
 #include <cassert>
-#include <stdexcept>
 
 #include "project-global-decls.h"
 #include "src/app/applications/IApplication.h"
@@ -19,9 +18,6 @@ SDL3Controller::SDL3Controller()
       painter3d{std::make_shared<painter::Painter>()},
       oglIniter{std::make_shared<OpenGLIniter>()}
 {
-  if (!SDL_Init(SDL_INIT_VIDEO)) {
-    throw_sdl3("Fail to init the SDL3");
-  }
 }
 
 SDL3Controller::~SDL3Controller()
@@ -36,13 +32,17 @@ int SDL3Controller::run(std::shared_ptr<app::ApplicationContext> ctx)
   assert(ctx != nullptr);
 
   if (ctx == nullptr) {
-    LOGE("No valid application context provied");
+    LOGE("No valid application context provided");
+    return app::IApplication::INVALID;
+  }
+
+  if (!SDL_Init(SDL_INIT_VIDEO)) {
+    LOGE(
+        "Fail to init the SDL3 video subsystem, SDL_Error: " << SDL_GetError());
     return app::IApplication::INVALID;
   }
 
   sdl3Context = ctxBuilder->build_context(ctx);
-
-  assert(sdl3Context != nullptr);
 
   if (sdl3Context == nullptr) {
     LOGE("Fail to create the SDL3 context");
@@ -62,25 +62,10 @@ int SDL3Controller::run(std::shared_ptr<app::ApplicationContext> ctx)
 void SDL3Controller::event_loop()
 {
   assert(sdl3Context != nullptr);
-  assert(sdl3Context->appCtx != nullptr);
   assert(events != nullptr);
   assert(painter3d != nullptr);
 
-  if (sdl3Context == nullptr) {
-    throw_sdl3("No SDL3Context given");
-    return;
-  }
-
-  if (painter3d == nullptr) {
-    throw_sdl3("No scene painter given");
-    return;
-  }
-
-  if (events == nullptr) {
-    throw_sdl3("No event handler given");
-    return;
-  }
-
+  // the window close and the stop signals handlers both raise the stop flag
   while (!sdl3Context->appCtx->get_stop()) {
     events->handle(sdl3Context);
 
@@ -88,14 +73,6 @@ void SDL3Controller::event_loop()
 
     SDL_GL_SwapWindow(sdl3Context->window);
   }
-}
-
-void SDL3Controller::throw_sdl3(const std::string& errDesc)
-{
-  LOGE(errDesc << std::string{" SDL_Error: "} << SDL_GetError());
-
-  throw std::runtime_error(errDesc + std::string{" SDL_Error: "} +
-                           SDL_GetError());
 }
 
 }  // namespace templateSDL3

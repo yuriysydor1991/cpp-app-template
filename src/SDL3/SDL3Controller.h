@@ -23,17 +23,18 @@ class SDL3Controller
   SDL3Controller();
 
   /**
-   * @brief Init and run the SDL3 event loop.
+   * @brief Init and run the SDL3 event loop until the window is closed or
+   * a stop signal raises the context stop flag.
    *
    * @param ctx Application's run context with command line parameters etc.
    *
    * @return Returns the init and run return status. A zero value on the success
-   * and other value otherwise.
+   * and the IApplication::INVALID value if the SDL3 video subsystem, the window
+   * or the OpenGL context can't be created (e.g. no display available).
    */
   virtual int run(std::shared_ptr<app::ApplicationContext> ctx);
 
  protected:
-  static void throw_sdl3(const std::string& errDesc);
   virtual void event_loop();
 
   std::shared_ptr<SDL3ContextBuilder> ctxBuilder;

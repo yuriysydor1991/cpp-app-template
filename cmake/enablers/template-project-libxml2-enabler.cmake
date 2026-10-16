@@ -20,7 +20,9 @@ template_project_default_3rdparty_enabler(
   GIT_TAG ${TEMPLATE_APP_LIBXML2_GIT_TAG}
 )
 
+# the library holds the project code, the executable only calls it
 target_link_libraries(
-  ${PROJECT_BINARY_NAME}
-  LibXml2::LibXml2
+  ${PROJECT_LIBRARY_NAME}
+  PRIVATE
+    LibXml2::LibXml2
 )

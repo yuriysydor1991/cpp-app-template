@@ -19,7 +19,9 @@ template_project_default_3rdparty_enabler(
   GIT_TAG ${TEMPLATE_APP_CURL_GIT_TAG}
 )
 
+# the library holds the project code, the executable only calls it
 target_link_libraries(
-  ${PROJECT_BINARY_NAME}
-  CURL::libcurl
+  ${PROJECT_LIBRARY_NAME}
+  PRIVATE
+    CURL::libcurl
 )

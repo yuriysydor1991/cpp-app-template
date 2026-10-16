@@ -16,6 +16,7 @@ PACKAGES="
     cmake
     git
     googletest
+    pkgconf
     postgresql-libpqxx
     postgresql18-server
 "

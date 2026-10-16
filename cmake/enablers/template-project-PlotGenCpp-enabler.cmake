@@ -6,8 +6,14 @@ option(
     ON
 )
 
+# The library is a hard requirement of this branch rather than an optional
+# integration: the application draws its plot with it.
 if (NOT ENABLE_PLOTGENCPP)
-    return()
+  message(
+    FATAL_ERROR
+    "The application draws it's plot with the PlotGenCpp library. Keep the "
+    "ENABLE_PLOTGENCPP option ON."
+  )
 endif()
 
 set(TEMPLATE_APP_PLOTGENCPP_GIT "https://github.com/skhelladi/PlotGenCpp.git" CACHE STRING "The PlotGenCpp library git source repository")

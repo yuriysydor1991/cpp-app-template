@@ -6,8 +6,14 @@ option(
     ON
 )
 
+# The PlotGenCpp library renders with the SFML, so it is a hard requirement of
+# this branch rather than an optional integration.
 if (NOT ENABLE_SFML)
-    return()
+  message(
+    FATAL_ERROR
+    "The PlotGenCpp library renders the plot with the SFML. Keep the "
+    "ENABLE_SFML option ON."
+  )
 endif()
 
 set(TEMPLATE_APP_SFML_GIT "https://github.com/SFML/SFML.git" CACHE STRING "The SFML library git source repository")

@@ -24,4 +24,4 @@ template_project_default_3rdparty_enabler(
 #   - system install, via find_package(TIFF): TIFF::TIFF
 #   - FetchContent source build:              tiff (also exported as TIFF::tiff)
 # For example:
-#   target_link_libraries(${PROJECT_BINARY_NAME} TIFF::TIFF)
+#   target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE TIFF::TIFF)

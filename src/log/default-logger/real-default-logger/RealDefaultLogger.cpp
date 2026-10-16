@@ -2,7 +2,6 @@
 
 #include <array>
 #include <chrono>
-#include <exception>
 #include <filesystem>
 #include <fstream>
 #include <iomanip>
@@ -76,10 +75,10 @@ void RealDefaultLogger::log(const unsigned short& loglvl,
   log(loglvl, filename + ":" + std::to_string(fileLine) + " : " + msg);
 }
 
-void RealDefaultLogger::logfile(const std::string& filepath)
+bool RealDefaultLogger::logfile(const std::string& filepath)
 {
   if (filepath.empty()) {
-    return;
+    return true;
   }
 
   if (alogfile.is_open()) {
@@ -88,9 +87,7 @@ void RealDefaultLogger::logfile(const std::string& filepath)
 
   alogfile.open(filepath.c_str(), std::fstream::app);
 
-  if (!alogfile.is_open()) {
-    throw std::runtime_error{"Fail to open the log file at " + filepath};
-  }
+  return alogfile.is_open();
 }
 
 void RealDefaultLogger::print(const bool toPrintValue)
@@ -100,13 +97,14 @@ void RealDefaultLogger::print(const bool toPrintValue)
 
 void RealDefaultLogger::level(const unsigned short& nlvl) { lvl = nlvl; }
 
-void RealDefaultLogger::init(const std::string& filepath,
+bool RealDefaultLogger::init(const std::string& filepath,
                              const unsigned short& nlvl,
                              const bool toPrintValue)
 {
-  logfile(filepath);
   level(nlvl);
   print(toPrintValue);
+
+  return logfile(filepath);
 }
 
 inline void RealDefaultLogger::insert_current_timestamp(std::ostringstream& oss)

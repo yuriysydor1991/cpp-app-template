@@ -8,19 +8,21 @@ set(
       -t ${DOCKER_SINGLE_RUN_NAME} .
 )
 
+# The X server access granted to the container is revoked on every exit of the
+# run, the failed and the interrupted ones included.
 set(
   DOCKER_SINGLE_RUN_CMD
-    xhost +local:docker &&
-    ${DOCKER_EXEC} run --rm -t
-    --security-opt apparmor=unconfined
-    --ipc=host
-    -e DISPLAY=$$DISPLAY
-    -v /tmp/.X11-unix:/tmp/.X11-unix:ro
-    -e DBUS_SESSION_BUS_ADDRESS=$$DBUS_SESSION_BUS_ADDRESS
-    -v $$XDG_RUNTIME_DIR/bus:$$XDG_RUNTIME_DIR/bus
-    -v $$XDG_RUNTIME_DIR/at-spi/bus_0:$$XDG_RUNTIME_DIR/at-spi/bus_0
-    ${DOCKER_SINGLE_RUN_NAME} &&
-    xhost -local:docker
+    sh -c "trap 'xhost -local:docker' EXIT && trap 'exit 130' INT TERM && \
+      xhost +local:docker && \
+      ${DOCKER_EXEC} run --rm -t \
+      --security-opt apparmor=unconfined \
+      --ipc=host \
+      -e DISPLAY=$DISPLAY \
+      -v /tmp/.X11-unix:/tmp/.X11-unix:ro \
+      -e DBUS_SESSION_BUS_ADDRESS=$DBUS_SESSION_BUS_ADDRESS \
+      -v $XDG_RUNTIME_DIR/bus:$XDG_RUNTIME_DIR/bus \
+      -v $XDG_RUNTIME_DIR/at-spi/bus_0:$XDG_RUNTIME_DIR/at-spi/bus_0 \
+      ${DOCKER_SINGLE_RUN_NAME}"
 )
 
 message(STATUS "docker single build command: ${DOCKER_SINGLE_BUILD_CMD}")
@@ -37,4 +39,5 @@ add_custom_target(
   COMMAND ${DOCKER_SINGLE_RUN_CMD}
   DEPENDS docker-single-build
   COMMENT "Running the docker single run instance"
+  VERBATIM
 )

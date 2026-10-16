@@ -27,4 +27,4 @@ template_project_default_3rdparty_enabler(
 #   - system install, via find_package(PNG): PNG::PNG
 #   - FetchContent source build:             png_static (static) or png (shared)
 # For example:
-#   target_link_libraries(${PROJECT_BINARY_NAME} PNG::PNG)
+#   target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE PNG::PNG)

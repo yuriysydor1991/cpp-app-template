@@ -98,6 +98,26 @@ pipeline {
     
     stage('Unit Tests') {
       parallel {
+        stage('UTEST_MongoDBConnStringMaker') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_MongoDBConnStringMaker\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_MongoDBConnStringMaker.junit.xml'
+          }
+        }
+        stage('UTEST_MongoDBController') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_MongoDBController\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_MongoDBController.junit.xml'
+          }
+        }
+        stage('UTEST_MongoDBDate2String') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_MongoDBDate2String\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_MongoDBDate2String.junit.xml'
+          }
+        }
+        stage('UTEST_QueryMaker') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_QueryMaker\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_QueryMaker.junit.xml'
+          }
+        }
         stage('UTEST_Application') { 
           steps { 
             sh 'cd $BUILDDIR && ctest -R "UTEST_Application\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_Application.junit.xml'
@@ -174,6 +194,11 @@ pipeline {
     
     stage('Component Tests') {
       parallel {
+        stage('CTEST_MongoDBController') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "CTEST_MongoDBController\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_MongoDBController.junit.xml'
+          }
+        }
         stage('CTEST_DefaultLogger') {
           steps {
             sh 'cd $BUILDDIR && ctest -R "CTEST_DefaultLogger" --output-on-failure --output-junit $BDJUNITOUT/CTEST_DefaultLogger.junit.xml'

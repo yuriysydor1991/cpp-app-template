@@ -38,6 +38,11 @@ else()
       DISABLE_SYSTEM_PROBE
     )
 
+    # The FetchContent variables set by the enabler function above stay in its
+    # own scope, so the fetched sources directory is queried here once more.
+    include(FetchContent)
+    FetchContent_GetProperties(log4cpp)
+
     # The Debug builds of the fetched sources rename their library target.
     if (TARGET log4cpp)
       set(LOG4CPP_FETCHED_TARGET log4cpp)

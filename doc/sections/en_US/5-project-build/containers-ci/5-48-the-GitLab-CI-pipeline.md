@@ -27,7 +27,7 @@ variables:
   DEPENDENCIES: qt6-base-dev qt6-declarative-dev qt6-location-dev qt6-positioning-dev
 ```
 
-That last variable is the single line the branches of the template differ by, so a project which links a library of its own appends the development package of the library there.
+That last variable holds the packages the branches of the template differ by, so a project which links a library of its own appends the development package of the library there. Besides it, this branch makes the `clang-tidy` job a manual one, see the variables below.
 
 ### The manual parameters
 

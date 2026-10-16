@@ -19,7 +19,7 @@ namespace sqlite3i
 class SQLiteController : public app::IDBConnection
 {
  public:
-  virtual ~SQLiteController() = default;
+  ~SQLiteController() override = default;
   SQLiteController() = default;
 
   /**

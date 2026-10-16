@@ -16,7 +16,7 @@ namespace sqlite3i
 class SQLiteController : public app::IDBConnection
 {
  public:
-  virtual ~SQLiteController() = default;
+  ~SQLiteController() override = default;
   SQLiteController()
   {
     if (onMockCreate != nullptr) {
@@ -26,11 +26,12 @@ class SQLiteController : public app::IDBConnection
 
   inline static std::function<void(SQLiteController&)> onMockCreate;
 
-  MOCK_METHOD(bool, connect, (std::shared_ptr<app::ApplicationContext> nctx));
+  MOCK_METHOD(bool, connect, (std::shared_ptr<app::ApplicationContext> nctx),
+              (override));
 
-  MOCK_METHOD(bool, connected, ());
+  MOCK_METHOD(bool, connected, (), (override));
 
-  MOCK_METHOD(std::string, get_current_date, ());
+  MOCK_METHOD(std::string, get_current_date, (), (override));
 };
 
 }  // namespace sqlite3i

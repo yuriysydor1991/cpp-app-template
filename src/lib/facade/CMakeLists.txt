@@ -9,7 +9,11 @@ target_sources(
 # public headers, so the whole installable surface is one directory and nothing
 # outside of it is ever installed.
 if(LIB_INSTALL_DEV_FILES)
-  install(DIRECTORY public/ DESTINATION include/${PROJECT_LIBRARY_NAME})
+  install(
+    DIRECTORY public/
+    DESTINATION include/${PROJECT_LIBRARY_NAME}
+    COMPONENT Development
+  )
 endif()
 
 add_subdirectory(tests)

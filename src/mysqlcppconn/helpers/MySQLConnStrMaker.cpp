@@ -20,6 +20,10 @@ std::string MySQLConnStrMaker::make_conn_string(
 
   std::string cstr = actx->get_mysql_host();
 
+  if (cstr.find("://") == std::string::npos) {
+    cstr = "tcp://" + cstr;
+  }
+
   if (!actx->get_mysql_port().empty()) {
     cstr += ":" + actx->get_mysql_port();
   }

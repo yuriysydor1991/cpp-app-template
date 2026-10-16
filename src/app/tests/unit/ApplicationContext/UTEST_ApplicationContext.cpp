@@ -1,6 +1,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include <cstdlib>
 #include <thread>
 
 #include "src/app/ApplicationContext.h"
@@ -271,4 +272,43 @@ TEST_F(UTEST_ApplicationContext, raising_the_reload_flag_from_another_thread)
   EXPECT_TRUE(appCtx->get_errors().empty());
   EXPECT_FALSE(appCtx->get_stop());
   EXPECT_FALSE(appCtx->get_pause());
+}
+
+TEST_F(UTEST_ApplicationContext, default_mysql_credentials)
+{
+  for (const char* name : {"MYSQL_DATABASE", "MYSQL_USER", "MYSQL_PASSWORD",
+                           "MYSQL_HOST", "MYSQL_TCP_PORT"}) {
+    unsetenv(name);
+  }
+
+  auto ctx = create_context(argc, argv);
+
+  EXPECT_EQ(ctx->get_mysql_dbname(), ApplicationContext::default_mysql_name);
+  EXPECT_EQ(ctx->get_mysql_user(), ApplicationContext::default_mysql_user);
+  EXPECT_EQ(ctx->get_mysql_password(),
+            ApplicationContext::default_mysql_password);
+  EXPECT_EQ(ctx->get_mysql_host(), ApplicationContext::default_mysql_host);
+  EXPECT_EQ(ctx->get_mysql_port(), ApplicationContext::default_mysql_port);
+}
+
+TEST_F(UTEST_ApplicationContext, mysql_credentials_from_the_environment)
+{
+  setenv("MYSQL_DATABASE", "env_db", 1);
+  setenv("MYSQL_USER", "env_user", 1);
+  setenv("MYSQL_PASSWORD", "env pass'word", 1);
+  setenv("MYSQL_HOST", "db.example.org", 1);
+  setenv("MYSQL_TCP_PORT", "13306", 1);
+
+  auto ctx = create_context(argc, argv);
+
+  EXPECT_EQ(ctx->get_mysql_dbname(), "env_db");
+  EXPECT_EQ(ctx->get_mysql_user(), "env_user");
+  EXPECT_EQ(ctx->get_mysql_password(), "env pass'word");
+  EXPECT_EQ(ctx->get_mysql_host(), "db.example.org");
+  EXPECT_EQ(ctx->get_mysql_port(), "13306");
+
+  for (const char* name : {"MYSQL_DATABASE", "MYSQL_USER", "MYSQL_PASSWORD",
+                           "MYSQL_HOST", "MYSQL_TCP_PORT"}) {
+    unsetenv(name);
+  }
 }

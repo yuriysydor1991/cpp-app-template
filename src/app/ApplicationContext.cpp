@@ -1,7 +1,22 @@
 #include "src/app/ApplicationContext.h"
 
+#include <cstdlib>
 #include <string>
 #include <vector>
+
+namespace
+{
+
+/// @brief Returns the value of the name environment variable or the fallback
+/// value when the variable is not set.
+std::string env_or(const char* name, const std::string& fallback)
+{
+  const char* value = std::getenv(name);
+
+  return value != nullptr ? std::string{value} : fallback;
+}
+
+}  // namespace
 
 namespace app
 {
@@ -13,18 +28,18 @@ const std::string ApplicationContext::default_mysql_user = "template_test_user";
 const std::string ApplicationContext::default_mysql_password =
     "template_test_password";
 
-const std::string ApplicationContext::default_mysql_host = "tcp://127.0.0.1";
+const std::string ApplicationContext::default_mysql_host = "127.0.0.1";
 
 const std::string ApplicationContext::default_mysql_port = "3306";
 
 ApplicationContext::ApplicationContext(int& gargc, char**& gargv)
     : margc{gargc},
       margv{gargv},
-      mmysql_dbname{default_mysql_name},
-      mmysql_user{default_mysql_user},
-      mmysql_password{default_mysql_password},
-      mmysql_host{default_mysql_host},
-      mmysql_port{default_mysql_port}
+      mmysql_dbname{env_or("MYSQL_DATABASE", default_mysql_name)},
+      mmysql_user{env_or("MYSQL_USER", default_mysql_user)},
+      mmysql_password{env_or("MYSQL_PASSWORD", default_mysql_password)},
+      mmysql_host{env_or("MYSQL_HOST", default_mysql_host)},
+      mmysql_port{env_or("MYSQL_TCP_PORT", default_mysql_port)}
 {
 }
 

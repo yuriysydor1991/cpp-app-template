@@ -152,16 +152,24 @@ class ApplicationContext
   /// default Application class implementation.
   void set_mysqlconn(const std::shared_ptr<IDBConnection>& newValue);
 
+  /// @brief The default MySQL database name, overridden by the
+  /// MYSQL_DATABASE environment variable.
   static const std::string default_mysql_name;
 
   /// @brief Remember to change this publicly visible credentials!!!
+  /// Overridden by the MYSQL_USER environment variable.
   static const std::string default_mysql_user;
 
   /// @brief Remember to change this publicly visible credentials!!!
+  /// Overridden by the MYSQL_PASSWORD environment variable.
   static const std::string default_mysql_password;
 
+  /// @brief The default MySQL server host, overridden by the MYSQL_HOST
+  /// environment variable.
   static const std::string default_mysql_host;
 
+  /// @brief The default MySQL server port, overridden by the MYSQL_TCP_PORT
+  /// environment variable.
   static const std::string default_mysql_port;
 
  private:

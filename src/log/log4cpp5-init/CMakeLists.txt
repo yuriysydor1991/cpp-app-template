@@ -21,3 +21,5 @@ target_link_libraries(
   ${PROJECT_BINARY_NAME}
   PRIVATE TemplateLog4Cpp5ControllerObj
 )
+
+add_subdirectory(tests)

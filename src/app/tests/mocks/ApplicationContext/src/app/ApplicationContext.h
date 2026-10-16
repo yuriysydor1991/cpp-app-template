@@ -84,6 +84,7 @@ class ApplicationContext
   static const std::string default_pg_name;
   static const std::string default_pg_user;
   static const std::string default_pg_password;
+  static const std::string default_pg_host;
 
  private:
   int& margc;

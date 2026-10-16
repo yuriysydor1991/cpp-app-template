@@ -1,10 +1,24 @@
 #include "src/app/ApplicationContext.h"
 
+#include <cstdlib>
 #include <string>
 #include <vector>
 
 namespace app
 {
+
+namespace
+{
+
+/// @brief Returns the given environment variable value if set or the fallback.
+std::string env_or(const char* name, const std::string& fallback)
+{
+  const char* value = std::getenv(name);
+
+  return value != nullptr ? std::string{value} : fallback;
+}
+
+}  // namespace
 
 const std::string ApplicationContext::default_pg_name = "postgres";
 
@@ -13,12 +27,16 @@ const std::string ApplicationContext::default_pg_user = "template_test_user";
 const std::string ApplicationContext::default_pg_password =
     "template_test_password";
 
+const std::string ApplicationContext::default_pg_host = "localhost";
+
 ApplicationContext::ApplicationContext(int& gargc, char**& gargv)
     : margc{gargc},
       margv{gargv},
-      mpg_dbname{default_pg_name},
-      mpg_user{default_pg_user},
-      mpg_password{default_pg_password}
+      mpg_dbname{env_or("PGDATABASE", default_pg_name)},
+      mpg_user{env_or("PGUSER", default_pg_user)},
+      mpg_password{env_or("PGPASSWORD", default_pg_password)},
+      mpg_host{env_or("PGHOST", default_pg_host)},
+      mpg_port{env_or("PGPORT", {})}
 {
 }
 

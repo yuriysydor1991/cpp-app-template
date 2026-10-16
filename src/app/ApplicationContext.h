@@ -132,13 +132,15 @@ class ApplicationContext
   /// @brief Sets the PostgreSQL user password.
   void set_pg_password(const std::string& newValue);
 
-  /// @brief PostgreSQL hostname.
+  /// @brief PostgreSQL hostname, the PGHOST environment variable overrides
+  /// the ApplicationContext::default_pg_host.
   const std::string& get_pg_host() const;
 
   /// @brief Sets the PostgreSQL hostname.
   void set_pg_host(const std::string& newValue);
 
-  /// @brief PostgreSQL port.
+  /// @brief PostgreSQL port taken from the PGPORT environment variable, empty
+  /// for the libpq default 5432.
   const std::string& get_pg_port() const;
 
   /// @brief Sets the PostgreSQL port.
@@ -152,13 +154,22 @@ class ApplicationContext
   /// default Application class implementation.
   void set_pg_connection(const std::shared_ptr<IDBConnection>& newValue);
 
+  /// @brief The default database name, the PGDATABASE environment variable
+  /// overrides it.
   static const std::string default_pg_name;
 
   /// @brief Remember to change this publicly visible credentials!!!
+  /// The PGUSER environment variable overrides it.
   static const std::string default_pg_user;
 
   /// @brief Remember to change this publicly visible credentials!!!
+  /// The PGPASSWORD environment variable overrides it.
   static const std::string default_pg_password;
+
+  /// @brief The default server host connected through the TCP, so the
+  /// password authentication applies. The PGHOST environment variable
+  /// overrides it.
+  static const std::string default_pg_host;
 
  private:
   /// @brief Command line arguments count passed by the OS through the main

@@ -19,18 +19,17 @@ bool PgSQL::connect(std::shared_ptr<app::ApplicationContext> nctx)
     return false;
   }
 
-  actx = nctx;
-
   qmaker = create_query_maker();
-  pgsqlc = create_connection();
+  pgsqlc = create_connection(make_conn_string(nctx));
 
-  return pgsqlc != nullptr && pgsqlc->is_open();
+  return connected();
 }
 
-std::shared_ptr<pqxx::connection> PgSQL::create_connection()
+std::shared_ptr<pqxx::connection> PgSQL::create_connection(
+    const std::string& connStr)
 {
   try {
-    return std::make_shared<pqxx::connection>(make_conn_string());
+    return std::make_shared<pqxx::connection>(connStr);
   }
   catch (const std::exception& e) {
     LOGE("failure while creating the db connection: " << e.what());
@@ -41,36 +40,29 @@ std::shared_ptr<pqxx::connection> PgSQL::create_connection()
 
 std::shared_ptr<sql::QueryMaker> PgSQL::create_query_maker()
 {
-  return std::make_shared<sql::QueryMaker>(actx);
+  return std::make_shared<sql::QueryMaker>();
 }
 
-std::string PgSQL::make_conn_string()
+std::string PgSQL::make_conn_string(
+    const std::shared_ptr<app::ApplicationContext>& nctx)
 {
   auto csmaker = std::make_shared<helpers::PgConnStringMaker>();
 
-  return csmaker->make_conn_string(actx);
+  return csmaker->make_conn_string(nctx);
 }
 
-bool PgSQL::connected()
-{
-  assert(pgsqlc != nullptr);
-
-  return pgsqlc != nullptr && pgsqlc->is_open();
-}
+bool PgSQL::connected() { return pgsqlc != nullptr && pgsqlc->is_open(); }
 
 std::string PgSQL::get_current_date()
 {
-  assert(pgsqlc != nullptr);
-  assert(qmaker != nullptr);
-
   if (!connected()) {
     LOGE("Not connected");
     return {};
   }
 
-  static const std::string dquery = qmaker->make_date_query();
+  assert(qmaker != nullptr);
 
-  auto pgres = execute_query(dquery);
+  auto pgres = execute_query(qmaker->make_date_query());
 
   if (pgres.empty()) {
     LOGE("Empty result obtained");

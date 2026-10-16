@@ -53,16 +53,21 @@ class PgSQL : public app::IDBConnection
   virtual std::string get_current_date() override;
 
  protected:
-  virtual std::string make_conn_string();
+  /**
+   * @brief Builds the libpq connection string from the context credentials.
+   * The context is not stored, so the context may own this connection
+   * object without a shared pointers cycle.
+   */
+  virtual std::string make_conn_string(
+      const std::shared_ptr<app::ApplicationContext>& nctx);
 
   virtual pqxx::result execute_query(const std::string& query);
 
-  virtual std::shared_ptr<pqxx::connection> create_connection();
+  virtual std::shared_ptr<pqxx::connection> create_connection(
+      const std::string& connStr);
   virtual std::shared_ptr<sql::QueryMaker> create_query_maker();
 
  private:
-  std::shared_ptr<app::ApplicationContext> actx;
-
   std::shared_ptr<pqxx::connection> pgsqlc;
   std::shared_ptr<sql::QueryMaker> qmaker;
 };

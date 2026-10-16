@@ -36,11 +36,9 @@ set(CPACK_DEBIAN_PACKAGE_MAINTAINER "${PROJECT_MAINTAINER} ${PROJECT_MAINTAINER_
 set(CPACK_DEB_COMPONENT_INSTALL ON)
 set(CPACK_PACKAGE_DESCRIPTION ${CMAKE_PROJECT_DESCRIPTION})
 set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE ${TEMPLATE_PROJECT_DEB_PACKAGE_ARCHITECTURE})
+# Qt loads the Vulkan loader at run time (dlopen), so no Qt package pulls it in
 set(CPACK_DEBIAN_PACKAGE_DEPENDS
-    "libqt6core6, libqt6gui6, libqt6widgets6, libqt6qml6, libqt6quick6, 
-    libqt6quickcontrols2-6, libqt6quicktemplates2-6, libqt6qmlworkerscript6, 
-    qml6-module-qtquick, qml6-module-qtqml-workerscript, 
-    qml6-module-qtquick-templates, qml6-module-qtquick-window"
+    "libqt6core6, libqt6gui6, libqt6widgets6, libvulkan1"
 )
 
 # the CPACK_SYSTEM_NAME of the default file name names the system alone, so the

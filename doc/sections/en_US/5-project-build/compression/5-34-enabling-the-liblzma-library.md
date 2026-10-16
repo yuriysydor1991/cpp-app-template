@@ -12,7 +12,7 @@ See the `cmake/enablers/compression/template-project-liblzma-enabler.cmake` modu
 
 ### Compressing data of interest (copy-paste examples)
 
-After `ENABLE_LIBLZMA=ON` and linking a liblzma target (e.g. `target_link_libraries(${PROJECT_BINARY_NAME} LibLZMA::LibLZMA)`), include `<lzma.h>` and copy-paste any of the snippets below.
+After `ENABLE_LIBLZMA=ON` and linking a liblzma target (e.g. `target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE LibLZMA::LibLZMA)`), include `<lzma.h>` and copy-paste any of the snippets below.
 
 The quickest way to compress a buffer of interest — one-shot, in-memory, into the `.xz` (LZMA2) container:
 

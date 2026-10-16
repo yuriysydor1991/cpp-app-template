@@ -36,7 +36,11 @@ set(CPACK_DEBIAN_PACKAGE_MAINTAINER "${PROJECT_MAINTAINER} ${PROJECT_MAINTAINER_
 set(CPACK_DEB_COMPONENT_INSTALL ON)
 set(CPACK_PACKAGE_DESCRIPTION ${CMAKE_PROJECT_DESCRIPTION})
 set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE ${TEMPLATE_PROJECT_DEB_PACKAGE_ARCHITECTURE})
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "libmysqlcppconn7v5")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "")
+# The executable links the Connector/C++ shared library, which every
+# distribution release names by it's own ABI suffix (libmysqlcppconn7v5,
+# libmysqlcppconn7t64), so the dpkg-shlibdeps tool finds the package to depend on.
+set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
 
 # the CPACK_SYSTEM_NAME of the default file name names the system alone, so the
 # destination CPU takes its place

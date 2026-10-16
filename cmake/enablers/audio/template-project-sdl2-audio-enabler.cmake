@@ -80,10 +80,45 @@ message(STATUS "The sound player decodes with: ${TEMPLATE_APP_SDL2_MIXER_TARGET}
 # The FetchContent built SDL2 and SDL_mixer are the 3rd-party code as much as
 # the installed ones, so their headers stay out of the project warnings and
 # the clang-tidy checks.
+#
+# Neither upstream project installs itself as a subproject, while the binary
+# needs the shared libraries built here at the run time, so they go into an own
+# directory the installed binary finds through a relative RUNPATH. The system
+# ones are left to the package dependencies instead, which the deb packager
+# computes out of the very libraries the binary links against.
+set(TEMPLATE_APP_SDL2_AUDIO_LIBDIR "${CMAKE_INSTALL_LIBDIR}/${PROJECT_BINARY_NAME}")
+
 foreach(sdlTarget IN ITEMS ${TEMPLATE_APP_SDL2_AUDIO_TARGET} ${TEMPLATE_APP_SDL2_MIXER_TARGET})
   get_target_property(sdlAliasedTarget ${sdlTarget} ALIASED_TARGET)
   if (sdlAliasedTarget)
     set(sdlTarget ${sdlAliasedTarget})
   endif()
   set_target_properties(${sdlTarget} PROPERTIES SYSTEM ON)
+
+  get_target_property(sdlImported ${sdlTarget} IMPORTED)
+  get_target_property(sdlType ${sdlTarget} TYPE)
+
+  if (NOT sdlImported AND sdlType STREQUAL "SHARED_LIBRARY")
+    set_target_properties(${sdlTarget} PROPERTIES INSTALL_RPATH "$ORIGIN")
+
+    install(
+      TARGETS ${sdlTarget}
+      LIBRARY DESTINATION ${TEMPLATE_APP_SDL2_AUDIO_LIBDIR} NAMELINK_SKIP
+      RUNTIME DESTINATION ${PROJECT_BINARY_INSTALLATION_DIR}
+    )
+
+    message(STATUS "Installing the fetched ${sdlTarget} library into: ${TEMPLATE_APP_SDL2_AUDIO_LIBDIR}")
+    set(sdlBundled ON)
+  endif()
 endforeach()
+
+if (sdlBundled)
+  file(
+    RELATIVE_PATH sdlLibdirFromBinary
+    "/${PROJECT_BINARY_INSTALLATION_DIR}" "/${TEMPLATE_APP_SDL2_AUDIO_LIBDIR}"
+  )
+
+  list(APPEND CMAKE_INSTALL_RPATH "$ORIGIN/${sdlLibdirFromBinary}")
+endif()
+
+set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)

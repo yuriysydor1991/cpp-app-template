@@ -1,5 +1,15 @@
 cmake_minimum_required(VERSION 3.13)
 
+# The libcurl is a hard requirement of this branch rather than an optional
+# integration: the application downloads it's data with it.
+if (NOT TARGET CURL::libcurl)
+  message(
+    FATAL_ERROR
+    "The CURLController performs it's requests with the libcurl. Keep the "
+    "ENABLE_LIBCURL option ON."
+  )
+endif()
+
 add_library(
   TemplateProjectCURLControllerObj OBJECT
   CURLController.cpp

@@ -27,7 +27,7 @@ bool MySQLController::connect(std::shared_ptr<app::ApplicationContext> nctx)
   }
 
   try {
-    qmaker = std::make_unique<sqlmaker::QueryMaker>(nctx);
+    qmaker = std::make_unique<sqlmaker::QueryMaker>();
 
     auto connmaker = std::make_shared<helpers::MySQLConnStrMaker>();
 

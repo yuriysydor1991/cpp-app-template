@@ -115,7 +115,7 @@ class ApplicationContext
   /// named in it's TOKEN_ENV_VAR field.
   const std::string& get_chatgpt_token() const;
 
-  /// @brief Sets the the OpenAI API token to authorize the ChatGPT calls
+  /// @brief Sets the OpenAI API token to authorize the ChatGPT calls
   /// with. When empty the ChatGPTController takes the token from the
   /// environment variable named in it's TOKEN_ENV_VAR field.
   void set_chatgpt_token(const std::string& newValue);
@@ -124,7 +124,7 @@ class ApplicationContext
   /// Application::run only prints the hint on how to provide one.
   const std::string& get_chatgpt_question() const;
 
-  /// @brief Sets the the question to ask the ChatGPT model about. When empty
+  /// @brief Sets the question to ask the ChatGPT model about. When empty
   /// the Application::run only prints the hint on how to provide one.
   void set_chatgpt_question(const std::string& newValue);
 
@@ -132,7 +132,7 @@ class ApplicationContext
   /// it's DEFAULT_MODEL one.
   const std::string& get_chatgpt_model() const;
 
-  /// @brief Sets the an optional model override. When empty the
+  /// @brief Sets an optional model override. When empty the
   /// ChatGPTController asks it's DEFAULT_MODEL one.
   void set_chatgpt_model(const std::string& newValue);
 

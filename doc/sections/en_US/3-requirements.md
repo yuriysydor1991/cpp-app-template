@@ -19,3 +19,4 @@ This section contains list of required packages and/or tools that must be presen
 1. [Optional for the WIX packager](/doc/sections/en_US/3-15-optional-for-the-WIX-packager.md)
 1. [Optional for the libcurl integration](/doc/sections/en_US/3-16-optional-for-the-libcurl-integration.md)
 1. [Optional for the nlohmann JSON integration](/doc/sections/en_US/3-17-optional-for-the-nlohmann-json-integration.md)
+1. [Optional for the AppImage packager](/doc/sections/en_US/3-18-optional-for-the-AppImage-packager.md)

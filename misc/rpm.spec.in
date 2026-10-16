@@ -11,12 +11,17 @@ Packager:       @PROJECT_MAINTAINER@ <@PROJECT_MAINTAINER_EMAIL@>
 BuildArch:      %{_arch}
 AutoReqProv:    no
 
+# The binaries come prebuilt from the Meson build, no debuginfo is extracted.
+%global debug_package %{nil}
+
 %description
 @PROJECT_DESCRIPTION@
 
 %install
-# DESTDIR-prepared by meson install before rpmbuild is invoked
+# The rpm target stages the meson install output here, the rpmbuild itself
+# starts the install section with an empty buildroot.
+mkdir -p %{buildroot}
+cp -a @RPM_STAGE_DIR@/. %{buildroot}/
 
-%files
+%files -f @RPM_FILE_LIST@
 %defattr(-,root,root,-)
-/usr/bin/*

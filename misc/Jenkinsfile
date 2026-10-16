@@ -98,6 +98,16 @@ pipeline {
     
     stage('Unit Tests') {
       parallel {
+        stage('UTEST_QueryMaker') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_QueryMaker\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_QueryMaker.junit.xml'
+          }
+        }
+        stage('UTEST_SQLiteController') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_SQLiteController\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_SQLiteController.junit.xml'
+          }
+        }
         stage('UTEST_Application') { 
           steps { 
             sh 'cd $BUILDDIR && ctest -R "UTEST_Application\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_Application.junit.xml'
@@ -174,6 +184,11 @@ pipeline {
     
     stage('Component Tests') {
       parallel {
+        stage('CTEST_SQLiteController') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "CTEST_SQLiteController\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_SQLiteController.junit.xml'
+          }
+        }
         stage('CTEST_DefaultLogger') {
           steps {
             sh 'cd $BUILDDIR && ctest -R "CTEST_DefaultLogger" --output-on-failure --output-junit $BDJUNITOUT/CTEST_DefaultLogger.junit.xml'

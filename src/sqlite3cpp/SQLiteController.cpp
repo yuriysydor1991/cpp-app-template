@@ -23,7 +23,7 @@ bool SQLiteController::connect(std::shared_ptr<app::ApplicationContext> nctx)
     return false;
   }
 
-  qmaker = std::make_shared<sqlmaker::QueryMaker>();
+  qmaker = create_query_maker();
 
   const std::filesystem::path dbpath{nctx->get_db_dbname()};
   std::error_code ec;
@@ -33,8 +33,8 @@ bool SQLiteController::connect(std::shared_ptr<app::ApplicationContext> nctx)
   }
 
   if (ec) {
-    LOGE("Failure to create the database directory "
-         << dbpath.parent_path() << ": " << ec.message());
+    LOGE("Failure to create the database directory " << dbpath.parent_path()
+                                                     << ": " << ec.message());
     return false;
   }
 
@@ -48,6 +48,11 @@ bool SQLiteController::connect(std::shared_ptr<app::ApplicationContext> nctx)
   }
 
   return db != nullptr;
+}
+
+std::shared_ptr<sqlmaker::QueryMaker> SQLiteController::create_query_maker()
+{
+  return std::make_shared<sqlmaker::QueryMaker>();
 }
 
 bool SQLiteController::connected()

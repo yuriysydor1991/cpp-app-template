@@ -27,3 +27,4 @@ target_link_libraries(
 )
 
 add_subdirectory(sqlmaker)
+add_subdirectory(tests)

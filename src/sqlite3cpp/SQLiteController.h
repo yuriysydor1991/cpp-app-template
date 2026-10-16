@@ -26,7 +26,7 @@ class SQLiteController : public app::IDBConnection
    * @brief Opens (creates if absent) the SQLite database file, and its
    * directory, which path the ApplicationContext::get_db_dbname returns.
    *
-   * @param nctx The ApplicationContext for connection credentials etc.
+   * @param nctx The ApplicationContext with the database file path.
    *
    * @returns Returns a true boolean value on the success or false otherwise.
    */
@@ -49,6 +49,11 @@ class SQLiteController : public app::IDBConnection
    * in case of any error.
    */
   virtual std::string get_current_date() override;
+
+ protected:
+  /// @brief Creates the SQL query maker. Overridden by the tests to inject a
+  /// mock query maker.
+  virtual std::shared_ptr<sqlmaker::QueryMaker> create_query_maker();
 
  private:
   /**

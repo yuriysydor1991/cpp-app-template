@@ -133,6 +133,40 @@ TEST_F(UTEST_Application, failure_exit_invalid_context_conversion_result)
   EXPECT_FALSE(appCtx->get_print_version_and_exit());
 }
 
+TEST_F(UTEST_Application, failure_exit_no_library_instance)
+{
+  MockFunction<void(ApplicationContext2LibraryContext&)> converterEnsurer;
+
+  auto ctxInstance = std::make_shared<LibraryContext>();
+
+  EXPECT_CALL(*CppAppTemplate012::LibraryFacade::create_library_context_mock,
+              Call())
+      .Times(1)
+      .WillOnce(Return(ctxInstance));
+
+  EXPECT_CALL(*CppAppTemplate012::LibraryFacade::create_library_mock, Call(_))
+      .Times(1)
+      .WillOnce(Return(nullptr));
+
+  EXPECT_CALL(converterEnsurer, Call(_))
+      .Times(1)
+      .WillOnce([&](ApplicationContext2LibraryContext& instance) {
+        EXPECT_CALL(instance, convert(_, _)).Times(1).WillOnce(Return(true));
+      });
+
+  ApplicationContext2LibraryContext::onMockCreate =
+      converterEnsurer.AsStdFunction();
+
+  EXPECT_CALL(*appCtx,
+              push_error(std::string{"No library instance was created"}))
+      .Times(1);
+
+  EXPECT_NE(app->run(appCtx), 0);
+
+  EXPECT_FALSE(appCtx->get_print_help_and_exit());
+  EXPECT_FALSE(appCtx->get_print_version_and_exit());
+}
+
 TEST_F(UTEST_Application, failure_exit_invalid_lib_result)
 {
   MockFunction<void(ApplicationContext2LibraryContext&)> converterEnsurer;

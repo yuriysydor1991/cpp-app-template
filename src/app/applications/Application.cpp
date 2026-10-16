@@ -32,6 +32,12 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
 
   auto libi = CppAppTemplate012::LibraryFacade::create_library(libctx);
 
+  if (libi == nullptr) {
+    LOGE("No library instance was created");
+    ctx->push_error("No library instance was created");
+    return INVALID;
+  }
+
   if (!libi->libcall(libctx)) {
     LOGE("Invalid library execution status");
     ctx->push_error("Invalid library execution status");

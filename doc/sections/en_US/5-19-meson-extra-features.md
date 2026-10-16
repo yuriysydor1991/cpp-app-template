@@ -55,6 +55,14 @@ Each packager is a `custom_target` that internally runs `meson install` into a s
 
 The DEB / RPM / FreeBSD pkg / WIX packagers share the `PROJECT_MAINTAINER` / `PROJECT_MAINTAINER_EMAIL` options - see [Project maintainer options](/doc/sections/en_US/5-28-project-maintainer-options.md).
 
+### Logging
+
+| Option | Description |
+|---|---|
+| `-DMAX_LOG_LEVEL=<0..5>` | The maximum severity of the compiled in log messages and the default runtime level: `1` error, `2` warning, `3` info (the default), `4` debug, `5` trace. The `LOGE` errors are always compiled in. |
+| `-DDEFAULT_LOG_FILE_PATH=<dir>` | The directory the default log file is created in (empty - the current working directory). |
+| `-DENABLE_LOGS_MICROSECONDS_TIME=false` | Drops the microseconds field from the log messages timestamps. |
+
 ### Doxygen
 
 | Option | Subsection |

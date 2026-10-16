@@ -167,12 +167,26 @@ option(
 )
 
 option(
+  'ENABLE_LOGS_MICROSECONDS_TIME',
+  type: 'boolean',
+  value: true,
+  description: 'Include the microseconds field into emitted log messages'
+)
+
+option(
+  'DEFAULT_LOG_FILE_PATH',
+  type: 'string',
+  value: '',
+  description: 'Default directory where the log file is created (empty - current working directory)'
+)
+
+option(
   'MAX_LOG_LEVEL',
   type: 'integer',
   value: 3,
   min: 0,
   max: 5,
-  description: 'Maximum severity of the compiled log messages. Error=0. Trace=5.'
+  description: 'Maximum severity of the compiled log messages. Error=1, Warning=2, Info=3, Debug=4, Trace=5. The errors are always compiled in.'
 )
 
 option(

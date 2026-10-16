@@ -1,143 +1,71 @@
 #include "src/log/default-logger/DefaultLogger.h"
 
-#include <array>
-#include <chrono>
-#include <exception>
-#include <filesystem>
-#include <fstream>
-#include <iostream>
-#include <locale>
-#include <mutex>
+#include <memory>
 #include <string>
-#include <thread>
 
 namespace default_logger
 {
 
 void DefaultLogger::log(const unsigned short& loglvl, const std::string& msg)
 {
-  if (loglvl > lvl) {
-    return;
-  }
-
-  std::lock_guard<std::mutex> alogfile_m_guard{alogfile_m};
-
-  std::ostringstream finalLog;
-
-  // A freshly constructed stream adopts the global locale, which the
-  // application is free to replace with one that groups the digits - that is
-  // what std::locale::global(std::locale("")) does on most of the hosts. Such
-  // a locale splits the logger own numeric fields with the group separators,
-  // turning a thread id into 135,429,793,650,560, and it even eats the
-  // microseconds zero padding, because the separators count towards the field
-  // width. The log line layout is the logger own business and must not depend
-  // on the application locale, so the message stream is pinned to the classic
-  // one. The application message itself is formatted by the LOG_BODY macro
-  // stream and keeps honouring the application locale.
-  finalLog.imbue(std::locale::classic());
-
-  insert_current_timestamp(finalLog);
-
-  finalLog << " " << lvl_repr(loglvl) << " " << std::this_thread::get_id()
-           << " " << msg << std::endl;
-
-  const std::string finalLogStr = finalLog.str();
-
-  if (alogfile.is_open()) {
-    alogfile << finalLogStr;
-  }
-
-  if (!toPrintMsgs.load()) {
-    return;
-  }
-
-  if (loglvl <= LVL_WARNING) {
-    std::cerr << finalLogStr;
-  } else {
-    std::cout << finalLogStr;
-  }
+  real_logger()->log(loglvl, msg);
 }
 
 void DefaultLogger::log(const unsigned short& loglvl,
                         const char* const filePath, const int& fileLine,
                         const std::string& msg)
 {
-  std::filesystem::path fullPath{filePath};
-
-  std::string filename = fullPath.filename().string();
-
-  log(loglvl, filename + ":" + std::to_string(fileLine) + " : " + msg);
+  real_logger()->log(loglvl, filePath, fileLine, msg);
 }
 
 void DefaultLogger::logfile(const std::string& filepath)
 {
-  if (filepath.empty()) {
-    return;
-  }
-
-  alogfile.open(filepath.c_str(), std::fstream::app);
-
-  if (!alogfile.is_open()) {
-    throw std::runtime_error{"Fail to open the log file at " + filepath};
-  }
+  real_logger()->logfile(filepath);
 }
 
 void DefaultLogger::print(const bool toPrintValue)
 {
-  toPrintMsgs.store(toPrintValue);
+  real_logger()->print(toPrintValue);
 }
 
-void DefaultLogger::level(const unsigned short& nlvl) { lvl = nlvl; }
-
-void DefaultLogger::init(const std::string& filepath,
-                         const unsigned short& nlvl, const bool toPrintValue)
+void DefaultLogger::level(const unsigned short& nlvl)
 {
-  logfile(filepath);
-  level(nlvl);
-  print(toPrintValue);
-}
-
-inline void DefaultLogger::insert_current_timestamp(std::ostringstream& oss)
-{
-  static constexpr const char microsecFiller = '0';
-  static constexpr const unsigned int microsecWidth = 6U;
-
-  using namespace std::chrono;
-
-  const auto now = system_clock::now();
-
-  const time_t now_time_t = system_clock::to_time_t(now);
-  std::tm timeHolder = *std::localtime(&now_time_t);
-
-  const auto timeSinceEpoch = now.time_since_epoch();
-
-  auto seconds = duration_cast<std::chrono::seconds>(timeSinceEpoch);
-  auto microseconds =
-      duration_cast<std::chrono::microseconds>(timeSinceEpoch - seconds);
-
-  oss << std::put_time(&timeHolder, defaultLogDateFormat);
-  // The fill character is sticky, unlike the width, so it is restored right
-  // after the padded field. Otherwise it stays behind and pads whatever field
-  // is appended to the very same message later on.
-  const char previousFill = oss.fill();
-
-  oss << '.' << std::setfill(microsecFiller) << std::setw(microsecWidth)
-      << microseconds.count() << std::setfill(previousFill);
+  real_logger()->level(nlvl);
 }
 
 const std::string& DefaultLogger::lvl_repr(const unsigned short& glvl)
 {
-  static constexpr const unsigned short maxLvls = 6U;
-  static const std::array<const std::string, maxLvls> reprs{
-      std::string{"UNK"}, std::string{"ERR"}, std::string{"WRN"},
-      std::string{"INF"}, std::string{"DBG"}, std::string{"TRA"},
-  };
+  return real_logger()->lvl_repr(glvl);
+}
 
-  if (glvl >= maxLvls) {
-    return reprs[0U];
+void DefaultLogger::init(const std::string& filepath,
+                         const unsigned short& nlvl, const bool toPrintValue)
+{
+  real_logger()->init(filepath, nlvl, toPrintValue);
+}
+
+DefaultLogger::RealLoggerPtr DefaultLogger::real_logger()
+{
+  return real_logger_holder();
+}
+
+void DefaultLogger::real_logger(const RealLoggerPtr& newRealLogger)
+{
+  if (!newRealLogger) {
+    return;
   }
 
-  return reprs[glvl];
+  real_logger_holder() = newRealLogger;
+  adopted = true;
+}
+
+bool DefaultLogger::real_logger_adopted() { return adopted; }
+
+DefaultLogger::RealLoggerPtr& DefaultLogger::real_logger_holder()
+{
+  static RealLoggerPtr realLogger{std::make_shared<RealDefaultLogger>()};
+
+  return realLogger;
 }
 
 }  // namespace default_logger

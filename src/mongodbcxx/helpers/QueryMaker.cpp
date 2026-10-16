@@ -1,15 +1,9 @@
 #include "src/mongodbcxx/helpers/QueryMaker.h"
 
-#include <memory>
-
 #include "src/mongodbcxx/mongocxx-includes.h"
 
 namespace mongodbcxxi::helpers
 {
-
-QueryMaker::QueryMaker(std::shared_ptr<app::ApplicationContext> ctx) : actx{ctx}
-{
-}
 
 QueryMaker::JsonDoc QueryMaker::create_date_query()
 {

@@ -68,8 +68,6 @@ class MongoDBController : public app::IDBConnection
 
   inline static constexpr const char* const localTime = "localTime";
 
-  std::shared_ptr<app::ApplicationContext> actx;
-
   mongocxx::client dbclient;
   mongocxx::database dbconnection;
 

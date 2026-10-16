@@ -30,13 +30,11 @@ bool MongoDBController::connect(std::shared_ptr<app::ApplicationContext> nctx)
     return false;
   }
 
-  actx = nctx;
-
   try {
     auto csMaker = std::make_shared<helpers::MongoDBConnStringMaker>();
-    qmaker = std::make_shared<helpers::QueryMaker>(actx);
+    qmaker = std::make_shared<helpers::QueryMaker>();
 
-    const std::string connString = csMaker->make_conn_string(actx);
+    const std::string connString = csMaker->make_conn_string(nctx);
 
     const mongocxx::uri connURI{connString};
 

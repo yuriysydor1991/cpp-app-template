@@ -1,9 +1,6 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_NOSQL_MONGODB_QUERYMAKER_HELPER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_NOSQL_MONGODB_QUERYMAKER_HELPER_CLASS_H
 
-#include <memory>
-
-#include "src/app/ApplicationContext.h"
 #include "src/mongodbcxx/mongocxx-includes.h"
 
 namespace mongodbcxxi::helpers
@@ -21,7 +18,7 @@ class QueryMaker
   using JsonDoc = bsoncxx::document::value;
 
   virtual ~QueryMaker() = default;
-  explicit QueryMaker(std::shared_ptr<app::ApplicationContext> ctx);
+  QueryMaker() = default;
 
   /**
    * @brief Creates the simple current date query JSON document.
@@ -37,9 +34,6 @@ class QueryMaker
    * @return Returns filled ping bsoncxx document query.
    */
   static JsonDoc create_ping_query();
-
- private:
-  std::shared_ptr<app::ApplicationContext> actx;
 };
 
 }  // namespace mongodbcxxi::helpers

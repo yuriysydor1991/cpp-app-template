@@ -36,7 +36,11 @@ set(CPACK_DEBIAN_PACKAGE_MAINTAINER "${PROJECT_MAINTAINER} ${PROJECT_MAINTAINER_
 set(CPACK_DEB_COMPONENT_INSTALL ON)
 set(CPACK_PACKAGE_DESCRIPTION ${CMAKE_PROJECT_DESCRIPTION})
 set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE ${TEMPLATE_PROJECT_DEB_PACKAGE_ARCHITECTURE})
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "libpqxx-6.4")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "")
+# The executable links the libpq (and the libpqxx when no static archive is
+# available), which every distribution release names by it's own ABI version
+# (libpqxx-7.8, libpqxx-7.10), so the dpkg-shlibdeps tool finds the packages.
+set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
 
 # the CPACK_SYSTEM_NAME of the default file name names the system alone, so the
 # destination CPU takes its place

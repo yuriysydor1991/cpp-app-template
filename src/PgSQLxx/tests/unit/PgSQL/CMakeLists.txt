@@ -12,7 +12,6 @@ add_executable(
 target_include_directories(
   UTEST_PgSQL
   PRIVATE ${APP_MOCKS_ROOT}/log
-  PRIVATE ${PGSQL_MOCKS_ROOT}
   PRIVATE ${CMAKE_SOURCE_DIR}
 )
 

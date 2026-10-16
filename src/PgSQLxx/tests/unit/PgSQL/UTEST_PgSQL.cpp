@@ -3,7 +3,7 @@
 
 #include <memory>
 
-#include "PgSQLSpy.h"
+#include "src/PgSQLxx/tests/mocks/PgSQLSpy.h"
 #include "src/app/ApplicationContext.h"
 
 using namespace pgsqli;

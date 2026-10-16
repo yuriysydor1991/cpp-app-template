@@ -16,7 +16,7 @@ namespace pgsqli
 class PgSQL : public app::IDBConnection
 {
  public:
-  virtual ~PgSQL() = default;
+  ~PgSQL() override = default;
   PgSQL()
   {
     if (onMockCreate) {

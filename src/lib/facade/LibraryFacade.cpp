@@ -37,6 +37,9 @@ ILibPtr LibraryFacade::create_library(LibraryContextPtr ctx)
   return libFactory->create_appropriate_lib(ctx);
 }
 
+// A public interface entry point: the library users call it, the library
+// itself never does.
+// cppcheck-suppress unusedFunction
 void LibraryFacade::init_logger(const logger::ILoggerPtr& appLogger)
 {
   LOG_INIT_REAL_LOGGER(appLogger);

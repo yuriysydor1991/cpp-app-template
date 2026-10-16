@@ -40,6 +40,8 @@ add_custom_target (
   cppcheck
   COMMAND ${CPPCHECK_EXEC} --language=c++ --std=c++${CMAKE_CXX_STANDARD}
     --error-exitcode=1 --inconclusive --enable=all -v
+    # Enables the // cppcheck-suppress <id> source comments.
+    --inline-suppr
     --suppressions-list=${CMAKE_SOURCE_DIR}/misc/.cppcheck-suppress
     -I${CMAKE_SOURCE_DIR} -I${CMAKE_BINARY_DIR} ${CPPCHECK_LIB_PUBLIC_INCLUDE}
     ${ALLSOURCES}

@@ -1,6 +1,8 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include <algorithm>
+#include <iterator>
 #include <string>
 #include <vector>
 
@@ -16,9 +18,10 @@ class UTEST_Wt4ArgsFilter : public Test
   {
     std::vector<char*> argv;
 
-    for (auto& arg : args) {
-      argv.push_back(arg.data());
-    }
+    // the main function argv points to the mutable argument buffers
+    std::transform(args.begin(), args.end(), std::back_inserter(argv),
+                   // cppcheck-suppress constParameterReference
+                   [](std::string& arg) { return arg.data(); });
 
     return argsFilter.filter(static_cast<int>(argv.size()), argv.data());
   }
@@ -49,9 +52,9 @@ TEST_F(UTEST_Wt4ArgsFilter, log_file_params_skipped_with_data)
 
 TEST_F(UTEST_Wt4ArgsFilter, app_flags_skipped)
 {
-  EXPECT_THAT(filter({"app", "-h", "--docroot", ".", "--help", "-v",
-                      "--version"}),
-              ElementsAre("--docroot", "."));
+  EXPECT_THAT(
+      filter({"app", "-h", "--docroot", ".", "--help", "-v", "--version"}),
+      ElementsAre("--docroot", "."));
 }
 
 TEST_F(UTEST_Wt4ArgsFilter, trailing_log_file_param_without_data)

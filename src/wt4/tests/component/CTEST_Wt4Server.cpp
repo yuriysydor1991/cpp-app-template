@@ -1,8 +1,10 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include <algorithm>
 #include <chrono>
 #include <future>
+#include <iterator>
 #include <memory>
 #include <regex>
 #include <string>
@@ -27,9 +29,10 @@ class CTEST_Wt4Server : public Test
     args = std::move(nargs);
     argv.clear();
 
-    for (auto& arg : args) {
-      argv.push_back(arg.data());
-    }
+    // the main function argv points to the mutable argument buffers
+    std::transform(args.begin(), args.end(), std::back_inserter(argv),
+                   // cppcheck-suppress constParameterReference
+                   [](std::string& arg) { return arg.data(); });
 
     argc = static_cast<int>(argv.size());
     argvp = argv.data();

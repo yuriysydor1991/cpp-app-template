@@ -16,7 +16,7 @@ namespace wt4server::widgets::guest
 class Root : public Wt::WContainerWidget, public ICustomWidget
 {
  public:
-  virtual ~Root() = default;
+  ~Root() override = default;
   Root() = default;
 
   virtual bool init(std::shared_ptr<Wt4Context> wt4ctx) override;

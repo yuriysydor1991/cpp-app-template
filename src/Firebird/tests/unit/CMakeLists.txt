@@ -9,4 +9,5 @@ add_compile_options(-DNDEBUG=1)
 
 add_subdirectory(QueryMaker)
 add_subdirectory(FbConnStringMaker)
+add_subdirectory(FbDpbBuilder)
 add_subdirectory(Firebird)

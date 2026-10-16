@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 
+#include "src/Firebird/driver/FbDpbBuilder.h"
 #include "src/Firebird/driver/FbHandles.h"
 #include "src/log/log.h"
 
@@ -50,24 +51,18 @@ bool FbClient::attach(const std::string& database, const std::string& user,
                       const std::string& password)
 {
   // Build the database parameter buffer (DPB) with the credentials.
-  std::vector<char> dpb;
-  dpb.push_back(isc_dpb_version1);
+  FbDpbBuilder dpb{isc_dpb_version1};
 
-  const auto append_dpb = [&dpb](char tag, const std::string& value) {
-    if (value.empty()) {
-      return;
-    }
-    dpb.push_back(tag);
-    dpb.push_back(static_cast<char>(value.size()));
-    dpb.insert(dpb.end(), value.begin(), value.end());
-  };
-
-  append_dpb(isc_dpb_user_name, user);
-  append_dpb(isc_dpb_password, password);
+  if (!dpb.append(isc_dpb_user_name, user) ||
+      !dpb.append(isc_dpb_password, password)) {
+    LOGE("The Firebird user name and password may not exceed "
+         << FbDpbBuilder::max_value_length << " bytes");
+    return false;
+  }
 
   isc_attach_database(handles->status, static_cast<short>(database.size()),
                       database.c_str(), &handles->db,
-                      static_cast<short>(dpb.size()), dpb.data());
+                      static_cast<short>(dpb.data().size()), dpb.data().data());
 
   if (has_error(handles->status)) {
     LOGE("Failure to attach to the Firebird database: " << database);

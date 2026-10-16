@@ -7,6 +7,7 @@ cmake_minimum_required(VERSION 3.13)
 add_library(
   TemplateFirebirdDriverObj OBJECT
   FbClient.cpp
+  FbDpbBuilder.cpp
 )
 
 target_include_directories(

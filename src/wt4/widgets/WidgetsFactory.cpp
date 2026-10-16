@@ -1,5 +1,6 @@
 #include "src/wt4/widgets/WidgetsFactory.h"
 
+#include <cassert>
 #include <memory>
 
 #include "src/wt4/Wt4Context.h"

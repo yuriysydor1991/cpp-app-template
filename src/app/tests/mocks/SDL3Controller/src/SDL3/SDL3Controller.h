@@ -1,8 +1,6 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_SDL3CONTROLLER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_SDL3CONTROLLER_CLASS_H
 
-#include <SDL3/SDL.h>
-#include <SDL3/SDL_opengl.h>
 #include <gmock/gmock.h>
 
 #include <functional>

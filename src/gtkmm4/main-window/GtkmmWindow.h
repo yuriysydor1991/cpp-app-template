@@ -19,8 +19,6 @@ class GtkmmWindow : public Gtk::Window
   virtual ~GtkmmWindow() = default;
   GtkmmWindow();
 
-  bool init();
-
  protected:
   const std::string& get_default_title();
 

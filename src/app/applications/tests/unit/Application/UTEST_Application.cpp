@@ -53,6 +53,7 @@ TEST_F(UTEST_Application, normal_exit)
 
   EXPECT_FALSE(appCtx->get_print_help_and_exit());
   EXPECT_FALSE(appCtx->get_print_version_and_exit());
+  EXPECT_FALSE(appCtx->get_stop());
 }
 
 TEST_F(UTEST_Application, controller_run_failure_is_reported)

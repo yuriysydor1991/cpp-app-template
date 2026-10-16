@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 3.13)
 
+# The branch includes it ahead of the src subdirectory as well, so the second
+# include of the feature-enabler-post.cmake probes nothing again.
+include_guard(GLOBAL)
+
 option(
     ENABLE_ZLIB
     "Enables the zlib compression library (deflate, gzip, zip) for the project usage through system installed one or FetchContent by internet"

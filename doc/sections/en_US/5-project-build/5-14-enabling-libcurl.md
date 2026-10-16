@@ -1,12 +1,14 @@
 ## Enabling the libcurl
 
-In order to enable [libcurl](https://uk.wikipedia.org/wiki/CURL) for the project by using the installed system one or by fetching it by the available connection set an `ON` value to the `ENABLE_LIBCURL` CMake variable.
+The [libcurl](https://uk.wikipedia.org/wiki/CURL) is enabled for the project by the `ENABLE_LIBCURL` CMake variable, which is `ON` by default on this branch. The installed system library is used when available, otherwise the sources of the `TEMPLATE_APP_CURL_GIT_TAG` release (`curl-8_23_0` by default) are fetched and built by the available connection.
 
 ```
 # Inside the source root directory
 
 cmake -S . -B build -DENABLE_LIBCURL=ON
 ```
+
+The application of this branch downloads it's data with the libcurl, so the option is a hard requirement here: the CMake configure step fails with an explanatory message when the option is turned `OFF`.
 
 ### The requests the CURLController performs
 

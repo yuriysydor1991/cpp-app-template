@@ -26,6 +26,10 @@ class Qt6Controller
    * Zero at success and non-zero value otherwise.
    */
   virtual int run(std::shared_ptr<app::ApplicationContext> actx);
+
+ private:
+  /// @brief How often the event loop checks the context stop flag.
+  inline static constexpr const int stop_poll_interval_ms = 100;
 };
 
 }  // namespace Qt6i

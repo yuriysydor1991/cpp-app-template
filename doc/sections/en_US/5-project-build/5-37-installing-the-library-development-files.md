@@ -57,6 +57,11 @@ the library (`CppAppTemplate012`) changes with every minor version. Pass the
 installation prefix through the `CMAKE_PREFIX_PATH` variable when it is not a
 system one.
 
+The executable of the project finds the installed library through the
+`$ORIGIN/<bin to libdir>` RUNPATH (`$ORIGIN/../lib`, `$ORIGIN/../lib/x86_64-linux-gnu`
+etc.), so it starts from any installation prefix without the `LD_LIBRARY_PATH`
+or the `ldconfig` cache. See the [src/CMakeLists.txt](/src/CMakeLists.txt) file.
+
 The template installs no separate debug symbol files of its own - a `Debug`
 build carries its debug info inside the library binary itself. The option is
 the place to gate such an install rule should a derived project add one.

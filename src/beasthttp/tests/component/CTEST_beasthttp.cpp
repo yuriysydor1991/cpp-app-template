@@ -1,6 +1,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include <algorithm>
 #include <atomic>
 #include <chrono>
 #include <memory>
@@ -10,6 +11,7 @@
 
 #include "HTTPHelper.h"
 #include "LimitedController.h"
+#include "project-global-decls.h"
 #include "src/app/ApplicationContext.h"
 #include "src/beasthttp/HttpController.h"
 
@@ -137,8 +139,12 @@ TEST_F(CTEST_beasthttp, accept_wait_success)
 
 TEST_F(CTEST_beasthttp, multithread_accept_wait_success)
 {
+  // The clients stay within the half of the connections the server serves at
+  // once, since a finished session is released a bit after it's client has
+  // got the answer already and may connect again.
   static const unsigned int expected_threads =
-      std::thread::hardware_concurrency() * 2U;
+      std::max(1U, std::min(std::thread::hardware_concurrency() * 2U,
+                            project_decls::PROJECT_HTTP_MAX_CONNECTIONS / 2U));
 
   const auto port = start_server(http);
 

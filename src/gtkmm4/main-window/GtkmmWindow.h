@@ -41,8 +41,6 @@ class GtkmmWindow : public Gtk::Window
   explicit GtkmmWindow(VkInstance instance);
   ~GtkmmWindow() override;
 
-  bool init(VkInstance instance);
-
  protected:
   const std::string& get_default_title();
 

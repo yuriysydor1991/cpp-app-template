@@ -14,15 +14,6 @@ namespace Gtkmm4i::main_window
 
 GtkmmWindow::GtkmmWindow(VkInstance instance)
 {
-  if (!init(instance)) {
-    LOGE("Fail to init");
-  }
-}
-
-GtkmmWindow::~GtkmmWindow() = default;
-
-bool GtkmmWindow::init(VkInstance instance)
-{
   set_title(get_default_title());
   set_default_size(W_DEFAULT_WIDTH, W_DEFAULT_HEIGHT);
 
@@ -32,9 +23,9 @@ bool GtkmmWindow::init(VkInstance instance)
         "instead");
     show_fallback_black();
   }
-
-  return true;
 }
+
+GtkmmWindow::~GtkmmWindow() = default;
 
 bool GtkmmWindow::show_vulkan_surface(VkInstance instance)
 {

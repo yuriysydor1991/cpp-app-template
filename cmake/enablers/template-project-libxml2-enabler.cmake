@@ -15,12 +15,12 @@ set(TEMPLATE_APP_LIBXML2_GIT "https://github.com/GNOME/libxml2.git" CACHE STRING
 set(TEMPLATE_APP_LIBXML2_GIT_TAG "master" CACHE STRING "The LibXml2 project git repository tag of interest")
 
 template_project_default_3rdparty_enabler(
-  NAME LibXml2
+  NAME LibXml2 
   GIT_REPOSITORY ${TEMPLATE_APP_LIBXML2_GIT}
   GIT_TAG ${TEMPLATE_APP_LIBXML2_GIT_TAG}
 )
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  LibXml2::LibXml2
+  PRIVATE LibXml2::LibXml2
 )

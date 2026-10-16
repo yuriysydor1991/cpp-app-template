@@ -175,7 +175,7 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
 1. [Requirements](/doc/sections/en_US/3-requirements/3-requirements.md)
     1. [Required tools for the GNU/Linux based OS](/doc/sections/en_US/3-requirements/3-1-required-tools-for-the-GNU-Linux-based-OS.md)
     1. [Required tools for the MS Windows based OS](/doc/sections/en_US/3-requirements/3-2-required-tools-for-the-MS-Windows-based-OS.md)
-    1. [Required packages for the MySQL](/doc/sections/en_US/3-requirements/3-11-required-packages-for-the-MySQL.md)
+    1. [Required packages for the MySQL](/doc/sections/en_US/3-requirements/3-13-required-packages-for-the-MySQL.md)
     1. [Optional for the tests](/doc/sections/en_US/3-requirements/3-3-optional-for-the-tests.md)
     1. [Optional for the documentation](/doc/sections/en_US/3-requirements/3-4-optional-for-the-documentation.md)
     1. [Optional for the code formatting](/doc/sections/en_US/3-requirements/3-5-optional-for-the-code-formatting.md)

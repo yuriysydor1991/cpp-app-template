@@ -20,4 +20,4 @@ parts:
     source: '@PROJECT_SOURCE_DIR@'
     meson-parameters:
       - --buildtype=release
-      - --prefix=/usr
+      - --prefix=@SNAP_INSTALL_PREFIX@

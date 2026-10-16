@@ -52,7 +52,14 @@ SDL_GLContext SDL3ContextBuilder::create_context(
     return nullptr;
   }
 
-  return SDL_GL_CreateContext(sdl3ctx->window);
+  SDL_GLContext glContext = SDL_GL_CreateContext(sdl3ctx->window);
+
+  // the vsync paces the event loop by the display refresh rate
+  if (glContext != nullptr && !SDL_GL_SetSwapInterval(1)) {
+    LOGW("No vsync available, SDL_Error: " << SDL_GetError());
+  }
+
+  return glContext;
 }
 
 SDL_Window* SDL3ContextBuilder::create_window(

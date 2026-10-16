@@ -16,7 +16,7 @@
 #endif  // LOG_INIT
 
 #ifndef LOG_INIT_DEFAULTS
-#define LOG_INIT_DEFAULTS() default_logger::DefaultLogger::init();
+#define LOG_INIT_DEFAULTS() default_logger::DefaultLogger::init_defaults();
 #endif  // LOG_INIT_DEFAULTS
 
 #ifndef LOG_REAL_LOGGER

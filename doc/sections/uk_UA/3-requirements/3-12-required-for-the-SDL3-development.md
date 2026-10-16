@@ -1,35 +1,38 @@
 ## Обов'язкові пакети для розробки з SDL3
 
-Проект-шаблон залежить від бібліотеки [SDL3](https://wiki.libsdl.org/SDL3/FrontPage) разом з заголовковими файлами [OpenGL](https://www.opengl.org/). CMake отримує SDL3 через окремий enabler-модуль `cmake/enablers/template-project-SDL3-enabler.cmake`, який за замовчуванням використовує **FetchContent**: якщо SDL3 у системі відсутній, enabler клонує `libsdl-org/SDL` за тегом з `TEMPLATE_APP_SDL3_GIT_TAG` (за замовчуванням `release-3.2.10`) і збирає `SDL3::SDL3` з джерел разом з проектом. OpenGL все ще шукається у системі через `find_package(OpenGL REQUIRED)`.
+Проект-шаблон залежить від бібліотеки [SDL3](https://wiki.libsdl.org/SDL3/FrontPage) разом з заголовковими файлами [OpenGL](https://www.opengl.org/). CMake отримує SDL3 через окремий enabler-модуль `cmake/enablers/template-project-SDL3-enabler.cmake`: спершу він шукає SDL3 у системі (`find_package(SDL3 QUIET)`), а якщо його не встановлено, клонує `libsdl-org/SDL` за тегом з `TEMPLATE_APP_SDL3_GIT_TAG` (за замовчуванням `release-3.2.10`) через **FetchContent** і збирає `SDL3::SDL3` з джерел разом з проектом. OpenGL все ще шукається у системі через `find_package(OpenGL REQUIRED)`.
 
-### Перемикання між FetchContent і системним SDL3
+### Системний SDL3 чи побудова через FetchContent
 
-Enabler пропонує опцію CMake `SDL3_DISABLE_SYSTEM_PROBE`:
-
-| Значення опції | Поведінка |
-|---|---|
-| `ON` (за замовчуванням для `appSDL3`) | Пропустити `find_package(SDL3)` і одразу використати FetchContent - корисно на хостах без `libsdl3-dev`. |
-| `OFF` | Спочатку шукати у системі через `find_package(SDL3 QUIET)`, лише потім перейти на FetchContent якщо SDL3 не знайдено. |
-
-Переключи URL або зафіксуй конкретну ревізію через рядкові cache-змінні `TEMPLATE_APP_SDL3_GIT` (URL) і `TEMPLATE_APP_SDL3_GIT_TAG` (git-тег / гілка / sha), наприклад:
+Встановлений у системі SDL3 завжди має перевагу. Щоб усе ж зібрати зафіксовані джерела на машині зі встановленим `libsdl3-dev`, прихови системний пакет від пошуку стандартною CMake змінною `CMAKE_DISABLE_FIND_PACKAGE_SDL3`. Переключи URL або зафіксуй конкретну ревізію через рядкові cache-змінні `TEMPLATE_APP_SDL3_GIT` (URL) і `TEMPLATE_APP_SDL3_GIT_TAG` (git-тег / гілка / sha), наприклад:
 
 ```
 cmake -S . -B build \
-  -DSDL3_DISABLE_SYSTEM_PROBE=OFF \
+  -DCMAKE_DISABLE_FIND_PACKAGE_SDL3=ON \
   -DTEMPLATE_APP_SDL3_GIT_TAG=release-3.2.10
 ```
 
-Нижче перелічено варіанти системного встановлення на випадок якщо ти бажаєш переключитись у режим `find_package`.
+Побудова SDL3 з джерел компілює відео-підсистеми лише для тих віконних систем, файли розробки яких вона знаходить, тож встанови їх до конфігурації, інакше застосунок завершиться з помилкою "No available video device". На Debian/Ubuntu:
+
+```
+sudo apt install -y libx11-dev libxext-dev libxrandr-dev libxcursor-dev \
+  libxi-dev libxfixes-dev libxss-dev libxtst-dev libwayland-dev \
+  libxkbcommon-dev libegl-dev libdecor-0-dev libdbus-1-dev libudev-dev
+```
+
+CMake опція `ENABLE_SDL3` (за замовчуванням `ON`) призначена для проектів, що відмовляються від інтеграції з SDL3: сирці шаблону (`src/SDL3`, використання `SDL3Controller` у класі `Application` та їхні тести) використовують SDL3 безумовно, тож її значення `OFF` працює лише разом з їх видаленням.
+
+Нижче перелічено варіанти системного встановлення.
 
 ### GNU/Лінукс (Debian/Ubuntu та похідні)
 
-Мінімальний набір для конфігурації і побудови - пакет розробки SDL3 (`libsdl3-dev`) і файли розробки OpenGL (`libgl1-mesa-dev`):
+Мінімальний набір для конфігурації і побудови з системним SDL3 - пакет розробки SDL3 (`libsdl3-dev`, доступний починаючи з Debian 13 та Ubuntu 25.04) і файли розробки OpenGL (`libgl1-mesa-dev`):
 
 ```
 sudo apt install -y libsdl3-dev libgl1-mesa-dev
 ```
 
-Якщо застосунок використовує додаткові опціональні модулі SDL3 (завантаження картинок, рендеринг шрифтів) - встанови їх одразу:
+Сам шаблон не використовує жодного з додаткових модулів SDL3. Якщо твій застосунок їх використовуватиме (завантаження картинок, рендеринг шрифтів) - встанови їх одразу:
 
 ```
 sudo apt install -y libsdl3-dev libsdl3-doc \
@@ -37,7 +40,7 @@ sudo apt install -y libsdl3-dev libsdl3-doc \
   libsdl3-ttf0 libsdl3-ttf-dev
 ```
 
-Якщо пакет `libsdl3-dev` ще відсутній у стабільних apt репозиторіях (наприклад на старих Debian / Ubuntu LTS), збери його з джерел:
+Якщо пакет `libsdl3-dev` відсутній у apt репозиторіях (наприклад в Ubuntu 24.04), або дозволь побудові через FetchContent вище зробити це, або збери та встанови його з джерел (зі встановленими вище пакетами розробки віконних систем):
 
 ```
 git clone --depth 1 --branch release-3.2.10 https://github.com/libsdl-org/SDL.git
@@ -57,7 +60,7 @@ sudo ldconfig
 Використовуй пакетний менеджер [vcpkg](https://vcpkg.io/) або завантажуй прекомпільовані бінарники для розробки з [офіційної сторінки релізів SDL3](https://github.com/libsdl-org/SDL/releases). У vcpkg команда встановлення така:
 
 ```
-vcpkg install sdl3 sdl3-image sdl3-ttf
+vcpkg install sdl3
 ```
 
 Передавай toolchain-файл vcpkg у CMake під час конфігурації щоб виклик `find_package(SDL3)` знайшов бінарники:
@@ -74,4 +77,4 @@ cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=<vcpkg-root>/scripts/buildsystems/vcp
 pkg-config --modversion sdl3
 ```
 
-Команда має вивести встановлену версію SDL3. Якщо вона повертає помилку, то і виклик `find_package(SDL3 REQUIRED)` у CMake впаде на етапі конфігурації.
+Команда має вивести встановлену версію SDL3. Якщо вона повертає помилку, то і пошук `find_package(SDL3 QUIET)` у CMake не знайде SDL3, тож конфігурація перейде до побудови через FetchContent.

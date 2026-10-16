@@ -3,6 +3,11 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   CTEST_DefaultLogger
   CTEST_DefaultLogger.cpp
+  CTEST_DefaultLoggerRealLogger.cpp
+  GlobalLocaleGuard.cpp
+  GroupingNumpunct.cpp
+  RecordingLogger.cpp
+  RecordingRealLogger.cpp
   ${CMAKE_SOURCE_DIR}/src/log/default-logger/DefaultLogger.cpp
   ${CMAKE_SOURCE_DIR}/src/log/default-logger/real-default-logger/RealDefaultLogger.cpp
 )

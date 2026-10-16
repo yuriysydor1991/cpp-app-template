@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.13)
 add_library(
   ${GTKMM_OBJECT_NAME} OBJECT
   Gtkmm4Controller.cpp
+  StopFlagWatcher.cpp
 )
 
 target_include_directories(
@@ -32,3 +33,4 @@ target_link_libraries(
 add_subdirectory(log)
 add_subdirectory(ui)
 add_subdirectory(main-window)
+add_subdirectory(tests)

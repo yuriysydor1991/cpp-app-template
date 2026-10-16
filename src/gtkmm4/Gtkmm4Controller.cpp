@@ -5,6 +5,7 @@
 
 #include "project-global-decls.h"
 #include "src/app/applications/IApplication.h"
+#include "src/gtkmm4/StopFlagWatcher.h"
 #include "src/gtkmm4/adwaita_includes.h"
 #include "src/gtkmm4/gtkmm4_includes.h"
 #include "src/gtkmm4/log/GtkLogBridge.h"
@@ -52,6 +53,8 @@ int Gtkmm4Controller::run(std::shared_ptr<app::ApplicationContext> nactx)
 
     window->build(app);
   });
+
+  const StopFlagWatcher stopWatcher{actx, *app};
 
   LOGD("Starting the GTK4 app with the libadwaita widgets");
 

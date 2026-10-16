@@ -200,6 +200,11 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "CTEST_AdwaitaWindow\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_AdwaitaWindow.junit.xml'
           }
         }
+        stage('CTEST_StopFlagWatcher') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "CTEST_StopFlagWatcher\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_StopFlagWatcher.junit.xml'
+          }
+        }
       }
       post { always { junit "$BUILDDIR/$BDJUNITOUT/CTEST_*.xml" } }
     }

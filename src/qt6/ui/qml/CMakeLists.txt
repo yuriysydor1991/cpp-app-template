@@ -8,6 +8,7 @@ qt_add_qml_module(
   NO_PLUGIN
   URI main
   RESOURCE_PREFIX /${PROJECT_URI}
+  OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/main
   QML_FILES
       main.qml
 )

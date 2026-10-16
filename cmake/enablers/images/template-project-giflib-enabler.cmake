@@ -21,4 +21,4 @@ message(STATUS "giflib ${GIF_VERSION} found: ${GIF_INCLUDE_DIRS}")
 # ${PROJECT_BINARY_NAME} executable or any of your own libraries):
 #   - system install, via find_package(GIF): GIF::GIF
 # For example:
-#   target_link_libraries(${PROJECT_BINARY_NAME} GIF::GIF)
+#   target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE GIF::GIF)

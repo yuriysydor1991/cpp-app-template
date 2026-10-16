@@ -26,9 +26,11 @@ set(SFML_BUILD_NETWORK OFF CACHE BOOL "Build the SFML network module")
 # prefix, which a cmake --install --prefix cannot redirect.
 set(SFML_INSTALL_PKGCONFIG_FILES OFF CACHE BOOL "Install the SFML pkg-config files")
 
-# COMPONENTS graphics window system
+# The system wide SFML 3 (the libsfml-dev of the Ubuntu 26.04) rejects the
+# component names below, so only an SFML 2 install is probed for.
 template_project_default_3rdparty_enabler(
   NAME SFML
+  VERSION 2
   GIT_REPOSITORY ${TEMPLATE_APP_SFML_GIT}
   GIT_TAG        ${TEMPLATE_APP_SFML_GIT_TAG}
   COMPONENTS     graphics window system

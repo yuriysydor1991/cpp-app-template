@@ -10,7 +10,7 @@ add_executable(
 target_include_directories(
   UTEST_PlotGenCppController
   PRIVATE ${PLOTGENCPP_MOCKS_ROOT}/plotgen
-  PRIVATE ${PLOTGENCPP_MOCKS_ROOT}/log
+  PRIVATE ${PLOTGENCPP_LOG_MOCK_ROOT}
   PRIVATE ${CMAKE_SOURCE_DIR}
   PRIVATE ${CMAKE_BINARY_DIR}
 )

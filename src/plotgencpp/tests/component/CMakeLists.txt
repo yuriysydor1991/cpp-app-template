@@ -18,7 +18,7 @@ target_include_directories(
   CTEST_plotgencpp
   PRIVATE
     ${PLOTGENCPP_MOCKS_ROOT}/plotgen
-    ${PLOTGENCPP_MOCKS_ROOT}/log
+    ${PLOTGENCPP_LOG_MOCK_ROOT}
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
 )

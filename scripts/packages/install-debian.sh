@@ -2,6 +2,9 @@
 #
 # Installs the minimal set of packages required to build and run the project
 # locally.
+#
+# The PGPLOT interface comes from the free giza-dev package, since the non-free
+# pgplot5-dev one conflicts with it (and is absent from the Ubuntu 24.04).
 
 PROJECT_ROOT=$(realpath "$(dirname "$0")/../..")
 
@@ -18,7 +21,6 @@ PACKAGES=(
     libgtest-dev
     libssl-dev
     libstdc++6
-    pgplot5-dev
 )
 
 APT_SUDO=""

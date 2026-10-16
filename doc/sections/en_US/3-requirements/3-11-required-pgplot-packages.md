@@ -14,6 +14,8 @@ The [giza](https://danieljprice.github.io/giza/) library provides a free softwar
 sudo apt install -y giza-dev
 ```
 
+The `pgplot5-dev` and the `giza-dev` packages conflict with each other, so install only one of them. The Debian and Ubuntu packages install scripts and the Docker images of the project install the `giza-dev` one.
+
 Or compile the giza replacement manually by commands that may look like next:
 
 ```

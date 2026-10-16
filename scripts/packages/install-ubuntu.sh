@@ -1,7 +1,11 @@
 #!/bin/bash -e
 #
-# Installs the packages required to build and develop the project on Ubuntu.
-#
-# Ubuntu shares the package set with Debian.
+# Installs the packages required to build and develop the project on Ubuntu by
+# running the install-ubuntu-<version>.sh script of the running release, e.g.
+# the install-ubuntu-26-04.sh one on the Ubuntu 26.04.
 
-exec "$(dirname "$0")/install-debian.sh" "$@"
+PROJECT_ROOT=$(realpath "$(dirname "$0")/../..")
+
+. "${PROJECT_ROOT}/scripts/packages/common.sh"
+
+exec_release_script "$@"

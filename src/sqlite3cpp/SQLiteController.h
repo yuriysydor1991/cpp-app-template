@@ -54,7 +54,6 @@ class SQLiteController : public app::IDBConnection
   std::shared_ptr<SQLite::Statement> execute_select_query(
       const std::string& query);
 
-  std::shared_ptr<app::ApplicationContext> actx;
   std::shared_ptr<SQLite::Database> db;
   std::shared_ptr<sqlmaker::QueryMaker> qmaker;
 };

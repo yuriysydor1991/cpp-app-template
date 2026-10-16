@@ -21,9 +21,7 @@ bool SQLiteController::connect(std::shared_ptr<app::ApplicationContext> nctx)
     return false;
   }
 
-  actx = nctx;
-
-  qmaker = std::make_shared<sqlmaker::QueryMaker>(actx);
+  qmaker = std::make_shared<sqlmaker::QueryMaker>();
 
   try {
     db = std::make_shared<SQLite::Database>(

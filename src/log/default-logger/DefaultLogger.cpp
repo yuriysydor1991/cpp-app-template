@@ -1,5 +1,6 @@
 #include "src/log/default-logger/DefaultLogger.h"
 
+#include <iostream>
 #include <memory>
 #include <string>
 
@@ -18,9 +19,9 @@ void DefaultLogger::log(const unsigned short& loglvl,
   real_logger()->log(loglvl, filePath, fileLine, msg);
 }
 
-void DefaultLogger::logfile(const std::string& filepath)
+bool DefaultLogger::logfile(const std::string& filepath)
 {
-  real_logger()->logfile(filepath);
+  return real_logger()->logfile(filepath);
 }
 
 void DefaultLogger::print(const bool toPrintValue)
@@ -38,10 +39,20 @@ const std::string& DefaultLogger::lvl_repr(const unsigned short& glvl)
   return real_logger()->lvl_repr(glvl);
 }
 
-void DefaultLogger::init(const std::string& filepath,
+bool DefaultLogger::init(const std::string& filepath,
                          const unsigned short& nlvl, const bool toPrintValue)
 {
-  real_logger()->init(filepath, nlvl, toPrintValue);
+  return real_logger()->init(filepath, nlvl, toPrintValue);
+}
+
+void DefaultLogger::init_defaults()
+{
+  const std::string filepath = RealDefaultLogger::get_default_full_log_path();
+
+  if (!init(filepath)) {
+    std::cerr << "Fail to open the log file at " << filepath
+              << ", logging into the console only" << std::endl;
+  }
 }
 
 DefaultLogger::RealLoggerPtr DefaultLogger::real_logger()

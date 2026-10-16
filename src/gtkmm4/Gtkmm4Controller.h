@@ -11,7 +11,8 @@ namespace Gtkmm4i
 
 /**
  * @brief Creates the GTK4 application instance, initializes the libadwaita
- * and runs the libadwaita main window.
+ * and runs the libadwaita main window until the window is closed or the
+ * application stop is requested.
  */
 class Gtkmm4Controller
 {

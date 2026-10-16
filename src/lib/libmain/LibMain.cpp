@@ -11,17 +11,16 @@ namespace lib0impl
 
 LibMain::LibMain()
 {
-  static bool inited{false};
-
-  if (!inited) {
-    // Only the own default logger instance is initialized here. The logging
-    // destination of an adopted one belongs to the code which uses the
-    // library, so the library must not replace the log file, the level nor the
-    // printing settings chosen by it. See the
-    // CppAppTemplate012::LibraryFacade::init_logger method.
+  // Only the own default logger instance is initialized here. The logging
+  // destination of an adopted one belongs to the code which uses the
+  // library, so the library must not replace the log file, the level nor the
+  // printing settings chosen by it. See the
+  // CppAppTemplate012::LibraryFacade::init_logger method. The static local
+  // initialization runs once even for the concurrently created instances.
+  [[maybe_unused]] static const bool inited = [] {
     LOG_INIT_DEFAULTS_IF_OWN();
-    inited = true;
-  }
+    return true;
+  }();
 }
 
 bool LibMain::libcall([[maybe_unused]] LibraryContextPtr ctx)

@@ -12,7 +12,7 @@ See the `cmake/enablers/fonts/template-project-harfbuzz-enabler.cmake` module fo
 
 The fetched revision is driven by the `TEMPLATE_APP_HARFBUZZ_GIT_TAG` CMake variable (`14.4.0` by default). Meson is the main HarfBuzz build system, so its community maintained CMake build prints a warning about it while the FetchContent build configures. The enabler aliases the fetched `harfbuzz` target as `harfbuzz::harfbuzz` (the name of a system install) and marks it `SYSTEM` to keep the project warnings off its headers.
 
-HarfBuzz shapes the text with its own OpenType implementation and needs no FreeType for that. The FetchContent build still compiles the `<hb-ft.h>` FreeType glue in when `ENABLE_FREETYPE` builds FreeType as well.
+HarfBuzz shapes the text with its own OpenType implementation and needs no FreeType for that. The FetchContent build still compiles the `<hb-ft.h>` FreeType glue in when `ENABLE_FREETYPE` is `ON` as well (the enabler then sets the HarfBuzz `HB_HAVE_FREETYPE` option for both a system installed and a fetched FreeType).
 
 ### Shaping the text of interest (copy-paste examples)
 

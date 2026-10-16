@@ -27,5 +27,5 @@ set_target_properties(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  TemplateProjectRealDefaultLoggerObj
+  PRIVATE TemplateProjectRealDefaultLoggerObj
 )

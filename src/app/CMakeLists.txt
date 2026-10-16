@@ -14,7 +14,7 @@ target_sources(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  ${PROJECT_LIBRARY_NAME}
+  PRIVATE ${PROJECT_LIBRARY_NAME}
 )
 
 add_subdirectory(applications)

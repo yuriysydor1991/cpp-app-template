@@ -13,6 +13,10 @@ apps:
     command: ${PROJECT_BINARY_INSTALLATION_DIR}/${PROJECT_BINARY_NAME}${SNAP_APP_DESKTOP}
     plugs:
       - home${SNAP_APP_DESKTOP_PLUGS}
+    environment:
+      LD_LIBRARY_PATH: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR
+      QT_PLUGIN_PATH: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/qt6/plugins
+      QML_IMPORT_PATH: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/qt6/qml
 
 parts:
   ${PROJECT_BINARY_NAME}:
@@ -22,3 +26,20 @@ parts:
     cmake-parameters:
       - -DCMAKE_BUILD_TYPE=Release
       - -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
+    build-packages:
+      - qt6-base-dev
+      - qt6-declarative-dev
+    stage-packages:
+      - libqt6core6t64
+      - libqt6gui6t64
+      - libqt6qml6
+      - libqt6quick6
+      - libqt6quickcontrols2-6
+      - qml6-module-qtqml-workerscript
+      - qml6-module-qtquick
+      - qml6-module-qtquick-controls
+      - qml6-module-qtquick-layouts
+      - qml6-module-qtquick-templates
+      - qml6-module-qtquick-window
+      - qt6-qpa-plugins
+      - qt6-wayland

@@ -4,6 +4,9 @@
   "runtime-version": "24.08",
   "sdk": "org.freedesktop.Sdk",
   "command": "${PROJECT_BINARY_NAME}",
+  "finish-args": [
+    "--share=network"
+  ],
   "modules": [
     {
       "name": "${CMAKE_PROJECT_NAME}",

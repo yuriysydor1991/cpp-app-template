@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "src/app/ApplicationContext.h"
+#include "src/log/log.h"
 #include "src/mysqlcppconn/helpers/MySQLConnStrMaker.h"
 
 namespace mysqli
@@ -47,7 +48,7 @@ bool MySQLController::connect(std::shared_ptr<app::ApplicationContext> nctx)
     }
   }
   catch (sql::SQLException& e) {
-    std::cerr << "Error: " << e.what() << std::endl;
+    LOGE("Failure to connect to the MySQL server: " << e.what());
   }
 
   return connected();
@@ -74,7 +75,8 @@ std::unique_ptr<sql::ResultSet> MySQLController::execute_query(
     return res;
   }
   catch (sql::SQLException& e) {
-    std::cerr << "Error: " << e.what() << std::endl;
+    LOGE("Failure during the query execution: " << e.what()
+                                                << "; query: " << query);
   }
 
   return {};

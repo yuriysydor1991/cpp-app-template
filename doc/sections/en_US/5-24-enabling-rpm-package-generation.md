@@ -10,7 +10,7 @@ meson setup build -DENABLE_RPM=true \
   -DPROJECT_MAINTAINER_EMAIL='you@example.com'
 ```
 
-Which in turn will enable the `rpm` Meson `custom_target` that under the hood runs `meson install` into a staged `BUILDROOT` and invokes `rpmbuild -bb` on the generated `.spec` file.
+Which in turn will enable the `rpm` Meson `custom_target` that under the hood runs `meson install` into a staging directory and invokes `rpmbuild -bb` on the generated `.spec` file. The `.spec` file copies the staged tree into its buildroot and packs the files listed from that tree, so the package follows the configured `--prefix` (the default `/usr/local`, or `/usr` for a distribution style package configured with the `--prefix=/usr` parameter).
 
 To produce the RPM package run the `rpm` target for the build:
 

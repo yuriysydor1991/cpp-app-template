@@ -10,7 +10,7 @@ meson setup build -DENABLE_RPM=true \
   -DPROJECT_MAINTAINER_EMAIL='you@example.com'
 ```
 
-Яка у свою чергу вмикає Meson-ціль `rpm` (`custom_target`) що під капотом виконує `meson install` у staging-директорію `BUILDROOT` і викликає `rpmbuild -bb` на згенерованому `.spec`-файлі.
+Яка у свою чергу вмикає Meson-ціль `rpm` (`custom_target`) що під капотом виконує `meson install` у staging-директорію і викликає `rpmbuild -bb` на згенерованому `.spec`-файлі. `.spec`-файл копіює підготовлене дерево у свій buildroot і пакує перелік файлів, складений з того дерева, тож пакет слідує налаштованому `--prefix` (типовому `/usr/local` або `/usr` для пакету у стилі дистрибутиву, налаштованого параметром `--prefix=/usr`).
 
 Для генерації RPM-пакету необхідно побудувати ціль `rpm`:
 

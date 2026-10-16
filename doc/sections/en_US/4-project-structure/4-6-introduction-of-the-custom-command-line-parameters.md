@@ -6,4 +6,4 @@ Add some additional custom fields into the `ApplicationContext` class in order t
 
 All the `ApplicationContext` data members are private ones and are named with the `m` prefix, so declare an appropriate public access methods pair next to every new field, the same way the already available ones are declared: a `get_` prefixed getter and a `set_` prefixed setter (see the `mprint_help_and_exit` field with it's `ApplicationContext::get_print_help_and_exit` and `ApplicationContext::set_print_help_and_exit` methods). Prefer the `std::atomic` based field types whenever the value is shared between multiple threads, the way the `mstop` application stop flag is declared.
 
-The GTKmm library also supports some of the command line parameters which are passed to the GTKmm application by default.
+The command line belongs to the `CommandLineParser` class alone: the GTKmm application receives the program name only, so the GTKmm own command line parameters are not supported and the application parameters never reach the toolkit.

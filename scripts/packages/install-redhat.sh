@@ -20,8 +20,6 @@ PACKAGES=(
     mesa-libGL-devel
     openssl-devel
     SDL3-devel
-    SDL3_image-devel
-    SDL3_ttf-devel
 )
 
 DNF_SUDO=""

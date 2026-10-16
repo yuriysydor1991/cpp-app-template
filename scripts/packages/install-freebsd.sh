@@ -18,8 +18,6 @@ PACKAGES="
     googletest
     libglvnd
     sdl3
-    sdl3_image
-    sdl3_ttf
 "
 
 PKG_SUDO=""

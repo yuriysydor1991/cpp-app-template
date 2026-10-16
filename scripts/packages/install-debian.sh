@@ -17,10 +17,6 @@ PACKAGES=(
     libgmock-dev
     libgtest-dev
     libsdl3-dev
-    libsdl3-image-dev
-    libsdl3-image0
-    libsdl3-ttf-dev
-    libsdl3-ttf0
     libssl-dev
     libstdc++6
 )

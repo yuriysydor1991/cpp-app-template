@@ -24,7 +24,7 @@ variables:
   # The tools every job needs on top of the bare image.
   TOOLS: build-essential cmake g++ git ca-certificates pkg-config
   # The development packages of the branch specific libraries.
-  DEPENDENCIES: libsdl3-dev libsdl3-image-dev libsdl3-ttf-dev libglu1-mesa-dev
+  DEPENDENCIES: libsdl3-dev libgl1-mesa-dev
 ```
 
 Саме остання змінна - єдиний рядок, яким різняться гілки шаблону, отож проект, який долучає власну бібліотеку, дописує туди її пакунок розробки.

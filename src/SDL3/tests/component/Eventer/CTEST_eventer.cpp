@@ -5,6 +5,7 @@
 
 #include <memory>
 
+#include "src/SDL3/Eventer/EventsController.h"
 #include "src/SDL3/Eventer/EventsHandlers/EventQuitHandler.h"
 #include "src/SDL3/Eventer/EventsHandlers/EventsHandlersFactory.h"
 #include "src/SDL3/Eventer/EventsHandlers/IEventHandler.h"
@@ -77,6 +78,41 @@ TEST_F(CTEST_eventer, multiple_quit_events_keep_stop_flag_set)
   }
 
   EXPECT_TRUE(appCtx->get_stop());
+}
+
+TEST_F(CTEST_eventer, pushed_quit_event_stops_the_loop)
+{
+  ASSERT_TRUE(SDL_Init(SDL_INIT_EVENTS));
+
+  SDL_Event event{};
+  event.type = SDL_EVENT_QUIT;
+
+  ASSERT_TRUE(SDL_PushEvent(&event));
+
+  EventsController controller;
+
+  EXPECT_TRUE(controller.handle(sdlCtx));
+  EXPECT_TRUE(appCtx->get_stop());
+
+  SDL_Quit();
+}
+
+TEST_F(CTEST_eventer, pushed_unhandled_event_keeps_the_loop_running)
+{
+  ASSERT_TRUE(SDL_Init(SDL_INIT_EVENTS));
+
+  SDL_Event event{};
+  event.type = SDL_EVENT_USER;
+
+  ASSERT_TRUE(SDL_PushEvent(&event));
+
+  EventsController controller;
+
+  EXPECT_TRUE(controller.handle(sdlCtx));
+  EXPECT_FALSE(appCtx->get_stop());
+  EXPECT_FALSE(SDL_HasEvent(SDL_EVENT_USER));
+
+  SDL_Quit();
 }
 
 TEST_F(CTEST_eventer, resize_event_updates_the_opengl_viewport)

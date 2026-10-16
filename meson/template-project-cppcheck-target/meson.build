@@ -36,6 +36,8 @@ cppcheck_cmd = [
   '--error-exitcode=1',
   '--inconclusive',
   '--enable=all',
+  # Enables the // cppcheck-suppress <id> source comments.
+  '--inline-suppr',
   '--suppressions-list=' + join_paths(meson.project_source_root(), 'misc', '.cppcheck-suppress'),
   '-v',
   '-I' + project_include_root,

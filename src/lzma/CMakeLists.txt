@@ -1,5 +1,16 @@
 cmake_minimum_required(VERSION 3.13)
 
+if (NOT ENABLE_LIBLZMA)
+  message(
+    FATAL_ERROR
+    "The src/lzma sources require the liblzma library which is turned off by the "
+    "ENABLE_LIBLZMA=OFF parameter. Drop the add_subdirectory(lzma) call from the "
+    "src/CMakeLists.txt file together with the whole src/lzma subdirectory and "
+    "the liblzma example of the src/app/applications/Application.cpp file to "
+    "build the project without the liblzma library."
+  )
+endif()
+
 # The FetchContent fallback of the liblzma enabler builds the liblzma library
 # alone, which keeps it's API headers private to it's own build tree, so they
 # get exported (as the installed ones are) and it takes the LibLZMA::LibLZMA

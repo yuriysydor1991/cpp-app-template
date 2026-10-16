@@ -10,6 +10,8 @@ cmake -S . -B build -DENABLE_LIBLZMA=ON
 
 Дивись модуль `cmake/enablers/compression/template-project-liblzma-enabler.cmake` щодо цілей (`LibLZMA::LibLZMA` для системної версії, `liblzma` для побудови через FetchContent), які слід прилінкувати до твоїх цільових об'єктів.
 
+У гілці `appLZMA` змінна типово має значення `ON`, оскільки приклад `src/lzma` потребує бібліотеки: значення `OFF` зупиняє конфігурацію з поясненням, доки з файлу `src/CMakeLists.txt` не буде вилучено виклик `add_subdirectory(lzma)` разом з підкаталогом `src/lzma` і прикладом liblzma у файлі `src/app/applications/Application.cpp`.
+
 ### Стиснення потрібних даних (приклади для копіювання)
 
 Після `ENABLE_LIBLZMA=ON` та прилінкування цілі liblzma (наприклад `target_link_libraries(${PROJECT_BINARY_NAME} LibLZMA::LibLZMA)`) підключи `<lzma.h>` і скопіюй будь-який зі сніпетів нижче.

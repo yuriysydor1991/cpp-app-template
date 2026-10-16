@@ -10,6 +10,8 @@ cmake -S . -B build -DENABLE_LIBLZMA=ON
 
 See the `cmake/enablers/compression/template-project-liblzma-enabler.cmake` module for the targets (`LibLZMA::LibLZMA` for a system install, `liblzma` for the FetchContent build) to link to your targets of interest.
 
+On the `appLZMA` branch the option is `ON` by default, since the `src/lzma` example requires the library: turning it `OFF` stops the configuration with an explanation, until the `add_subdirectory(lzma)` call of the `src/CMakeLists.txt` file is dropped together with the `src/lzma` subdirectory and the liblzma example of the `src/app/applications/Application.cpp` file.
+
 ### Compressing data of interest (copy-paste examples)
 
 After `ENABLE_LIBLZMA=ON` and linking a liblzma target (e.g. `target_link_libraries(${PROJECT_BINARY_NAME} LibLZMA::LibLZMA)`), include `<lzma.h>` and copy-paste any of the snippets below.

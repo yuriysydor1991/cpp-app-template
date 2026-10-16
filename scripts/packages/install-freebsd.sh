@@ -19,8 +19,6 @@ PACKAGES="
     libglvnd
     mesa-dri
     qt6-base
-    qt6-declarative
-    qt6-tools
     vulkan-headers
     vulkan-loader
 "

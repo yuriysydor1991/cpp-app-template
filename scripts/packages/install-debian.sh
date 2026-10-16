@@ -17,31 +17,12 @@ PACKAGES=(
     libgmock-dev
     libgtest-dev
     libopengl-dev
-    libqt6gui6
-    libqt6opengl6-dev
-    libqt6openglwidgets6
-    libqt6quick6
-    libqt6quickcontrols2-6
     libssl-dev
     libstdc++6
     libvulkan-dev
     mesa-vulkan-drivers
-    qml-module-qtquick-controls2
-    qml-module-qtquick-dialogs
-    qml-module-qtquick-layouts
-    qml-module-qtquick-shapes
-    qml-module-qtquick2
-    qml6-module-qtqml-workerscript
-    qml6-module-qtquick
-    qml6-module-qtquick-controls
-    qml6-module-qtquick-templates
-    qml6-module-qtquick-window
     qt6-base-dev
     qt6-base-dev-tools
-    qt6-declarative-dev
-    qt6-tools-dev
-    qt6-tools-dev-tools
-    qtquickcontrols2-5-dev
 )
 
 APT_SUDO=""

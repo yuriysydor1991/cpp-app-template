@@ -1,5 +1,7 @@
 #include "src/liboai/OAIController.h"
 
+#include <liboai.h>
+
 #include <exception>
 #include <memory>
 #include <string>
@@ -9,6 +11,10 @@
 namespace liboaii
 {
 
+OAIController::OAIController() : oai{std::make_unique<liboai::OpenAI>()} {}
+
+OAIController::~OAIController() = default;
+
 bool OAIController::set_token(const std::string& token)
 {
   if (token.empty()) {
@@ -16,7 +22,7 @@ bool OAIController::set_token(const std::string& token)
     return false;
   }
 
-  if (!oai.auth.SetKey(token)) {
+  if (!oai->auth.SetKey(token)) {
     LOGE("Fail to set the provided OpenAI API token");
     return false;
   }
@@ -28,7 +34,7 @@ bool OAIController::set_token(const std::string& token)
 
 bool OAIController::set_token_from_env()
 {
-  if (!oai.auth.SetKeyEnv(TOKEN_ENV_VAR)) {
+  if (!oai->auth.SetKeyEnv(TOKEN_ENV_VAR)) {
     LOGE("Fail to take the OpenAI API token from the "
          << TOKEN_ENV_VAR << " environment variable");
     return false;
@@ -61,7 +67,7 @@ std::string OAIController::ask(const std::string& question,
     LOGT("Asking the " << askedModel << " model");
 
     const liboai::Response response =
-        oai.ChatCompletion->create(askedModel, conversation);
+        oai->ChatCompletion->create(askedModel, conversation);
 
     if (!conversation.Update(response)) {
       LOGE("Fail to update the conversation with the received answer");

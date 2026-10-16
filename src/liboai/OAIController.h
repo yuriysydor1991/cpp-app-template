@@ -1,10 +1,15 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_OAICONTROLLER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_OAICONTROLLER_CLASS_H
 
-#include <liboai.h>
-
 #include <memory>
 #include <string>
+
+// The library header drags in the libcurl and the nlohmann JSON ones, so it is
+// kept out of this header, which the help printer includes for the constants.
+namespace liboai
+{
+class OpenAI;
+}  // namespace liboai
 
 /**
  * @brief The liboai OpenAI API adaptor subsystem namespace.
@@ -27,8 +32,8 @@ class OAIController
   /// token is given in the command line.
   inline static const std::string TOKEN_ENV_VAR{"OPENAI_API_KEY"};
 
-  virtual ~OAIController() = default;
-  OAIController() = default;
+  virtual ~OAIController();
+  OAIController();
   OAIController(const OAIController&) = delete;
   OAIController(OAIController&&) = delete;
 
@@ -67,7 +72,7 @@ class OAIController
   static OAIControllerPtr create();
 
  private:
-  liboai::OpenAI oai;
+  std::unique_ptr<liboai::OpenAI> oai;
 };
 
 using OAIControllerPtr = OAIController::OAIControllerPtr;

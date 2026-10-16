@@ -21,4 +21,6 @@ target_link_libraries(${PROJECT_BINARY_NAME} LOG4CPP::log4cpp)
 
 Модуль [src/log/CMakeLists.txt](/src/log/CMakeLists.txt) компонує її до виконуваного файлу проекту, а [src/log/log4cpp5-init/CMakeLists.txt](/src/log/log4cpp5-init/CMakeLists.txt) — до об'єктної бібліотеки `TemplateLog4Cpp5ControllerObj`, тому вихідні коди `log4cpp5i::Log4Cpp5Init` бачать заголовки обох шляхів.
 
+Макроси `LOGE`, `LOGW`, `LOGI` та `LOGD` логують із пріоритетами log4cpp `ERROR`, `WARN`, `INFO` та `DEBUG` відповідно. У log4cpp немає пріоритету трасування, тому макрос `LOGT` логує із пріоритетом одразу нижчим за `DEBUG` (`log4cpp5i::Log4Cpp5Init::trace_priority`), який у повідомленнях журналу також називається `DEBUG`. Кожен із макросів `LOG_INIT*` замінює виводи попереднього виклику, а якщо файл журналу неможливо відкрити, то у stderr виводиться попередження, а повідомлення потрапляють лише у stdout.
+
 Значення `OFF` залишає гілку взагалі без бібліотеки логування для компонування, тому встановлюйте його лише разом із заміною логера log4cpp5 на власний.

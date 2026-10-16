@@ -2,6 +2,7 @@
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_LOG4CPPV5INIT_CLASS_H
 
 #include <log4cpp/Category.hh>
+#include <log4cpp/Priority.hh>
 #include <string>
 
 #include "project-global-decls.h"
@@ -27,6 +28,13 @@ class Log4Cpp5Init
       ".log";
   inline static const std::string default_conversation_pattern =
       "%d{%Y-%m-%d %H:%M:%S.%l} [%p] %m%n";
+
+  /**
+   * @brief The log4cpp knows no trace priority, so the trace messages take
+   * one between the DEBUG and the NOTSET ones (printed as DEBUG).
+   */
+  static constexpr log4cpp::Priority::Value trace_priority =
+      log4cpp::Priority::DEBUG + 50;
 
   /**
    * @brief (Re)initializes the log4cpp root category: the appenders of any

@@ -21,4 +21,6 @@ target_link_libraries(${PROJECT_BINARY_NAME} LOG4CPP::log4cpp)
 
 The [src/log/CMakeLists.txt](/src/log/CMakeLists.txt) module links it to the project executable and the [src/log/log4cpp5-init/CMakeLists.txt](/src/log/log4cpp5-init/CMakeLists.txt) one links it to the `TemplateLog4Cpp5ControllerObj` object library, so the `log4cpp5i::Log4Cpp5Init` sources see the headers of both of the paths.
 
+The `LOGE`, `LOGW`, `LOGI` and `LOGD` macros log with the log4cpp `ERROR`, `WARN`, `INFO` and `DEBUG` priorities respectively. The log4cpp knows no trace priority, so the `LOGT` macro logs with a priority just below the `DEBUG` one (`log4cpp5i::Log4Cpp5Init::trace_priority`), which the log messages name `DEBUG` as well. Each of the `LOG_INIT*` macros replaces the appenders of the previous call, and a log file that can't be opened leaves a warning in the stderr with the messages going into the stdout only.
+
 An `OFF` value leaves the branch with no logging library to link at all, so set it only along with the replacement of the log4cpp5 logger by an own one.

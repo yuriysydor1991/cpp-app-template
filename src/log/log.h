@@ -29,8 +29,8 @@
 /**
  * @brief The internal logger macro to define the general logging code body.
  */
-#define LOG_BODY(streamName, msg)                                    \
-  log4cpp::Category::getRoot().streamName()                          \
+#define LOG_BODY(priority, msg)                                      \
+  log4cpp::Category::getRoot().getStream(priority)                   \
       << std::this_thread::get_id() << " "                           \
       << log4cpp5i::Log4Cpp5Init::get_filename_only(__FILE__) << ":" \
       << __LINE__ << " - " << msg
@@ -43,7 +43,7 @@
  * @param msg The logging message which may use the << operator
  * and each of the log elements MUST be converted into the std::string.
  */
-#define LOGE(msg) LOG_BODY(errorStream, msg)
+#define LOGE(msg) LOG_BODY(log4cpp::Priority::ERROR, msg)
 #endif  // LOGE
 
 #ifndef LOGI
@@ -54,7 +54,7 @@
  * @param msg The logging message which may use the << operator
  * and each of the log elements MUST be converted into the std::string.
  */
-#define LOGI(msg) LOG_BODY(noticeStream, msg)
+#define LOGI(msg) LOG_BODY(log4cpp::Priority::INFO, msg)
 #else
 #define LOGI(msg)
 #endif  // MAX_LOG_LEVEL
@@ -68,7 +68,7 @@
  * @param msg The logging message which may use the << operator
  * and each of the log elements MUST be converted into the std::string.
  */
-#define LOGW(msg) LOG_BODY(warnStream, msg)
+#define LOGW(msg) LOG_BODY(log4cpp::Priority::WARN, msg)
 #else
 #define LOGW(msg)
 #endif  // MAX_LOG_LEVEL
@@ -82,7 +82,7 @@
  * @param msg The logging message which may use the << operator
  * and each of the log elements MUST be converted into the std::string.
  */
-#define LOGD(msg) LOG_BODY(infoStream, msg)
+#define LOGD(msg) LOG_BODY(log4cpp::Priority::DEBUG, msg)
 #else
 #define LOGD(msg)
 #endif  // MAX_LOG_LEVEL
@@ -96,7 +96,7 @@
  * @param msg The logging message which may use the << operator
  * and each of the log elements MUST be converted into the std::string.
  */
-#define LOGT(msg) LOG_BODY(debugStream, msg)
+#define LOGT(msg) LOG_BODY(log4cpp5i::Log4Cpp5Init::trace_priority, msg)
 #else
 #define LOGT(msg)
 #endif  // MAX_LOG_LEVEL

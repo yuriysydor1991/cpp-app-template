@@ -75,8 +75,8 @@ log4cpp::Priority::Value Log4Cpp5Init::get_log4cpp_priority(
 {
   static const std::array<log4cpp::Priority::Value, MACRO_LVL_TRACE>
       log4cpp_prio{log4cpp::Priority::ERROR, log4cpp::Priority::WARN,
-                   log4cpp::Priority::NOTICE, log4cpp::Priority::INFO,
-                   log4cpp::Priority::DEBUG};
+                   log4cpp::Priority::INFO, log4cpp::Priority::DEBUG,
+                   trace_priority};
 
   if (prjsev <= MACRO_LVL_ERROR) {
     return log4cpp_prio.front();

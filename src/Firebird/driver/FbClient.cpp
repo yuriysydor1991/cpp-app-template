@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 
+#include "src/Firebird/driver/FbHandles.h"
 #include "src/log/log.h"
 
 namespace firebirdi::driver
@@ -15,16 +16,6 @@ std::shared_ptr<IFbClient> create_fb_client()
 {
   return std::make_shared<FbClient>();
 }
-
-/**
- * @brief Holds the native Firebird handles so that ibase.h does not leak into
- * the FbClient.h header.
- */
-struct FbClient::Impl
-{
-  isc_db_handle db{0};
-  ISC_STATUS_ARRAY status{};
-};
 
 namespace
 {
@@ -49,7 +40,7 @@ bool has_error(const ISC_STATUS_ARRAY& status)
 
 }  // namespace
 
-FbClient::FbClient() : impl{std::make_unique<Impl>()} {}
+FbClient::FbClient() : handles{std::make_unique<FbHandles>()} {}
 
 // Calls the non-virtual do_detach(): a virtual call during destruction would
 // bypass the dynamic dispatch anyway.
@@ -74,13 +65,13 @@ bool FbClient::attach(const std::string& database, const std::string& user,
   append_dpb(isc_dpb_user_name, user);
   append_dpb(isc_dpb_password, password);
 
-  isc_attach_database(impl->status, static_cast<short>(database.size()),
-                      database.c_str(), &impl->db,
+  isc_attach_database(handles->status, static_cast<short>(database.size()),
+                      database.c_str(), &handles->db,
                       static_cast<short>(dpb.size()), dpb.data());
 
-  if (has_error(impl->status)) {
+  if (has_error(handles->status)) {
     LOGE("Failure to attach to the Firebird database: " << database);
-    impl->db = 0;
+    handles->db = 0;
     return false;
   }
 
@@ -89,17 +80,17 @@ bool FbClient::attach(const std::string& database, const std::string& user,
 
 void FbClient::detach() { do_detach(); }
 
-bool FbClient::attached() const { return impl->db != 0; }
+bool FbClient::attached() const { return handles->db != 0; }
 
 void FbClient::do_detach()
 {
-  if (impl->db == 0) {
+  if (handles->db == 0) {
     return;
   }
 
-  isc_detach_database(impl->status, &impl->db);
+  isc_detach_database(handles->status, &handles->db);
 
-  impl->db = 0;
+  handles->db = 0;
 }
 
 std::string FbClient::query_scalar(const std::string& query)
@@ -113,8 +104,8 @@ std::string FbClient::query_scalar(const std::string& query)
   isc_stmt_handle stmt{0};
   std::string result;
 
-  isc_start_transaction(impl->status, &trans, 1, &impl->db, 0, nullptr);
-  if (has_error(impl->status)) {
+  isc_start_transaction(handles->status, &trans, 1, &handles->db, 0, nullptr);
+  if (has_error(handles->status)) {
     LOGE("Failure to start the Firebird transaction");
     return {};
   }
@@ -125,14 +116,14 @@ std::string FbClient::query_scalar(const std::string& query)
   out_sqlda.version = SQLDA_VERSION1;
   out_sqlda.sqln = 1;
 
-  isc_dsql_allocate_statement(impl->status, &impl->db, &stmt);
+  isc_dsql_allocate_statement(handles->status, &handles->db, &stmt);
 
-  isc_dsql_prepare(impl->status, &trans, &stmt, 0, query.c_str(),
+  isc_dsql_prepare(handles->status, &trans, &stmt, 0, query.c_str(),
                    SQL_DIALECT_V6, &out_sqlda);
-  if (has_error(impl->status) || out_sqlda.sqld < 1) {
+  if (has_error(handles->status) || out_sqlda.sqld < 1) {
     LOGE("Failure to prepare the Firebird query: " << query);
-    isc_dsql_free_statement(impl->status, &stmt, DSQL_drop);
-    isc_rollback_transaction(impl->status, &trans);
+    isc_dsql_free_statement(handles->status, &stmt, DSQL_drop);
+    isc_rollback_transaction(handles->status, &trans);
     return {};
   }
 
@@ -146,11 +137,11 @@ std::string FbClient::query_scalar(const std::string& query)
   var.sqltype = SQL_VARYING + 1;  // +1 -> provide a NULL indicator
   var.sqlind = &null_flag;
 
-  isc_dsql_execute(impl->status, &trans, &stmt, SQL_DIALECT_V6, nullptr);
-  if (has_error(impl->status)) {
+  isc_dsql_execute(handles->status, &trans, &stmt, SQL_DIALECT_V6, nullptr);
+  if (has_error(handles->status)) {
     LOGE("Failure to execute the Firebird query: " << query);
-  } else if (isc_dsql_fetch(impl->status, &stmt, SQL_DIALECT_V6, &out_sqlda) ==
-                 0 &&
+  } else if (isc_dsql_fetch(handles->status, &stmt, SQL_DIALECT_V6,
+                            &out_sqlda) == 0 &&
              null_flag == 0) {
     // SQL_VARYING data is a 2-byte length prefix followed by the characters.
     const PARAMVARY* vary = reinterpret_cast<const PARAMVARY*>(buffer.data());
@@ -158,8 +149,8 @@ std::string FbClient::query_scalar(const std::string& query)
                   vary->vary_length);
   }
 
-  isc_dsql_free_statement(impl->status, &stmt, DSQL_drop);
-  isc_commit_transaction(impl->status, &trans);
+  isc_dsql_free_statement(handles->status, &stmt, DSQL_drop);
+  isc_commit_transaction(handles->status, &trans);
 
   return result;
 }

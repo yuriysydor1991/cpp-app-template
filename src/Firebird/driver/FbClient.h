@@ -9,6 +9,8 @@
 namespace firebirdi::driver
 {
 
+class FbHandles;
+
 /**
  * @brief Factory that creates the default, fbclient backed IFbClient
  * implementation.
@@ -27,9 +29,9 @@ std::shared_ptr<IFbClient> create_fb_client();
  * @brief The default IFbClient implementation backed by the native Firebird
  * client library (fbclient / ibase.h).
  *
- * The whole implementation, together with the ibase.h inclusion, lives in the
- * FbClient.cpp translation unit so that the native library stays isolated from
- * the rest of the project.
+ * The whole implementation, together with the ibase.h inclusion through the
+ * FbHandles.h header, lives in the FbClient.cpp translation unit so that the
+ * native library stays isolated from the rest of the project.
  */
 class FbClient : public IFbClient
 {
@@ -47,8 +49,8 @@ class FbClient : public IFbClient
   /// @brief The non-virtual detach used by both detach() and the destructor.
   void do_detach();
 
-  struct Impl;
-  std::unique_ptr<Impl> impl;
+  /// @brief The native Firebird handles.
+  std::unique_ptr<FbHandles> handles;
 };
 
 }  // namespace firebirdi::driver

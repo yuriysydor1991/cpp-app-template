@@ -18,6 +18,8 @@ PACKAGES=(
     gtest-devel
     make
     openssl-devel
+    SDL2-devel
+    SDL2_mixer-devel
 )
 
 DNF_SUDO=""

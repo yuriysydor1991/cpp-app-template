@@ -12,7 +12,6 @@ bool EventQuitHandler::handle([[maybe_unused]] SDL_Event& event,
                               std::shared_ptr<SDL3Context> sdl3Context)
 {
   assert(sdl3Context != nullptr);
-  assert(sdl3Context->appCtx != nullptr);
   assert(event.type == SDL_EVENT_QUIT);
 
   if (sdl3Context == nullptr || sdl3Context->appCtx == nullptr) {

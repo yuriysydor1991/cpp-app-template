@@ -26,6 +26,16 @@ endif()
 
 message(STATUS "cppcheck: ${CPPCHECK_EXEC}")
 
+# The library implementation includes the public headers by their bare names,
+# so the analyzed sources reach them through the public directory itself. The
+# branches which build no library carry no such directory.
+if(EXISTS ${CMAKE_SOURCE_DIR}/src/lib/facade/public)
+  set(
+    CPPCHECK_LIB_PUBLIC_INCLUDE
+    -I${CMAKE_SOURCE_DIR}/src/lib/facade/public
+  )
+endif()
+
 add_custom_target (
   cppcheck
   COMMAND ${CPPCHECK_EXEC} --language=c++ --std=c++${CMAKE_CXX_STANDARD} 
@@ -33,7 +43,8 @@ add_custom_target (
     # Enables the // cppcheck-suppress <id> source comments.
     --inline-suppr
     --suppressions-list=${CMAKE_SOURCE_DIR}/misc/.cppcheck-suppress
-    -I${CMAKE_SOURCE_DIR} -I${CMAKE_BINARY_DIR} ${ALLSOURCES}
+    -I${CMAKE_SOURCE_DIR} -I${CMAKE_BINARY_DIR} ${CPPCHECK_LIB_PUBLIC_INCLUDE}
+    ${ALLSOURCES}
   WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
   COMMENT "Executes cppcheck command for all project sources. Just outputs all findings into stdout."
 )

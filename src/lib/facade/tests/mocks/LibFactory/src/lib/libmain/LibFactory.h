@@ -34,7 +34,7 @@ class LibFactory : public LibFactorySynthParent
  public:
   using LibFactoryPtr = std::shared_ptr<LibFactory>;
 
-  virtual ~LibFactory() = default;
+  ~LibFactory() override = default;
   LibFactory()
   {
     if (onMockCreate) {

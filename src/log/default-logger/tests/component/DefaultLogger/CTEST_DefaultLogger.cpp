@@ -66,6 +66,24 @@ class CTEST_DefaultLogger : public Test
     log.close();
   }
 
+  /**
+   * @brief Only the WARNING severity and above is flushed, so a lower severity
+   * message is absent from the log file even when it is logged. The ERROR
+   * sentinel flushes whatever was logged in front of it, which makes the
+   * absence of the dropped message a proof of the level filter.
+   */
+  void expect_dropped(const std::string& dropped)
+  {
+    static const std::string sentinel = "the flushing error sentinel";
+
+    DefaultLogger::log(DefaultLogger::LVL_ERROR, sentinel);
+
+    const auto logs = get_default_log_file_contents();
+
+    EXPECT_THAT(logs, EndsWith(sentinel + "\n"));
+    EXPECT_THAT(logs, Not(HasSubstr(dropped)));
+  }
+
   const std::set<unsigned short> levelsSet{
       DefaultLogger::LVL_ERROR, DefaultLogger::LVL_WARNING,
       DefaultLogger::LVL_INFO, DefaultLogger::LVL_DEBUG,
@@ -116,10 +134,7 @@ TEST_F(CTEST_DefaultLogger, trace_with_max_debug_log_absent)
 
   DefaultLogger::log(DefaultLogger::LVL_TRACE, "Expect absent");
 
-  const auto logs = get_default_log_file_contents();
-
-  EXPECT_TRUE(logs.empty());
-  EXPECT_EQ(logs, std::string{});
+  expect_dropped("Expect absent");
 }
 
 TEST_F(CTEST_DefaultLogger, debug_with_max_info_log_absent)
@@ -128,10 +143,7 @@ TEST_F(CTEST_DefaultLogger, debug_with_max_info_log_absent)
 
   DefaultLogger::log(DefaultLogger::LVL_DEBUG, "Expect absent");
 
-  const auto logs = get_default_log_file_contents();
-
-  EXPECT_TRUE(logs.empty());
-  EXPECT_EQ(logs, std::string{});
+  expect_dropped("Expect absent");
 }
 
 TEST_F(CTEST_DefaultLogger, info_with_max_warning_log_absent)
@@ -140,10 +152,7 @@ TEST_F(CTEST_DefaultLogger, info_with_max_warning_log_absent)
 
   DefaultLogger::log(DefaultLogger::LVL_INFO, "Expect absent");
 
-  const auto logs = get_default_log_file_contents();
-
-  EXPECT_TRUE(logs.empty());
-  EXPECT_EQ(logs, std::string{});
+  expect_dropped("Expect absent");
 }
 
 TEST_F(CTEST_DefaultLogger, warning_with_max_error_log_absent)
@@ -152,10 +161,7 @@ TEST_F(CTEST_DefaultLogger, warning_with_max_error_log_absent)
 
   DefaultLogger::log(DefaultLogger::LVL_WARNING, "Expect absent");
 
-  const auto logs = get_default_log_file_contents();
-
-  EXPECT_TRUE(logs.empty());
-  EXPECT_EQ(logs, std::string{});
+  expect_dropped("Expect absent");
 }
 
 TEST_F(CTEST_DefaultLogger, warning_with_max_info_log_present)

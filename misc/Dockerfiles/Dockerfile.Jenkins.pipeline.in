@@ -17,9 +17,9 @@ ARG prefixD=/usr
 
 WORKDIR $srcD
 
-# SQLiteCpp is cloned, built and erased inside a single layer, so neither the
-# sources nor the build tree reach the image.
-RUN git clone https://github.com/SRombauts/SQLiteCpp.git && \
+# SQLiteCpp is cloned at the tag the project pins, built and erased inside a
+# single layer, so neither the sources nor the build tree reach the image.
+RUN git clone --depth 1 --branch ${TEMPLATE_APP_SQLITECPP_GIT_TAG} ${TEMPLATE_APP_SQLITECPP_GIT} SQLiteCpp && \
   cmake -S $srcD/SQLiteCpp -B $srcD/SQLiteCpp/build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$prefixD && \
   cmake --build $srcD/SQLiteCpp/build -j$(nproc) && \
   cmake --install $srcD/SQLiteCpp/build --prefix $prefixD && \

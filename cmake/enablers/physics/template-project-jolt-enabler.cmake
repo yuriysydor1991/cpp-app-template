@@ -15,11 +15,13 @@ set(TEMPLATE_APP_JOLT_GIT_TAG "v5.6.0" CACHE STRING "The Jolt Physics project gi
 
 # Jolt defaults that break a plain consumer build: the link time optimization
 # makes the Jolt objects unlinkable unless the whole project enables LTO too,
-# the warnings option treats the Jolt warnings as errors and the Vulkan compute
-# backend demands the Vulkan SDK shader compiler the runtime does not ship.
+# the warnings option treats the Jolt warnings as errors, the Vulkan compute
+# backend demands the Vulkan SDK shader compiler the runtime does not ship and
+# the static MSVC runtime (/MT) clashes with the project's DLL one (/MD).
 set(INTERPROCEDURAL_OPTIMIZATION OFF CACHE BOOL "Build Jolt with the link time optimizations")
 set(ENABLE_ALL_WARNINGS OFF CACHE BOOL "Build Jolt with all the warnings treated as errors")
 set(JPH_USE_VK OFF CACHE BOOL "Build the Jolt Vulkan compute backend")
+set(USE_STATIC_MSVC_RUNTIME_LIBRARY OFF CACHE BOOL "Build Jolt with the static MSVC runtime library")
 
 # the Jolt CMake project resides in the repository Build subdirectory
 template_project_default_3rdparty_enabler(

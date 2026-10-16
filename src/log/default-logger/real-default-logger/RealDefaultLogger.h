@@ -157,7 +157,7 @@ class RealDefaultLogger : public logger::ILogger
   std::atomic_bool toPrintMsgs{true};
   std::fstream alogfile;
   std::mutex alogfile_m;
-  unsigned short lvl{MAX_LOG_LEVEL};
+  std::atomic<unsigned short> lvl{MAX_LOG_LEVEL};
 };
 
 }  // namespace default_logger

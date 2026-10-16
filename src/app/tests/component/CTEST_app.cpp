@@ -4,7 +4,6 @@
 #include <csignal>
 
 #include "src/app/ApplicationFactory.h"
-#include "src/gtkmm4/Gtkmm4Controller.h"
 
 using namespace app;
 using namespace testing;

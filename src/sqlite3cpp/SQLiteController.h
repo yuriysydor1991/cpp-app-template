@@ -23,8 +23,8 @@ class SQLiteController : public app::IDBConnection
   SQLiteController() = default;
 
   /**
-   * @brief Tries to connect to the specified database server.
-   * The credentials are taken from the ApplicationContext instance.
+   * @brief Opens (creates if absent) the SQLite database file, and its
+   * directory, which path the ApplicationContext::get_db_dbname returns.
    *
    * @param nctx The ApplicationContext for connection credentials etc.
    *

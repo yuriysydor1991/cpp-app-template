@@ -1,8 +1,10 @@
 #include "src/sqlite3cpp/SQLiteController.h"
 
 #include <cassert>
+#include <filesystem>
 #include <memory>
 #include <string>
+#include <system_error>
 
 #include "src/app/ApplicationContext.h"
 #include "src/app/IDBConnection.h"
@@ -22,6 +24,19 @@ bool SQLiteController::connect(std::shared_ptr<app::ApplicationContext> nctx)
   }
 
   qmaker = std::make_shared<sqlmaker::QueryMaker>();
+
+  const std::filesystem::path dbpath{nctx->get_db_dbname()};
+  std::error_code ec;
+
+  if (dbpath.has_parent_path()) {
+    std::filesystem::create_directories(dbpath.parent_path(), ec);
+  }
+
+  if (ec) {
+    LOGE("Failure to create the database directory "
+         << dbpath.parent_path() << ": " << ec.message());
+    return false;
+  }
 
   try {
     db = std::make_shared<SQLite::Database>(

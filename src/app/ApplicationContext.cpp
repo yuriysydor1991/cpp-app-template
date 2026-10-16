@@ -1,10 +1,38 @@
 #include "src/app/ApplicationContext.h"
 
+#include <cstdlib>
+#include <filesystem>
 #include <memory>
 #include <string>
 #include <vector>
 
 #include "project-global-decls.h"
+
+namespace
+{
+
+/// @brief Returns the environment variable value or the fallback if the
+/// variable is unset or empty.
+std::string env_or(const char* name, const std::string& fallback)
+{
+  const char* value = std::getenv(name);
+
+  return value != nullptr && *value != '\0' ? std::string{value} : fallback;
+}
+
+/// @brief Returns the SQLITE_DB_PATH value if set, otherwise the database file
+/// inside the user data directory of the XDG Base Directory specification.
+std::string default_db_path(const std::string& fileName)
+{
+  const std::string home = env_or("HOME", {});
+  const std::filesystem::path dataDir = env_or(
+      "XDG_DATA_HOME", home.empty() ? std::string{} : home + "/.local/share");
+
+  return env_or("SQLITE_DB_PATH",
+                (dataDir / project_decls::PROJECT_NAME / fileName).string());
+}
+
+}  // namespace
 
 namespace app
 {
@@ -14,7 +42,7 @@ const std::string ApplicationContext::default_db_name =
     std::string{".db"};
 
 ApplicationContext::ApplicationContext(int& gargc, char**& gargv)
-    : margc{gargc}, margv{gargv}, mdb_dbname{default_db_name}
+    : margc{gargc}, margv{gargv}, mdb_dbname{default_db_path(default_db_name)}
 {
 }
 

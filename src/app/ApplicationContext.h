@@ -114,7 +114,9 @@ class ApplicationContext
   /// ApplicationContext::set_first_user_request setter.
   void set_second_user_request(const bool newValue);
 
-  /// @brief The SQLite database file path.
+  /// @brief The SQLite database file path. Defaults to the SQLITE_DB_PATH
+  /// environment variable value or to the default_db_name file inside the
+  /// $XDG_DATA_HOME/<project name> (~/.local/share/<project name>) directory.
   const std::string& get_db_dbname() const;
 
   /// @brief Sets the SQLite database file path.

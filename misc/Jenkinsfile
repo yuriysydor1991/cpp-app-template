@@ -13,7 +13,6 @@ pipeline {
     // only). Safe to drop together with the template stages below.
     booleanParam(name: 'RUN_DEB_PACKAGER', defaultValue: false, description: 'Template: build and check the deb package?')
     booleanParam(name: 'RUN_RPM_PACKAGER', defaultValue: false, description: 'Template: build and check the RPM package?')
-    booleanParam(name: 'RUN_SNAP_PACKAGER', defaultValue: false, description: 'Template: build and check the snap package?')
     booleanParam(name: 'RUN_FREEBSD_PACKAGER', defaultValue: false, description: 'Template: build and check the FreeBSD pkg package? (FreeBSD only)')
     booleanParam(name: 'RUN_WIX_PACKAGER', defaultValue: false, description: 'Template: build and check the WIX MSI package? (MS Windows only)')
   }
@@ -528,24 +527,6 @@ pipeline {
             exit 1
           fi
           echo "OK: produced $(find "$BD" -maxdepth 2 -name '*.rpm')"
-        '''
-      }
-    }
-
-    stage('Template: snap package') {
-      when { expression { params.RUN_SNAP_PACKAGER } }
-      steps {
-        sh '''
-          BD="$BUILDDIR-pkg-snap"
-          rm -fr "$BD"
-          cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_SNAP=ON
-          cmake --build "$BD" -j$(nproc)
-          cmake --build "$BD" --target snap
-          if [ -z "$(find "$BD" -maxdepth 3 -name '*.snap' -print -quit)" ]; then
-            echo "FAIL: CMake did not produce a .snap package"
-            exit 1
-          fi
-          echo "OK: produced $(find "$BD" -maxdepth 3 -name '*.snap')"
         '''
       }
     }

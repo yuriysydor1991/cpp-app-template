@@ -23,5 +23,5 @@ message(STATUS "OpenCV ${OpenCV_VERSION} found at ${OpenCV_INCLUDE_DIRS}")
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  PUBLIC ${OpenCV_LIBS}
+  PRIVATE ${OpenCV_LIBS}
 )

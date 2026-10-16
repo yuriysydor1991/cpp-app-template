@@ -12,7 +12,7 @@ cmake -S . -B build -DENABLE_LIBLZMA=ON
 
 ### Стиснення потрібних даних (приклади для копіювання)
 
-Після `ENABLE_LIBLZMA=ON` та прилінкування цілі liblzma (наприклад `target_link_libraries(${PROJECT_BINARY_NAME} LibLZMA::LibLZMA)`) підключи `<lzma.h>` і скопіюй будь-який зі сніпетів нижче.
+Після `ENABLE_LIBLZMA=ON` та прилінкування цілі liblzma (наприклад `target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE LibLZMA::LibLZMA)`) підключи `<lzma.h>` і скопіюй будь-який зі сніпетів нижче.
 
 Найшвидший спосіб стиснути потрібний буфер — за один виклик, у пам'яті, у контейнер `.xz` (LZMA2):
 

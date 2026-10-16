@@ -13,10 +13,10 @@ The [cmake/enablers/template-project-log4cpp-enabler.cmake](/cmake/enablers/temp
 
 The CMake build of the fetched sources (the `REL_1.1.6_Mar_12_2026` release by default) generates its own `log4cpp/config.h` header and carries the include directories and the threading library within its `log4cpp_static` target, so the enabler links that static library and keeps the tests of the fetched sources out of the project `ctest` runs. The static library of such a build gets linked into the project executable, while its headers and the library itself stay out of the project install and its packages; a system installation is linked and left alone.
 
-Both of the paths provide the very same `LOG4CPP::log4cpp` target, so link it to your target(s) of interest:
+Both of the paths provide the very same `LOG4CPP::log4cpp` target, so link it to your target(s) of interest with the keyword signature of the `target_link_libraries`, the one the project uses for its executable (CMake rejects mixing it with the plain signature on the same target):
 
 ```
-target_link_libraries(${PROJECT_BINARY_NAME} LOG4CPP::log4cpp)
+target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE LOG4CPP::log4cpp)
 ```
 
 The [src/log/CMakeLists.txt](/src/log/CMakeLists.txt) module links it to the project executable and the [src/log/log4cpp5-init/CMakeLists.txt](/src/log/log4cpp5-init/CMakeLists.txt) one links it to the `TemplateLog4Cpp5ControllerObj` object library, so the `log4cpp5i::Log4Cpp5Init` sources see the headers of both of the paths.

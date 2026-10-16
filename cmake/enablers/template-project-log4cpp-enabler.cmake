@@ -61,5 +61,5 @@ endif()
 
 # Both of the paths above provide the very same LOG4CPP::log4cpp target, so
 # link it to your target(s) of interest (e.g. the ${PROJECT_BINARY_NAME}
-# executable or any of your own libraries):
-#   target_link_libraries(${PROJECT_BINARY_NAME} LOG4CPP::log4cpp)
+# executable or any of your own libraries) with the keyword signature:
+#   target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE LOG4CPP::log4cpp)

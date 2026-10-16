@@ -54,7 +54,7 @@ const std::string received{answer.begin(), answer.end()};
 
 A redirect answer counts as alive and is not followed, while a server rejecting the HEAD method itself (with the `405` status, for example) is reported as not alive, so check such an URL with a download instead.
 
-A download gives up after the `DEFAULT_TIMEOUT` seconds and aborts a stalled transfer even earlier (less than the `DEFAULT_LOWSPEEDLIMIT` bytes per second during the `DEFAULT_LOWSPEEDSECS` seconds). A post applies no low speed abort at all and waits for the `DEFAULT_POST_TIMEOUT` seconds instead, because a server composing an answer keeps the connection silent meanwhile. All of them are the class fields to change for the needs of your requests.
+A download gives up after the `DEFAULT_TIMEOUT` seconds and aborts a stalled transfer even earlier (less than the `DEFAULT_LOWSPEEDLIMIT` bytes per second during the `DEFAULT_LOWSPEEDSECS` seconds). A post applies no low speed abort at all and waits for the `DEFAULT_POST_TIMEOUT` seconds instead, because a server composing an answer keeps the connection silent meanwhile. The low speed limits are the constants of the class, while the timeouts come from the `PROJECT_CURL_TRANSFER_TIMEOUT_SECONDS` and the `PROJECT_CURL_POST_TIMEOUT_SECONDS` CMake variables described by [the HTTP client hardening constraints](/doc/sections/en_US/5-project-build/security/5-51-the-HTTP-client-hardening-constraints.md) section, so a build changes them with no code change at all.
 
 ### Testing the controller
 
@@ -63,4 +63,4 @@ Two test binaries of the `src/CURL/tests` directory cover the class, both perfor
 - `UTEST_CURLController` is the unit test of the calls that give up before any transfer starts, like the ones with an empty URL or with an unsupported protocol. Enable it with the [ENABLE_UNIT_TESTS](/doc/sections/en_US/5-project-build/testing/5-3-1-enabling-unit-testing.md) CMake variable.
 - `CTEST_CURLController` is the component test driving the real libcurl over the file protocol against the files it writes into it's own build directory. Enable it with the `ENABLE_COMPONENT_TESTS` CMake variable.
 
-The code using the controller is tested against it's gmock replacement of the `src/app/tests/mocks/CURLController` directory instead, which the `UTEST_Application` and the `CTEST_app` targets include ahead of the real header. Keep the mock in sync with the class when extending the one.
+The code using the controller is tested against it's gmock replacement of the `src/app/tests/mocks/CURLController` directory instead, which the `UTEST_Application` and the `CTEST_app` targets include ahead of the real header. The mock hands out it's `curli::CURLController::instance` object, so a test sets the expectations on it before the tested code calls the `create` method. Keep the mock in sync with the class when extending the one.

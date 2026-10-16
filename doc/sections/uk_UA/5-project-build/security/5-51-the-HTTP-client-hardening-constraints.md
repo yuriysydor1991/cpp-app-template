@@ -26,7 +26,7 @@ cmake -S . -B build -DCMAKE_BUILD_TYPE=Release \
 Відповідь, яка оголошує розмір понад дозволений, відхиляється параметром `CURLOPT_MAXFILESIZE_LARGE` бібліотеки libcurl ще до передавання жодного її байта. Відповідь, яка не оголошує розміру взагалі - частинами (chunked), наприклад - натомість обрізається зворотним викликом запису, який припиняє дописування, щойно буфер переріс би межу, і цим перериває усе передавання:
 
 ```
-ERR CURLController.cpp:112 : The response has outgrown the allowed 8388608 bytes
+ERR CURLController.cpp:88 : The response has outgrown the allowed 8388608 bytes
 ```
 
 Отриманий буфер залишається порожнім в обох випадках, а виклик `last_response_successful` повідомляє про невдачу, отож частково отриману відповідь ніколи не сприймають за повну.
@@ -44,7 +44,7 @@ ERR CURLController.cpp:112 : The response has outgrown the allowed 8388608 bytes
 Параметр з'явився у випуску libcurl 7.85.0 і застосовується лише новішою бібліотекою, отож старіша libcurl зберігає протоколи власної побудови. Назва протоколу, якої libcurl не знає, провалює запит із повідомленням, що називає змінну для виправлення:
 
 ```
-ERR CURLController.cpp:194 : Fail to allow the htttp protocols only. Check the PROJECT_CURL_ALLOWED_PROTOCOLS value
+ERR CURLController.cpp:170 : Fail to allow the htttp protocols only. Check the PROJECT_CURL_ALLOWED_PROTOCOLS value
 ```
 
 ### Обмеження TLS

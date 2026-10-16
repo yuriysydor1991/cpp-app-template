@@ -90,15 +90,20 @@ std::string MySQLController::get_current_date()
     return {};
   }
 
-  auto res = execute_query(qmaker->make_date_query());
+  try {
+    auto res = execute_query(qmaker->make_date_query());
 
-  assert(res != nullptr);
-
-  if (res != nullptr) {
-    return {};
+    if (res != nullptr && res->next()) {
+      return res->getString(1).asStdString();
+    }
+  }
+  catch (sql::SQLException& e) {
+    LOGE("Failure to read the current date: " << e.what());
   }
 
-  return res->getString(1).asStdString();
+  LOGE("No current date obtained");
+
+  return {};
 }
 
 }  // namespace mysqli

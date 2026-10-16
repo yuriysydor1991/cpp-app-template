@@ -24,7 +24,7 @@ template_project_default_3rdparty_enabler(
 #   - system install, via find_package(ZLIB): ZLIB::ZLIB
 #   - FetchContent source build:              zlibstatic (static) or zlib (shared)
 # For example:
-#   target_link_libraries(${PROJECT_BINARY_NAME} ZLIB::ZLIB)
+#   target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE ZLIB::ZLIB)
 #
 # See doc/sections/en_US/5-23-enabling-the-zlib-library.md (and the uk_UA copy)
 # for copy-paste C++ usage examples: one-shot in-memory compression, gzip (.gz)

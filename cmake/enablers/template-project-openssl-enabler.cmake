@@ -30,6 +30,6 @@ template_project_default_3rdparty_enabler(
 # minimal HTTPS/TLS client.
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  OpenSSL::SSL
-  OpenSSL::Crypto
+  PRIVATE OpenSSL::SSL
+  PRIVATE OpenSSL::Crypto
 )

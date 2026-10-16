@@ -5,7 +5,6 @@
 #include <cstdint>
 #include <memory>
 
-#include "src/app/ApplicationContext.h"
 #include "src/vulkan/VulkanController.h"
 #include "src/vulkan/device-info/DeviceInfoHandlerFactory.h"
 #include "src/vulkan/device-info/IDeviceInfoHandler.h"
@@ -17,8 +16,7 @@ class UTEST_VulkanController : public Test
 {
  public:
   UTEST_VulkanController()
-      : appCtx{std::make_shared<app::ApplicationContext>(argc, argv)},
-        handler{std::make_shared<NiceMock<IDeviceInfoHandler>>()}
+      : handler{std::make_shared<NiceMock<IDeviceInfoHandler>>()}
   {
     // The controller builds a DeviceInfoHandlerFactory internally; route every
     // created factory to hand out the fixture's mock handler.
@@ -35,21 +33,8 @@ class UTEST_VulkanController : public Test
     vkmock::fail_instance_creation() = false;
   }
 
-  int argc{0};
-  char** argv{nullptr};
-
-  std::shared_ptr<app::ApplicationContext> appCtx;
   std::shared_ptr<NiceMock<IDeviceInfoHandler>> handler;
 };
-
-TEST_F(UTEST_VulkanController, run_returns_false_on_null_context)
-{
-  VulkanController controller;
-
-  // Asserts are compiled out for the unit tests (NDEBUG), so the explicit
-  // nullptr guard inside run() is what is being exercised here.
-  EXPECT_FALSE(controller.run(nullptr));
-}
 
 TEST_F(UTEST_VulkanController, run_returns_false_when_not_initialized)
 {
@@ -57,7 +42,7 @@ TEST_F(UTEST_VulkanController, run_returns_false_when_not_initialized)
   // inited() is false and run() bails out before the enumeration call.
   VulkanController controller;
 
-  EXPECT_FALSE(controller.run(appCtx));
+  EXPECT_FALSE(controller.run());
 }
 
 TEST_F(UTEST_VulkanController, run_succeeds_when_device_handler_succeeds)
@@ -67,7 +52,7 @@ TEST_F(UTEST_VulkanController, run_succeeds_when_device_handler_succeeds)
   VulkanControllerPtr controller = VulkanController::create();
 
   ASSERT_NE(controller, nullptr);
-  EXPECT_TRUE(controller->run(appCtx));
+  EXPECT_TRUE(controller->run());
 }
 
 TEST_F(UTEST_VulkanController, run_returns_false_when_device_handler_fails)
@@ -77,7 +62,7 @@ TEST_F(UTEST_VulkanController, run_returns_false_when_device_handler_fails)
   VulkanControllerPtr controller = VulkanController::create();
 
   ASSERT_NE(controller, nullptr);
-  EXPECT_FALSE(controller->run(appCtx));
+  EXPECT_FALSE(controller->run());
 }
 
 TEST_F(UTEST_VulkanController, create_returns_null_when_instance_unavailable)

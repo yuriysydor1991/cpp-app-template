@@ -43,7 +43,7 @@ int Gtkmm4Controller::run(std::shared_ptr<app::ApplicationContext> nactx)
     return app::IApplication::INVALID;
   }
 
-  if (!vulkan->run(actx)) {
+  if (!vulkan->run()) {
     LOGE("Failed to enumerate the Vulkan physical devices");
     return app::IApplication::INVALID;
   }

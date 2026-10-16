@@ -2,13 +2,12 @@ cmake_minimum_required(VERSION 3.13)
 
 # Pure unit test: only the unit under test (VulkanController) is compiled,
 # against header-replacement mocks (the Vulkan API, the device info handler
-# factory and its handler interface, ApplicationContext, log). No real Vulkan
+# factory and its handler interface, log). No real Vulkan
 # loader is linked.
 add_executable(
   UTEST_VulkanController
   UTEST_VulkanController.cpp
   ${CMAKE_SOURCE_DIR}/src/vulkan/VulkanController.cpp
-  ${GENERAL_MOCKS_ROOT}/ApplicationContext/src/app/ApplicationContext.cpp
 )
 
 target_include_directories(
@@ -16,7 +15,6 @@ target_include_directories(
   PRIVATE ${VULKAN_MOCKS_ROOT}/DeviceInfoHandlerFactory
   PRIVATE ${VULKAN_MOCKS_ROOT}/IDeviceInfoHandler
   PRIVATE ${GENERAL_MOCKS_ROOT}/vulkan
-  PRIVATE ${GENERAL_MOCKS_ROOT}/ApplicationContext
   PRIVATE ${CMAKE_SOURCE_DIR}/src/app/tests/mocks/log
   PRIVATE ${CMAKE_SOURCE_DIR}
   PRIVATE ${CMAKE_BINARY_DIR}

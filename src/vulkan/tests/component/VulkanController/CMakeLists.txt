@@ -6,7 +6,6 @@ add_executable(
   ${CMAKE_SOURCE_DIR}/src/vulkan/VulkanController.cpp
   ${CMAKE_SOURCE_DIR}/src/vulkan/device-info/DeviceInfoHandlerFactory.cpp
   ${CMAKE_SOURCE_DIR}/src/vulkan/device-info/PhysicalDeviceInfoHandler.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/ApplicationContext.cpp
 )
 
 target_include_directories(

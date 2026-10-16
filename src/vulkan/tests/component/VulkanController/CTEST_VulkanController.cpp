@@ -4,7 +4,6 @@
 
 #include <memory>
 
-#include "src/app/ApplicationContext.h"
 #include "src/vulkan/VulkanController.h"
 
 using namespace testing;
@@ -13,11 +12,6 @@ using namespace vulkani;
 class CTEST_VulkanController : public Test
 {
  public:
-  CTEST_VulkanController()
-      : appCtx{std::make_shared<app::ApplicationContext>(argc, argv)}
-  {
-  }
-
   /**
    * @brief Whether a Vulkan instance can be created in this environment.
    *
@@ -45,11 +39,6 @@ class CTEST_VulkanController : public Test
 
     return true;
   }
-
-  int argc{0};
-  char** argv{nullptr};
-
-  std::shared_ptr<app::ApplicationContext> appCtx;
 };
 
 TEST_F(CTEST_VulkanController, create_reflects_runtime_availability)
@@ -77,5 +66,5 @@ TEST_F(CTEST_VulkanController, run_against_live_runtime)
 
   // With a usable Vulkan loader the demo enumerates the physical devices (zero
   // is a valid, successful outcome) and must complete successfully.
-  EXPECT_TRUE(controller->run(appCtx));
+  EXPECT_TRUE(controller->run());
 }

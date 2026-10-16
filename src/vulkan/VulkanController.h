@@ -6,8 +6,6 @@
 #include <cstdint>
 #include <memory>
 
-#include "src/app/ApplicationContext.h"
-
 /**
  * @brief The namespace to contain all the entities related to the Vulkan API
  * usage demonstration component.
@@ -20,11 +18,9 @@ namespace vulkani
  * work (the physical device enumeration and logging).
  *
  * The controller is created through the static create() factory which brings up
- * a VkInstance up front, so a non-null controller is always usable. The actual
- * Vulkan touching steps (the instance creation and the @ref inited() check) are
- * kept behind small protected, overridable seams, so the run() orchestration
- * may be unit tested without a live Vulkan loader. The real path is exercised
- * by the component test against the system Vulkan runtime.
+ * a VkInstance up front, so a non-null controller is always usable. The unit
+ * tests replace the Vulkan loader with the header-only vulkan.h mock, the real
+ * path is exercised by the component test against the system Vulkan runtime.
  */
 class VulkanController
 {
@@ -47,14 +43,15 @@ class VulkanController
   virtual ~VulkanController();
   VulkanController() = default;
 
+  VulkanController(const VulkanController&) = delete;
+  VulkanController& operator=(const VulkanController&) = delete;
+
   /**
    * @brief Runs the demonstration work against the already created instance.
    *
-   * @param ctx Application's run context. Must not be a nullptr.
-   *
    * @return Returns true in case of success and false in case of any error.
    */
-  virtual bool run(std::shared_ptr<app::ApplicationContext> ctx);
+  virtual bool run();
 
   /**
    * @brief Creates a ready to use controller with an already created Vulkan
@@ -65,25 +62,9 @@ class VulkanController
    */
   static VulkanControllerPtr create();
 
- protected:
-  /**
-   * @brief Creates the VkInstance. The only instance-creating seam, overridable
-   * for the unit tests.
-   *
-   * @return Returns true in case of success and false in case of any error.
-   */
-  virtual bool init();
-
-  /**
-   * @brief Reports whether a usable Vulkan instance has been created.
-   *
-   * @return Returns true when the instance is valid and false otherwise.
-   */
-  virtual bool inited();
-
-  std::shared_ptr<app::ApplicationContext> appctx;
-
  private:
+  bool init();
+  bool inited() const;
   bool enumerate_physical_devices();
 
   VkInstance instance{VK_NULL_HANDLE};

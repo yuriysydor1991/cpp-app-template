@@ -20,17 +20,8 @@ VulkanController::~VulkanController()
   }
 }
 
-bool VulkanController::run(std::shared_ptr<app::ApplicationContext> ctx)
+bool VulkanController::run()
 {
-  assert(ctx != nullptr);
-
-  if (ctx == nullptr) {
-    LOGE("No valid context pointer provided");
-    return false;
-  }
-
-  appctx = ctx;
-
   if (!inited()) {
     LOGE("Object is not initialized");
     return false;
@@ -77,7 +68,7 @@ bool VulkanController::init()
   return true;
 }
 
-bool VulkanController::inited() { return instance != VK_NULL_HANDLE; }
+bool VulkanController::inited() const { return instance != VK_NULL_HANDLE; }
 
 bool VulkanController::enumerate_physical_devices()
 {

@@ -26,4 +26,4 @@ template_project_default_3rdparty_enabler(
 #     (enable a codec for the FetchContent build to encode/decode, e.g.
 #      -DAVIF_CODEC_AOM=ON or -DAVIF_CODEC_DAV1D=ON)
 # For example:
-#   target_link_libraries(${PROJECT_BINARY_NAME} avif)
+#   target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE avif)

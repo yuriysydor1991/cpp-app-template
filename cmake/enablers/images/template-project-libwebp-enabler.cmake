@@ -26,4 +26,4 @@ template_project_default_3rdparty_enabler(
 #   - FetchContent source build: webp, webpdecoder, webpdemux, libwebpmux
 #     (the WebP:: aliases are exported as well)
 # For example:
-#   target_link_libraries(${PROJECT_BINARY_NAME} WebP::webp)
+#   target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE WebP::webp)

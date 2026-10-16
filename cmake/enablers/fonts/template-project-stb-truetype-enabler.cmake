@@ -11,7 +11,8 @@ if (NOT ENABLE_STB_TRUETYPE)
 endif()
 
 set(TEMPLATE_APP_STB_GIT "https://github.com/nothings/stb.git" CACHE STRING "The stb libraries git source repository")
-set(TEMPLATE_APP_STB_GIT_TAG "master" CACHE STRING "The stb project git repository tag/branch of interest")
+# stb tags no releases, so a master commit (2026-08-02) keeps the builds reproducible
+set(TEMPLATE_APP_STB_GIT_TAG "2c980bb59875b0d32144a71867fbdebb2f77cd20" CACHE STRING "The stb project git repository commit of interest")
 
 # stb ships headers only, with neither a build nor a package to probe for
 template_project_default_3rdparty_enabler(

@@ -39,8 +39,8 @@ class Log4Cpp5Init
   /**
    * @brief (Re)initializes the log4cpp root category: the appenders of any
    * previous call are replaced, so the log storage and output follow the last
-   * call only. If the log file can't be opened a warning is printed into the
-   * stderr and the messages go into the stdout only.
+   * call only. If the log file can't be opened the messages go into the
+   * stdout only.
    *
    * @param filepath The file path or name for the new log file to create or to
    * append new log messages. Defaults to Log4Cpp5Init::default_log_name.
@@ -48,12 +48,25 @@ class Log4Cpp5Init
    * default_priority value.
    * @param toPrintValue If the true boolean value passed - all the log message
    * will be printed into the stdout also.
+   *
+   * @return Returns false if the log file can't be opened.
    */
-  static void init(const std::string& filepath = get_default_full_log_path(),
+  static bool init(const std::string& filepath = get_default_full_log_path(),
                    const unsigned short& nlvl = default_priority,
                    bool toPrintValue = true);
 
+  /**
+   * @brief Initializes the logging with the default settings. If the default
+   * log file can't be opened a warning is printed into the stderr and the
+   * messages go into the stdout only.
+   */
+  static void init_defaults();
+
   static std::string get_filename_only(const char* filePath);
+
+  /// @brief The default log file path: the default log name in the
+  /// DEFAULT_LOG_FILE_PATH directory (the current one by default).
+  static std::string get_default_full_log_path();
 
   static log4cpp::Priority::Value get_log4cpp_priority(
       const unsigned short& prjsev);
@@ -70,8 +83,6 @@ class Log4Cpp5Init
   static void add_console_appender(log4cpp::Category& root);
 
   static std::string get_full_log_path(const std::string& logname);
-
-  static std::string get_default_full_log_path();
 };
 
 }  // namespace log4cpp5i

@@ -12,7 +12,7 @@
 namespace log4cpp5i
 {
 
-void Log4Cpp5Init::init(const std::string& filepath, const unsigned short& nlvl,
+bool Log4Cpp5Init::init(const std::string& filepath, const unsigned short& nlvl,
                         const bool toPrintValue)
 {
   log4cpp::Category& root = log4cpp::Category::getRoot();
@@ -20,13 +20,22 @@ void Log4Cpp5Init::init(const std::string& filepath, const unsigned short& nlvl,
   root.removeAllAppenders();
   root.setPriority(get_log4cpp_priority(nlvl));
 
-  if (!add_file_appender(root, filepath)) {
-    std::cerr << "Fail to open the log file at " << filepath
-              << ", logging into the stdout only" << std::endl;
+  const bool fileOpened = add_file_appender(root, filepath);
 
+  if (!fileOpened || toPrintValue) {
     add_console_appender(root);
-  } else if (toPrintValue) {
-    add_console_appender(root);
+  }
+
+  return fileOpened;
+}
+
+void Log4Cpp5Init::init_defaults()
+{
+  const std::string filepath = get_default_full_log_path();
+
+  if (!init(filepath)) {
+    std::cerr << "Fail to open the log file at " << filepath
+              << ", logging into the console only" << std::endl;
   }
 }
 

@@ -22,7 +22,7 @@
 #endif  // LOG_INIT_PATH
 
 #ifndef LOG_INIT_DEFAULTS
-#define LOG_INIT_DEFAULTS() log4cpp5i::Log4Cpp5Init::init();
+#define LOG_INIT_DEFAULTS() log4cpp5i::Log4Cpp5Init::init_defaults();
 #endif  // LOG_INIT_DEFAULTS
 
 #ifndef LOG_BODY

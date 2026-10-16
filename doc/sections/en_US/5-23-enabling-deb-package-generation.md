@@ -5,12 +5,12 @@ In order to enable the Debian/Ubuntu `.deb` package creation target on the templ
 ```
 # inside the project root directory
 
-meson setup build -DENABLE_DEB=true \
+meson setup build --prefix=/usr -DENABLE_DEB=true \
   -DPROJECT_MAINTAINER='Your Name' \
   -DPROJECT_MAINTAINER_EMAIL='you@example.com'
 ```
 
-Which in turn will enable the `deb` Meson `custom_target` that under the hood runs `meson install` into a staging directory and invokes `dpkg-deb --build` on it.
+Which in turn will enable the `deb` Meson `custom_target` that under the hood runs `meson install` into a staging directory and invokes `dpkg-deb --build` on it. The Debian packages install into the `/usr` prefix, so the `--prefix=/usr` parameter replaces the Meson default `/usr/local` one (the configure step reports any other prefix). The package payload belongs to the `root` user, and a package which ships a shared library refreshes the dynamic linker cache through the `ldconfig` trigger.
 
 To produce the DEB package run the `deb` target for the build:
 

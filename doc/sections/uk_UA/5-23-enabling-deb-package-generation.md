@@ -5,12 +5,12 @@
 ```
 # всередині кореневої директорії проекту
 
-meson setup build -DENABLE_DEB=true \
+meson setup build --prefix=/usr -DENABLE_DEB=true \
   -DPROJECT_MAINTAINER='Імʼя Прізвище' \
   -DPROJECT_MAINTAINER_EMAIL='you@example.com'
 ```
 
-Яка у свою чергу вмикає Meson-ціль `deb` (`custom_target`) що під капотом виконує `meson install` у staging-директорію і викликає `dpkg-deb --build` на ній.
+Яка у свою чергу вмикає Meson-ціль `deb` (`custom_target`) що під капотом виконує `meson install` у staging-директорію і викликає `dpkg-deb --build` на ній. Debian-пакети встановлюються у префікс `/usr`, тому параметр `--prefix=/usr` замінює типовий для Meson префікс `/usr/local` (етап конфігурування повідомляє про будь-який інший префікс). Вміст пакету належить користувачу `root`, а пакет зі спільною бібліотекою оновлює кеш динамічного компонувальника тригером `ldconfig`.
 
 Для генерації DEB-пакету необхідно побудувати ціль `deb`:
 

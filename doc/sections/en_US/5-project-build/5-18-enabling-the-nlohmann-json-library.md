@@ -9,3 +9,5 @@ cmake -S . -B build -DENABLE_NLOHMANN_JSON=ON
 ```
 
 The option is `ON` by default on this branch, because the [ChatGPT client](/doc/sections/en_US/5-project-build/ai/5-37-connecting-to-the-openai-servers.md) reads the API answers with that library and the CMake configure step fails with an explanatory message when the option is turned off.
+
+A system without the installed library gets the sources of the `TEMPLATE_APP_NLOHMANN_GIT_TAG` release (`v3.12.0` by default) fetched and built, while the flatpak package builds the very same `v3.12.0` release from it's checksum verified archive.

@@ -28,7 +28,7 @@ template_project_default_3rdparty_enabler(
 #   - system install, via find_package(LibLZMA): LibLZMA::LibLZMA
 #   - FetchContent source build:                 liblzma
 # For example:
-#   target_link_libraries(${PROJECT_BINARY_NAME} LibLZMA::LibLZMA)
+#   target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE LibLZMA::LibLZMA)
 #
 # See doc/sections/en_US/5-34-enabling-the-liblzma-library.md (and the uk_UA
 # copy) for copy-paste C++ usage examples: one-shot in-memory .xz compression

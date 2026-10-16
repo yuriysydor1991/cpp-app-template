@@ -1,15 +1,8 @@
 cmake_minimum_required(VERSION 3.13)
 
-option(
-  ENABLE_VULKAN
-  "Enables the Vulkan API for the project (system loader, no FetchContent available)"
-  ON
-)
-
-if(NOT ENABLE_VULKAN)
-  return()
-endif()
-
+# Vulkan is the very purpose of this branch (src/qtvulkan always builds), so
+# there is no option to turn it off.
+#
 # The Vulkan headers and loader are a system component shipped with the platform
 # Vulkan SDK / runtime. This branch reaches Vulkan through the native Qt6
 # QVulkanInstance / QVulkanFunctions wrappers (Qt6::Gui), but the project sources

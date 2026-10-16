@@ -129,6 +129,21 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "UTEST_CommandLineParser\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_CommandLineParser.junit.xml'
           }
         }
+        stage('UTEST_EventQuitHandler') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_EventQuitHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_EventQuitHandler.junit.xml'
+          }
+        }
+        stage('UTEST_EventsHandlersFactory') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_EventsHandlersFactory\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_EventsHandlersFactory.junit.xml'
+          }
+        }
+        stage('UTEST_SDLContext') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "UTEST_SDLContext\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_SDLContext.junit.xml'
+          }
+        }
         stage('UTEST_EventWindowResizedHandler') {
           steps {
             sh 'cd $BUILDDIR && ctest -R "UTEST_EventWindowResizedHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_EventWindowResizedHandler.junit.xml'
@@ -203,21 +218,6 @@ pipeline {
         stage('CTEST_controller') {
           steps {
             sh 'cd $BUILDDIR && ctest -R "CTEST_controller\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_controller.junit.xml'
-          }
-        }
-        stage('UTEST_EventQuitHandler') { 
-          steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_EventQuitHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_EventQuitHandler.junit.xml'
-          }
-        }
-        stage('UTEST_EventsHandlersFactory') { 
-          steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_EventsHandlersFactory\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_EventsHandlersFactory.junit.xml'
-          }
-        }
-        stage('UTEST_SDLContext') { 
-          steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_SDLContext\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_SDLContext.junit.xml'
           }
         }
       }

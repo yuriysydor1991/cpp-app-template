@@ -10,7 +10,7 @@ cmake -S . -B build -DENABLE_STB_TRUETYPE=ON
 
 The stb headers come with neither a build system nor a package to probe for, so the enabler always fetches them and exposes them through its own interface target. See the `cmake/enablers/fonts/template-project-stb-truetype-enabler.cmake` module for the target (`stb_truetype`) to link to your targets of interest.
 
-The fetched revision is driven by the `TEMPLATE_APP_STB_GIT_TAG` CMake variable (the `master` branch by default). The target include directory is a `SYSTEM` one, since the library implementation gets compiled inside one of the project sources, which the project warnings would flood otherwise.
+The fetched revision is driven by the `TEMPLATE_APP_STB_GIT_TAG` CMake variable (the `2c980bb59875b0d32144a71867fbdebb2f77cd20` commit of the `master` branch from 2026-08-02 by default, since stb tags no releases and a moving branch would make the builds irreproducible). The target include directory is a `SYSTEM` one, since the library implementation gets compiled inside one of the project sources, which the project warnings would flood otherwise.
 
 ### Packing the glyphs into an atlas (copy-paste example)
 

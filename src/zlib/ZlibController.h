@@ -65,7 +65,7 @@ class ZlibController
    * @param path The source file path.
    *
    * @return The decompressed bytes, or an empty buffer on any I/O or zlib
-   * error.
+   * error, a truncated file included.
    */
   virtual buffer uncompress_from_file(const std::string& path);
 

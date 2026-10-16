@@ -163,13 +163,14 @@ ZlibController::buffer ZlibController::uncompress_from_file(
     out.insert(out.end(), chunk.data(), chunk.data() + read);
   }
 
-  if (read < 0) {
-    gzclose(file);
+  // A file cut short reads just like a shorter one: only the closing call
+  // tells (by the Z_BUF_ERROR) that it ended in the middle of the gzip stream.
+  const int closed = gzclose(file);
+
+  if (read < 0 || closed != Z_OK) {
     LOGE("Failed to read the gzip file: " << path);
     return {};
   }
-
-  gzclose(file);
 
   LOGT("Read " << out.size() << " bytes from the gzip file " << path);
 

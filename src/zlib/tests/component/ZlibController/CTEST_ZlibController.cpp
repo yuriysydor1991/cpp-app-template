@@ -3,6 +3,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <cstdio>
+#include <filesystem>
 #include <string>
 #include <vector>
 
@@ -150,4 +151,15 @@ TEST_F(CTEST_ZlibController, uncompress_from_missing_file_returns_empty)
 {
   EXPECT_TRUE(
       zlib.uncompress_from_file("ctest_zlib_does_not_exist.gz").empty());
+}
+
+TEST_F(CTEST_ZlibController, uncompress_from_truncated_file_returns_empty)
+{
+  const std::string path = "ctest_zlib_truncated.gz";
+
+  ASSERT_TRUE(zlib.compress_to_file(path, pseudo_random(200000)));
+  std::filesystem::resize_file(path, std::filesystem::file_size(path) / 2U);
+
+  EXPECT_TRUE(zlib.uncompress_from_file(path).empty());
+  std::remove(path.c_str());
 }

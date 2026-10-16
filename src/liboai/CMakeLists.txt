@@ -32,3 +32,5 @@ target_link_libraries(
   TemplateProjectOAIControllerObj
   oai::oai
 )
+
+add_subdirectory(tests)

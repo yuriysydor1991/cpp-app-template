@@ -17,3 +17,5 @@ sudo apt install -y qt6-base-dev qt6-base-dev-tools \
   qml6-module-qtquick-shapes qml6-module-qtquick-tooling \
   qml6-module-qtquick-timeline
 ```
+
+Qt6 є обов'язковою для цієї гілки: клас `Application` запускає `Qt6Controller`, тож конфігурування з параметром `-DENABLE_QT6=OFF` завершується помилкою. Для програми без Qt6 скористайтеся гілкою `app`.

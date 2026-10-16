@@ -14,8 +14,7 @@ target_include_directories(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  PRIVATE
-  TemplateProjectDefaultLoggerObj
+  PRIVATE TemplateProjectDefaultLoggerObj
 )
 
 add_subdirectory(real-default-logger)

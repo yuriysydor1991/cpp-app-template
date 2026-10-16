@@ -110,8 +110,7 @@ bool VulkanDmabufRenderer::create_instance()
   const VkResult result = vkCreateInstance(&createInfo, nullptr, &instance);
 
   if (result != VK_SUCCESS) {
-    LOGE("vkCreateInstance failed with the VkResult code: "
-         << static_cast<int>(result));
+    LOGE("vkCreateInstance failed with the VkResult code: " << result);
     instance = VK_NULL_HANDLE;
     return false;
   }
@@ -181,8 +180,7 @@ bool VulkanDmabufRenderer::create_logical_device()
       vkCreateDevice(physicalDevice, &createInfo, nullptr, &device);
 
   if (result != VK_SUCCESS) {
-    LOGE("vkCreateDevice failed with the VkResult code: "
-         << static_cast<int>(result));
+    LOGE("vkCreateDevice failed with the VkResult code: " << result);
     device = VK_NULL_HANDLE;
     return false;
   }
@@ -239,7 +237,7 @@ bool VulkanDmabufRenderer::create_image(std::uint32_t width,
 
   if (result != VK_SUCCESS) {
     LOGE("vkCreateImage (DRM format modifier) failed with the VkResult code: "
-         << static_cast<int>(result));
+         << result);
     image = VK_NULL_HANDLE;
     return false;
   }

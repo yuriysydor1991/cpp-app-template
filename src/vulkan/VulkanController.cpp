@@ -65,8 +65,7 @@ bool VulkanController::init()
   const VkResult result = vkCreateInstance(&createInfo, nullptr, &instance);
 
   if (result != VK_SUCCESS) {
-    LOGE("vkCreateInstance failed with the VkResult code: "
-         << static_cast<int>(result));
+    LOGE("vkCreateInstance failed with the VkResult code: " << result);
     instance = VK_NULL_HANDLE;
     return false;
   }

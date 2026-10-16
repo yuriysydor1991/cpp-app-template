@@ -61,7 +61,7 @@ std::vector<PhysicalDeviceInfo> PhysicalDeviceInfoHandler::fetch_devices(
     throw std::runtime_error(
         "vkEnumeratePhysicalDevices (count query) failed with the VkResult "
         "code: " +
-        std::to_string(static_cast<int>(result)));
+        std::to_string(result));
   }
 
   std::vector<VkPhysicalDevice> handles(count, VK_NULL_HANDLE);
@@ -73,7 +73,7 @@ std::vector<PhysicalDeviceInfo> PhysicalDeviceInfoHandler::fetch_devices(
       throw std::runtime_error(
           "vkEnumeratePhysicalDevices (device query) failed with the VkResult "
           "code: " +
-          std::to_string(static_cast<int>(result)));
+          std::to_string(result));
     }
     // The second call may report fewer devices than the first one did.
     handles.resize(count);

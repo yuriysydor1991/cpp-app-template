@@ -98,6 +98,4 @@ const std::string& GtkmmWindow::get_default_title()
   return default_title;
 }
 
-GtkmmWindowPtr GtkmmWindow::create() { return std::make_shared<GtkmmWindow>(); }
-
 }  // namespace Gtkmm4i::main_window

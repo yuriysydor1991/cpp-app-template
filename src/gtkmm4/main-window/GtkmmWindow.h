@@ -1,7 +1,6 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMM4WINDOW_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMM4WINDOW_CLASS_H
 
-#include <memory>
 #include <string>
 
 #include "src/gtkmm4/gl-area/GLTriangleArea.h"
@@ -17,14 +16,10 @@ namespace Gtkmm4i::main_window
 class GtkmmWindow : public Gtk::Window
 {
  public:
-  using GtkmmWindowPtr = std::shared_ptr<GtkmmWindow>;
-
   virtual ~GtkmmWindow() = default;
   GtkmmWindow();
 
   bool init();
-
-  static GtkmmWindowPtr create();
 
  protected:
   const std::string& get_default_title();
@@ -32,7 +27,6 @@ class GtkmmWindow : public Gtk::Window
  private:
   void prepare_header_label();
   void prepare_random_logo();
-  void prepare_global_resource();
   void prepare_widgets();
   void prepare_css();
   void pack_widgets();
@@ -43,8 +37,6 @@ class GtkmmWindow : public Gtk::Window
       GTKMM_APP_RESOURCES_PREFIX "/resources/css/main-window.css";
   inline static constexpr const char* const header_label_class = "header-label";
 
-  Glib::RefPtr<Gio::Resource> resources{nullptr};
-
   Gtk::Box box;
 
   Gtk::Label headerText;
@@ -53,8 +45,6 @@ class GtkmmWindow : public Gtk::Window
 
   gl_area::GLTriangleArea glArea;
 };
-
-using GtkmmWindowPtr = GtkmmWindow::GtkmmWindowPtr;
 
 }  // namespace Gtkmm4i::main_window
 

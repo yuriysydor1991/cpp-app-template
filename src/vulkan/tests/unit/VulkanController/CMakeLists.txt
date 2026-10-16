@@ -17,7 +17,7 @@ target_include_directories(
   PRIVATE ${VULKAN_MOCKS_ROOT}/IDeviceInfoHandler
   PRIVATE ${GENERAL_MOCKS_ROOT}/vulkan
   PRIVATE ${GENERAL_MOCKS_ROOT}/ApplicationContext
-  PRIVATE ${GENERAL_MOCKS_ROOT}/log
+  PRIVATE ${CMAKE_SOURCE_DIR}/src/app/tests/mocks/log
   PRIVATE ${CMAKE_SOURCE_DIR}
   PRIVATE ${CMAKE_BINARY_DIR}
 )

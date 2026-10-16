@@ -9,7 +9,7 @@ add_executable(
 
 target_include_directories(
   CTEST_PhysicalDeviceInfoHandler
-  PRIVATE ${GENERAL_MOCKS_ROOT}/log
+  PRIVATE ${CMAKE_SOURCE_DIR}/src/app/tests/mocks/log
   PRIVATE ${CMAKE_SOURCE_DIR}
   PRIVATE ${CMAKE_BINARY_DIR}
 )

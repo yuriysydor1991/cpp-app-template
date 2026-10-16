@@ -13,8 +13,11 @@ endif()
 set(TEMPLATE_APP_BOX2D_GIT "https://github.com/erincatto/box2d.git" CACHE STRING "The Box2D library git source repository")
 set(TEMPLATE_APP_BOX2D_GIT_TAG "v3.1.1" CACHE STRING "The Box2D project git repository tag of interest")
 
+# the 2.x system packages (e.g. libbox2d-dev 2.4) ship the old C++ API, so
+# only a 3.x install is taken
 template_project_default_3rdparty_enabler(
   NAME box2d
+  VERSION 3.1
   GIT_REPOSITORY ${TEMPLATE_APP_BOX2D_GIT}
   GIT_TAG ${TEMPLATE_APP_BOX2D_GIT_TAG}
 )

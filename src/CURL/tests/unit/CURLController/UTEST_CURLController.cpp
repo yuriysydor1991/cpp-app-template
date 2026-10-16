@@ -6,6 +6,7 @@
 
 #include "project-global-decls.h"
 #include "src/CURL/CURLController.h"
+#include "src/CURL/HeadersList.h"
 
 using namespace curli;
 using namespace testing;
@@ -117,4 +118,24 @@ TEST_F(UTEST_CURLController, the_response_buffer_stops_at_the_allowed_size)
 
   EXPECT_FALSE(controller->append(allowed.data(), 1U));
   EXPECT_EQ(controller->get().size(), allowed.size());
+}
+
+TEST_F(UTEST_CURLController, the_headers_list_keeps_every_given_header)
+{
+  const HeadersList headers{{"X-First: a value", "X-Second: another value"}};
+
+  ASSERT_TRUE(headers.complete());
+  ASSERT_NE(headers.raw(), nullptr);
+  EXPECT_STREQ(headers.raw()->data, "X-First: a value");
+  ASSERT_NE(headers.raw()->next, nullptr);
+  EXPECT_STREQ(headers.raw()->next->data, "X-Second: another value");
+  EXPECT_EQ(headers.raw()->next->next, nullptr);
+}
+
+TEST_F(UTEST_CURLController, no_headers_give_an_empty_complete_list)
+{
+  const HeadersList headers{{}};
+
+  EXPECT_TRUE(headers.complete());
+  EXPECT_EQ(headers.raw(), nullptr);
 }

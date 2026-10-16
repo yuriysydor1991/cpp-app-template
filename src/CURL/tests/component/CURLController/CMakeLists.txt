@@ -4,6 +4,7 @@ add_executable(
   CTEST_CURLController
   CTEST_CURLController.cpp
   ${CMAKE_SOURCE_DIR}/src/CURL/CURLController.cpp
+  ${CMAKE_SOURCE_DIR}/src/CURL/HeadersList.cpp
 )
 
 target_compile_definitions(

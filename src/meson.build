@@ -54,14 +54,16 @@ endif
 
 if get_option('ENABLE_GPROF')
   gprof_exec = find_program('gprof', required: true)
+  # The profiled binary writes the gmon.out into its working directory, so it
+  # runs from the very directory the gprof reads it back from.
   custom_target(
     'gprof-analyze',
     command: [
       'sh', '-c',
+      'cd ' + meson.current_build_dir() + ' && ' +
       template_project_main_binary.full_path() + ' && ' +
       gprof_exec.full_path() + ' ' + template_project_main_binary.full_path() +
-      ' ' + join_paths(meson.current_build_dir(), 'gmon.out') +
-      ' > ' + join_paths(meson.current_build_dir(), 'gprof-analyze.txt')
+      ' gmon.out > gprof-analyze.txt'
     ],
     depends: [template_project_main_binary],
     output: 'gprof-analyze.txt',

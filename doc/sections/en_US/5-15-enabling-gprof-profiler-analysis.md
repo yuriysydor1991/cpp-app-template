@@ -12,11 +12,10 @@ After configuring project with support for the `gprof` profiling facility build 
 
 ```
 # Inside the source root directory
-# might not work !!!
 
 meson compile -C build gprof-analyze
 ```
 
-Which will execute application and starts the `gprof` profiling analyze tool for `gmon.out` generated file under the project's build directory (for example `build/src/gmon.out`). The resulting analysis may be examined by `gprof-analyze.txt` under the project's build directory.
+Which will execute application inside the `src` directory of the build tree and starts the `gprof` profiling analyze tool for the `gmon.out` file generated there (for example `build/src/gmon.out`). The resulting analysis may be examined in the `gprof-analyze.txt` file next to it (for example `build/src/gprof-analyze.txt`).
 
 Profiling with the `gprof` may be enabled only with `--buildtype=debug`. The Meson submodule `meson/template-project-profiler-gprof/meson.build` will emit a hard error if configured against any other build type.

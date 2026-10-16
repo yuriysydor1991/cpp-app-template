@@ -31,7 +31,15 @@ class Application : public IApplication
   virtual int run(std::shared_ptr<ApplicationContext> ctx) override;
 
  protected:
-  std::shared_ptr<sqlite3i::SQLiteController> create_db_controller(
+  /**
+   * @brief Creates the SQLite database controller. Override it to provide a
+   * customized SQLiteController descendant.
+   *
+   * @param ctx Application's run context.
+   *
+   * @return Returns the new SQLite controller instance.
+   */
+  virtual std::shared_ptr<sqlite3i::SQLiteController> create_db_controller(
       std::shared_ptr<ApplicationContext> ctx);
 };
 

@@ -114,20 +114,21 @@ class ApplicationContext
   /// ApplicationContext::set_first_user_request setter.
   void set_second_user_request(const bool newValue);
 
-  /// @brief MySQL database name.
+  /// @brief The SQLite database file path.
   const std::string& get_db_dbname() const;
 
-  /// @brief Sets the MySQL database name.
+  /// @brief Sets the SQLite database file path.
   void set_db_dbname(const std::string& newValue);
 
-  /// @brief The MySQL connection interface object. Connected in default
+  /// @brief The SQLite connection interface object. Connected in default
   /// Application class implementation.
   const std::shared_ptr<IDBConnection>& get_dbconn() const;
 
-  /// @brief Sets the the MySQL connection interface object. Connected in
+  /// @brief Sets the SQLite connection interface object. Connected in
   /// default Application class implementation.
   void set_dbconn(const std::shared_ptr<IDBConnection>& newValue);
 
+  /// @brief The default SQLite database file name.
   static const std::string default_db_name;
 
  private:
@@ -170,10 +171,10 @@ class ApplicationContext
   /// ApplicationContext::set_second_user_request setter.
   std::atomic_bool msecond_user_request{false};
 
-  /// @brief MySQL database name
+  /// @brief The SQLite database file path.
   std::string mdb_dbname;
 
-  /// @brief The MySQL connection interface object. Connected in default
+  /// @brief The SQLite connection interface object. Connected in default
   /// Application class implementation.
   std::shared_ptr<IDBConnection> mdbconn;
 };

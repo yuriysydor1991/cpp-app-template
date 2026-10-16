@@ -25,4 +25,4 @@ template_project_default_3rdparty_enabler(
 #   - FetchContent source build:                 OpenEXR::OpenEXR
 #     (the FetchContent build pulls its Imath dependency automatically)
 # For example:
-#   target_link_libraries(${PROJECT_BINARY_NAME} OpenEXR::OpenEXR)
+#   target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE OpenEXR::OpenEXR)

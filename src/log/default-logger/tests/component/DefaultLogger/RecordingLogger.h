@@ -21,7 +21,7 @@ class RecordingLogger : public logger::ILogger
   void log(const unsigned short& loglvl, const char* const filePath,
            const int& fileLine, const std::string& msg) override;
 
-  void logfile(const std::string& filepath) override;
+  bool logfile(const std::string& filepath) override;
 
   void print(const bool toPrintValue) override;
 
@@ -29,7 +29,7 @@ class RecordingLogger : public logger::ILogger
 
   const std::string& lvl_repr(const unsigned short& glvl) override;
 
-  void init(const std::string& filepath, const unsigned short& nlvl,
+  bool init(const std::string& filepath, const unsigned short& nlvl,
             const bool toPrintValue) override;
 
   unsigned short lastLvl{0U};

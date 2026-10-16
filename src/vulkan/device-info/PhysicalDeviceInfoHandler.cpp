@@ -75,6 +75,8 @@ std::vector<PhysicalDeviceInfo> PhysicalDeviceInfoHandler::fetch_devices(
           "code: " +
           std::to_string(static_cast<int>(result)));
     }
+    // The second call may report fewer devices than the first one did.
+    handles.resize(count);
   }
 
   std::vector<PhysicalDeviceInfo> devices;

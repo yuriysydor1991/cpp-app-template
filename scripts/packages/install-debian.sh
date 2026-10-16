@@ -12,7 +12,6 @@ PACKAGES=(
     cmake
     g++
     git
-    glade
     googletest
     libglib2.0-dev-bin
     libgmock-dev

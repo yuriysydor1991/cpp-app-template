@@ -17,9 +17,3 @@ The Leaflet maps web view is rendered with WebKitGTK, so its development package
 ```
 sudo apt install -y libwebkitgtk-6.0-dev
 ```
-
-To be able to develop UI in the specialized [Glade](https://en.wikipedia.org/wiki/Glade_Interface_Designer) IDE install it with the command:
-
-```
-sudo apt install -y glade
-```

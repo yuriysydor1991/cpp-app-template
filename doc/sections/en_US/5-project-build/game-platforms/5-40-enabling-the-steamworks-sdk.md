@@ -33,7 +33,7 @@ See the `cmake/enablers/game-platforms/template-project-steamworks-enabler.cmake
 
 ### Running the built binary
 
-The Steam client library is loaded from beside the executable, so the module adds the picked redistributable to the installation next to the project binary and therefore to every generated package as well. A binary run straight from the build tree needs it copied over by hand once:
+The Steam client library is loaded from beside the executable, so the module adds the picked redistributable to the installation next to the project binary and therefore to every generated package as well. On GNU/Linux the module also gives the installed project binary an `$ORIGIN` RPATH, since the dynamic loader there doesn't look into the executable directory on its own. A binary run straight from the build tree needs it copied over by hand once:
 
 ```
 cmake -E copy /path/to/steamworks_sdk/sdk/redistributable_bin/linux64/libsteam_api.so build/src/

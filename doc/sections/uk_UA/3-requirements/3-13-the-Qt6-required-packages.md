@@ -20,3 +20,5 @@ sudo apt install -y qt6-base-dev qt6-base-dev-tools \
 ```
 
 Пакети `qt6-charts-dev` і `qml6-module-qtcharts` надають модуль [QtCharts](https://doc.qt.io/qt-6/qtcharts-index.html), що містить QML-елемент [ChartView](https://doc.qt.io/qt-6/qml-qtcharts-chartview.html), який використовується у цій гілці.
+
+Qt6 є обов'язковою для цієї гілки: клас `Application` запускає `Qt6Controller`, тож конфігурування з параметром `-DENABLE_QT6=OFF` завершується помилкою. Для програми без Qt6 скористайтеся гілкою `app`.

@@ -20,3 +20,5 @@ sudo apt install -y qt6-base-dev qt6-base-dev-tools \
 ```
 
 The `qt6-charts-dev` and `qml6-module-qtcharts` packages provide the [QtCharts](https://doc.qt.io/qt-6/qtcharts-index.html) module that exposes the [ChartView](https://doc.qt.io/qt-6/qml-qtcharts-chartview.html) QML element used by this branch.
+
+The Qt6 is mandatory on this branch: the `Application` class runs the `Qt6Controller`, so configuring with the `-DENABLE_QT6=OFF` stops with an error. Take the `app` branch for an application with no Qt6 in it.

@@ -34,6 +34,8 @@
 1. Libraries
     1. [Enabling the libcurl](/doc/sections/en_US/5-project-build/5-14-enabling-libcurl.md)
     1. [Enabling the nlohmann JSON library](/doc/sections/en_US/5-project-build/5-18-enabling-the-nlohmann-json-library.md)
+1. Security / Cryptography
+    1. [The HTTP client hardening constraints](/doc/sections/en_US/5-project-build/security/5-51-the-HTTP-client-hardening-constraints.md)
 1. Compression
     1. [Enabling the zlib library](/doc/sections/en_US/5-project-build/compression/5-23-enabling-the-zlib-library.md)
     1. [Enabling the liblzma library](/doc/sections/en_US/5-project-build/compression/5-34-enabling-the-liblzma-library.md)

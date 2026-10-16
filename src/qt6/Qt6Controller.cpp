@@ -3,6 +3,7 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QString>
+#include <QTimer>
 
 #include "src/app/applications/IApplication.h"
 #include "src/log/log.h"
@@ -43,6 +44,17 @@ int Qt6Controller::run(std::shared_ptr<app::ApplicationContext> actx)
     LOGE("Fail to initialize the Qt6 QML engine");
     return app::IApplication::INVALID;
   }
+
+  // The OS signals only raise the context stop flag, so the event loop polls
+  // it and is left as soon as the flag is raised.
+  QTimer stopPoller;
+  QObject::connect(&stopPoller, &QTimer::timeout, &app, [&actx]() {
+    if (actx->get_stop()) {
+      LOGI("The stop flag is raised, leaving the Qt event loop");
+      QCoreApplication::quit();
+    }
+  });
+  stopPoller.start(stop_poll_interval_ms);
 
   return app.exec();
 }

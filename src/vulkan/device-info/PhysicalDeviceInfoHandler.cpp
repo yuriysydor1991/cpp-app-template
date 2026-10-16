@@ -48,8 +48,8 @@ bool PhysicalDeviceInfoHandler::handle(VkInstance instance)
   return true;
 }
 
-std::vector<PhysicalDeviceInfoHandler::PhysicalDeviceInfo>
-PhysicalDeviceInfoHandler::fetch_devices(VkInstance instance)
+std::vector<PhysicalDeviceInfo> PhysicalDeviceInfoHandler::fetch_devices(
+    VkInstance instance)
 {
   assert(instance != VK_NULL_HANDLE);
 

@@ -35,9 +35,6 @@ VkInstance fake_instance()
 class TestablePhysicalDeviceInfoHandler : public PhysicalDeviceInfoHandler
 {
  public:
-  // Re-export the protected result type so the test bodies can name it.
-  using PhysicalDeviceInfoHandler::PhysicalDeviceInfo;
-
   std::function<std::vector<PhysicalDeviceInfo>(VkInstance)> onFetchDevices;
 
  protected:
@@ -66,7 +63,7 @@ TEST_F(UTEST_PhysicalDeviceInfoHandler, handle_returns_true_on_successful_fetch)
   handler.onFetchDevices = [&](VkInstance instance) {
     received = instance;
 
-    TestablePhysicalDeviceInfoHandler::PhysicalDeviceInfo device;
+    PhysicalDeviceInfo device;
     device.name = "Unit Test GPU";
     device.type = VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU;
     device.apiVersion = VK_MAKE_VERSION(1, 3, 0);
@@ -74,8 +71,7 @@ TEST_F(UTEST_PhysicalDeviceInfoHandler, handle_returns_true_on_successful_fetch)
     device.vendorID = 0x10DE;
     device.deviceID = 0x1234;
 
-    return std::vector<TestablePhysicalDeviceInfoHandler::PhysicalDeviceInfo>{
-        device};
+    return std::vector<PhysicalDeviceInfo>{device};
   };
 
   EXPECT_TRUE(handler.handle(fake_instance()));
@@ -89,7 +85,7 @@ TEST_F(UTEST_PhysicalDeviceInfoHandler,
 
   handler.onFetchDevices = [&](VkInstance) {
     fetchCalled = true;
-    return std::vector<TestablePhysicalDeviceInfoHandler::PhysicalDeviceInfo>{};
+    return std::vector<PhysicalDeviceInfo>{};
   };
 
   // Zero reported devices is a valid, successful enumeration outcome.
@@ -100,8 +96,7 @@ TEST_F(UTEST_PhysicalDeviceInfoHandler,
 TEST_F(UTEST_PhysicalDeviceInfoHandler,
        handle_returns_false_on_enumeration_error)
 {
-  handler.onFetchDevices = [&](VkInstance)
-      -> std::vector<TestablePhysicalDeviceInfoHandler::PhysicalDeviceInfo> {
+  handler.onFetchDevices = [&](VkInstance) -> std::vector<PhysicalDeviceInfo> {
     throw std::runtime_error("vkEnumeratePhysicalDevices failed");
   };
 
@@ -114,7 +109,7 @@ TEST_F(UTEST_PhysicalDeviceInfoHandler, handle_returns_false_on_null_instance)
 
   handler.onFetchDevices = [&](VkInstance) {
     fetchCalled = true;
-    return std::vector<TestablePhysicalDeviceInfoHandler::PhysicalDeviceInfo>{};
+    return std::vector<PhysicalDeviceInfo>{};
   };
 
   // Asserts are compiled out for the unit tests (NDEBUG), so the explicit

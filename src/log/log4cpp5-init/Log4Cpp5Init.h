@@ -31,7 +31,8 @@ class Log4Cpp5Init
   /**
    * @brief (Re)initializes the log4cpp root category: the appenders of any
    * previous call are replaced, so the log storage and output follow the last
-   * call only.
+   * call only. If the log file can't be opened a warning is printed into the
+   * stderr and the messages go into the stdout only.
    *
    * @param filepath The file path or name for the new log file to create or to
    * append new log messages. Defaults to Log4Cpp5Init::default_log_name.
@@ -50,7 +51,12 @@ class Log4Cpp5Init
       const unsigned short& prjsev);
 
  private:
-  static void add_file_appender(log4cpp::Category& root,
+  /**
+   * @brief Adds the file appender to the given category.
+   *
+   * @return Returns false if the log file can't be opened.
+   */
+  static bool add_file_appender(log4cpp::Category& root,
                                 const std::string& filepath);
 
   static void add_console_appender(log4cpp::Category& root);

@@ -1,5 +1,7 @@
 #include "src/log/log4cpp5-init/Log4Cpp5Init.h"
 
+#include <fcntl.h>
+
 #include <array>
 #include <filesystem>
 #include <iostream>
@@ -18,22 +20,37 @@ void Log4Cpp5Init::init(const std::string& filepath, const unsigned short& nlvl,
   root.removeAllAppenders();
   root.setPriority(get_log4cpp_priority(nlvl));
 
-  add_file_appender(root, filepath);
+  if (!add_file_appender(root, filepath)) {
+    std::cerr << "Fail to open the log file at " << filepath
+              << ", logging into the stdout only" << std::endl;
 
-  if (toPrintValue) {
+    add_console_appender(root);
+  } else if (toPrintValue) {
     add_console_appender(root);
   }
 }
 
-void Log4Cpp5Init::add_file_appender(log4cpp::Category& root,
+bool Log4Cpp5Init::add_file_appender(log4cpp::Category& root,
                                      const std::string& filepath)
 {
-  auto* fileAppender = new log4cpp::FileAppender("file", filepath);
+  static constexpr mode_t file_mode = 00644;
+
+  const int fd =
+      ::open(filepath.c_str(), O_CREAT | O_APPEND | O_WRONLY, file_mode);
+
+  if (fd < 0) {
+    return false;
+  }
+
+  // the appender takes over the descriptor and closes it on its own
+  auto* fileAppender = new log4cpp::FileAppender("file", fd);
   auto* layout = new log4cpp::PatternLayout();
   layout->setConversionPattern(default_conversation_pattern);
   fileAppender->setLayout(layout);
 
   root.addAppender(fileAppender);
+
+  return true;
 }
 
 void Log4Cpp5Init::add_console_appender(log4cpp::Category& root)

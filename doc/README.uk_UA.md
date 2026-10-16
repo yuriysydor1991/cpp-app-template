@@ -193,7 +193,7 @@
     1. [Зміна назви проекту і головного виконуваного файлу](/doc/sections/uk_UA/4-project-structure/4-2-changing-the-project-and-executable-name.md)
     1. [Впровадження нових параметрів командного рядка](/doc/sections/uk_UA/4-project-structure/4-6-introduction-of-the-custom-command-line-parameters.md)
     1. [Реалізація власних нащадків IApplication](/doc/sections/uk_UA/4-project-structure/4-7-implementing-your-onw-IApplication-descendants.md)
-    1. [Реалізація власних нащадків ILib](/doc/sections/uk_UA/4-project-structure/4-8-implement-your-own-ILib-descendants.md)
+    1. [Реалізація власних нащадків ILib](/doc/sections/uk_UA/4-project-structure/4-10-implement-your-own-ILib-descendants.md)
     1. [Обробка сигналів операційної системи](/doc/sections/uk_UA/4-project-structure/4-8-handling-the-OS-signals.md)
     1. [Версіювання і інші параметри проекту](/doc/sections/uk_UA/4-project-structure/4-3-version-tracking-and-other-project-parameters.md)
     1. [Мінімально можливі версії](/doc/sections/uk_UA/4-project-structure/4-6-minimal-possible-versions.md)
@@ -209,7 +209,7 @@
         1. [Запобігання використання GTest з ОС](/doc/sections/uk_UA/5-project-build/testing/5-3-2-disabling-system-GTest-probe.md)
     1. [Побудова документації](/doc/sections/uk_UA/5-project-build/documentation/5-4-documentation-build.md)
     1. [Вмикання підтримки встановлення документації](/doc/sections/uk_UA/5-project-build/documentation/5-5-configuring-the-documentation-install-support.md)
-    1. [Налаштування складових імені встановлюваної бібліотеки](/doc/sections/uk_UA/5-project-build/compression/5-23-customizing-library-name-segments.md)
+    1. [Налаштування складових імені встановлюваної бібліотеки](/doc/sections/uk_UA/5-project-build/5-41-customizing-library-name-segments.md)
     1. [Встановлення файлів розробки бібліотеки](/doc/sections/uk_UA/5-project-build/5-37-installing-the-library-development-files.md)
     1. Якість коду та санітайзери
         1. [Вмикання підтримки форматування коду](/doc/sections/uk_UA/5-project-build/code-quality/5-6-enabling-and-performing-code-formatting-target.md)

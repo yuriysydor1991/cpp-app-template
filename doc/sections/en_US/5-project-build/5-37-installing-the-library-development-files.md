@@ -72,4 +72,4 @@ without reconfiguring anything else.
 
 The option is declared in [cmake/template-project-misc-variables-declare.cmake](/cmake/template-project-misc-variables-declare.cmake) and consumed by [src/lib/CMakeLists.txt](/src/lib/CMakeLists.txt) and [src/lib/facade/CMakeLists.txt](/src/lib/facade/CMakeLists.txt).
 
-See also the [Customizing the installable library name segments](/doc/sections/en_US/5-project-build/compression/5-23-customizing-library-name-segments.md) section, which decides the `<NAME>` used by every artefact listed above.
+See also the [Customizing the installable library name segments](/doc/sections/en_US/5-project-build/5-41-customizing-library-name-segments.md) section, which decides the `<NAME>` used by every artefact listed above.

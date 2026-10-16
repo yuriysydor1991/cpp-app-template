@@ -13,7 +13,7 @@ The [src/lib/facade/public](/src/lib/facade/public) directory holds the whole in
 
 The first four are in the `CppAppTemplate012` namespace; the logging interface deliberately is not - see below.
 
-Introduce new classes and/or methods to share more functionality amongst any project of interest. The contents of the directory are installed under the `include/CppAppTemplate-0.12` sub-directory - the installable library name, see [Customizing the installable library name segments](/doc/sections/en_US/5-project-build/compression/5-23-customizing-library-name-segments.md) - with respect of the specified prefixed root install directory.
+Introduce new classes and/or methods to share more functionality amongst any project of interest. The contents of the directory are installed under the `include/CppAppTemplate-0.12` sub-directory - the installable library name, see [Customizing the installable library name segments](/doc/sections/en_US/5-project-build/5-41-customizing-library-name-segments.md) - with respect of the specified prefixed root install directory.
 
 ### The logging interface
 

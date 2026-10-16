@@ -1,25 +1,15 @@
 #include "src/gtkmm4/main-window/GtkmmWindow.h"
 
 #include "project-global-decls.h"
-#include "src/log/log.h"
 
 namespace Gtkmm4i::main_window
 {
 
 GtkmmWindow::GtkmmWindow()
 {
-  if (!init()) {
-    LOGE("Fail to init");
-  }
-}
-
-bool GtkmmWindow::init()
-{
   prepare_window();
 
   set_child(map);
-
-  return true;
 }
 
 void GtkmmWindow::prepare_window()

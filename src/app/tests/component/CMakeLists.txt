@@ -24,12 +24,14 @@ add_executable(
   ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/StopSignalsHandler.cpp
   ${CMAKE_SOURCE_DIR}/src/gettext/CatalogsLocator.cpp
   ${CMAKE_SOURCE_DIR}/src/gettext/GettextController.cpp
+  ${CMAKE_SOURCE_DIR}/src/log/default-logger/DefaultLogger.cpp
+  ${CMAKE_SOURCE_DIR}/src/log/default-logger/real-default-logger/RealDefaultLogger.cpp
 )
 
+# The real logger, so the log file effects of the command line are covered too.
 target_include_directories(
   CTEST_app
   PRIVATE
-    ${APP_MOCKS_ROOT}/log
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
 )

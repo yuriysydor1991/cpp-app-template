@@ -16,7 +16,7 @@ And to perform the actual static code analysis by itself build any target of int
 cmake --build build --target all
 ```
 
-For more information about the `clang-tidy` examine the `cmake/template-project-clang-tidy-target.cmake`, `misc/.clang-tidy` files
+For more information about the `clang-tidy` examine the `cmake/enablers/template-project-clang-tidy-target.cmake`, `misc/.clang-tidy` files
 and the `clang-tidy` application documentation of a used version.
 
 **Warning!** The `clang-tidy` static code analysis may dramatically increase the code compilation time.

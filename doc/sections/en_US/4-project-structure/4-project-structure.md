@@ -10,4 +10,4 @@
 1. [Minimal possible versions](/doc/sections/en_US/4-project-structure/4-6-minimal-possible-versions.md)
 1. [Project tests](/doc/sections/en_US/4-project-structure/4-4-project-tests.md)
     1. [Google Test](/doc/sections/en_US/4-project-structure/4-4-1-google-test.md)
-1. [Extensions](/doc/sections/en_US/4-project-structure/4-5-extensions.md)
+1. [Extensions](/doc/sections/en_US/4-project-structure/4-5-extensions.md)1. [WinUI 3 + C++/WinRT integration](/doc/sections/en_US/4-project-structure/4-9-winui3-cppwinrt-integration.md)

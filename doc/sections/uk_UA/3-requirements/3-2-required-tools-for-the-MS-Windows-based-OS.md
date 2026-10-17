@@ -6,5 +6,5 @@
 - Система вірсіювання Git за адресою [https://git-scm.com/downloads/win](https://git-scm.com/downloads/win)
 - Система побудови CMake за адресою [https://cmake.org/download/](https://cmake.org/download/)
 - Пакунки Windows 10 SDK за адресою [https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/](https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/)
-- Windows App SDK (WinUI 3) - відновлюється під час конфігурування CMake як NuGet-пакет `Microsoft.WindowsAppSDK` (разом із пакетами C++/WinRT і WebView2); див. розділ [Інтеграція WinUI 3 + C++/WinRT](/doc/sections/uk_UA/4-project-structure/4-8-winui3-cppwinrt-integration.md)
+- Windows App SDK (WinUI 3) - відновлюється під час конфігурування CMake як NuGet-пакет `Microsoft.WindowsAppSDK` (разом із пакетами C++/WinRT і WebView2); див. розділ [Інтеграція WinUI 3 + C++/WinRT](/doc/sections/uk_UA/4-project-structure/4-9-winui3-cppwinrt-integration.md)
 - NuGet CLI за адресою [https://www.nuget.org/downloads](https://www.nuget.org/downloads) - використовується для відновлення пакетів Windows App SDK, C++/WinRT і WebView2

@@ -80,3 +80,7 @@ The `--rebuild` flag of both scripts sets the `JENKINS_PIPELINE_FORCE_REBUILD` C
 
 scripts/docker/jenkins-run.sh --rebuild
 ```
+
+### Packager tools of the container
+
+The [misc/Dockerfiles/Dockerfile.Jenkins.pipeline.in](/misc/Dockerfiles/Dockerfile.Jenkins.pipeline.in) image carries the tools of the optional packager stages of the [misc/Jenkinsfile](/misc/Jenkinsfile) which its Debian base distributes: `rpm` for the `RUN_RPM_PACKAGER` stage (the `RUN_DEB_PACKAGER` one needs nothing beyond CMake) and `doxygen` with `graphviz` for the documentation build. The `RUN_FREEBSD_PACKAGER` and the `RUN_WIX_PACKAGER` stages are FreeBSD and MS Windows only.

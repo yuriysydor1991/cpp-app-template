@@ -79,3 +79,7 @@ scripts/docker/jenkins-run.sh -DJENKINS_PIPELINES_PANEL_HTTP_PORT=9090
 
 scripts/docker/jenkins-run.sh --rebuild
 ```
+
+### Інструменти пакувальників контейнера
+
+Образ [misc/Dockerfiles/Dockerfile.Jenkins.pipeline.in](/misc/Dockerfiles/Dockerfile.Jenkins.pipeline.in) містить інструменти необов'язкових стадій пакувальників [misc/Jenkinsfile](/misc/Jenkinsfile), які постачає його базовий дистрибутив Debian: `rpm` для стадії `RUN_RPM_PACKAGER` (стадії `RUN_DEB_PACKAGER` не потрібно нічого, окрім CMake) та `doxygen` разом з `graphviz` для побудови документації. Стадії `RUN_FREEBSD_PACKAGER` та `RUN_WIX_PACKAGER` призначені лише для FreeBSD та MS Windows відповідно.

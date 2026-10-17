@@ -97,17 +97,17 @@ pipeline {
       parallel {
         stage('UTEST_LibraryFacade') {
           steps {
-            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_LibraryFacade --suite UTEST_LibraryFacade'
+            sh 'meson test -C $BUILDDIR --list --suite UTEST_LibraryFacade | grep -q "^UTEST_LibraryFacade - " && meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_LibraryFacade --suite UTEST_LibraryFacade'
           }
         }
         stage('UTEST_LibFactory') {
           steps {
-            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_LibFactory --suite UTEST_LibFactory'
+            sh 'meson test -C $BUILDDIR --list --suite UTEST_LibFactory | grep -q "^UTEST_LibFactory - " && meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_LibFactory --suite UTEST_LibFactory'
           }
         }
         stage('UTEST_LibMain') {
           steps {
-            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_LibMain --suite UTEST_LibMain'
+            sh 'meson test -C $BUILDDIR --list --suite UTEST_LibMain | grep -q "^UTEST_LibMain - " && meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_LibMain --suite UTEST_LibMain'
           }
         }
       }
@@ -118,12 +118,12 @@ pipeline {
       parallel {
         stage('CTEST_DefaultLogger') {
           steps {
-            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase CTEST_DefaultLogger --suite CTEST_DefaultLogger'
+            sh 'meson test -C $BUILDDIR --list --suite CTEST_DefaultLogger | grep -q "^CTEST_DefaultLogger - " && meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase CTEST_DefaultLogger --suite CTEST_DefaultLogger'
           }
         }
         stage('CTEST_LibraryRealLogger') {
           steps {
-            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase CTEST_LibraryRealLogger --suite CTEST_LibraryRealLogger'
+            sh 'meson test -C $BUILDDIR --list --suite CTEST_LibraryRealLogger | grep -q "^CTEST_LibraryRealLogger - " && meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase CTEST_LibraryRealLogger --suite CTEST_LibraryRealLogger'
           }
         }
       }

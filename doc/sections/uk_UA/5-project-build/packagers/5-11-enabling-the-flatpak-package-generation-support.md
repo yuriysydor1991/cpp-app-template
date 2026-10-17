@@ -28,5 +28,5 @@ cmake --build . --target flatpak
 flatpak install --user CppAppTemplate-0.12.0-x86_64.flatpak
 
 # для запуску встановленої програми
-flatpak run flatpak run ua.org.kytok.template.matplotplusplus.CppAppTemplate
+flatpak run ua.org.kytok.template.matplotplusplus.CppAppTemplate
 ```

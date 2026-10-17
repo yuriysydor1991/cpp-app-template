@@ -83,29 +83,6 @@ class UTEST_CommandLineParser : public Test
   std::vector<std::string> storage;
   std::vector<char*> pointers;
 
-  /// @brief Makes the given parameters the command line ones, which follow the
-  /// binary name.
-  void set_args(const std::vector<std::string>& params)
-  {
-    static std::vector<std::string> storage;
-    static std::vector<char*> pointers;
-
-    storage = params;
-    storage.insert(storage.begin(), "binaryName");
-
-    pointers.clear();
-
-    // False positive: the char* of the argv needs the non const data().
-    // cppcheck-suppress constParameterReference
-    const auto toArg = [](std::string& param) { return param.data(); };
-
-    std::transform(storage.begin(), storage.end(), std::back_inserter(pointers),
-                   toArg);
-
-    argc = static_cast<int>(pointers.size());
-    argv = pointers.data();
-  }
-
   int argc{0};
   char** argv{nullptr};
 
@@ -248,7 +225,7 @@ TEST_F(UTEST_CommandLineParser, unknown_flag)
 
 TEST_F(UTEST_CommandLineParser, log_file_short)
 {
-  set_args({"-l", "custom.log"});
+  args({"-l", "custom.log"});
 
   EXPECT_CALL(*appctx, push_error(_)).Times(0);
 
@@ -262,7 +239,7 @@ TEST_F(UTEST_CommandLineParser, log_file_short)
 
 TEST_F(UTEST_CommandLineParser, log_file_long)
 {
-  set_args({"--log-file", "custom.log"});
+  args({"--log-file", "custom.log"});
 
   EXPECT_CALL(*appctx, push_error(_)).Times(0);
 
@@ -276,7 +253,7 @@ TEST_F(UTEST_CommandLineParser, log_file_long)
 
 TEST_F(UTEST_CommandLineParser, log_file_value_is_skipped)
 {
-  set_args({"--log-file", "custom.log", "--version"});
+  args({"--log-file", "custom.log", "--version"});
 
   EXPECT_CALL(*appctx, push_error(_)).Times(0);
 
@@ -292,7 +269,7 @@ TEST_F(UTEST_CommandLineParser, log_file_missing_value)
   static const std::string expectedError =
       "Parameter --log-file requires the data next to it.";
 
-  set_args({"--log-file"});
+  args({"--log-file"});
 
   EXPECT_CALL(*appctx, push_error(expectedError)).Times(1);
 

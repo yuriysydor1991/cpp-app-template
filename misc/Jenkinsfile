@@ -131,22 +131,22 @@ pipeline {
         }
         stage('UTEST_EventQuitHandler') { 
           steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_EventQuitHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_EventQuitHandler.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_EventQuitHandler\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_EventQuitHandler.junit.xml'
           }
         }
         stage('UTEST_EventsHandlersFactory') { 
           steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_EventsHandlersFactory\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_EventsHandlersFactory.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_EventsHandlersFactory\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_EventsHandlersFactory.junit.xml'
           }
         }
         stage('UTEST_SDLContext') { 
           steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_SDLContext\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_SDLContext.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_SDLContext\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_SDLContext.junit.xml'
           }
         }
         stage('UTEST_EventWindowResizedHandler') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_EventWindowResizedHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_EventWindowResizedHandler.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_EventWindowResizedHandler\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_EventWindowResizedHandler.junit.xml'
           }
         }
         stage('UTEST_SignalsHandler') { 
@@ -212,12 +212,12 @@ pipeline {
         }
         stage('CTEST_eventer') { 
           steps { 
-            sh 'cd $BUILDDIR && ctest -R "CTEST_eventer\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_eventer.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_eventer\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_eventer.junit.xml'
           }
         }
         stage('CTEST_controller') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_controller\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_controller.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_controller\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_controller.junit.xml'
           }
         }
       }

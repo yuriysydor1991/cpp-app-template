@@ -22,7 +22,7 @@ The native UI is set up by the CMake enabler `cmake/enablers/template-project-Wi
 
 On Windows the enabler restores the Windows App SDK, C++/WinRT and WebView2 NuGet packages (the NuGet CLI is required), generates the C++/WinRT projection headers (`winrt/*.h`) of the Windows SDK, Windows App SDK and WebView2 metadata with the restored `cppwinrt.exe` (again only when the package versions change) and exposes the `winui3::sdk` target (C++20, `/bigobj`) the native UI links against; the Windows SDK must be present (Visual Studio 2022 with the *Desktop development with C++* workload). On every other host the enabler is a no-op and the stub launch seam is built instead, so the portable code keeps building and testing.
 
-> WinUI 3 with CMake is not the Microsoft default (Visual Studio drives WinUI 3 through MSBuild/.vcxproj). The CMake setup here is a starting point: the portable orchestration, the launch seam, the tests and the WIX packaging are wired up; finish the Windows App SDK / `cppwinrt` projection wiring on a Windows host to produce the native window.
+> WinUI 3 with CMake is not the Microsoft default (Visual Studio drives WinUI 3 through MSBuild/.vcxproj). The executable here is an unpackaged, code-only (no XAML markup compiler) WinUI 3 application: `run_winui_application()` bootstraps the Windows App SDK runtime with `MddBootstrapInitialize2()` (the Windows App SDK runtime of the same major.minor version must be installed on the machine, otherwise the bootstrapper offers its download), and the build copies `Microsoft.WindowsAppRuntime.Bootstrap.dll` next to the executable and installs it along with it.
 
 ### Tests
 

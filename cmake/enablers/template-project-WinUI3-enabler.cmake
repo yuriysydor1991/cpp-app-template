@@ -161,11 +161,19 @@ target_include_directories(
 )
 
 # WindowsApp.lib provides the base WinRT activation; the Windows App SDK runtime
-# bootstrapper lib lets an unpackaged executable load the WinUI 3 runtime.
+# bootstrapper lib (and its DLL deployed next to the executable) lets an
+# unpackaged executable load the WinUI 3 runtime.
 target_link_libraries(
   winui3-sdk INTERFACE
   WindowsApp.lib
   "${WINAPPSDK_ROOT}/lib/win10-${WINUI3_ARCH}/Microsoft.WindowsAppRuntime.Bootstrap.lib"
 )
+
+set(
+  WINUI3_BOOTSTRAP_DLL
+  "${WINAPPSDK_ROOT}/runtimes/win-${WINUI3_ARCH}/native/Microsoft.WindowsAppRuntime.Bootstrap.dll"
+)
+
+target_compile_definitions(winui3-sdk INTERFACE NOMINMAX)
 
 message(STATUS "WinUI 3 SDK target 'winui3::sdk' configured (Windows App SDK ${TEMPLATE_APP_WINAPPSDK_VERSION}, C++/WinRT ${TEMPLATE_APP_CPPWINRT_VERSION}, ${WINUI3_ARCH})")

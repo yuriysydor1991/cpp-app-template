@@ -22,7 +22,7 @@
 
 На Windows модуль відновлює NuGet-пакети Windows App SDK, C++/WinRT і WebView2 (потрібен NuGet CLI), генерує відновленим `cppwinrt.exe` заголовки проєкції C++/WinRT (`winrt/*.h`) з метаданих Windows SDK, Windows App SDK і WebView2 (повторно лише після зміни версій пакетів) і надає ціль `winui3::sdk` (C++20, `/bigobj`), з якою лінкується нативний UI; Windows SDK має бути присутній (Visual Studio 2022 з робочим навантаженням *Desktop development with C++*). На будь-якому іншому хості модуль нічого не робить, і замість нього збирається шов-заглушка, тож платформонезалежний код продовжує збиратися й тестуватися.
 
-> WinUI 3 з CMake - це не типовий шлях від Microsoft (Visual Studio керує WinUI 3 через MSBuild/.vcxproj). Налаштування CMake тут - це відправна точка: оркестрація, шов запуску, тести і пакування WIX уже з'єднані; доведи з'єднання Windows App SDK / проєкції `cppwinrt` на хості Windows, щоб отримати нативне вікно.
+> WinUI 3 з CMake - це не типовий шлях від Microsoft (Visual Studio керує WinUI 3 через MSBuild/.vcxproj). Виконуваний файл тут - це непакована (unpackaged) програма WinUI 3 лише з коду (без компілятора розмітки XAML): `run_winui_application()` ініціалізує середовище виконання Windows App SDK викликом `MddBootstrapInitialize2()` (на машині має бути встановлене середовище виконання Windows App SDK тієї ж версії major.minor, інакше завантажувач запропонує його завантажити), а збирання копіює `Microsoft.WindowsAppRuntime.Bootstrap.dll` поруч із виконуваним файлом і встановлює його разом із ним.
 
 ### Тести
 

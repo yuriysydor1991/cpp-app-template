@@ -26,6 +26,6 @@ template_project_default_3rdparty_enabler(
 # For example:
 #   target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE LibLZMA::LibLZMA)
 #
-# See doc/sections/en_US/5-34-enabling-the-liblzma-library.md (and the uk_UA
+# See doc/sections/en_US/5-project-build/compression/5-34-enabling-the-liblzma-library.md (and the uk_UA
 # copy) for copy-paste C++ usage examples: one-shot in-memory .xz compression
 # and decompression and streaming compression via lzma_stream.

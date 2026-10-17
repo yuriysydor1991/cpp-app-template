@@ -32,32 +32,45 @@ bool ASignalsHandler::install(std::shared_ptr<ApplicationContext> ctx)
 
   store_context(ctx.get());
 
+  bool anyCovered{false};
+
   for (const int signalNumber : get_handled_signals()) {
-    if (std::signal(signalNumber, signalDisposition) == SIG_ERR) {
+    const SignalDisposition previous =
+        std::signal(signalNumber, signalDisposition);
+
+    if (previous == SIG_ERR) {
       LOGE("Fail to handle the signal " << signalNumber);
       continue;
     }
 
-    minstalled_signals.emplace(signalNumber);
+    anyCovered = true;
+
+    // An inherited ignored signal (nohup, the background jobs) stays ignored.
+    if (previous == SIG_IGN && signalDisposition != SIG_IGN) {
+      std::signal(signalNumber, SIG_IGN);
+      continue;
+    }
+
+    mprevious_dispositions.emplace(signalNumber, previous);
   }
 
-  if (minstalled_signals.empty()) {
+  if (!anyCovered) {
     store_context(nullptr);
     return false;
   }
 
-  LOGD("Handling " << minstalled_signals.size() << " OS signals");
+  LOGD("Handling " << mprevious_dispositions.size() << " OS signals");
 
   return true;
 }
 
 void ASignalsHandler::uninstall()
 {
-  for (const int signalNumber : minstalled_signals) {
-    std::signal(signalNumber, SIG_DFL);
+  for (const auto& [signalNumber, previous] : mprevious_dispositions) {
+    std::signal(signalNumber, previous);
   }
 
-  minstalled_signals.clear();
+  mprevious_dispositions.clear();
 
   store_context(nullptr);
 }

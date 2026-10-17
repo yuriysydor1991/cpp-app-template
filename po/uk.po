@@ -54,6 +54,14 @@ msgstr "надрукувати поточне довідкове повідом�
 msgid "print application version, build git commit and configure date"
 msgstr "надрукувати версію програми, git-коміт збірки та дату конфігурування"
 
+#: src/app/applications/ApplicationHelpPrinter.cpp
+msgid "<path>"
+msgstr "<шлях>"
+
+#: src/app/applications/ApplicationHelpPrinter.cpp
+msgid "append the log messages to the given file instead of the default one"
+msgstr "дописувати повідомлення журналу до вказаного файлу замість типового"
+
 #: src/app/applications/ApplicationVersionPrinter.cpp
 msgid "version"
 msgstr "версія"

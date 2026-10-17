@@ -1,6 +1,8 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include <string>
+
 #include "src/app/applications/ApplicationHelpPrinter.h"
 
 using namespace app;
@@ -38,4 +40,30 @@ TEST_F(UTEST_ApplicationHelpPrinter, normal_exit)
   EXPECT_FALSE(appCtx->get_print_help_and_exit());
   EXPECT_FALSE(appCtx->get_print_version_and_exit());
   EXPECT_FALSE(appCtx->get_stop());
+}
+
+TEST_F(UTEST_ApplicationHelpPrinter, the_command_line_errors_fail_the_run)
+{
+  static const std::string error = "Unknown parameter: --bogus";
+
+  appCtx->push_error(error);
+
+  testing::internal::CaptureStderr();
+
+  EXPECT_NE(app->run(appCtx), 0);
+
+  EXPECT_THAT(testing::internal::GetCapturedStderr(), HasSubstr(error));
+  EXPECT_FALSE(appCtx->get_stop());
+}
+
+TEST_F(UTEST_ApplicationHelpPrinter, the_log_file_option_is_listed)
+{
+  testing::internal::CaptureStdout();
+
+  EXPECT_EQ(app->run(appCtx), 0);
+
+  const std::string help = testing::internal::GetCapturedStdout();
+
+  EXPECT_THAT(help, HasSubstr("--log-file"));
+  EXPECT_THAT(help, HasSubstr("-l"));
 }

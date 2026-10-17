@@ -70,11 +70,12 @@ the real application ones. The `create_header_bar`, `create_content`,
 methods are all virtual, so a descendant class may replace any single part
 without touching the window assembly itself.
 
-The GResource bundle and the additional stylesheet stay exactly the same as on
-the plain `appGtkmm4` branch - see the [Resource embedding](/doc/sections/en_US/4-project-structure/4-6-gtkmm4-resource-embedding.md)
-section. The libadwaita stylesheet is applied first and the bundled
-`main-window.css` on top of it, with the `GTK_STYLE_PROVIDER_PRIORITY_APPLICATION`
-priority.
+The GResource bundle works exactly the same way as on the plain `appGtkmm4`
+branch - see the [Resource embedding](/doc/sections/en_US/4-project-structure/4-6-gtkmm4-resource-embedding.md)
+section. It carries the logo alone, because the window is styled by the
+libadwaita stylesheet only. An additional stylesheet registered in the bundle
+may be applied on top of it with a `Gtk::CssProvider` and the
+`GTK_STYLE_PROVIDER_PRIORITY_APPLICATION` priority.
 
 ### Requirements and the build option
 

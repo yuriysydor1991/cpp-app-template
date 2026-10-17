@@ -56,12 +56,9 @@ TEST_F(CTEST_AdwaitaWindow, default_description_is_present)
 TEST_F(CTEST_AdwaitaWindow, resource_paths_live_under_the_resources_prefix)
 {
   const std::string logo{AdwaitaWindow::logo_res_path};
-  const std::string css{AdwaitaWindow::main_css_res_path};
 
   EXPECT_THAT(logo, StartsWith(GTKMM_APP_RESOURCES_PREFIX));
-  EXPECT_THAT(css, StartsWith(GTKMM_APP_RESOURCES_PREFIX));
   EXPECT_THAT(logo, EndsWith(".png"));
-  EXPECT_THAT(css, EndsWith(".css"));
 }
 
 TEST_F(CTEST_AdwaitaWindow, the_heading_is_styled_as_the_libadwaita_h1)

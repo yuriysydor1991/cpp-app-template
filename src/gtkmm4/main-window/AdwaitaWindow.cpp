@@ -45,8 +45,6 @@ Gtk::Window* AdwaitaWindow::build(const Glib::RefPtr<Gtk::Application>& app)
 
   adw_application_window_set_content(window, toolbarView);
 
-  prepare_css();
-
   gtk_window_present(gtkWindow);
 
   LOGD("The libadwaita application window is presented");
@@ -136,29 +134,6 @@ GtkWidget* AdwaitaWindow::create_logo_picture()
   gtk_widget_set_hexpand(logo, TRUE);
 
   return logo;
-}
-
-void AdwaitaWindow::prepare_css()
-{
-  auto css_provider = Gtk::CssProvider::create();
-
-  try {
-    css_provider->load_from_resource(main_css_res_path);
-  }
-  catch (const Glib::Error& ex) {
-    LOGE("Failed to load CSS: " << ex.what());
-    return;
-  }
-
-  auto display = Gdk::Display::get_default();
-
-  if (!display) {
-    LOGE("No default display to apply the stylesheet on");
-    return;
-  }
-
-  Gtk::StyleContext::add_provider_for_display(
-      display, css_provider, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 }
 
 const std::string& AdwaitaWindow::get_default_title()

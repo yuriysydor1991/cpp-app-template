@@ -77,10 +77,6 @@ class AdwaitaWindow
   inline static constexpr const char* const logo_res_path =
       GTKMM_APP_RESOURCES_PREFIX "/resources/images/kytok.org.ua-logo.png";
 
-  /// @brief The GResource path of the additional window stylesheet.
-  inline static constexpr const char* const main_css_res_path =
-      GTKMM_APP_RESOURCES_PREFIX "/resources/css/main-window.css";
-
   /**
    * @brief The libadwaita typography style class of the window heading.
    *
@@ -156,12 +152,6 @@ class AdwaitaWindow
    * @return Returns the created picture widget.
    */
   virtual GtkWidget* create_logo_picture();
-
-  /**
-   * @brief Loads the additional window stylesheet from the GResource bundle
-   * and applies it on top of the libadwaita one.
-   */
-  virtual void prepare_css();
 
  private:
   AdwApplicationWindow* window{nullptr};

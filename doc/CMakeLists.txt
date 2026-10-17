@@ -67,8 +67,14 @@ configure_file(
   ${DOXYGEN_OUT}
 )
 
+# The documentation install needs the generated HTML directory, so the
+# documentation becomes a part of the default build once its install is asked.
+if(DOXYGEN_DO_INSTALL)
+  set(DOXYGEN_DOC_IN_ALL ALL)
+endif()
+
 add_custom_target(
-  Doxygen-doc
+  Doxygen-doc ${DOXYGEN_DOC_IN_ALL}
   COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
   WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
   COMMENT "Generating project documentation with Doxygen"
@@ -80,7 +86,7 @@ if(DOXYGEN_DO_INSTALL)
 
   install(
     DIRECTORY ${DOXYGEN_OUT_HTML}
-    DESTINATION share/docs
+    DESTINATION ${CMAKE_INSTALL_DOCDIR}
     COMPONENT Documentation
   )
 endif()

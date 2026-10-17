@@ -43,7 +43,9 @@ target_link_libraries(V8::V8 INTERFACE ${V8_LIBRARY} Threads::Threads ${CMAKE_DL
 
 # The V8 headers since the 13.x (e.g. the libnode-dev of the Node.js 24) demand
 # the C++20, so the targets linking the V8::V8 are raised above the project
-# C++ standard while the rest of the project keeps it.
+# C++ standard: the V8 controller object library and the executable, whose own
+# sources (src/app, main.cpp) include the V8 headers through the
+# V8Controller.h. The other object libraries (the logger ones) keep the C++17.
 target_compile_features(V8::V8 INTERFACE cxx_std_20)
 
 # The V8 is built without the RTTI, so the vptr sanitizer of the sanitizers

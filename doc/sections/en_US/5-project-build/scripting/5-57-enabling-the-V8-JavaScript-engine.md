@@ -45,7 +45,7 @@ cmake -S . -B build \
 
 The V8 is built without the RTTI, so the enabler turns the `vptr` check of the [sanitizers](/doc/sections/en_US/5-project-build/code-quality/5-13-enabling-sanitizers.md) off for the targets linking the `V8::V8` one.
 
-The V8 headers since the 13.x version (e.g. the `libnode-dev` of the Node.js 24) demand the C++20, so the enabler raises the targets linking the `V8::V8` one to the C++20 while the rest of the project keeps it's C++17.
+The V8 headers since the 13.x version (e.g. the `libnode-dev` of the Node.js 24) demand the C++20, so the enabler raises the targets linking the `V8::V8` one to the C++20: the V8 controller object library and the executable, whose own sources (the `src/app` ones and the `main.cpp`) include the V8 headers through the `V8Controller.h` file, are compiled as the C++20, while the other object libraries (the logger ones) keep the project's C++17.
 
 ### The components
 

@@ -9,6 +9,8 @@ cmake -S . -B build -DENABLE_GETTEXT=ON
 cmake --build build --target all
 ```
 
+The application of this branch is built around the gettext, so the option is a hard requirement here: the CMake configure step fails with an explanatory message when the option is turned `OFF`.
+
 The [cmake/enablers/i18n/template-project-gettext-enabler.cmake](/cmake/enablers/i18n/template-project-gettext-enabler.cmake) module looks for the libintl library, a part of the GNU C library on the GNU/Linux based OS, and for the gettext tools which compile the translations, so install them (the `scripts/packages/install-*.sh` scripts do it too):
 
 ```

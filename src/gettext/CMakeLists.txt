@@ -1,5 +1,18 @@
 cmake_minimum_required(VERSION 3.13)
 
+# The gettext is a hard requirement of this branch rather than an optional
+# integration, since the whole src/gettext example is built around it.
+if (NOT ENABLE_GETTEXT)
+  message(
+    FATAL_ERROR
+    "The src/gettext sources require the gettext library which is turned off by "
+    "the ENABLE_GETTEXT=OFF parameter. Drop the add_subdirectory(gettext) call from the "
+    "src/CMakeLists.txt file together with the whole src/gettext subdirectory "
+    "and its usage of the src/app/applications/Application.cpp file to build "
+    "the project without it."
+  )
+endif()
+
 add_library(
   TemplateProjectGettextControllerObj OBJECT
   CatalogsLocator.cpp

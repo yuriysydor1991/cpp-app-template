@@ -16,6 +16,6 @@ mkdir -vp build && cd build && cmake ../ -DENABLE_CLANG_TIDY=ON
 cmake --build . --target all
 ```
 
-Щоб переглянути докладну інформацію по статичному аналізатору `clang-tidy` необхідно переглянути файли `cmake/template-project-clang-tidy-target.cmake`, `misc/.clang-tidy` і документацію до відповідної використовуваної вермії `clang-tidy`.
+Щоб переглянути докладну інформацію по статичному аналізатору `clang-tidy` необхідно переглянути файли `cmake/enablers/template-project-clang-tidy-target.cmake`, `misc/.clang-tidy` і документацію до відповідної використовуваної вермії `clang-tidy`.
 
 **Попередження** Виконання статичного аналізу коду за допомогою `clang-tidy` може значно збільшити час побудови цілей.

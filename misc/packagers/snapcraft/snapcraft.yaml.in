@@ -25,5 +25,8 @@ parts:
     build-packages:
       - pkg-config
       - libgtkmm-4.0-dev
+      - libvulkan-dev
     stage-packages:
       - libgtkmm-4.0-0
+      - libvulkan1
+      - mesa-vulkan-drivers

@@ -25,9 +25,11 @@ set(SFML_BUILD_DOC OFF CACHE BOOL "" FORCE)
 set(SFML_INSTALL_PKGCONFIG_FILES OFF CACHE BOOL "" FORCE)
 
 # Probes the system installed SFML (COMPONENTS graphics window system) first and
-# falls back to fetching and building it from the upstream git repository.
+# falls back to fetching and building it from the upstream git repository. The
+# template sources use the SFML 2 API, so an installed SFML 3 is skipped.
 template_project_default_3rdparty_enabler(
   NAME SFML
+  VERSION        2.6
   GIT_REPOSITORY ${TEMPLATE_APP_SFML_GIT}
   GIT_TAG        ${TEMPLATE_APP_SFML_GIT_TAG}
   COMPONENTS     graphics window system

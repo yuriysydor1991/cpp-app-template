@@ -1,12 +1,12 @@
 ## Required packages for the SFML development
 
-The template project depends on the [SFML](https://www.sfml-dev.org/) multimedia library (the `graphics`, `window` and `system` modules). The CMake `template-project-SFML-enabler` first probes a system installation with `find_package(SFML COMPONENTS graphics window system)` and, when it is missing, transparently falls back to fetching and building SFML from its upstream git repository through the CMake `FetchContent` facility (pinned to the `2.6.2` tag by default).
+The template project depends on the [SFML](https://www.sfml-dev.org/) multimedia library (the `graphics`, `window` and `system` modules). The CMake `template-project-SFML-enabler` first probes a system installation with `find_package(SFML 2.6 COMPONENTS graphics window system)` and, when it is missing, transparently falls back to fetching and building SFML from its upstream git repository through the CMake `FetchContent` facility (pinned to the `2.6.2` tag by default). The template sources use the SFML 2 API, so the probe accepts an SFML 2.6 installation only and skips an installed SFML 3 (e.g. the `libsfml-dev` of Ubuntu 26.04 or the current vcpkg `sfml` port), which leads to the `FetchContent` build as well.
 
 So a system wide SFML is **optional**: install it to speed up the configuration step, or let the `FetchContent` fallback build it for you (which additionally needs the X11/OpenGL/FreeType development headers listed below).
 
 ### GNU/Linux (Debian/Ubuntu/derivatives)
 
-The fastest path is to install the SFML development package so that the system probe succeeds and no source build is required:
+Where the distribution ships SFML 2.6 (e.g. Ubuntu 24.04, Debian 13) the fastest path is to install the SFML development package so that the system probe succeeds and no source build is required:
 
 ```
 sudo apt install -y libsfml-dev

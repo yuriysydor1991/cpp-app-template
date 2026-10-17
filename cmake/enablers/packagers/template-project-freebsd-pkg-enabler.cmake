@@ -11,6 +11,7 @@ if(NOT ENABLE_FREEBSD_PKG)
 endif()
 
 include(InstallRequiredSystemLibraries)
+include(template-project-package-os)
 
 set(
   TEMPLATE_PROJECT_FREEBSD_PKG_LICENSE
@@ -52,7 +53,10 @@ set(CPACK_FREEBSD_PACKAGE_CATEGORIES ${TEMPLATE_PROJECT_FREEBSD_PKG_CATEGORIES})
 set(CPACK_FREEBSD_PACKAGE_DEPS "")
 
 # the CPACK_SYSTEM_NAME of the default file name names the system alone, so the
-# destination CPU takes its place (the uname -p one, as in the package ABI)
-set(CPACK_PACKAGE_FILE_NAME ${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${CMAKE_SYSTEM_PROCESSOR})
+# destination CPU (the uname -p one, as in the package ABI) and OS take its place
+set(
+  CPACK_PACKAGE_FILE_NAME
+  ${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${CMAKE_SYSTEM_PROCESSOR}-${TEMPLATE_PROJECT_PACKAGE_OS}
+)
 
 include(CPack)

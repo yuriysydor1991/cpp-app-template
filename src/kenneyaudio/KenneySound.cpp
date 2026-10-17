@@ -5,7 +5,7 @@
 #include <string>
 #include <utility>
 
-#include "kenney-audio-decls.h"
+#include "src/kenneyaudio/KenneyRootDirectory.h"
 #include "src/kenneyaudio/packs/IKenneyPack.h"
 #include "src/log/log.h"
 
@@ -77,7 +77,7 @@ std::string KenneySound::filePath() const
     return {};
   }
 
-  return kenney_audio_decls::KENNEY_AUDIO_ROOT_DIR + "/" + soundAlias;
+  return KenneyRootDirectory::path() + "/" + soundAlias;
 }
 
 KenneySoundPtr KenneySound::create(IKenneyPackPtr gpack, std::string gpath)

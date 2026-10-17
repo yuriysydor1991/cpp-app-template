@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include "kenney-audio-decls.h"
+#include "src/kenneyaudio/KenneyRootDirectory.h"
 #include "src/kenneyaudio/KenneySound.h"
 #include "src/kenneyaudio/packs/KenneyPack.h"
 
@@ -67,10 +67,10 @@ TEST_F(UTEST_KenneySound, the_alias_carries_the_pack_and_the_path)
   EXPECT_EQ(sound->alias(), expectedPack + "/" + expectedPath);
 }
 
-TEST_F(UTEST_KenneySound, the_file_path_sits_under_the_configured_root)
+TEST_F(UTEST_KenneySound, the_file_path_sits_under_the_packs_root)
 {
   EXPECT_EQ(sound->filePath(),
-            kenney_audio_decls::KENNEY_AUDIO_ROOT_DIR + "/" + sound->alias());
+            KenneyRootDirectory::path() + "/" + sound->alias());
 }
 
 TEST_F(UTEST_KenneySound, a_sound_with_no_pack_gives_no_alias)

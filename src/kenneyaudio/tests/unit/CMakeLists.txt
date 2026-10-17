@@ -8,6 +8,7 @@ endif()
 add_compile_options(-DNDEBUG=1)
 
 add_subdirectory(KenneySound)
+add_subdirectory(KenneyRootDirectory)
 add_subdirectory(KenneyPacks)
 add_subdirectory(KenneySounds)
 add_subdirectory(KenneyResourcePath)

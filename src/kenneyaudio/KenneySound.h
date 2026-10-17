@@ -85,7 +85,7 @@ class KenneySound
 
   /**
    * @brief Gives the absolute path of the sound file inside the packs
-   * directory the project has been configured with.
+   * directory the running binary reads (see KenneyRootDirectory).
    *
    * @return Returns the absolute path of the sound file.
    */

@@ -8,6 +8,7 @@ add_executable(
   CTEST_KenneySoundPlayer
   CTEST_KenneySoundPlayer.cpp
   ${CMAKE_SOURCE_DIR}/src/kenneyaudio/KenneySound.cpp
+  ${CMAKE_SOURCE_DIR}/src/kenneyaudio/KenneyRootDirectory.cpp
   ${CMAKE_SOURCE_DIR}/src/kenneyaudio/packs/KenneyPack.cpp
   ${CMAKE_SOURCE_DIR}/src/kenneyaudio/packs/KenneyPacks.cpp
   ${CMAKE_SOURCE_DIR}/src/kenneyaudio/sounds/KenneySounds.cpp

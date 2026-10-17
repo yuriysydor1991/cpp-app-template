@@ -14,6 +14,7 @@ endif()
 add_library(
   TemplateProjectKenneySoundObj OBJECT
   KenneySound.cpp
+  KenneyRootDirectory.cpp
 )
 
 target_include_directories(

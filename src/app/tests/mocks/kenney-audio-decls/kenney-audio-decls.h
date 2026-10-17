@@ -7,6 +7,8 @@ namespace kenney_audio_decls
 {
 
 const std::string KENNEY_AUDIO_ROOT_DIR = "/mock/kenney-audio";
+const std::string KENNEY_AUDIO_INSTALLED_RELATIVE_DIR = "../mock/kenney-audio";
+const std::string KENNEY_AUDIO_INSTALLED_DIR = "/mock/share/kenney-audio";
 const std::string KENNEY_AUDIO_QT_RESOURCE_PREFIX = "/sounds";
 const std::string KENNEY_AUDIO_GRESOURCE_PREFIX = "/mock/sounds";
 

@@ -39,6 +39,7 @@ set(
 set(
   KENNEY_AUDIO_SUBSYSTEM_SOURCES
   ${CMAKE_CURRENT_SOURCE_DIR}/kenneyaudio/KenneySound.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/kenneyaudio/KenneyRootDirectory.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/kenneyaudio/packs/KenneyPack.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/kenneyaudio/packs/KenneyPacks.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/kenneyaudio/sounds/KenneySounds.cpp

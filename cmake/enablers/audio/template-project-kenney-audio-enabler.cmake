@@ -69,6 +69,32 @@ endif()
 
 template_project_kenney_audio_generate_index()
 
+# The packs directory above is a configure time one (the build tree, or the
+# flatpak sandbox one), so the install step copies the sounds and the license
+# of every pack into the data directory, where the installed binary looks for
+# them relative to it's own location first (see KenneyRootDirectory).
+set(KENNEY_AUDIO_INSTALL_DIR "${CMAKE_INSTALL_DATADIR}/${PROJECT_BINARY_NAME}/kenney-audio")
+set(KENNEY_AUDIO_INSTALLED_DIR "${CMAKE_INSTALL_FULL_DATADIR}/${PROJECT_BINARY_NAME}/kenney-audio")
+
+file(
+  RELATIVE_PATH KENNEY_AUDIO_INSTALLED_RELATIVE_DIR
+  "/${PROJECT_BINARY_INSTALLATION_DIR}" "/${KENNEY_AUDIO_INSTALL_DIR}"
+)
+
+set(installPatterns PATTERN "License.txt")
+
+foreach(extension IN LISTS KENNEY_AUDIO_EXTENSIONS)
+  list(APPEND installPatterns PATTERN "*.${extension}")
+endforeach()
+
+foreach(pack IN LISTS KENNEY_AUDIO_PACKS)
+  install(
+    DIRECTORY "${KENNEY_AUDIO_ROOT_DIR}/${pack}"
+    DESTINATION "${KENNEY_AUDIO_INSTALL_DIR}"
+    FILES_MATCHING ${installPatterns}
+  )
+endforeach()
+
 configure_file(
   "${CMAKE_SOURCE_DIR}/src/kenneyaudio/kenney-audio-decls.h.in"
   "${CMAKE_BINARY_DIR}/kenney-audio-decls.h"

@@ -4,7 +4,7 @@
 #include <iostream>
 #include <memory>
 
-#include "kenney-audio-decls.h"
+#include "src/kenneyaudio/KenneyRootDirectory.h"
 #include "src/kenneyaudio/controller/KenneySoundsController.h"
 #include "src/kenneyaudio/resources/KenneyGResourcePath.h"
 #include "src/kenneyaudio/resources/KenneyQtResourcePath.h"
@@ -28,7 +28,7 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
   assert(sounds != nullptr);
 
   LOGI("The Kenney packs carry " << sounds->count() << " sounds at "
-                                 << kenney_audio_decls::KENNEY_AUDIO_ROOT_DIR);
+                                 << kenneyaudio::KenneyRootDirectory::path());
 
   const auto controller = kenneyaudio::KenneySoundsController::create(sounds);
 

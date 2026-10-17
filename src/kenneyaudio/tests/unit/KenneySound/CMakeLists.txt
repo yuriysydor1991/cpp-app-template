@@ -4,6 +4,7 @@ add_executable(
   UTEST_KenneySound
   UTEST_KenneySound.cpp
   ${CMAKE_SOURCE_DIR}/src/kenneyaudio/KenneySound.cpp
+  ${CMAKE_SOURCE_DIR}/src/kenneyaudio/KenneyRootDirectory.cpp
   ${CMAKE_SOURCE_DIR}/src/kenneyaudio/packs/KenneyPack.cpp
 )
 

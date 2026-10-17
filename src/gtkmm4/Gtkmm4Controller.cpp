@@ -35,23 +35,25 @@ int Gtkmm4Controller::run(std::shared_ptr<app::ApplicationContext> nactx)
 
   auto app = Gtk::Application::create(project_decls::PROJECT_REVERSE_URL);
 
-  // libadwaita has to be initialized before any of its widgets is created. It
-  // is done in the activate handler and not before the run call, because
-  // adw_init needs the GTK display, which the application opens for itself.
-  // Calling it twice is harmless - the second call is a documented no-op.
-  app->signal_activate().connect([app]() {
-    adw_init();
+  // The Gtk::Application constructor has already initialized GTK and opened
+  // the display, so libadwaita is initialized right here, before any of its
+  // widgets is created.
+  adw_init();
 
+  bool windowBuilt{true};
+
+  // The handler refers to the application instead of holding a reference to
+  // it, so the application does not keep itself alive through its own signal.
+  app->signal_activate().connect([&app, &windowBuilt]() {
     auto window = create_main_window();
 
     assert(window != nullptr);
 
-    if (window == nullptr) {
+    if (window == nullptr || window->build(app) == nullptr) {
       LOGE("Fail to create the main application window");
-      return;
+      windowBuilt = false;
+      app->quit();
     }
-
-    window->build(app);
   });
 
   const StopFlagWatcher stopWatcher{actx, *app};
@@ -60,7 +62,9 @@ int Gtkmm4Controller::run(std::shared_ptr<app::ApplicationContext> nactx)
 
   // The command line belongs to the CommandLineParser alone, so the toolkit
   // gets the program name only and never rejects the application parameters.
-  return app->run(std::min(actx->get_argc(), 1), actx->get_argv());
+  const int status = app->run(std::min(actx->get_argc(), 1), actx->get_argv());
+
+  return windowBuilt ? status : app::IApplication::INVALID;
 }
 
 main_window::AdwaitaWindowPtr Gtkmm4Controller::create_main_window()

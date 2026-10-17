@@ -56,9 +56,11 @@ logo never gets deformed. The `GTK_CONTENT_FIT_FILL` stretches it over the whole
 free area instead, and the `GTK_CONTENT_FIT_COVER` fills that area keeping the
 ratio but cropping whatever does not fit.
 
-`adw_init()` is called by the `Gtkmm4i::Gtkmm4Controller::run` from the application
-`activate` handler and not before the `Gtk::Application::run` call, because it
-needs the GTK display that the application opens for itself.
+`adw_init()` is called by the `Gtkmm4i::Gtkmm4Controller::run` right after the
+`Gtk::Application` is created, because its constructor already initializes GTK
+and opens the display, and before any libadwaita widget is created in the
+application `activate` handler. A window that fails to build quits the
+application, which then exits with the `IApplication::INVALID` status.
 
 ### Starting the development
 

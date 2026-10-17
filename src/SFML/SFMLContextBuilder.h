@@ -32,6 +32,7 @@ class SFMLContextBuilder
 
   inline static constexpr const unsigned int default_window_width = 800;
   inline static constexpr const unsigned int default_window_height = 600;
+  inline static constexpr const unsigned int default_frame_rate_limit = 60;
 };
 
 }  // namespace templateSFML

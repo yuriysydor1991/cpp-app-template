@@ -36,9 +36,14 @@ std::shared_ptr<SFMLContext> SFMLContextBuilder::default_context(
 std::unique_ptr<sf::RenderWindow> SFMLContextBuilder::create_window(
     [[maybe_unused]] std::shared_ptr<SFMLContext> sfmlctx)
 {
-  return std::make_unique<sf::RenderWindow>(
+  auto window = std::make_unique<sf::RenderWindow>(
       sf::VideoMode(default_window_width, default_window_height),
       get_window_title(), sf::Style::Default);
+
+  // the frame rate limit paces the event loop instead of a busy loop
+  window->setFramerateLimit(default_frame_rate_limit);
+
+  return window;
 }
 
 const std::string& SFMLContextBuilder::get_window_title()

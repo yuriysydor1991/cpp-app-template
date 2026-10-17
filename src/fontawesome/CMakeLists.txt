@@ -14,6 +14,7 @@ endif()
 add_library(
   TemplateProjectFontAwesomeIconObj OBJECT
   FontAwesomeIcon.cpp
+  FontAwesomeSvgsDirectory.cpp
 )
 
 target_include_directories(

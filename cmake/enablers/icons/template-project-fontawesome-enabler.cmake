@@ -94,6 +94,32 @@ message(STATUS "Font Awesome Free ${FONTAWESOME_VERSION} icons: ${FONTAWESOME_SV
 
 template_project_fontawesome_generate_index()
 
+# The checkout above is a configure time one (the build tree, or the flatpak
+# sandbox one), so the install step copies the SVG icons of every enabled style
+# and the license file into the data directory, where the installed binary
+# looks for them relative to it's own location first (see
+# FontAwesomeSvgsDirectory).
+set(FONTAWESOME_INSTALL_DIR "${CMAKE_INSTALL_DATADIR}/${PROJECT_BINARY_NAME}/fontawesome")
+set(FONTAWESOME_SVGS_INSTALLED_DIR "${CMAKE_INSTALL_FULL_DATADIR}/${PROJECT_BINARY_NAME}/fontawesome/svgs")
+
+file(
+  RELATIVE_PATH FONTAWESOME_SVGS_INSTALLED_RELATIVE_DIR
+  "/${PROJECT_BINARY_INSTALLATION_DIR}" "/${FONTAWESOME_INSTALL_DIR}/svgs"
+)
+
+foreach(style IN LISTS FONTAWESOME_STYLES)
+  install(
+    DIRECTORY "${FONTAWESOME_SVGS_DIR}/${style}"
+    DESTINATION "${FONTAWESOME_INSTALL_DIR}/svgs"
+    FILES_MATCHING PATTERN "*.svg"
+  )
+endforeach()
+
+install(
+  FILES "${FONTAWESOME_LICENSE_FILE}"
+  DESTINATION "${FONTAWESOME_INSTALL_DIR}"
+)
+
 configure_file(
   "${CMAKE_SOURCE_DIR}/src/fontawesome/fontawesome-decls.h.in"
   "${CMAKE_BINARY_DIR}/fontawesome-decls.h"

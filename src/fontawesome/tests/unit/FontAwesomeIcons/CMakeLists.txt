@@ -8,6 +8,7 @@ add_executable(
   UTEST_FontAwesomeIcons.cpp
   ${CMAKE_SOURCE_DIR}/src/fontawesome/icons/FontAwesomeIcons.cpp
   ${CMAKE_SOURCE_DIR}/src/fontawesome/FontAwesomeIcon.cpp
+  ${CMAKE_SOURCE_DIR}/src/fontawesome/FontAwesomeSvgsDirectory.cpp
   ${FONTAWESOME_STYLES_SOURCES}
 )
 

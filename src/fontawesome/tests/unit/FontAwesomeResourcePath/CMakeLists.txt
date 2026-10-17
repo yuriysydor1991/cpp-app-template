@@ -7,6 +7,7 @@ add_executable(
   ${CMAKE_SOURCE_DIR}/src/fontawesome/resources/FontAwesomeQtResourcePath.cpp
   ${CMAKE_SOURCE_DIR}/src/fontawesome/resources/FontAwesomeGResourcePath.cpp
   ${CMAKE_SOURCE_DIR}/src/fontawesome/FontAwesomeIcon.cpp
+  ${CMAKE_SOURCE_DIR}/src/fontawesome/FontAwesomeSvgsDirectory.cpp
   ${FONTAWESOME_STYLES_SOURCES}
 )
 

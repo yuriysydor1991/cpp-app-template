@@ -70,8 +70,8 @@ class FontAwesomeIcon
   std::string relativePath() const;
 
   /**
-   * @brief Gives the absolute path of the icon SVG file inside the Font
-   * Awesome checkout the project has been configured with.
+   * @brief Gives the absolute path of the icon SVG file inside the icons
+   * directory the running binary reads (see FontAwesomeSvgsDirectory).
    *
    * @return Returns the absolute path of the SVG file.
    */

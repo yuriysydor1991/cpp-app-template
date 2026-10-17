@@ -154,6 +154,10 @@ With `FONTAWESOME_GENERATE_FULL_MANIFESTS=ON` the enabler writes both manifests 
 
 Keep in mind that embedding all of the icons costs about 12 MiB of SVG data (the GResource one is written with the `compressed="true"` attribute, which roughly halves it). Selecting the icons an application actually shows is the cheaper and the usual way; the complete manifests are there for the cases where the set has to be browsable at the run time.
 
+### Installing the icons
+
+The checkout is a configure time one, so the install step (and every package built out of it: deb, rpm, AppImage, snap, flatpak, the single run Docker image) copies the SVG icons of every enabled style and the `LICENSE.txt` file into the `share/<binary>/fontawesome` directory of the installation prefix. The `FontAwesomeSvgsDirectory` class picks the icons directory the running binary reads at the run time: the installed one relative to the binary location first (so a relocated package keeps working), then the configured checkout (a binary run out of the build tree), then the installed one under the configured prefix.
+
 ### Licensing
 
-The checkout keeps it's own `LICENSE.txt` and so must every redistribution of the assets: Font Awesome Free is licensed under the [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) for the icons, the [SIL OFL 1.1](https://openfontlicense.org/) for the fonts and the [MIT](https://opensource.org/license/mit) one for the code. The `FONTAWESOME_LICENSE_FILE` variable (and the declaration of the same name) points at the file, so a packaging step installs it with no path guessing. The full terms are at [fontawesome.com/license/free](https://fontawesome.com/license/free).
+The checkout keeps it's own `LICENSE.txt` and so must every redistribution of the assets: Font Awesome Free is licensed under the [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) for the icons, the [SIL OFL 1.1](https://openfontlicense.org/) for the fonts and the [MIT](https://opensource.org/license/mit) one for the code. The `FONTAWESOME_LICENSE_FILE` variable (and the declaration of the same name) points at the file, and the install step copies it next to the installed icons. The full terms are at [fontawesome.com/license/free](https://fontawesome.com/license/free).

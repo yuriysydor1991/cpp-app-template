@@ -5,7 +5,7 @@
 #include <string>
 #include <utility>
 
-#include "fontawesome-decls.h"
+#include "src/fontawesome/FontAwesomeSvgsDirectory.h"
 #include "src/fontawesome/styles/IFontAwesomeStyle.h"
 
 namespace fontawesome
@@ -42,7 +42,7 @@ std::string FontAwesomeIcon::relativePath() const
 
 std::string FontAwesomeIcon::filePath() const
 {
-  return fontawesome_decls::FONTAWESOME_SVGS_DIR + "/" + alias();
+  return FontAwesomeSvgsDirectory::path() + "/" + alias();
 }
 
 FontAwesomeIconPtr FontAwesomeIcon::create(IFontAwesomeStylePtr gstyle,

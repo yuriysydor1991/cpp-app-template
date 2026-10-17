@@ -5,6 +5,7 @@
 #include <memory>
 
 #include "fontawesome-decls.h"
+#include "src/fontawesome/FontAwesomeSvgsDirectory.h"
 #include "src/fontawesome/icons/FontAwesomeIcons.h"
 #include "src/fontawesome/resources/FontAwesomeGResourcePath.h"
 #include "src/fontawesome/resources/FontAwesomeQtResourcePath.h"
@@ -28,7 +29,7 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
 
   LOGI("Font Awesome Free " << fontawesome_decls::FONTAWESOME_VERSION
                             << " carries " << icons->count() << " icons at "
-                            << fontawesome_decls::FONTAWESOME_SVGS_DIR);
+                            << fontawesome::FontAwesomeSvgsDirectory::path());
 
   const auto icon = icons->find(DEMO_ICON_STYLE, DEMO_ICON_NAME);
 

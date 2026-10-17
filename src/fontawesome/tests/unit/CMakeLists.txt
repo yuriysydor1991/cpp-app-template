@@ -9,5 +9,6 @@ add_compile_options(-DNDEBUG=1)
 
 add_subdirectory(FontAwesomeStyles)
 add_subdirectory(FontAwesomeIcon)
+add_subdirectory(FontAwesomeSvgsDirectory)
 add_subdirectory(FontAwesomeIcons)
 add_subdirectory(FontAwesomeResourcePath)

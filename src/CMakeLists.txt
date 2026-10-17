@@ -40,6 +40,7 @@ set(
 set(
   FONTAWESOME_SUBSYSTEM_SOURCES
   ${CMAKE_CURRENT_SOURCE_DIR}/fontawesome/FontAwesomeIcon.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/fontawesome/FontAwesomeSvgsDirectory.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/fontawesome/icons/FontAwesomeIcons.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/fontawesome/resources/FontAwesomeResourcePath.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/fontawesome/resources/FontAwesomeQtResourcePath.cpp

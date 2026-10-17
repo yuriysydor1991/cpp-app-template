@@ -12,6 +12,10 @@ const std::string FONTAWESOME_VERSION = "${FONTAWESOME_VERSION}" ;
 const std::string FONTAWESOME_ROOT_DIR = "${FONTAWESOME_ROOT_DIR}" ;
 /// @brief The per style individual SVG icon files directory
 const std::string FONTAWESOME_SVGS_DIR = "${FONTAWESOME_SVGS_DIR}" ;
+/// @brief The installed SVG icons directory relative to the installed binary one
+const std::string FONTAWESOME_SVGS_INSTALLED_RELATIVE_DIR = "${FONTAWESOME_SVGS_INSTALLED_RELATIVE_DIR}" ;
+/// @brief The installed SVG icons directory under the configured installation prefix
+const std::string FONTAWESOME_SVGS_INSTALLED_DIR = "${FONTAWESOME_SVGS_INSTALLED_DIR}" ;
 /// @brief The webfont files directory
 const std::string FONTAWESOME_WEBFONTS_DIR = "${FONTAWESOME_WEBFONTS_DIR}" ;
 /// @brief The Font Awesome Free license file

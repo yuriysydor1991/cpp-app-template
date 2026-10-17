@@ -3,8 +3,8 @@
 
 #include <string>
 
-#include "fontawesome-decls.h"
 #include "src/fontawesome/FontAwesomeIcon.h"
+#include "src/fontawesome/FontAwesomeSvgsDirectory.h"
 #include "src/fontawesome/styles/FontAwesomeSolidStyle.h"
 
 using namespace fontawesome;
@@ -58,10 +58,10 @@ TEST_F(UTEST_FontAwesomeIcon, derives_the_checkout_relative_path)
   EXPECT_EQ(icon->relativePath(), "svgs/solid/folder-open.svg");
 }
 
-TEST_F(UTEST_FontAwesomeIcon, derives_the_configured_absolute_path)
+TEST_F(UTEST_FontAwesomeIcon, derives_the_absolute_path_inside_the_svgs_dir)
 {
   EXPECT_EQ(icon->filePath(),
-            fontawesome_decls::FONTAWESOME_SVGS_DIR + "/solid/folder-open.svg");
+            FontAwesomeSvgsDirectory::path() + "/solid/folder-open.svg");
 }
 
 TEST_F(UTEST_FontAwesomeIcon, icons_of_other_styles_keep_their_own_aliases)

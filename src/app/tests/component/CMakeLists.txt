@@ -22,6 +22,8 @@ add_executable(
   ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/PauseSignalsHandler.cpp
   ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/PosixSignalsHandler.cpp
   ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/StopSignalsHandler.cpp
+  ${CMAKE_SOURCE_DIR}/src/log/default-logger/DefaultLogger.cpp
+  ${CMAKE_SOURCE_DIR}/src/log/default-logger/real-default-logger/RealDefaultLogger.cpp
   ${CMAKE_SOURCE_DIR}/src/DarknetXX/Detection.cpp
   ${CMAKE_SOURCE_DIR}/src/DarknetXX/weights/Dxxwjz1Weights.cpp
   ${CMAKE_SOURCE_DIR}/src/DarknetXX/weights/Dxxwjz2Weights.cpp

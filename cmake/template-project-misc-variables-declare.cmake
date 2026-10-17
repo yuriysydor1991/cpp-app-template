@@ -14,7 +14,7 @@ string(TOLOWER ${PROJECT_BINARY_NAME} PROJECT_BINARY_NAME_lower)
 
 set(
   GTKMM_OBJECT_NAME "${PROJECT_NAME}GTKmmObj"
-  CACHE STRING "Project main binary name and target"
+  CACHE STRING "The GTKmm controller object library target name"
 )
 
 set(

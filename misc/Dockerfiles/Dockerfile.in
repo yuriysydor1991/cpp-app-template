@@ -15,7 +15,7 @@ WORKDIR $srcD
 
 # sdbus-c++ is cloned, built and erased inside a single layer, so neither the
 # sources nor the build tree reach the image.
-RUN git clone --branch v1.6.0 https://github.com/Kistler-Group/sdbus-cpp.git $DBusCxxS && \
+RUN git clone --branch v2.1.0 https://github.com/Kistler-Group/sdbus-cpp.git $DBusCxxS && \
   cmake -B $DBusCxxB -S $DBusCxxS -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON && \
   cmake --build $DBusCxxB -j$(nproc) && \
   cmake --install $DBusCxxB --prefix $prefixD && \

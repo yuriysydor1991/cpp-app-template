@@ -19,9 +19,15 @@ PACKAGES=(
     make
     openssl-devel
     pkgconf-pkg-config
-    sdbus-cpp-devel
     systemd-devel
 )
+
+# The sdbus-cpp-devel package of the EPEL 9 and the Fedora up to 42 is the 1.x
+# one the code isn't written for, so the configure fetches the sdbus-c++ 2
+# sources while the system carries no newer one.
+if dnf -q list --available sdbus-cpp-devel 2>/dev/null | grep -q -E '\s2\.' ; then
+    PACKAGES+=(sdbus-cpp-devel)
+fi
 
 DNF_SUDO=""
 

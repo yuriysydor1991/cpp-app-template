@@ -13,6 +13,11 @@ endif()
 set(TEMPLATE_APP_LIBAVIF_GIT "https://github.com/AOMediaCodec/libavif.git" CACHE STRING "The libavif library git source repository")
 set(TEMPLATE_APP_LIBAVIF_GIT_TAG "v1.4.2" CACHE STRING "The libavif project git repository release tag of interest")
 
+# The libavif FetchContent build stops without a system libyuv by default;
+# libyuv only speeds the YUV/RGB conversions up, so it stays off unless asked
+# for with -DAVIF_LIBYUV=SYSTEM (or LOCAL to fetch it too).
+set(AVIF_LIBYUV "OFF" CACHE STRING "The libyuv usage of the libavif FetchContent build: OFF, LOCAL or SYSTEM")
+
 template_project_default_3rdparty_enabler(
   NAME libavif
   GIT_REPOSITORY ${TEMPLATE_APP_LIBAVIF_GIT}
@@ -24,6 +29,6 @@ template_project_default_3rdparty_enabler(
 #   - system install, via find_package(libavif): avif
 #   - FetchContent source build:                 avif
 #     (enable a codec for the FetchContent build to encode/decode, e.g.
-#      -DAVIF_CODEC_AOM=ON or -DAVIF_CODEC_DAV1D=ON)
+#      -DAVIF_CODEC_AOM=SYSTEM or -DAVIF_CODEC_DAV1D=SYSTEM, LOCAL to fetch it)
 # For example:
 #   target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE avif)

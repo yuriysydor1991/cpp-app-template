@@ -17,9 +17,10 @@
 Нативний UI налаштовує CMake-модуль `cmake/enablers/template-project-WinUI3-enabler.cmake`, що керується:
 
 - `ENABLE_WINUI3` (типово `ON`) - встанови `OFF`, щоб прибрати інтеграцію з WinUI 3.
-- `TEMPLATE_APP_WINAPPSDK_VERSION` / `TEMPLATE_APP_CPPWINRT_VERSION` - версії NuGet-пакетів Windows App SDK і C++/WinRT, що відновлюються на Windows.
+- `TEMPLATE_APP_WINAPPSDK_VERSION` / `TEMPLATE_APP_CPPWINRT_VERSION` / `TEMPLATE_APP_WEBVIEW2_VERSION` - версії NuGet-пакетів Windows App SDK, C++/WinRT і WebView2 (залежності Windows App SDK), що відновлюються на Windows.
+- `WINUI3_CPPWINRT_GEN` (типово `<директорія збирання>/winui3-cppwinrt`) - директорія згенерованих заголовків проєкції C++/WinRT.
 
-На Windows модуль відновлює NuGet-пакети Windows App SDK + C++/WinRT (потрібен NuGet CLI) і надає ціль `winui3::sdk`, з якою лінкується нативний UI; проєкція C++/WinRT (`cppwinrt.exe`) і Windows SDK мають бути присутні (Visual Studio 2022 з робочим навантаженням *Desktop development with C++* і Windows App SDK). На будь-якому іншому хості модуль нічого не робить, і замість нього збирається шов-заглушка, тож платформонезалежний код продовжує збиратися й тестуватися.
+На Windows модуль відновлює NuGet-пакети Windows App SDK, C++/WinRT і WebView2 (потрібен NuGet CLI), генерує відновленим `cppwinrt.exe` заголовки проєкції C++/WinRT (`winrt/*.h`) з метаданих Windows SDK, Windows App SDK і WebView2 (повторно лише після зміни версій пакетів) і надає ціль `winui3::sdk` (C++20, `/bigobj`), з якою лінкується нативний UI; Windows SDK має бути присутній (Visual Studio 2022 з робочим навантаженням *Desktop development with C++*). На будь-якому іншому хості модуль нічого не робить, і замість нього збирається шов-заглушка, тож платформонезалежний код продовжує збиратися й тестуватися.
 
 > WinUI 3 з CMake - це не типовий шлях від Microsoft (Visual Studio керує WinUI 3 через MSBuild/.vcxproj). Налаштування CMake тут - це відправна точка: оркестрація, шов запуску, тести і пакування WIX уже з'єднані; доведи з'єднання Windows App SDK / проєкції `cppwinrt` на хості Windows, щоб отримати нативне вікно.
 

@@ -13,6 +13,17 @@ endif()
 set(TEMPLATE_PROJECT_SNAP_GRADE "devel" CACHE STRING "The snap package grade")
 set(TEMPLATE_PROJECT_SNAP_CONFINEMENT "strict" CACHE STRING "The snap package confinement")
 
+# snapcraft installs the part with the DESTDIR set to the part install root, so
+# the binary lands under the install prefix of the snap and the command path is
+# relative to the snap root
+if(IS_ABSOLUTE "${PROJECT_BINARY_INSTALLATION_DIR}")
+  set(snapBinaryDir "${PROJECT_BINARY_INSTALLATION_DIR}")
+else()
+  set(snapBinaryDir "${CMAKE_INSTALL_PREFIX}/${PROJECT_BINARY_INSTALLATION_DIR}")
+endif()
+
+file(RELATIVE_PATH SNAP_APP_COMMAND / "${snapBinaryDir}/${PROJECT_BINARY_NAME}")
+
 # a windowed application: its desktop entry and the interfaces of a window
 if(ENABLE_DESKTOP_APPLICATION)
   file(

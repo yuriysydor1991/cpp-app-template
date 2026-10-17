@@ -33,6 +33,8 @@ The `cmake/enablers/icons/template-project-fontawesome-enabler.cmake` module dec
 | `FONTAWESOME_GRESOURCE_PREFIX` | `/ua/org/kytok/template/<binary>/icons` | the prefix of the generated GResource manifests |
 | `FONTAWESOME_GENERATE_FULL_MANIFESTS` | `ON` | write the resource manifests carrying the whole icon set |
 
+The `src/fontawesome` subsystem and the `Application` demo use the icon set unconditionally, so `-DENABLE_FONTAWESOME=OFF` works only together with their removal: the configure otherwise stops with an explicit error naming what to drop.
+
 A checkout is a heavy download, so reuse one across the build directories (or work offline) with:
 
 ```

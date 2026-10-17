@@ -34,7 +34,7 @@ void FreeGlutController::display()
 
   glTranslatef(static_cast<float>(-current_width) / 2.f, 0, 0);
 
-  glScalef(0.2f, 0.2f, 0.f);
+  glScalef(0.2f, 0.2f, 1.f);
 
   static const char* const implStr =
       "Your FreeGlut OpenGL scene draw goes here!";
@@ -66,7 +66,7 @@ int FreeGlutController::run(std::shared_ptr<app::ApplicationContext> ctx)
   glutInit(&ctx->get_argc(), ctx->get_argv());
   // the window close returns from the main loop instead of the exit() call
   glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
-  glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
+  glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
   glutInitWindowSize(W_DEFAULT_WIDTH, W_DEFAULT_HEIGHT);
   glutCreateWindow(ctx->get_argv()[0]);
 

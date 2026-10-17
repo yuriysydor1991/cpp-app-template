@@ -31,22 +31,21 @@ int Gtkmm4Controller::run(std::shared_ptr<app::ApplicationContext> nactx)
 
   actx = nactx;
 
-  // The Vulkan work is headless (raw libvulkan, no GTK dependency): create an
-  // instance, enumerate the physical devices and log their properties before
-  // the GTK main loop is entered. GTK4 exposes no usable Vulkan rendering
-  // widget (see GtkmmWindow), so the window itself is a plain, blank black GTK
-  // window.
+  // The Vulkan work is headless (raw libvulkan, no GTK dependency): the
+  // controller creates the single instance of the application, enumerates the
+  // physical devices and logs their properties before the GTK main loop is
+  // entered. Without a usable Vulkan runtime (no loader, no driver) the window
+  // still opens and shows its plain black fallback.
   vulkani::VulkanControllerPtr vulkan = vulkani::VulkanController::create();
 
   if (vulkan == nullptr) {
-    LOGE("Fail to create the Vulkan controller");
-    return app::IApplication::INVALID;
+    LOGW("No Vulkan instance is available, the window falls back to black");
+  } else if (!vulkan->run()) {
+    LOGW("Failed to enumerate the Vulkan physical devices");
   }
 
-  if (!vulkan->run()) {
-    LOGE("Failed to enumerate the Vulkan physical devices");
-    return app::IApplication::INVALID;
-  }
+  const VkInstance instance =
+      vulkan != nullptr ? vulkan->vulkan_instance() : VK_NULL_HANDLE;
 
   LOGD("Trying to create the GTK4 app instance");
 
@@ -60,8 +59,7 @@ int Gtkmm4Controller::run(std::shared_ptr<app::ApplicationContext> nactx)
   // gets the program name only and never rejects the application parameters.
   // The window renders with the controller's instance, which outlives it.
   return app->make_window_and_run<main_window::GtkmmWindow>(
-      std::min(actx->get_argc(), 1), actx->get_argv(),
-      vulkan->vulkan_instance());
+      std::min(actx->get_argc(), 1), actx->get_argv(), instance);
 }
 
 }  // namespace Gtkmm4i

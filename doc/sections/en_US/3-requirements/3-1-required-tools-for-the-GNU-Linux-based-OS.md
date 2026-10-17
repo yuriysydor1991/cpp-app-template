@@ -21,7 +21,8 @@ supports dma-buf export, e.g. the Mesa GPU drivers):
 sudo apt install -y libvulkan-dev mesa-vulkan-drivers
 ```
 
-The dma-buf display additionally needs GTK / gtkmm 4.14 or newer (for the
-`Gdk::DmabufTexture`). With only a software Vulkan driver (e.g. lavapipe), the
-dma-buf export is unavailable and the window falls back to a plain black
+The branch requires GTK / gtkmm 4.14 or newer (for the `Gdk::DmabufTexture`):
+the configure stops on an older gtkmm. With no usable Vulkan runtime at all (no
+loader or no driver) or with only a software Vulkan driver (e.g. lavapipe),
+the dma-buf export is unavailable and the window falls back to a plain black
 background.

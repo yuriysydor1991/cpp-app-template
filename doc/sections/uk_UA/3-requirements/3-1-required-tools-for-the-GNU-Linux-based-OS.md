@@ -18,4 +18,4 @@ sudo apt install -y pkg-config libgtkmm-4.0-dev libglib2.0-dev-bin
 sudo apt install -y libvulkan-dev mesa-vulkan-drivers
 ```
 
-Для показу через dma-buf додатково потрібен GTK / gtkmm версії 4.14 або новішої (для `Gdk::DmabufTexture`). За наявності лише програмного драйвера Vulkan (наприклад lavapipe) експорт dma-buf недоступний, і вікно повертається до простого чорного тла.
+Гілка потребує GTK / gtkmm версії 4.14 або новішої (для `Gdk::DmabufTexture`): зі старішою gtkmm конфігурування зупиняється. Без придатного середовища виконання Vulkan взагалі (немає завантажувача чи драйвера) або за наявності лише програмного драйвера Vulkan (наприклад lavapipe) експорт dma-buf недоступний, і вікно повертається до простого чорного тла.

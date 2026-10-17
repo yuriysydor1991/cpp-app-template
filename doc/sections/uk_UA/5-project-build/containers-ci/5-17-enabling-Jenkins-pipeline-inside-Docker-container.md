@@ -82,9 +82,19 @@ scripts/docker/jenkins-run.sh \
 
 ### Експортування та імпортування конфігурацій завдань Jenkins
 
-Встановлення значення `ON` для CMake-змінної `JENKINS_CLI_JAR_TARGETS` вмикає керування завданнями [Jenkins](https://www.jenkins.io/) за допомогою клієнта [Jenkins CLI](https://www.jenkins.io/doc/book/managing/cli/). Повний шлях до клієнта `jenkins-cli.jar` (котрий можна завантажити з Web-панелі запущеної системи [Jenkins](https://www.jenkins.io/)) необхідно вказати у CMake-змінній `JENKINS_CLI_JAR_PATH` разом із обліковими даними `JENKINS_CLI_LOGIN` та `JENKINS_CLI_SECRET`. Під час кроку конфігурування CMake кожне завдання запущеного примірника [Jenkins](https://www.jenkins.io/) експортуватиметься як XML-конфігурація у файли `<build>/Jenkins-exported-jobs/<назва-завдання>.xml`.
+Встановлення значення `ON` для CMake-змінної `JENKINS_CLI_JAR_TARGETS` вмикає керування завданнями [Jenkins](https://www.jenkins.io/) за допомогою клієнта [Jenkins CLI](https://www.jenkins.io/doc/book/managing/cli/). Повний шлях до клієнта `jenkins-cli.jar` (котрий можна завантажити з Web-панелі запущеної системи [Jenkins](https://www.jenkins.io/)) необхідно вказати у CMake-змінній `JENKINS_CLI_JAR_PATH` разом із обліковими даними `JENKINS_CLI_LOGIN` та `JENKINS_CLI_SECRET`.
 
-Експортовані XML-конфігурації завдань можуть бути імпортовані назад до сервера [Jenkins](https://www.jenkins.io/) додатковим встановленням значення `ON` для CMake-змінної `JENKINS_CLI_IMPORT_JOBS`:
+Експортування належить до контейнера конвеєра: з також увімкненою опцією `ENABLE_JENKINS_DOCKER_PIPELINE` крок конфігурування CMake експортує кожне завдання запущеного контейнера як XML-конфігурацію у файли `<build>/Jenkins-exported-jobs/<назва-завдання>.xml` і завершується помилкою, якщо виклик `jenkins-cli` не вдався:
+
+```
+# в середині кореневої директорії проекту
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DENABLE_DOCKER=ON \
+    -DENABLE_JENKINS_DOCKER_PIPELINE=ON -DJENKINS_CLI_JAR_TARGETS=ON \
+    -DJENKINS_CLI_JAR_PATH=/шлях/до/jenkins-cli.jar \
+    -DJENKINS_CLI_LOGIN=admin -DJENKINS_CLI_SECRET=пароль
+```
+
+Встановлення значення `ON` для CMake-змінної `JENKINS_CLI_IMPORT_JOBS` додатково імпортує XML-конфігурації завдань `*.xml` до сервера [Jenkins](https://www.jenkins.io/) під час кроку конфігурування:
 
 ```
 # в середині кореневої директорії проекту
@@ -95,7 +105,11 @@ cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DENABLE_DOCKER=ON \
     -DJENKINS_IMPORT_SERVER_URL=http://127.0.0.1:8080/
 ```
 
-Під час кроку конфігурування CMake кожен файл `*.xml` із директорії, вказаної у CMake-змінній `JENKINS_IMPORT_JOBS_DIR` (за замовчуванням директорія експорту `<build>/Jenkins-exported-jobs`), імпортується до цільового сервера [Jenkins](https://www.jenkins.io/), вказаного у CMake-змінній `JENKINS_IMPORT_SERVER_URL` (за замовчуванням локальний контейнер конвеєра за адресою `http://127.0.0.1:${JENKINS_PIPELINES_PANEL_HTTP_PORT}/`). Відсутнє на цільовому сервері завдання створюється, а вже наявне — оновлюється, тому цільовий сервер [Jenkins](https://www.jenkins.io/) може відрізнятися від того, з якого завдання було експортовано. Відповідний CMake-скрипт розміщений за відносним шляхом cmake/enablers/dockerers/template-project-docker-Jenkins-import-jobs-from-xml.cmake.
+Кожен файл `*.xml` із директорії, вказаної у CMake-змінній `JENKINS_IMPORT_JOBS_DIR`, імпортується до цільового сервера [Jenkins](https://www.jenkins.io/), вказаного у CMake-змінній `JENKINS_IMPORT_SERVER_URL` (за замовчуванням локальний контейнер конвеєра за адресою `http://127.0.0.1:${JENKINS_PIPELINES_PANEL_HTTP_PORT}/`). Відсутнє на цільовому сервері завдання створюється, а вже наявне — оновлюється, тому цільовий сервер [Jenkins](https://www.jenkins.io/) може відрізнятися від того, з якого завдання було експортовано. Відповідний CMake-скрипт розміщений за відносним шляхом cmake/enablers/dockerers/template-project-docker-Jenkins-import-jobs-from-xml.cmake.
+
+За замовчуванням `JENKINS_IMPORT_JOBS_DIR` вказує на збережену в репозиторії директорію [misc/Jenkins/Jenkins-exported-jobs](/misc/Jenkins/Jenkins-exported-jobs) — завдання кожної гілки шаблону на GitHub, той самий набір, який образ конвеєра попередньо завантажує під час свого першого запуску (пропускаючи вже наявні завдання). Свіжий експорт імпортується з параметром `-DJENKINS_IMPORT_JOBS_DIR=<build>/Jenkins-exported-jobs`. Директорія [misc/Jenkins/Jenkins-exported-jobs-gitlab](/misc/Jenkins/Jenkins-exported-jobs-gitlab) зберігає вимкнені двійники цих завдань, які отримують гілки з дзеркала на GitLab; їх імпортує параметр `-DJENKINS_IMPORT_JOBS_DIR=misc/Jenkins/Jenkins-exported-jobs-gitlab` (відносно кореня джерел або абсолютним шляхом), після чого потрібні з них вмикаються.
+
+Параметри побудови, збережені в експортованих файлах, є знімком на момент експорту, тож деяким із них бракує новіших параметрів пакувальників `RUN_*` гілок. Редагувати їх не потрібно: завдання конвеєра бере параметри з блоку `parameters` файлу `misc/Jenkinsfile` гілки, і Jenkins оновлює їх під час першої побудови завдання.
 
 ### Скрипти запуску
 

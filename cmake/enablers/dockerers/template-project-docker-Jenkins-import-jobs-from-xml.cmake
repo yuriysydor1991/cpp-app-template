@@ -42,9 +42,13 @@ set(
     "The target Jenkins server URL the *.xml jobs are imported (created / updated) into"
 )
 
+# The committed job set of every template branch by default - the very same one
+# the Jenkins pipeline image preloads. A fresh export of the
+# template-project-docker-Jenkins-export-jobs-2-xml.cmake script lands in the
+# <build>/Jenkins-exported-jobs directory instead.
 set(
     JENKINS_IMPORT_JOBS_DIR
-    "${CMAKE_BINARY_DIR}/Jenkins-exported-jobs"
+    "${CMAKE_SOURCE_DIR}/misc/Jenkins/Jenkins-exported-jobs"
     CACHE STRING
     "The directory holding the *.xml Jenkins job configurations to import into the target server"
 )
@@ -83,7 +87,12 @@ execute_process(
             -auth ${JENKINS_CLI_LOGIN}:${JENKINS_CLI_SECRET}
             -s "${JENKINS_IMPORT_SERVER_URL}" list-jobs
     OUTPUT_VARIABLE JENKINS_EXISTING_JOBS_STRING
+    RESULT_VARIABLE JENKINS_LIST_JOBS_RESULT
 )
+
+if (NOT JENKINS_LIST_JOBS_RESULT EQUAL 0)
+    message(FATAL_ERROR "Failed to list the Jenkins jobs of ${JENKINS_IMPORT_SERVER_URL} (jenkins-cli list-jobs exit code: ${JENKINS_LIST_JOBS_RESULT})")
+endif()
 
 string(REPLACE "\n" ";" JENKINS_EXISTING_JOBS_LIST "${JENKINS_EXISTING_JOBS_STRING}")
 list(REMOVE_ITEM JENKINS_EXISTING_JOBS_LIST "")

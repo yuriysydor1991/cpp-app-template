@@ -81,6 +81,37 @@ They land in the per user installation of the `jenkins` user, the one the `flatp
 - the built-in node keeps two executors, so the parallel test stages of the pipeline really run in parallel while the builds of the two of them still leave the host machine usable;
 - the image build gets an empty directory as its context and takes the exported jobs from the tree being configured, so neither the binary tree travels to the Docker daemon nor a clone of the published branch is needed.
 
+### Exporting and importing the Jenkins job configurations
+
+Setting the `ON` value for the `JENKINS_CLI_JAR_TARGETS` CMake variable enables the [Jenkins](https://www.jenkins.io/) jobs management through the [Jenkins CLI](https://www.jenkins.io/doc/book/managing/cli/) client. Pass the full path of the `jenkins-cli.jar` client (downloadable from the Web panel of the running [Jenkins](https://www.jenkins.io/) system) in the `JENKINS_CLI_JAR_PATH` CMake variable together with the `JENKINS_CLI_LOGIN` and the `JENKINS_CLI_SECRET` credentials.
+
+The export belongs to the pipeline container: with the `ENABLE_JENKINS_DOCKER_PIPELINE` option on as well, the CMake configure step exports every job of the running container into the `<build>/Jenkins-exported-jobs/<job name>.xml` files and fails when the `jenkins-cli` call fails:
+
+```
+# inside the project root directory
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DENABLE_DOCKER=ON \
+    -DENABLE_JENKINS_DOCKER_PIPELINE=ON -DJENKINS_CLI_JAR_TARGETS=ON \
+    -DJENKINS_CLI_JAR_PATH=/path/to/jenkins-cli.jar \
+    -DJENKINS_CLI_LOGIN=admin -DJENKINS_CLI_SECRET=password
+```
+
+Setting the `ON` value for the `JENKINS_CLI_IMPORT_JOBS` CMake variable additionally imports the `*.xml` job configurations into a [Jenkins](https://www.jenkins.io/) server during the configure step:
+
+```
+# inside the project root directory
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DENABLE_DOCKER=ON \
+    -DJENKINS_CLI_JAR_TARGETS=ON -DJENKINS_CLI_IMPORT_JOBS=ON \
+    -DJENKINS_CLI_JAR_PATH=/path/to/jenkins-cli.jar \
+    -DJENKINS_CLI_LOGIN=admin -DJENKINS_CLI_SECRET=password \
+    -DJENKINS_IMPORT_SERVER_URL=http://127.0.0.1:8080/
+```
+
+Every `*.xml` file of the directory the `JENKINS_IMPORT_JOBS_DIR` CMake variable names is imported into the target [Jenkins](https://www.jenkins.io/) server of the `JENKINS_IMPORT_SERVER_URL` CMake variable (the local pipeline container at the `http://127.0.0.1:${JENKINS_PIPELINES_PANEL_HTTP_PORT}/` address by default). A job missing on the target server is created and an existing one is updated, so the target server may differ from the one the jobs were exported from. The script is the cmake/enablers/dockerers/template-project-docker-Jenkins-import-jobs-from-xml.cmake one.
+
+The `JENKINS_IMPORT_JOBS_DIR` defaults to the committed [misc/Jenkins/Jenkins-exported-jobs](/misc/Jenkins/Jenkins-exported-jobs) directory - the jobs of every template branch on GitHub, the very same set the pipeline image preloads on its first start (skipping the jobs which already exist). Import a fresh export with `-DJENKINS_IMPORT_JOBS_DIR=<build>/Jenkins-exported-jobs`. The [misc/Jenkins/Jenkins-exported-jobs-gitlab](/misc/Jenkins/Jenkins-exported-jobs-gitlab) directory keeps the disabled twins of those jobs which check the branches out of the GitLab mirror; import them with `-DJENKINS_IMPORT_JOBS_DIR=misc/Jenkins/Jenkins-exported-jobs-gitlab` (relative to the source root, or an absolute path) and enable the ones of interest.
+
+The build parameters stored in the exported files are a snapshot of the moment of the export, so some of them lack the newer `RUN_*` packager parameters of the branches. That needs no edit: a pipeline job takes its parameters from the `parameters` block of the branch `misc/Jenkinsfile` and Jenkins refreshes them on the first build of the job.
+
 ### Starter scripts
 
 The [scripts/docker](/scripts/docker) directory holds the shortcuts which perform both commands above, so the whole run takes a single command:

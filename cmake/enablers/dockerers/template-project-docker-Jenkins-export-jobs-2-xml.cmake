@@ -44,7 +44,13 @@ execute_process(
           -auth ${JENKINS_CLI_LOGIN}:${JENKINS_CLI_SECRET} 
           -s http://127.0.0.1:${JENKINS_PIPELINES_PANEL_HTTP_PORT}/ list-jobs
   OUTPUT_VARIABLE JENKINS_ALL_JOBS_STRING
+  RESULT_VARIABLE JENKINS_LIST_JOBS_RESULT
 )
+
+# A failed call prints nothing, which would pass for a Jenkins with no jobs.
+if (NOT JENKINS_LIST_JOBS_RESULT EQUAL 0)
+    message(FATAL_ERROR "Failed to list the Jenkins jobs of http://127.0.0.1:${JENKINS_PIPELINES_PANEL_HTTP_PORT}/ (jenkins-cli list-jobs exit code: ${JENKINS_LIST_JOBS_RESULT})")
+endif()
 
 string(REPLACE "\n" ";" JENKINS_ALL_JOBS_LIST "${JENKINS_ALL_JOBS_STRING}")
 list(REMOVE_ITEM JENKINS_ALL_JOBS_LIST "")
@@ -61,7 +67,12 @@ foreach(JENKINS_JOB IN LISTS JENKINS_ALL_JOBS_LIST)
                 -auth ${JENKINS_CLI_LOGIN}:${JENKINS_CLI_SECRET} 
                 -s http://127.0.0.1:${JENKINS_PIPELINES_PANEL_HTTP_PORT}/ get-job "${JENKINS_JOB}"
         OUTPUT_VARIABLE JENKINS_JOB_XML_CONF
+        RESULT_VARIABLE JENKINS_GET_JOB_RESULT
     )
+
+    if (NOT JENKINS_GET_JOB_RESULT EQUAL 0)
+        message(FATAL_ERROR "Failed to export the Jenkins job '${JENKINS_JOB}' (jenkins-cli get-job exit code: ${JENKINS_GET_JOB_RESULT})")
+    endif()
 
     file(WRITE "${JENKINS_JOB_PATH}" "${JENKINS_JOB_XML_CONF}")
 endforeach()

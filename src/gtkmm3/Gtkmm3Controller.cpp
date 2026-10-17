@@ -50,7 +50,7 @@ int Gtkmm3Controller::run(std::shared_ptr<app::ApplicationContext> nactx)
 
   if (!window->init()) {
     LOGE("Fail to init the main window");
-    return false;
+    return app::IApplication::INVALID;
   }
 
   LOGD("Starting the GTK3 app");

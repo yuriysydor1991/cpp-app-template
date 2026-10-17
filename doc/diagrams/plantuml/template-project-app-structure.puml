@@ -27,6 +27,10 @@ class ApplicationContext {
   -bool mprint_version_and_exit{false}
   -std::vector<std::string> merrors
   -std::atomic_bool mstop{false}
+  -std::atomic_bool mpause{false}
+  -std::atomic_bool mreload{false}
+  -std::atomic_bool mfirst_user_request{false}
+  -std::atomic_bool msecond_user_request{false}
   +int& get_argc() const
   +char**& get_argv() const
   +bool get_print_help_and_exit() const
@@ -37,6 +41,14 @@ class ApplicationContext {
   +void push_error(const std::string& errorDescription)
   +bool get_stop() const
   +void set_stop(const bool newValue)
+  +bool get_pause() const
+  +void set_pause(const bool newValue)
+  +bool get_reload() const
+  +void set_reload(const bool newValue)
+  +bool get_first_user_request() const
+  +void set_first_user_request(const bool newValue)
+  +bool get_second_user_request() const
+  +void set_second_user_request(const bool newValue)
 }
 
 package Facade {
@@ -48,6 +60,7 @@ package Facade {
     +{abstract} std::shared_ptr<IApplication> create_help_printer()
     +{abstract} std::shared_ptr<IApplication> create_version_printer()
     +{abstract} std::shared_ptr<ApplicationContext> create_context(int& gargc, char**& gargv)
+    +{abstract} bool init_logging(std::shared_ptr<ApplicationContext> ctx)
     +{abstract} std::shared_ptr<IApplication> create_application(std::shared_ptr<ApplicationContext> ctx)
     +{abstract} int run(int& gargc, char**& gargv)
     +{static} int execute(int& gargc, char**& gargv)
@@ -83,10 +96,74 @@ package Signals-handlers {
   class SignalsHandler {
     +{abstract} bool install(std::shared_ptr<ApplicationContext> ctx)
     +{abstract} void uninstall()
+    #{abstract} std::vector<std::shared_ptr<ISignalsHandler>> create_handlers()
+    -std::vector<std::shared_ptr<ISignalsHandler>> mhandlers
+  }
+
+  abstract class ASignalsHandler {
+    +{abstract} bool install(std::shared_ptr<ApplicationContext> ctx)
+    +{abstract} void uninstall()
     #{abstract} const std::set<int>& get_handled_signals()
-    #{static} void stop_context(int signalNumber)
-    -{static} inline std::atomic<ApplicationContext*> mstopping_context{nullptr}
-    -std::set<int> minstalled_signals
+    #{abstract} SignalDisposition get_signal_disposition()
+    #{abstract} void store_context(ApplicationContext* ctx)
+    -std::map<int, SignalDisposition> mprevious_dispositions
+  }
+
+  package posix {
+    abstract class PosixSignalsHandler {
+    }
+
+    class StopSignalsHandler {
+      #const std::set<int>& get_handled_signals()
+      #SignalDisposition get_signal_disposition()
+      #void store_context(ApplicationContext* ctx)
+      #{static} void stop_context(int signalNumber)
+      -{static} inline std::atomic<ApplicationContext*> mhandled_context{nullptr}
+    }
+    note bottom of StopSignalsHandler : SIGINT, SIGTERM, SIGQUIT
+
+    class PauseSignalsHandler {
+      #const std::set<int>& get_handled_signals()
+      #SignalDisposition get_signal_disposition()
+      #void store_context(ApplicationContext* ctx)
+      #{static} void pause_context(int signalNumber)
+      -{static} inline std::atomic<ApplicationContext*> mhandled_context{nullptr}
+    }
+    note bottom of PauseSignalsHandler : SIGTSTP
+
+    class ContinueSignalsHandler {
+      #const std::set<int>& get_handled_signals()
+      #SignalDisposition get_signal_disposition()
+      #void store_context(ApplicationContext* ctx)
+      #{static} void continue_context(int signalNumber)
+      -{static} inline std::atomic<ApplicationContext*> mhandled_context{nullptr}
+    }
+    note bottom of ContinueSignalsHandler : SIGCONT
+
+    class ReloadSignalsHandler {
+      #const std::set<int>& get_handled_signals()
+      #SignalDisposition get_signal_disposition()
+      #void store_context(ApplicationContext* ctx)
+      #{static} void reload_context(int signalNumber)
+      -{static} inline std::atomic<ApplicationContext*> mhandled_context{nullptr}
+    }
+    note bottom of ReloadSignalsHandler : SIGHUP
+
+    class UserSignalsHandler {
+      #const std::set<int>& get_handled_signals()
+      #SignalDisposition get_signal_disposition()
+      #void store_context(ApplicationContext* ctx)
+      #{static} void request_context(int signalNumber)
+      -{static} inline std::atomic<ApplicationContext*> mhandled_context{nullptr}
+    }
+    note bottom of UserSignalsHandler : SIGUSR1, SIGUSR2
+
+    class IgnoredSignalsHandler {
+      #const std::set<int>& get_handled_signals()
+      #SignalDisposition get_signal_disposition()
+      #void store_context(ApplicationContext* ctx)
+    }
+    note bottom of IgnoredSignalsHandler : SIGPIPE (SIG_IGN)
   }
 }
 
@@ -112,6 +189,15 @@ ApplicationFactory <.. ISignalsHandler
 ApplicationFactory <.. SignalsHandler
 
 ISignalsHandler <|.. SignalsHandler
+ISignalsHandler <|.. ASignalsHandler
+ASignalsHandler <|-- PosixSignalsHandler
+PosixSignalsHandler <|-- StopSignalsHandler
+PosixSignalsHandler <|-- PauseSignalsHandler
+PosixSignalsHandler <|-- ContinueSignalsHandler
+PosixSignalsHandler <|-- ReloadSignalsHandler
+PosixSignalsHandler <|-- UserSignalsHandler
+PosixSignalsHandler <|-- IgnoredSignalsHandler
+SignalsHandler o-- ISignalsHandler : mhandlers
 
 CommandLineParser <.. CMDParamNames
 

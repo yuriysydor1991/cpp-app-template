@@ -1,6 +1,5 @@
 #include "src/gtkmm3/log/GtkLogBridge.h"
 
-#include <cstring>
 #include <filesystem>
 #include <string>
 
@@ -184,29 +183,9 @@ unsigned short GtkLogBridge::severity_of(const GLogLevelFlags logLevel)
 bool GtkLogBridge::toolkit_would_drop(const GLogLevelFlags logLevel,
                                       const gchar* const domain)
 {
-#if GLIB_CHECK_VERSION(2, 68, 0)
+  // The enabler requires the GLib 2.68 or a newer one, which brought the
+  // g_log_writer_default_would_drop in.
   return g_log_writer_default_would_drop(logLevel, domain) != FALSE;
-#else
-  // The GLib of this build carries no g_log_writer_default_would_drop, which
-  // arrived with the 2.68 one, so the rule of it's default writer is applied
-  // by hand: an info or a debug message of a domain the G_MESSAGES_DEBUG
-  // variable does not name is dropped and every other level is kept.
-  if ((logLevel & (G_LOG_LEVEL_INFO | G_LOG_LEVEL_DEBUG)) == 0) {
-    return false;
-  }
-
-  const gchar* const switchedOn = g_getenv("G_MESSAGES_DEBUG");
-
-  if (switchedOn == nullptr) {
-    return true;
-  }
-
-  if (g_strcmp0(switchedOn, "all") == 0) {
-    return false;
-  }
-
-  return domain == nullptr || std::strstr(switchedOn, domain) == nullptr;
-#endif  // GLIB_CHECK_VERSION
 }
 
 bool GtkLogBridge::field_value(const GLogField* const fields,

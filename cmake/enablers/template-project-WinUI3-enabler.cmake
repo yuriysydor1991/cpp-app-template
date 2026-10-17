@@ -34,6 +34,15 @@ if(NOT MSVC)
   message(WARNING "WinUI 3 + C++/WinRT is only supported with the MSVC toolchain")
 endif()
 
+# The Windows App SDK ships its native libraries per target architecture.
+string(TOLOWER "${CMAKE_CXX_COMPILER_ARCHITECTURE_ID}" WINUI3_ARCH)
+
+if(NOT WINUI3_ARCH MATCHES "^(x64|x86|arm64)$")
+  message(FATAL_ERROR
+    "The Windows App SDK supports the x64, x86 and arm64 targets only, not "
+    "'${CMAKE_CXX_COMPILER_ARCHITECTURE_ID}'")
+endif()
+
 set(
   TEMPLATE_APP_WINAPPSDK_VERSION "1.6.250228001"
   CACHE STRING "The Microsoft.WindowsAppSDK NuGet package version to restore"
@@ -96,7 +105,7 @@ target_include_directories(
 target_link_libraries(
   winui3-sdk INTERFACE
   WindowsApp.lib
-  "${WINAPPSDK_ROOT}/lib/win10-x64/Microsoft.WindowsAppRuntime.Bootstrap.lib"
+  "${WINAPPSDK_ROOT}/lib/win10-${WINUI3_ARCH}/Microsoft.WindowsAppRuntime.Bootstrap.lib"
 )
 
-message(STATUS "WinUI 3 SDK target 'winui3::sdk' configured (Windows App SDK ${TEMPLATE_APP_WINAPPSDK_VERSION}, C++/WinRT ${TEMPLATE_APP_CPPWINRT_VERSION})")
+message(STATUS "WinUI 3 SDK target 'winui3::sdk' configured (Windows App SDK ${TEMPLATE_APP_WINAPPSDK_VERSION}, C++/WinRT ${TEMPLATE_APP_CPPWINRT_VERSION}, ${WINUI3_ARCH})")

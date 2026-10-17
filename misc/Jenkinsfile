@@ -192,12 +192,12 @@ pipeline {
         }
         stage('CTEST_GtkLogBridge') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_GtkLogBridge\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_GtkLogBridge.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_GtkLogBridge\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_GtkLogBridge.junit.xml'
           }
         }
         stage('CTEST_StopFlagWatcher') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_StopFlagWatcher\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_StopFlagWatcher.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_StopFlagWatcher\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_StopFlagWatcher.junit.xml'
           }
         }
       }

@@ -255,8 +255,6 @@ TEST_F(CTEST_app, execute_success)
 
 TEST_F(CTEST_app, execute_failure)
 {
-  MockFunction<void(MySQLController&)> controllerEnsurer;
-
   EXPECT_CALL(controllerEnsurer, Call)
       .Times(1)
       .WillOnce(Invoke([](MySQLController& i) {

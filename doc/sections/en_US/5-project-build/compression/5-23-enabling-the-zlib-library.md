@@ -124,7 +124,11 @@ void write_gz_file(const std::string& path,
     gzclose(f);
     throw std::runtime_error("gzwrite failed");
   }
-  gzclose(f);
+  // gzclose() flushes the pending compressed data: a failing flush shows up
+  // only through its result
+  if (gzclose(f) != Z_OK) {
+    throw std::runtime_error("gzclose (write) failed");
+  }
 }
 
 std::vector<unsigned char> read_gz_file(const std::string& path)
@@ -139,7 +143,12 @@ std::vector<unsigned char> read_gz_file(const std::string& path)
   while ((n = gzread(f, buf, sizeof(buf))) > 0) {
     out.insert(out.end(), buf, buf + n);
   }
-  gzclose(f);
+  // gzread() gives -1 on a read or a data error, and gzclose() reports a
+  // truncated file (Z_BUF_ERROR)
+  const int closed = gzclose(f);
+  if (n < 0 || closed != Z_OK) {
+    throw std::runtime_error("gzread failed: a damaged or truncated file");
+  }
   return out;
 }
 ```

@@ -8,7 +8,7 @@ A windowed (GUI) application belongs to the application menus of the desktop, wh
 cmake -S . -B build -DENABLE_DESKTOP_APPLICATION=ON
 ```
 
-With the variable on, the install step places the [desktop entry](https://specifications.freedesktop.org/desktop-entry-spec/latest/) and the icon of the application into the `share/applications` and the `share/icons/hicolor/scalable/apps` directories, both named after the reverse DNS id of the application (e.g. `ua.org.kytok.template.CppAppTemplate.desktop`), and every packager marks the application as a desktop one:
+With the variable on, the install step places the [desktop entry](https://specifications.freedesktop.org/desktop-entry-spec/latest/) and the icon of the application into the `share/applications` and the `share/icons/hicolor/scalable/apps` directories, both named after the reverse DNS id of the application (e.g. `ua.org.kytok.template.FreeGlut.CppAppTemplate.desktop`), and every packager marks the application as a desktop one:
 
 - the flatpak exports the desktop entry and the icon to the desktop menus, and its [AppStream](https://www.freedesktop.org/software/appstream/docs/) metainfo turns into a `desktop-application` component launched through that desktop entry;
 - the snap gets the desktop entry and the `desktop`, `desktop-legacy`, `wayland`, `x11` and `opengl` interfaces a window needs;

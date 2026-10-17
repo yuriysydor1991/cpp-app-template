@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.13)
 
-set(FLATPAK_PROJECT_URL ua.org.kytok.template.${PROJECT_BINARY_NAME}.FreeGlut)
+set(FLATPAK_PROJECT_URL ua.org.kytok.template.FreeGlut.${PROJECT_BINARY_NAME})
 
 option(
   ENABLE_FLATPAK_METAINFO

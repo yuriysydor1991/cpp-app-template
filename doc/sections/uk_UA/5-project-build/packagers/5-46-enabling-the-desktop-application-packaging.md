@@ -8,7 +8,7 @@
 cmake -S . -B build -DENABLE_DESKTOP_APPLICATION=ON
 ```
 
-Коли змінна увімкнена, крок встановлення розміщує [файл робочого столу](https://specifications.freedesktop.org/desktop-entry-spec/latest/) і піктограму застосунку в каталогах `share/applications` та `share/icons/hicolor/scalable/apps`, обидва названі за зворотним DNS ідентифікатором застосунку (наприклад, `ua.org.kytok.template.CppAppTemplate.desktop`), і кожен пакувальник позначає застосунок як застосунок робочого столу:
+Коли змінна увімкнена, крок встановлення розміщує [файл робочого столу](https://specifications.freedesktop.org/desktop-entry-spec/latest/) і піктограму застосунку в каталогах `share/applications` та `share/icons/hicolor/scalable/apps`, обидва названі за зворотним DNS ідентифікатором застосунку (наприклад, `ua.org.kytok.template.FreeGlut.CppAppTemplate.desktop`), і кожен пакувальник позначає застосунок як застосунок робочого столу:
 
 - flatpak експортує файл робочого столу та піктограму до меню робочого столу, а його метаінформація [AppStream](https://www.freedesktop.org/software/appstream/docs/) стає компонентом `desktop-application`, який запускається через цей файл робочого столу;
 - snap отримує файл робочого столу та інтерфейси `desktop`, `desktop-legacy`, `wayland`, `x11` і `opengl`, потрібні вікну;

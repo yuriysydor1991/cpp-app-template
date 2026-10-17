@@ -228,7 +228,7 @@
         1. [Вмикання підтримки генерування пакунків FreeBSD pkg з cpack](/doc/sections/uk_UA/5-project-build/packagers/5-20-enabling-FreeBSD-pkg-package-generation-with-cpack.md)
         1. [Вмикання підтримки генерування WIX MSI-пакетів з cpack](/doc/sections/uk_UA/5-project-build/packagers/5-21-enabling-WIX-MSI-package-generation-with-cpack.md)
         1. [Вмикання підтримки генерування RPM-пакунків з cpack](/doc/sections/uk_UA/5-project-build/packagers/5-22-enabling-RPM-package-generation-with-cpack.md)
-        1. [Вмикання пакувальника AppImage](/doc/sections/uk_UA/5-project-build/packagers/5-38-enabling-the-AppImage-packager.md)
+        1. [Вмикання пакувальника AppImage](/doc/sections/uk_UA/5-project-build/packagers/5-37-enabling-the-AppImage-packager.md)
         1. [Вмикання пакування застосунку робочого столу](/doc/sections/uk_UA/5-project-build/packagers/5-46-enabling-the-desktop-application-packaging.md)
     1. Бібліотеки
         1. [Вмикання інтеграції libcurl](/doc/sections/uk_UA/5-project-build/5-14-enabling-libcurl.md)
@@ -251,7 +251,7 @@
         1. [Вмикання інтеграції libavif (AVIF)](/doc/sections/uk_UA/5-project-build/image-libraries/5-32-enabling-the-libavif-library.md)
         1. [Вмикання інтеграції libheif (HEIF/HEIC)](/doc/sections/uk_UA/5-project-build/image-libraries/5-33-enabling-the-libheif-library.md)
     1. Іконки
-        1. [Вмикання іконок Font Awesome](/doc/sections/uk_UA/5-project-build/icons/5-37-enabling-the-fontawesome-icons.md)
+        1. [Вмикання іконок Font Awesome](/doc/sections/uk_UA/5-project-build/icons/5-38-enabling-the-fontawesome-icons.md)
 1. [Запуск головного виконуваного файлу](/doc/sections/uk_UA/6-run-the-executable/6-run-the-executable.md)
     1. [Запуск через IDE](/doc/sections/uk_UA/6-run-the-executable/6-1-IDE-run.md)
     1. Запуск з терміналу

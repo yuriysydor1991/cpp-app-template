@@ -20,4 +20,4 @@ sudo apt install -y libfuse2t64
 
 Без цієї бібліотеки і інструмент, і згенерований пакунок все ще можливо запустити з опцією `--appimage-extract-and-run` або зі встановленою змінною середовища `APPIMAGE_EXTRACT_AND_RUN=1`.
 
-Деталі у секції [Вмикання пакувальника AppImage](/doc/sections/uk_UA/5-project-build/packagers/5-38-enabling-the-AppImage-packager.md).
+Деталі у секції [Вмикання пакувальника AppImage](/doc/sections/uk_UA/5-project-build/packagers/5-37-enabling-the-AppImage-packager.md).

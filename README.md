@@ -227,7 +227,7 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
         1. [Enabling FreeBSD pkg package generation with cpack](/doc/sections/en_US/5-project-build/packagers/5-20-enabling-FreeBSD-pkg-package-generation-with-cpack.md)
         1. [Enabling WIX MSI package generation with cpack](/doc/sections/en_US/5-project-build/packagers/5-21-enabling-WIX-MSI-package-generation-with-cpack.md)
         1. [Enabling RPM package generation with cpack](/doc/sections/en_US/5-project-build/packagers/5-22-enabling-RPM-package-generation-with-cpack.md)
-        1. [Enabling the AppImage packager](/doc/sections/en_US/5-project-build/packagers/5-38-enabling-the-AppImage-packager.md)
+        1. [Enabling the AppImage packager](/doc/sections/en_US/5-project-build/packagers/5-37-enabling-the-AppImage-packager.md)
         1. [Enabling the desktop application packaging](/doc/sections/en_US/5-project-build/packagers/5-46-enabling-the-desktop-application-packaging.md)
     1. Libraries
         1. [Enabling the libcurl](/doc/sections/en_US/5-project-build/5-14-enabling-libcurl.md)
@@ -250,7 +250,7 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
         1. [Enabling the libavif library (AVIF)](/doc/sections/en_US/5-project-build/image-libraries/5-32-enabling-the-libavif-library.md)
         1. [Enabling the libheif library (HEIF/HEIC)](/doc/sections/en_US/5-project-build/image-libraries/5-33-enabling-the-libheif-library.md)
     1. Icons
-        1. [Enabling the Font Awesome icons](/doc/sections/en_US/5-project-build/icons/5-37-enabling-the-fontawesome-icons.md)
+        1. [Enabling the Font Awesome icons](/doc/sections/en_US/5-project-build/icons/5-38-enabling-the-fontawesome-icons.md)
 1. [Run the executable](/doc/sections/en_US/6-run-the-executable/6-run-the-executable.md)
     1. [IDE run](/doc/sections/en_US/6-run-the-executable/6-1-IDE-run.md)
     1. Command line run

@@ -13,6 +13,15 @@ apps:
     command: ${PROJECT_BINARY_INSTALLATION_DIR}/${PROJECT_BINARY_NAME}${SNAP_APP_DESKTOP}
     plugs:
       - home${SNAP_APP_DESKTOP_PLUGS}
+    slots:
+      - dbus-server
+
+# the server owns its well known name on the session bus
+slots:
+  dbus-server:
+    interface: dbus
+    bus: session
+    name: org.cppapptemplate.SimpleServer
 
 parts:
   ${PROJECT_BINARY_NAME}:
@@ -22,3 +31,6 @@ parts:
     cmake-parameters:
       - -DCMAKE_BUILD_TYPE=Release
       - -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
+    build-packages:
+      - pkg-config
+      - libsystemd-dev

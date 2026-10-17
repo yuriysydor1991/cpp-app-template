@@ -4,6 +4,9 @@
   "runtime-version": "24.08",
   "sdk": "org.freedesktop.Sdk",
   "command": "${PROJECT_BINARY_NAME}",
+  "finish-args": [
+    "--own-name=org.cppapptemplate.SimpleServer"
+  ],
   "modules": [
     {
       "name": "sdbus-c++",

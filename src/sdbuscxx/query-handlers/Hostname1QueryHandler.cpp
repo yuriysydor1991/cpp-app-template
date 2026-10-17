@@ -34,8 +34,8 @@ bool Hostname1QueryHandler::handle(sdbus::IConnection* connection)
   return true;
 }
 
-Hostname1QueryHandler::Hostname1Properties
-Hostname1QueryHandler::fetch_properties(sdbus::IConnection* connection)
+Hostname1Properties Hostname1QueryHandler::fetch_properties(
+    sdbus::IConnection* connection)
 {
   assert(connection != nullptr);
 

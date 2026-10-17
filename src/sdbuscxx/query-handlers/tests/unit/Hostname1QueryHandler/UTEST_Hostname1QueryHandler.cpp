@@ -34,9 +34,6 @@ sdbus::IConnection* fake_connection()
 class TestableHostname1QueryHandler : public Hostname1QueryHandler
 {
  public:
-  // Re-export the protected result type so the test bodies can name it.
-  using Hostname1QueryHandler::Hostname1Properties;
-
   std::function<Hostname1Properties(sdbus::IConnection*)> onFetchProperties;
 
  protected:
@@ -65,7 +62,7 @@ TEST_F(UTEST_Hostname1QueryHandler, handle_returns_true_on_successful_fetch)
   handler.onFetchProperties = [&](sdbus::IConnection* connection) {
     received = connection;
 
-    TestableHostname1QueryHandler::Hostname1Properties props;
+    Hostname1Properties props;
     props.hostname = "unit-test-host";
     props.prettyHostname = "Unit Test Host";
     props.osPrettyName = "UnitTestOS 1.0";
@@ -79,8 +76,7 @@ TEST_F(UTEST_Hostname1QueryHandler, handle_returns_true_on_successful_fetch)
 
 TEST_F(UTEST_Hostname1QueryHandler, handle_returns_false_on_dbus_error)
 {
-  handler.onFetchProperties = [&](sdbus::IConnection*)
-      -> TestableHostname1QueryHandler::Hostname1Properties {
+  handler.onFetchProperties = [&](sdbus::IConnection*) -> Hostname1Properties {
     throw sdbus::Error(
         sdbus::Error::Name{"org.freedesktop.DBus.Error.ServiceUnknown"},
         "The name org.freedesktop.hostname1 was not provided by any .service "
@@ -96,7 +92,7 @@ TEST_F(UTEST_Hostname1QueryHandler, handle_returns_false_on_null_connection)
 
   handler.onFetchProperties = [&](sdbus::IConnection*) {
     fetchCalled = true;
-    return TestableHostname1QueryHandler::Hostname1Properties{};
+    return Hostname1Properties{};
   };
 
   // Asserts are compiled out for the unit tests (NDEBUG), so the explicit

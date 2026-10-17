@@ -191,7 +191,7 @@ pipeline {
         }
         stage('CTEST_controller') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_controller\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_controller.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_controller\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_controller.junit.xml'
           }
         }
       }

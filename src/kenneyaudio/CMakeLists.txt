@@ -11,14 +11,20 @@ if (NOT ENABLE_KENNEY_AUDIO)
   )
 endif()
 
+# The sources come out of the KENNEY_AUDIO_SUBSYSTEM_SOURCES list of
+# src/CMakeLists.txt, the very one the app tests build, so no source is listed
+# twice. The generated index carries the sound paths of the very packs the
+# project has been configured with, so the whole set is reachable from the code
+# with no run time directory scanning: the kenney audio enabler writes it and
+# points the KENNEY_AUDIO_GENERATED_SOUNDS_SOURCE variable at it.
 add_library(
-  TemplateProjectKenneySoundObj OBJECT
-  KenneySound.cpp
-  KenneyRootDirectory.cpp
+  TemplateProjectKenneyAudioObj OBJECT
+  ${KENNEY_AUDIO_SUBSYSTEM_SOURCES}
+  ${KENNEY_AUDIO_GENERATED_SOUNDS_SOURCE}
 )
 
 target_include_directories(
-  TemplateProjectKenneySoundObj
+  TemplateProjectKenneyAudioObj
   PRIVATE
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
@@ -26,12 +32,8 @@ target_include_directories(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  TemplateProjectKenneySoundObj
+  TemplateProjectKenneyAudioObj
 )
 
-add_subdirectory(packs)
-add_subdirectory(sounds)
-add_subdirectory(resources)
 add_subdirectory(player)
-add_subdirectory(controller)
 add_subdirectory(tests)

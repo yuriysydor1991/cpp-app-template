@@ -202,7 +202,12 @@ function(template_project_freesound_audio_generate_index)
     foreach(categoryFile IN LISTS categoryFiles)
       file(RELATIVE_PATH categoryRelative "${categoryDir}" "${categoryFile}")
 
-      list(APPEND names "             \"${categoryRelative}\"")
+      # A file name is free to carry the characters a C++ string literal
+      # gives a meaning of it's own.
+      string(REPLACE "\\" "\\\\" categoryRelativeLiteral "${categoryRelative}")
+      string(REPLACE "\"" "\\\"" categoryRelativeLiteral "${categoryRelativeLiteral}")
+
+      list(APPEND names "             \"${categoryRelativeLiteral}\"")
 
       set(soundAlias "${category}/${categoryRelative}")
       list(FIND FREESOUND_AUDIO_SOUNDS "${soundAlias}" soundIndex)
@@ -216,15 +221,17 @@ function(template_project_freesound_audio_generate_index)
 
       list(GET FREESOUND_AUDIO_SOUND_LICENSES ${soundIndex} soundLicense)
       list(GET FREESOUND_AUDIO_SOUND_URLS ${soundIndex} soundUrl)
+      string(REPLACE "\\" "\\\\" soundAliasLiteral "${soundAlias}")
+      string(REPLACE "\"" "\\\"" soundAliasLiteral "${soundAliasLiteral}")
 
       string(
         APPEND FREESOUND_AUDIO_GENERATED_LICENSES
-        "      {\"${soundAlias}\", \"${soundLicense}\"},\n"
+        "      {\"${soundAliasLiteral}\", \"${soundLicense}\"},\n"
       )
 
       string(
         APPEND FREESOUND_AUDIO_GENERATED_SOURCES
-        "      {\"${soundAlias}\", \"${soundUrl}\"},\n"
+        "      {\"${soundAliasLiteral}\", \"${soundUrl}\"},\n"
       )
     endforeach()
 

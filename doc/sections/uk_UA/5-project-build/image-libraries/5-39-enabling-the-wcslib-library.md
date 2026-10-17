@@ -11,6 +11,8 @@ cmake --build build --target all
 
 Модуль [cmake/enablers/images/template-project-wcslib-enabler.cmake](/cmake/enablers/images/template-project-wcslib-enabler.cmake) шукає встановлену в системі версію через `pkg-config`. Якщо в системі нічого не знайдено, то натомість завантажується архів вихідних кодів `TEMPLATE_APP_WCSLIB_URL`, який перевіряється за значенням `TEMPLATE_APP_WCSLIB_URL_HASH`. WCSLIB постачається лише зі збіркою autotools, тому функція `template_project_autotools_3rdparty_build` модуля [cmake/tools/template-project-autotools-build-function.cmake](/cmake/tools/template-project-autotools-build-function.cmake) збирає її власним скриптом `configure` та GNU `make` одразу під час конфігурування, один раз на директорію побудови, і встановлює в директорію `_deps/wcslib-install`, де її потім знаходить той самий пошук через `pkg-config`. Для цього шляху потрібні компілятор C, GNU `make` і шлях до директорії побудови без пробілів, оскільки make-файли WCSLIB не беруть свої директорії встановлення в лапки.
 
+У гілці `appCFITSIO` приклад `src/WCSLIB` потребує бібліотеки, тож значення `OFF` зупиняє конфігурацію з поясненням, доки з файлу `src/CMakeLists.txt` не буде вилучено виклик `add_subdirectory(WCSLIB)` разом з підкаталогом `src/WCSLIB` і використанням WCSLIB у файлі `src/app/applications/Application.cpp`.
+
 Обидва шляхи надають ту саму ціль `WCSLIB::wcslib`, тому прилінковуй її до своїх цільових об'єктів:
 
 ```

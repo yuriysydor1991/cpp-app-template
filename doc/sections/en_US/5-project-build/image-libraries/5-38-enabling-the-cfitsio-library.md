@@ -11,6 +11,8 @@ cmake --build build --target all
 
 The [cmake/enablers/images/template-project-cfitsio-enabler.cmake](/cmake/enablers/images/template-project-cfitsio-enabler.cmake) module probes the system installation with `pkg-config`, since every CFITSIO installation ships a `cfitsio.pc` file while a CMake package one comes with the upstream CMake install alone. When no system installation is found the sources of the `TEMPLATE_APP_CFITSIO_GIT_TAG` tag get fetched from the `TEMPLATE_APP_CFITSIO_GIT` repository instead, which requires the zlib development files to be available.
 
+On the `appCFITSIO` branch the `src/CFITSIO` example requires the library, so turning the option `OFF` stops the configuration with an explanation, until the `add_subdirectory(CFITSIO)` call of the `src/CMakeLists.txt` file is dropped together with the `src/CFITSIO` subdirectory and the CFITSIO usage of the `src/app/applications/Application.cpp` file.
+
 Both of the paths provide the very same `CFITSIO::cfitsio` target, so link it to your target(s) of interest:
 
 ```

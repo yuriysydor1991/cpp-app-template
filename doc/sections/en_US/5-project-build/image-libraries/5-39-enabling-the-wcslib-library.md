@@ -11,6 +11,8 @@ cmake --build build --target all
 
 The [cmake/enablers/images/template-project-wcslib-enabler.cmake](/cmake/enablers/images/template-project-wcslib-enabler.cmake) module probes the system installation with `pkg-config`. When no system installation is found the `TEMPLATE_APP_WCSLIB_URL` source archive gets fetched instead and checked against the `TEMPLATE_APP_WCSLIB_URL_HASH` value. WCSLIB ships an autotools build alone, so the `template_project_autotools_3rdparty_build` function of the [cmake/tools/template-project-autotools-build-function.cmake](/cmake/tools/template-project-autotools-build-function.cmake) module builds it by its own `configure` script and GNU `make` right at the configure time, once per build tree, and installs it into the `_deps/wcslib-install` directory, where the very same `pkg-config` probe finds it then. That path requires a C compiler, GNU `make` and a build directory path without spaces, since the WCSLIB makefiles do not quote their install directories.
 
+On the `appCFITSIO` branch the `src/WCSLIB` example requires the library, so turning the option `OFF` stops the configuration with an explanation, until the `add_subdirectory(WCSLIB)` call of the `src/CMakeLists.txt` file is dropped together with the `src/WCSLIB` subdirectory and the WCSLIB usage of the `src/app/applications/Application.cpp` file.
+
 Both of the paths provide the very same `WCSLIB::wcslib` target, so link it to your target(s) of interest:
 
 ```

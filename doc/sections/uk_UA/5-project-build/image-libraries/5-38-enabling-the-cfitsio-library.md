@@ -11,6 +11,8 @@ cmake --build build --target all
 
 Модуль [cmake/enablers/images/template-project-cfitsio-enabler.cmake](/cmake/enablers/images/template-project-cfitsio-enabler.cmake) шукає встановлену в системі версію через `pkg-config`, оскільки кожна установка CFITSIO містить файл `cfitsio.pc`, тоді як пакетний файл CMake постачається лише разом зі встановленням через CMake. Якщо в системі нічого не знайдено, то натомість завантажуються вихідні коди тегу `TEMPLATE_APP_CFITSIO_GIT_TAG` з репозиторію `TEMPLATE_APP_CFITSIO_GIT`, для збирання яких необхідні файли розробки zlib.
 
+У гілці `appCFITSIO` приклад `src/CFITSIO` потребує бібліотеки, тож значення `OFF` зупиняє конфігурацію з поясненням, доки з файлу `src/CMakeLists.txt` не буде вилучено виклик `add_subdirectory(CFITSIO)` разом з підкаталогом `src/CFITSIO` і використанням CFITSIO у файлі `src/app/applications/Application.cpp`.
+
 Обидва шляхи надають ту саму ціль `CFITSIO::cfitsio`, тому прилінковуй її до своїх цільових об'єктів:
 
 ```

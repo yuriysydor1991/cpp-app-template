@@ -1,5 +1,16 @@
 cmake_minimum_required(VERSION 3.13)
 
+if (NOT ENABLE_CFITSIO)
+  message(
+    FATAL_ERROR
+    "The src/CFITSIO sources require the CFITSIO library which is turned off by "
+    "the ENABLE_CFITSIO=OFF parameter. Drop the add_subdirectory(CFITSIO) call from the "
+    "src/CMakeLists.txt file together with the whole src/CFITSIO subdirectory "
+    "and the CFITSIO usage of the src/app/applications/Application.cpp file to "
+    "build the project without the CFITSIO library."
+  )
+endif()
+
 add_library(
   TemplateProjectCFITSIOControllerObj OBJECT
   CFITSIOContext.cpp

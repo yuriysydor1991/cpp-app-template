@@ -224,7 +224,12 @@ function(template_project_opengameart_audio_generate_index)
 
     foreach(packFile IN LISTS packFiles)
       file(RELATIVE_PATH packRelative "${packDir}" "${packFile}")
-      list(APPEND names "         \"${packRelative}\"")
+
+      # A file name is free to carry the characters a C++ string literal
+      # gives a meaning of it's own.
+      string(REPLACE "\\" "\\\\" packRelativeLiteral "${packRelative}")
+      string(REPLACE "\"" "\\\"" packRelativeLiteral "${packRelativeLiteral}")
+      list(APPEND names "         \"${packRelativeLiteral}\"")
     endforeach()
 
     list(LENGTH names packCount)

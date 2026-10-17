@@ -75,6 +75,18 @@ endfunction()
 
 # Writes the given manifest only when it's content differs from the already
 # written one, so a repeated configure run rebuilds no resources.
+# Gives the given text with the characters an XML attribute or element gives a
+# meaning of it's own replaced by their entities, since a sound file name is
+# free to carry them.
+function(template_project_opengameart_audio_xml_escape text outputVar)
+  string(REPLACE "&" "&amp;" text "${text}")
+  string(REPLACE "<" "&lt;" text "${text}")
+  string(REPLACE ">" "&gt;" text "${text}")
+  string(REPLACE "\"" "&quot;" text "${text}")
+
+  set(${outputVar} "${text}" PARENT_SCOPE)
+endfunction()
+
 function(template_project_opengameart_audio_write_manifest outputFile content)
   file(WRITE "${outputFile}.tmp" "${content}")
 
@@ -112,17 +124,19 @@ function(template_project_opengameart_audio_write_qrc outputFile)
     PACKS ${ARG_PACKS}
     SOUNDS ${ARG_SOUNDS})
 
-  set(entries "")
+  # The entities carry semicolons, hence a plain text rather than a CMake list.
+  set(entriesText "")
 
   foreach(alias IN LISTS aliases)
-    list(APPEND entries "    <file alias=\"${alias}\">${OPENGAMEART_AUDIO_ROOT_DIR}/${alias}</file>")
+    template_project_opengameart_audio_xml_escape("${alias}" xmlAlias)
+    template_project_opengameart_audio_xml_escape("${OPENGAMEART_AUDIO_ROOT_DIR}/${alias}" xmlPath)
+    string(APPEND entriesText "    <file alias=\"${xmlAlias}\">${xmlPath}</file>\n")
   endforeach()
 
-  string(JOIN "\n" entriesText ${entries})
 
   template_project_opengameart_audio_write_manifest(
     "${outputFile}"
-    "<!DOCTYPE RCC><RCC version=\"1.0\">\n  <qresource prefix=\"${ARG_PREFIX}\">\n${entriesText}\n  </qresource>\n</RCC>\n")
+    "<!DOCTYPE RCC><RCC version=\"1.0\">\n  <qresource prefix=\"${ARG_PREFIX}\">\n${entriesText}  </qresource>\n</RCC>\n")
 
   list(LENGTH aliases count)
 
@@ -172,17 +186,19 @@ function(template_project_opengameart_audio_write_gresource outputFile)
     PACKS ${ARG_PACKS}
     SOUNDS ${ARG_SOUNDS})
 
-  set(entries "")
+  # The entities carry semicolons, hence a plain text rather than a CMake list.
+  set(entriesText "")
 
   foreach(alias IN LISTS aliases)
-    list(APPEND entries "    <file alias=\"${alias}\"${compressedAttribute}>${OPENGAMEART_AUDIO_ROOT_DIR}/${alias}</file>")
+    template_project_opengameart_audio_xml_escape("${alias}" xmlAlias)
+    template_project_opengameart_audio_xml_escape("${OPENGAMEART_AUDIO_ROOT_DIR}/${alias}" xmlPath)
+    string(APPEND entriesText "    <file alias=\"${xmlAlias}\"${compressedAttribute}>${xmlPath}</file>\n")
   endforeach()
 
-  string(JOIN "\n" entriesText ${entries})
 
   template_project_opengameart_audio_write_manifest(
     "${outputFile}"
-    "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<gresources>\n  <gresource prefix=\"${ARG_PREFIX}\">\n${entriesText}\n  </gresource>\n</gresources>\n")
+    "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<gresources>\n  <gresource prefix=\"${ARG_PREFIX}\">\n${entriesText}  </gresource>\n</gresources>\n")
 
   list(LENGTH aliases count)
 

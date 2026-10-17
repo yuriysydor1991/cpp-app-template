@@ -28,7 +28,6 @@ target_include_directories(
   PRIVATE
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
-    ${CURL_INCLUDE_DIRS}
 )
 
 target_link_libraries(

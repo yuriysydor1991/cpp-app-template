@@ -9,6 +9,7 @@
 // from the Windows SDK + Windows App SDK metadata; see the WinUI 3 enabler and
 // the documentation for how that generation is wired on a Windows host.
 
+#include <windows.h>
 #include <winrt/Microsoft.UI.Xaml.Controls.h>
 #include <winrt/Microsoft.UI.Xaml.Markup.h>
 #include <winrt/Microsoft.UI.Xaml.Media.h>

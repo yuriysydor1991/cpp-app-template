@@ -29,6 +29,18 @@ add_subdirectory(app)
 # launch seam instead.
 if(WIN32 AND TARGET winui3::sdk)
   add_subdirectory(main-window)
+
+  # The Windows App SDK bootstrapper DLL is loaded from the executable directory.
+  add_custom_command(
+    TARGET ${PROJECT_BINARY_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different "${WINUI3_BOOTSTRAP_DLL}"
+            "$<TARGET_FILE_DIR:${PROJECT_BINARY_NAME}>"
+  )
+
+  install(
+    FILES "${WINUI3_BOOTSTRAP_DLL}"
+    DESTINATION ${PROJECT_BINARY_INSTALLATION_DIR}
+  )
 endif()
 
 add_subdirectory(tests)

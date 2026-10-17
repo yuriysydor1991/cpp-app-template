@@ -101,17 +101,17 @@ pipeline {
       parallel {
         stage('UTEST_DeviceInfoHandlerFactory') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_DeviceInfoHandlerFactory\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_DeviceInfoHandlerFactory.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_DeviceInfoHandlerFactory\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_DeviceInfoHandlerFactory.junit.xml'
           }
         }
         stage('UTEST_PhysicalDeviceInfoHandler') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_PhysicalDeviceInfoHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_PhysicalDeviceInfoHandler.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_PhysicalDeviceInfoHandler\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_PhysicalDeviceInfoHandler.junit.xml'
           }
         }
         stage('UTEST_VulkanController') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_VulkanController\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_VulkanController.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_VulkanController\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_VulkanController.junit.xml'
           }
         }
         stage('UTEST_Application') { 
@@ -192,17 +192,17 @@ pipeline {
       parallel {
         stage('CTEST_PhysicalDeviceInfoHandler') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_PhysicalDeviceInfoHandler\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_PhysicalDeviceInfoHandler.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_PhysicalDeviceInfoHandler\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_PhysicalDeviceInfoHandler.junit.xml'
           }
         }
         stage('CTEST_VulkanController') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_VulkanController\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_VulkanController.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_VulkanController\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_VulkanController.junit.xml'
           }
         }
         stage('CTEST_VulkanDmabufRenderer') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_VulkanDmabufRenderer\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_VulkanDmabufRenderer.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_VulkanDmabufRenderer\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_VulkanDmabufRenderer.junit.xml'
           }
         }
         stage('CTEST_DefaultLogger') {
@@ -222,12 +222,12 @@ pipeline {
         }
         stage('CTEST_GtkLogBridge') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_GtkLogBridge\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_GtkLogBridge.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_GtkLogBridge\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_GtkLogBridge.junit.xml'
           }
         }
         stage('CTEST_StopFlagWatcher') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_StopFlagWatcher\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_StopFlagWatcher.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_StopFlagWatcher\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_StopFlagWatcher.junit.xml'
           }
         }
       }

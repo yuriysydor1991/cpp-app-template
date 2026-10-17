@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 
+#include "NoWaitClaudeController.h"
 #include "src/CURL/CURLController.h"
 #include "src/claude/ClaudeController.h"
 
@@ -18,7 +19,7 @@ class UTEST_ClaudeController : public Test
  public:
   UTEST_ClaudeController()
       : curl{std::make_shared<curli::CURLController>()},
-        controller{std::make_shared<ClaudeController>(curl)}
+        controller{std::make_shared<NoWaitClaudeController>(curl)}
   {
   }
 
@@ -185,7 +186,8 @@ TEST_F(UTEST_ClaudeController, empty_response_gives_no_answer)
   EXPECT_TRUE(controller->set_token(token));
 
   EXPECT_CALL(*curl, post(_, _, _))
-      .WillOnce(Return(curli::CURLController::download_buffer{}));
+      .Times(ClaudeController::MAX_ATTEMPTS)
+      .WillRepeatedly(Return(curli::CURLController::download_buffer{}));
 
   EXPECT_TRUE(controller->ask(question, {}).empty());
 }
@@ -195,6 +197,55 @@ TEST_F(UTEST_ClaudeController, contentless_response_gives_no_answer)
   EXPECT_TRUE(controller->set_token(token));
 
   expect_answered_with(R"({"stop_reason":"end_turn"})");
+
+  EXPECT_TRUE(controller->ask(question, {}).empty());
+}
+
+TEST_F(UTEST_ClaudeController, an_overloaded_endpoint_is_asked_again)
+{
+  EXPECT_TRUE(controller->set_token(token));
+
+  EXPECT_CALL(*curl, post(_, _, _))
+      .WillOnce(Return(
+          as_buffer(R"({"type":"error","error":{"type":"overloaded_error",)"
+                    R"("message":"Overloaded"}})")))
+      .WillOnce(Return(as_buffer(answer_with("Public goods."))));
+
+  EXPECT_CALL(*curl, last_response_code())
+      .WillOnce(Return(529L))
+      .WillRepeatedly(Return(200L));
+  EXPECT_CALL(*curl, last_response_successful()).WillRepeatedly(Return(true));
+
+  EXPECT_EQ(controller->ask(question, {}), "Public goods.");
+}
+
+TEST_F(UTEST_ClaudeController, a_failing_endpoint_is_given_up_on)
+{
+  EXPECT_TRUE(controller->set_token(token));
+
+  EXPECT_CALL(*curl, post(_, _, _))
+      .Times(ClaudeController::MAX_ATTEMPTS)
+      .WillRepeatedly(
+          Return(as_buffer(R"({"type":"error","error":{"type":"api_error",)"
+                           R"("message":"Internal server error"}})")));
+
+  EXPECT_CALL(*curl, last_response_code()).WillRepeatedly(Return(500L));
+  EXPECT_CALL(*curl, last_response_successful()).WillRepeatedly(Return(false));
+
+  EXPECT_TRUE(controller->ask(question, {}).empty());
+}
+
+TEST_F(UTEST_ClaudeController, a_rejected_request_is_not_asked_again)
+{
+  EXPECT_TRUE(controller->set_token(token));
+
+  EXPECT_CALL(*curl, post(_, _, _))
+      .WillOnce(Return(as_buffer(
+          R"({"type":"error","error":{"type":"invalid_request_error",)"
+          R"("message":"max_tokens: too large"}})")));
+
+  EXPECT_CALL(*curl, last_response_code()).WillRepeatedly(Return(400L));
+  EXPECT_CALL(*curl, last_response_successful()).WillRepeatedly(Return(false));
 
   EXPECT_TRUE(controller->ask(question, {}).empty());
 }

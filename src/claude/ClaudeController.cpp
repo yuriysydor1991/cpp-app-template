@@ -4,6 +4,7 @@
 #include <memory>
 #include <nlohmann/json.hpp>
 #include <string>
+#include <thread>
 #include <vector>
 
 #include "src/CURL/CURLController.h"
@@ -176,12 +177,29 @@ std::string ClaudeController::ask(const std::string& question,
 
   const std::string& askedModel = model.empty() ? DEFAULT_MODEL : model;
 
-  LOGT("Asking the " << askedModel << " model");
+  const std::string request = build_request(question, askedModel);
+  const std::vector<std::string> headers = build_headers();
 
-  const auto& received =
-      curl->post(API_URL, build_request(question, askedModel), build_headers());
+  std::string response;
 
-  const std::string response{received.cbegin(), received.cend()};
+  for (unsigned int attempt = 1U;; ++attempt) {
+    LOGT("Asking the " << askedModel << " model, the attempt " << attempt);
+
+    const auto& received = curl->post(API_URL, request, headers);
+
+    response.assign(received.cbegin(), received.cend());
+
+    const long code = curl->last_response_code();
+
+    if (attempt >= MAX_ATTEMPTS || !retryable(!response.empty(), code)) {
+      break;
+    }
+
+    LOGW("The Anthropic API call failed with the " << code
+                                                   << " HTTP status, retrying");
+
+    wait_before_retry(attempt);
+  }
 
   if (response.empty()) {
     LOGE("No response received from the Anthropic API");
@@ -194,6 +212,28 @@ std::string ClaudeController::ask(const std::string& question,
   }
 
   return extract_answer(response);
+}
+
+bool ClaudeController::retryable(const bool answered, const long code)
+{
+  static constexpr const long timeout = 408L;
+  static constexpr const long conflict = 409L;
+  static constexpr const long rateLimited = 429L;
+  static constexpr const long serverErrors = 500L;
+
+  // No status at all is a lost connection, while an empty answer of a
+  // successful call is no failure of the endpoint.
+  if (code == 0L) {
+    return !answered;
+  }
+
+  return code == timeout || code == conflict || code == rateLimited ||
+         code >= serverErrors;
+}
+
+void ClaudeController::wait_before_retry(const unsigned int attempt) const
+{
+  std::this_thread::sleep_for(RETRY_DELAY * (1U << (attempt - 1U)));
 }
 
 ClaudeControllerPtr ClaudeController::create()

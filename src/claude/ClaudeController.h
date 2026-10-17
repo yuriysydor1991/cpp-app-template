@@ -1,6 +1,7 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_CLAUDECONTROLLER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_CLAUDECONTROLLER_CLASS_H
 
+#include <chrono>
 #include <memory>
 #include <string>
 #include <vector>
@@ -44,6 +45,14 @@ class ClaudeController
   /// it has no server side default to fall back to.
   inline static constexpr const unsigned int DEFAULT_MAX_TOKENS{16000U};
 
+  /// @brief The calls made for a single question at most: the first one and
+  /// the two retries the Anthropic SDKs make for an overloaded, a rate limited
+  /// or a failing endpoint and for a lost connection.
+  inline static constexpr const unsigned int MAX_ATTEMPTS{3U};
+
+  /// @brief The wait before the first retry, doubled for every next one.
+  inline static constexpr const std::chrono::milliseconds RETRY_DELAY{500};
+
   virtual ~ClaudeController() = default;
   ClaudeController();
   explicit ClaudeController(curli::CURLControllerPtr curlController);
@@ -77,6 +86,10 @@ class ClaudeController
    * @param question The question to ask the model about.
    * @param model The model to ask. The DEFAULT_MODEL one is asked when the
    * value is empty.
+   *
+   * The call is repeated up to the MAX_ATTEMPTS times when no answer arrives
+   * or the endpoint answers with the 408, 409, 429 or any 5xx (the 529
+   * overloaded one included) HTTP status.
    *
    * @return Returns the model answer or an empty string in case of any error.
    */
@@ -118,6 +131,14 @@ class ClaudeController
    */
   static std::string extract_answer(const std::string& response);
 
+  /// @brief Tells whether a call ended so is worth repeating.
+  static bool retryable(const bool answered, const long code);
+
+ protected:
+  /// @brief Waits the RETRY_DELAY doubled for every attempt made already.
+  virtual void wait_before_retry(const unsigned int attempt) const;
+
+ private:
   curli::CURLControllerPtr curl;
   std::string token;
 };

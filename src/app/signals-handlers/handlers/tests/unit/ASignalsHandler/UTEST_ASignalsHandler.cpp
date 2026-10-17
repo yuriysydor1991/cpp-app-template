@@ -71,6 +71,10 @@ class TestSignalsHandler : public ASignalsHandler
   }
 };
 
+/// @brief A routine standing for the disposition a signal had before the
+/// TestSignalsHandler took it over.
+static void previous_routine([[maybe_unused]] int signalNumber) {}
+
 class UTEST_ASignalsHandler : public Test
 {
  public:
@@ -216,4 +220,53 @@ TEST_F(UTEST_ASignalsHandler, the_descendant_destructor_releases_the_signals)
   EXPECT_EQ(TestSignalsHandler::handledContext.load(), nullptr);
 
   expect_the_default_dispositions();
+}
+
+TEST_F(UTEST_ASignalsHandler, uninstall_restores_the_previous_dispositions)
+{
+  std::signal(SIGINT, &previous_routine);
+
+  EXPECT_TRUE(handler->install(appCtx));
+
+  handler->uninstall();
+
+  EXPECT_EQ(std::signal(SIGINT, SIG_DFL), &previous_routine);
+}
+
+TEST_F(UTEST_ASignalsHandler, an_inherited_ignored_signal_stays_ignored)
+{
+  TestSignalsHandler::handledSignals = {SIGINT, SIGTERM};
+
+  std::signal(SIGINT, SIG_IGN);
+
+  EXPECT_TRUE(handler->install(appCtx));
+
+  std::raise(SIGINT);
+
+  EXPECT_EQ(TestSignalsHandler::touchesCount.load(), 0);
+  EXPECT_FALSE(appCtx->get_stop());
+
+  std::raise(SIGTERM);
+
+  // False positive: the raise does return, since the installed handler
+  // does return too.
+  // cppcheck-suppress unreachableCode
+  EXPECT_EQ(TestSignalsHandler::touchesCount.load(), 1);
+  EXPECT_TRUE(appCtx->get_stop());
+
+  handler->uninstall();
+
+  EXPECT_EQ(std::signal(SIGINT, SIG_DFL), SIG_IGN);
+  EXPECT_EQ(std::signal(SIGTERM, SIG_DFL), SIG_DFL);
+}
+
+TEST_F(UTEST_ASignalsHandler, an_only_inherited_ignored_category_is_covered)
+{
+  std::signal(SIGINT, SIG_IGN);
+
+  EXPECT_TRUE(handler->install(appCtx));
+
+  handler->uninstall();
+
+  EXPECT_EQ(std::signal(SIGINT, SIG_DFL), SIG_IGN);
 }

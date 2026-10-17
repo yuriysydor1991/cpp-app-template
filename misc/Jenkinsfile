@@ -100,27 +100,27 @@ pipeline {
       parallel {
         stage('UTEST_DisabledFbClient') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_DisabledFbClient\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_DisabledFbClient.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_DisabledFbClient\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_DisabledFbClient.junit.xml'
           }
         }
         stage('UTEST_FbConnStringMaker') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_FbConnStringMaker\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_FbConnStringMaker.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_FbConnStringMaker\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_FbConnStringMaker.junit.xml'
           }
         }
         stage('UTEST_FbDpbBuilder') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_FbDpbBuilder\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_FbDpbBuilder.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_FbDpbBuilder\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_FbDpbBuilder.junit.xml'
           }
         }
         stage('UTEST_Firebird') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_Firebird\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_Firebird.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_Firebird\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_Firebird.junit.xml'
           }
         }
         stage('UTEST_QueryMaker') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_QueryMaker\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_QueryMaker.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_QueryMaker\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_QueryMaker.junit.xml'
           }
         }
         stage('UTEST_Application') { 
@@ -201,7 +201,7 @@ pipeline {
       parallel {
         stage('CTEST_Firebird') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_Firebird\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_Firebird.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_Firebird\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_Firebird.junit.xml'
           }
         }
         stage('CTEST_DefaultLogger') {

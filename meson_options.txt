@@ -137,7 +137,7 @@ option(
   value: 3,
   min: 0,
   max: 5,
-  description: 'Maximum severity of the compiled log messages. Error=0. Trace=5.'
+  description: 'Maximum severity of the compiled log messages. Error=1. Trace=5.'
 )
 
 option(

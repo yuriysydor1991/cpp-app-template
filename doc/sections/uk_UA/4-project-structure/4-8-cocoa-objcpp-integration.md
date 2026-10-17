@@ -4,7 +4,7 @@
 
 ### Вимоги
 
-Хост macOS з інструментами командного рядка Xcode (`xcode-select --install`) надає clang з фронтендом Objective-C++ і фреймворк Cocoa. CMake (>= 3.13) керує збиранням нативно: компілює `.mm` як Objective-C++ і лінкує `-framework Cocoa`.
+Хост macOS з інструментами командного рядка Xcode (`xcode-select --install`) надає clang з фронтендом Objective-C++ і фреймворк Cocoa. CMake (>= 3.18 на macOS, для мови `OBJCXX` і виклику `find_library(... REQUIRED)`; >= 3.13 для платформонезалежного збирання деінде) керує збиранням нативно: компілює `.mm` як Objective-C++ і лінкує `-framework Cocoa`.
 
 ### Структура
 

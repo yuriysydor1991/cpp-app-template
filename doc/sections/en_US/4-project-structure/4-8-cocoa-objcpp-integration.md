@@ -4,7 +4,7 @@ This branch fast-starts a native macOS desktop application written with the [Coc
 
 ### Requirements
 
-A macOS host with the Xcode command line tools (`xcode-select --install`) provides clang with the Objective-C++ frontend and the Cocoa framework. CMake (>= 3.13) drives the build natively: it compiles `.mm` as Objective-C++ and links `-framework Cocoa`.
+A macOS host with the Xcode command line tools (`xcode-select --install`) provides clang with the Objective-C++ frontend and the Cocoa framework. CMake (>= 3.18 on macOS, for the `OBJCXX` language and the `find_library(... REQUIRED)` call; >= 3.13 for the portable build elsewhere) drives the build natively: it compiles `.mm` as Objective-C++ and links `-framework Cocoa`.
 
 ### Layout
 

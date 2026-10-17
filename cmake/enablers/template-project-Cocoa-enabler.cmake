@@ -29,6 +29,11 @@ if(NOT APPLE)
   return()
 endif()
 
+# The OBJCXX language needs CMake 3.16 and find_library(... REQUIRED) 3.18.
+if(CMAKE_VERSION VERSION_LESS 3.18)
+  message(FATAL_ERROR "The Cocoa / Objective-C++ build needs CMake 3.18 or newer, found ${CMAKE_VERSION}")
+endif()
+
 # The native window code is Objective-C++ (.mm); enable that language for the
 # build (it is only available with an Apple/clang toolchain).
 enable_language(OBJCXX)

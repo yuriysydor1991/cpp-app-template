@@ -9,8 +9,8 @@ import QtPositioning
  * Map element (backed by the QtPositioning coordinate types) using the bundled
  * "osm" geo services plugin. Unlike the appQt6LeafLet branch there is no
  * embedded web engine here - the tiles are drawn directly by the Qt Quick
- * scene graph, which makes this the native counterpart of the Leaflet/WebView
- * based map branch.
+ * scene graph, which makes this the native counterpart of the Leaflet/WebEngine
+ * based map branch (a WebEngineView).
  */
 Map {
   id: defaultMap

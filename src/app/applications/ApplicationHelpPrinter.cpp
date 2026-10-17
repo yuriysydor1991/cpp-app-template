@@ -3,6 +3,7 @@
 #include <cassert>
 #include <iostream>
 #include <memory>
+#include <string>
 
 #include "project-global-decls.h"
 #include "src/app/CMDParamNames.h"
@@ -19,6 +20,12 @@ int ApplicationHelpPrinter::run(std::shared_ptr<ApplicationContext> ctx)
   if (ctx == nullptr) {
     LOGE("No valid application context provided");
     return INVALID;
+  }
+
+  // The command line errors of the CommandLineParser come first, since a bad
+  // usage is the reason of the help message then.
+  for (const std::string& error : ctx->get_errors()) {
+    std::cerr << error << std::endl;
   }
 
   // Register and implement here command line parameters from the
@@ -42,7 +49,8 @@ int ApplicationHelpPrinter::run(std::shared_ptr<ApplicationContext> ctx)
             << std::endl
             << "\t" << CMDParamNames::LOGPATHW << " or "
             << CMDParamNames::LOGPATH
-            << " <path> - write the log messages into the given file"
+            << " <path> - append the log messages to the given file instead of "
+               "the default one"
             << std::endl
             << "\t" << CMDParamNames::TOKENW << " or " << CMDParamNames::TOKEN
             << " <token> - the OpenAI API token to authorize the ChatGPT "
@@ -58,7 +66,8 @@ int ApplicationHelpPrinter::run(std::shared_ptr<ApplicationContext> ctx)
             << liboaii::OAIController::DEFAULT_MODEL
             << " one is asked when omitted" << std::endl;
 
-  return 0;
+  // A help message printed because of a bad usage is a failure.
+  return ctx->get_errors().empty() ? 0 : INVALID;
 }
 
 }  // namespace app

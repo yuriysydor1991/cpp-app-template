@@ -20,6 +20,6 @@ Finally build the documentation by executing the command:
 cmake --build build --target Doxygen-doc
 ```
 
-Which in turn will generate the `doc/CppAppTemplate-html` directory (already added to the `.gitignore` file) which will contain the HTML-type documentation. In order to open and examine generated documentation open the `doc/CppAppTemplate-html/index.html` file. The `CppAppTemplate-html` directory name will change if changed default executable name for the project by setting a new value for the `PROJECT_NAME` in the `CMakeLists.txt` file or `PROJECT_LIBRARY_NAME` variable in the `template-project-misc-variables-declare.cmake` file or the `DOXYGEN_OUT_HTML_NAME` variable which in turn set the whole name for the directory.
+Which in turn will generate the `doc/CppAppTemplate-html` directory (already added to the `.gitignore` file) which will contain the HTML-type documentation. In order to open and examine generated documentation open the `doc/CppAppTemplate-html/index.html` file. The `CppAppTemplate-html` directory name will change if changed default executable name for the project by setting a new value for the `PROJECT_NAME` in the `CMakeLists.txt` file or `PROJECT_LIBRARY_NAME` variable in the `cmake/template-project-misc-variables-declare.cmake` file or the `DOXYGEN_OUT_HTML_NAME` variable which in turn set the whole name for the directory.
 
 The `doc/Doxyfile.in` file contains all available Doxygen configuration parameters which may be changed in order to change the documentation output.

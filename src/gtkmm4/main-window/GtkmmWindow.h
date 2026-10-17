@@ -1,6 +1,8 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMM4WINDOW_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMM4WINDOW_CLASS_H
 
+#include <vulkan/vulkan.h>
+
 #include <memory>
 #include <string>
 
@@ -29,14 +31,17 @@ namespace Gtkmm4i::main_window
 class GtkmmWindow : public Gtk::Window
 {
  public:
-  using GtkmmWindowPtr = std::shared_ptr<GtkmmWindow>;
-
-  GtkmmWindow();
+  /**
+   * @brief Builds the window contents.
+   *
+   * @param instance The shared Vulkan instance to render with (owned by the
+   * VulkanController and outliving the window), or VK_NULL_HANDLE for the
+   * plain black window.
+   */
+  explicit GtkmmWindow(VkInstance instance);
   ~GtkmmWindow() override;
 
-  bool init();
-
-  static GtkmmWindowPtr create();
+  bool init(VkInstance instance);
 
  protected:
   const std::string& get_default_title();
@@ -45,10 +50,12 @@ class GtkmmWindow : public Gtk::Window
   /**
    * @brief Tries to render a Vulkan frame, export it and show it.
    *
+   * @param instance The shared Vulkan instance to render with.
+   *
    * @return Returns true when the Vulkan dma-buf texture is shown and false
    * when the dma-buf path is unavailable and the caller should fall back.
    */
-  bool show_vulkan_surface();
+  bool show_vulkan_surface(VkInstance instance);
 
   /**
    * @brief Paints the window black through the embedded CSS resource.
@@ -76,8 +83,6 @@ class GtkmmWindow : public Gtk::Window
 
   Gtk::Picture picture;
 };
-
-using GtkmmWindowPtr = GtkmmWindow::GtkmmWindowPtr;
 
 }  // namespace Gtkmm4i::main_window
 

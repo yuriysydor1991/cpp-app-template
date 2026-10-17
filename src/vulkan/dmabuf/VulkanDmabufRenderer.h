@@ -17,7 +17,8 @@ namespace vulkani
  * exports it as a Linux dma-buf, so the GTK side can display genuine Vulkan
  * output in a Gtk::Picture (GTK4 exposes no Vulkan rendering widget).
  *
- * The pipeline is: create an instance + logical device that support the
+ * The pipeline is: on the shared instance (owned by the VulkanController)
+ * create a logical device that supports the
  * external-memory / dma-buf / DRM-format-modifier extensions, create a
  * DRM-format-modifier (linear) color image backed by exportable memory, clear
  * it through a render pass, wait for completion, then export the memory as a
@@ -45,6 +46,8 @@ class VulkanDmabufRenderer
   /**
    * @brief Creates a renderer that has already produced one cleared frame.
    *
+   * @param ninstance The shared Vulkan instance (API 1.2), which must outlive
+   * the renderer. A VK_NULL_HANDLE makes the creation fail right away.
    * @param width The image width in pixels.
    * @param height The image height in pixels.
    * @param r,g,b,a The normalized [0;1] clear color components.
@@ -52,7 +55,8 @@ class VulkanDmabufRenderer
    * @return The ready renderer holding an exported dma-buf, or an empty pointer
    * when the dma-buf rendering path is not available in this environment.
    */
-  static VulkanDmabufRendererPtr create(std::uint32_t width,
+  static VulkanDmabufRendererPtr create(VkInstance ninstance,
+                                        std::uint32_t width,
                                         std::uint32_t height, float r, float g,
                                         float b, float a);
 
@@ -65,7 +69,6 @@ class VulkanDmabufRenderer
   bool init(std::uint32_t width, std::uint32_t height, float r, float g,
             float b, float a);
 
-  bool create_instance();
   bool select_physical_device();
   bool create_logical_device();
   bool create_image(std::uint32_t width, std::uint32_t height);
@@ -80,6 +83,7 @@ class VulkanDmabufRenderer
 
   void cleanup();
 
+  /// @brief The shared instance, not owned by the renderer.
   VkInstance instance{VK_NULL_HANDLE};
   VkPhysicalDevice physicalDevice{VK_NULL_HANDLE};
   std::uint32_t queueFamily{0};

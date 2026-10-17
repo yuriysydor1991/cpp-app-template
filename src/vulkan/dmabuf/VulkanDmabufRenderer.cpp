@@ -71,11 +71,17 @@ bool device_supports_required_extensions(VkPhysicalDevice candidate)
 VulkanDmabufRenderer::~VulkanDmabufRenderer() { cleanup(); }
 
 VulkanDmabufRenderer::VulkanDmabufRendererPtr VulkanDmabufRenderer::create(
-    std::uint32_t width, std::uint32_t height, float r, float g, float b,
-    float a)
+    VkInstance ninstance, std::uint32_t width, std::uint32_t height, float r,
+    float g, float b, float a)
 {
+  if (ninstance == VK_NULL_HANDLE) {
+    LOGE("No Vulkan instance to render with");
+    return nullptr;
+  }
+
   auto renderer =
       std::unique_ptr<VulkanDmabufRenderer>(new VulkanDmabufRenderer());
+  renderer->instance = ninstance;
 
   if (!renderer->init(width, height, r, g, b, a)) {
     return nullptr;
@@ -87,35 +93,10 @@ VulkanDmabufRenderer::VulkanDmabufRendererPtr VulkanDmabufRenderer::create(
 bool VulkanDmabufRenderer::init(std::uint32_t width, std::uint32_t height,
                                 float r, float g, float b, float a)
 {
-  return create_instance() && select_physical_device() &&
-         create_logical_device() && create_image(width, height) &&
-         allocate_memory() && create_render_target(width, height) &&
+  return select_physical_device() && create_logical_device() &&
+         create_image(width, height) && allocate_memory() &&
+         create_render_target(width, height) &&
          render(width, height, r, g, b, a) && export_dmabuf(width, height);
-}
-
-bool VulkanDmabufRenderer::create_instance()
-{
-  VkApplicationInfo appInfo{};
-  appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
-  appInfo.pApplicationName = "cpp-app-template-gtkmm4-vulkan";
-  appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
-  appInfo.pEngineName = "cpp-app-template";
-  appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
-  appInfo.apiVersion = VK_API_VERSION_1_2;
-
-  VkInstanceCreateInfo createInfo{};
-  createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
-  createInfo.pApplicationInfo = &appInfo;
-
-  const VkResult result = vkCreateInstance(&createInfo, nullptr, &instance);
-
-  if (result != VK_SUCCESS) {
-    LOGE("vkCreateInstance failed with the VkResult code: " << result);
-    instance = VK_NULL_HANDLE;
-    return false;
-  }
-
-  return true;
 }
 
 bool VulkanDmabufRenderer::select_physical_device()
@@ -558,11 +539,6 @@ void VulkanDmabufRenderer::cleanup()
 
     vkDestroyDevice(device, nullptr);
     device = VK_NULL_HANDLE;
-  }
-
-  if (instance != VK_NULL_HANDLE) {
-    vkDestroyInstance(instance, nullptr);
-    instance = VK_NULL_HANDLE;
   }
 
   if (frameInfo.has_value() && frameInfo->fd >= 0) {

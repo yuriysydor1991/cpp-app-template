@@ -58,8 +58,10 @@ int Gtkmm4Controller::run(std::shared_ptr<app::ApplicationContext> nactx)
 
   // The command line belongs to the CommandLineParser alone, so the toolkit
   // gets the program name only and never rejects the application parameters.
+  // The window renders with the controller's instance, which outlives it.
   return app->make_window_and_run<main_window::GtkmmWindow>(
-      std::min(actx->get_argc(), 1), actx->get_argv());
+      std::min(actx->get_argc(), 1), actx->get_argv(),
+      vulkan->vulkan_instance());
 }
 
 }  // namespace Gtkmm4i

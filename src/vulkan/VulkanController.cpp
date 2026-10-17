@@ -70,6 +70,8 @@ bool VulkanController::init()
 
 bool VulkanController::inited() const { return instance != VK_NULL_HANDLE; }
 
+VkInstance VulkanController::vulkan_instance() const { return instance; }
+
 bool VulkanController::enumerate_physical_devices()
 {
   assert(instance != VK_NULL_HANDLE);

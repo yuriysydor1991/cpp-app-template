@@ -10,21 +10,21 @@
 namespace Gtkmm4i::main_window
 {
 
-GtkmmWindow::GtkmmWindow()
+GtkmmWindow::GtkmmWindow(VkInstance instance)
 {
-  if (!init()) {
+  if (!init(instance)) {
     LOGE("Fail to init");
   }
 }
 
 GtkmmWindow::~GtkmmWindow() = default;
 
-bool GtkmmWindow::init()
+bool GtkmmWindow::init(VkInstance instance)
 {
   set_title(get_default_title());
   set_default_size(W_DEFAULT_WIDTH, W_DEFAULT_HEIGHT);
 
-  if (!show_vulkan_surface()) {
+  if (!show_vulkan_surface(instance)) {
     LOGI(
         "Vulkan dma-buf surface unavailable; showing a plain black window "
         "instead");
@@ -34,10 +34,10 @@ bool GtkmmWindow::init()
   return true;
 }
 
-bool GtkmmWindow::show_vulkan_surface()
+bool GtkmmWindow::show_vulkan_surface(VkInstance instance)
 {
   renderer = vulkani::VulkanDmabufRenderer::create(
-      static_cast<std::uint32_t>(W_DEFAULT_WIDTH),
+      instance, static_cast<std::uint32_t>(W_DEFAULT_WIDTH),
       static_cast<std::uint32_t>(W_DEFAULT_HEIGHT), 0.0F, 0.0F, 0.0F, 1.0F);
 
   if (renderer == nullptr || !renderer->frame().has_value()) {
@@ -111,7 +111,5 @@ const std::string& GtkmmWindow::get_default_title()
 
   return default_title;
 }
-
-GtkmmWindowPtr GtkmmWindow::create() { return std::make_shared<GtkmmWindow>(); }
 
 }  // namespace Gtkmm4i::main_window

@@ -65,6 +65,18 @@ TEST_F(UTEST_VulkanController, run_returns_false_when_device_handler_fails)
   EXPECT_FALSE(controller->run());
 }
 
+TEST_F(UTEST_VulkanController, vulkan_instance_is_shared_after_create)
+{
+  VulkanController uninitialized;
+
+  EXPECT_EQ(uninitialized.vulkan_instance(), VK_NULL_HANDLE);
+
+  VulkanControllerPtr controller = VulkanController::create();
+
+  ASSERT_NE(controller, nullptr);
+  EXPECT_NE(controller->vulkan_instance(), VK_NULL_HANDLE);
+}
+
 TEST_F(UTEST_VulkanController, create_returns_null_when_instance_unavailable)
 {
   vkmock::fail_instance_creation() = true;
@@ -77,6 +89,6 @@ TEST_F(UTEST_VulkanController, exposes_expected_instance_parameters)
   EXPECT_STREQ(VulkanController::applicationName,
                "cpp-app-template-vulkan-app");
   EXPECT_STREQ(VulkanController::engineName, "cpp-app-template-vulkan-engine");
-  const std::uint32_t expectedApiVersion = VK_API_VERSION_1_0;
+  const std::uint32_t expectedApiVersion = VK_API_VERSION_1_2;
   EXPECT_EQ(VulkanController::apiVersion, expectedApiVersion);
 }

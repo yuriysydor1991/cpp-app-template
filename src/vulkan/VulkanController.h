@@ -14,8 +14,8 @@ namespace vulkani
 {
 
 /**
- * @brief Owns the Vulkan instance life cycle and drives the demonstration
- * work (the physical device enumeration and logging).
+ * @brief Owns the single Vulkan instance of the application and drives the
+ * demonstration work (the physical device enumeration and logging).
  *
  * The controller is created through the static create() factory which brings up
  * a VkInstance up front, so a non-null controller is always usable. The unit
@@ -37,8 +37,9 @@ class VulkanController
   inline static constexpr const char* const engineName =
       "cpp-app-template-vulkan-engine";
 
-  /// @brief The Vulkan API version the instance is created against.
-  inline static constexpr std::uint32_t apiVersion = VK_API_VERSION_1_0;
+  /// @brief The Vulkan API version the instance is created against: 1.2, since
+  /// the dma-buf renderer shares the instance and needs the 1.1+ queries.
+  inline static constexpr std::uint32_t apiVersion = VK_API_VERSION_1_2;
 
   virtual ~VulkanController();
   VulkanController() = default;
@@ -61,6 +62,14 @@ class VulkanController
    * Vulkan instance could not be created (no usable loader / driver).
    */
   static VulkanControllerPtr create();
+
+  /**
+   * @brief Provides the instance owned by the controller, so the other Vulkan
+   * users (the dma-buf renderer) share it instead of creating their own.
+   *
+   * @return The created instance, valid for as long as the controller lives.
+   */
+  VkInstance vulkan_instance() const;
 
  private:
   bool init();

@@ -48,6 +48,7 @@ typedef int VkResult;
 #define VK_VERSION_PATCH(version) (static_cast<std::uint32_t>(version) & 0xFFFu)
 
 #define VK_API_VERSION_1_0 VK_MAKE_VERSION(1, 0, 0)
+#define VK_API_VERSION_1_2 VK_MAKE_VERSION(1, 2, 0)
 
 #define VK_MAX_PHYSICAL_DEVICE_NAME_SIZE 256
 

@@ -30,7 +30,11 @@ template_project_main_binary = executable(
   cpp_args: template_project_extra_cpp_args,
   link_args: template_project_extra_link_args,
   install: true,
-  install_dir: 'bin'
+  install_dir: 'bin',
+  # The installed binary finds the project library next to it under any
+  # prefix - the deb, the rpm and the AppImage trees included - without the
+  # loader cache or the LD_LIBRARY_PATH.
+  install_rpath: join_paths('$ORIGIN', '..', get_option('libdir')),
 )
 
 if get_option('ENABLE_VALGRIND')

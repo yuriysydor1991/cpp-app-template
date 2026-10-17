@@ -7,27 +7,10 @@
 #include "src/qtdbus/QtDBusController.h"
 #include "src/qtdbus/query-handlers/DBusQueryHandlerFactory.h"
 #include "src/qtdbus/query-handlers/IDBusQueryHandler.h"
+#include "src/qtdbus/tests/unit/QtDBusController/TestableQtDBusController.h"
 
 using namespace testing;
 using namespace qtdbusi;
-
-namespace
-{
-
-/**
- * @brief Test double exposing the protected seams so run()'s orchestration may
- * be exercised without a live system bus: inited() is forced true and the
- * connection pointer handed to the (mocked) handler is an unused nullptr.
- */
-class TestableQtDBusController : public QtDBusController
-{
- protected:
-  bool init() override { return true; }
-  bool inited() const override { return true; }
-  QDBusConnection* connection_ptr() override { return nullptr; }
-};
-
-}  // namespace
 
 class UTEST_QtDBusController : public Test
 {

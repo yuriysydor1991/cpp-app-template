@@ -5,6 +5,7 @@
 #include <functional>
 
 #include "src/qtdbus/query-handlers/Hostname1QueryHandler.h"
+#include "src/qtdbus/query-handlers/tests/unit/Hostname1QueryHandler/TestableHostname1QueryHandler.h"
 
 class QDBusConnection;
 
@@ -18,38 +19,15 @@ namespace
  * @brief A non-null, opaque connection pointer.
  *
  * It is never dereferenced because the fetch_properties() seam is overridden in
- * the test double below, so a real QDBusConnection (which would require a live
- * bus and a QCoreApplication) is not needed to drive handle().
+ * the TestableHostname1QueryHandler double, so a real QDBusConnection (which
+ * would require a live bus and a QCoreApplication) is not needed to drive
+ * handle().
  */
 QDBusConnection* fake_connection()
 {
   static int placeholder{0};
   return reinterpret_cast<QDBusConnection*>(&placeholder);
 }
-
-/**
- * @brief Test double that replaces the only bus-touching method with a
- * configurable callback, so the handle() orchestration (and its LOGI logging)
- * can be exercised in isolation, without a live D-Bus.
- */
-class TestableHostname1QueryHandler : public Hostname1QueryHandler
-{
- public:
-  using Hostname1QueryHandler::Hostname1Properties;
-
-  std::function<bool(QDBusConnection*, Hostname1Properties&, QString&)> onFetch;
-
- protected:
-  bool fetch_properties(QDBusConnection* connection, Hostname1Properties& out,
-                        QString& error) override
-  {
-    if (onFetch) {
-      return onFetch(connection, out, error);
-    }
-
-    return false;
-  }
-};
 
 }  // namespace
 
@@ -63,8 +41,7 @@ TEST_F(UTEST_Hostname1QueryHandler, handle_returns_true_on_successful_fetch)
 {
   QDBusConnection* received = nullptr;
 
-  handler.onFetch = [&](QDBusConnection* connection,
-                        TestableHostname1QueryHandler::Hostname1Properties& out,
+  handler.onFetch = [&](QDBusConnection* connection, Hostname1Properties& out,
                         QString&) {
     received = connection;
 
@@ -84,8 +61,7 @@ TEST_F(UTEST_Hostname1QueryHandler, handle_returns_true_on_successful_fetch)
 
 TEST_F(UTEST_Hostname1QueryHandler, handle_returns_false_on_dbus_error)
 {
-  handler.onFetch = [&](QDBusConnection*,
-                        TestableHostname1QueryHandler::Hostname1Properties&,
+  handler.onFetch = [&](QDBusConnection*, Hostname1Properties&,
                         QString& error) {
     error = QStringLiteral(
         "org.freedesktop.DBus.Error.ServiceUnknown: the name "
@@ -100,9 +76,7 @@ TEST_F(UTEST_Hostname1QueryHandler, handle_returns_false_on_null_connection)
 {
   bool fetchCalled = false;
 
-  handler.onFetch = [&](QDBusConnection*,
-                        TestableHostname1QueryHandler::Hostname1Properties&,
-                        QString&) {
+  handler.onFetch = [&](QDBusConnection*, Hostname1Properties&, QString&) {
     fetchCalled = true;
     return true;
   };

@@ -3,6 +3,7 @@
 
 #include <QString>
 
+#include "src/qtdbus/query-handlers/Hostname1Properties.h"
 #include "src/qtdbus/query-handlers/IDBusQueryHandler.h"
 
 class QDBusConnection;
@@ -61,19 +62,6 @@ class Hostname1QueryHandler : public IDBusQueryHandler
   bool handle(QDBusConnection* connection) override;
 
  protected:
-  /**
-   * @brief The aggregated set of hostname1 properties read from the bus.
-   */
-  struct Hostname1Properties
-  {
-    QString hostname;
-    QString prettyHostname;
-    QString osPrettyName;
-    QString kernelName;
-    QString kernelRelease;
-    QString chassis;
-  };
-
   /**
    * @brief Reads the well known hostname1 properties from the bus in a single
    * org.freedesktop.DBus.Properties.GetAll round trip.

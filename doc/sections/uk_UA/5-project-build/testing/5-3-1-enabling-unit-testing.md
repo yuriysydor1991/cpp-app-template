@@ -7,3 +7,13 @@
 
 mkdir -vp build && cd build && cmake ../ -DENABLE_UNIT_TESTS=ON && cmake --build . --target all
 ```
+
+Компонентні тести (тести `CTEST_*`, які перевіряють декілька класів разом, наприклад тести журналювання кожної гілки) вмикаються окремою змінною `ENABLE_COMPONENT_TESTS`, отож для побудови усіх наявних тестів необхідно увімкнути обидві - так само, як це роблять конвеєри CI та `Debug` скрипти швидкої побудови (для GNU/Linux):
+
+```
+# у кореневій директорії проекту
+
+cmake -B build -S . -DENABLE_UNIT_TESTS=ON -DENABLE_COMPONENT_TESTS=ON && cmake --build build
+```
+
+Гілка без власних юніт-тестів (наприклад `main`) має лише компонентні тести, отож лише `ENABLE_UNIT_TESTS=ON` не побудує в ній жодного тесту.

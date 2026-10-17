@@ -19,7 +19,7 @@ target_include_directories(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  TemplateSQLiteControllerObj
+  PRIVATE TemplateSQLiteControllerObj
   SQLiteCpp
   sqlite3
   pthread

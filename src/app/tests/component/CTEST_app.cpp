@@ -253,92 +253,97 @@ TEST_F(CTEST_app, execute_success)
   EXPECT_EQ(status, 0);
 }
 
-TEST_F(CTEST_app, help_prints_the_options_without_a_log_file)
 TEST_F(CTEST_app, execute_failure)
 {
   MockFunction<void(MySQLController&)> controllerEnsurer;
+
   EXPECT_CALL(controllerEnsurer, Call)
       .Times(1)
       .WillOnce(Invoke([](MySQLController& i) {
         EXPECT_CALL(i, connect(_)).Times(1).WillOnce(Return(false));
         EXPECT_CALL(i, get_current_date).Times(0);
       }));
+
   MySQLController::onMockCreate = controllerEnsurer.AsStdFunction();
+
   int status = ApplicationFactory::execute(argc, argv);
+
   EXPECT_NE(status, 0);
-  {
-    testing::internal::CaptureStdout();
+}
 
-    EXPECT_EQ(execute_with({"--help"}), 0);
+TEST_F(CTEST_app, help_prints_the_options_without_a_log_file)
+{
+  testing::internal::CaptureStdout();
 
-    EXPECT_THAT(testing::internal::GetCapturedStdout(),
-                HasSubstr("--log-file"));
-    EXPECT_FALSE(std::filesystem::exists(default_log_file()));
-  }
+  EXPECT_EQ(execute_with({"--help"}), 0);
 
-  TEST_F(CTEST_app, version_prints_the_version_without_a_log_file)
-  {
-    testing::internal::CaptureStdout();
+  EXPECT_THAT(testing::internal::GetCapturedStdout(), HasSubstr("--log-file"));
+  EXPECT_FALSE(std::filesystem::exists(default_log_file()));
+}
 
-    EXPECT_EQ(execute_with({"--version"}), 0);
+TEST_F(CTEST_app, version_prints_the_version_without_a_log_file)
+{
+  testing::internal::CaptureStdout();
 
-    EXPECT_THAT(testing::internal::GetCapturedStdout(),
-                HasSubstr(project_decls::PROJECT_BUILD_VERSION));
-    EXPECT_FALSE(std::filesystem::exists(default_log_file()));
-  }
+  EXPECT_EQ(execute_with({"--version"}), 0);
 
-  TEST_F(CTEST_app, unknown_option_fails_with_the_help)
-  {
-    testing::internal::CaptureStdout();
-    testing::internal::CaptureStderr();
+  EXPECT_THAT(testing::internal::GetCapturedStdout(),
+              HasSubstr(project_decls::PROJECT_BUILD_VERSION));
+  EXPECT_FALSE(std::filesystem::exists(default_log_file()));
+}
 
-    EXPECT_NE(execute_with({"--bogus"}), 0);
+TEST_F(CTEST_app, unknown_option_fails_with_the_help)
+{
+  testing::internal::CaptureStdout();
+  testing::internal::CaptureStderr();
 
-    EXPECT_THAT(testing::internal::GetCapturedStderr(),
-                HasSubstr("Unknown parameter: --bogus"));
-    EXPECT_THAT(testing::internal::GetCapturedStdout(), HasSubstr("Usage:"));
-    EXPECT_FALSE(std::filesystem::exists(default_log_file()));
-  }
+  EXPECT_NE(execute_with({"--bogus"}), 0);
 
-  TEST_F(CTEST_app, missing_log_file_path_fails_with_the_help)
-  {
-    testing::internal::CaptureStdout();
-    testing::internal::CaptureStderr();
+  EXPECT_THAT(testing::internal::GetCapturedStderr(),
+              HasSubstr("Unknown parameter: --bogus"));
+  EXPECT_THAT(testing::internal::GetCapturedStdout(), HasSubstr("Usage:"));
+  EXPECT_FALSE(std::filesystem::exists(default_log_file()));
+}
 
-    EXPECT_NE(execute_with({"--log-file"}), 0);
+TEST_F(CTEST_app, missing_log_file_path_fails_with_the_help)
+{
+  testing::internal::CaptureStdout();
+  testing::internal::CaptureStderr();
 
-    testing::internal::GetCapturedStderr();
+  EXPECT_NE(execute_with({"--log-file"}), 0);
 
-    const std::string out = testing::internal::GetCapturedStdout();
+  testing::internal::GetCapturedStderr();
 
-    EXPECT_THAT(out, HasSubstr("Usage:"));
-    EXPECT_THAT(out, Not(HasSubstr(project_decls::PROJECT_BUILD_COMMIT)));
-  }
+  const std::string out = testing::internal::GetCapturedStdout();
 
-  TEST_F(CTEST_app, unopenable_log_file_fails_before_the_run)
-  {
-    static const std::string unopenable =
-        "no-such-directory-of-CTEST_app/CTEST_app.log";
+  EXPECT_THAT(out, HasSubstr("Usage:"));
+  EXPECT_THAT(out, Not(HasSubstr(project_decls::PROJECT_BUILD_COMMIT)));
+}
 
-    testing::internal::CaptureStderr();
+TEST_F(CTEST_app, unopenable_log_file_fails_before_the_run)
+{
+  static const std::string unopenable =
+      "no-such-directory-of-CTEST_app/CTEST_app.log";
 
-    EXPECT_NE(execute_with({"-l", unopenable}), 0);
+  testing::internal::CaptureStderr();
 
-    EXPECT_THAT(testing::internal::GetCapturedStderr(),
-                HasSubstr("Fail to open the log file at " + unopenable));
-    EXPECT_FALSE(std::filesystem::exists(default_log_file()));
-  }
+  EXPECT_NE(execute_with({"-l", unopenable}), 0);
 
-  TEST_F(CTEST_app, custom_log_file_is_used)
-  {
-    static const std::filesystem::path customLog{"CTEST_app.custom.log"};
+  EXPECT_THAT(testing::internal::GetCapturedStderr(),
+              HasSubstr("Fail to open the log file at " + unopenable));
+  EXPECT_FALSE(std::filesystem::exists(default_log_file()));
+}
 
-    std::filesystem::remove(customLog);
+TEST_F(CTEST_app, custom_log_file_is_used)
+{
+  static const std::filesystem::path customLog{"CTEST_app.custom.log"};
 
-    expect_the_default_run();
+  std::filesystem::remove(customLog);
 
-    EXPECT_EQ(execute_with({"--log-file", customLog.string()}), 0);
+  expect_the_default_run();
 
-    EXPECT_TRUE(std::filesystem::exists(customLog));
-    EXPECT_FALSE(std::filesystem::exists(default_log_file()));
-  }
+  EXPECT_EQ(execute_with({"--log-file", customLog.string()}), 0);
+
+  EXPECT_TRUE(std::filesystem::exists(customLog));
+  EXPECT_FALSE(std::filesystem::exists(default_log_file()));
+}

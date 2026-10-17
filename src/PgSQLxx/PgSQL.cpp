@@ -15,7 +15,7 @@ bool PgSQL::connect(std::shared_ptr<app::ApplicationContext> nctx)
   assert(nctx != nullptr);
 
   if (nctx == nullptr) {
-    LOGE("No valid application context provided")
+    LOGE("No valid application context provided");
     return false;
   }
 

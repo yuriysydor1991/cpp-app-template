@@ -50,7 +50,7 @@ This may also be found at: /var/jenkins_home/secrets/initialAdminPassword
 
 - інструментарій і аналізатори: `build-essential`, `cmake`, `meson` разом з `ninja-build`, `clang-format`, `clang-tidy`, `cppcheck`, `valgrind`, `doxygen` разом з `graphviz` та пакунки розробки GoogleTest і GoogleMock;
 - пакунки розробки кожної бібліотеки, з якою компонується гілка - Qt6 разом з модулями QML, QtCharts, Qt Location та WebView / WebEngine, Gtkmm-3 і Gtkmm-4 разом з libadwaita та WebKitGTK, SDL2, SDL3, SFML, FreeGLUT, Vulkan, OpenCV, CFITSIO разом з WCSLIB, giza, Boost, libcurl, nlohmann JSON, PostgreSQL, MySQL, Firebird та інші;
-- бібліотеки, для яких дистрибутив не постачає придатного пакунка, побудовані з їх первинних джерел: wxWidgets, Wt, SQLiteCpp, драйвери MongoDB для C і C++, MatPlot++, sdbus-c++ та PLplot;
+- бібліотеки, для яких дистрибутив не постачає придатного пакунка, побудовані з їх первинних джерел на тих ревізіях, які завантажують їхні гілки: wxWidgets, Wt, SQLiteCpp, драйвери MongoDB для C і C++, MatPlot++, sdbus-c++, PLplot, whisper.cpp та liboai;
 - пакувальники: `flatpak` разом з `flatpak-builder`, `appimagetool`, `rpm` та `dpkg-dev` зі складу `build-essential`.
 
 Пакувальники snap, FreeBSD pkg та WIX MSI залишились поза образом: перший потребує власних systemd та LXD, другий - `cpack`, зібраного з `libpkg`, а третій - хоста MS Windows.

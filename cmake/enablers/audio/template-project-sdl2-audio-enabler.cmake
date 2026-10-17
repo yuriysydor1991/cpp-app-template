@@ -52,4 +52,4 @@ endif()
 # Link the ${TEMPLATE_APP_SDL2_AUDIO_TARGET} target to your target(s) of
 # interest (e.g. the ${PROJECT_BINARY_NAME} executable or any of your own
 # libraries):
-#   target_link_libraries(${PROJECT_BINARY_NAME} ${TEMPLATE_APP_SDL2_AUDIO_TARGET})
+#   target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE ${TEMPLATE_APP_SDL2_AUDIO_TARGET})

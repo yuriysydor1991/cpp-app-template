@@ -147,4 +147,4 @@ message(STATUS "The whisper.cpp model: ${PROJECT_WHISPER_MODEL_PATH}")
 # Link the whisper target, the very same one for the system installed and the
 # fetched library, to your target(s) of interest (e.g. the
 # ${PROJECT_BINARY_NAME} executable or any of your own libraries):
-#   target_link_libraries(${PROJECT_BINARY_NAME} whisper)
+#   target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE whisper)

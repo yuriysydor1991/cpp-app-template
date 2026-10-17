@@ -23,8 +23,12 @@ class ApplicationHelpPrinter : public IApplication
    *
    * @param ctx Application's run context with command line parameters etc.
    *
+   * The command line errors of the context, if any, are printed into the
+   * stderr stream in front of the help message.
+   *
    * @return Returns the application return status. A zero value on the success
-   * and other value otherwise.
+   * and other value otherwise, the help message printed because of the
+   * command line errors of the context included.
    */
   virtual int run(std::shared_ptr<ApplicationContext> ctx) override;
 };

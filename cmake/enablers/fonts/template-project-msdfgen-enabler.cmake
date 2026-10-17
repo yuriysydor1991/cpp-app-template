@@ -42,4 +42,4 @@ endif()
 #   - system install, via find_package(msdfgen): msdfgen::msdfgen
 #   - FetchContent source build:                 msdfgen::msdfgen
 # For example:
-#   target_link_libraries(${PROJECT_BINARY_NAME} msdfgen::msdfgen)
+#   target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE msdfgen::msdfgen)

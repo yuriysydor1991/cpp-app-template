@@ -100,4 +100,4 @@ endif()
 # ${PROJECT_BINARY_NAME} executable or any of your own libraries):
 #   - local SDK directory only: Steamworks::Steamworks
 # For example:
-#   target_link_libraries(${PROJECT_BINARY_NAME} Steamworks::Steamworks)
+#   target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE Steamworks::Steamworks)

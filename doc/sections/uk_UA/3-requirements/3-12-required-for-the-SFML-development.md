@@ -43,7 +43,7 @@ cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=<vcpkg-root>/scripts/buildsystems/vcp
 
 ### Налаштування SFML-енейблера
 
-- `-DENABLE_SFML=OFF` вимикає всю інтеграцію з SFML.
+- `ENABLE_SFML` (за замовчуванням `ON`) призначена для проектів, що відмовляються від інтеграції з SFML: сирці шаблону (`src/SFML`, використання `SFMLController` у класі `Application` та їхні тести) використовують SFML безумовно, тож значення `-DENABLE_SFML=OFF` працює лише разом з їх видаленням.
 - `-DTEMPLATE_APP_SFML_GIT_TAG=<теґ>` обирає іншу ревізію SFML для побудови через `FetchContent` (типово `2.6.2`).
 
 ### Перевірка встановлення SFML

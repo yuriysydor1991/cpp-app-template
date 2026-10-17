@@ -43,7 +43,7 @@ If neither a system SFML nor vcpkg is available the `FetchContent` fallback stil
 
 ### Tuning the SFML enabler
 
-- `-DENABLE_SFML=OFF` disables the whole SFML integration.
+- `ENABLE_SFML` (`ON` by default) is there for the projects that drop the SFML integration: the template sources (`src/SFML`, the `SFMLController` usage of the `Application` class and their tests) use SFML unconditionally, so `-DENABLE_SFML=OFF` works only together with their removal.
 - `-DTEMPLATE_APP_SFML_GIT_TAG=<tag>` selects a different SFML revision for the `FetchContent` build (defaults to `2.6.2`).
 
 ### Verifying the SFML installation

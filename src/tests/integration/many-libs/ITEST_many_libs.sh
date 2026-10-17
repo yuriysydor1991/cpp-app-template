@@ -104,18 +104,51 @@ lib_project_name() { echo "CppAppTemplateLib$1"; }
 
 # The PROJECT_LIBRARY_NAME the template derives from the project name and the
 # project version. The minor version segment is a part of it by default.
-lib_target_name() { echo "$(lib_project_name "$1")-0.12"; }
+lib_target_name() { echo "$(lib_project_name "$1")-${TEMPLATE_VERSION}"; }
 
 # The library public C++ namespace, renamed by hand the way the template asks a
-# derived project to rename it.
-lib_namespace() { echo "$(lib_project_name "$1")012"; }
+# derived project to rename it. It keeps the version segment of the template.
+lib_namespace() { echo "$(lib_project_name "$1")${TEMPLATE_NAMESPACE#CppAppTemplate}"; }
 
 # The include guard stamp of the public headers, renamed along with it.
-lib_guard() { echo "CPP_APP_TEMPLATE_LIB$1_012_"; }
+lib_guard() { echo "CPP_APP_TEMPLATE_LIB$1_${TEMPLATE_GUARD#CPP_APP_TEMPLATE_}"; }
 
 # The library implementation C++ namespace, renamed along with them: it never
 # leaves the shared object, but its weak template instantiations may.
 lib_impl_namespace() { echo "lib$1impl"; }
+
+# Reads the version and the identifiers the generation renames out of the
+# template sources, since a version bump renames them by hand (see the 4-8
+# section) and the test has to follow without an edit of its own.
+read_template_identifiers()
+{
+  local facade="${SOURCE_DIR}/src/lib/facade/public/LibraryFacade.h"
+
+  TEMPLATE_VERSION="$(sed -n 's/^  VERSION \([0-9][0-9]*\.[0-9][0-9]*\)\..*$/\1/p' \
+    "${SOURCE_DIR}/CMakeLists.txt" | head -n 1)"
+  TEMPLATE_NAMESPACE="$(sed -n 's/^namespace \(CppAppTemplate[0-9][0-9]*\)$/\1/p' \
+    "${facade}" | head -n 1)"
+  TEMPLATE_GUARD="$(sed -n \
+    's/^#ifndef \(CPP_APP_TEMPLATE_[0-9][0-9]*_\)LIBRARYFACADE_CLASS_H$/\1/p' \
+    "${facade}" | head -n 1)"
+  TEMPLATE_IMPL_NAMESPACE="$(sed -n 's/^namespace \(lib[0-9][0-9]*impl\)$/\1/p' \
+    "${SOURCE_DIR}/src/lib/libmain/LibMain.h" | head -n 1)"
+
+  [ -n "${TEMPLATE_VERSION}" ] || fail "no project VERSION in the CMakeLists.txt"
+  [ -n "${TEMPLATE_NAMESPACE}" ] || fail "no public namespace in ${facade}"
+  [ -n "${TEMPLATE_GUARD}" ] || fail "no include guard stamp in ${facade}"
+  [ -n "${TEMPLATE_IMPL_NAMESPACE}" ] || fail "no implementation namespace found"
+}
+
+# Edits the given file in place with the given sed arguments. The GNU and the
+# BSD sed -i flags differ, so a temporary file is used instead.
+sed_in_place()
+{
+  local file="$1"
+  shift
+
+  sed "$@" "${file}" > "${file}.tmp" && mv "${file}.tmp" "${file}"
+}
 
 prepare_work_dir()
 {
@@ -147,12 +180,13 @@ generate_library_project()
   cp -R "${SOURCE_DIR}/CMakeLists.txt" "${SOURCE_DIR}/cmake" "${SOURCE_DIR}/src" \
     "${dst}/"
 
-  sed -i '/add_subdirectory(doc)/d' "${dst}/CMakeLists.txt"
+  sed_in_place "${dst}/CMakeLists.txt" -e '/add_subdirectory(doc)/d'
 
   # The whole point of the generation: give the project its own name, so the
   # template derives an own library name, an own installed headers directory
-  # and an own library namespace out of it.
-  sed -i "0,/^  CppAppTemplate$/s//  ${name}/" "${dst}/CMakeLists.txt"
+  # and an own library namespace out of it. The project() call is the only line
+  # holding the bare name.
+  sed_in_place "${dst}/CMakeLists.txt" -e "s/^  CppAppTemplate\$/  ${name}/"
 
   grep -q "^  ${name}$" "${dst}/CMakeLists.txt" || \
     fail "failed to rename the top level CMake project into ${name}"
@@ -164,11 +198,13 @@ generate_library_project()
   # the shared object even though the classes themselves do not. The logging
   # subsystem namespace is deliberately left alone - the hidden symbol
   # visibility of the library is what keeps those copies apart.
-  grep -rl --null -e 'CppAppTemplate012' -e 'CPP_APP_TEMPLATE_012_' -e 'lib0impl' \
-    "${dst}/src" | xargs -0 sed -i \
-      -e "s/CppAppTemplate012/$(lib_namespace "${index}")/g" \
-      -e "s/CPP_APP_TEMPLATE_012_/$(lib_guard "${index}")/g" \
-      -e "s/\blib0impl\b/$(lib_impl_namespace "${index}")/g"
+  grep -rl -e "${TEMPLATE_NAMESPACE}" -e "${TEMPLATE_GUARD}" \
+    -e "${TEMPLATE_IMPL_NAMESPACE}" "${dst}/src" | while IFS= read -r file; do
+    sed_in_place "${file}" \
+      -e "s/${TEMPLATE_NAMESPACE}/$(lib_namespace "${index}")/g" \
+      -e "s/${TEMPLATE_GUARD}/$(lib_guard "${index}")/g" \
+      -e "s/${TEMPLATE_IMPL_NAMESPACE}/$(lib_impl_namespace "${index}")/g"
+  done
 
   grep -q "namespace $(lib_namespace "${index}")$" \
     "${dst}/src/lib/facade/public/LibraryFacade.h" || \
@@ -176,15 +212,17 @@ generate_library_project()
 
   # The library user passes a number in and reads the answer back, the way the
   # template asks for the LibraryContext fields to be introduced.
-  sed -i \
-    's|  // Introduce here the library required data fields.|  int number{0};\n  int result{0};\n|' \
-    "${dst}/src/lib/facade/public/LibraryContext.h"
+  sed_in_place "${dst}/src/lib/facade/public/LibraryContext.h" \
+    -e 's|  // Introduce here the library required data fields.|  int number{0};\
+  int result{0};\
+|'
 
   # The library implementation itself. Every generated library answers with its
   # own generation index added to the given number.
-  sed -i \
-    "s|  LOGI(\"Your library implementation goes here!\");|  ctx->result = ctx->number + ${index};\n\n  LOGI(\"The library ${index} libcall\");|" \
-    "${dst}/src/lib/libmain/LibMain.cpp"
+  sed_in_place "${dst}/src/lib/libmain/LibMain.cpp" \
+    -e "s|  LOGI(\"Your library implementation goes here!\");|  ctx->result = ctx->number + ${index};\\
+\\
+  LOGI(\"The library ${index} libcall\");|"
 
   grep -q "ctx->result = ctx->number + ${index};" "${dst}/src/lib/libmain/LibMain.cpp" || \
     fail "failed to implement the libcall of the ${name} library"
@@ -531,6 +569,7 @@ check_no_library_log_files()
 main()
 {
   parse_args "$@"
+  read_template_identifiers
 
   prepare_work_dir
   generate_all_libraries

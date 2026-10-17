@@ -44,14 +44,16 @@
 
 | Опція | Артефакт | Підсекція |
 |---|---|---|
-| `-DENABLE_FLATPAK=true` | `<проект>-<версія>-<арх>.flatpak` | [Вмикання підтримки генерації flatpak пакету](/doc/sections/uk_UA/5-11-enabling-the-flatpak-package-generation-support.md) |
+| `-DENABLE_FLATPAK=true` | `<проект>-<версія>-<арх>-<середовище>.flatpak` | [Вмикання підтримки генерації flatpak пакету](/doc/sections/uk_UA/5-11-enabling-the-flatpak-package-generation-support.md) |
 | `-DENABLE_SNAP=true` | `<проект>_<версія>_<арх>.snap` | [Вмикання підтримки генерації snap-пакету](/doc/sections/uk_UA/5-22-enabling-snap-package-generation.md) |
-| `-DENABLE_DEB=true` | `<проект>-<версія>_<арх>.deb` | [Вмикання підтримки генерації DEB-пакету](/doc/sections/uk_UA/5-23-enabling-deb-package-generation.md) |
-| `-DENABLE_RPM=true` | `<проект>-<версія>-1.<арх>.rpm` | [Вмикання підтримки генерації RPM-пакету](/doc/sections/uk_UA/5-24-enabling-rpm-package-generation.md) |
-| `-DENABLE_FREEBSD_PKG=true` | `<проект>-<версія>-<арх>.pkg` | [Вмикання підтримки генерації FreeBSD pkg-пакету](/doc/sections/uk_UA/5-25-enabling-freebsd-pkg-package-generation.md) |
-| `-DENABLE_APPIMAGE=true` | `<проект>-<версія>-<арх>.AppImage` | [Вмикання підтримки генерації AppImage-збірки](/doc/sections/uk_UA/5-26-enabling-the-AppImage-bundle-generation.md) |
-| `-DENABLE_WIX=true` | `<проект>-<версія>-win-<арх>.msi` | [Вмикання підтримки генерації WIX MSI-інсталятора](/doc/sections/uk_UA/5-27-enabling-the-WIX-MSI-installer-generation.md) |
+| `-DENABLE_DEB=true` | `<проект>-<версія>-<арх>-<ОС>.deb` | [Вмикання підтримки генерації DEB-пакету](/doc/sections/uk_UA/5-23-enabling-deb-package-generation.md) |
+| `-DENABLE_RPM=true` | `<проект>-<версія>-<арх>-<ОС>.rpm` | [Вмикання підтримки генерації RPM-пакету](/doc/sections/uk_UA/5-24-enabling-rpm-package-generation.md) |
+| `-DENABLE_FREEBSD_PKG=true` | `<проект>-<версія>-<арх>-<ОС>.pkg` | [Вмикання підтримки генерації FreeBSD pkg-пакету](/doc/sections/uk_UA/5-25-enabling-freebsd-pkg-package-generation.md) |
+| `-DENABLE_APPIMAGE=true` | `<проект>-<версія>-<арх>-<ОС>.AppImage` | [Вмикання підтримки генерації AppImage-збірки](/doc/sections/uk_UA/5-26-enabling-the-AppImage-bundle-generation.md) |
+| `-DENABLE_WIX=true` | `<проект>-<версія>-<арх>-<ОС>.msi` | [Вмикання підтримки генерації WIX MSI-інсталятора](/doc/sections/uk_UA/5-27-enabling-the-WIX-MSI-installer-generation.md) |
 | `-DENABLE_DOCKER=true` | побудова і запуск контейнера | [Вмикання підтримки запуску Docker-контейнера](/doc/sections/uk_UA/5-12-enabling-the-docker-container-build-and-run.md) |
+
+`<ОС>` - цільова ОС, тож пакунки різних випусків ОС відрізняються назвою: її містить опція `PACKAGE_OS` (типово: поля `ID` і `VERSION_ID` файлу `/etc/os-release` хоста збирання, наприклад `ubuntu-24.04` чи `freebsd-15.1`, а на Windows - спільне для Windows 10 і 11 значення `windows-10.0`). `<середовище>` - середовище виконання (runtime) маніфесту flatpak (наприклад `freedesktop-24.08`), адже його обирає графічний фреймворк проекту.
 
 Пакувальники DEB / RPM / FreeBSD pkg / WIX поділяють спільні опції `PROJECT_MAINTAINER` / `PROJECT_MAINTAINER_EMAIL` - див. [Опції супровідника проекту](/doc/sections/uk_UA/5-28-project-maintainer-options.md).
 

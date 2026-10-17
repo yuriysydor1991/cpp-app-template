@@ -18,8 +18,8 @@ To produce the AppImage bundle run the `AppImage` target for the build:
 meson compile -C build AppImage
 ```
 
-The artefact is named like `<project>-<version>-<arch>.AppImage` and lands in the build directory. Examine and/or change the AppImage generation target parameters in `meson/template-project-AppImage-enabler/meson.build`, in `misc/AppRun.meson.in` or in the `misc/template-project.desktop.meson.in` and `misc/template-project.icon.svg.meson.in` templates.
+The artefact is named like `<project>-<version>-<arch>-<os>.AppImage` and lands in the build directory, the `<os>` being the destination OS the `PACKAGE_OS` option holds (default: the `ID` and the `VERSION_ID` of the `/etc/os-release` file of the build host, e.g. `ubuntu-24.04`). Examine and/or change the AppImage generation target parameters in `meson/template-project-AppImage-enabler/meson.build`, in `misc/AppRun.meson.in` or in the `misc/template-project.desktop.meson.in` and `misc/template-project.icon.svg.meson.in` templates.
 
-The produced bundle starts as any other executable (for example, `./build/CppAppTemplate-0.11.0-x86_64.AppImage --version`). The `scripts/build/build-appimage.sh` script performs the whole configure and build sequence, its `--install` flag copies the bundle into the `${HOME}/.local/bin` directory.
+The produced bundle starts as any other executable (for example, `./build/CppAppTemplate-0.11.0-x86_64-ubuntu-24.04.AppImage --version`). The `scripts/build/build-appimage.sh` script performs the whole configure and build sequence, its `--install` flag copies the bundle into the `${HOME}/.local/bin` directory.
 
 See [Optional for the AppImage packager](/doc/sections/en_US/3-18-optional-for-the-AppImage-packager.md) for the `appimagetool` install commands.

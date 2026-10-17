@@ -1,7 +1,7 @@
 appimagetool_exec = find_program('appimagetool', required: true)
 
 appimage_arch = run_command('uname', '-m', check: true).stdout().strip()
-appimage_name = meson.project_name() + '-' + meson.project_version() + '-' + appimage_arch
+appimage_name = meson.project_name() + '-' + meson.project_version() + '-' + appimage_arch + '-' + package_os
 appimage_appdir = join_paths(meson.project_build_root(), appimage_name + '.AppDir')
 appimage_output = appimage_name + '.AppImage'
 appimage_icon_name = meson.project_name().to_lower() + '.svg'

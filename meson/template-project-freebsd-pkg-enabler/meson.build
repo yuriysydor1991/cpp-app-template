@@ -4,7 +4,7 @@ pkg_exec = find_program('pkg', required: true)
 freebsd_arch = run_command('uname', '-p', check: true).stdout().strip()
 freebsd_pkg_stage = join_paths(meson.project_build_root(), 'freebsd-pkg-staging')
 freebsd_pkg_name = meson.project_name() + '-' + meson.project_version()
-freebsd_pkg_output = freebsd_pkg_name + '-' + freebsd_arch + '.pkg'
+freebsd_pkg_output = freebsd_pkg_name + '-' + freebsd_arch + '-' + package_os + '.pkg'
 
 freebsd_manifest_path = join_paths(meson.current_build_dir(), '+MANIFEST')
 freebsd_plist_path = join_paths(meson.current_build_dir(), 'pkg-plist')

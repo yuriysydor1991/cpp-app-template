@@ -18,8 +18,8 @@ meson setup build --prefix=/usr -DENABLE_APPIMAGE=true
 meson compile -C build AppImage
 ```
 
-Артефакт іменується за шаблоном `<проект>-<версія>-<арх>.AppImage` і потрапляє у директорію побудови. Деталі і параметри цілі можна переглянути або змінити у файлах `meson/template-project-AppImage-enabler/meson.build`, `misc/AppRun.meson.in` або у шаблонах `misc/template-project.desktop.meson.in` і `misc/template-project.icon.svg.meson.in`.
+Артефакт іменується за шаблоном `<проект>-<версія>-<арх>-<ОС>.AppImage` і потрапляє у директорію побудови, де `<ОС>` - цільова ОС, яку містить опція `PACKAGE_OS` (типово: поля `ID` і `VERSION_ID` файлу `/etc/os-release` хоста збирання, наприклад `ubuntu-24.04`). Деталі і параметри цілі можна переглянути або змінити у файлах `meson/template-project-AppImage-enabler/meson.build`, `misc/AppRun.meson.in` або у шаблонах `misc/template-project.desktop.meson.in` і `misc/template-project.icon.svg.meson.in`.
 
-Згенерована збірка запускається як будь-який інший виконуваний файл (наприклад, `./build/CppAppTemplate-0.11.0-x86_64.AppImage --version`). Скрипт `scripts/build/build-appimage.sh` виконує всю послідовність конфігурування і побудови, а його прапорець `--install` копіює збірку у директорію `${HOME}/.local/bin`.
+Згенерована збірка запускається як будь-який інший виконуваний файл (наприклад, `./build/CppAppTemplate-0.11.0-x86_64-ubuntu-24.04.AppImage --version`). Скрипт `scripts/build/build-appimage.sh` виконує всю послідовність конфігурування і побудови, а його прапорець `--install` копіює збірку у директорію `${HOME}/.local/bin`.
 
 Команди встановлення `appimagetool`: [Необов'язкові програми для генерації AppImage-збірки](/doc/sections/uk_UA/3-18-optional-for-the-AppImage-packager.md).

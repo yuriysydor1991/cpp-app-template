@@ -22,3 +22,9 @@ parts:
     cmake-parameters:
       - -DCMAKE_BUILD_TYPE=Release
       - -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
+    build-packages:
+      - pkg-config
+      - git
+      - libgtk-3-dev
+    stage-packages:
+      - libgtk-3-0t64

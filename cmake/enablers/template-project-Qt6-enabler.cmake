@@ -17,6 +17,12 @@ endif()
 
 set(CMAKE_AUTOMOC ON)
 
+# The AUTOMOC (CMake 3.30 and newer) checks every link dependency of the binary
+# from the src directory, which sees no imported target the enablers find in
+# the top level directory after it (the OpenSSL, libcurl, libxml2 ones), so the
+# found package targets are made global (CMake 3.24 and newer).
+set(CMAKE_FIND_PACKAGE_TARGETS_GLOBAL ON)
+
 find_package(
   Qt6 REQUIRED 
   COMPONENTS Core Gui Qml Quick QuickControls2

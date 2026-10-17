@@ -23,7 +23,7 @@ target_link_libraries(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  TemplateFreeGlutObj
+  PRIVATE TemplateFreeGlutObj
 )
 
 if(ENABLE_UNIT_TESTS OR ENABLE_COMPONENT_TESTS)

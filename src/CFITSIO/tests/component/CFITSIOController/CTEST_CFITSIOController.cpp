@@ -6,6 +6,8 @@
 #include <cstring>
 #include <filesystem>
 #include <fstream>
+#include <functional>
+#include <numeric>
 #include <string>
 #include <vector>
 
@@ -85,11 +87,8 @@ class CTEST_CFITSIOController : public Test
   {
     int status = 0;
     fitsfile* file = nullptr;
-    LONGLONG count = 1;
-
-    for (const long axis : axes) {
-      count *= axis;
-    }
+    const LONGLONG count = std::accumulate(axes.begin(), axes.end(),
+                                           LONGLONG{1}, std::multiplies<>());
 
     fits_create_file(&file, ("!" + path).c_str(), &status);
 

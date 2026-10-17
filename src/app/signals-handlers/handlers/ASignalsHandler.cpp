@@ -35,23 +35,7 @@ bool ASignalsHandler::install(std::shared_ptr<ApplicationContext> ctx)
   bool anyCovered{false};
 
   for (const int signalNumber : get_handled_signals()) {
-    const SignalDisposition previous =
-        std::signal(signalNumber, signalDisposition);
-
-    if (previous == SIG_ERR) {
-      LOGE("Fail to handle the signal " << signalNumber);
-      continue;
-    }
-
-    anyCovered = true;
-
-    // An inherited ignored signal (nohup, the background jobs) stays ignored.
-    if (previous == SIG_IGN && signalDisposition != SIG_IGN) {
-      std::signal(signalNumber, SIG_IGN);
-      continue;
-    }
-
-    mprevious_dispositions.emplace(signalNumber, previous);
+    anyCovered = cover_signal(signalNumber, signalDisposition) || anyCovered;
   }
 
   if (!anyCovered) {
@@ -60,6 +44,28 @@ bool ASignalsHandler::install(std::shared_ptr<ApplicationContext> ctx)
   }
 
   LOGD("Handling " << mprevious_dispositions.size() << " OS signals");
+
+  return true;
+}
+
+bool ASignalsHandler::cover_signal(const int signalNumber,
+                                   const SignalDisposition signalDisposition)
+{
+  const SignalDisposition previous =
+      std::signal(signalNumber, signalDisposition);
+
+  if (previous == SIG_ERR) {
+    LOGE("Fail to handle the signal " << signalNumber);
+    return false;
+  }
+
+  // An inherited ignored signal (nohup, the background jobs) stays ignored.
+  if (previous == SIG_IGN && signalDisposition != SIG_IGN) {
+    std::signal(signalNumber, SIG_IGN);
+    return true;
+  }
+
+  mprevious_dispositions.emplace(signalNumber, previous);
 
   return true;
 }

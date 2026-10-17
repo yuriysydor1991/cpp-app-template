@@ -11,7 +11,7 @@ if (NOT ENABLE_OPENEXR)
 endif()
 
 set(TEMPLATE_APP_OPENEXR_GIT "https://github.com/AcademySoftwareFoundation/openexr.git" CACHE STRING "The OpenEXR library git source repository")
-set(TEMPLATE_APP_OPENEXR_GIT_TAG "main" CACHE STRING "The OpenEXR project git repository tag/branch of interest")
+set(TEMPLATE_APP_OPENEXR_GIT_TAG "v3.5.2" CACHE STRING "The OpenEXR project git repository release tag of interest")
 
 template_project_default_3rdparty_enabler(
   NAME OpenEXR

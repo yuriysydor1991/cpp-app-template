@@ -11,7 +11,7 @@ if (NOT ENABLE_NLOHMANN_JSON)
 endif()
 
 set(TEMPLATE_APP_NLOHMANN_GIT "https://github.com/nlohmann/json.git" CACHE STRING "The Nlohmann JSON library git source repository")
-set(TEMPLATE_APP_NLOHMANN_GIT_TAG "master" CACHE STRING "The Nlohmann JSON project git repository tag of interest")
+set(TEMPLATE_APP_NLOHMANN_GIT_TAG "v3.12.0" CACHE STRING "The Nlohmann JSON project git repository release tag of interest")
 
 template_project_default_3rdparty_enabler(
   NAME nlohmann_json

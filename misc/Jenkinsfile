@@ -100,17 +100,17 @@ pipeline {
       parallel {
         stage('UTEST_PgConnStringMaker') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_PgConnStringMaker\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_PgConnStringMaker.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_PgConnStringMaker\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_PgConnStringMaker.junit.xml'
           }
         }
         stage('UTEST_PgSQL') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_PgSQL\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_PgSQL.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_PgSQL\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_PgSQL.junit.xml'
           }
         }
         stage('UTEST_QueryMaker') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_QueryMaker\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_QueryMaker.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_QueryMaker\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_QueryMaker.junit.xml'
           }
         }
         stage('UTEST_Application') { 
@@ -191,7 +191,7 @@ pipeline {
       parallel {
         stage('CTEST_PgSQL') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_PgSQL\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_PgSQL.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_PgSQL\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_PgSQL.junit.xml'
           }
         }
         stage('CTEST_DefaultLogger') {

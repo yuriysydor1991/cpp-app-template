@@ -15,6 +15,14 @@
   boost_log::BoostLogController::init(filepath, logLvl, printMessages);
 #endif  // LOG_INIT
 
+#ifndef LOG_INIT_PATH
+/**
+ * @brief Inits the logging into the given file (the --log-file one) with the
+ * default level.
+ */
+#define LOG_INIT_PATH(filepath) boost_log::BoostLogController::init(filepath);
+#endif  // LOG_INIT_PATH
+
 #ifndef LOG_INIT_DEFAULTS
 #define LOG_INIT_DEFAULTS() boost_log::BoostLogController::init();
 #endif  // LOG_INIT_DEFAULTS

@@ -130,17 +130,17 @@ pipeline {
         }
         stage('UTEST_SFMLContext') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_SFMLContext\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_SFMLContext.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_SFMLContext\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_SFMLContext.junit.xml'
           }
         }
         stage('UTEST_EventClosedHandler') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_EventClosedHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_EventClosedHandler.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_EventClosedHandler\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_EventClosedHandler.junit.xml'
           }
         }
         stage('UTEST_EventsHandlersFactory') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_EventsHandlersFactory\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_EventsHandlersFactory.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_EventsHandlersFactory\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_EventsHandlersFactory.junit.xml'
           }
         }
         stage('UTEST_SignalsHandler') { 
@@ -206,12 +206,12 @@ pipeline {
         }
         stage('CTEST_eventer') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_eventer\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_eventer.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_eventer\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_eventer.junit.xml'
           }
         }
         stage('CTEST_controller') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_controller\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_controller.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_controller\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_controller.junit.xml'
           }
         }
       }

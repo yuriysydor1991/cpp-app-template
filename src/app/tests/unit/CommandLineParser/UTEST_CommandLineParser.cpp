@@ -1,6 +1,8 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include <algorithm>
+#include <iterator>
 #include <string>
 #include <vector>
 
@@ -52,9 +54,12 @@ class UTEST_CommandLineParser : public Test
 
     pointers.clear();
 
-    for (std::string& param : storage) {
-      pointers.push_back(param.data());
-    }
+    // False positive: the char* of the argv needs the non const data().
+    // cppcheck-suppress constParameterReference
+    const auto toArg = [](std::string& param) { return param.data(); };
+
+    std::transform(storage.begin(), storage.end(), std::back_inserter(pointers),
+                   toArg);
 
     argc = static_cast<int>(pointers.size());
     argv = pointers.data();

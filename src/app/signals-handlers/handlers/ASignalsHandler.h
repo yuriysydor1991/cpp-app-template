@@ -102,6 +102,16 @@ class ASignalsHandler : public ISignalsHandler
   virtual void store_context(ApplicationContext* ctx) = 0;
 
  private:
+  /**
+   * @brief Makes the given disposition the one of the given signal and
+   * remembers the previous one for the ASignalsHandler::uninstall method. A
+   * signal inherited as an ignored one is left ignored.
+   *
+   * @return Returns false if the OS refuses the signal and true otherwise.
+   */
+  bool cover_signal(const int signalNumber,
+                    const SignalDisposition signalDisposition);
+
   /// @brief The signals that are covered by the current instance, each one
   /// with the disposition it had before, which the ASignalsHandler::uninstall
   /// method gives back to it.

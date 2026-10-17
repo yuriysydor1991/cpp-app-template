@@ -200,6 +200,11 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "CTEST_VulkanController\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_VulkanController.junit.xml'
           }
         }
+        stage('CTEST_VulkanDmabufRenderer') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "CTEST_VulkanDmabufRenderer\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_VulkanDmabufRenderer.junit.xml'
+          }
+        }
         stage('CTEST_DefaultLogger') {
           steps {
             sh 'cd $BUILDDIR && ctest -R "CTEST_DefaultLogger" --output-on-failure --output-junit $BDJUNITOUT/CTEST_DefaultLogger.junit.xml'

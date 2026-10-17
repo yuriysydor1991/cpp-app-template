@@ -5,3 +5,4 @@ if(NOT ENABLE_COMPONENT_TESTS)
 endif()
 
 add_subdirectory(VulkanController)
+add_subdirectory(VulkanDmabufRenderer)

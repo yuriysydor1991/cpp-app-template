@@ -192,12 +192,12 @@ pipeline {
         }
         stage('CTEST_QtLogBridge') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_QtLogBridge\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_QtLogBridge.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_QtLogBridge\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_QtLogBridge.junit.xml'
           }
         }
         stage('CTEST_Qt6Controller') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_Qt6Controller\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_Qt6Controller.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_Qt6Controller\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_Qt6Controller.junit.xml'
           }
         }
       }

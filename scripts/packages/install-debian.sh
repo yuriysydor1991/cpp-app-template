@@ -13,6 +13,7 @@ PACKAGES=(
     g++
     git
     googletest
+    libepoxy-dev
     libglib2.0-dev-bin
     libgmock-dev
     libgtest-dev

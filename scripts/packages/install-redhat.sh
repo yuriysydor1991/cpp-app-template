@@ -15,6 +15,7 @@ PACKAGES=(
     gcc-c++
     git
     glib2-devel
+    libepoxy-devel
     gmock-devel
     gtest-devel
     gtkmm4.0-devel

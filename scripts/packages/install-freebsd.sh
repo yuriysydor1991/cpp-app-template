@@ -16,6 +16,7 @@ PACKAGES="
     cmake
     git
     glib
+    libepoxy
     googletest
     gtkmm40
     pkgconf

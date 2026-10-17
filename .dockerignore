@@ -1,5 +1,4 @@
 build/
 build-*/
 cmake-build-*/
-.flatpak-builder/
 *.log

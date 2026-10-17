@@ -30,7 +30,7 @@ target_link_libraries(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  TemplateProjectGDBusControllerObj
+  PRIVATE TemplateProjectGDBusControllerObj
 )
 
 add_subdirectory(query-handlers)

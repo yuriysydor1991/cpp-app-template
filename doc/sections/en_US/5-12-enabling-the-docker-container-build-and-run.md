@@ -1,6 +1,6 @@
 ## Enabling the Docker container build and run
 
-To be able to build and run the Docker container with current template project' target binary file enable it's Meson target with setting the `ENABLE_DOCKER` variable into value `ON` by using the next command:
+To be able to build and run the Docker container with current template project' target binary file enable it's Meson target with setting the `ENABLE_DOCKER` option to the `true` value by using the next command:
 
 ```
 # inside the project root directory

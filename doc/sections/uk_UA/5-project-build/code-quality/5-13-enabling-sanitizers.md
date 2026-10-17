@@ -8,7 +8,7 @@
 cmake -S . -B build -DENABLE_SANITIZERS=ON
 ```
 
-Для вмикання загальних перевірок. Деталі і список прапорців перевірок у файлі `cmake/template-project-sanitizers.cmake`.
+Для вмикання загальних перевірок. Деталі і список прапорців перевірок у файлі `cmake/compile-options/sanitizers/template-project-sanitizers.cmake`.
 
 Також присутня можливість вмикання перевірок виконання потоків на предмет помилок і спотвернення даних (data rises) насутпною командою:
 

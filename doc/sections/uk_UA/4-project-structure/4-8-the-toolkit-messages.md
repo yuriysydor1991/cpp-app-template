@@ -25,9 +25,8 @@
 GTK побудовано зі структурованим журналюванням, тож його повідомлення називають файл, рядок і функцію вихідного коду інструментарію, звідки вони походять, і рядок журналу несе усі три з них. Сам GLib звітує про більшість власних негараздів старішим шляхом, який не несе таких полів, і тоді на початку повідомлення стоїть лише домен:
 
 ```
-... DBG ... GtkLogBridge.cpp:157 : Gtk: gtkiconpaintable.c:365: gtk_icon_paintable_snapshot_with_weight: snapshot symbolic icon as recolored node
 ... DBG ... GtkLogBridge.cpp:157 : GLib-GIO: _g_io_module_get_default: Found default implementation local (GLocalVfs) for ‘gio-vfs’
-... WRN ... GtkLogBridge.cpp:154 : Gtk: gtkmain.c:738: gtk_init: Failed to open display
+... WRN ... GtkLogBridge.cpp:154 : Gtk: gtkmain.c:1175: gtk_init: cannot open display:
 ```
 
 Міст веде журнал через макроси `LOG*`, а не через клас логера напряму, тож він продовжує працювати на гілках, які замінюють усю реалізацію журналювання (`appLog4Cpp5`, `appBoostLog`). Платою за це є координати джерела рядка журналу: вони називають сам файл `GtkLogBridge.cpp`, тоді як координати інструментарію стоять всередині тексту повідомлення.

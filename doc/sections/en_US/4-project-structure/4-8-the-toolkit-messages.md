@@ -25,9 +25,8 @@ The GLib error and critical levels both stand for a broken invariant, which is w
 The GTK is built with the structured logging, so it's messages name the toolkit source file, line and function they came from, and the log line carries all three of them. The GLib itself reports most of it's own troubles through the older path, which carries no such fields, and then the domain alone stands at the front of the message:
 
 ```
-... DBG ... GtkLogBridge.cpp:157 : Gtk: gtkiconpaintable.c:365: gtk_icon_paintable_snapshot_with_weight: snapshot symbolic icon as recolored node
 ... DBG ... GtkLogBridge.cpp:157 : GLib-GIO: _g_io_module_get_default: Found default implementation local (GLocalVfs) for ‘gio-vfs’
-... WRN ... GtkLogBridge.cpp:154 : Gtk: gtkmain.c:738: gtk_init: Failed to open display
+... WRN ... GtkLogBridge.cpp:154 : Gtk: gtkmain.c:1175: gtk_init: cannot open display:
 ```
 
 The bridge logs through the `LOG*` macroses and not through a logger class directly, so it keeps working on the branches which replace the whole logging implementation (`appLog4Cpp5`, `appBoostLog`). The price of it is the source coordinates of a log line: they name the `GtkLogBridge.cpp` file itself, while the toolkit ones stand inside the message text.

@@ -7,6 +7,13 @@ pipeline {
 
   parameters {
     booleanParam(name: 'RUN_CPPCHECK', defaultValue: false, description: 'Run the cppcheck static code check?')
+    // Template project specific: optional packager checks, all disabled by
+    // default and opt-in (e.g. WIX is MS Windows only, FreeBSD pkg is FreeBSD
+    // only). Safe to drop together with the template stages below.
+    booleanParam(name: 'RUN_DEB_PACKAGER', defaultValue: false, description: 'Template: build and check the deb package?')
+    booleanParam(name: 'RUN_RPM_PACKAGER', defaultValue: false, description: 'Template: build and check the RPM package?')
+    booleanParam(name: 'RUN_FREEBSD_PACKAGER', defaultValue: false, description: 'Template: build and check the FreeBSD pkg package? (FreeBSD only)')
+    booleanParam(name: 'RUN_WIX_PACKAGER', defaultValue: false, description: 'Template: build and check the WIX MSI package? (MS Windows only)')
   }
 
   stages {
@@ -167,6 +174,148 @@ pipeline {
       }
     }
 
+    stage('Template: no git conflict markers') {
+      steps {
+        sh '''
+          if git grep -nE "^(<<<<<<<|>>>>>>>)" -- .; then
+            echo "FAIL: the files listed above contain git conflict markers (unmerged content)"
+            exit 1
+          fi
+          echo "OK: no git conflict markers found in the tracked files"
+        '''
+      }
+    }
+
+    stage('Template: no en_US doc sections in the uk_UA README') {
+      steps {
+        sh '''
+          if grep -nE "doc/sections/en_US/" doc/README.uk_UA.md; then
+            echo "FAIL: the uk_UA README links en_US sections; it must use uk_UA sections only"
+            exit 1
+          fi
+          echo "OK: the uk_UA README references no en_US sections"
+        '''
+      }
+    }
+
+    stage('Template: no uk_UA doc sections in the top-level README') {
+      steps {
+        sh '''
+          if grep -nE "doc/sections/uk_UA/" README.md; then
+            echo "FAIL: the top-level README links uk_UA sections; it must use en_US sections only"
+            exit 1
+          fi
+          echo "OK: the top-level README references no uk_UA sections"
+        '''
+      }
+    }
+
+    stage('Template: every doc section is linked in its README') {
+      steps {
+        sh '''
+          status=0
+          for langdir in doc/sections/*/; do
+            [ -d "$langdir" ] || continue
+            lang="$(basename "$langdir")"
+            if [ "$lang" = "en_US" ]; then
+              readme="README.md"
+            else
+              readme="doc/README.${lang}.md"
+            fi
+            if [ ! -f "$readme" ]; then
+              echo "FAIL: no README ($readme) found for the doc/sections/$lang language"
+              status=1
+              continue
+            fi
+            for f in "$langdir"*; do
+              [ -f "$f" ] || continue
+              if ! grep -qF "$f" "$readme"; then
+                echo "FAIL: $f is not linked in $readme"
+                status=1
+              fi
+            done
+          done
+          [ "$status" -eq 0 ] || exit 1
+          echo "OK: every doc/sections file is linked in its README"
+        '''
+      }
+    }
+
+    stage('Template: no broken markdown links') {
+      steps {
+        sh '''
+          MDLIST=$(mktemp)
+          LINKLIST=$(mktemp)
+          trap 'rm -f "$MDLIST" "$LINKLIST"' EXIT
+
+          # The repository own documentation only: a build tree keeps the
+          # fetched third-party sources with the markdown files of their own.
+          git ls-files -z '*.md' | tr '\\0' '\\n' | sort > "$MDLIST"
+
+          while IFS= read -r mdfile; do
+            grep -oE '[[][^]]*[]][(][^)]+[)]' "$mdfile" 2>/dev/null \
+              | sed 's/.*][(]\\(.*\\)[)]$/\\1/' > "$LINKLIST"
+
+            while IFS= read -r link; do
+              [ -z "$link" ] && continue
+              target="${link%%#*}"
+              [ -z "$target" ] && continue
+              case "$target" in http://*|https://*|mailto:*|ftp://*) continue ;; esac
+              if [ "${target#/}" != "$target" ]; then
+                resolved="${target#/}"
+              else
+                resolved="$(dirname "$mdfile")/${target}"
+              fi
+              if [ ! -e "$resolved" ]; then
+                echo "FAIL: broken link in $mdfile"
+                echo "  link:     $link"
+                echo "  resolved: $resolved"
+                exit 1
+              fi
+            done < "$LINKLIST"
+          done < "$MDLIST"
+
+          echo "OK: all *.md files have valid links"
+        '''
+      }
+    }
+
+    stage('Template: every meson submodule is wired via subdir()') {
+      steps {
+        sh '''
+          wired="$(grep -rh "subdir(" --include=meson.build . | cut -d"'" -f2 | sort -u)"
+          status=0
+          for d in meson/*/; do
+            [ -f "${d}meson.build" ] || continue
+            mod="$(basename "$d")"
+            if ! echo "$wired" | grep -qx "$mod"; then
+              echo "FAIL: meson submodule $mod ($d) is not wired via subdir() in the meson build files"
+              status=1
+            fi
+          done
+          [ "$status" -eq 0 ] || exit 1
+          echo "OK: every meson/ submodule is wired via subdir()"
+        '''
+      }
+    }
+
+    stage('Template: every declared test is registered in the pipeline') {
+      steps {
+        sh '''
+          declared="$(grep -rh "suite:" --include=meson.build src | cut -d"'" -f2 | sort -u)"
+          status=0
+          for t in $declared; do
+            if ! grep -qF "$t" misc/Jenkinsfile; then
+              echo "FAIL: test suite $t is declared in the meson.build files but not registered in this Jenkinsfile"
+              status=1
+            fi
+          done
+          [ "$status" -eq 0 ] || exit 1
+          echo "OK: every meson-declared test suite is registered in the pipeline"
+        '''
+      }
+    }
+
     stage('Template: no broken external documentation URLs') {
       steps {
         sh '''
@@ -314,6 +463,78 @@ pipeline {
 
           echo ""
           echo "OK: every external documentation URL is reachable"
+        '''
+      }
+    }
+
+    stage('Template: deb package') {
+      when { expression { params.RUN_DEB_PACKAGER } }
+      steps {
+        sh '''
+          BD="$BUILDDIR-pkg-deb"
+          rm -fr "$BD"
+          meson setup "$BD" --buildtype=release -DENABLE_DEB=true
+          meson compile -C "$BD"
+          meson compile -C "$BD" deb
+          if [ -z "$(find "$BD" -name '*.deb' -print -quit)" ]; then
+            echo "FAIL: Meson did not produce a .deb package"
+            exit 1
+          fi
+          echo "OK: produced $(find "$BD" -name '*.deb' | head -n1)"
+        '''
+      }
+    }
+
+    stage('Template: rpm package') {
+      when { expression { params.RUN_RPM_PACKAGER } }
+      steps {
+        sh '''
+          BD="$BUILDDIR-pkg-rpm"
+          rm -fr "$BD"
+          meson setup "$BD" --buildtype=release -DENABLE_RPM=true
+          meson compile -C "$BD"
+          meson compile -C "$BD" rpm
+          if [ -z "$(find "$BD" -name '*.rpm' -print -quit)" ]; then
+            echo "FAIL: Meson did not produce a .rpm package"
+            exit 1
+          fi
+          echo "OK: produced $(find "$BD" -name '*.rpm' | head -n1)"
+        '''
+      }
+    }
+
+    stage('Template: freebsd-pkg package') {
+      when { expression { params.RUN_FREEBSD_PACKAGER } }
+      steps {
+        sh '''
+          BD="$BUILDDIR-pkg-freebsd"
+          rm -fr "$BD"
+          meson setup "$BD" --buildtype=release -DENABLE_FREEBSD_PKG=true
+          meson compile -C "$BD"
+          meson compile -C "$BD" freebsd-pkg
+          if [ -z "$(find "$BD" -name '*.pkg' -print -quit)" ]; then
+            echo "FAIL: Meson did not produce a FreeBSD .pkg package"
+            exit 1
+          fi
+          echo "OK: produced $(find "$BD" -name '*.pkg' | head -n1)"
+        '''
+      }
+    }
+
+    stage('Template: wix-msi package') {
+      when { expression { params.RUN_WIX_PACKAGER } }
+      steps {
+        sh '''
+          BD="$BUILDDIR-pkg-wix"
+          rm -fr "$BD"
+          meson setup "$BD" --buildtype=release -DENABLE_WIX=true
+          meson compile -C "$BD"
+          meson compile -C "$BD" wix
+          if [ -z "$(find "$BD" -name '*.msi' -print -quit)" ]; then
+            echo "FAIL: Meson did not produce a .msi package"
+            exit 1
+          fi
+          echo "OK: produced $(find "$BD" -name '*.msi' | head -n1)"
         '''
       }
     }

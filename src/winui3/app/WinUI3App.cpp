@@ -18,14 +18,14 @@ int run_winui_application(int& /*argc*/, char**& /*argv*/)
   winrt::init_apartment(winrt::apartment_type::single_threaded);
 
   mux::Application::Start(
-      [](auto&&) { winrt::make<winui3::app::WinUI3App>(); });
+      [](auto&&) { winrt::make<winui3::application::WinUI3App>(); });
 
   return 0;
 }
 
 }  // namespace winui3
 
-namespace winui3::app
+namespace winui3::application
 {
 
 void WinUI3App::OnLaunched(mux::LaunchActivatedEventArgs const& /*args*/)
@@ -43,4 +43,4 @@ void WinUI3App::OnLaunched(mux::LaunchActivatedEventArgs const& /*args*/)
   window.Activate();
 }
 
-}  // namespace winui3::app
+}  // namespace winui3::application

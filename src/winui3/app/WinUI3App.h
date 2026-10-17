@@ -3,7 +3,7 @@
 
 #include "src/winui3/winui3_includes.h"
 
-namespace winui3::app
+namespace winui3::application
 {
 
 /**
@@ -22,6 +22,6 @@ class WinUI3App : public winrt::Microsoft::UI::Xaml::ApplicationT<WinUI3App>
   winrt::Microsoft::UI::Xaml::Window window{nullptr};
 };
 
-}  // namespace winui3::app
+}  // namespace winui3::application
 
 #endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_WINUI3APP_CLASS_H

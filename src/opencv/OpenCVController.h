@@ -95,6 +95,16 @@ class OpenCVController
   virtual faces_buffer detect(const std::string& imagePath);
 
   /**
+   * @brief Decodes the image file with the `cv::imread`.
+   *
+   * @param imagePath Path to the image file.
+   *
+   * @return The decoded image, an empty one when the file is missing,
+   *         unreadable or in no format the OpenCV decodes.
+   */
+  virtual cv::Mat read_image(const std::string& imagePath);
+
+  /**
    * @brief Returns the currently loaded cascade path. An empty value
    * means the cascade has not been loaded yet.
    */
@@ -110,7 +120,8 @@ class OpenCVController
    *        `cascade_path` and `image_path` fields.
    *
    * @return true when the cascade was loaded and (optionally) the
-   *         detection ran to completion, false otherwise.
+   *         detection ran to completion, false otherwise, a missing or
+   *         unreadable image included.
    */
   virtual bool face_recognition_example(appctx ctx);
 

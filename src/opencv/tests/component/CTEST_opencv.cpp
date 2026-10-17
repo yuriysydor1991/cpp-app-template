@@ -149,3 +149,25 @@ TEST_F(CTEST_opencv, a_cascade_file_of_no_xml_fails_to_load_with_no_throw)
   EXPECT_FALSE(loaded);
   EXPECT_TRUE(controller->get_cascade_path().empty());
 }
+
+TEST_F(CTEST_opencv, a_missing_image_fails_the_example)
+{
+  if (OpenCVController::default_cascade_path().empty()) {
+    GTEST_SKIP() << "No preinstalled OpenCV Haar cascade was found on the host";
+  }
+
+  ctx->set_image_path(fixture_path("opencv-missing-image-fixture.png"));
+
+  EXPECT_FALSE(controller->face_recognition_example(ctx));
+}
+
+TEST_F(CTEST_opencv, an_unreadable_image_fails_the_example)
+{
+  if (OpenCVController::default_cascade_path().empty()) {
+    GTEST_SKIP() << "No preinstalled OpenCV Haar cascade was found on the host";
+  }
+
+  ctx->set_image_path(make_text_fixture("opencv-broken-image-fixture.png"));
+
+  EXPECT_FALSE(controller->face_recognition_example(ctx));
+}

@@ -50,6 +50,7 @@ class OpenCVController
   MOCK_METHOD(bool, load_cascade, (const std::string& cascadePath));
   MOCK_METHOD(faces_buffer, detect, (const cv::Mat& image));
   MOCK_METHOD(faces_buffer, detect, (const std::string& imagePath));
+  MOCK_METHOD(cv::Mat, read_image, (const std::string& imagePath));
   MOCK_METHOD(const std::string&, get_cascade_path, (), (const));
   MOCK_METHOD(bool, run, (appctx ctx));
   MOCK_METHOD(bool, face_recognition_example, (appctx ctx));

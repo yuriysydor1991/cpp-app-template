@@ -98,14 +98,24 @@ OpenCVController::faces_buffer OpenCVController::detect(
     return {};
   }
 
-  cv::Mat image = cv::imread(imagePath, cv::IMREAD_COLOR);
+  const cv::Mat image = read_image(imagePath);
 
   if (image.empty()) {
-    LOGE("Failed to read the image at " << imagePath);
     return {};
   }
 
   return detect(image);
+}
+
+cv::Mat OpenCVController::read_image(const std::string& imagePath)
+{
+  cv::Mat image = cv::imread(imagePath, cv::IMREAD_COLOR);
+
+  if (image.empty()) {
+    LOGE("Failed to read the image at " << imagePath);
+  }
+
+  return image;
 }
 
 const std::string& OpenCVController::get_cascade_path() const
@@ -151,7 +161,13 @@ bool OpenCVController::face_recognition_example(appctx ctx)
     return true;
   }
 
-  const auto faces = detect(ctx->get_image_path());
+  const cv::Mat image = read_image(ctx->get_image_path());
+
+  if (image.empty()) {
+    return false;
+  }
+
+  const auto faces = detect(image);
 
   LOGI("Detected " << faces.size() << " face(s) in " << ctx->get_image_path());
 

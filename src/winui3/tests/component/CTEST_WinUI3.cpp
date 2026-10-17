@@ -29,6 +29,8 @@ std::function<bool()> g_stop_requested;
 
 namespace winui3
 {
+// the seam signature is the WinUI3Launcher.h one
+// cppcheck-suppress constParameterReference
 int run_winui_application(int& argc, char**& /*argv*/,
                           const std::function<bool()>& stop_requested)
 {

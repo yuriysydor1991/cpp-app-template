@@ -60,6 +60,8 @@ WinUI3App::WinUI3App(std::function<bool()> nstop_requested)
 {
 }
 
+// called by the XAML framework once the application is launched
+// cppcheck-suppress unusedFunction
 void WinUI3App::OnLaunched(mux::LaunchActivatedEventArgs const& /*args*/)
 {
   watch_the_stop_request();

@@ -41,10 +41,12 @@
 
 | Опція | Артефакт | Підсекція |
 |---|---|---|
-| `-DENABLE_DEB=true` | `<проект>-<версія>_<арх>.deb` | [Вмикання підтримки генерації DEB-пакету](/doc/sections/uk_UA/5-23-enabling-deb-package-generation.md) |
-| `-DENABLE_RPM=true` | `<проект>-<версія>-1.<арх>.rpm` | [Вмикання підтримки генерації RPM-пакету](/doc/sections/uk_UA/5-24-enabling-rpm-package-generation.md) |
-| `-DENABLE_FREEBSD_PKG=true` | `<проект>-<версія>-<арх>.pkg` | [Вмикання підтримки генерації FreeBSD pkg-пакету](/doc/sections/uk_UA/5-25-enabling-freebsd-pkg-package-generation.md) |
-| `-DENABLE_WIX=true` | `<проект>-<версія>-win-<арх>.msi` | [Вмикання підтримки генерації WIX MSI-інсталятора](/doc/sections/uk_UA/5-27-enabling-the-WIX-MSI-installer-generation.md) |
+| `-DENABLE_DEB=true` | `<проект>-<версія>-<арх>-<ОС>.deb` | [Вмикання підтримки генерації DEB-пакету](/doc/sections/uk_UA/5-23-enabling-deb-package-generation.md) |
+| `-DENABLE_RPM=true` | `<проект>-<версія>-<арх>-<ОС>.rpm` | [Вмикання підтримки генерації RPM-пакету](/doc/sections/uk_UA/5-24-enabling-rpm-package-generation.md) |
+| `-DENABLE_FREEBSD_PKG=true` | `<проект>-<версія>-<арх>-<ОС>.pkg` | [Вмикання підтримки генерації FreeBSD pkg-пакету](/doc/sections/uk_UA/5-25-enabling-freebsd-pkg-package-generation.md) |
+| `-DENABLE_WIX=true` | `<проект>-<версія>-<арх>-<ОС>.msi` | [Вмикання підтримки генерації WIX MSI-інсталятора](/doc/sections/uk_UA/5-27-enabling-the-WIX-MSI-installer-generation.md) |
+
+`<ОС>` - цільова ОС, тож пакунки різних випусків ОС відрізняються назвою: її містить опція `PACKAGE_OS` (типово: поля `ID` і `VERSION_ID` файлу `/etc/os-release` хоста збирання, наприклад `ubuntu-24.04` чи `freebsd-15.1`, а на Windows - спільне для Windows 10 і 11 значення `windows-10.0`).
 
 Пакувальники DEB / RPM / FreeBSD pkg / WIX поділяють спільні опції `PROJECT_MAINTAINER` / `PROJECT_MAINTAINER_EMAIL` - див. [Опції супровідника проекту](/doc/sections/uk_UA/5-28-project-maintainer-options.md).
 

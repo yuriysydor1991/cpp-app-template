@@ -13,7 +13,7 @@ light_exec = find_program('light', 'light.exe', required: false)
 wix_arch = {'x86_64': 'x64', 'aarch64': 'arm64'}.get(host_machine.cpu_family(), host_machine.cpu_family())
 wix_program_files = wix_arch in ['x64', 'arm64'] ? 'ProgramFiles64Folder' : 'ProgramFilesFolder'
 wix_upgrade_guid = '12345678-1234-1234-1234-123456789012'
-wix_output = meson.project_name() + '-' + meson.project_version() + '-win-' + wix_arch + '.msi'
+wix_output = meson.project_name() + '-' + meson.project_version() + '-' + wix_arch + '-' + package_os + '.msi'
 
 wxs_path = join_paths(meson.current_build_dir(), meson.project_name() + '.wxs')
 

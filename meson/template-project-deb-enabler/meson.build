@@ -2,7 +2,7 @@ find_program('dpkg-deb', required: true)
 
 deb_arch = run_command('dpkg', '--print-architecture', check: true).stdout().strip()
 
-deb_package_name = meson.project_name() + '-' + meson.project_version() + '_' + deb_arch
+deb_package_name = meson.project_name() + '-' + meson.project_version() + '-' + deb_arch + '-' + package_os
 deb_stage_dir = join_paths(meson.project_build_root(), 'deb-staging', deb_package_name)
 deb_output = deb_package_name + '.deb'
 

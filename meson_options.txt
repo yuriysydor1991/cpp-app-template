@@ -184,3 +184,10 @@ option(
   value: 'yourname@your.email.org',
   description: 'Project maintainer email (used by packager targets)'
 )
+
+option(
+  'PACKAGE_OS',
+  type: 'string',
+  value: '',
+  description: 'The destination OS of the package file names (e.g. ubuntu-24.04, freebsd-15.1), the build host one when empty'
+)

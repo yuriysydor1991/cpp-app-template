@@ -12,6 +12,8 @@
 
 `Application::run()` (`src/app/applications/Application.cpp`) створює `WinUI3Controller` і делегує йому, так само як інші GUI-гілки делегують своєму контролеру.
 
+Обробники сигналів програми лише встановлюють прапорець зупинки контексту (див. розділ [Обробка сигналів операційної системи](/doc/sections/uk_UA/4-project-structure/4-8-handling-the-OS-signals.md)), тож `WinUI3Controller` передає до `run_winui_application()` запит на зупинку, що читає `ApplicationContext::get_stop()`. Програма WinUI 3 перевіряє його кожні 100 мс за допомогою `DispatcherQueueTimer` і викликає `Application::Exit()`, щойно його встановлено, тож сигнали зупинки завершують програму звичайним чином.
+
 ### Збирання
 
 Нативний UI налаштовує CMake-модуль `cmake/enablers/template-project-WinUI3-enabler.cmake`, що керується:

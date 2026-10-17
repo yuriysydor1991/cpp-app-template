@@ -1,6 +1,8 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_WINUI3LAUNCHER_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_WINUI3LAUNCHER_H
 
+#include <functional>
+
 namespace winui3
 {
 
@@ -17,10 +19,14 @@ namespace winui3
  *
  * @param argc The command line arguments count.
  * @param argv The command line arguments array.
+ * @param stop_requested Tells whether the application stop is requested (the
+ * signals handlers raise the context stop flag); the WinUI 3 application polls
+ * it and leaves its event loop then.
  *
  * @return Returns the application exit status (0 on success).
  */
-int run_winui_application(int& argc, char**& argv);
+int run_winui_application(int& argc, char**& argv,
+                          const std::function<bool()>& stop_requested);
 
 }  // namespace winui3
 

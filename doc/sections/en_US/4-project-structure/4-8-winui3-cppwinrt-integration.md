@@ -12,6 +12,8 @@ This branch fast-starts a [Microsoft WinUI 3](https://learn.microsoft.com/window
 
 `Application::run()` (`src/app/applications/Application.cpp`) creates a `WinUI3Controller` and delegates to it, exactly like the other GUI branches delegate to their controller.
 
+The signals handlers of the application only raise the context stop flag (see the [Handling the OS signals](/doc/sections/en_US/4-project-structure/4-8-handling-the-OS-signals.md) section), so `WinUI3Controller` hands a stop request reading `ApplicationContext::get_stop()` to `run_winui_application()`. The WinUI 3 application polls it every 100 ms with a `DispatcherQueueTimer` and calls `Application::Exit()` once it is raised, so the stop signals end the application normally.
+
 ### Building it
 
 The native UI is set up by the CMake enabler `cmake/enablers/template-project-WinUI3-enabler.cmake`, controlled by:

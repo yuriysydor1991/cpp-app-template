@@ -3,6 +3,10 @@
 #include <MddBootstrap.h>
 #include <WindowsAppSDK-VersionInfo.h>
 
+#include <chrono>
+#include <functional>
+#include <utility>
+
 #include "project-global-decls.h"
 #include "src/app/applications/IApplication.h"
 #include "src/log/log.h"
@@ -15,7 +19,8 @@ namespace mux = winrt::Microsoft::UI::Xaml;
 namespace winui3
 {
 
-int run_winui_application(int& /*argc*/, char**& /*argv*/)
+int run_winui_application(int& /*argc*/, char**& /*argv*/,
+                          const std::function<bool()>& stop_requested)
 {
   // The unpackaged executable has no package identity: the bootstrapper adds
   // the Windows App SDK framework package (the WinUI 3 runtime) to the process
@@ -36,8 +41,9 @@ int run_winui_application(int& /*argc*/, char**& /*argv*/)
   // the message loop until the application exits.
   winrt::init_apartment(winrt::apartment_type::single_threaded);
 
-  mux::Application::Start(
-      [](auto&&) { winrt::make<winui3::application::WinUI3App>(); });
+  mux::Application::Start([stop_requested](auto&&) {
+    winrt::make<winui3::application::WinUI3App>(stop_requested);
+  });
 
   MddBootstrapShutdown();
 
@@ -49,8 +55,15 @@ int run_winui_application(int& /*argc*/, char**& /*argv*/)
 namespace winui3::application
 {
 
+WinUI3App::WinUI3App(std::function<bool()> nstop_requested)
+    : stop_requested{std::move(nstop_requested)}
+{
+}
+
 void WinUI3App::OnLaunched(mux::LaunchActivatedEventArgs const& /*args*/)
 {
+  watch_the_stop_request();
+
   // Merge the default WinUI 3 control styles - the code-only equivalent of the
   // generated App.xaml <XamlControlsResources/> resource merge.
   Resources().MergedDictionaries().Append(
@@ -62,6 +75,23 @@ void WinUI3App::OnLaunched(mux::LaunchActivatedEventArgs const& /*args*/)
   main_window::WinUI3MainWindow mainWindow{config};
   window = mainWindow.window();
   window.Activate();
+}
+
+void WinUI3App::watch_the_stop_request()
+{
+  // The signals handlers only raise the context stop flag: poll it and leave
+  // the XAML application loop once it is raised.
+  stop_timer =
+      winrt::Microsoft::UI::Dispatching::DispatcherQueue::GetForCurrentThread()
+          .CreateTimer();
+  stop_timer.Interval(std::chrono::milliseconds{100});
+  stop_timer.Tick([this](auto&&, auto&&) {
+    if (stop_requested && stop_requested()) {
+      stop_timer.Stop();
+      Exit();
+    }
+  });
+  stop_timer.Start();
 }
 
 mux::Markup::IXamlType WinUI3App::GetXamlType(

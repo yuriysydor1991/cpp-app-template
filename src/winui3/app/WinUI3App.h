@@ -1,6 +1,8 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_WINUI3APP_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_WINUI3APP_CLASS_H
 
+#include <functional>
+
 #include "src/winui3/winui3_includes.h"
 
 namespace winui3::application
@@ -13,13 +15,16 @@ namespace winui3::application
  * of the generated App.xaml) and creates/activates the main window on launch.
  * Without the XAML compiler the application itself provides the XAML type
  * metadata of the WinUI 3 controls (IXamlMetadataProvider), which the merged
- * XamlControlsResources styles need.
+ * XamlControlsResources styles need. It also leaves the application loop once
+ * the application stop is requested.
  */
 class WinUI3App
     : public winrt::Microsoft::UI::Xaml::ApplicationT<
           WinUI3App, winrt::Microsoft::UI::Xaml::Markup::IXamlMetadataProvider>
 {
  public:
+  explicit WinUI3App(std::function<bool()> nstop_requested);
+
   void OnLaunched(
       winrt::Microsoft::UI::Xaml::LaunchActivatedEventArgs const& args);
 
@@ -31,6 +36,10 @@ class WinUI3App
   GetXmlnsDefinitions();
 
  private:
+  void watch_the_stop_request();
+
+  std::function<bool()> stop_requested;
+  winrt::Microsoft::UI::Dispatching::DispatcherQueueTimer stop_timer{nullptr};
   winrt::Microsoft::UI::Xaml::Window window{nullptr};
   winrt::Microsoft::UI::Xaml::XamlTypeInfo::XamlControlsXamlMetaDataProvider
       provider;

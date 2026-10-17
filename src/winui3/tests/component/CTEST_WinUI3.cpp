@@ -1,6 +1,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include <functional>
 #include <memory>
 #include <string>
 
@@ -23,13 +24,16 @@ namespace
 // GUI.
 int g_seen_argc = -1;
 std::string g_built_title;
+std::function<bool()> g_stop_requested;
 }  // namespace
 
 namespace winui3
 {
-int run_winui_application(int& argc, char**& /*argv*/)
+int run_winui_application(int& argc, char**& /*argv*/,
+                          const std::function<bool()>& stop_requested)
 {
   g_seen_argc = argc;
+  g_stop_requested = stop_requested;
 
   const helpers::WindowConfig config{"ComponentApp", "9.9.9"};
   g_built_title = config.title();
@@ -45,6 +49,7 @@ class CTEST_WinUI3 : public Test
   {
     g_seen_argc = -1;
     g_built_title.clear();
+    g_stop_requested = nullptr;
   }
 
   int argc{4};
@@ -72,4 +77,16 @@ TEST_F(CTEST_WinUI3, run_forwards_the_current_argument_count)
 
   EXPECT_EQ(g_seen_argc, 1);
   EXPECT_EQ(g_built_title, "ComponentApp 9.9.9");
+}
+
+TEST_F(CTEST_WinUI3, run_hands_the_context_stop_flag_to_the_winui_application)
+{
+  EXPECT_EQ(controller.run(ctx), 0);
+
+  ASSERT_TRUE(g_stop_requested);
+  EXPECT_FALSE(g_stop_requested());
+
+  ctx->set_stop(true);
+
+  EXPECT_TRUE(g_stop_requested());
 }

@@ -28,7 +28,8 @@ int WinUI3Controller::run(std::shared_ptr<app::ApplicationContext> nactx)
 
 int WinUI3Controller::launch(int& argc, char**& argv)
 {
-  return run_winui_application(argc, argv);
+  return run_winui_application(argc, argv,
+                               [ctx = actx]() { return ctx->get_stop(); });
 }
 
 }  // namespace winui3

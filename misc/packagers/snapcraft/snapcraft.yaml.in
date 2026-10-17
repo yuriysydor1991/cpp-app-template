@@ -32,6 +32,7 @@ parts:
     stage-packages:
       - libqt6core6t64
       - libqt6gui6t64
+      - libqt6opengl6t64
       - libqt6qml6
       - libqt6quick6
       - libqt6quickcontrols2-6

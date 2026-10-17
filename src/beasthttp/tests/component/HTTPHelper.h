@@ -24,7 +24,6 @@ class HTTPHelper
                                  const std::string& request);
 
  private:
-  static std::string perform_http_request(const unsigned short& uiport);
   static std::string perform_http_request_repeat(const unsigned short& uiport,
                                                  const unsigned int& reps,
                                                  const std::string& expected);

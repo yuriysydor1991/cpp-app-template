@@ -6,5 +6,5 @@ Separately each project may be downloaded and installed from different sources (
 - The Git versioning system at [https://git-scm.com/downloads/win](https://git-scm.com/downloads/win)
 - The CMake build system at [https://cmake.org/download/](https://cmake.org/download/)
 - The Windows 10/11 SDK at [https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/](https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/)
-- The Windows App SDK (WinUI 3) - installed through the Visual Studio installer or restored as the `Microsoft.WindowsAppSDK` NuGet package; see the [WinUI 3 + C++/WinRT integration](/doc/sections/en_US/4-project-structure/4-8-winui3-cppwinrt-integration.md) section
-- The NuGet CLI at [https://www.nuget.org/downloads](https://www.nuget.org/downloads) - used to restore the Windows App SDK and C++/WinRT packages
+- The Windows App SDK (WinUI 3) - restored by the CMake configure as the `Microsoft.WindowsAppSDK` NuGet package (along with the C++/WinRT and WebView2 ones); see the [WinUI 3 + C++/WinRT integration](/doc/sections/en_US/4-project-structure/4-8-winui3-cppwinrt-integration.md) section
+- The NuGet CLI at [https://www.nuget.org/downloads](https://www.nuget.org/downloads) - used to restore the Windows App SDK, C++/WinRT and WebView2 packages

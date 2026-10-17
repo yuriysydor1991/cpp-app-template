@@ -173,6 +173,7 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
 1. [Requirements](/doc/sections/en_US/3-requirements/3-requirements.md)
     1. [Required tools for the GNU/Linux based OS](/doc/sections/en_US/3-requirements/3-1-required-tools-for-the-GNU-Linux-based-OS.md)
     1. [Required tools for the MS Windows based OS](/doc/sections/en_US/3-requirements/3-2-required-tools-for-the-MS-Windows-based-OS.md)
+    1. [Required packages for the Boost.Log](/doc/sections/en_US/3-requirements/3-13-required-packages-for-the-Boost-Log.md)
     1. [Optional for the tests](/doc/sections/en_US/3-requirements/3-3-optional-for-the-tests.md)
     1. [Optional for the documentation](/doc/sections/en_US/3-requirements/3-4-optional-for-the-documentation.md)
     1. [Optional for the code formatting](/doc/sections/en_US/3-requirements/3-5-optional-for-the-code-formatting.md)
@@ -228,6 +229,7 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
         1. [Enabling the AppImage packager](/doc/sections/en_US/5-project-build/packagers/5-37-enabling-the-AppImage-packager.md)
         1. [Enabling the desktop application packaging](/doc/sections/en_US/5-project-build/packagers/5-46-enabling-the-desktop-application-packaging.md)
     1. Libraries
+        1. [The Boost.Log logger](/doc/sections/en_US/5-project-build/5-66-the-Boost-Log-logger.md)
         1. [Enabling the libcurl](/doc/sections/en_US/5-project-build/5-14-enabling-libcurl.md)
         1. [Enabling the nlohmann json library](/doc/sections/en_US/5-project-build/5-18-enabling-the-nlohmann-json-library.md)
     1. Security / Cryptography

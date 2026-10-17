@@ -14,3 +14,4 @@
 1. [Необов'язкові пакети для запуску контейнера Docker](/doc/sections/uk_UA/3-requirements/3-10-optional-for-docker-container-runs.md)
 1. [Необов'язкові пакети для генерації пакету snap](/doc/sections/uk_UA/3-requirements/3-11-optional-for-snap-packager.md)
 1. [Необхідні пакети для liboai](/doc/sections/uk_UA/3-requirements/3-12-required-packages-for-the-liboai.md)
+1. [Необов'язкові програми для генерації пакунку AppImage](/doc/sections/uk_UA/3-requirements/3-13-optional-for-the-AppImage-packager.md)

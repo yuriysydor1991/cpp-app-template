@@ -2,6 +2,7 @@
 
 1. [Побудова за допомогою IDE](/doc/sections/uk_UA/5-project-build/5-1-IDE-build.md)
 1. [Побудова проекту-шаблону через командний рядок](/doc/sections/uk_UA/5-project-build/5-2-command-line-build.md)
+1. [Швидкі скрипти побудови](/doc/sections/uk_UA/5-project-build/5-36-quick-build-scripts.md)
 1. Вмикання тестів
     1. [Вмикання юніт-тестів](/doc/sections/uk_UA/5-project-build/testing/5-3-1-enabling-unit-testing.md)
     1. [Запобігання використання GTest з ОС](/doc/sections/uk_UA/5-project-build/testing/5-3-2-disabling-system-GTest-probe.md)
@@ -28,12 +29,16 @@
     1. [Вмикання підтримки генерування пакунків FreeBSD pkg з cpack](/doc/sections/uk_UA/5-project-build/packagers/5-20-enabling-FreeBSD-pkg-package-generation-with-cpack.md)
     1. [Вмикання підтримки генерування WIX MSI-пакетів з cpack](/doc/sections/uk_UA/5-project-build/packagers/5-21-enabling-WIX-MSI-package-generation-with-cpack.md)
     1. [Вмикання підтримки генерування RPM-пакунків з cpack](/doc/sections/uk_UA/5-project-build/packagers/5-22-enabling-RPM-package-generation-with-cpack.md)
+    1. [Вмикання пакувальника AppImage](/doc/sections/uk_UA/5-project-build/packagers/5-38-enabling-the-AppImage-packager.md)
     1. [Вмикання пакування застосунку робочого столу](/doc/sections/uk_UA/5-project-build/packagers/5-46-enabling-the-desktop-application-packaging.md)
 1. Штучний інтелект
     1. [Вмикання інтеграції бібліотеки liboai](/doc/sections/uk_UA/5-project-build/ai/5-37-enabling-the-liboai-library.md)
 1. Бібліотеки
     1. [Вмикання інтеграції libcurl](/doc/sections/uk_UA/5-project-build/5-14-enabling-libcurl.md)
     1. [Вмикання інтеграції бібліотеки nlohmann JSON](/doc/sections/uk_UA/5-project-build/5-18-enabling-the-nlohmann-json-library.md)
+1. Безпека / Криптографія
+    1. [Вмикання інтеграції OpenSSL](/doc/sections/uk_UA/5-project-build/security/5-35-enabling-the-openssl-library.md)
+    1. [Параметри захисту бінарних файлів](/doc/sections/uk_UA/5-project-build/security/5-49-the-binary-hardening-options.md)
 1. Стиснення даних
     1. [Вмикання інтеграції zlib](/doc/sections/uk_UA/5-project-build/compression/5-23-enabling-the-zlib-library.md)
     1. [Вмикання інтеграції liblzma](/doc/sections/uk_UA/5-project-build/compression/5-34-enabling-the-liblzma-library.md)

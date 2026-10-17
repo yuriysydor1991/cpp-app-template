@@ -127,6 +127,8 @@ inline VkResult vkCreateInstance(const VkInstanceCreateInfo*,
                                  const VkAllocationCallbacks*,
                                  VkInstance* pInstance)
 {
+  // The tests flip the flag at run time, which cppcheck can not see.
+  // cppcheck-suppress knownConditionTrueFalse
   if (vkmock::fail_instance_creation()) {
     if (pInstance != nullptr) {
       *pInstance = VK_NULL_HANDLE;

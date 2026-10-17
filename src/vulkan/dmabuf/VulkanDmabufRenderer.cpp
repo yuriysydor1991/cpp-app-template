@@ -3,9 +3,11 @@
 #include <unistd.h>
 #include <vulkan/vulkan.h>
 
+#include <algorithm>
 #include <array>
 #include <cstdint>
 #include <cstring>
+#include <iterator>
 #include <limits>
 #include <vector>
 
@@ -65,13 +67,10 @@ std::vector<VkExtensionProperties> device_extensions(VkPhysicalDevice candidate)
 bool has_extension(const std::vector<VkExtensionProperties>& available,
                    const char* const name)
 {
-  for (const VkExtensionProperties& props : available) {
-    if (std::strcmp(props.extensionName, name) == 0) {
-      return true;
-    }
-  }
-
-  return false;
+  return std::any_of(available.begin(), available.end(),
+                     [name](const VkExtensionProperties& props) {
+                       return std::strcmp(props.extensionName, name) == 0;
+                     });
 }
 
 bool device_supports_required_extensions(VkPhysicalDevice candidate)
@@ -79,13 +78,11 @@ bool device_supports_required_extensions(VkPhysicalDevice candidate)
   const std::vector<VkExtensionProperties> available =
       device_extensions(candidate);
 
-  for (const char* required : kRequiredDeviceExtensions) {
-    if (!has_extension(available, required)) {
-      return false;
-    }
-  }
-
-  return true;
+  return std::all_of(kRequiredDeviceExtensions.begin(),
+                     kRequiredDeviceExtensions.end(),
+                     [&available](const char* required) {
+                       return has_extension(available, required);
+                     });
 }
 
 bool device_supports_vulkan_1_2(VkPhysicalDevice candidate)
@@ -204,17 +201,22 @@ bool VulkanDmabufRenderer::select_physical_device()
     vkGetPhysicalDeviceQueueFamilyProperties(candidate, &familyCount,
                                              families.data());
 
-    for (std::uint32_t i = 0; i < familyCount; ++i) {
-      if ((families[i].queueFlags & VK_QUEUE_GRAPHICS_BIT) != 0U) {
-        physicalDevice = candidate;
-        queueFamily = i;
-        // The image is released to the foreign (GTK) consumer when the device
-        // can tell it so; the release is optional and skipped otherwise.
-        foreignQueueFamily =
-            has_extension(device_extensions(candidate),
-                          VK_EXT_QUEUE_FAMILY_FOREIGN_EXTENSION_NAME);
-        return true;
-      }
+    const auto graphics =
+        std::find_if(families.begin(), families.end(),
+                     [](const VkQueueFamilyProperties& family) {
+                       return (family.queueFlags & VK_QUEUE_GRAPHICS_BIT) != 0U;
+                     });
+
+    if (graphics != families.end()) {
+      physicalDevice = candidate;
+      queueFamily =
+          static_cast<std::uint32_t>(std::distance(families.begin(), graphics));
+      // The image is released to the foreign (GTK) consumer when the device
+      // can tell it so; the release is optional and skipped otherwise.
+      foreignQueueFamily =
+          has_extension(device_extensions(candidate),
+                        VK_EXT_QUEUE_FAMILY_FOREIGN_EXTENSION_NAME);
+      return true;
     }
   }
 

@@ -2,6 +2,7 @@
 
 1. [IDE build](/doc/sections/en_US/5-project-build/5-1-IDE-build.md)
 1. [Command line build](/doc/sections/en_US/5-project-build/5-2-command-line-build.md)
+1. [Quick build scripts](/doc/sections/en_US/5-project-build/5-36-quick-build-scripts.md)
 1. Enabling testing
     1. [Enabling unit testing](/doc/sections/en_US/5-project-build/testing/5-3-1-enabling-unit-testing.md)
     1. [Disabling system GTest probe](/doc/sections/en_US/5-project-build/testing/5-3-2-disabling-system-GTest-probe.md)
@@ -28,11 +29,15 @@
     1. [Enabling FreeBSD pkg package generation with cpack](/doc/sections/en_US/5-project-build/packagers/5-20-enabling-FreeBSD-pkg-package-generation-with-cpack.md)
     1. [Enabling WIX MSI package generation with cpack](/doc/sections/en_US/5-project-build/packagers/5-21-enabling-WIX-MSI-package-generation-with-cpack.md)
     1. [Enabling RPM package generation with cpack](/doc/sections/en_US/5-project-build/packagers/5-22-enabling-RPM-package-generation-with-cpack.md)
+    1. [Enabling the AppImage packager](/doc/sections/en_US/5-project-build/packagers/5-37-enabling-the-AppImage-packager.md)
     1. [Enabling the desktop application packaging](/doc/sections/en_US/5-project-build/packagers/5-46-enabling-the-desktop-application-packaging.md)
 1. Libraries
     1. [The Boost.Log logger](/doc/sections/en_US/5-project-build/5-66-the-Boost-Log-logger.md)
     1. [Enabling the libcurl](/doc/sections/en_US/5-project-build/5-14-enabling-libcurl.md)
     1. [Enabling the nlohmann JSON library](/doc/sections/en_US/5-project-build/5-18-enabling-the-nlohmann-json-library.md)
+1. Security / Cryptography
+    1. [Enabling the OpenSSL library](/doc/sections/en_US/5-project-build/security/5-35-enabling-the-openssl-library.md)
+    1. [The binary hardening options](/doc/sections/en_US/5-project-build/security/5-49-the-binary-hardening-options.md)
 1. Compression
     1. [Enabling the zlib library](/doc/sections/en_US/5-project-build/compression/5-23-enabling-the-zlib-library.md)
     1. [Enabling the liblzma library](/doc/sections/en_US/5-project-build/compression/5-34-enabling-the-liblzma-library.md)

@@ -81,6 +81,17 @@ cmake_conf = configuration_data()
 cmake_conf.set('PROJECT_LIBRARY_NAME', PROJECT_LIBRARY_NAME)
 cmake_conf.set('PROJECT_VERSION', meson.project_version())
 cmake_conf.set('PROJECT_VERSION_MAJOR', project_major_version)
+# Meson appends the soversion to a Windows DLL name and prefixes the MinGW
+# outputs with lib: <name>-<soversion>.dll with the <name>.lib import library
+# for the MSVC toolchain, lib<name>-<soversion>.dll with lib<name>.dll.a for
+# the MinGW one.
+if meson.get_compiler('cpp').get_argument_syntax() == 'msvc'
+  cmake_conf.set('WINDOWS_DLL_NAME', PROJECT_LIBRARY_NAME + '-' + project_major_version + '.dll')
+  cmake_conf.set('WINDOWS_IMPLIB_NAME', PROJECT_LIBRARY_NAME + '.lib')
+else
+  cmake_conf.set('WINDOWS_DLL_NAME', 'lib' + PROJECT_LIBRARY_NAME + '-' + project_major_version + '.dll')
+  cmake_conf.set('WINDOWS_IMPLIB_NAME', 'lib' + PROJECT_LIBRARY_NAME + '.dll.a')
+endif
 cmake_conf.set('CMAKE_CONFIG_INSTALL_DIR', cmake_config_install_subdir)
 cmake_conf.set('LIB_INSTALL_SUBDIR', get_option('libdir'))
 cmake_conf.set('INCLUDE_INSTALL_SUBDIR',

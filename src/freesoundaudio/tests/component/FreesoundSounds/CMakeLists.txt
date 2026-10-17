@@ -14,6 +14,13 @@ add_executable(
   ${FREESOUND_AUDIO_GENERATED_SOUNDS_SOURCE}
 )
 
+target_compile_definitions(
+  CTEST_FreesoundSounds
+  PRIVATE CTEST_FreesoundSounds_QRC=\"${FREESOUND_AUDIO_FULL_QRC}\"
+  PRIVATE CTEST_FreesoundSounds_GRESOURCE_XML=\"${FREESOUND_AUDIO_FULL_GRESOURCE_XML}\"
+  PRIVATE CTEST_FreesoundSounds_MANIFEST=\"${TEMPLATE_APP_FREESOUND_AUDIO_MANIFEST}\"
+)
+
 target_include_directories(
   CTEST_FreesoundSounds
   PRIVATE ${FREESOUND_AUDIO_MOCKS_ROOT}/log

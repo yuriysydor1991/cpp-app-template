@@ -11,7 +11,7 @@ if (NOT ENABLE_LIBHEIF)
 endif()
 
 set(TEMPLATE_APP_LIBHEIF_GIT "https://github.com/strukturag/libheif.git" CACHE STRING "The libheif library git source repository")
-set(TEMPLATE_APP_LIBHEIF_GIT_TAG "master" CACHE STRING "The libheif project git repository tag/branch of interest")
+set(TEMPLATE_APP_LIBHEIF_GIT_TAG "v1.23.6" CACHE STRING "The libheif project git repository release tag of interest")
 
 template_project_default_3rdparty_enabler(
   NAME libheif

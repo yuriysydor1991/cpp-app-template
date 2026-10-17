@@ -8,9 +8,18 @@ set(
       -t ${DOCKER_SINGLE_RUN_NAME} .
 )
 
+# The container draws on the host X server, whose access granted to it is
+# revoked on every exit of the run, the failed and the interrupted ones included.
 set(
   DOCKER_SINGLE_RUN_CMD
-    ${DOCKER_EXEC} run --rm ${DOCKER_SINGLE_RUN_NAME}
+    sh -c "trap 'xhost -local:docker' EXIT && trap 'exit 130' INT TERM && \
+      xhost +local:docker && \
+      ${DOCKER_EXEC} run --rm \
+      -e DISPLAY=$DISPLAY \
+      -v /tmp/.X11-unix:/tmp/.X11-unix:ro \
+      --device /dev/dri \
+      --group-add video \
+      ${DOCKER_SINGLE_RUN_NAME}"
 )
 
 message(STATUS "docker single build command: ${DOCKER_SINGLE_BUILD_CMD}")
@@ -27,4 +36,5 @@ add_custom_target(
   COMMAND ${DOCKER_SINGLE_RUN_CMD}
   DEPENDS docker-single-build
   COMMENT "Running the docker single run instance"
+  VERBATIM
 )

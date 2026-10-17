@@ -10,6 +10,7 @@ add_executable(
   ${CMAKE_SOURCE_DIR}/src/app/applications/Application.cpp
   ${KENNEY_AUDIO_SUBSYSTEM_SOURCES}
   ${KENNEY_AUDIO_NO_PLAYER_SOURCE}
+  ${CMAKE_SOURCE_DIR}/src/kenneyaudio/tests/mocks/KenneyGeneratedSounds/KenneyGeneratedSounds.cpp
   ${CMAKE_SOURCE_DIR}/src/app/ApplicationContext.cpp
   ${CMAKE_SOURCE_DIR}/src/app/ApplicationFactory.cpp
   ${CMAKE_SOURCE_DIR}/src/app/applications/ApplicationHelpPrinter.cpp
@@ -30,7 +31,6 @@ target_include_directories(
   CTEST_app
   PRIVATE
     ${APP_MOCKS_ROOT}/log
-    ${APP_MOCKS_ROOT}/KenneyGeneratedSounds
     ${APP_MOCKS_ROOT}/kenney-audio-decls
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}

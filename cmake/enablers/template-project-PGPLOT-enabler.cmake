@@ -18,7 +18,7 @@ endif()
 # the original PGPLOT library or the giza-dev (Debian/Ubuntu) one with it's
 # free drop-in cpgplot/PGPLOT replacement. Neither of them is a Fedora (or an
 # EPEL) package, so the giza gets built from it's sources there. Consult the
-# doc/sections/en_US/3-requirements/3-11-required-pgplot-packages.md file for
+# doc/sections/en_US/3-requirements/3-13-required-pgplot-packages.md file for
 # the details.
 
 set(

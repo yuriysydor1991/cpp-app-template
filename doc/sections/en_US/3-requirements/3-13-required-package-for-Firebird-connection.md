@@ -14,10 +14,10 @@ sudo apt install -y autoconf automake libtool-bin make unzip zlib1g-dev libicu-d
 
 The `ENABLE_FIREBIRD` CMake option (`ON` by default) controls the client library. Configured with `-DENABLE_FIREBIRD=OFF` the project neither probes nor fetches the fbclient library and builds without it: the `DisabledFbClient` class takes the place of the driver, so the executable reports that the Firebird support is disabled and exits with a failure status.
 
-In order to install the [Firebird](https://firebirdsql.org/) DBMS server by itself (it also pulls in the `libfbclient2` runtime library) the next command may be used (GNU/Linux based OS, the version suffix may differ between distributions):
+In order to install the [Firebird](https://firebirdsql.org/) DBMS server by itself (it also pulls in the `libfbclient2` runtime library) the next command may be used (Ubuntu 26.04 and Debian 13, which ship the 4.0 client development files; take the `firebird3.0-server` package on Ubuntu 24.04):
 
 ```
-sudo apt install -y firebird3.0-server
+sudo apt install -y firebird4.0-server
 ```
 
 ### Connection settings

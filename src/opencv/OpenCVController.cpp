@@ -30,7 +30,18 @@ bool OpenCVController::load_cascade(const std::string& cascadePath)
 
   LOGT("Loading the Haar cascade from " << target);
 
-  if (!cascade.load(target)) {
+  bool loaded{false};
+
+  // A file that is no cascade XML at all makes the OpenCV throw instead of
+  // failing the load.
+  try {
+    loaded = cascade.load(target);
+  }
+  catch (const cv::Exception& e) {
+    LOGE("The Haar cascade " << target << " can't be parsed: " << e.what());
+  }
+
+  if (!loaded) {
     LOGE("Failed to load the Haar cascade from " << target);
     loadedCascadePath.clear();
     return false;

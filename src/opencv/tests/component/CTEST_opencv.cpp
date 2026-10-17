@@ -3,11 +3,13 @@
 
 #include <cstdlib>
 #include <filesystem>
+#include <fstream>
 #include <memory>
 #include <opencv2/core.hpp>
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/imgproc.hpp>
 #include <string>
+#include <vector>
 
 #include "src/app/ApplicationContext.h"
 #include "src/opencv/OpenCVController.h"
@@ -27,17 +29,40 @@ class CTEST_opencv : public Test
   ~CTEST_opencv() override
   {
     std::error_code ec;
-    if (!fixturePath.empty()) {
-      std::filesystem::remove(fixturePath, ec);
+
+    for (const auto& path : fixturePaths) {
+      std::filesystem::remove_all(path, ec);
     }
+  }
+
+  std::string fixture_path(const std::string& filename)
+  {
+    fixturePaths.emplace_back(
+        (std::filesystem::temp_directory_path() / filename).string());
+
+    return fixturePaths.back();
   }
 
   std::string make_blank_fixture(const std::string& filename)
   {
-    fixturePath = (std::filesystem::temp_directory_path() / filename).string();
-    cv::Mat blank(120, 120, CV_8UC3, cv::Scalar::all(0));
-    cv::imwrite(fixturePath, blank);
-    return fixturePath;
+    const auto path = fixture_path(filename);
+    const cv::Mat blank(120, 120, CV_8UC3, cv::Scalar::all(0));
+
+    EXPECT_TRUE(cv::imwrite(path, blank));
+    EXPECT_TRUE(std::filesystem::is_regular_file(path));
+
+    return path;
+  }
+
+  std::string make_text_fixture(const std::string& filename)
+  {
+    const auto path = fixture_path(filename);
+
+    std::ofstream{path} << "no image and no cascade XML at all";
+
+    EXPECT_TRUE(std::filesystem::is_regular_file(path));
+
+    return path;
   }
 
   int argc{0};
@@ -45,7 +70,7 @@ class CTEST_opencv : public Test
 
   OpenCVController::OpenCVControllerPtr controller;
   std::shared_ptr<app::ApplicationContext> ctx;
-  std::string fixturePath;
+  std::vector<std::string> fixturePaths;
 };
 
 TEST_F(CTEST_opencv, create_default_controller_success)
@@ -112,4 +137,15 @@ TEST_F(CTEST_opencv, face_recognition_example_succeeds_without_image)
 
   EXPECT_TRUE(controller->face_recognition_example(ctx));
   EXPECT_FALSE(controller->get_cascade_path().empty());
+}
+
+TEST_F(CTEST_opencv, a_cascade_file_of_no_xml_fails_to_load_with_no_throw)
+{
+  const auto path = make_text_fixture("opencv-broken-cascade-fixture.xml");
+
+  bool loaded{true};
+
+  EXPECT_NO_THROW(loaded = controller->load_cascade(path));
+  EXPECT_FALSE(loaded);
+  EXPECT_TRUE(controller->get_cascade_path().empty());
 }

@@ -18,7 +18,6 @@ PACKAGES="
     googletest
     libglvnd
     qt6-base
-    qt6-declarative
     qt6-tools
 "
 

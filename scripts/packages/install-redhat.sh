@@ -20,8 +20,6 @@ PACKAGES=(
     make
     openssl-devel
     qt6-qtbase-devel
-    qt6-qtdeclarative
-    qt6-qtdeclarative-devel
     qt6-qttools-devel
 )
 

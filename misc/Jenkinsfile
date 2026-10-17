@@ -131,12 +131,12 @@ pipeline {
         }
         stage('UTEST_WindowConfig') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_WindowConfig\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_WindowConfig.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_WindowConfig\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_WindowConfig.junit.xml'
           }
         }
         stage('UTEST_WxWidgetsController') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_WxWidgetsController\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_WxWidgetsController.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_WxWidgetsController\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_WxWidgetsController.junit.xml'
           }
         }
         stage('UTEST_SignalsHandler') { 
@@ -202,12 +202,12 @@ pipeline {
         }
         stage('CTEST_WxWidgets') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_WxWidgets\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_WxWidgets.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_WxWidgets\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_WxWidgets.junit.xml'
           }
         }
         stage('CTEST_WxStopFlagWatcher') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_WxStopFlagWatcher\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_WxStopFlagWatcher.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_WxStopFlagWatcher\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_WxStopFlagWatcher.junit.xml'
           }
         }
       }

@@ -12,7 +12,7 @@ endif()
 
 # original repo @ https://gitlab.gnome.org/GNOME/libxml2.git
 set(TEMPLATE_APP_LIBXML2_GIT "https://github.com/GNOME/libxml2.git" CACHE STRING "The LibXml2 library git source repository")
-set(TEMPLATE_APP_LIBXML2_GIT_TAG "master" CACHE STRING "The LibXml2 project git repository tag of interest")
+set(TEMPLATE_APP_LIBXML2_GIT_TAG "v2.15.4" CACHE STRING "The LibXml2 project git repository release tag of interest")
 
 template_project_default_3rdparty_enabler(
   NAME LibXml2 

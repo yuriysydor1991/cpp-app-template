@@ -11,7 +11,7 @@ if (NOT ENABLE_LIBAVIF)
 endif()
 
 set(TEMPLATE_APP_LIBAVIF_GIT "https://github.com/AOMediaCodec/libavif.git" CACHE STRING "The libavif library git source repository")
-set(TEMPLATE_APP_LIBAVIF_GIT_TAG "main" CACHE STRING "The libavif project git repository tag/branch of interest")
+set(TEMPLATE_APP_LIBAVIF_GIT_TAG "v1.4.2" CACHE STRING "The libavif project git repository release tag of interest")
 
 template_project_default_3rdparty_enabler(
   NAME libavif

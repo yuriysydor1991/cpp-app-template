@@ -18,7 +18,7 @@ if (NOT ENABLE_SDL2_AUDIO)
 
   target_link_libraries(
     ${PROJECT_BINARY_NAME}
-    TemplateProjectFreesoundSoundPlayerObj
+    PRIVATE TemplateProjectFreesoundSoundPlayerObj
   )
 
   return()
@@ -45,7 +45,7 @@ target_link_libraries(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  TemplateProjectFreesoundSoundPlayerObj
+  PRIVATE TemplateProjectFreesoundSoundPlayerObj
   ${TEMPLATE_APP_SDL2_MIXER_TARGET}
   ${TEMPLATE_APP_SDL2_AUDIO_TARGET}
 )

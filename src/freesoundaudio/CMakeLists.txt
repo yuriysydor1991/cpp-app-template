@@ -32,7 +32,7 @@ target_include_directories(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  TemplateProjectFreesoundAudioObj
+  PRIVATE TemplateProjectFreesoundAudioObj
 )
 
 add_subdirectory(player)

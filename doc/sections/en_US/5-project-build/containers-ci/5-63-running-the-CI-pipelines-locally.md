@@ -82,7 +82,7 @@ The JUnit `reports` of the `build-and-test` job have no local counterpart, since
 | --- | --- | --- |
 | `LOCAL_PIPELINE_BRANCH` | the checked out branch | the local branch whose committed tip both pipelines check |
 | `LOCAL_PIPELINE_RUN_CPPCHECK` | `OFF` | sets the `run_cppcheck` input of the GitHub Actions pipeline and the `RUN_CPPCHECK` variable of the GitLab CI/CD one, which start their `cppcheck` stage |
-| `LOCAL_PIPELINE_MAX_PARALLEL_JOBS` | every job at once | the number of the jobs a run starts at once - each job builds with all the host cores on its own, so the four jobs of a pipeline load the host four times over |
+| `LOCAL_PIPELINE_MAX_PARALLEL_JOBS` | the runner default: as many jobs as the host has CPU cores for `act`, every job at once for `gitlab-ci-local` | the number of the jobs a run starts at once - each job builds with all the host cores on its own, so the four jobs of a pipeline load the host four times over |
 | `GITHUB_ACTIONS_PIPELINE_JOB` | every job | the single job ID the GitHub Actions run is limited to, e.g. `code-format` |
 | `GITLAB_CI_PIPELINE_JOBS` | every job | the space separated job names the GitLab CI/CD run is limited to, e.g. `code-format release` |
 | `GITHUB_ACTIONS_PIPELINE_FORCE_REBUILD` | `OFF` | builds the runner image anew, see above |

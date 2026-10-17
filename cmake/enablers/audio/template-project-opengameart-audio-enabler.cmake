@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.13)
 
 option(
   ENABLE_OPENGAMEART_AUDIO
-  "Set to ON to make the OpenGameArt CC0 sound effect packs available (by reusing an already present directory or by fetching them through the Internet)"
+  "Set to ON to make the OpenGameArt sound effect packs the manifest names available (by reusing an already present directory or by fetching them through the Internet)"
   ON
 )
 

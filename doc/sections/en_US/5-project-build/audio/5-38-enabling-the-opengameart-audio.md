@@ -1,6 +1,6 @@
 ## Enabling the OpenGameArt sound effects
 
-The [OpenGameArt](https://opengameart.org) CC0 sound effect packs are made available to the project by the `ENABLE_OPENGAMEART_AUDIO` CMake variable, which is `ON` by default on this branch:
+The [OpenGameArt](https://opengameart.org) sound effect packs are made available to the project by the `ENABLE_OPENGAMEART_AUDIO` CMake variable, which is `ON` by default on this branch:
 
 ```
 # Inside the source root directory
@@ -10,7 +10,7 @@ cmake -S . -B build -DENABLE_OPENGAMEART_AUDIO=ON
 
 The enabler downloads every configured pack, unpacks it into a resources directory of the build tree, keeps it **intact** and reachable both from CMake and from the C++ code, and leaves the decision of what ends up inside the application binary to the developer. No browser, no sound by sound "save as" ritual and no network access at the application run time.
 
-OpenGameArt publishes the packs under the [CC0](https://creativecommons.org/publicdomain/zero/1.0/) terms, so they need no attribution and stay usable commercially. **The packs are never committed into this repository**: they are fetched at the configure time, exactly the way the Font Awesome icon set is on the `appFontAwesome` branch.
+OpenGameArt hosts it's submissions under several different licenses (CC0, CC-BY, CC-BY-SA, GPL and others), so every pack is recorded in the manifest together with the very license it was published under, and that license travels into the binary (see the `OpenGameArtPack::license` accessor). The packs this branch defaults to are [CC0](https://creativecommons.org/publicdomain/zero/1.0/) ones and need no attribution, while a pack of any other license added to the manifest brings it's own attribution and sharing terms along. **The packs are never committed into this repository**: they are fetched at the configure time.
 
 ### The enabler variables
 

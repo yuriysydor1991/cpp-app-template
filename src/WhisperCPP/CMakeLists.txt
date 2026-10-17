@@ -1,5 +1,18 @@
 cmake_minimum_required(VERSION 3.13)
 
+# The whisper.cpp is a hard requirement of this branch rather than an optional
+# integration, since the whole src/WhisperCPP example is built around it.
+if (NOT ENABLE_WHISPERCPP)
+  message(
+    FATAL_ERROR
+    "The src/WhisperCPP sources require the whisper.cpp library which is turned off by "
+    "the ENABLE_WHISPERCPP=OFF parameter. Drop the add_subdirectory(WhisperCPP) call from the "
+    "src/CMakeLists.txt file together with the whole src/WhisperCPP subdirectory "
+    "and its usage of the src/app/applications/Application.cpp file to build "
+    "the project without it."
+  )
+endif()
+
 add_library(
   TemplateProjectWhisperControllerObj OBJECT
   Microphone.cpp

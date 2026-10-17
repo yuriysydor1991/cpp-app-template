@@ -9,6 +9,8 @@ cmake -S . -B build -DENABLE_WHISPERCPP=ON
 cmake --build build --target all
 ```
 
+Застосунок цієї гілки побудовано навколо whisper.cpp, тож тут ця опція є обов'язковою: крок конфігурування CMake завершується з пояснювальним повідомленням, якщо опцію вимкнути (`OFF`).
+
 Модуль [cmake/enablers/ai/template-project-whispercpp-enabler.cmake](/cmake/enablers/ai/template-project-whispercpp-enabler.cmake) спершу шукає встановлену в системі whisper.cpp. Ubuntu 26.04 і Debian forky постачають її пакет розробки (скрипти `scripts/packages/install-ubuntu.sh` і `scripts/packages/install-debian.sh` встановлюють його скрізь, де він доступний):
 
 ```

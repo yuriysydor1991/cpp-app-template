@@ -69,4 +69,4 @@ target_link_libraries(consumer PRIVATE CppAppTemplate-0.12::CppAppTemplate-0.12)
 
 Опція оголошена у [cmake/template-project-misc-variables-declare.cmake](/cmake/template-project-misc-variables-declare.cmake) і використовується у [src/lib/CMakeLists.txt](/src/lib/CMakeLists.txt) і [src/lib/facade/CMakeLists.txt](/src/lib/facade/CMakeLists.txt).
 
-Дивись також розділ [Налаштування складових імені встановлюваної бібліотеки](/doc/sections/uk_UA/5-project-build/compression/5-23-customizing-library-name-segments.md), який визначає `<NAME>` для кожного з перелічених вище артефактів.
+Дивись також розділ [Налаштування складових імені встановлюваної бібліотеки](/doc/sections/uk_UA/5-project-build/5-41-customizing-library-name-segments.md), який визначає `<NAME>` для кожного з перелічених вище артефактів.

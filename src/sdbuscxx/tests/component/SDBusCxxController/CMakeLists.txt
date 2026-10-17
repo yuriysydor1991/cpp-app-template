@@ -6,10 +6,12 @@ add_executable(
   ${CMAKE_SOURCE_DIR}/src/sdbuscxx/SDBusCxxController.cpp
   ${CMAKE_SOURCE_DIR}/src/sdbuscxx/server-objects/DBusServerObjectFactory.cpp
   ${CMAKE_SOURCE_DIR}/src/sdbuscxx/server-objects/CurrentDateServerObject.cpp
+  ${GENERAL_MOCKS_ROOT}/ApplicationContext/src/app/ApplicationContext.cpp
 )
 
 target_include_directories(
   CTEST_SDBusCxxController
+  PRIVATE ${GENERAL_MOCKS_ROOT}/ApplicationContext
   PRIVATE ${GENERAL_MOCKS_ROOT}/log
   PRIVATE ${CMAKE_SOURCE_DIR}
   PRIVATE ${CMAKE_BINARY_DIR}
@@ -21,8 +23,8 @@ target_link_libraries(
   ${SDBUSCPP_LINK_TARGET}
 )
 
-# NOTE: the sdbus-c++ usage requirements are attached to this target by the
-# template-project-libsdbuscxx-enabler in the post enabler step.
+# The sdbus-c++ usage requirements come with the SDBUSCPP_LINK_TARGET the
+# template-project-libsdbuscxx-enabler declares before the src directory.
 
 include(GoogleTest)
 

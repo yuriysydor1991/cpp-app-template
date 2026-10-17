@@ -2,7 +2,7 @@
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_SDBUS_CXX_MOCK_H
 
 // Header-only mock of the subset of the sdbus-c++ API used by the project's
-// D-Bus client and server sources. It lets the sdbus-cpp unit tests compile and
+// D-Bus server sources. It lets the sdbus-cpp unit tests compile and
 // run without linking the real sdbus-c++ or touching a live bus: the
 // bus-touching members are no-ops that return defaults. The real bus
 // interactions stay covered by the component tests, which link the real
@@ -13,6 +13,7 @@
 #include <stdexcept>
 #include <string>
 #include <utility>
+#include <vector>
 
 namespace sdbus
 {
@@ -100,6 +101,15 @@ inline bool& fail_bus_connection()
   return flag;
 }
 
+/**
+ * @brief Test hook: the connection calls made so far, in their order.
+ */
+inline std::vector<std::string>& calls()
+{
+  static std::vector<std::string> made;
+  return made;
+}
+
 }  // namespace mock
 
 // ---- property read (client proxy side) ------------------------------------
@@ -132,12 +142,6 @@ class PropertyVTableItem
   {
     return *this;
   }
-
-  template <typename Setter>
-  PropertyVTableItem& withSetter(Setter&&)
-  {
-    return *this;
-  }
 };
 
 inline PropertyVTableItem registerProperty(const PropertyName&) { return {}; }
@@ -166,22 +170,20 @@ class IConnection
  public:
   virtual ~IConnection() = default;
 
-  void requestName(const ServiceName&) {}
-  void releaseName(const ServiceName&) {}
-  void enterEventLoop() {}
-  void enterEventLoopAsync() {}
-  void leaveEventLoop() {}
-};
-
-inline std::unique_ptr<IConnection> createSystemBusConnection()
-{
-  if (mock::fail_bus_connection()) {
-    throw Error(Error::Name{"org.freedesktop.DBus.Error.Failed"},
-                "mock: system bus is not reachable");
+  void requestName(const ServiceName&)
+  {
+    mock::calls().emplace_back("requestName");
   }
-
-  return std::make_unique<IConnection>();
-}
+  void releaseName(const ServiceName&)
+  {
+    mock::calls().emplace_back("releaseName");
+  }
+  void enterEventLoopAsync()
+  {
+    mock::calls().emplace_back("enterEventLoopAsync");
+  }
+  void leaveEventLoop() { mock::calls().emplace_back("leaveEventLoop"); }
+};
 
 inline std::unique_ptr<IConnection> createSessionBusConnection()
 {

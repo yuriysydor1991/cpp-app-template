@@ -3,6 +3,7 @@
 #include <cassert>
 #include <exception>
 #include <memory>
+#include <thread>
 
 #include "src/log/log.h"
 #include "src/sdbuscxx/sdbuscxx-includes.h"
@@ -96,7 +97,18 @@ bool SDBusCxxController::serve()
          << serverObject->service_name()
          << ", object: " << serverObject->object_path());
 
-    conn->enterEventLoop();
+    // The connection serves the requests by an event loop thread of its own,
+    // while this one watches the stop flag the termination signals raise.
+    conn->enterEventLoopAsync();
+
+    while (!appctx->get_stop()) {
+      std::this_thread::sleep_for(STOP_CHECK_PERIOD);
+    }
+
+    LOGI("Stopping the DBus server");
+
+    conn->leaveEventLoop();
+    conn->releaseName(serverObject->service_name());
   }
   catch (const sdbus::Error& e) {
     LOGE("DBus error: [" << e.getName() << "] " << e.getMessage());

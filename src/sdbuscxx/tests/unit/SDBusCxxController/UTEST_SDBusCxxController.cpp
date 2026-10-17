@@ -1,7 +1,10 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include <atomic>
+#include <chrono>
 #include <memory>
+#include <thread>
 
 #include "src/app/ApplicationContext.h"
 #include "src/sdbuscxx/SDBusCxxController.h"
@@ -30,6 +33,7 @@ class UTEST_SDBusCxxController : public Test
           .WillRepeatedly(Return(serverObject));
     };
     sdbus::mock::fail_bus_connection() = false;
+    sdbus::mock::calls().clear();
   }
 
   ~UTEST_SDBusCxxController() override
@@ -68,12 +72,39 @@ TEST_F(UTEST_SDBusCxxController, run_returns_false_when_not_initialized)
 
 TEST_F(UTEST_SDBusCxxController, run_succeeds_when_server_starts)
 {
-  // The mocked connection's event loop returns immediately, so serve() exports
-  // the object, claims the name and reports success without a live bus.
+  // The raised stop flag ends the serving right away, so serve() exports the
+  // object, claims the name, leaves the loop and reports success.
   SDBusCxxControllerPtr controller = SDBusCxxController::create();
 
   ASSERT_NE(controller, nullptr);
+
+  appCtx->set_stop(true);
+
   EXPECT_TRUE(controller->run(appCtx));
+  EXPECT_THAT(sdbus::mock::calls(),
+              ElementsAre("requestName", "enterEventLoopAsync",
+                          "leaveEventLoop", "releaseName"));
+}
+
+TEST_F(UTEST_SDBusCxxController, run_serves_until_the_stop_flag_is_raised)
+{
+  SDBusCxxControllerPtr controller = SDBusCxxController::create();
+
+  ASSERT_NE(controller, nullptr);
+
+  std::atomic_bool served{false};
+  std::thread server{[&]() { served.store(controller->run(appCtx)); }};
+
+  std::this_thread::sleep_for(std::chrono::milliseconds(300));
+
+  EXPECT_FALSE(served.load());
+  EXPECT_THAT(sdbus::mock::calls(), Not(Contains("leaveEventLoop")));
+
+  appCtx->set_stop(true);
+  server.join();
+
+  EXPECT_TRUE(served.load());
+  EXPECT_THAT(sdbus::mock::calls(), Contains("leaveEventLoop"));
 }
 
 TEST_F(UTEST_SDBusCxxController,

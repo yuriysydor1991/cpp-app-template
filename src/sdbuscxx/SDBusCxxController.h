@@ -1,6 +1,7 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_SDBUSCXXCONTROLLER_CLASS_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_SDBUSCXXCONTROLLER_CLASS_H
 
+#include <chrono>
 #include <memory>
 
 #include "src/app/ApplicationContext.h"
@@ -24,8 +25,9 @@ class SDBusCxxController
   SDBusCxxController() = default;
 
   /**
-   * @brief Sets up and runs the D-Bus server. Blocks in the bus event loop
-   * until the connection leaves it (e.g. on process termination).
+   * @brief Sets up and runs the D-Bus server. Serves the requests until the
+   * stop flag of the context is raised (the SIGINT or the SIGTERM signal, for
+   * instance), then leaves the bus event loop and releases the name.
    *
    * @param ctx A filled application context.
    *
@@ -44,6 +46,10 @@ class SDBusCxxController
 
  private:
   bool serve();
+
+  /// @brief How often the served bus checks the stop flag of the context.
+  inline static constexpr const std::chrono::milliseconds STOP_CHECK_PERIOD{
+      100};
 
   std::unique_ptr<sdbus::IConnection> conn;
   IDBusServerObjectPtr serverObject;

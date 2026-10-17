@@ -39,10 +39,7 @@
           "type": "dir",
           "path": "${CMAKE_SOURCE_DIR}"
         }
-      ],
-      "build-options": {
-        "build-args": [ "--share=network" ]
-      }
+      ]
     }
   ],
   "finish-args": [

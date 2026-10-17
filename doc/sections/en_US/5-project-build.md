@@ -20,6 +20,8 @@
 1. Containers & CI
     1. [Enabling the Docker container build and run](/doc/sections/en_US/5-12-enabling-the-docker-container-build-and-run.md)
     1. [Running the Jenkins pipeline](/doc/sections/en_US/5-17-enabling-Jenkins-pipeline-inside-Docker-container.md)
+    1. [The GitHub Actions CI pipeline](/doc/sections/en_US/5-31-the-GitHub-Actions-CI-pipeline.md)
+    1. [The GitLab CI/CD pipeline](/doc/sections/en_US/5-32-the-GitLab-CI-pipeline.md)
 1. Packagers
     1. [Enabling the flatpak package generation support](/doc/sections/en_US/5-11-enabling-the-flatpak-package-generation-support.md)
     1. [Enabling the snap package generation support](/doc/sections/en_US/5-22-enabling-snap-package-generation.md)
@@ -33,5 +35,7 @@
     1. [Enabling the nlohmann JSON library](/doc/sections/en_US/5-18-enabling-the-nlohmann-json-library.md)
     1. [Enabling the libxml2](/doc/sections/en_US/5-20-enabling-libxml2.md)
     1. [Enabling the OpenCV](/doc/sections/en_US/5-21-enabling-OpenCV.md)
+1. [The binary hardening options](/doc/sections/en_US/5-33-the-binary-hardening-options.md)
 1. [Project maintainer options](/doc/sections/en_US/5-28-project-maintainer-options.md)
 1. [Customizing the installable library name segments](/doc/sections/en_US/5-29-customizing-library-name-segments.md)
+1. [Installing the library development files](/doc/sections/en_US/5-30-installing-the-library-development-files.md)

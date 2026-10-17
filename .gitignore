@@ -1,17 +1,13 @@
 build/*
 builddir/*
-cmake-build-debug/*
-cmake-build-release/*
 build-*/*
 .vscode
 .idea/*
-Testing/*
 html/*
 latex/*
 doc/html/*
 doc/latex/*
 out/*
-CMakeSettings.json
 *.log
 gmon.out
 analysis.txt

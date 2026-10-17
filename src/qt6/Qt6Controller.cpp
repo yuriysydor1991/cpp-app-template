@@ -3,6 +3,8 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlEngine>
+#include <QQuickWindow>
+#include <QSGRendererInterface>
 #include <QString>
 #include <QTimer>
 
@@ -43,6 +45,11 @@ int Qt6Controller::run(std::shared_ptr<app::ApplicationContext> actx)
 
   QCoreApplication::setOrganizationName(
       QString::fromStdString(project_decls::PROJECT_NAME));
+
+  // The QQuickFramebufferObject renders with OpenGL alone, while the Qt Quick
+  // default is the Direct3D on MS Windows and the Metal on macOS, so the scene
+  // graph is told to use the OpenGL before any window is created.
+  QQuickWindow::setGraphicsApi(QSGRendererInterface::OpenGL);
 
   QGuiApplication app(actx->get_argc(), actx->get_argv());
 

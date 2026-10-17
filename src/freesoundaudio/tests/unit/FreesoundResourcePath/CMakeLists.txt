@@ -4,6 +4,7 @@ add_executable(
   UTEST_FreesoundResourcePath
   UTEST_FreesoundResourcePath.cpp
   ${CMAKE_SOURCE_DIR}/src/freesoundaudio/FreesoundSound.cpp
+  ${CMAKE_SOURCE_DIR}/src/freesoundaudio/FreesoundRootDirectory.cpp
   ${FREESOUND_AUDIO_OWN_MOCKS_ROOT}/FreesoundGeneratedSounds/FreesoundGeneratedSounds.cpp
   ${CMAKE_SOURCE_DIR}/src/freesoundaudio/categories/FreesoundCategory.cpp
   ${CMAKE_SOURCE_DIR}/src/freesoundaudio/resources/FreesoundResourcePath.cpp

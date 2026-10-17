@@ -14,6 +14,7 @@ endif()
 add_library(
   TemplateProjectFreesoundSoundObj OBJECT
   FreesoundSound.cpp
+  FreesoundRootDirectory.cpp
 )
 
 target_include_directories(

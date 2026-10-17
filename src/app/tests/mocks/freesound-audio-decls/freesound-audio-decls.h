@@ -7,6 +7,9 @@ namespace freesound_audio_decls
 {
 
 const std::string FREESOUND_AUDIO_ROOT_DIR = "/mock/freesound-audio";
+const std::string FREESOUND_AUDIO_INSTALLED_RELATIVE_DIR =
+    "../mock/freesound-audio";
+const std::string FREESOUND_AUDIO_INSTALLED_DIR = "/mock/share/freesound-audio";
 const std::string FREESOUND_AUDIO_QT_RESOURCE_PREFIX = "/sounds";
 const std::string FREESOUND_AUDIO_GRESOURCE_PREFIX = "/mock/sounds";
 

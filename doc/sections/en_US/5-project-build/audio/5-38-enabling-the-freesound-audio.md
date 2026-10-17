@@ -96,6 +96,10 @@ auto click = sounds->find("interface-sounds", "Audio/click_001.ogg");
 auto clicks = sounds->search("click");
 ```
 
+### Installing the sounds
+
+The sounds directory is a configure time one, so the install step (and every package built out of it: deb, rpm, AppImage, snap, flatpak, the single run Docker image) copies the sounds of every category and the `misc/freesound-sounds.txt` manifest recording the provenance and the license of every one of them into the `share/<binary>/freesound-audio` directory of the installation prefix. The `FreesoundRootDirectory` class picks the directory the running binary reads at the run time: the installed one relative to the binary location first (so a relocated package keeps working), then the configured sounds directory (a binary run out of the build tree), then the installed one under the configured prefix.
+
 ### Embedding the sounds into the binary
 
 Every category stays intact inside the categories directory and only the sounds an application actually asks for end up inside it's binary. Select them with the `template_project_freesound_audio_write_qrc` (Qt) or the `template_project_freesound_audio_write_gresource` (Gtkmm) function, then hand the written manifest over to the resource compiler of the toolkit in use:

@@ -39,6 +39,7 @@ set(
 set(
   FREESOUND_AUDIO_SUBSYSTEM_SOURCES
   ${CMAKE_CURRENT_SOURCE_DIR}/freesoundaudio/FreesoundSound.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/freesoundaudio/FreesoundRootDirectory.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/freesoundaudio/categories/FreesoundCategory.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/freesoundaudio/categories/FreesoundCategories.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/freesoundaudio/sounds/FreesoundSounds.cpp

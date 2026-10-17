@@ -5,7 +5,7 @@
 #include <string>
 #include <utility>
 
-#include "freesound-audio-decls.h"
+#include "src/freesoundaudio/FreesoundRootDirectory.h"
 #include "src/freesoundaudio/categories/IFreesoundCategory.h"
 #include "src/freesoundaudio/sounds/FreesoundGeneratedSounds.h"
 #include "src/log/log.h"
@@ -82,7 +82,7 @@ std::string FreesoundSound::filePath() const
     return {};
   }
 
-  return freesound_audio_decls::FREESOUND_AUDIO_ROOT_DIR + "/" + soundAlias;
+  return FreesoundRootDirectory::path() + "/" + soundAlias;
 }
 
 std::string FreesoundSound::license() const

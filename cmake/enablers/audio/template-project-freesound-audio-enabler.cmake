@@ -73,6 +73,39 @@ endif()
 
 template_project_freesound_audio_generate_index()
 
+# The sounds directory above is a configure time one (the build tree, or the
+# flatpak sandbox one), so the install step copies the sounds of every
+# category and the manifest recording the provenance and the license of every
+# one of them into the data directory, where the installed
+# binary looks for them relative to it's own location first (see
+# FreesoundRootDirectory).
+set(FREESOUND_AUDIO_INSTALL_DIR "${CMAKE_INSTALL_DATADIR}/${PROJECT_BINARY_NAME}/freesound-audio")
+set(FREESOUND_AUDIO_INSTALLED_DIR "${CMAKE_INSTALL_FULL_DATADIR}/${PROJECT_BINARY_NAME}/freesound-audio")
+
+file(
+  RELATIVE_PATH FREESOUND_AUDIO_INSTALLED_RELATIVE_DIR
+  "/${PROJECT_BINARY_INSTALLATION_DIR}" "/${FREESOUND_AUDIO_INSTALL_DIR}"
+)
+
+set(installPatterns "")
+
+foreach(extension IN LISTS FREESOUND_AUDIO_EXTENSIONS)
+  list(APPEND installPatterns PATTERN "*.${extension}")
+endforeach()
+
+foreach(category IN LISTS FREESOUND_AUDIO_CATEGORIES)
+  install(
+    DIRECTORY "${FREESOUND_AUDIO_ROOT_DIR}/${category}"
+    DESTINATION "${FREESOUND_AUDIO_INSTALL_DIR}"
+    FILES_MATCHING ${installPatterns}
+  )
+endforeach()
+
+install(
+  FILES "${TEMPLATE_APP_FREESOUND_AUDIO_MANIFEST}"
+  DESTINATION "${FREESOUND_AUDIO_INSTALL_DIR}"
+)
+
 configure_file(
   "${CMAKE_SOURCE_DIR}/src/freesoundaudio/freesound-audio-decls.h.in"
   "${CMAKE_BINARY_DIR}/freesound-audio-decls.h"

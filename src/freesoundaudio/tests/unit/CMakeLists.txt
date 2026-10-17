@@ -8,6 +8,7 @@ endif()
 add_compile_options(-DNDEBUG=1)
 
 add_subdirectory(FreesoundSound)
+add_subdirectory(FreesoundRootDirectory)
 add_subdirectory(FreesoundCategories)
 add_subdirectory(FreesoundSounds)
 add_subdirectory(FreesoundResourcePath)

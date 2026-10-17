@@ -8,6 +8,7 @@ add_executable(
   CTEST_FreesoundSoundPlayer
   CTEST_FreesoundSoundPlayer.cpp
   ${CMAKE_SOURCE_DIR}/src/freesoundaudio/FreesoundSound.cpp
+  ${CMAKE_SOURCE_DIR}/src/freesoundaudio/FreesoundRootDirectory.cpp
   ${CMAKE_SOURCE_DIR}/src/freesoundaudio/categories/FreesoundCategory.cpp
   ${CMAKE_SOURCE_DIR}/src/freesoundaudio/categories/FreesoundCategories.cpp
   ${CMAKE_SOURCE_DIR}/src/freesoundaudio/sounds/FreesoundSounds.cpp

@@ -87,7 +87,7 @@ class FreesoundSound
 
   /**
    * @brief Gives the absolute path of the sound file inside the categories
-   * directory the project has been configured with.
+   * directory the running binary reads (see FreesoundRootDirectory).
    *
    * @return Returns the absolute path of the sound file.
    */

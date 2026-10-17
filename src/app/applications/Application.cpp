@@ -4,7 +4,7 @@
 #include <iostream>
 #include <memory>
 
-#include "freesound-audio-decls.h"
+#include "src/freesoundaudio/FreesoundRootDirectory.h"
 #include "src/freesoundaudio/controller/FreesoundSoundsController.h"
 #include "src/freesoundaudio/resources/FreesoundGResourcePath.h"
 #include "src/freesoundaudio/resources/FreesoundQtResourcePath.h"
@@ -29,7 +29,7 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
 
   LOGI("The Freesound packs carry "
        << sounds->count() << " sounds at "
-       << freesound_audio_decls::FREESOUND_AUDIO_ROOT_DIR);
+       << freesoundaudio::FreesoundRootDirectory::path());
 
   const auto controller =
       freesoundaudio::FreesoundSoundsController::create(sounds);

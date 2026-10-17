@@ -11,6 +11,7 @@ if(NOT ENABLE_RPM)
 endif()
 
 include(InstallRequiredSystemLibraries)
+include(template-project-package-os)
 
 set(
   TEMPLATE_PROJECT_RPM_LICENSE
@@ -62,10 +63,10 @@ set(CPACK_RPM_PACKAGE_REQUIRES "")
 set(CPACK_RPM_COMPONENT_INSTALL ON)
 
 # the CPACK_SYSTEM_NAME of the default file name names the system alone, so the
-# destination CPU takes its place
+# destination CPU and OS take its place
 set(
   CPACK_PACKAGE_FILE_NAME
-  ${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${TEMPLATE_PROJECT_RPM_PACKAGE_ARCHITECTURE}
+  ${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${TEMPLATE_PROJECT_RPM_PACKAGE_ARCHITECTURE}-${TEMPLATE_PROJECT_PACKAGE_OS}
 )
 
 include(CPack)

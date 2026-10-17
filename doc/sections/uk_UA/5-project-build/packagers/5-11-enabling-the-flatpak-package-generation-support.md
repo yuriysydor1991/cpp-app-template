@@ -20,14 +20,14 @@ mkdir -vp build && cd build && cmake ../ -DENABLE_FLATPAK=ON -DENABLE_PACKAGERS_
 cmake --build . --target flatpak
 ```
 
-У разі успішної побудови цілі буде створено файл під назвою `CppAppTemplate-0.10.0-x86_64.flatpak` у кореневій директорії побудови проекту шаблону. Для того щоб преглянути або/і змінити ціль побудови пакету flatpak необхідно відвідати файли `cmake/enablers/packagers/template-project-flatpak-target.cmake` або `misc/packagers/flatpak/flatpak.conf.json.in`.
+У разі успішної побудови цілі буде створено файл під назвою `CppAppTemplate-0.10.0-x86_64-freedesktop-24.08.flatpak` у кореневій директорії побудови проекту шаблону. Назва завершується середовищем виконання (runtime), на якому працює пакет, тим, що вказує маніфест `misc/packagers/flatpak/flatpak.conf.json.in` (`freedesktop-24.08` позначає його `org.freedesktop.Platform` `24.08`), адже середовище виконання обирає графічний фреймворк проекту. Назва завершується середовищем виконання (runtime), на якому працює пакет, тим, що вказує маніфест `misc/packagers/flatpak/flatpak.conf.json.in` (`freedesktop-24.08` позначає його `org.freedesktop.Platform` `24.08`), адже середовище виконання обирає графічний фреймворк проекту. Для того щоб преглянути або/і змінити ціль побудови пакету flatpak необхідно відвідати файли `cmake/enablers/packagers/template-project-flatpak-target.cmake` або `misc/packagers/flatpak/flatpak.conf.json.in`.
 
 Необхідно звернутися до документації програми flatpak для того щоб дізнитись як встановлювати або запускати програми котрі розповсюджуються у вигляді пакету flatpak. Для не змінених паарметрів поточного проекту вони можуть виглядати наступним чином:
 
 ```
 # для встановлення (версія може змінитись)
 # всередині директорії побудови проекту-шаблону 
-flatpak install --user CppAppTemplate-0.10.0-x86_64.flatpak
+flatpak install --user CppAppTemplate-0.10.0-x86_64-freedesktop-24.08.flatpak
 
 # для запуску встановленої програми
 flatpak run ua.org.kytok.template.firebird.CppAppTemplate

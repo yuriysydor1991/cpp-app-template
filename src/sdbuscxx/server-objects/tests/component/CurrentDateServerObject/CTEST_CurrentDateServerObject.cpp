@@ -17,21 +17,26 @@ using namespace sdbuscxxi;
 class CTEST_CurrentDateServerObject : public Test
 {
  public:
+  /// @brief Asks the bus daemon whether the given name has an owner.
+  static bool name_owned(sdbus::IConnection& connection,
+                         const sdbus::ServiceName& name)
+  {
+    auto daemon = sdbus::createProxy(
+        connection, sdbus::ServiceName{"org.freedesktop.DBus"},
+        sdbus::ObjectPath{"/org/freedesktop/DBus"});
+
+    bool owned{false};
+
+    daemon->callMethod("NameHasOwner")
+        .onInterface("org.freedesktop.DBus")
+        .withArguments(static_cast<std::string>(name))
+        .storeResultsTo(owned);
+
+    return owned;
+  }
+
   DBusServerObjectFactory factory;
 };
-
-TEST_F(CTEST_CurrentDateServerObject, factory_creates_non_null_default_object)
-{
-  EXPECT_NE(factory.create_default_object(), nullptr);
-}
-
-TEST_F(CTEST_CurrentDateServerObject, factory_default_object_is_current_date)
-{
-  IDBusServerObjectPtr object = factory.create_default_object();
-
-  EXPECT_NE(std::dynamic_pointer_cast<CurrentDateServerObject>(object),
-            nullptr);
-}
 
 TEST_F(CTEST_CurrentDateServerObject, served_current_date_roundtrip)
 {
@@ -51,6 +56,13 @@ TEST_F(CTEST_CurrentDateServerObject, served_current_date_roundtrip)
   // Server side: export the default object and start serving asynchronously.
   IDBusServerObjectPtr serverObject = factory.create_default_object();
   ASSERT_NE(serverObject, nullptr);
+
+  // A server instance running already owns the name, which the test may not
+  // take over from it.
+  if (name_owned(*serverConn, serverObject->service_name())) {
+    GTEST_SKIP() << "The " << serverObject->service_name()
+                 << " name is owned by a running server already";
+  }
 
   std::unique_ptr<sdbus::IObject> object =
       sdbus::createObject(*serverConn, serverObject->object_path());

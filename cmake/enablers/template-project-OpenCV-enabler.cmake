@@ -1,27 +1,10 @@
 cmake_minimum_required(VERSION 3.13)
 
+# The src/opencv/CMakeLists.txt file finds and links the OpenCV components of
+# the TEMPLATE_APP_OPENCV_COMPONENTS cache variable, since its tests link them
+# too while this enabler is processed after the src directory.
 option(
   ENABLE_OPENCV
   "Set to ON to enable the OpenCV integration (probe the system installation)"
   ON
-)
-
-if (NOT ENABLE_OPENCV)
-  return()
-endif()
-
-set(
-  TEMPLATE_APP_OPENCV_COMPONENTS
-  "core;objdetect;imgcodecs;imgproc"
-  CACHE STRING
-  "Semicolon-separated list of OpenCV components required by the project"
-)
-
-find_package(OpenCV REQUIRED COMPONENTS ${TEMPLATE_APP_OPENCV_COMPONENTS})
-
-message(STATUS "OpenCV ${OpenCV_VERSION} found at ${OpenCV_INCLUDE_DIRS}")
-
-target_link_libraries(
-  TemplateProjectOpenCVControllerObj
-  PUBLIC ${OpenCV_LIBS}
 )

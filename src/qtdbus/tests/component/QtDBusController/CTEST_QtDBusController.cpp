@@ -3,8 +3,10 @@
 
 #include <QCoreApplication>
 #include <QDBusConnection>
+#include <QDBusMessage>
 
 #include "src/qtdbus/QtDBusController.h"
+#include "src/qtdbus/query-handlers/Hostname1QueryHandler.h"
 
 using namespace testing;
 using namespace qtdbusi;
@@ -18,6 +20,25 @@ class CTEST_QtDBusController : public Test
   static bool system_bus_reachable()
   {
     return QDBusConnection::systemBus().isConnected();
+  }
+
+  /**
+   * @brief Whether the hostname1 service answers on the system bus. A system
+   * bus without the systemd-hostnamed (a container, a non systemd host) skips
+   * the live cases instead of failing them.
+   */
+  static bool hostnamed_reachable()
+  {
+    if (!system_bus_reachable()) {
+      return false;
+    }
+
+    QDBusMessage ping = QDBusMessage::createMethodCall(
+        Hostname1QueryHandler::serviceName, Hostname1QueryHandler::objectPath,
+        "org.freedesktop.DBus.Peer", "Ping");
+
+    return QDBusConnection::systemBus().call(ping).type() !=
+           QDBusMessage::ErrorMessage;
   }
 };
 
@@ -36,8 +57,9 @@ TEST_F(CTEST_QtDBusController, create_reflects_system_bus_availability)
 
 TEST_F(CTEST_QtDBusController, run_against_live_system_bus)
 {
-  if (!system_bus_reachable()) {
-    GTEST_SKIP() << "System bus is not reachable in this environment";
+  if (!hostnamed_reachable()) {
+    GTEST_SKIP()
+        << "The hostname1 service is not reachable in this environment";
   }
 
   QtDBusControllerPtr controller = QtDBusController::create();

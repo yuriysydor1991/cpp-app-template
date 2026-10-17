@@ -89,8 +89,8 @@ FetchContent fallback, exactly like for the gtkmm-4.0 itself.
 ### Tests
 
 The `CTEST_AdwaitaWindow` component test covers everything the window decides
-before it touches a display: the shown strings, the GResource paths, the style
-classes and the content fit of the layout, the requested geometry and the
+before it touches a display: the shown strings, the logo GResource path, which
+has to name a file the GResource bundle of the binary really carries, and the
 argument guard of the `build` method. It also asserts
 the libadwaita runtime version, which proves the enabler found the library and
 the binary really links against it.

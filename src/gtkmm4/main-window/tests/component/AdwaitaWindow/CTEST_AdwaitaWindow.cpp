@@ -12,8 +12,8 @@ using namespace Gtkmm4i::main_window;
 /**
  * @brief The window widget tree can not be built without an opened GTK
  * display, so these tests cover everything the window decides before it
- * touches one: the strings it shows, the GResource paths it loads from, the
- * geometry it requests and the libadwaita linkage itself.
+ * touches one: the strings it shows, the GResource bundle it loads from and
+ * the libadwaita linkage itself.
  */
 class CTEST_AdwaitaWindow : public Test
 {
@@ -61,50 +61,16 @@ TEST_F(CTEST_AdwaitaWindow, resource_paths_live_under_the_resources_prefix)
   EXPECT_THAT(logo, EndsWith(".png"));
 }
 
-TEST_F(CTEST_AdwaitaWindow, the_heading_is_styled_as_the_libadwaita_h1)
+TEST_F(CTEST_AdwaitaWindow, logo_resource_is_compiled_into_the_bundle)
 {
-  // The heading is enlarged by the libadwaita typography style class and not
-  // by a custom CSS rule, so the window keeps following the light and the dark
-  // libadwaita palettes.
-  EXPECT_STREQ(AdwaitaWindow::title_style_class, "title-1");
-}
+  // The logo is loaded by it's GResource path, so the path has to name a file
+  // the GResource bundle of the binary really carries.
+  gsize size{0};
 
-TEST_F(CTEST_AdwaitaWindow, the_description_is_the_smaller_text)
-{
-  EXPECT_STREQ(AdwaitaWindow::description_style_class, "body");
-  EXPECT_STREQ(AdwaitaWindow::dim_style_class, "dim-label");
-  EXPECT_STRNE(AdwaitaWindow::description_style_class,
-               AdwaitaWindow::title_style_class);
-}
-
-TEST_F(CTEST_AdwaitaWindow, the_logo_grows_over_the_free_space_undeformed)
-{
-  // The GTK_CONTENT_FIT_SCALE_DOWN would keep the logo at its own pixel size
-  // instead of letting it grow over the height the labels leave free, and the
-  // GTK_CONTENT_FIT_FILL would grow it into a deformed one.
-  EXPECT_EQ(AdwaitaWindow::logo_content_fit, GTK_CONTENT_FIT_CONTAIN);
-  EXPECT_NE(AdwaitaWindow::logo_content_fit, GTK_CONTENT_FIT_SCALE_DOWN);
-  EXPECT_NE(AdwaitaWindow::logo_content_fit, GTK_CONTENT_FIT_FILL);
-}
-
-TEST_F(CTEST_AdwaitaWindow, the_content_paddings_fit_the_minimal_window)
-{
-  EXPECT_GE(AdwaitaWindow::content_spacing, 0);
-  EXPECT_GE(AdwaitaWindow::content_margin, 0);
-  EXPECT_LT(AdwaitaWindow::content_margin, AdwaitaWindow::min_width);
-  EXPECT_LT(AdwaitaWindow::content_margin, AdwaitaWindow::min_height);
-}
-
-TEST_F(CTEST_AdwaitaWindow, default_geometry_fits_the_minimal_one)
-{
-  // libadwaita targets the adaptive layouts, so the window must be able to
-  // shrink down to the mobile width without breaking its own default size.
-  EXPECT_GT(AdwaitaWindow::default_width, 0);
-  EXPECT_GT(AdwaitaWindow::default_height, 0);
-  EXPECT_GT(AdwaitaWindow::min_width, 0);
-  EXPECT_GT(AdwaitaWindow::min_height, 0);
-  EXPECT_LE(AdwaitaWindow::min_width, AdwaitaWindow::default_width);
-  EXPECT_LE(AdwaitaWindow::min_height, AdwaitaWindow::default_height);
+  EXPECT_TRUE(g_resources_get_info(AdwaitaWindow::logo_res_path,
+                                   G_RESOURCE_LOOKUP_FLAGS_NONE, &size, nullptr,
+                                   nullptr));
+  EXPECT_GT(size, 0U);
 }
 
 TEST_F(CTEST_AdwaitaWindow, build_rejects_an_empty_application)

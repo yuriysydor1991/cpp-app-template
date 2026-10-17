@@ -34,8 +34,10 @@ target_link_directories(
   PRIVATE ${GTKMM_LIBRARY_DIRS} ${ADWAITA_LIBRARY_DIRS}
 )
 
+# The very GResource bundle of the binary, which registers itself on load.
 target_link_libraries(
   CTEST_AdwaitaWindow
+  gresourcelib
   ${GTKMM_LIBRARIES} ${ADWAITA_LIBRARIES}
   GTest::gtest_main GTest::gmock
 )

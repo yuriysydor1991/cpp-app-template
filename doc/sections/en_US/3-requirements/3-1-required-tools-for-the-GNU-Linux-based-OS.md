@@ -12,7 +12,7 @@ All necessary development packages for the GTKmm-3.0:
 sudo apt install -y pkg-config libgtkmm-3.0-dev
 ```
 
-To be able to develop UI in the specialized [Glade](https://en.wikipedia.org/wiki/Glade_Interface_Designer) IDE install it with the command (the build does not need it, and Ubuntu 26.04 ships no glade package, so the `scripts/packages/install-debian.sh` script installs it only where it is available):
+To be able to develop UI in the specialized [Glade](https://en.wikipedia.org/wiki/Glade_Interface_Designer) IDE install it with the command (the build does not need it, and Ubuntu 26.04 ships no glade package, so only the `scripts/packages/install-ubuntu-24-04.sh` and `scripts/packages/install-debian-13.sh` scripts install it):
 
 ```
 sudo apt install -y glade

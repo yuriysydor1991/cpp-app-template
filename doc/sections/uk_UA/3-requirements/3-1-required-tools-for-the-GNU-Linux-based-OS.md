@@ -12,7 +12,7 @@ sudo apt install -y git g++ cmake
 sudo apt install -y pkg-config libgtkmm-3.0-dev
 ```
 
-Для того щоб мати змогу розробляти візуальний інтерфейс необіхдно встановити спеціалізований інструмент розробки [Glade](https://en.wikipedia.org/wiki/Glade_Interface_Designer) за допомогою команди (для побудови він не потрібен, а Ubuntu 26.04 не містить пакунку glade, тому сценарій `scripts/packages/install-debian.sh` встановлює його лише там, де він доступний):
+Для того щоб мати змогу розробляти візуальний інтерфейс необіхдно встановити спеціалізований інструмент розробки [Glade](https://en.wikipedia.org/wiki/Glade_Interface_Designer) за допомогою команди (для побудови він не потрібен, а Ubuntu 26.04 не містить пакунку glade, тому його встановлюють лише сценарії `scripts/packages/install-ubuntu-24-04.sh` та `scripts/packages/install-debian-13.sh`):
 
 ```
 sudo apt install -y glade

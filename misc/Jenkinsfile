@@ -130,7 +130,7 @@ pipeline {
         }
         stage('UTEST_OAIController') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_OAIController\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_OAIController.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_OAIController\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_OAIController.junit.xml'
           }
         }
         stage('UTEST_SignalsHandler') { 

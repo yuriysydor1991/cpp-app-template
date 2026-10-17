@@ -5,7 +5,9 @@
 
 #include <cassert>
 #include <memory>
+#include <string>
 
+#include "project-global-decls.h"
 #include "src/app/applications/IApplication.h"
 #include "src/log/log.h"
 
@@ -66,7 +68,10 @@ int FreeGlutController::run(std::shared_ptr<app::ApplicationContext> ctx)
   glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
   glutInitWindowSize(W_DEFAULT_WIDTH, W_DEFAULT_HEIGHT);
-  glutCreateWindow(ctx->get_argv()[0]);
+  static const std::string windowTitle =
+      project_decls::PROJECT_NAME + " " + project_decls::PROJECT_BUILD_VERSION;
+
+  glutCreateWindow(windowTitle.c_str());
 
   init();
 

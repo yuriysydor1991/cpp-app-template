@@ -2,9 +2,11 @@ cmake_minimum_required(VERSION 3.13)
 
 # Reads the manifest naming every sound together with it's download URL and
 # it's license, filling the FREESOUND_AUDIO_SOUNDS list, the
-# FREESOUND_AUDIO_CATEGORIES one and the per sound
-# FREESOUND_AUDIO_URL_OF_<alias> and FREESOUND_AUDIO_LICENSE_OF_<alias>
-# variables out of it.
+# FREESOUND_AUDIO_SOUND_URLS and FREESOUND_AUDIO_SOUND_LICENSES ones of the same
+# order and the FREESOUND_AUDIO_CATEGORIES one out of it. All of them are
+# rewritten on every configure run, so a sound dropped from the manifest leaves
+# no license behind for a leftover file to pass the license check with, and the
+# aliases are kept as they are, so no two sounds may share an entry.
 #
 # Freesound publishes it's sounds under CC0, CC-BY and CC-BY-NC alike, one
 # license per sound rather than one for the whole database, so a sound with no
@@ -20,6 +22,8 @@ function(template_project_freesound_audio_read_manifest)
   file(STRINGS "${TEMPLATE_APP_FREESOUND_AUDIO_MANIFEST}" manifestLines)
 
   set(sounds "")
+  set(urls "")
+  set(licenses "")
   set(categories "")
 
   foreach(manifestLine IN LISTS manifestLines)
@@ -47,14 +51,17 @@ function(template_project_freesound_audio_read_manifest)
       )
     endif()
 
+    if (soundAlias IN_LIST sounds)
+      message(
+        FATAL_ERROR
+        "The '${soundAlias}' sound is named twice by the ${TEMPLATE_APP_FREESOUND_AUDIO_MANIFEST} manifest"
+      )
+    endif()
+
     list(APPEND sounds "${soundAlias}")
+    list(APPEND urls "${soundUrl}")
+    list(APPEND licenses "${soundLicense}")
     list(APPEND categories "${CMAKE_MATCH_1}")
-
-    # A cache entry name tolerates no slash, so the alias becomes a flat key.
-    string(REPLACE "/" "_" soundKey "${soundAlias}")
-
-    set(FREESOUND_AUDIO_URL_OF_${soundKey} "${soundUrl}" CACHE INTERNAL "The download URL of the ${soundAlias} sound")
-    set(FREESOUND_AUDIO_LICENSE_OF_${soundKey} "${soundLicense}" CACHE INTERNAL "The license of the ${soundAlias} sound")
   endforeach()
 
   if (NOT sounds)
@@ -66,9 +73,10 @@ function(template_project_freesound_audio_read_manifest)
 
   list(REMOVE_DUPLICATES categories)
   list(SORT categories)
-  list(SORT sounds)
 
-  set(FREESOUND_AUDIO_SOUNDS "${sounds}" CACHE INTERNAL "The sounds the manifest names" FORCE)
+  set(FREESOUND_AUDIO_SOUNDS "${sounds}" CACHE INTERNAL "The sounds the manifest names")
+  set(FREESOUND_AUDIO_SOUND_URLS "${urls}" CACHE INTERNAL "The download URLs of the FREESOUND_AUDIO_SOUNDS sounds")
+  set(FREESOUND_AUDIO_SOUND_LICENSES "${licenses}" CACHE INTERNAL "The licenses of the FREESOUND_AUDIO_SOUNDS sounds")
   set(FREESOUND_AUDIO_CATEGORIES "${categories}" CACHE INTERNAL "The categories the sounds manifest groups the sounds into" FORCE)
 
   list(LENGTH sounds soundsCount)
@@ -96,9 +104,8 @@ function(template_project_freesound_audio_fetch_sounds)
       continue()
     endif()
 
-    string(REPLACE "/" "_" soundKey "${soundAlias}")
-
-    set(soundUrl "${FREESOUND_AUDIO_URL_OF_${soundKey}}")
+    list(FIND FREESOUND_AUDIO_SOUNDS "${soundAlias}" soundIndex)
+    list(GET FREESOUND_AUDIO_SOUND_URLS ${soundIndex} soundUrl)
 
     get_filename_component(soundDir "${soundFile}" DIRECTORY)
     file(MAKE_DIRECTORY "${soundDir}")
@@ -164,23 +171,26 @@ function(template_project_freesound_audio_generate_index)
       list(APPEND names "             \"${categoryRelative}\"")
 
       set(soundAlias "${category}/${categoryRelative}")
-      string(REPLACE "/" "_" soundKey "${soundAlias}")
+      list(FIND FREESOUND_AUDIO_SOUNDS "${soundAlias}" soundIndex)
 
-      if (NOT FREESOUND_AUDIO_LICENSE_OF_${soundKey})
+      if (soundIndex EQUAL -1)
         message(
           FATAL_ERROR
           "The ${soundAlias} sound file sits inside the ${FREESOUND_AUDIO_ROOT_DIR} directory but the ${TEMPLATE_APP_FREESOUND_AUDIO_MANIFEST} manifest records no license of it. Add it's <category>/<file>|<download URL>|<license> line or drop the file."
         )
       endif()
 
+      list(GET FREESOUND_AUDIO_SOUND_LICENSES ${soundIndex} soundLicense)
+      list(GET FREESOUND_AUDIO_SOUND_URLS ${soundIndex} soundUrl)
+
       string(
         APPEND FREESOUND_AUDIO_GENERATED_LICENSES
-        "      {\"${soundAlias}\", \"${FREESOUND_AUDIO_LICENSE_OF_${soundKey}}\"},\n"
+        "      {\"${soundAlias}\", \"${soundLicense}\"},\n"
       )
 
       string(
         APPEND FREESOUND_AUDIO_GENERATED_SOURCES
-        "      {\"${soundAlias}\", \"${FREESOUND_AUDIO_URL_OF_${soundKey}}\"},\n"
+        "      {\"${soundAlias}\", \"${soundUrl}\"},\n"
       )
     endforeach()
 

@@ -13,6 +13,8 @@ apps:
     command: ${PROJECT_BINARY_INSTALLATION_DIR}/${PROJECT_BINARY_NAME}${SNAP_APP_DESKTOP}
     plugs:
       - home${SNAP_APP_DESKTOP_PLUGS}
+      # reads the org.freedesktop.hostname1 properties of the system bus
+      - system-observe
 
 parts:
   ${PROJECT_BINARY_NAME}:
@@ -22,3 +24,6 @@ parts:
     cmake-parameters:
       - -DCMAKE_BUILD_TYPE=Release
       - -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
+    build-packages:
+      - pkg-config
+      - libsystemd-dev

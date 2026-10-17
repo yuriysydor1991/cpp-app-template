@@ -64,7 +64,7 @@ misc/scripts/fetch-opengameart-audio.sh ~/opengameart-audio
 cmake -S . -B build -DTEMPLATE_APP_OPENGAMEART_AUDIO_DIR=~/opengameart-audio
 ```
 
-The script takes the target directory as it's single argument, reads the very manifest the build does (the `OPENGAMEART_AUDIO_MANIFEST` environment variable points it at another one), downloads through `curl` or `wget` (whichever is available), refuses an archive of any other SHA-256 checksum and leaves an already unpacked pack alone.
+The script takes the target directory as it's single and mandatory argument (keep it outside of the source tree, so the downloads never get committed), reads the very manifest the build does (the `OPENGAMEART_AUDIO_MANIFEST` environment variable points it at another one), downloads through `curl` or `wget` (whichever is available), refuses an archive of any other SHA-256 checksum and leaves an already unpacked pack alone.
 
 ### Reaching the sounds from the C++ code
 

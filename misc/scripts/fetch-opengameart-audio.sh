@@ -11,8 +11,13 @@
 # packs directory and for keeping the downloads out of the build tree.
 set -eu
 
-TARGET_DIR="${1:-./resources/opengameart-audio}"
-MANIFEST="${OPENGAMEART_AUDIO_MANIFEST:-misc/opengameart-packs.txt}"
+if [ "$#" -ne 1 ]; then
+  echo "Usage: $0 <target directory outside of the source tree>" >&2
+  exit 1
+fi
+
+TARGET_DIR="$1"
+MANIFEST="${OPENGAMEART_AUDIO_MANIFEST:-$(dirname "$0")/../opengameart-packs.txt}"
 
 if [ ! -f "$MANIFEST" ]; then
   echo "No $MANIFEST packs manifest to read the packs of" >&2

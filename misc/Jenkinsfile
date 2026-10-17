@@ -130,7 +130,7 @@ pipeline {
         }
         stage('UTEST_V8Controller') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_V8Controller\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_V8Controller.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_V8Controller\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_V8Controller.junit.xml'
           }
         }
         stage('UTEST_SignalsHandler') { 
@@ -196,7 +196,7 @@ pipeline {
         }
         stage('CTEST_V8Controller') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_V8Controller\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_V8Controller.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_V8Controller\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_V8Controller.junit.xml'
           }
         }
       }

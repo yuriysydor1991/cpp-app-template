@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.13)
 add_library(
   TemplateProjectPLPlotControllerObj OBJECT
   PLplotController.cpp
+  PLplotDevicePicker.cpp
 )
 
 target_include_directories(
@@ -16,3 +17,5 @@ target_link_libraries(
   ${PROJECT_BINARY_NAME}
   TemplateProjectPLPlotControllerObj
 )
+
+add_subdirectory(tests)

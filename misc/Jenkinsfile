@@ -98,6 +98,11 @@ pipeline {
     
     stage('Unit Tests') {
       parallel {
+        stage('UTEST_PLplotDevicePicker') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_PLplotDevicePicker\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_PLplotDevicePicker.junit.xml'
+          }
+        }
         stage('UTEST_Application') { 
           steps { 
             sh 'cd $BUILDDIR && ctest -R "UTEST_Application\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_Application.junit.xml'

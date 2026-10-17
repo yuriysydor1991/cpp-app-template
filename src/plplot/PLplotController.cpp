@@ -1,13 +1,17 @@
 #include "src/plplot/PLplotController.h"
 
+#include <plplot/plplot.h>
 #include <plplot/plstream.h>
 
 #include <algorithm>
 #include <cassert>
 #include <cmath>
 #include <memory>
+#include <string>
+#include <vector>
 
 #include "src/log/log.h"
+#include "src/plplot/PLplotDevicePicker.h"
 
 namespace plploti
 {
@@ -41,13 +45,22 @@ bool PLplotController::draw_simple_plot()
   std::generate(y.begin(), y.end(),
                 [xter = x.begin()]() mutable { return std::exp(*(xter++)); });
 
-  LOGI("Showing the default example exponential logarithmic plot");
+  const std::string device = PLplotDevicePicker{}.pick(installed_devices());
+
+  if (device.empty()) {
+    LOGE("No interactive PLplot device is installed, install the "
+         "plplot-driver-qt, the plplot-driver-cairo or the plplot-driver-xwin "
+         "package");
+    return false;
+  }
+
+  LOGI("Showing the default example exponential logarithmic plot on the "
+       << device << " device");
 
   // Create PLplot C++ stream
   plstream pls;
 
-  // Use Qt widget device (others are also supported)
-  pls.sdev("qtwidget");
+  pls.sdev(device.c_str());
 
   // Initialize
   pls.init();
@@ -64,6 +77,30 @@ bool PLplotController::draw_simple_plot()
   pls.line(n, x.data(), y.data());
 
   return true;
+}
+
+std::vector<std::string> PLplotController::installed_devices()
+{
+  // The PLplot fills the caller's arrays with the device keywords of the
+  // drivers it has found and leaves a null pointer after the last one.
+  static constexpr const int maxDevices = 128;
+
+  std::vector<const char*> menus(maxDevices, nullptr);
+  std::vector<const char*> names(maxDevices, nullptr);
+
+  const char** menusData = menus.data();
+  const char** namesData = names.data();
+  int count = maxDevices;
+
+  plgDevs(&menusData, &namesData, &count);
+
+  std::vector<std::string> devices;
+
+  for (int index = 0; index < count && names[index] != nullptr; ++index) {
+    devices.emplace_back(names[index]);
+  }
+
+  return devices;
 }
 
 }  // namespace plploti

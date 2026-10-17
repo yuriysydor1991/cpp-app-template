@@ -2,6 +2,8 @@
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_PLPLOTCONTROLLER_CLASS_H
 
 #include <memory>
+#include <string>
+#include <vector>
 
 #include "src/app/ApplicationContext.h"
 
@@ -24,7 +26,10 @@ class PLplotController
   static PLplotControllerPtr create();
 
  private:
-  bool draw_simple_plot();
+  static bool draw_simple_plot();
+
+  /// @brief Lists the device keywords of the installed PLplot drivers.
+  static std::vector<std::string> installed_devices();
 };
 
 using PLplotControllerPtr = PLplotController::PLplotControllerPtr;

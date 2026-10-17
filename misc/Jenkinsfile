@@ -56,82 +56,82 @@ pipeline {
       parallel {
         stage('UTEST_Application') {
           steps {
-            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_Application\\." --output-on-failure --output-junit %BDJUNITOUT%/UTEST_Application.junit.xml'
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_Application\\." --no-tests=error --output-on-failure --output-junit %BDJUNITOUT%/UTEST_Application.junit.xml'
           }
         }
         stage('UTEST_ApplicationContext') {
           steps {
-            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_ApplicationContext\\." --output-on-failure --output-junit %BDJUNITOUT%/UTEST_ApplicationContext.junit.xml'
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_ApplicationContext\\." --no-tests=error --output-on-failure --output-junit %BDJUNITOUT%/UTEST_ApplicationContext.junit.xml'
           }
         }
         stage('UTEST_ApplicationFactory') {
           steps {
-            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_ApplicationFactory\\." --output-on-failure --output-junit %BDJUNITOUT%/UTEST_ApplicationFactory.junit.xml'
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_ApplicationFactory\\." --no-tests=error --output-on-failure --output-junit %BDJUNITOUT%/UTEST_ApplicationFactory.junit.xml'
           }
         }
         stage('UTEST_ApplicationHelpPrinter') {
           steps {
-            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_ApplicationHelpPrinter\\." --output-on-failure --output-junit %BDJUNITOUT%/UTEST_ApplicationHelpPrinter.junit.xml'
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_ApplicationHelpPrinter\\." --no-tests=error --output-on-failure --output-junit %BDJUNITOUT%/UTEST_ApplicationHelpPrinter.junit.xml'
           }
         }
         stage('UTEST_ApplicationVersionPrinter') {
           steps {
-            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_ApplicationVersionPrinter\\." --output-on-failure --output-junit %BDJUNITOUT%/UTEST_ApplicationVersionPrinter.junit.xml'
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_ApplicationVersionPrinter\\." --no-tests=error --output-on-failure --output-junit %BDJUNITOUT%/UTEST_ApplicationVersionPrinter.junit.xml'
           }
         }
         stage('UTEST_CommandLineParser') {
           steps {
-            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_CommandLineParser\\." --output-on-failure --output-junit %BDJUNITOUT%/UTEST_CommandLineParser.junit.xml'
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_CommandLineParser\\." --no-tests=error --output-on-failure --output-junit %BDJUNITOUT%/UTEST_CommandLineParser.junit.xml'
           }
         }
         stage('UTEST_WindowConfig') {
           steps {
-            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_WindowConfig\\." --output-on-failure --output-junit %BDJUNITOUT%/UTEST_WindowConfig.junit.xml'
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_WindowConfig\\." --no-tests=error --output-on-failure --output-junit %BDJUNITOUT%/UTEST_WindowConfig.junit.xml'
           }
         }
         stage('UTEST_WinUI3Controller') {
           steps {
-            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_WinUI3Controller\\." --output-on-failure --output-junit %BDJUNITOUT%/UTEST_WinUI3Controller.junit.xml'
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_WinUI3Controller\\." --no-tests=error --output-on-failure --output-junit %BDJUNITOUT%/UTEST_WinUI3Controller.junit.xml'
           }
         }
         stage('UTEST_SignalsHandler') {
           steps {
-            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_SignalsHandler\\." --output-on-failure --output-junit %BDJUNITOUT%/UTEST_SignalsHandler.junit.xml'
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_SignalsHandler\\." --no-tests=error --output-on-failure --output-junit %BDJUNITOUT%/UTEST_SignalsHandler.junit.xml'
           }
         }
         stage('UTEST_ASignalsHandler') {
           steps {
-            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_ASignalsHandler\\." --output-on-failure --output-junit %BDJUNITOUT%/UTEST_ASignalsHandler.junit.xml'
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_ASignalsHandler\\." --no-tests=error --output-on-failure --output-junit %BDJUNITOUT%/UTEST_ASignalsHandler.junit.xml'
           }
         }
         stage('UTEST_ContinueSignalsHandler') {
           steps {
-            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_ContinueSignalsHandler\\." --output-on-failure --output-junit %BDJUNITOUT%/UTEST_ContinueSignalsHandler.junit.xml'
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_ContinueSignalsHandler\\." --no-tests=error --output-on-failure --output-junit %BDJUNITOUT%/UTEST_ContinueSignalsHandler.junit.xml'
           }
         }
         stage('UTEST_IgnoredSignalsHandler') {
           steps {
-            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_IgnoredSignalsHandler\\." --output-on-failure --output-junit %BDJUNITOUT%/UTEST_IgnoredSignalsHandler.junit.xml'
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_IgnoredSignalsHandler\\." --no-tests=error --output-on-failure --output-junit %BDJUNITOUT%/UTEST_IgnoredSignalsHandler.junit.xml'
           }
         }
         stage('UTEST_PauseSignalsHandler') {
           steps {
-            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_PauseSignalsHandler\\." --output-on-failure --output-junit %BDJUNITOUT%/UTEST_PauseSignalsHandler.junit.xml'
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_PauseSignalsHandler\\." --no-tests=error --output-on-failure --output-junit %BDJUNITOUT%/UTEST_PauseSignalsHandler.junit.xml'
           }
         }
         stage('UTEST_ReloadSignalsHandler') {
           steps {
-            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_ReloadSignalsHandler\\." --output-on-failure --output-junit %BDJUNITOUT%/UTEST_ReloadSignalsHandler.junit.xml'
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_ReloadSignalsHandler\\." --no-tests=error --output-on-failure --output-junit %BDJUNITOUT%/UTEST_ReloadSignalsHandler.junit.xml'
           }
         }
         stage('UTEST_StopSignalsHandler') {
           steps {
-            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_StopSignalsHandler\\." --output-on-failure --output-junit %BDJUNITOUT%/UTEST_StopSignalsHandler.junit.xml'
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_StopSignalsHandler\\." --no-tests=error --output-on-failure --output-junit %BDJUNITOUT%/UTEST_StopSignalsHandler.junit.xml'
           }
         }
         stage('UTEST_UserSignalsHandler') {
           steps {
-            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_UserSignalsHandler\\." --output-on-failure --output-junit %BDJUNITOUT%/UTEST_UserSignalsHandler.junit.xml'
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_UserSignalsHandler\\." --no-tests=error --output-on-failure --output-junit %BDJUNITOUT%/UTEST_UserSignalsHandler.junit.xml'
           }
         }
       }
@@ -142,22 +142,22 @@ pipeline {
       parallel {
         stage('CTEST_DefaultLogger') {
           steps {
-            bat 'cd %BUILDDIR% && ctest -C Debug -R "CTEST_DefaultLogger" --output-on-failure --output-junit %BDJUNITOUT%/CTEST_DefaultLogger.junit.xml'
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "CTEST_DefaultLogger" --no-tests=error --output-on-failure --output-junit %BDJUNITOUT%/CTEST_DefaultLogger.junit.xml'
           }
         }
         stage('CTEST_log') {
           steps {
-            bat 'cd %BUILDDIR% && ctest -C Debug -R "CTEST_log\\." --output-on-failure --output-junit %BDJUNITOUT%/CTEST_log.junit.xml'
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "CTEST_log\\." --no-tests=error --output-on-failure --output-junit %BDJUNITOUT%/CTEST_log.junit.xml'
           }
         }
         stage('CTEST_app') {
           steps {
-            bat 'cd %BUILDDIR% && ctest -C Debug -R "CTEST_app\\." --output-on-failure --output-junit %BDJUNITOUT%/CTEST_app.junit.xml'
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "CTEST_app\\." --no-tests=error --output-on-failure --output-junit %BDJUNITOUT%/CTEST_app.junit.xml'
           }
         }
         stage('CTEST_WinUI3') {
           steps {
-            bat 'cd %BUILDDIR% && ctest -C Debug -R "CTEST_WinUI3\\." --output-on-failure --output-junit %BDJUNITOUT%/CTEST_WinUI3.junit.xml'
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "CTEST_WinUI3\\." --no-tests=error --output-on-failure --output-junit %BDJUNITOUT%/CTEST_WinUI3.junit.xml'
           }
         }
       }

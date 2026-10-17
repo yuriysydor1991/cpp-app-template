@@ -77,7 +77,7 @@ message(STATUS "PGPLOT libraries: ${PGPLOT_LIBRARIES}")
 # Link the following PGPLOT target to your target(s) of interest (e.g. the
 # ${PROJECT_BINARY_NAME} executable or any of your own libraries), just like
 # the src/pgplot/CMakeLists.txt does:
-#   target_link_libraries(${PROJECT_BINARY_NAME} PGPLOT::cpgplot)
+#   target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE PGPLOT::cpgplot)
 if (NOT TARGET PGPLOT::cpgplot)
   add_library(PGPLOT::cpgplot INTERFACE IMPORTED GLOBAL)
 

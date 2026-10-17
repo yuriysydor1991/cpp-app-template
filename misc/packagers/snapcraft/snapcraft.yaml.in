@@ -29,16 +29,19 @@ parts:
     build-packages:
       - qt6-base-dev
       - qt6-declarative-dev
+      - qt6-charts-dev
     stage-packages:
       - libqt6core6t64
       - libqt6gui6t64
+      - libqt6widgets6t64
       - libqt6qml6
       - libqt6quick6
       - libqt6quickcontrols2-6
+      - libqt6charts6
       - qml6-module-qtqml-workerscript
       - qml6-module-qtquick
       - qml6-module-qtquick-controls
-      - qml6-module-qtquick-layouts
+      - qml6-module-qtcharts
       - qml6-module-qtquick-templates
       - qml6-module-qtquick-window
       - qt6-qpa-plugins

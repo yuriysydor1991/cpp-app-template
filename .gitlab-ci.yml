@@ -63,9 +63,9 @@ build-and-test:
     - if [ "$RUN_CPPCHECK" = "true" ]; then cmake --build "$BUILDDIR" -j"$(nproc)" --target cppcheck; fi
     - mkdir -p "$BUILDDIR/$BDJUNITOUT"
     - cd "$BUILDDIR"
-    - ctest -R "UTEST_" --output-on-failure --output-junit "$BDJUNITOUT/UTEST.junit.xml"
-    - ctest -R "CTEST_" --output-on-failure --output-junit "$BDJUNITOUT/CTEST.junit.xml"
-    - ctest -R "ITEST_" --output-on-failure --output-junit "$BDJUNITOUT/ITEST.junit.xml"
+    - ctest -R "UTEST_" --no-tests=error --output-on-failure --output-junit "$BDJUNITOUT/UTEST.junit.xml"
+    - ctest -R "CTEST_" --no-tests=error --output-on-failure --output-junit "$BDJUNITOUT/CTEST.junit.xml"
+    - ctest -R "ITEST_" --no-tests=error --output-on-failure --output-junit "$BDJUNITOUT/ITEST.junit.xml"
   artifacts:
     when: always
     reports:

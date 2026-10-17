@@ -98,17 +98,17 @@ pipeline {
       parallel {
         stage('UTEST_LibraryFacade') { 
           steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_LibraryFacade\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_LibraryFacade.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_LibraryFacade\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_LibraryFacade.junit.xml'
           }
         }
         stage('UTEST_LibFactory') { 
           steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_LibFactory\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_LibFactory.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_LibFactory\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_LibFactory.junit.xml'
           }
         }
         stage('UTEST_LibMain') { 
           steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_LibMain\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_LibMain.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_LibMain\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_LibMain.junit.xml'
           }
         }
       }
@@ -119,12 +119,12 @@ pipeline {
       parallel {
         stage('CTEST_DefaultLogger') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_DefaultLogger" --output-on-failure --output-junit $BDJUNITOUT/CTEST_DefaultLogger.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_DefaultLogger" --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_DefaultLogger.junit.xml'
           }
         }
         stage('CTEST_LibraryRealLogger') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_LibraryRealLogger\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_LibraryRealLogger.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_LibraryRealLogger\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_LibraryRealLogger.junit.xml'
           }
         }
       }
@@ -135,7 +135,7 @@ pipeline {
       parallel {
         stage('ITEST_many_libs') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "ITEST_many_libs\\." --output-on-failure --output-junit $BDJUNITOUT/ITEST_many_libs.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "ITEST_many_libs\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/ITEST_many_libs.junit.xml'
           }
         }
       }

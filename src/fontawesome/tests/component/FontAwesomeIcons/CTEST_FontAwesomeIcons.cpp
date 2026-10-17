@@ -177,6 +177,8 @@ TEST_F(CTEST_FontAwesomeIcons,
 
 TEST_F(CTEST_FontAwesomeIcons, the_icons_resolve_to_the_configured_resources)
 {
+  ASSERT_FALSE(icons->all().empty());
+
   const auto icon = icons->all().front();
 
   ASSERT_NE(icon, nullptr);

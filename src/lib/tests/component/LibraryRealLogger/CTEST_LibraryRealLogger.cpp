@@ -65,9 +65,11 @@ class RecordingLogger : public logger::ILogger
         std::string{filePath} + ":" + std::to_string(fileLine) + " : " + msg);
   }
 
-  void logfile(const std::string& filepath) override
+  bool logfile(const std::string& filepath) override
   {
     logfiles.push_back(filepath);
+
+    return true;
   }
 
   void print([[maybe_unused]] const bool toPrintValue) override {}
@@ -80,11 +82,13 @@ class RecordingLogger : public logger::ILogger
     return lvlRepr;
   }
 
-  void init([[maybe_unused]] const std::string& filepath,
+  bool init([[maybe_unused]] const std::string& filepath,
             [[maybe_unused]] const unsigned short& nlvl,
             [[maybe_unused]] const bool toPrintValue) override
   {
     ++inits;
+
+    return true;
   }
 
   std::vector<unsigned short> lvls;

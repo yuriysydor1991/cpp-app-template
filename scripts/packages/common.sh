@@ -56,7 +56,8 @@ apt_install()
 # Builds and installs a CMake project out of a pinned release tag of its git
 # repository, for a dependency the running release packages no usable version
 # of. The build runs in a temporary directory, which is removed whatever the
-# outcome is.
+# outcome is. The shared library cache is refreshed afterwards, so the
+# installed libraries are found at run time.
 #
 # Usage: cmake_install_from_source <git URL> <release tag> [CMake options...]
 cmake_install_from_source()
@@ -80,6 +81,8 @@ cmake_install_from_source()
     cmake --build "${BUILD_TMP_DIR}/build" -j "$(nproc)"
 
     ${SUDO} cmake --install "${BUILD_TMP_DIR}/build"
+
+    ${SUDO} ldconfig
 )
 
 # The local CI pipelines tools no distribution packages are installed out of

@@ -14,6 +14,12 @@ add_executable(
   ${KENNEY_AUDIO_GENERATED_SOUNDS_SOURCE}
 )
 
+target_compile_definitions(
+  CTEST_KenneySounds
+  PRIVATE CTEST_KenneySounds_QRC=\"${KENNEY_AUDIO_FULL_QRC}\"
+  PRIVATE CTEST_KenneySounds_GRESOURCE_XML=\"${KENNEY_AUDIO_FULL_GRESOURCE_XML}\"
+)
+
 target_include_directories(
   CTEST_KenneySounds
   PRIVATE ${KENNEY_AUDIO_MOCKS_ROOT}/log

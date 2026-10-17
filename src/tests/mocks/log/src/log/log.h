@@ -39,6 +39,8 @@ class logMock
   inline static bool log_init_path_result{true};
 
   /// @brief Gives the LOG_INIT macro result the real one gives on success.
+  // Used through the macros below only.
+  // cppcheck-suppress unusedFunction
   static bool log_init(const std::string& filepath,
                        const unsigned short& logLvl, const bool printMessages)
   {
@@ -49,6 +51,8 @@ class logMock
 
   /// @brief Gives the logMock::log_init_path_result as the LOG_INIT_PATH macro
   /// result.
+  // Used through the macros below only.
+  // cppcheck-suppress unusedFunction
   static bool log_init_path(const std::string& filepath)
   {
     LOG_INIT_PATH.AsStdFunction()(filepath);

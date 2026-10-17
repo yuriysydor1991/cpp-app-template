@@ -23,7 +23,9 @@ std::shared_ptr<ApplicationContext> g_seen_ctx;
 
 namespace wxwi
 {
+// The stub keeps the very signature of the seam it replaces.
 int run_wx_application(std::shared_ptr<::app::ApplicationContext> ctx,
+                       // cppcheck-suppress constParameterReference
                        int& argc, char**& /*argv*/)
 {
   g_seen_argc = argc;

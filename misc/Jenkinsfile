@@ -100,17 +100,17 @@ pipeline {
       parallel {
         stage('UTEST_MySQLConnStrMaker') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_MySQLConnStrMaker\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_MySQLConnStrMaker.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_MySQLConnStrMaker\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_MySQLConnStrMaker.junit.xml'
           }
         }
         stage('UTEST_MySQLController') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_MySQLController\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_MySQLController.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_MySQLController\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_MySQLController.junit.xml'
           }
         }
         stage('UTEST_QueryMaker') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_QueryMaker\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_QueryMaker.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_QueryMaker\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_QueryMaker.junit.xml'
           }
         }
         stage('UTEST_Application') { 
@@ -191,7 +191,7 @@ pipeline {
       parallel {
         stage('CTEST_MySQLController') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_MySQLController\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_MySQLController.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_MySQLController\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_MySQLController.junit.xml'
           }
         }
         stage('CTEST_DefaultLogger') {

@@ -37,7 +37,7 @@ endif()
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  TemplateBoostBeastObj
+  PRIVATE TemplateBoostBeastObj
 )
 
 add_subdirectory(rhandlers)

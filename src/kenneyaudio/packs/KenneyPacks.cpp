@@ -1,6 +1,8 @@
 #include "src/kenneyaudio/packs/KenneyPacks.h"
 
+#include <algorithm>
 #include <cstddef>
+#include <iterator>
 #include <memory>
 #include <string>
 
@@ -18,22 +20,20 @@ KenneyPacks::KenneyPacks()
 
   mpacks.reserve(packNames.size());
 
-  for (const auto& packName : packNames) {
-    mpacks.push_back(KenneyPack::create(packName));
-  }
+  std::transform(
+      packNames.cbegin(), packNames.cend(), std::back_inserter(mpacks),
+      [](const auto& packName) { return KenneyPack::create(packName); });
 }
 
 const KenneyPacks::PacksList& KenneyPacks::all() const { return mpacks; }
 
 IKenneyPackPtr KenneyPacks::find(const std::string& packName) const
 {
-  for (const auto& pack : mpacks) {
-    if (pack->name() == packName) {
-      return pack;
-    }
-  }
+  const auto found = std::find_if(
+      mpacks.cbegin(), mpacks.cend(),
+      [&packName](const auto& pack) { return pack->name() == packName; });
 
-  return {};
+  return found == mpacks.cend() ? IKenneyPackPtr{} : *found;
 }
 
 std::size_t KenneyPacks::count() const { return mpacks.size(); }

@@ -1,7 +1,9 @@
 #include "src/kenneyaudio/sounds/KenneySounds.h"
 
+#include <algorithm>
 #include <cassert>
 #include <cstddef>
+#include <iterator>
 #include <memory>
 #include <string>
 #include <utility>
@@ -30,9 +32,12 @@ KenneySounds::KenneySounds(IKenneyPacksPtr gpacks)
     // the index answers with a reference into it's own storage.
     const auto packName = pack->name();
 
-    for (const auto& soundPath : KenneyGeneratedSounds::names(packName)) {
-      msounds.push_back(KenneySound::create(pack, soundPath));
-    }
+    const auto& soundPaths = KenneyGeneratedSounds::names(packName);
+
+    std::transform(soundPaths.cbegin(), soundPaths.cend(),
+                   std::back_inserter(msounds), [&pack](const auto& soundPath) {
+                     return KenneySound::create(pack, soundPath);
+                   });
   }
 }
 
@@ -42,11 +47,10 @@ KenneySounds::SoundsList KenneySounds::ofPack(const std::string& packName) const
 {
   SoundsList found;
 
-  for (const auto& sound : msounds) {
-    if (sound->pack()->name() == packName) {
-      found.push_back(sound);
-    }
-  }
+  std::copy_if(msounds.cbegin(), msounds.cend(), std::back_inserter(found),
+               [&packName](const auto& sound) {
+                 return sound->pack()->name() == packName;
+               });
 
   return found;
 }
@@ -54,24 +58,23 @@ KenneySounds::SoundsList KenneySounds::ofPack(const std::string& packName) const
 KenneySoundPtr KenneySounds::find(const std::string& packName,
                                   const std::string& soundPath) const
 {
-  for (const auto& sound : msounds) {
-    if (sound->pack()->name() == packName && sound->path() == soundPath) {
-      return sound;
-    }
-  }
+  const auto found = std::find_if(msounds.cbegin(), msounds.cend(),
+                                  [&packName, &soundPath](const auto& sound) {
+                                    return sound->pack()->name() == packName &&
+                                           sound->path() == soundPath;
+                                  });
 
-  return {};
+  return found == msounds.cend() ? KenneySoundPtr{} : *found;
 }
 
 KenneySounds::SoundsList KenneySounds::search(const std::string& namePart) const
 {
   SoundsList found;
 
-  for (const auto& sound : msounds) {
-    if (sound->name().find(namePart) != std::string::npos) {
-      found.push_back(sound);
-    }
-  }
+  std::copy_if(msounds.cbegin(), msounds.cend(), std::back_inserter(found),
+               [&namePart](const auto& sound) {
+                 return sound->name().find(namePart) != std::string::npos;
+               });
 
   return found;
 }

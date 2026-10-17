@@ -1,6 +1,8 @@
 #include "src/kenneyaudio/controller/KenneySoundsController.h"
 
+#include <algorithm>
 #include <cassert>
+#include <iterator>
 #include <memory>
 #include <utility>
 
@@ -31,11 +33,12 @@ IKenneySounds::SoundsList KenneySoundsController::playableSounds() const
     return playableOnes;
   }
 
-  for (const auto& sound : msounds->all()) {
-    if (mplayer->supports(sound->extension())) {
-      playableOnes.push_back(sound);
-    }
-  }
+  const auto& all = msounds->all();
+
+  std::copy_if(all.cbegin(), all.cend(), std::back_inserter(playableOnes),
+               [this](const auto& sound) {
+                 return mplayer->supports(sound->extension());
+               });
 
   return playableOnes;
 }

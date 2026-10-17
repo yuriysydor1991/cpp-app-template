@@ -130,17 +130,17 @@ pipeline {
         }
         stage('UTEST_Microphone') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_Microphone\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_Microphone.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_Microphone\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_Microphone.junit.xml'
           }
         }
         stage('UTEST_UtteranceDetector') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_UtteranceDetector\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_UtteranceDetector.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_UtteranceDetector\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_UtteranceDetector.junit.xml'
           }
         }
         stage('UTEST_WhisperController') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_WhisperController\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_WhisperController.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_WhisperController\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_WhisperController.junit.xml'
           }
         }
         stage('UTEST_SignalsHandler') { 
@@ -206,7 +206,7 @@ pipeline {
         }
         stage('CTEST_WhisperController') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_WhisperController\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_WhisperController.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_WhisperController\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_WhisperController.junit.xml'
           }
         }
       }

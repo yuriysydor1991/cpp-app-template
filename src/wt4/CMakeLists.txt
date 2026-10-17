@@ -24,7 +24,7 @@ target_link_libraries(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  TemplateWt4Obj
+  PRIVATE TemplateWt4Obj
 )
 
 add_subdirectory(widgets)

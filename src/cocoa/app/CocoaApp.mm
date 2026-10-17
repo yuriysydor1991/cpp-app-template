@@ -1,36 +1,6 @@
-#include "project-global-decls.h"
 #include "src/cocoa/CocoaLauncher.h"
+#import "src/cocoa/app/TemplateCocoaAppDelegate.h"
 #import "src/cocoa/cocoa_includes.h"
-#include "src/cocoa/helpers/WindowConfig.h"
-#include "src/cocoa/main-window/CocoaMainWindow.h"
-
-// The application delegate creates and shows the main window on launch and lets
-// the app quit once the last window is closed.
-@interface TemplateCocoaAppDelegate : NSObject <NSApplicationDelegate>
-@end
-
-@implementation TemplateCocoaAppDelegate {
-  NSWindow* _window;
-}
-
-- (void)applicationDidFinishLaunching:(NSNotification*)notification
-{
-  const cocoa::helpers::WindowConfig config{
-      project_decls::PROJECT_NAME, project_decls::PROJECT_BUILD_VERSION};
-
-  cocoa::main_window::CocoaMainWindow mainWindow{config};
-  _window = mainWindow.window();
-
-  [_window makeKeyAndOrderFront:nil];
-  [NSApp activateIgnoringOtherApps:YES];
-}
-
-- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication*)sender
-{
-  return YES;
-}
-
-@end
 
 namespace cocoa
 {

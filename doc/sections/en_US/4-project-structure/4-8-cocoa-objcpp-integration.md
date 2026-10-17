@@ -10,7 +10,8 @@ A macOS host with the Xcode command line tools (`xcode-select --install`) provid
 
 - `src/cocoa/CocoaController.{h,cpp}` - the Cocoa free orchestration object. It validates the application context and launches the GUI through the `run_cocoa_application()` launch seam (`src/cocoa/CocoaLauncher.h`). Builds and is unit/component tested on every platform.
 - `src/cocoa/helpers/WindowConfig.{h,cpp}` - a Cocoa independent holder for the window title / texts / sizes, unit tested in isolation.
-- `src/cocoa/app/CocoaApp.mm` - the native AppKit application delegate and the real `run_cocoa_application()` definition. **macOS only.**
+- `src/cocoa/app/CocoaApp.mm` - the real `run_cocoa_application()` definition, which runs the AppKit application. **macOS only.**
+- `src/cocoa/app/TemplateCocoaAppDelegate.{h,mm}` - the native AppKit application delegate, which shows the main window on launch. Its Objective-C interface is guarded by `__OBJC__`, so the C++ only `cppcheck` target skips it. **macOS only.**
 - `src/cocoa/app/CocoaAppStub.cpp` - a non-Apple definition of `run_cocoa_application()` so the executable still builds, links and runs (printing a notice) off macOS. The real Cocoa window only opens on macOS.
 - `src/cocoa/main-window/CocoaMainWindow.{h,mm}` - the AppKit `NSWindow`, built programmatically (no .xib/.nib file) from `WindowConfig`. **macOS only.**
 

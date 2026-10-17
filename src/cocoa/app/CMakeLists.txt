@@ -5,7 +5,11 @@ cmake_minimum_required(VERSION 3.13)
 # Objective-C++ AppKit application; on every other platform it is a small stub so
 # the executable still links and runs.
 if(APPLE AND TARGET cocoa::sdk)
-  add_library(${COCOA_OBJECT_NAME}App OBJECT CocoaApp.mm)
+  add_library(
+    ${COCOA_OBJECT_NAME}App OBJECT
+    CocoaApp.mm
+    TemplateCocoaAppDelegate.mm
+  )
   target_link_libraries(${COCOA_OBJECT_NAME}App PUBLIC cocoa::sdk)
 else()
   add_library(${COCOA_OBJECT_NAME}App OBJECT CocoaAppStub.cpp)

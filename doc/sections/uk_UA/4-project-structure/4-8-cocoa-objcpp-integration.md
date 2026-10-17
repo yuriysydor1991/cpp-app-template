@@ -10,7 +10,8 @@
 
 - `src/cocoa/CocoaController.{h,cpp}` - об'єкт оркестрації, вільний від Cocoa. Перевіряє контекст програми і запускає GUI через шов `run_cocoa_application()` (`src/cocoa/CocoaLauncher.h`). Збирається і тестується (модульно/компонентно) на будь-якій платформі.
 - `src/cocoa/helpers/WindowConfig.{h,cpp}` - незалежний від Cocoa тримач заголовка / текстів / розмірів вікна, тестується ізольовано.
-- `src/cocoa/app/CocoaApp.mm` - нативний делегат програми AppKit і справжнє визначення `run_cocoa_application()`. **Лише macOS.**
+- `src/cocoa/app/CocoaApp.mm` - справжнє визначення `run_cocoa_application()`, яке запускає програму AppKit. **Лише macOS.**
+- `src/cocoa/app/TemplateCocoaAppDelegate.{h,mm}` - нативний делегат програми AppKit, який показує головне вікно під час запуску. Його інтерфейс Objective-C захищений `__OBJC__`, тож ціль `cppcheck`, яка перевіряє лише C++, його пропускає. **Лише macOS.**
 - `src/cocoa/app/CocoaAppStub.cpp` - визначення `run_cocoa_application()` для не-Apple, щоб виконуваний файл усе одно збирався, лінкувався і запускався (друкуючи повідомлення) поза macOS. Справжнє вікно Cocoa відкривається лише на macOS.
 - `src/cocoa/main-window/CocoaMainWindow.{h,mm}` - вікно AppKit `NSWindow`, побудоване програмно (без файлу .xib/.nib) з `WindowConfig`. **Лише macOS.**
 

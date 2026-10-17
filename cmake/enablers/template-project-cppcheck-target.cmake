@@ -33,6 +33,8 @@ add_custom_target (
     # Enables the // cppcheck-suppress <id> source comments.
     --inline-suppr
     --suppressions-list=${CMAKE_SOURCE_DIR}/misc/.cppcheck-suppress
+    # The Objective-C interfaces of the headers are guarded by __OBJC__.
+    -U__OBJC__
     -I${CMAKE_SOURCE_DIR} -I${CMAKE_BINARY_DIR} ${ALLSOURCES}
   WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
   COMMENT "Executes cppcheck command for all project sources. Just outputs all findings into stdout."

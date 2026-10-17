@@ -9,8 +9,8 @@ namespace Gtkmm3i
 {
 
 /**
- * @brief The root GTKmm window class to show
- * templated GUI window.
+ * @brief Creates the GTK3 application and runs the main window in it until
+ * the window is closed or the application stop is requested.
  */
 class Gtkmm3Controller
 {

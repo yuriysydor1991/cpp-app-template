@@ -2,8 +2,13 @@
 #include <gtest/gtest.h>
 
 #include <csignal>
+#include <filesystem>
+#include <string>
+#include <vector>
 
+#include "project-global-decls.h"
 #include "src/app/ApplicationFactory.h"
+#include "src/log/log.h"
 #include "src/wt4/Wt4Server.h"
 
 using namespace app;
@@ -13,13 +18,55 @@ using namespace wt4server;
 class CTEST_app : public Test
 {
  public:
-  CTEST_app() = default;
+  CTEST_app() { std::filesystem::remove(default_log_file()); }
 
   // the mock function the hook refers to dies with the test case
   ~CTEST_app() override { Wt4Server::run_mock = nullptr; }
 
+  /// @brief The default log file of the factory, which the current working
+  /// directory of the test case keeps.
+  static std::filesystem::path default_log_file()
+  {
+    return default_logger::RealDefaultLogger::get_default_full_log_path();
+  }
+
+  /// @brief Runs the ApplicationFactory::execute with the given command line
+  /// parameters, which follow the binary name.
+  int execute_with(const std::vector<std::string>& params)
+  {
+    args = params;
+    args.insert(args.begin(), "CTEST_app");
+
+    argPointers.clear();
+
+    for (std::string& param : args) {
+      argPointers.push_back(param.data());
+    }
+
+    realArgc = static_cast<int>(argPointers.size());
+    realArgv = argPointers.data();
+
+    return ApplicationFactory::execute(realArgc, realArgv);
+  }
+
+  /// @brief Lets the default application of the factory run on the mocked
+  /// component, whose mock function lives as long as the test case.
+  void expect_the_default_run()
+  {
+    EXPECT_CALL(staticEnsurer, Call(_)).Times(1).WillOnce(Return(0));
+
+    Wt4Server::run_mock = staticEnsurer.AsStdFunction();
+  }
+
   int argc{0};
   char** argv{nullptr};
+
+  std::vector<std::string> args;
+  std::vector<char*> argPointers;
+  int realArgc{0};
+  char** realArgv{nullptr};
+
+  MockFunction<int(std::shared_ptr<app::ApplicationContext>)> staticEnsurer;
 
   ApplicationFactory facade;
 };
@@ -189,11 +236,7 @@ TEST_F(CTEST_app, signals_handler_ignores_the_broken_pipe)
 
 TEST_F(CTEST_app, execute_success)
 {
-  MockFunction<int(std::shared_ptr<app::ApplicationContext>)> staticEnsurer;
-
-  EXPECT_CALL(staticEnsurer, Call(_)).Times(1).WillOnce(Return(0));
-
-  Wt4Server::run_mock = staticEnsurer.AsStdFunction();
+  expect_the_default_run();
 
   int status = ApplicationFactory::execute(argc, argv);
 
@@ -202,8 +245,6 @@ TEST_F(CTEST_app, execute_success)
 
 TEST_F(CTEST_app, execute_failure)
 {
-  MockFunction<int(std::shared_ptr<app::ApplicationContext>)> staticEnsurer;
-
   EXPECT_CALL(staticEnsurer, Call(_)).Times(1).WillOnce(Return(1));
 
   Wt4Server::run_mock = staticEnsurer.AsStdFunction();
@@ -211,4 +252,81 @@ TEST_F(CTEST_app, execute_failure)
   int status = ApplicationFactory::execute(argc, argv);
 
   EXPECT_NE(status, 0);
+}
+
+TEST_F(CTEST_app, help_prints_the_options_without_a_log_file)
+{
+  testing::internal::CaptureStdout();
+
+  EXPECT_EQ(execute_with({"--help"}), 0);
+
+  EXPECT_THAT(testing::internal::GetCapturedStdout(), HasSubstr("--log-file"));
+  EXPECT_FALSE(std::filesystem::exists(default_log_file()));
+}
+
+TEST_F(CTEST_app, version_prints_the_version_without_a_log_file)
+{
+  testing::internal::CaptureStdout();
+
+  EXPECT_EQ(execute_with({"--version"}), 0);
+
+  EXPECT_THAT(testing::internal::GetCapturedStdout(),
+              HasSubstr(project_decls::PROJECT_BUILD_VERSION));
+  EXPECT_FALSE(std::filesystem::exists(default_log_file()));
+}
+
+TEST_F(CTEST_app, unknown_option_fails_with_the_help)
+{
+  testing::internal::CaptureStdout();
+  testing::internal::CaptureStderr();
+
+  EXPECT_NE(execute_with({"--bogus"}), 0);
+
+  EXPECT_THAT(testing::internal::GetCapturedStderr(),
+              HasSubstr("Unknown parameter: --bogus"));
+  EXPECT_THAT(testing::internal::GetCapturedStdout(), HasSubstr("Usage:"));
+  EXPECT_FALSE(std::filesystem::exists(default_log_file()));
+}
+
+TEST_F(CTEST_app, missing_log_file_path_fails_with_the_help)
+{
+  testing::internal::CaptureStdout();
+  testing::internal::CaptureStderr();
+
+  EXPECT_NE(execute_with({"--log-file"}), 0);
+
+  testing::internal::GetCapturedStderr();
+
+  const std::string out = testing::internal::GetCapturedStdout();
+
+  EXPECT_THAT(out, HasSubstr("Usage:"));
+  EXPECT_THAT(out, Not(HasSubstr(project_decls::PROJECT_BUILD_COMMIT)));
+}
+
+TEST_F(CTEST_app, unopenable_log_file_fails_before_the_run)
+{
+  static const std::string unopenable =
+      "no-such-directory-of-CTEST_app/CTEST_app.log";
+
+  testing::internal::CaptureStderr();
+
+  EXPECT_NE(execute_with({"-l", unopenable}), 0);
+
+  EXPECT_THAT(testing::internal::GetCapturedStderr(),
+              HasSubstr("Fail to open the log file at " + unopenable));
+  EXPECT_FALSE(std::filesystem::exists(default_log_file()));
+}
+
+TEST_F(CTEST_app, custom_log_file_is_used)
+{
+  static const std::filesystem::path customLog{"CTEST_app.custom.log"};
+
+  std::filesystem::remove(customLog);
+
+  expect_the_default_run();
+
+  EXPECT_EQ(execute_with({"--log-file", customLog.string()}), 0);
+
+  EXPECT_TRUE(std::filesystem::exists(customLog));
+  EXPECT_FALSE(std::filesystem::exists(default_log_file()));
 }

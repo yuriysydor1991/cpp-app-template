@@ -7,26 +7,9 @@
 #include <string>
 #include <vector>
 
+#include "cv/Mat.h"
+#include "cv/Rect.h"
 #include "src/app/ApplicationContext.h"
-
-namespace cv
-{
-
-struct Rect
-{
-  int x{0};
-  int y{0};
-  int width{0};
-  int height{0};
-};
-
-class Mat
-{
- public:
-  bool empty() const { return true; }
-};
-
-}  // namespace cv
 
 namespace opencvi
 {

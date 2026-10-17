@@ -27,8 +27,7 @@ target_link_libraries(
   CTEST_Qt6Controller
   GTest::gtest_main GTest::gmock
   ${QT6_OBJECT_NAME} ${QT6_OBJECT_NAME}log ${QT6_OBJECT_NAME}main
-  ${QT6_OBJECT_NAME}components ${QT6_OBJECT_NAME}constants
-  ${QT6_OBJECT_NAME}resources
+  ${QT6_OBJECT_NAME}components
 )
 
 include(GoogleTest)

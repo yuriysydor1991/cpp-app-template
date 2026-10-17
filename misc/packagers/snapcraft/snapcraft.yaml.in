@@ -22,3 +22,11 @@ parts:
     cmake-parameters:
       - -DCMAKE_BUILD_TYPE=Release
       - -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
+    build-packages:
+      - libsdl2-dev
+      - libgl-dev
+    stage-packages:
+      - libsdl2-2.0-0
+      - libopengl0
+      - libgl1
+      - libgl1-mesa-dri

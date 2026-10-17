@@ -5,6 +5,7 @@
 
 #include "project-global-decls.h"
 #include "src/app/applications/IApplication.h"
+#include "src/gtkmm3/StopFlagWatcher.h"
 #include "src/gtkmm3/gtkmm_includes.h"
 #include "src/gtkmm3/log/GtkLogBridge.h"
 #include "src/gtkmm3/main-window/Loader.h"
@@ -43,6 +44,8 @@ int Gtkmm3Controller::run(std::shared_ptr<app::ApplicationContext> nactx)
     LOGE("Fail to init subsystems");
     return app::IApplication::INVALID;
   }
+
+  const StopFlagWatcher stopWatcher{actx, *app.get()};
 
   LOGD("Starting the GTKmm event loop");
 

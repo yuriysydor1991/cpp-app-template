@@ -1,12 +1,13 @@
 #include "src/plotgencpp/PlotGenCppController.h"
 
+#include <plotgen.h>
+
 #include <algorithm>
 #include <cassert>
 #include <cmath>
 #include <memory>
 #include <vector>
 
-#include "plotgen.h"
 #include "src/log/log.h"
 
 namespace plotgencppi

@@ -1,9 +1,9 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <plotgen.h>
 
 #include <memory>
 
-#include "plotgen.h"
 #include "src/app/ApplicationContext.h"
 #include "src/plotgencpp/PlotGenCppController.h"
 

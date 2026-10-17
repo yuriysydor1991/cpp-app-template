@@ -81,8 +81,8 @@ class PlotGen
     show_calls = 0;
   }
 
-  PlotGen(unsigned int = 1200, unsigned int = 900, unsigned int = 1,
-          unsigned int = 1)
+  explicit PlotGen(unsigned int = 1200, unsigned int = 900, unsigned int = 1,
+                   unsigned int = 1)
   {
     ++constructed;
   }

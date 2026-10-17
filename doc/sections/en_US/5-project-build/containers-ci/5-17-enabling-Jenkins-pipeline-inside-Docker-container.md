@@ -80,3 +80,7 @@ The `--rebuild` flag of both scripts sets the `JENKINS_PIPELINE_FORCE_REBUILD` C
 
 scripts/docker/jenkins-run.sh --rebuild
 ```
+
+### Packager tools of the container
+
+The [misc/Dockerfiles/Dockerfile.Jenkins.pipeline.in](/misc/Dockerfiles/Dockerfile.Jenkins.pipeline.in) image carries the tools of the optional packager stages of the [misc/Jenkinsfile](/misc/Jenkinsfile) which its Debian base distributes: `flatpak` with `flatpak-builder` for the `RUN_FLATPAK_PACKAGER` stage, `rpm` for the `RUN_RPM_PACKAGER` one (the `RUN_DEB_PACKAGER` one needs nothing beyond CMake) and `doxygen` with `graphviz` for the documentation build. Two packager stages can't pass inside this container, so keep their parameters off there and run them on a host instead: `RUN_SNAP_PACKAGER` needs `snapcraft`, which comes as a snap only and therefore asks for a running `snapd`, and `RUN_APPIMAGE_PACKAGER` needs the `appimagetool`, which no Debian package provides and which runs through FUSE. The `RUN_FREEBSD_PACKAGER` and the `RUN_WIX_PACKAGER` stages are FreeBSD and MS Windows only.

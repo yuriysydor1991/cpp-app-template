@@ -26,6 +26,8 @@ The `cmake/enablers/audio/template-project-opengameart-audio-enabler.cmake` modu
 | `OPENGAMEART_AUDIO_GRESOURCE_PREFIX` | `/ua/org/kytok/template/<binary>/sounds` | the prefix of the generated `.gresource.xml` manifests |
 | `OPENGAMEART_AUDIO_GENERATE_FULL_MANIFESTS` | `ON` | generates the manifests carrying every available sound |
 
+The `src/opengameartaudio` subsystem and the `Application` demo use the sound packs unconditionally, so `-DENABLE_OPENGAMEART_AUDIO=OFF` works only together with their removal: the configure otherwise stops with an explicit error naming what to drop.
+
 ### The packs manifest
 
 OpenGameArt hosts it's submissions under several different licenses, so the `misc/opengameart-packs.txt` manifest is the single place recording **which** pack is used, **where** it came from and **what** it is licensed under. Every line follows the

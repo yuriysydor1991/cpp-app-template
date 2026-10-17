@@ -64,4 +64,20 @@ void WinUI3App::OnLaunched(mux::LaunchActivatedEventArgs const& /*args*/)
   window.Activate();
 }
 
+mux::Markup::IXamlType WinUI3App::GetXamlType(
+    winrt::Windows::UI::Xaml::Interop::TypeName const& type)
+{
+  return provider.GetXamlType(type);
+}
+
+mux::Markup::IXamlType WinUI3App::GetXamlType(winrt::hstring const& fullName)
+{
+  return provider.GetXamlType(fullName);
+}
+
+winrt::com_array<mux::Markup::XmlnsDefinition> WinUI3App::GetXmlnsDefinitions()
+{
+  return provider.GetXmlnsDefinitions();
+}
+
 }  // namespace winui3::application

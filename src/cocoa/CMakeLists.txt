@@ -18,7 +18,7 @@ target_include_directories(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  ${COCOA_OBJECT_NAME}
+  PRIVATE ${COCOA_OBJECT_NAME}
 )
 
 add_subdirectory(helpers)

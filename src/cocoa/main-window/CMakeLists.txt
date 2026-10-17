@@ -21,5 +21,5 @@ target_link_libraries(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  ${COCOA_OBJECT_NAME}MainWindow
+  PRIVATE ${COCOA_OBJECT_NAME}MainWindow
 )

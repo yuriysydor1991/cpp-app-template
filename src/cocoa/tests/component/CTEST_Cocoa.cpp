@@ -28,6 +28,8 @@ std::function<bool()> g_stop_requested;
 
 namespace cocoa
 {
+// the seam signature is the CocoaLauncher.h one
+// cppcheck-suppress constParameterReference
 int run_cocoa_application(int& argc, char**& /*argv*/,
                           const std::function<bool()>& stop_requested)
 {

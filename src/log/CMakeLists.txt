@@ -5,14 +5,20 @@ if(POLICY CMP0167)
   cmake_policy(SET CMP0167 NEW)
 endif()
 
-# Looked up here and not in boost-log: the Boost::* imported targets are
-# directory scoped and the tests subdirectory needs them too. The system
-# component is gone since the Boost 1.90 (header only since the 1.69).
+# Looked up here and not in boost-log: the tests subdirectory needs the
+# Boost::* targets too, and so does the CTEST_app of the src/app directory,
+# hence they are made global. The system component is gone since the Boost
+# 1.90 (header only since the 1.69).
 find_package(Boost REQUIRED COMPONENTS
   log
   log_setup
   thread
   filesystem
+)
+
+set_target_properties(
+  Boost::log Boost::log_setup Boost::thread Boost::filesystem
+  PROPERTIES IMPORTED_GLOBAL TRUE
 )
 
 add_subdirectory(boost-log)

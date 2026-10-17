@@ -22,12 +22,16 @@ add_executable(
   ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/PauseSignalsHandler.cpp
   ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/PosixSignalsHandler.cpp
   ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/StopSignalsHandler.cpp
+  ${CMAKE_SOURCE_DIR}/src/log/boost-log/BoostLogController.cpp
 )
 
+# Must match the TemplateBoostLogControllerObj target definition.
+target_compile_definitions(CTEST_app PRIVATE BOOST_LOG_DYN_LINK)
+
+# The real logger, so the log file effects of the command line are covered too.
 target_include_directories(
   CTEST_app
   PRIVATE
-    ${APP_MOCKS_ROOT}/log
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
 )
@@ -35,6 +39,8 @@ target_include_directories(
 target_link_libraries(
   CTEST_app
   GTest::gtest_main GTest::gmock
+  Boost::log Boost::log_setup Boost::thread Boost::filesystem
+  pthread
 )
 
 include(GoogleTest)

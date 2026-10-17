@@ -47,4 +47,6 @@ scripts/docker/single-run.sh --no-reconfigure
 scripts/docker/single-run.sh -DDOCKERFILE_SINGLE_RUN_BASE_IMAGE_VERSION=22.04
 ```
 
+On this branch the image is based on the Ubuntu 26.04 by default (the `DOCKERFILE_SINGLE_RUN_BASE_IMAGE_VERSION` cache variable), because the Qt Location module came back with the Qt 6.5 and the Ubuntu 24.04 does not package it.
+
 Keep in mind that the `ENABLE_DOCKER` option makes the configure step require the `docker` executable to be present in the system, so the scripts fail the configure step on a machine with no Docker installed (see the [Optional for the Docker container runs](/doc/sections/en_US/3-requirements/3-10-optional-for-docker-container-runs.md) requirements section).

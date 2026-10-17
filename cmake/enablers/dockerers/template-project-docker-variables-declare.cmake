@@ -12,9 +12,11 @@ set(
   "The Dockerfile source environment name (FROM ubuntu, debian, jenkins etc.)"
 )
 
+# The Qt Location module came back with the Qt 6.5, which the Ubuntu 24.04 does
+# not package, so the image is based on the 26.04 one.
 set(
   DOCKERFILE_SINGLE_RUN_BASE_IMAGE_VERSION
-  "24.04"
+  "26.04"
   CACHE STRING 
   "The Dockerfile source environment version"
 )

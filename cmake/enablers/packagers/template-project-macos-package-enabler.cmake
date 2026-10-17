@@ -21,13 +21,6 @@ endif()
 
 include(InstallRequiredSystemLibraries)
 
-set(
-  TEMPLATE_PROJECT_MACOS_BUNDLE_IDENTIFIER
-  "ua.org.kytok.template.${PROJECT_BINARY_NAME_lower}"
-  CACHE STRING
-  "Reverse-DNS bundle identifier used by the macOS .app and the .pkg installer"
-)
-
 set(CPACK_GENERATOR "DragNDrop;productbuild")
 set(CPACK_PACKAGE_NAME ${PROJECT_NAME})
 set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})

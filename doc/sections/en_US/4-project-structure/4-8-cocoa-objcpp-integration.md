@@ -18,7 +18,7 @@ A macOS host with the Xcode command line tools (`xcode-select --install`) provid
 
 ### Building it
 
-The native UI is set up by the CMake enabler `cmake/enablers/template-project-Cocoa-enabler.cmake`, controlled by `ENABLE_COCOA` (default `ON`). On macOS it enables the `OBJCXX` language, finds the Cocoa framework and exposes the `cocoa::sdk` target (linked with `-framework Cocoa`, compiled with `-fobjc-arc` for Automatic Reference Counting). On every other host it is a no-op and the stub launch seam is built instead, so the portable code keeps building and testing. On macOS the executable is produced as a `.app` bundle (`MACOSX_BUNDLE`).
+The native UI is set up by the CMake enabler `cmake/enablers/template-project-Cocoa-enabler.cmake`, controlled by `ENABLE_COCOA` (default `ON`). On macOS it enables the `OBJCXX` language, finds the Cocoa framework and exposes the `cocoa::sdk` target (linked with `-framework Cocoa`, compiled with `-fobjc-arc` for Automatic Reference Counting). On every other host it is a no-op and the stub launch seam is built instead, so the portable code keeps building and testing. On macOS the executable is produced as a `.app` bundle (`MACOSX_BUNDLE`) whose bundle identifier is the `TEMPLATE_PROJECT_MACOS_BUNDLE_IDENTIFIER` CMake variable (`ua.org.kytok.template.cppapptemplate` by default; the `.pkg` installer uses it too), so set it to your own reverse-DNS name.
 
 ### Packaging
 

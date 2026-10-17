@@ -10,6 +10,13 @@ set(
 string(TOLOWER ${PROJECT_BINARY_NAME} PROJECT_BINARY_NAME_lower)
 
 set(
+  TEMPLATE_PROJECT_MACOS_BUNDLE_IDENTIFIER
+  "ua.org.kytok.template.${PROJECT_BINARY_NAME_lower}"
+  CACHE STRING
+  "Reverse-DNS bundle identifier used by the macOS .app and the .pkg installer"
+)
+
+set(
   COCOA_OBJECT_NAME "${PROJECT_NAME}CocoaObj"
   CACHE STRING "Project Cocoa orchestration obj library name and target"
 )

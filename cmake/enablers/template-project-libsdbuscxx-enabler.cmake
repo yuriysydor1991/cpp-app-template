@@ -21,6 +21,12 @@ find_package(sdbus-c++ 2 QUIET)
 if (sdbus-c++_FOUND)
   message(STATUS "System already contains the sdbus-c++ ${sdbus-c++_VERSION} library")
 else()
+  # The fetched library is linked into the executable statically, so none of
+  # its headers, libraries, CMake and pkg-config files or docs belong to the
+  # project installation and packages.
+  set(SDBUSCPP_INSTALL OFF CACHE BOOL "Install the fetched sdbus-c++ files" FORCE)
+  set(SDBUSCPP_BUILD_DOCS OFF CACHE BOOL "Build the fetched sdbus-c++ docs" FORCE)
+
   template_project_default_3rdparty_enabler(
     NAME sdbus-c++
     GIT_REPOSITORY ${TEMPLATE_APP_SDBUSCXX_GIT}

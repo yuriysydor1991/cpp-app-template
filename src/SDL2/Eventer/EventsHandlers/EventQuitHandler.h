@@ -17,7 +17,7 @@ namespace templateSDL2::events::eventsHandlers
 class EventQuitHandler : public IEventHandler
 {
  public:
-  virtual ~EventQuitHandler() = default;
+  ~EventQuitHandler() override = default;
 
   /**
    * @brief The quit event handler routine

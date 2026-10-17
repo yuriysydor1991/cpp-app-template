@@ -130,7 +130,7 @@ pipeline {
         }
         stage('UTEST_CatalogsLocator') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_CatalogsLocator\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_CatalogsLocator.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_CatalogsLocator\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_CatalogsLocator.junit.xml'
           }
         }
         stage('UTEST_SignalsHandler') { 
@@ -196,7 +196,7 @@ pipeline {
         }
         stage('CTEST_GettextController') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_GettextController\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_GettextController.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_GettextController\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_GettextController.junit.xml'
           }
         }
       }

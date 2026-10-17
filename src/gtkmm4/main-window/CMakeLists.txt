@@ -26,7 +26,7 @@ target_link_libraries(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  TemplateGtkmm4MainWindowObj
+  PRIVATE TemplateGtkmm4MainWindowObj
 )
 
 add_subdirectory(tests)

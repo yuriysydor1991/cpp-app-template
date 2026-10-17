@@ -130,22 +130,22 @@ pipeline {
         }
         stage('UTEST_DarknetImage') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_DarknetImage\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_DarknetImage.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_DarknetImage\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_DarknetImage.junit.xml'
           }
         }
         stage('UTEST_DarknetXXController') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_DarknetXXController\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_DarknetXXController.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_DarknetXXController\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_DarknetXXController.junit.xml'
           }
         }
         stage('UTEST_Detection') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_Detection\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_Detection.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_Detection\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_Detection.junit.xml'
           }
         }
         stage('UTEST_NetworkWeights') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_NetworkWeights\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_NetworkWeights.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_NetworkWeights\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_NetworkWeights.junit.xml'
           }
         }
         stage('UTEST_SignalsHandler') { 
@@ -211,7 +211,7 @@ pipeline {
         }
         stage('CTEST_DarknetXXController') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_DarknetXXController\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_DarknetXXController.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_DarknetXXController\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_DarknetXXController.junit.xml'
           }
         }
       }

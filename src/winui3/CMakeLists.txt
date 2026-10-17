@@ -39,12 +39,15 @@ if(WIN32 AND TARGET winui3::sdk)
     target_link_options(${PROJECT_BINARY_NAME} PRIVATE /ENTRY:mainCRTStartup)
   endif()
 
-  # The Windows App SDK bootstrapper DLL is loaded from the executable directory.
-  add_custom_command(
-    TARGET ${PROJECT_BINARY_NAME} POST_BUILD
+  # The Windows App SDK bootstrapper DLL is loaded from the executable directory
+  # (a POST_BUILD command can't be attached to a target of another directory).
+  add_custom_target(
+    ${WINUI3_OBJECT_NAME}BootstrapDll ALL
     COMMAND ${CMAKE_COMMAND} -E copy_if_different "${WINUI3_BOOTSTRAP_DLL}"
             "$<TARGET_FILE_DIR:${PROJECT_BINARY_NAME}>"
   )
+
+  add_dependencies(${WINUI3_OBJECT_NAME}BootstrapDll ${PROJECT_BINARY_NAME})
 
   install(
     FILES "${WINUI3_BOOTSTRAP_DLL}"

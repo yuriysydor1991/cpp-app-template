@@ -26,6 +26,8 @@ The `cmake/enablers/audio/template-project-freesound-audio-enabler.cmake` module
 | `FREESOUND_AUDIO_GRESOURCE_PREFIX` | `/ua/org/kytok/template/<binary>/sounds` | the prefix of the generated `.gresource.xml` manifests |
 | `FREESOUND_AUDIO_GENERATE_FULL_MANIFESTS` | `ON` | generates the manifests carrying every available sound |
 
+The `src/freesoundaudio` subsystem and the `Application` demo use the sounds unconditionally, so `-DENABLE_FREESOUND_AUDIO=OFF` works only together with their removal: the configure otherwise stops with an explicit error naming what to drop.
+
 ### The sounds manifest
 
 Freesound publishes it's submissions under CC0, CC-BY and CC-BY-NC alike, **one license per sound** rather than one for the whole database, so this branch records the provenance of every single file. The `misc/freesound-sounds.txt` manifest is the single place naming **which** sound is used, **where** it came from and **what** it is licensed under. Every line follows the

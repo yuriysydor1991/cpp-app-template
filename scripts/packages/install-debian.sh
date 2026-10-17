@@ -41,7 +41,7 @@ PACKAGES=(
     qml6-module-qtquick-tooling
     qml6-module-qtquick-virtualkeyboard
     qml6-module-qtquick-window
-    qml6-module-qtwebview
+    qml6-module-qtwebengine
     qt6-base-dev
     qt6-base-dev-tools
     qt6-declarative-dev
@@ -49,7 +49,6 @@ PACKAGES=(
     qt6-tools-dev-tools
     qt6-webengine-dev
     qt6-webengine-dev-tools
-    qt6-webview-dev
 )
 
 APT_SUDO=""

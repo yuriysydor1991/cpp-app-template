@@ -16,8 +16,8 @@ sudo apt install -y qt6-base-dev qt6-base-dev-tools \
   qml6-module-qtquick-scene2d qml6-module-qtquick-scene3d \
   qml6-module-qtquick-shapes qml6-module-qtquick-tooling \
   qml6-module-qtquick-timeline \
-  qt6-webview-dev qml6-module-qtwebview \
-  qt6-webengine-dev libqt6webenginecore6 qt6-webengine-dev-tools
+  qt6-webengine-dev libqt6webenginecore6 qt6-webengine-dev-tools \
+  qml6-module-qtwebengine
 ```
 
 The Qt6 is mandatory on this branch: the `Application` class runs the `Qt6Controller`, so configuring with the `-DENABLE_QT6=OFF` stops with an error. Take the `app` branch for an application with no Qt6 in it.

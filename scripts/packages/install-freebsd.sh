@@ -25,7 +25,6 @@ PACKAGES="
     qt6-tools
     qt6-virtualkeyboard
     qt6-webengine
-    qt6-webview
 "
 
 PKG_SUDO=""

@@ -28,8 +28,6 @@ PACKAGES=(
     qt6-qttools-devel
     qt6-qtvirtualkeyboard
     qt6-qtwebengine-devel
-    qt6-qtwebview
-    qt6-qtwebview-devel
 )
 
 DNF_SUDO=""

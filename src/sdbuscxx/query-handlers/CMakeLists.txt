@@ -21,7 +21,7 @@ target_link_libraries(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  TemplateProjectDBusQueryHandlersObj
+  PRIVATE TemplateProjectDBusQueryHandlersObj
 )
 
 add_subdirectory(tests)

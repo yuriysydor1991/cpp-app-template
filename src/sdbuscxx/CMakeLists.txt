@@ -33,7 +33,7 @@ target_link_libraries(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  TemplateProjectSDBusCxxControllerObj
+  PRIVATE TemplateProjectSDBusCxxControllerObj
 )
 
 add_subdirectory(query-handlers)

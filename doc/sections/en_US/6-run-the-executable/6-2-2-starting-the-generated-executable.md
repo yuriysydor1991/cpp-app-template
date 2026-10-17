@@ -1,6 +1,16 @@
 ### Starting the generated executable
 
-If executable compiles and is present in the build directory start it in the terminal with path found from a previous subsection by a command:
+On macOS the executable is built as the `CppAppTemplate.app` bundle. Start it like any other macOS application, or run the executable inside the bundle to see its console output and to pass the command line arguments:
+
+```
+# from the build dir
+open src/CppAppTemplate.app
+
+# or
+./src/CppAppTemplate.app/Contents/MacOS/CppAppTemplate --help
+```
+
+On the other platforms there is no bundle (the Cocoa window is macOS only and the executable just prints a notice), so if executable compiles and is present in the build directory start it in the terminal with path found from a previous subsection by a command:
 
 ```
 # from the build dir

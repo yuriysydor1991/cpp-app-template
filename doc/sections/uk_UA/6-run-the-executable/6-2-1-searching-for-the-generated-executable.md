@@ -6,4 +6,6 @@
 find . -name 'CppAppTemplate'
 ```
 
+На macOS вона знаходить виконуваний файл всередині пакунку, `./src/CppAppTemplate.app/Contents/MacOS/CppAppTemplate`.
+
 Ім'я `CppAppTemplate` являється ім'ям головного виконуваного бінарного файлу за замовчуванням. Його необхідно замінити у разі заміни ім'я за умовчанням у кореневому файлі `CMakeLists.txt` (змінні `CMAKE_PROJECT_NAME` або `PROJECT_BINARY_NAME`).

@@ -1,7 +1,9 @@
 #include "src/app/ApplicationFactory.h"
 
 #include <cassert>
+#include <iostream>
 #include <memory>
+#include <string>
 
 #include "src/app/ApplicationContext.h"
 #include "src/app/CMDParamNames.h"
@@ -100,23 +102,49 @@ std::shared_ptr<IApplication> ApplicationFactory::create_application(
   return create_default_application();
 }
 
-int ApplicationFactory::run(int& gargc, char**& gargv)
+bool ApplicationFactory::init_logging(std::shared_ptr<ApplicationContext> ctx)
 {
+  assert(ctx != nullptr);
+
+  if (ctx == nullptr) {
+    LOGE("No valid application context provided");
+    return false;
+  }
+
+  if (ctx->get_print_help_and_exit() || ctx->get_print_version_and_exit()) {
+    return true;
+  }
+
   const std::string custom_log =
-      CommandLineParser::get_custom_logfile(gargc, gargv);
+      CommandLineParser::get_custom_logfile(ctx->get_argc(), ctx->get_argv());
 
   if (custom_log.empty()) {
     LOG_INIT_DEFAULTS();
-  } else {
-    LOG_INIT_PATH(custom_log);
+    return true;
   }
 
+  if (!LOG_INIT_PATH(custom_log)) {
+    std::cerr << "Fail to open the log file at " << custom_log << std::endl;
+    return false;
+  }
+
+  return true;
+}
+
+int ApplicationFactory::run(int& gargc, char**& gargv)
+{
+  // The arguments are parsed first, so the help and the version printers, as
+  // well as a bad usage, open no log file at all.
   std::shared_ptr<ApplicationContext> ctx = create_context(gargc, gargv);
 
   assert(ctx != nullptr);
 
   if (ctx == nullptr) {
     LOGE("No valid application context object provided");
+    return IApplication::INVALID;
+  }
+
+  if (!init_logging(ctx)) {
     return IApplication::INVALID;
   }
 

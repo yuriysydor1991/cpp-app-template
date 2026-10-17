@@ -10,7 +10,7 @@ confinement: ${TEMPLATE_PROJECT_SNAP_CONFINEMENT}
 
 apps:
   ${PROJECT_BINARY_NAME}:
-    command: ${PROJECT_BINARY_INSTALLATION_DIR}/${PROJECT_BINARY_NAME}${SNAP_APP_DESKTOP}
+    command: ${SNAP_APP_COMMAND}${SNAP_APP_DESKTOP}
     plugs:
       - home${SNAP_APP_DESKTOP_PLUGS}
       - audio-playback

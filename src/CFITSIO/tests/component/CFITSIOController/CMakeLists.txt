@@ -14,7 +14,7 @@ target_compile_definitions(
 
 target_include_directories(
   CTEST_CFITSIOController
-  PRIVATE ${CFITSIO_MOCKS_ROOT}/log
+  PRIVATE ${CMAKE_SOURCE_DIR}/src/app/tests/mocks/log
   PRIVATE ${CMAKE_SOURCE_DIR}
 )
 

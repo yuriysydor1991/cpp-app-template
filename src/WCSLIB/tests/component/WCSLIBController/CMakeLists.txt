@@ -18,7 +18,7 @@ target_compile_definitions(
 
 target_include_directories(
   CTEST_WCSLIBController
-  PRIVATE ${WCSLIB_MOCKS_ROOT}/log
+  PRIVATE ${CMAKE_SOURCE_DIR}/src/app/tests/mocks/log
   PRIVATE ${CMAKE_SOURCE_DIR}
 )
 

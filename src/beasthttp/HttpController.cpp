@@ -80,10 +80,7 @@ bool HttpController::serve(std::shared_ptr<app::ApplicationContext> actx)
   return true;
 }
 
-unsigned short HttpController::bound_port() const
-{
-  return mbound_port.load();
-}
+unsigned short HttpController::bound_port() const { return mbound_port.load(); }
 
 bool HttpController::accept_session(
     boost::asio::io_context& ioc, tcp::acceptor& acceptor,

@@ -64,6 +64,7 @@ bool CFITSIOController::open(const context& ctx, const bool writable)
 
   if (path.empty()) {
     LOGE("The FITS context carries no file path");
+    status = FILE_NOT_OPENED;
     return false;
   }
 
@@ -88,6 +89,7 @@ bool CFITSIOController::create(const context& ctx)
   if (path.empty() || width <= 0 || height <= 0) {
     LOGE("Invalid FITS image requested: '" << path << "' of " << width << "x"
                                            << height);
+    status = BAD_NAXES;
     return false;
   }
 
@@ -216,6 +218,7 @@ bool CFITSIOController::read_image(const context& ctx)
     LOGE("The FITS file holds a " << naxis
                                   << " axes image instead of a two "
                                      "dimensional one");
+    status = BAD_NAXIS;
     return false;
   }
 
@@ -225,6 +228,7 @@ bool CFITSIOController::read_image(const context& ctx)
 
   if (count <= 0) {
     LOGE("The FITS image holds no pixel at all");
+    status = BAD_NAXES;
     return false;
   }
 
@@ -286,6 +290,7 @@ bool CFITSIOController::write_image(const context& ctx)
   if (expected <= 0 || given != expected) {
     LOGE("The context carries " << given << " pixels while it's image holds "
                                 << expected);
+    status = BAD_NAXES;
     return false;
   }
 
@@ -323,6 +328,7 @@ bool CFITSIOController::prepare()
 
   if (fits == nullptr) {
     LOGE("No FITS file is open");
+    status = FILE_NOT_OPENED;
     return false;
   }
 

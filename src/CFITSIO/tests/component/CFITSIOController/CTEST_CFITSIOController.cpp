@@ -281,3 +281,18 @@ TEST_F(CTEST_CFITSIOController, the_image_behind_an_empty_primary_hdu_is_read)
             CFITSIOContext::image_size(WIDTH, HEIGHT));
   EXPECT_EQ(reading->get_pixels(), pixels);
 }
+
+TEST_F(CTEST_CFITSIOController, a_rejected_image_reports_its_status)
+{
+  std::vector<double> cube(8, 1.0);
+
+  ASSERT_EQ(write_raw_image(fits_path(), DOUBLE_IMG, {2, 2, 2}, TDOUBLE,
+                            cube.data(), false),
+            0);
+
+  auto reading = empty_context();
+
+  EXPECT_FALSE(controller->read(reading));
+  EXPECT_EQ(controller->last_status(), BAD_NAXIS);
+  EXPECT_NE(controller->last_error(), "OK - no error");
+}

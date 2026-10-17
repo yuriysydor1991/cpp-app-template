@@ -28,7 +28,7 @@ flatpak_cmd = [
     FLATPAK_DEPS_REMOTE, FLATPAK_DEPS_REMOTE_URL,
   '&&',
   'flatpak-builder', '--user', '--install-deps-from=' + FLATPAK_DEPS_REMOTE, 
-    '--assumeyes', '--repo=' + FLATPAK_REPO, 
+    '--assumeyes', '--force-clean', '--repo=' + FLATPAK_REPO, 
     FLATPAK_BUILD, 
     join_paths(meson.current_build_dir(), flatpakConfDst),
   '&&',

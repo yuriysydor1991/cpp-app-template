@@ -1,4 +1,5 @@
 #include <cassert>
+#include <exception>
 #include <memory>
 #include <string>
 #include <tuple>
@@ -234,7 +235,25 @@ bool CFITSIOController::read_image(const context& ctx)
     return false;
   }
 
-  pixels.resize(static_cast<CFITSIOContext::pixels_buffer::size_type>(count));
+  // A corrupt or a hostile header may claim any size at all, so the buffer
+  // grows to a bounded one alone and its allocation failure is caught.
+  if (count > MAX_IMAGE_PIXELS) {
+    LOGE("The " << naxes[0] << "x" << naxes[1]
+                << " FITS image exceeds the supported " << MAX_IMAGE_PIXELS
+                << " pixels");
+    status = ARRAY_TOO_BIG;
+    return false;
+  }
+
+  try {
+    pixels.resize(static_cast<CFITSIOContext::pixels_buffer::size_type>(count));
+  }
+  catch (const std::exception& e) {
+    LOGE("Fail to allocate the " << count
+                                 << " FITS image pixels: " << e.what());
+    status = MEMORY_ALLOCATION;
+    return false;
+  }
 
   // The null value and the null flag pointers are the optional ones and stay
   // omitted here, which turns the undefined pixels check off.

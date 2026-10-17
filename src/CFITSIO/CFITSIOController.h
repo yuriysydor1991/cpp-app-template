@@ -131,6 +131,9 @@ class CFITSIOController
   /// @brief The FITS images of the controller are the two dimensional ones.
   inline static constexpr const int IMAGE_AXES = 2;
 
+  /// @brief The largest image read (32768 x 32768, 8 GiB of the pixels).
+  inline static constexpr const LONGLONG MAX_IMAGE_PIXELS = 1LL << 30;
+
   fitsfile* fits{nullptr};
   int status{0};
 };

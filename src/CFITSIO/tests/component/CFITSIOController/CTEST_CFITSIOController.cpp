@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 
 #include <cmath>
+#include <cstring>
 #include <filesystem>
 #include <fstream>
 #include <string>
@@ -118,6 +119,7 @@ class CTEST_CFITSIOController : public Test
   static constexpr const double REFERENCE = 10.5;
   static constexpr const std::string::size_type KEYRECORD_LENGTH = 80U;
   static constexpr const short BLANK_VALUE = -32768;
+  static constexpr const std::string::size_type HEADER_BLOCK_LENGTH = 2880U;
 
   CFITSIOControllerPtr controller;
   CFITSIOContextPtr ctx;
@@ -295,4 +297,28 @@ TEST_F(CTEST_CFITSIOController, a_rejected_image_reports_its_status)
   EXPECT_FALSE(controller->read(reading));
   EXPECT_EQ(controller->last_status(), BAD_NAXIS);
   EXPECT_NE(controller->last_error(), "OK - no error");
+}
+
+TEST_F(CTEST_CFITSIOController, an_oversized_image_header_is_refused)
+{
+  // A bare header claiming a 100000 x 100000 image with no data behind it.
+  std::string header;
+
+  for (const char* card :
+       {"SIMPLE  =                    T", "BITPIX  =                  -64",
+        "NAXIS   =                    2", "NAXIS1  =               100000",
+        "NAXIS2  =               100000", "END"}) {
+    header +=
+        std::string{card}.append(KEYRECORD_LENGTH - std::strlen(card), ' ');
+  }
+
+  header.append(HEADER_BLOCK_LENGTH - header.size(), ' ');
+
+  std::ofstream{fits_path(), std::ios::binary} << header;
+
+  auto reading = empty_context();
+
+  EXPECT_FALSE(controller->read(reading));
+  EXPECT_EQ(controller->last_status(), ARRAY_TOO_BIG);
+  EXPECT_TRUE(reading->get_pixels().empty());
 }

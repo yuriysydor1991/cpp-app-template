@@ -267,7 +267,6 @@ function(template_project_opengameart_audio_generate_index)
   )
 
   set(OPENGAMEART_AUDIO_GENERATED_SOUNDS_SOURCE "${generatedSource}" CACHE INTERNAL "The generated OpenGameArt sounds index implementation file")
-  set(OPENGAMEART_AUDIO_SOUNDS_COUNT "${total}" CACHE INTERNAL "The count of the OpenGameArt sounds made available")
 
   message(STATUS "OpenGameArt sounds made available: ${total}")
 endfunction()

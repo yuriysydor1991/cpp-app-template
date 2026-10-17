@@ -12,4 +12,4 @@ The `appOpenCV` branch additionally relies on the system [OpenCV](https://opencv
 sudo apt install -y libopencv-dev opencv-data
 ```
 
-On RPM-based distributions the equivalent packages are `opencv-devel` and `opencv-data`; on FreeBSD they are `graphics/opencv` and `graphics/opencv-data` from `pkg`.
+On RPM-based distributions the equivalent packages are `opencv-devel` and `opencv-data`; on FreeBSD the single `graphics/opencv` package of `pkg` ships the cascades too (there is no separate data package).

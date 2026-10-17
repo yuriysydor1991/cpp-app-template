@@ -12,4 +12,4 @@ sudo apt install -y git g++ cmake
 sudo apt install -y libopencv-dev opencv-data
 ```
 
-На дистрибутивах на базі RPM відповідні пакети називаються `opencv-devel` і `opencv-data`; на FreeBSD це `graphics/opencv` і `graphics/opencv-data` з `pkg`.
+На дистрибутивах на базі RPM відповідні пакети називаються `opencv-devel` і `opencv-data`; на FreeBSD каскади містить і єдиний пакунок `graphics/opencv` з `pkg` (окремого пакунка даних немає).

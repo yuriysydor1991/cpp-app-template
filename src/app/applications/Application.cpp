@@ -2,6 +2,9 @@
 
 #include <algorithm>
 #include <cassert>
+#include <cmath>
+#include <cstddef>
+#include <limits>
 #include <memory>
 #include <string>
 
@@ -58,11 +61,26 @@ void report_image(const cfitsioi::CFITSIOContextPtr& fctx)
     return;
   }
 
-  const auto [minimum, maximum] =
-      std::minmax_element(pixels.cbegin(), pixels.cend());
+  // The undefined pixels are the NaN ones, which span no range at all.
+  double minimum = std::numeric_limits<double>::infinity();
+  double maximum = -std::numeric_limits<double>::infinity();
+  std::size_t defined = 0;
 
-  LOGI("Its " << pixels.size() << " pixels span from " << *minimum << " to "
-              << *maximum);
+  for (const double pixel : pixels) {
+    if (!std::isnan(pixel)) {
+      minimum = std::min(minimum, pixel);
+      maximum = std::max(maximum, pixel);
+      ++defined;
+    }
+  }
+
+  if (defined == 0) {
+    LOGW("Its " << pixels.size() << " pixels are all undefined");
+    return;
+  }
+
+  LOGI("Its " << defined << " defined of the " << pixels.size()
+              << " pixels span from " << minimum << " to " << maximum);
 }
 
 /**

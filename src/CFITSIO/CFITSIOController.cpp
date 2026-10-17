@@ -1,10 +1,12 @@
+#include "src/CFITSIO/CFITSIOController.h"
+
 #include <cassert>
 #include <exception>
+#include <limits>
 #include <memory>
 #include <string>
 #include <tuple>
 
-#include "src/CFITSIO/CFITSIOController.h"
 #include "src/log/log.h"
 
 namespace cfitsioi
@@ -255,10 +257,13 @@ bool CFITSIOController::read_image(const context& ctx)
     return false;
   }
 
-  // The null value and the null flag pointers are the optional ones and stay
-  // omitted here, which turns the undefined pixels check off.
-  fits_read_img(fits, TDOUBLE, 1, count, nullptr, pixels.data(), nullptr,
-                &status);
+  // The undefined pixels (the BLANK ones of the integer images) are read as
+  // the NaN ones the floating point images carry for them already.
+  double undefined = std::numeric_limits<double>::quiet_NaN();
+  int anyUndefined = 0;
+
+  fits_read_img(fits, TDOUBLE, 1, count, &undefined, pixels.data(),
+                &anyUndefined, &status);
 
   if (!succeeded("read the FITS image pixels")) {
     pixels.clear();

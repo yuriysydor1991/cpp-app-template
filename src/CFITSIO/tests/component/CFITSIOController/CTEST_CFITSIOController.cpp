@@ -322,3 +322,21 @@ TEST_F(CTEST_CFITSIOController, an_oversized_image_header_is_refused)
   EXPECT_EQ(controller->last_status(), ARRAY_TOO_BIG);
   EXPECT_TRUE(reading->get_pixels().empty());
 }
+
+TEST_F(CTEST_CFITSIOController, the_blank_pixels_are_read_as_nan)
+{
+  std::vector<short> pixels{1, BLANK_VALUE, 3, 4};
+
+  ASSERT_EQ(write_raw_image(fits_path(), SHORT_IMG, {2, 2}, TSHORT,
+                            pixels.data(), false),
+            0);
+
+  auto reading = empty_context();
+
+  ASSERT_TRUE(controller->read(reading));
+  ASSERT_EQ(reading->get_pixels().size(), pixels.size());
+
+  EXPECT_EQ(reading->get_pixels()[0], 1.0);
+  EXPECT_TRUE(std::isnan(reading->get_pixels()[1]));
+  EXPECT_EQ(reading->get_pixels()[3], 4.0);
+}

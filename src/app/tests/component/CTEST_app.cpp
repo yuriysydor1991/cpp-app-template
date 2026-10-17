@@ -1,8 +1,10 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include <algorithm>
 #include <csignal>
 #include <filesystem>
+#include <iterator>
 #include <string>
 #include <vector>
 
@@ -39,9 +41,12 @@ class CTEST_app : public Test
 
     argPointers.clear();
 
-    for (std::string& param : args) {
-      argPointers.push_back(param.data());
-    }
+    // False positive: the char* of the argv needs the non const data().
+    // cppcheck-suppress constParameterReference
+    const auto toArg = [](std::string& param) { return param.data(); };
+
+    std::transform(args.begin(), args.end(), std::back_inserter(argPointers),
+                   toArg);
 
     realArgc = static_cast<int>(argPointers.size());
     realArgv = argPointers.data();

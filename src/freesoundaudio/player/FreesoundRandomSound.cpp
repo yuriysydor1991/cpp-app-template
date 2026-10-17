@@ -1,6 +1,8 @@
 #include "src/freesoundaudio/player/FreesoundRandomSound.h"
 
+#include <algorithm>
 #include <cstddef>
+#include <iterator>
 #include <random>
 #include <string>
 
@@ -51,11 +53,12 @@ FreesoundSoundPtr FreesoundRandomSound::pick(const IFreesoundSoundsPtr& sounds,
 
   IFreesoundSounds::SoundsList ofExtension;
 
-  for (const auto& sound : sounds->all()) {
-    if (sound->extension() == extension) {
-      ofExtension.push_back(sound);
-    }
-  }
+  const auto& all = sounds->all();
+
+  std::copy_if(all.cbegin(), all.cend(), std::back_inserter(ofExtension),
+               [&extension](const auto& sound) {
+                 return sound->extension() == extension;
+               });
 
   if (ofExtension.empty()) {
     LOGW("No ." << extension << " sound among the " << sounds->count()

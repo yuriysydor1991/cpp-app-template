@@ -1,3 +1,4 @@
 nullPointer:assert.cpp
 missingIncludeSystem
 unusedStructMember
+normalCheckLevelMaxBranches

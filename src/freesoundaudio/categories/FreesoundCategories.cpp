@@ -1,6 +1,8 @@
 #include "src/freesoundaudio/categories/FreesoundCategories.h"
 
+#include <algorithm>
 #include <cstddef>
+#include <iterator>
 #include <memory>
 #include <string>
 
@@ -18,9 +20,10 @@ FreesoundCategories::FreesoundCategories()
 
   mcategories.reserve(categoryNames.size());
 
-  for (const auto& categoryName : categoryNames) {
-    mcategories.push_back(FreesoundCategory::create(categoryName));
-  }
+  std::transform(categoryNames.cbegin(), categoryNames.cend(),
+                 std::back_inserter(mcategories), [](const auto& categoryName) {
+                   return FreesoundCategory::create(categoryName);
+                 });
 }
 
 const FreesoundCategories::CategoriesList& FreesoundCategories::all() const
@@ -31,13 +34,12 @@ const FreesoundCategories::CategoriesList& FreesoundCategories::all() const
 IFreesoundCategoryPtr FreesoundCategories::find(
     const std::string& categoryName) const
 {
-  for (const auto& category : mcategories) {
-    if (category->name() == categoryName) {
-      return category;
-    }
-  }
+  const auto found = std::find_if(mcategories.cbegin(), mcategories.cend(),
+                                  [&categoryName](const auto& category) {
+                                    return category->name() == categoryName;
+                                  });
 
-  return {};
+  return found == mcategories.cend() ? IFreesoundCategoryPtr{} : *found;
 }
 
 std::size_t FreesoundCategories::count() const { return mcategories.size(); }

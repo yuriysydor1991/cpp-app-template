@@ -1,7 +1,9 @@
 #include "src/freesoundaudio/sounds/FreesoundSounds.h"
 
+#include <algorithm>
 #include <cassert>
 #include <cstddef>
+#include <iterator>
 #include <memory>
 #include <string>
 #include <utility>
@@ -30,10 +32,13 @@ FreesoundSounds::FreesoundSounds(IFreesoundCategoriesPtr gpacks)
     // value and the index answers with a reference into it's own storage.
     const auto categoryName = category->name();
 
-    for (const auto& soundPath :
-         FreesoundGeneratedSounds::names(categoryName)) {
-      msounds.push_back(FreesoundSound::create(category, soundPath));
-    }
+    const auto& soundPaths = FreesoundGeneratedSounds::names(categoryName);
+
+    std::transform(soundPaths.cbegin(), soundPaths.cend(),
+                   std::back_inserter(msounds),
+                   [&category](const auto& soundPath) {
+                     return FreesoundSound::create(category, soundPath);
+                   });
   }
 }
 
@@ -47,11 +52,10 @@ FreesoundSounds::SoundsList FreesoundSounds::ofCategory(
 {
   SoundsList found;
 
-  for (const auto& sound : msounds) {
-    if (sound->category()->name() == categoryName) {
-      found.push_back(sound);
-    }
-  }
+  std::copy_if(msounds.cbegin(), msounds.cend(), std::back_inserter(found),
+               [&categoryName](const auto& sound) {
+                 return sound->category()->name() == categoryName;
+               });
 
   return found;
 }
@@ -59,14 +63,14 @@ FreesoundSounds::SoundsList FreesoundSounds::ofCategory(
 FreesoundSoundPtr FreesoundSounds::find(const std::string& categoryName,
                                         const std::string& soundPath) const
 {
-  for (const auto& sound : msounds) {
-    if (sound->category()->name() == categoryName &&
-        sound->path() == soundPath) {
-      return sound;
-    }
-  }
+  const auto found =
+      std::find_if(msounds.cbegin(), msounds.cend(),
+                   [&categoryName, &soundPath](const auto& sound) {
+                     return sound->category()->name() == categoryName &&
+                            sound->path() == soundPath;
+                   });
 
-  return {};
+  return found == msounds.cend() ? FreesoundSoundPtr{} : *found;
 }
 
 FreesoundSounds::SoundsList FreesoundSounds::search(
@@ -74,11 +78,10 @@ FreesoundSounds::SoundsList FreesoundSounds::search(
 {
   SoundsList found;
 
-  for (const auto& sound : msounds) {
-    if (sound->name().find(namePart) != std::string::npos) {
-      found.push_back(sound);
-    }
-  }
+  std::copy_if(msounds.cbegin(), msounds.cend(), std::back_inserter(found),
+               [&namePart](const auto& sound) {
+                 return sound->name().find(namePart) != std::string::npos;
+               });
 
   return found;
 }

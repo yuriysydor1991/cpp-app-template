@@ -1,5 +1,7 @@
 #include "src/freesoundaudio/sounds/FreesoundGeneratedSounds.h"
 
+#include <algorithm>
+#include <iterator>
 #include <map>
 #include <string>
 
@@ -78,9 +80,9 @@ FreesoundGeneratedSounds::categories()
 
     collected.reserve(generated().size());
 
-    for (const auto& category : generated()) {
-      collected.push_back(category.first);
-    }
+    std::transform(generated().cbegin(), generated().cend(),
+                   std::back_inserter(collected),
+                   [](const auto& category) { return category.first; });
 
     return collected;
   }();

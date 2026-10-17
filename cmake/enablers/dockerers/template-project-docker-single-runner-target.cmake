@@ -8,22 +8,24 @@ set(
       -t ${DOCKER_SINGLE_RUN_NAME} .
 )
 
+# The container draws onto the X server of the host, which the xhost call opens
+# to the local connections for the run. The EXIT trap closes the access again
+# whatever the container exits with, while the shell keeps its exit status.
 set(
   DOCKER_SINGLE_RUN_CMD
-    xhost +local:docker &&
-    ${DOCKER_EXEC} run --rm -it
-    --env DISPLAY=$$DISPLAY
-    --env QT_X11_NO_MITSHM=1
-    --env XDG_RUNTIME_DIR=$$XDG_RUNTIME_DIR
-    --env XAUTHORITY=$$XAUTHORITY
-    --volume /tmp/.X11-unix:/tmp/.X11-unix
-    --volume $$XAUTHORITY:$$XAUTHORITY
-    --volume $$XDG_RUNTIME_DIR:$$XDG_RUNTIME_DIR
-    --device /dev/dri
-    --group-add video
-    --network host
-    ${DOCKER_SINGLE_RUN_NAME} &&
-    xhost -local:docker
+    sh -c "xhost +local:docker && trap 'xhost -local:docker' EXIT && \
+${DOCKER_EXEC} run --rm -it \
+--env DISPLAY=$DISPLAY \
+--env QT_X11_NO_MITSHM=1 \
+--env XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR \
+--env XAUTHORITY=$XAUTHORITY \
+--volume /tmp/.X11-unix:/tmp/.X11-unix \
+--volume $XAUTHORITY:$XAUTHORITY \
+--volume $XDG_RUNTIME_DIR:$XDG_RUNTIME_DIR \
+--device /dev/dri \
+--group-add video \
+--network host \
+${DOCKER_SINGLE_RUN_NAME}"
 )
 
 message(STATUS "docker single build command: ${DOCKER_SINGLE_BUILD_CMD}")
@@ -40,4 +42,5 @@ add_custom_target(
   COMMAND ${DOCKER_SINGLE_RUN_CMD}
   DEPENDS docker-single-build
   COMMENT "Running the docker single run instance"
+  VERBATIM
 )

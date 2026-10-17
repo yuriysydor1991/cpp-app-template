@@ -48,3 +48,11 @@ scripts/docker/single-run.sh -DDOCKERFILE_SINGLE_RUN_BASE_IMAGE_VERSION=22.04
 ```
 
 Keep in mind that the `ENABLE_DOCKER` option makes the configure step require the `docker` executable to be present in the system, so the scripts fail the configure step on a machine with no Docker installed (see the [Optional for the Docker container runs](/doc/sections/en_US/3-requirements/3-10-optional-for-docker-container-runs.md) requirements section).
+
+### The plot window of the container
+
+The container shows the plot window on the X server of the host (an Xwayland one works too). For the time of the run the `docker-single-run` target opens the X server to the local connections with the `xhost +local:docker` command and closes it again with the `xhost -local:docker` one as soon as the container exits, whatever its exit status is. Hence the host needs the `xhost` tool, which the next command installs (GNU/Linux based OS):
+
+```
+sudo apt install -y x11-xserver-utils
+```

@@ -103,8 +103,8 @@ RUN git clone --branch 3.3.3 --depth 1 --single-branch \
   cmake --install $srcD/SQLiteCpp-build --strip && \
   rm -fr $srcD/SQLiteCpp $srcD/SQLiteCpp-build
 
-# MongoDB C driver
-RUN git clone --depth 1 --single-branch \
+# MongoDB C driver, at the version the appMongoDBCpp4 C++ driver release takes
+RUN git clone --branch 2.0.0 --depth 1 --single-branch \
     https://github.com/mongodb/mongo-c-driver.git $srcD/mongo-c-driver && \
   cmake -S $srcD/mongo-c-driver -B $srcD/mongo-c-driver-build \
     -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr \
@@ -113,8 +113,8 @@ RUN git clone --depth 1 --single-branch \
   cmake --install $srcD/mongo-c-driver-build --strip && \
   rm -fr $srcD/mongo-c-driver $srcD/mongo-c-driver-build
 
-# MongoDB C++ driver
-RUN git clone --depth 1 --single-branch \
+# MongoDB C++ driver, at the revision the appMongoDBCpp4 branch fetches
+RUN git clone --branch r4.1.0 --depth 1 --single-branch \
     https://github.com/mongodb/mongo-cxx-driver.git $srcD/mongo-cxx-driver && \
   cmake -S $srcD/mongo-cxx-driver -B $srcD/mongo-cxx-driver-build \
     -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr \
@@ -123,8 +123,8 @@ RUN git clone --depth 1 --single-branch \
   cmake --install $srcD/mongo-cxx-driver-build --strip && \
   rm -fr $srcD/mongo-cxx-driver $srcD/mongo-cxx-driver-build
 
-# MatPlot++
-RUN git clone --depth 1 --single-branch \
+# MatPlot++, at the revision the appMatPlotxx branch fetches
+RUN git clone --branch v1.2.2 --depth 1 --single-branch \
     https://github.com/alandefreitas/matplotplusplus.git $srcD/matplotplusplus && \
   cmake -S $srcD/matplotplusplus -B $srcD/matplotplusplus-build \
     -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr \
@@ -143,10 +143,12 @@ RUN git clone --branch v2.1.0 --depth 1 --single-branch \
   cmake --install $srcD/sdbus-cpp-build --strip && \
   rm -fr $srcD/sdbus-cpp $srcD/sdbus-cpp-build
 
-# PLplot, with the options of the appPLplot branch, since the CMake package of
-# the libplplot-dev fails on the binding files the distribution never ships
-RUN git clone --depth 1 --single-branch \
+# PLplot, with the options and at the commit of the appPLplot branch, since the
+# CMake package of the libplplot-dev fails on the binding files the distribution
+# never ships and the last release predates the fixes the branch needs
+RUN git clone --single-branch \
     https://git.code.sf.net/p/plplot/plplot $srcD/plplot && \
+  git -C $srcD/plplot checkout --detach df0c00e11f2c289bb186e20b44651aa0184beb8b && \
   cmake -S $srcD/plplot -B $srcD/plplot-build -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_FLAGS=-std=gnu17 -DPLPLOT_USE_QT5=ON \
     -DDEFAULT_NO_BINDINGS=ON -DENABLE_cxx=ON -DENABLE_qt=ON && \
@@ -166,9 +168,11 @@ RUN git clone --branch v1.9.4 --depth 1 --single-branch \
   cmake --install $srcD/whisper.cpp-build --strip && \
   rm -fr $srcD/whisper.cpp $srcD/whisper.cpp-build
 
-# liboai of the appLibOAI branch
-RUN git clone --depth 1 --single-branch \
+# liboai of the appLibOAI branch, pinned to a commit, since the branch uses
+# the API of the main line which no release tag carries yet
+RUN git clone --single-branch \
     https://github.com/d7ead/liboai.git $srcD/liboai && \
+  git -C $srcD/liboai checkout --detach dc29a3e6920a055de3f02822089fc742ad4b8c5f && \
   cmake -S $srcD/liboai -B $srcD/liboai-build -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr && \
   cmake --build $srcD/liboai-build -j$(nproc) && \

@@ -22,7 +22,7 @@ env:
   BUILDDIR: build
   BDJUNITOUT: junit-out
   # The development packages of the branch specific libraries.
-  DEPENDENCIES: libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-net-dev libglu1-mesa-dev
+  DEPENDENCIES: libsdl2-dev libglu1-mesa-dev
 ```
 
 That variable is the single line the branches of the template differ by, so a project which links a library of its own appends the development package of the library there.

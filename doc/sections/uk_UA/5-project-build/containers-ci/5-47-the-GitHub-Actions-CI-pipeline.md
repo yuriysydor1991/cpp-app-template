@@ -22,7 +22,7 @@ env:
   BUILDDIR: build
   BDJUNITOUT: junit-out
   # The development packages of the branch specific libraries.
-  DEPENDENCIES: libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-net-dev libglu1-mesa-dev
+  DEPENDENCIES: libsdl2-dev libglu1-mesa-dev
 ```
 
 Саме ця змінна - єдиний рядок, яким різняться гілки шаблону, отож проект, який долучає власну бібліотеку, дописує туди її пакунок розробки.

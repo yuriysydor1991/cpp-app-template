@@ -18,10 +18,6 @@ PACKAGES="
     googletest
     libglvnd
     sdl2
-    sdl2_image
-    sdl2_mixer
-    sdl2_net
-    sdl2_ttf
 "
 
 PKG_SUDO=""

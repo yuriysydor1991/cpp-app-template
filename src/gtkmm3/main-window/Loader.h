@@ -28,7 +28,6 @@ class Loader
 
  private:
   bool prepare_widgets();
-  static bool load_css();
   bool prepare_random_logo();
   void update_window_title();
 

@@ -24,10 +24,6 @@ class DataContext
       GTKMM_APP_RESOURCES_PREFIX
       "/resources/images/"
       "kytok.org.ua-logo.png";
-  inline static constexpr const char* const main_css_res_path =
-      GTKMM_APP_RESOURCES_PREFIX
-      "/resources/css/"
-      "main-window.css";
 
   inline static constexpr const char* const main_window_id = "main_window";
   inline static constexpr const char* const central_image_id = "random_image";

@@ -42,11 +42,6 @@ bool Loader::init()
 
 bool Loader::prepare_widgets()
 {
-  if (!load_css()) {
-    LOGE("Fail to load the CSS");
-    return false;
-  }
-
   if (!prepare_random_logo()) {
     LOGE("Fail to prepare random logo");
     return false;
@@ -65,28 +60,6 @@ void Loader::update_window_title()
   assert(window() != nullptr);
 
   window()->set_title(basicTitle);
-}
-
-bool Loader::load_css()
-{
-  LOGD("Trying to load the CSS");
-
-  auto css = Gtk::CssProvider::create();
-
-  assert(css);
-
-  if (!css) {
-    LOGE("Obtained invalid CSS provider pointer");
-    return false;
-  }
-
-  css->load_from_resource(DataContext::main_css_res_path);
-
-  auto screen = Gdk::Display::get_default()->get_default_screen();
-  Gtk::StyleContext::add_provider_for_screen(
-      screen, css, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-
-  return true;
 }
 
 bool Loader::prepare_random_logo()

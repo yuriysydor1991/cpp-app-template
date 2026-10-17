@@ -13,6 +13,8 @@
     1. [Enabling the static code analyzer target with cppcheck](/doc/sections/en_US/5-7-enabling-the-static-code-analyzer-target-with-cppcheck.md)
     1. [Enabling the static code analyzer with clang-tidy](/doc/sections/en_US/5-8-enabling-static-code-analyzer-with-clang-tidy.md)
     1. [Enabling sanitizers](/doc/sections/en_US/5-13-enabling-sanitizers.md)
+    1. [The GitHub Actions CI pipeline](/doc/sections/en_US/5-31-the-GitHub-Actions-CI-pipeline.md)
+    1. [The GitLab CI/CD pipeline](/doc/sections/en_US/5-32-the-GitLab-CI-pipeline.md)
 1. Packagers
     1. [Enabling the DEB package generation support](/doc/sections/en_US/5-23-enabling-deb-package-generation.md)
     1. [Enabling the RPM package generation support](/doc/sections/en_US/5-24-enabling-rpm-package-generation.md)
@@ -23,5 +25,7 @@
     1. [Enabling the nlohmann JSON library](/doc/sections/en_US/5-18-enabling-the-nlohmann-json-library.md)
     1. [Enabling the libxml2](/doc/sections/en_US/5-20-enabling-libxml2.md)
     1. [Enabling the OpenCV](/doc/sections/en_US/5-21-enabling-OpenCV.md)
+1. [The binary hardening options](/doc/sections/en_US/5-33-the-binary-hardening-options.md)
 1. [Project maintainer options](/doc/sections/en_US/5-28-project-maintainer-options.md)
 1. [Customizing the installable library name segments](/doc/sections/en_US/5-29-customizing-library-name-segments.md)
+1. [Installing the library development files](/doc/sections/en_US/5-30-installing-the-library-development-files.md)

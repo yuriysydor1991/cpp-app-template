@@ -13,6 +13,8 @@
     1. [Вмикання підтримки цілі статичного аналізатора коду cppcheck](/doc/sections/uk_UA/5-7-enabling-the-static-code-analyzer-target-with-cppcheck.md)
     1. [Вмикання підтримки статичного аналізатора коду clang-tidy](/doc/sections/uk_UA/5-8-enabling-static-code-analyzer-with-clang-tidy.md)
     1. [Вмикання перевірок під час виконання програми (sanitizers)](/doc/sections/uk_UA/5-13-enabling-sanitizers.md)
+    1. [Конвеєр CI GitHub Actions](/doc/sections/uk_UA/5-31-the-GitHub-Actions-CI-pipeline.md)
+    1. [Конвеєр CI/CD GitLab](/doc/sections/uk_UA/5-32-the-GitLab-CI-pipeline.md)
 1. Пакувальники
     1. [Вмикання підтримки генерації DEB-пакету](/doc/sections/uk_UA/5-23-enabling-deb-package-generation.md)
     1. [Вмикання підтримки генерації RPM-пакету](/doc/sections/uk_UA/5-24-enabling-rpm-package-generation.md)
@@ -23,5 +25,7 @@
     1. [Вмикання інтеграції бібліотеки nlohmann JSON](/doc/sections/uk_UA/5-18-enabling-the-nlohmann-json-library.md)
     1. [Вмикання інтеграції libxml2](/doc/sections/uk_UA/5-20-enabling-libxml2.md)
     1. [Вмикання інтеграції OpenCV](/doc/sections/uk_UA/5-21-enabling-OpenCV.md)
+1. [Параметри захисту бінарних файлів](/doc/sections/uk_UA/5-33-the-binary-hardening-options.md)
 1. [Опції супровідника проекту](/doc/sections/uk_UA/5-28-project-maintainer-options.md)
 1. [Налаштування складових імені встановлюваної бібліотеки](/doc/sections/uk_UA/5-29-customizing-library-name-segments.md)
+1. [Встановлення файлів розробки бібліотеки](/doc/sections/uk_UA/5-30-installing-the-library-development-files.md)

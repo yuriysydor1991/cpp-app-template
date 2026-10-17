@@ -20,4 +20,3 @@ target_link_libraries(
 )
 
 add_subdirectory(components)
-add_subdirectory(constants)

@@ -16,4 +16,4 @@ And to perform the actual static code analysis by itself run the `cppcheck` targ
 cmake --build build --target cppcheck
 ```
 
-The `cppcheck` target details may be examined and/or altered in the `cmake/template-project-cppcheck-target.cmake` CMake submodule file.
+The `cppcheck` target details may be examined and/or altered in the `cmake/enablers/template-project-cppcheck-target.cmake` CMake submodule file.

@@ -19,9 +19,12 @@ set(
   "FreeBSD pkg license tag (e.g. BSD2CLAUSE, BSD3CLAUSE, GPLv3, MIT)"
 )
 
+# A library has no binary name, so the origin follows the package name.
+string(TOLOWER "${CMAKE_PROJECT_NAME}" TEMPLATE_PROJECT_FREEBSD_PKG_NAME_lower)
+
 set(
   TEMPLATE_PROJECT_FREEBSD_PKG_ORIGIN
-  "misc/${PROJECT_BINARY_NAME_lower}"
+  "misc/${TEMPLATE_PROJECT_FREEBSD_PKG_NAME_lower}"
   CACHE STRING
   "FreeBSD pkg origin in <category>/<name> form"
 )

@@ -20,8 +20,8 @@ target_link_libraries(
   ${SDBUSCPP_LINK_TARGET}
 )
 
-# NOTE: the sdbus-c++ usage requirements are attached to this target by the
-# template-project-libsdbuscxx-enabler in the post enabler step.
+# The sdbus-c++ usage requirements come with the SDBUSCPP_LINK_TARGET the
+# template-project-libsdbuscxx-enabler declares before the src directory.
 
 include(GoogleTest)
 

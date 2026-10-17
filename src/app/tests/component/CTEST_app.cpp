@@ -2,74 +2,102 @@
 #include <gtest/gtest.h>
 
 #include <csignal>
+#include <filesystem>
+#include <string>
+#include <vector>
 
+#include "project-global-decls.h"
 #include "src/app/ApplicationFactory.h"
+#include "src/log/log.h"
 #include "src/pgplot/PGPLOTController.h"
 
 using namespace app;
 using namespace testing;
 using namespace pgploti;
 
-class CTEST_app : public Test
-{
- public:
-  CTEST_app()
-  {
+class CTEST_app : public Test {
+public:
+  CTEST_app() {
+    std::filesystem::remove(default_log_file());
+
     PGPLOTController::createMock =
         std::make_shared<PGPLOTController::createMockType>();
   }
-  ~CTEST_app() { PGPLOTController::createMock.reset(); }
+
+  ~CTEST_app() override { PGPLOTController::createMock.reset(); }
+
+  /// @brief The default log file of the factory, which the current working
+  /// directory of the test case keeps.
+  static std::filesystem::path default_log_file() {
+    return default_logger::RealDefaultLogger::get_default_full_log_path();
+  }
+
+  /// @brief Runs the ApplicationFactory::execute with the given command line
+  /// parameters, which follow the binary name.
+  int execute_with(const std::vector<std::string> &params) {
+    args = params;
+    args.insert(args.begin(), "CTEST_app");
+
+    argPointers.clear();
+
+    for (std::string &param : args) {
+      argPointers.push_back(param.data());
+    }
+
+    realArgc = static_cast<int>(argPointers.size());
+    realArgv = argPointers.data();
+
+    return ApplicationFactory::execute(realArgc, realArgv);
+  }
 
   int argc{0};
-  char** argv{nullptr};
+  char **argv{nullptr};
+
+  std::vector<std::string> args;
+  std::vector<char *> argPointers;
+  int realArgc{0};
+  char **realArgv{nullptr};
 
   ApplicationFactory facade;
 };
 
-TEST_F(CTEST_app, create_default_context_success)
-{
+TEST_F(CTEST_app, create_default_context_success) {
   auto actx = facade.create_default_context(argc, argv);
 
   EXPECT_NE(actx, nullptr);
 }
 
-TEST_F(CTEST_app, create_default_arg_parser_success)
-{
+TEST_F(CTEST_app, create_default_arg_parser_success) {
   auto argp = facade.create_default_arg_parser();
 
   EXPECT_NE(argp, nullptr);
 }
 
-TEST_F(CTEST_app, create_default_signals_handler_success)
-{
+TEST_F(CTEST_app, create_default_signals_handler_success) {
   auto shandler = facade.create_default_signals_handler();
 
   EXPECT_NE(shandler, nullptr);
 }
 
-TEST_F(CTEST_app, create_default_application_success)
-{
+TEST_F(CTEST_app, create_default_application_success) {
   auto dapp = facade.create_default_application();
 
   EXPECT_NE(dapp, nullptr);
 }
 
-TEST_F(CTEST_app, create_help_printer_success)
-{
+TEST_F(CTEST_app, create_help_printer_success) {
   auto hpapp = facade.create_help_printer();
 
   EXPECT_NE(hpapp, nullptr);
 }
 
-TEST_F(CTEST_app, create_context_success)
-{
+TEST_F(CTEST_app, create_context_success) {
   auto ctx = facade.create_context(argc, argv);
 
   EXPECT_NE(ctx, nullptr);
 }
 
-TEST_F(CTEST_app, create_application_success)
-{
+TEST_F(CTEST_app, create_application_success) {
   auto actx = facade.create_default_context(argc, argv);
 
   EXPECT_NE(actx, nullptr);
@@ -79,8 +107,7 @@ TEST_F(CTEST_app, create_application_success)
   EXPECT_NE(app, nullptr);
 }
 
-TEST_F(CTEST_app, signals_handler_stops_the_context)
-{
+TEST_F(CTEST_app, signals_handler_stops_the_context) {
   auto actx = facade.create_default_context(argc, argv);
   auto shandler = facade.create_default_signals_handler();
 
@@ -95,8 +122,7 @@ TEST_F(CTEST_app, signals_handler_stops_the_context)
   EXPECT_TRUE(actx->get_stop());
 }
 
-TEST_F(CTEST_app, signals_handler_pauses_and_resumes_the_context)
-{
+TEST_F(CTEST_app, signals_handler_pauses_and_resumes_the_context) {
 #if defined(SIGTSTP) && defined(SIGCONT)
   auto actx = facade.create_default_context(argc, argv);
   auto shandler = facade.create_default_signals_handler();
@@ -118,11 +144,10 @@ TEST_F(CTEST_app, signals_handler_pauses_and_resumes_the_context)
 
   EXPECT_FALSE(actx->get_pause());
   EXPECT_FALSE(actx->get_stop());
-#endif  // defined(SIGTSTP) && defined(SIGCONT)
+#endif // defined(SIGTSTP) && defined(SIGCONT)
 }
 
-TEST_F(CTEST_app, signals_handler_reloads_the_context)
-{
+TEST_F(CTEST_app, signals_handler_reloads_the_context) {
 #ifdef SIGHUP
   auto actx = facade.create_default_context(argc, argv);
   auto shandler = facade.create_default_signals_handler();
@@ -140,11 +165,10 @@ TEST_F(CTEST_app, signals_handler_reloads_the_context)
   // cppcheck-suppress unreachableCode
   EXPECT_TRUE(actx->get_reload());
   EXPECT_FALSE(actx->get_stop());
-#endif  // SIGHUP
+#endif // SIGHUP
 }
 
-TEST_F(CTEST_app, signals_handler_serves_the_user_requests)
-{
+TEST_F(CTEST_app, signals_handler_serves_the_user_requests) {
 #if defined(SIGUSR1) && defined(SIGUSR2)
   auto actx = facade.create_default_context(argc, argv);
   auto shandler = facade.create_default_signals_handler();
@@ -166,11 +190,10 @@ TEST_F(CTEST_app, signals_handler_serves_the_user_requests)
   EXPECT_TRUE(actx->get_second_user_request());
 
   EXPECT_FALSE(actx->get_stop());
-#endif  // defined(SIGUSR1) && defined(SIGUSR2)
+#endif // defined(SIGUSR1) && defined(SIGUSR2)
 }
 
-TEST_F(CTEST_app, signals_handler_ignores_the_broken_pipe)
-{
+TEST_F(CTEST_app, signals_handler_ignores_the_broken_pipe) {
 #ifdef SIGPIPE
   auto actx = facade.create_default_context(argc, argv);
   auto shandler = facade.create_default_signals_handler();
@@ -186,11 +209,10 @@ TEST_F(CTEST_app, signals_handler_ignores_the_broken_pipe)
   EXPECT_FALSE(actx->get_stop());
   EXPECT_FALSE(actx->get_pause());
   EXPECT_FALSE(actx->get_reload());
-#endif  // SIGPIPE
+#endif // SIGPIPE
 }
 
-TEST_F(CTEST_app, execute_success)
-{
+TEST_F(CTEST_app, execute_success) {
   PGPLOTControllerPtr plotter = std::make_shared<PGPLOTController>();
 
   EXPECT_CALL(*plotter, run(_)).Times(1).WillOnce(Return(true));
@@ -205,8 +227,7 @@ TEST_F(CTEST_app, execute_success)
   EXPECT_EQ(status, 0);
 }
 
-TEST_F(CTEST_app, plotter_fail_status)
-{
+TEST_F(CTEST_app, plotter_fail_status) {
   PGPLOTControllerPtr plotter = std::make_shared<PGPLOTController>();
 
   EXPECT_CALL(*plotter, run(_)).Times(1).WillOnce(Return(false));
@@ -221,8 +242,7 @@ TEST_F(CTEST_app, plotter_fail_status)
   EXPECT_NE(status, 0);
 }
 
-TEST_F(CTEST_app, absent_plotter_instance)
-{
+TEST_F(CTEST_app, absent_plotter_instance) {
   EXPECT_NE(PGPLOTController::createMock, nullptr);
   EXPECT_CALL(*PGPLOTController::createMock, Call())
       .Times(1)
@@ -231,4 +251,80 @@ TEST_F(CTEST_app, absent_plotter_instance)
   int status = ApplicationFactory::execute(argc, argv);
 
   EXPECT_NE(status, 0);
+}
+
+TEST_F(CTEST_app, help_prints_the_options_without_a_log_file) {
+  testing::internal::CaptureStdout();
+
+  EXPECT_EQ(execute_with({"--help"}), 0);
+
+  EXPECT_THAT(testing::internal::GetCapturedStdout(), HasSubstr("--log-file"));
+  EXPECT_FALSE(std::filesystem::exists(default_log_file()));
+}
+
+TEST_F(CTEST_app, version_prints_the_version_without_a_log_file) {
+  testing::internal::CaptureStdout();
+
+  EXPECT_EQ(execute_with({"--version"}), 0);
+
+  EXPECT_THAT(testing::internal::GetCapturedStdout(),
+              HasSubstr(project_decls::PROJECT_BUILD_VERSION));
+  EXPECT_FALSE(std::filesystem::exists(default_log_file()));
+}
+
+TEST_F(CTEST_app, unknown_option_fails_with_the_help) {
+  testing::internal::CaptureStdout();
+  testing::internal::CaptureStderr();
+
+  EXPECT_NE(execute_with({"--bogus"}), 0);
+
+  EXPECT_THAT(testing::internal::GetCapturedStderr(),
+              HasSubstr("Unknown parameter: --bogus"));
+  EXPECT_THAT(testing::internal::GetCapturedStdout(), HasSubstr("Usage:"));
+  EXPECT_FALSE(std::filesystem::exists(default_log_file()));
+}
+
+TEST_F(CTEST_app, missing_log_file_path_fails_with_the_help) {
+  testing::internal::CaptureStdout();
+  testing::internal::CaptureStderr();
+
+  EXPECT_NE(execute_with({"--log-file"}), 0);
+
+  testing::internal::GetCapturedStderr();
+
+  const std::string out = testing::internal::GetCapturedStdout();
+
+  EXPECT_THAT(out, HasSubstr("Usage:"));
+  EXPECT_THAT(out, Not(HasSubstr(project_decls::PROJECT_BUILD_COMMIT)));
+}
+
+TEST_F(CTEST_app, unopenable_log_file_fails_before_the_run) {
+  static const std::string unopenable =
+      "no-such-directory-of-CTEST_app/CTEST_app.log";
+
+  testing::internal::CaptureStderr();
+
+  EXPECT_NE(execute_with({"-l", unopenable}), 0);
+
+  EXPECT_THAT(testing::internal::GetCapturedStderr(),
+              HasSubstr("Fail to open the log file at " + unopenable));
+  EXPECT_FALSE(std::filesystem::exists(default_log_file()));
+}
+
+TEST_F(CTEST_app, custom_log_file_is_used) {
+  static const std::filesystem::path customLog{"CTEST_app.custom.log"};
+
+  std::filesystem::remove(customLog);
+
+  // The default application runs with the custom log file, so its plotter
+  // is the mocked one.
+  PGPLOTControllerPtr plotter = std::make_shared<PGPLOTController>();
+
+  EXPECT_CALL(*plotter, run(_)).WillOnce(Return(true));
+  EXPECT_CALL(*PGPLOTController::createMock, Call()).WillOnce(Return(plotter));
+
+  EXPECT_EQ(execute_with({"--log-file", customLog.string()}), 0);
+
+  EXPECT_TRUE(std::filesystem::exists(customLog));
+  EXPECT_FALSE(std::filesystem::exists(default_log_file()));
 }

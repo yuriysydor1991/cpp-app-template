@@ -11,7 +11,7 @@ if (NOT ENABLE_LIBPNG)
 endif()
 
 set(TEMPLATE_APP_LIBPNG_GIT "https://github.com/pnggroup/libpng.git" CACHE STRING "The libpng library git source repository")
-set(TEMPLATE_APP_LIBPNG_GIT_TAG "libpng16" CACHE STRING "The libpng project git repository tag/branch of interest")
+set(TEMPLATE_APP_LIBPNG_GIT_TAG "v1.6.59" CACHE STRING "The libpng project git repository release tag of interest")
 
 template_project_default_3rdparty_enabler(
   NAME PNG

@@ -100,92 +100,92 @@ pipeline {
       parallel {
         stage('UTEST_Application') {
           steps {
-            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_Application --suite UTEST_Application'
+            sh 'meson test -C $BUILDDIR --list --suite UTEST_Application | grep -q "^UTEST_Application - " && meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_Application --suite UTEST_Application'
           }
         }
         stage('UTEST_ApplicationContext') {
           steps {
-            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_ApplicationContext --suite UTEST_ApplicationContext'
+            sh 'meson test -C $BUILDDIR --list --suite UTEST_ApplicationContext | grep -q "^UTEST_ApplicationContext - " && meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_ApplicationContext --suite UTEST_ApplicationContext'
           }
         }
         stage('UTEST_ApplicationFactory') {
           steps {
-            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_ApplicationFactory --suite UTEST_ApplicationFactory'
+            sh 'meson test -C $BUILDDIR --list --suite UTEST_ApplicationFactory | grep -q "^UTEST_ApplicationFactory - " && meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_ApplicationFactory --suite UTEST_ApplicationFactory'
           }
         }
         stage('UTEST_ApplicationHelpPrinter') {
           steps {
-            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_ApplicationHelpPrinter --suite UTEST_ApplicationHelpPrinter'
+            sh 'meson test -C $BUILDDIR --list --suite UTEST_ApplicationHelpPrinter | grep -q "^UTEST_ApplicationHelpPrinter - " && meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_ApplicationHelpPrinter --suite UTEST_ApplicationHelpPrinter'
           }
         }
         stage('UTEST_ApplicationVersionPrinter') {
           steps {
-            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_ApplicationVersionPrinter --suite UTEST_ApplicationVersionPrinter'
+            sh 'meson test -C $BUILDDIR --list --suite UTEST_ApplicationVersionPrinter | grep -q "^UTEST_ApplicationVersionPrinter - " && meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_ApplicationVersionPrinter --suite UTEST_ApplicationVersionPrinter'
           }
         }
         stage('UTEST_CommandLineParser') {
           steps {
-            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_CommandLineParser --suite UTEST_CommandLineParser'
+            sh 'meson test -C $BUILDDIR --list --suite UTEST_CommandLineParser | grep -q "^UTEST_CommandLineParser - " && meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_CommandLineParser --suite UTEST_CommandLineParser'
           }
         }
         stage('UTEST_SignalsHandler') {
           steps {
-            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_SignalsHandler --suite UTEST_SignalsHandler'
+            sh 'meson test -C $BUILDDIR --list --suite UTEST_SignalsHandler | grep -q "^UTEST_SignalsHandler - " && meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_SignalsHandler --suite UTEST_SignalsHandler'
           }
         }
         stage('UTEST_ASignalsHandler') {
           steps {
-            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_ASignalsHandler --suite UTEST_ASignalsHandler'
+            sh 'meson test -C $BUILDDIR --list --suite UTEST_ASignalsHandler | grep -q "^UTEST_ASignalsHandler - " && meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_ASignalsHandler --suite UTEST_ASignalsHandler'
           }
         }
         stage('UTEST_ContinueSignalsHandler') {
           steps {
-            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_ContinueSignalsHandler --suite UTEST_ContinueSignalsHandler'
+            sh 'meson test -C $BUILDDIR --list --suite UTEST_ContinueSignalsHandler | grep -q "^UTEST_ContinueSignalsHandler - " && meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_ContinueSignalsHandler --suite UTEST_ContinueSignalsHandler'
           }
         }
         stage('UTEST_IgnoredSignalsHandler') {
           steps {
-            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_IgnoredSignalsHandler --suite UTEST_IgnoredSignalsHandler'
+            sh 'meson test -C $BUILDDIR --list --suite UTEST_IgnoredSignalsHandler | grep -q "^UTEST_IgnoredSignalsHandler - " && meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_IgnoredSignalsHandler --suite UTEST_IgnoredSignalsHandler'
           }
         }
         stage('UTEST_PauseSignalsHandler') {
           steps {
-            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_PauseSignalsHandler --suite UTEST_PauseSignalsHandler'
+            sh 'meson test -C $BUILDDIR --list --suite UTEST_PauseSignalsHandler | grep -q "^UTEST_PauseSignalsHandler - " && meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_PauseSignalsHandler --suite UTEST_PauseSignalsHandler'
           }
         }
         stage('UTEST_ReloadSignalsHandler') {
           steps {
-            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_ReloadSignalsHandler --suite UTEST_ReloadSignalsHandler'
+            sh 'meson test -C $BUILDDIR --list --suite UTEST_ReloadSignalsHandler | grep -q "^UTEST_ReloadSignalsHandler - " && meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_ReloadSignalsHandler --suite UTEST_ReloadSignalsHandler'
           }
         }
         stage('UTEST_StopSignalsHandler') {
           steps {
-            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_StopSignalsHandler --suite UTEST_StopSignalsHandler'
+            sh 'meson test -C $BUILDDIR --list --suite UTEST_StopSignalsHandler | grep -q "^UTEST_StopSignalsHandler - " && meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_StopSignalsHandler --suite UTEST_StopSignalsHandler'
           }
         }
         stage('UTEST_UserSignalsHandler') {
           steps {
-            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_UserSignalsHandler --suite UTEST_UserSignalsHandler'
+            sh 'meson test -C $BUILDDIR --list --suite UTEST_UserSignalsHandler | grep -q "^UTEST_UserSignalsHandler - " && meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_UserSignalsHandler --suite UTEST_UserSignalsHandler'
           }
         }
         stage('UTEST_ApplicationContext2LibraryContext') {
           steps {
-            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_ApplicationContext2LibraryContext --suite UTEST_ApplicationContext2LibraryContext'
+            sh 'meson test -C $BUILDDIR --list --suite UTEST_ApplicationContext2LibraryContext | grep -q "^UTEST_ApplicationContext2LibraryContext - " && meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_ApplicationContext2LibraryContext --suite UTEST_ApplicationContext2LibraryContext'
           }
         }
         stage('UTEST_LibraryFacade') {
           steps {
-            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_LibraryFacade --suite UTEST_LibraryFacade'
+            sh 'meson test -C $BUILDDIR --list --suite UTEST_LibraryFacade | grep -q "^UTEST_LibraryFacade - " && meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_LibraryFacade --suite UTEST_LibraryFacade'
           }
         }
         stage('UTEST_LibMain') {
           steps {
-            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_LibMain --suite UTEST_LibMain'
+            sh 'meson test -C $BUILDDIR --list --suite UTEST_LibMain | grep -q "^UTEST_LibMain - " && meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_LibMain --suite UTEST_LibMain'
           }
         }
         stage('UTEST_LibFactory') {
           steps {
-            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_LibFactory --suite UTEST_LibFactory'
+            sh 'meson test -C $BUILDDIR --list --suite UTEST_LibFactory | grep -q "^UTEST_LibFactory - " && meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase UTEST_LibFactory --suite UTEST_LibFactory'
           }
         }
       }
@@ -196,22 +196,22 @@ pipeline {
       parallel {
         stage('CTEST_DefaultLogger') {
           steps {
-            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase CTEST_DefaultLogger --suite CTEST_DefaultLogger'
+            sh 'meson test -C $BUILDDIR --list --suite CTEST_DefaultLogger | grep -q "^CTEST_DefaultLogger - " && meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase CTEST_DefaultLogger --suite CTEST_DefaultLogger'
           }
         }
         stage('CTEST_log') {
           steps {
-            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase CTEST_log --suite CTEST_log'
+            sh 'meson test -C $BUILDDIR --list --suite CTEST_log | grep -q "^CTEST_log - " && meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase CTEST_log --suite CTEST_log'
           }
         }
         stage('CTEST_LibraryRealLogger') {
           steps {
-            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase CTEST_LibraryRealLogger --suite CTEST_LibraryRealLogger'
+            sh 'meson test -C $BUILDDIR --list --suite CTEST_LibraryRealLogger | grep -q "^CTEST_LibraryRealLogger - " && meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase CTEST_LibraryRealLogger --suite CTEST_LibraryRealLogger'
           }
         }
         stage('CTEST_app') {
           steps {
-            sh 'meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase CTEST_app --suite CTEST_app'
+            sh 'meson test -C $BUILDDIR --list --suite CTEST_app | grep -q "^CTEST_app - " && meson test -C $BUILDDIR --no-rebuild --print-errorlogs --logbase CTEST_app --suite CTEST_app'
           }
         }
       }

@@ -12,6 +12,8 @@ endif()
 
 find_program(APPIMAGETOOL_EXEC appimagetool REQUIRED)
 
+include(template-project-package-os)
+
 set(
   TEMPLATE_PROJECT_APPIMAGE_ARCHITECTURE
   ${CMAKE_SYSTEM_PROCESSOR}
@@ -20,7 +22,10 @@ set(
 )
 
 set(APPIMAGE_APPDIR ${CMAKE_BINARY_DIR}/AppDir)
-set(APPIMAGE_DST_NAME ${PROJECT_BINARY_NAME}-${CMAKE_PROJECT_VERSION}-${TEMPLATE_PROJECT_APPIMAGE_ARCHITECTURE}.AppImage)
+set(
+  APPIMAGE_DST_NAME
+  ${PROJECT_BINARY_NAME}-${CMAKE_PROJECT_VERSION}-${TEMPLATE_PROJECT_APPIMAGE_ARCHITECTURE}-${TEMPLATE_PROJECT_PACKAGE_OS}.AppImage
+)
 
 # the AppImage format demands the desktop entry and the icon it names on the
 # AppDir root, next to the ones the install step places

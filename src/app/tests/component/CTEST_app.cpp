@@ -280,17 +280,19 @@ TEST_F(CTEST_app, version_prints_the_version_without_a_log_file)
   EXPECT_FALSE(std::filesystem::exists(default_log_file()));
 }
 
-TEST_F(CTEST_app, unknown_option_fails_with_the_help)
+TEST_F(CTEST_app, unknown_option_is_forwarded_to_the_Wt)
 {
-  testing::internal::CaptureStdout();
-  testing::internal::CaptureStderr();
+  // The flavor parser hands the unknown parameters over to the Wt framework,
+  // so the factory reaches the Wt run, whose failure status it returns.
+  EXPECT_CALL(staticEnsurer, Call(_))
+      .WillOnce(Invoke([](const std::shared_ptr<app::ApplicationContext>& ctx) {
+        EXPECT_TRUE(ctx->get_errors().empty());
+        return 1;
+      }));
 
-  EXPECT_NE(execute_with({"--bogus"}), 0);
+  Wt4Server::run_mock = staticEnsurer.AsStdFunction();
 
-  EXPECT_THAT(testing::internal::GetCapturedStderr(),
-              HasSubstr("Unknown parameter: --bogus"));
-  EXPECT_THAT(testing::internal::GetCapturedStdout(), HasSubstr("Usage:"));
-  EXPECT_FALSE(std::filesystem::exists(default_log_file()));
+  EXPECT_EQ(execute_with({"--bogus"}), 1);
 }
 
 TEST_F(CTEST_app, missing_log_file_path_fails_with_the_help)

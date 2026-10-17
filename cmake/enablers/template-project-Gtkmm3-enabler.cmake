@@ -12,7 +12,8 @@ endif()
 
 find_package(PkgConfig REQUIRED)
 
-pkg_check_modules(GTKMM REQUIRED gtkmm-3.0)
+# The toolkit messages bridge needs the GLib 2.68 g_log_writer_default_would_drop.
+pkg_check_modules(GTKMM REQUIRED gtkmm-3.0 glib-2.0>=2.68)
 
 string(REPLACE  "." "/" GTKMM_APP_RESOURCES_PREFIX_COMPUTED "/${PROJECT_URI}")
 

@@ -61,3 +61,5 @@ rules are dropped. The same build tree can therefore be installed both ways.
 The option is declared in [meson_options.txt](/meson_options.txt) and consumed by [src/lib/meson.build](/src/lib/meson.build).
 
 See also the [Customizing the installable library name segments](/doc/sections/en_US/5-29-customizing-library-name-segments.md) section, which decides the name used by every artefact listed above.
+
+The packages of this branch carry the application, so the packager scripts of the [scripts/build](/scripts/build) directory (`build-deb.sh`, `build-rpm.sh`, `build-appimage.sh` and the rest of them) configure their builds with `-DLIB_INSTALL_DEV_FILES=false`: the packages install the executable together with the runtime library alone. Set the option to `true` on the very same configure line whenever a package has to carry the development files too.

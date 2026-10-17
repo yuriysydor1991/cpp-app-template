@@ -19,7 +19,7 @@ BUILD_SCRIPTS_ROOT=$(realpath "$(dirname "$0")")
 
 filter_script_args "$@"
 
-SETUP_ARGS=(--buildtype=release "-DENABLE_SNAP=true")
+SETUP_ARGS=(--buildtype=release "-DENABLE_SNAP=true" "-DLIB_INSTALL_DEV_FILES=false")
 
 if [[ -d "${BUILD_DIR}" ]] ; then
     SETUP_ARGS+=(--reconfigure)

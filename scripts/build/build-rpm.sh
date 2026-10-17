@@ -20,7 +20,7 @@ BUILD_SCRIPTS_ROOT=$(realpath "$(dirname "$0")")
 filter_script_args "$@"
 
 # The distribution packages install into the /usr prefix.
-SETUP_ARGS=(--buildtype=release --prefix=/usr "-DENABLE_RPM=true")
+SETUP_ARGS=(--buildtype=release --prefix=/usr "-DENABLE_RPM=true" "-DLIB_INSTALL_DEV_FILES=false")
 
 if [[ -d "${BUILD_DIR}" ]] ; then
     SETUP_ARGS+=(--reconfigure)

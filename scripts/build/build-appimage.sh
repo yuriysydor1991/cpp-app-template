@@ -21,7 +21,7 @@ BUILD_SCRIPTS_ROOT=$(realpath "$(dirname "$0")")
 
 filter_script_args "$@"
 
-SETUP_ARGS=(--buildtype=release --prefix=/usr "-DENABLE_APPIMAGE=true")
+SETUP_ARGS=(--buildtype=release --prefix=/usr "-DENABLE_APPIMAGE=true" "-DLIB_INSTALL_DEV_FILES=false")
 
 if [[ -d "${BUILD_DIR}" ]] ; then
     SETUP_ARGS+=(--reconfigure)

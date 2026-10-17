@@ -44,8 +44,6 @@ RUN apt-get update && \
     qml-module-qtquick-shapes qtquickcontrols2-5-dev \
     libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-net-dev \
     libsdl2-ttf-dev libsdl3-dev libsdl3-image-dev libsdl3-ttf-dev libsfml-dev \
-    ffmpeg libgstreamer1.0-dev libgstreamerd-3-dev libgstreamermm-1.0-dev \
-    libnotify-dev \
     giza-dev gnuplot libcfitsio-dev libopencv-dev opencv-data wcslib-dev \
     btop curl fdupes htop nano nmap traceroute wget whois && \
   apt-get clean && \

@@ -42,15 +42,15 @@ int SDL2Controller::run(std::shared_ptr<app::ApplicationContext> ctx)
     return app::IApplication::INVALID;
   }
 
+  if (!oglIniter->init_opengl()) {
+    LOGE("Fail to initiate the OpenGL");
+    return app::IApplication::INVALID;
+  }
+
   sdl2Context = ctxBuilder->build_context(ctx);
 
   if (sdl2Context == nullptr) {
     LOGE("Fail to create the SDL2 context");
-    return app::IApplication::INVALID;
-  }
-
-  if (!oglIniter->init_opengl(sdl2Context)) {
-    LOGE("Fail to initiate the OpenGL");
     return app::IApplication::INVALID;
   }
 

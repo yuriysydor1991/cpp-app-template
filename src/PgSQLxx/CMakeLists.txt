@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.13)
 
 # The libpqxx ships a pkg-config file on every supported OS, which also brings
-# it's include directory (/usr/local/include on FreeBSD).
+# its include directory (/usr/local/include on FreeBSD).
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(PQXX REQUIRED IMPORTED_TARGET libpqxx)
 
-# The shared libpqxx 7.10.0 of Ubuntu 26.04 frees it's pqxx::type_name strings
+# The shared libpqxx 7.10.0 of Ubuntu 26.04 frees its pqxx::type_name strings
 # twice at the program exit (abort), so the static archive is linked whenever
 # the OS ships one.
 find_library(PQXX_STATIC_LIBRARY libpqxx.a HINTS ${PQXX_LIBRARY_DIRS})

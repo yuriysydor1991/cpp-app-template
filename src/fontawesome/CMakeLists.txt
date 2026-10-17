@@ -11,14 +11,21 @@ if (NOT ENABLE_FONTAWESOME)
   )
 endif()
 
+# The sources come out of the FONTAWESOME_SUBSYSTEM_SOURCES list of
+# src/CMakeLists.txt, the very one the app tests build, so no source is listed
+# twice. The generated index carries the names of every icon of the very Font
+# Awesome checkout the project has been configured with, so the whole set is
+# reachable from the code with no run time directory scanning: the fontawesome
+# enabler writes it and points the FONTAWESOME_GENERATED_ICONS_SOURCE variable
+# at it.
 add_library(
-  TemplateProjectFontAwesomeIconObj OBJECT
-  FontAwesomeIcon.cpp
-  FontAwesomeSvgsDirectory.cpp
+  TemplateProjectFontAwesomeObj OBJECT
+  ${FONTAWESOME_SUBSYSTEM_SOURCES}
+  ${FONTAWESOME_GENERATED_ICONS_SOURCE}
 )
 
 target_include_directories(
-  TemplateProjectFontAwesomeIconObj
+  TemplateProjectFontAwesomeObj
   PRIVATE
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
@@ -26,10 +33,7 @@ target_include_directories(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  TemplateProjectFontAwesomeIconObj
+  TemplateProjectFontAwesomeObj
 )
 
-add_subdirectory(styles)
-add_subdirectory(icons)
-add_subdirectory(resources)
 add_subdirectory(tests)

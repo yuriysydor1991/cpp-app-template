@@ -27,8 +27,8 @@ configure_file(
 )
 
 # The Font Awesome subsystem sources, gathered before the subdirectories below
-# so every test executable linking a part of it (the app ones included) builds
-# the very same set.
+# so the binary (see src/fontawesome) and every test executable linking a part
+# of it (the app ones included) build the very same set.
 set(
   FONTAWESOME_STYLES_SOURCES
   ${CMAKE_CURRENT_SOURCE_DIR}/fontawesome/styles/FontAwesomeSolidStyle.cpp

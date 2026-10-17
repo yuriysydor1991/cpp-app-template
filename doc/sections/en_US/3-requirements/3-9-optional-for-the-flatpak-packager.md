@@ -9,14 +9,10 @@ sudo apt install -y flatpak flatpak-builder
 You'll also need the one of it's target SDK which may be installed by a command that may look like this:
 
 ```
-flatpak install runtime/org.kde.Sdk/x86_64/6.10
-flatpak install runtime/org.kde.Platform/x86_64/6.10
-flatpak install app/io.qt.qtwebengine.BaseApp/x86_64/6.10
+flatpak install --user flathub runtime/org.kde.Platform/x86_64/${FLATPAK_RUNTIME_VERSION} runtime/org.kde.Sdk/x86_64/${FLATPAK_RUNTIME_VERSION}
 ```
 
-The `org.kde.Platform` runtime ships no QtWebEngine, so the `io.qt.qtwebengine.BaseApp` base application provides it for the Qt6 map component.
-
-Replace the `runtime/org.kde.Sdk/x86_64/6.10` and `runtime/org.kde.Platform/x86_64/6.10` with your preferred SDK. Consult the flatpak documentation on how to list all available options.
+The `${FLATPAK_RUNTIME_VERSION}` is the `runtime-version` the [misc/packagers/flatpak/flatpak.conf.json.in](/misc/packagers/flatpak/flatpak.conf.json.in) manifest builds against: change both together to use another runtime. Consult the flatpak documentation on how to list all available options.
 
 The `flatpak` target installs the runtime and the SDK it needs from the `flathub` remote on its own, so the command above only preinstalls them.
 

@@ -11,7 +11,9 @@ cmake -B build -S . -DENABLE_OPENCV=ON
 cmake --build build --target all
 ```
 
-By default the enabler probes the system installation of OpenCV with `find_package(OpenCV REQUIRED COMPONENTS core objdetect imgcodecs imgproc)`. The probed components may be tuned through the `TEMPLATE_APP_OPENCV_COMPONENTS` cache variable (semicolon-separated list).
+The `src/opencv/CMakeLists.txt` file probes the system installation of OpenCV with `find_package(OpenCV REQUIRED COMPONENTS core objdetect imgcodecs imgproc)`, since its tests link the library too. The probed components may be tuned through the `TEMPLATE_APP_OPENCV_COMPONENTS` cache variable (semicolon-separated list).
+
+Since the `src/opencv` example requires the library, turning the `ENABLE_OPENCV` option `OFF` stops the configuration with an explanation, until the `add_subdirectory(opencv)` call of the `src/CMakeLists.txt` file is dropped together with the `src/opencv` subdirectory and the OpenCV example of the `src/app/applications/Application.cpp` file.
 
 Once built the application accepts two new command line flags:
 

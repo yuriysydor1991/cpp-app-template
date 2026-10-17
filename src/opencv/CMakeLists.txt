@@ -1,5 +1,18 @@
 cmake_minimum_required(VERSION 3.13)
 
+# The option itself is declared by the enabler only after the src directory.
+if (DEFINED ENABLE_OPENCV AND NOT ENABLE_OPENCV)
+  message(
+    FATAL_ERROR
+    "The src/opencv sources require the OpenCV library which is turned off by "
+    "the ENABLE_OPENCV=OFF parameter. Drop the add_subdirectory(opencv) call "
+    "from the src/CMakeLists.txt file together with the whole src/opencv "
+    "subdirectory and the OpenCV example of the "
+    "src/app/applications/Application.cpp file to build the project without "
+    "the OpenCV library."
+  )
+endif()
+
 # The OpenCV is found here and not by the enabler, which is processed after
 # the src directory, since the tests below link it too.
 set(

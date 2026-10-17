@@ -11,7 +11,9 @@ cmake -B build -S . -DENABLE_OPENCV=ON
 cmake --build build --target all
 ```
 
-За замовчуванням модуль виконує пошук системної установки OpenCV через `find_package(OpenCV REQUIRED COMPONENTS core objdetect imgcodecs imgproc)`. Перелік компонентів можна змінити через кеш-змінну `TEMPLATE_APP_OPENCV_COMPONENTS` (значення розділяються крапкою з комою).
+Файл `src/opencv/CMakeLists.txt` шукає системну установку OpenCV через `find_package(OpenCV REQUIRED COMPONENTS core objdetect imgcodecs imgproc)`, оскільки бібліотеку використовують і його тести. Перелік компонентів можна змінити через кеш-змінну `TEMPLATE_APP_OPENCV_COMPONENTS` (значення розділяються крапкою з комою).
+
+Оскільки приклад `src/opencv` потребує бібліотеки, значення `OFF` параметра `ENABLE_OPENCV` зупиняє конфігурацію з поясненням, доки з файлу `src/CMakeLists.txt` не буде вилучено виклик `add_subdirectory(opencv)` разом з підкаталогом `src/opencv` і прикладом OpenCV у файлі `src/app/applications/Application.cpp`.
 
 Після збирання застосунок підтримує два нових параметри командного рядка:
 

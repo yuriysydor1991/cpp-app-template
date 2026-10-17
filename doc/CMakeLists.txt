@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
 option(
-  ENABLE_DOC_DOXYGEN
+  ENABLE_DOC_DOXYGEN 
   "Set to ON value if Doxygen documentation generation should be available"
   OFF
 )
@@ -24,7 +24,7 @@ set(
 option(
   DOXYGEN_DO_INSTALL
   "Set to on if CMake should install the generated documentation during install command executed."
-  OFF
+  OFF 
 )
 
 set(
@@ -41,7 +41,19 @@ if(NOT ENABLE_DOC_DOXYGEN)
   return()
 endif()
 
-find_package(Doxygen REQUIRED)
+find_package(Doxygen)
+
+if (NOT DOXYGEN_FOUND)
+  message(
+    WARNING
+    "No doxygen executable found. "
+    "No Doxygen-doc documentation target will be declared. "
+    "Install doxygen by using command (GNU/Linux based):\n"
+    "sudo apt install -y doxygen graphviz\n"
+  )
+
+  return()
+endif()
 
 set(DOXYGEN_IN Doxyfile.in)
 set(DOXYGEN_OUT ${CMAKE_BINARY_DIR}/Doxyfile)
@@ -51,7 +63,7 @@ if (DOXYGEN_OUTPUT_LANGUAGE STREQUAL "Ukrainian")
 endif()
 
 configure_file(
-  ${DOXYGEN_IN}
+  ${DOXYGEN_IN} 
   ${DOXYGEN_OUT}
 )
 

@@ -3,10 +3,15 @@
 
 #include <clocale>
 #include <cstdlib>
+#include <filesystem>
 #include <fstream>
 #include <sstream>
 #include <string>
 
+#include <libintl.h>
+
+#include "project-global-decls.h"
+#include "src/gettext/CatalogsLocator.h"
 #include "src/gettext/GettextController.h"
 #include "src/gettext/tr.h"
 #include "src/log/log.h"
@@ -154,5 +159,41 @@ TEST_F(CTEST_GettextController, fails_to_bind_the_empty_domain)
 
 TEST_F(CTEST_GettextController, init_binds_the_project_catalogs)
 {
-  EXPECT_TRUE(controller->init(""));
+  ASSERT_TRUE(controller->init(""));
+
+  const CatalogsLocator locator{project_decls::PROJECT_RELATIVE_LOCALE_DIR,
+                                project_decls::PROJECT_BUILD_LOCALE_DIR,
+                                project_decls::PROJECT_LOCALE_DIR};
+
+  EXPECT_STREQ(textdomain(nullptr), project_decls::PROJECT_NAME.c_str());
+  EXPECT_EQ(bindtextdomain(project_decls::PROJECT_NAME.c_str(), nullptr),
+            locator.locate(CatalogsLocator::executable("")));
+}
+
+TEST_F(CTEST_GettextController, the_catalogs_next_to_the_binary_go_first)
+{
+  namespace fs = std::filesystem;
+
+  const fs::path root{fs::path{CTEST_GettextController_DATA_DIR} /
+                      "relocated-install"};
+  const fs::path nextToBinary = root / "share" / "locale";
+
+  fs::create_directories(nextToBinary);
+  fs::create_directories(root / "build-locale");
+
+  const CatalogsLocator locator{"../share/locale",
+                                (root / "build-locale").string(),
+                                (root / "installed-locale").string()};
+
+  EXPECT_EQ(locator.locate((root / "bin" / "app").string()),
+            nextToBinary.string());
+  EXPECT_EQ(locator.locate((root / "elsewhere" / "bin" / "app").string()),
+            (root / "build-locale").string());
+
+  fs::remove_all(root / "build-locale");
+
+  EXPECT_EQ(locator.locate((root / "elsewhere" / "bin" / "app").string()),
+            (root / "installed-locale").string());
+
+  fs::remove_all(root);
 }

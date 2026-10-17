@@ -41,4 +41,4 @@ It stays off by default, since the check costs minutes of the runner time which 
 
 ### What stays at the Jenkins pipeline
 
-The template self-checks of the [misc/Jenkinsfile](/misc/Jenkinsfile) - the doc sections and their README links, the markdown links, the external documentation URLs, the registered enablers and the registered tests - have no counterpart here, and neither have its packager checks: the workflow keeps to the stages a plain runner covers, while the packagers ask for the runtimes and the tools of the Jenkins pipeline container.
+The template self-checks of the [misc/Jenkinsfile](/misc/Jenkinsfile) - the doc sections and their README links, the markdown links, the external documentation URLs, the registered enablers and the registered tests - have no counterpart here, and neither has its WIX package stage: the workflow keeps to the stages a GNU/Linux runner covers, while the MSI package needs the Windows agent of the Jenkins pipeline.

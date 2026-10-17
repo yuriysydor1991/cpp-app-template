@@ -14,6 +14,7 @@ endif()
 add_library(
   TemplateProjectOpenGameArtSoundObj OBJECT
   OpenGameArtSound.cpp
+  OpenGameArtRootDirectory.cpp
 )
 
 target_include_directories(

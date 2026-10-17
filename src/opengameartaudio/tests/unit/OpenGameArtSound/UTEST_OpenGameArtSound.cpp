@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include "opengameart-audio-decls.h"
+#include "src/opengameartaudio/OpenGameArtRootDirectory.h"
 #include "src/opengameartaudio/OpenGameArtSound.h"
 #include "src/opengameartaudio/packs/OpenGameArtPack.h"
 
@@ -69,11 +69,10 @@ TEST_F(UTEST_OpenGameArtSound, the_alias_carries_the_pack_and_the_path)
   EXPECT_EQ(sound->alias(), expectedPack + "/" + expectedPath);
 }
 
-TEST_F(UTEST_OpenGameArtSound, the_file_path_sits_under_the_configured_root)
+TEST_F(UTEST_OpenGameArtSound, the_file_path_sits_under_the_sounds_root)
 {
   EXPECT_EQ(sound->filePath(),
-            opengameart_audio_decls::OPENGAMEART_AUDIO_ROOT_DIR + "/" +
-                sound->alias());
+            OpenGameArtRootDirectory::path() + "/" + sound->alias());
 }
 
 TEST_F(UTEST_OpenGameArtSound, a_sound_with_no_pack_gives_no_alias)

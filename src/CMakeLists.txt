@@ -39,6 +39,7 @@ set(
 set(
   OPENGAMEART_AUDIO_SUBSYSTEM_SOURCES
   ${CMAKE_CURRENT_SOURCE_DIR}/opengameartaudio/OpenGameArtSound.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/opengameartaudio/OpenGameArtRootDirectory.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/opengameartaudio/packs/OpenGameArtPack.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/opengameartaudio/packs/OpenGameArtPacks.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/opengameartaudio/sounds/OpenGameArtSounds.cpp

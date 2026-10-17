@@ -7,6 +7,10 @@ namespace opengameart_audio_decls
 {
 
 const std::string OPENGAMEART_AUDIO_ROOT_DIR = "/mock/opengameart-audio";
+const std::string OPENGAMEART_AUDIO_INSTALLED_RELATIVE_DIR =
+    "../mock/opengameart-audio";
+const std::string OPENGAMEART_AUDIO_INSTALLED_DIR =
+    "/mock/share/opengameart-audio";
 const std::string OPENGAMEART_AUDIO_QT_RESOURCE_PREFIX = "/sounds";
 const std::string OPENGAMEART_AUDIO_GRESOURCE_PREFIX = "/mock/sounds";
 

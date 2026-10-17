@@ -5,8 +5,8 @@
 #include <string>
 #include <utility>
 
-#include "opengameart-audio-decls.h"
 #include "src/log/log.h"
+#include "src/opengameartaudio/OpenGameArtRootDirectory.h"
 #include "src/opengameartaudio/packs/IOpenGameArtPack.h"
 
 namespace opengameartaudio
@@ -77,7 +77,7 @@ std::string OpenGameArtSound::filePath() const
     return {};
   }
 
-  return opengameart_audio_decls::OPENGAMEART_AUDIO_ROOT_DIR + "/" + soundAlias;
+  return OpenGameArtRootDirectory::path() + "/" + soundAlias;
 }
 
 OpenGameArtSoundPtr OpenGameArtSound::create(IOpenGameArtPackPtr gpack,

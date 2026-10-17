@@ -8,6 +8,7 @@ endif()
 add_compile_options(-DNDEBUG=1)
 
 add_subdirectory(OpenGameArtSound)
+add_subdirectory(OpenGameArtRootDirectory)
 add_subdirectory(OpenGameArtPacks)
 add_subdirectory(OpenGameArtSounds)
 add_subdirectory(OpenGameArtResourcePath)

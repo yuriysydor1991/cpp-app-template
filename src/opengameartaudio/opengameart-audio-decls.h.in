@@ -8,6 +8,10 @@ namespace opengameart_audio_decls {
 
 /// @brief The OpenGameArt sound packs root directory
 const std::string OPENGAMEART_AUDIO_ROOT_DIR = "${OPENGAMEART_AUDIO_ROOT_DIR}" ;
+/// @brief The installed directory relative to the installed binary one
+const std::string OPENGAMEART_AUDIO_INSTALLED_RELATIVE_DIR = "${OPENGAMEART_AUDIO_INSTALLED_RELATIVE_DIR}" ;
+/// @brief The installed directory under the configured installation prefix
+const std::string OPENGAMEART_AUDIO_INSTALLED_DIR = "${OPENGAMEART_AUDIO_INSTALLED_DIR}" ;
 /// @brief The Qt resource system prefix the generated .qrc manifests use
 const std::string OPENGAMEART_AUDIO_QT_RESOURCE_PREFIX = "${OPENGAMEART_AUDIO_QT_RESOURCE_PREFIX}" ;
 /// @brief The GResource prefix the generated .gresource.xml manifests use

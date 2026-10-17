@@ -8,6 +8,7 @@ add_executable(
   CTEST_OpenGameArtSoundPlayer
   CTEST_OpenGameArtSoundPlayer.cpp
   ${CMAKE_SOURCE_DIR}/src/opengameartaudio/OpenGameArtSound.cpp
+  ${CMAKE_SOURCE_DIR}/src/opengameartaudio/OpenGameArtRootDirectory.cpp
   ${CMAKE_SOURCE_DIR}/src/opengameartaudio/packs/OpenGameArtPack.cpp
   ${CMAKE_SOURCE_DIR}/src/opengameartaudio/packs/OpenGameArtPacks.cpp
   ${CMAKE_SOURCE_DIR}/src/opengameartaudio/sounds/OpenGameArtSounds.cpp

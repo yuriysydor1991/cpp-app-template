@@ -92,6 +92,10 @@ auto click = sounds->find("interface-sounds", "Audio/click_001.ogg");
 auto clicks = sounds->search("click");
 ```
 
+### Installing the sounds
+
+The packs directory is a configure time one, so the install step (and every package built out of it: deb, rpm, AppImage, snap, flatpak, the single run Docker image) copies the sounds, the license and readme `.txt` files of every pack and the `misc/opengameart-packs.txt` manifest recording the provenance and the license of every one of them into the `share/<binary>/opengameart-audio` directory of the installation prefix. The `OpenGameArtRootDirectory` class picks the directory the running binary reads at the run time: the installed one relative to the binary location first (so a relocated package keeps working), then the configured packs directory (a binary run out of the build tree), then the installed one under the configured prefix.
+
 ### Embedding the sounds into the binary
 
 Every pack stays intact inside the packs directory and only the sounds an application actually asks for end up inside it's binary. Select them with the `template_project_opengameart_audio_write_qrc` (Qt) or the `template_project_opengameart_audio_write_gresource` (Gtkmm) function, then hand the written manifest over to the resource compiler of the toolkit in use:

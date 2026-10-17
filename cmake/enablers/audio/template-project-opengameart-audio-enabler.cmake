@@ -70,6 +70,39 @@ endif()
 
 template_project_opengameart_audio_generate_index()
 
+# The packs directory above is a configure time one (the build tree, or the
+# flatpak sandbox one), so the install step copies the sounds, the license and
+# readme files of every pack and the manifest recording the provenance and the
+# license of every pack into the data directory, where the installed
+# binary looks for them relative to it's own location first (see
+# OpenGameArtRootDirectory).
+set(OPENGAMEART_AUDIO_INSTALL_DIR "${CMAKE_INSTALL_DATADIR}/${PROJECT_BINARY_NAME}/opengameart-audio")
+set(OPENGAMEART_AUDIO_INSTALLED_DIR "${CMAKE_INSTALL_FULL_DATADIR}/${PROJECT_BINARY_NAME}/opengameart-audio")
+
+file(
+  RELATIVE_PATH OPENGAMEART_AUDIO_INSTALLED_RELATIVE_DIR
+  "/${PROJECT_BINARY_INSTALLATION_DIR}" "/${OPENGAMEART_AUDIO_INSTALL_DIR}"
+)
+
+set(installPatterns PATTERN "*.txt")
+
+foreach(extension IN LISTS OPENGAMEART_AUDIO_EXTENSIONS)
+  list(APPEND installPatterns PATTERN "*.${extension}")
+endforeach()
+
+foreach(pack IN LISTS OPENGAMEART_AUDIO_PACKS)
+  install(
+    DIRECTORY "${OPENGAMEART_AUDIO_ROOT_DIR}/${pack}"
+    DESTINATION "${OPENGAMEART_AUDIO_INSTALL_DIR}"
+    FILES_MATCHING ${installPatterns}
+  )
+endforeach()
+
+install(
+  FILES "${TEMPLATE_APP_OPENGAMEART_AUDIO_MANIFEST}"
+  DESTINATION "${OPENGAMEART_AUDIO_INSTALL_DIR}"
+)
+
 configure_file(
   "${CMAKE_SOURCE_DIR}/src/opengameartaudio/opengameart-audio-decls.h.in"
   "${CMAKE_BINARY_DIR}/opengameart-audio-decls.h"

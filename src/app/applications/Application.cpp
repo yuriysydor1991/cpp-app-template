@@ -4,8 +4,8 @@
 #include <iostream>
 #include <memory>
 
-#include "opengameart-audio-decls.h"
 #include "src/log/log.h"
+#include "src/opengameartaudio/OpenGameArtRootDirectory.h"
 #include "src/opengameartaudio/controller/OpenGameArtSoundsController.h"
 #include "src/opengameartaudio/resources/OpenGameArtGResourcePath.h"
 #include "src/opengameartaudio/resources/OpenGameArtQtResourcePath.h"
@@ -29,7 +29,7 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
 
   LOGI("The OpenGameArt packs carry "
        << sounds->count() << " sounds at "
-       << opengameart_audio_decls::OPENGAMEART_AUDIO_ROOT_DIR);
+       << opengameartaudio::OpenGameArtRootDirectory::path());
 
   const auto controller =
       opengameartaudio::OpenGameArtSoundsController::create(sounds);

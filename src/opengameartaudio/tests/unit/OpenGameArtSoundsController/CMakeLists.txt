@@ -4,6 +4,7 @@ add_executable(
   UTEST_OpenGameArtSoundsController
   UTEST_OpenGameArtSoundsController.cpp
   ${CMAKE_SOURCE_DIR}/src/opengameartaudio/OpenGameArtSound.cpp
+  ${CMAKE_SOURCE_DIR}/src/opengameartaudio/OpenGameArtRootDirectory.cpp
   ${CMAKE_SOURCE_DIR}/src/opengameartaudio/packs/OpenGameArtPack.cpp
   ${CMAKE_SOURCE_DIR}/src/opengameartaudio/packs/OpenGameArtPacks.cpp
   ${CMAKE_SOURCE_DIR}/src/opengameartaudio/sounds/OpenGameArtSounds.cpp

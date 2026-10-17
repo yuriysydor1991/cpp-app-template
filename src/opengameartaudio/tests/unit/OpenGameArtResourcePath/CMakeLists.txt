@@ -4,6 +4,7 @@ add_executable(
   UTEST_OpenGameArtResourcePath
   UTEST_OpenGameArtResourcePath.cpp
   ${CMAKE_SOURCE_DIR}/src/opengameartaudio/OpenGameArtSound.cpp
+  ${CMAKE_SOURCE_DIR}/src/opengameartaudio/OpenGameArtRootDirectory.cpp
   ${CMAKE_SOURCE_DIR}/src/opengameartaudio/packs/OpenGameArtPack.cpp
   ${CMAKE_SOURCE_DIR}/src/opengameartaudio/resources/OpenGameArtResourcePath.cpp
   ${CMAKE_SOURCE_DIR}/src/opengameartaudio/resources/OpenGameArtQtResourcePath.cpp

@@ -19,10 +19,10 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
+  // No reachable bus is a runtime failure rather than a programming error,
+  // so it is reported by the INVALID status alone.
   sdbuscxxi::SDBusCxxControllerPtr sdbusconn =
       sdbuscxxi::SDBusCxxController::create();
-
-  assert(sdbusconn != nullptr);
 
   if (sdbusconn == nullptr) {
     LOGE("Fail during the SDBus-c++ connection object creation");

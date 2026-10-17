@@ -14,8 +14,13 @@
 # provenance of every file it holds even once it leaves this build tree.
 set -eu
 
-TARGET_DIR="${1:-./resources/freesound-audio}"
-MANIFEST="${FREESOUND_AUDIO_MANIFEST:-misc/freesound-sounds.txt}"
+if [ "$#" -ne 1 ]; then
+  echo "Usage: $0 <target directory outside of the source tree>" >&2
+  exit 1
+fi
+
+TARGET_DIR="$1"
+MANIFEST="${FREESOUND_AUDIO_MANIFEST:-$(dirname "$0")/../freesound-sounds.txt}"
 
 if [ ! -f "$MANIFEST" ]; then
   echo "No $MANIFEST sounds manifest to read the sounds of" >&2

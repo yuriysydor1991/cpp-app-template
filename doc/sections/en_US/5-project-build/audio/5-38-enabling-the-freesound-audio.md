@@ -68,7 +68,7 @@ misc/scripts/fetch-freesound-audio.sh ~/freesound-audio
 cmake -S . -B build -DTEMPLATE_APP_FREESOUND_AUDIO_DIR=~/freesound-audio
 ```
 
-The script takes the target directory as it's single argument, obeys the `FREESOUND_AUDIO_MANIFEST` environment variable, downloads through `curl` or `wget` (whichever is available), refuses a file of any other SHA-256 checksum and leaves an already downloaded sound alone.
+The script takes the target directory as it's single and mandatory argument (keep it outside of the source tree, so the downloads never get committed), obeys the `FREESOUND_AUDIO_MANIFEST` environment variable, downloads through `curl` or `wget` (whichever is available), refuses a file of any other SHA-256 checksum and leaves an already downloaded sound alone.
 
 ### Reaching the sounds from the C++ code
 

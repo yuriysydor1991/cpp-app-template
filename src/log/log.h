@@ -17,7 +17,11 @@
 #endif  // LOG_INIT
 
 #ifndef LOG_INIT_PATH
-#define LOG_INIT_PATH(filepath) default_logger::DefaultLogger::init(filepath);
+/**
+ * @brief Inits the logging with the given log file path and the default
+ * settings. Gives a false value if the log file can not be opened.
+ */
+#define LOG_INIT_PATH(filepath) default_logger::DefaultLogger::init(filepath)
 #endif  // LOG_INIT_PATH
 
 #ifndef LOG_INIT_DEFAULTS

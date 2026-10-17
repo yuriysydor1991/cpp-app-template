@@ -25,7 +25,7 @@ target_include_directories(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  ${WXWIDGETS_OBJECT_NAME}
+  PRIVATE ${WXWIDGETS_OBJECT_NAME}
 )
 
 add_subdirectory(helpers)

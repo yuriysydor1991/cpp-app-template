@@ -22,5 +22,5 @@ target_link_libraries(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  ${WXWIDGETS_OBJECT_NAME}App
+  PRIVATE ${WXWIDGETS_OBJECT_NAME}App
 )

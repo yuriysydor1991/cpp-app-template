@@ -24,7 +24,7 @@ namespace qtvulkani
 class PhysicalDeviceInfoHandler : public IDeviceInfoHandler
 {
  public:
-  virtual ~PhysicalDeviceInfoHandler() = default;
+  ~PhysicalDeviceInfoHandler() override = default;
   PhysicalDeviceInfoHandler() = default;
 
   /**

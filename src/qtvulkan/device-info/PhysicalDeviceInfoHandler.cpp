@@ -91,9 +91,9 @@ std::vector<PhysicalDeviceInfo> PhysicalDeviceInfoHandler::fetch_devices(
   std::vector<PhysicalDeviceInfo> devices;
   devices.reserve(handles.size());
 
-  for (const VkPhysicalDevice handle : handles) {
+  for (const VkPhysicalDevice device : handles) {
     VkPhysicalDeviceProperties props{};
-    functions->vkGetPhysicalDeviceProperties(handle, &props);
+    functions->vkGetPhysicalDeviceProperties(device, &props);
 
     PhysicalDeviceInfo info;
     info.name = props.deviceName;

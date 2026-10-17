@@ -11,7 +11,7 @@ if (NOT ENABLE_OPENJPEG)
 endif()
 
 set(TEMPLATE_APP_OPENJPEG_GIT "https://github.com/uclouvain/openjpeg.git" CACHE STRING "The OpenJPEG library git source repository")
-set(TEMPLATE_APP_OPENJPEG_GIT_TAG "master" CACHE STRING "The OpenJPEG project git repository tag/branch of interest")
+set(TEMPLATE_APP_OPENJPEG_GIT_TAG "v2.5.4" CACHE STRING "The OpenJPEG project git repository release tag of interest")
 
 template_project_default_3rdparty_enabler(
   NAME OpenJPEG

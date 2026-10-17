@@ -8,6 +8,7 @@
 #include "src/sdbuscxx/query-handlers/Hostname1QueryHandler.h"
 #include "src/sdbuscxx/query-handlers/IDBusQueryHandler.h"
 #include "src/sdbuscxx/sdbuscxx-includes.h"
+#include "src/sdbuscxx/tests/Hostname1Availability.h"
 
 using namespace testing;
 using namespace sdbuscxxi;
@@ -56,6 +57,10 @@ TEST_F(CTEST_Hostname1QueryHandler, live_system_bus_query)
   }
 
   ASSERT_NE(conn, nullptr);
+
+  if (!Hostname1Availability::available(*conn)) {
+    GTEST_SKIP() << "The system bus carries no hostname1 service";
+  }
 
   IDBusQueryHandlerPtr handler = factory.create_default_handler();
 

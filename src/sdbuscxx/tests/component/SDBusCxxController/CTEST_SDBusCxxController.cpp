@@ -7,6 +7,7 @@
 #include "src/app/ApplicationContext.h"
 #include "src/sdbuscxx/SDBusCxxController.h"
 #include "src/sdbuscxx/sdbuscxx-includes.h"
+#include "src/sdbuscxx/tests/Hostname1Availability.h"
 
 using namespace testing;
 using namespace sdbuscxxi;
@@ -28,6 +29,21 @@ class CTEST_SDBusCxxController : public Test
       std::unique_ptr<sdbus::IConnection> probe =
           sdbus::createSystemBusConnection();
       return probe != nullptr;
+    }
+    catch (const sdbus::Error&) {
+      return false;
+    }
+  }
+
+  /**
+   * @brief Whether the reachable system bus carries the hostname1 service.
+   */
+  static bool hostname1_available()
+  {
+    try {
+      std::unique_ptr<sdbus::IConnection> probe =
+          sdbus::createSystemBusConnection();
+      return Hostname1Availability::available(*probe);
     }
     catch (const sdbus::Error&) {
       return false;
@@ -57,6 +73,10 @@ TEST_F(CTEST_SDBusCxxController, run_against_live_system_bus)
 {
   if (!system_bus_reachable()) {
     GTEST_SKIP() << "System bus is not reachable in this environment";
+  }
+
+  if (!hostname1_available()) {
+    GTEST_SKIP() << "The system bus carries no hostname1 service";
   }
 
   SDBusCxxControllerPtr controller = SDBusCxxController::create();

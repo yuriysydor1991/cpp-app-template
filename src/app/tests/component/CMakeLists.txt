@@ -22,19 +22,20 @@ add_executable(
   ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/PauseSignalsHandler.cpp
   ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/PosixSignalsHandler.cpp
   ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/StopSignalsHandler.cpp
+  ${CMAKE_SOURCE_DIR}/src/log/log4cpp5-init/Log4Cpp5Init.cpp
 )
 
+# The real logger, so the log file effects of the command line are covered too.
 target_include_directories(
   CTEST_app
   PRIVATE
-    ${APP_MOCKS_ROOT}/log
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
 )
 
 target_link_libraries(
   CTEST_app
-  GTest::gtest_main GTest::gmock
+  GTest::gtest_main GTest::gmock LOG4CPP::log4cpp
 )
 
 include(GoogleTest)

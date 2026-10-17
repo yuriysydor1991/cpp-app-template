@@ -12,19 +12,19 @@
  * as by default is used in the app::ApplicationFactory::execute method.
  */
 #define LOG_INIT(filepath, logLvl, printMessages) \
-  boost_log::BoostLogController::init(filepath, logLvl, printMessages);
+  boost_log::BoostLogController::init(filepath, logLvl, printMessages)
 #endif  // LOG_INIT
 
 #ifndef LOG_INIT_PATH
 /**
  * @brief Inits the logging into the given file (the --log-file one) with the
- * default level.
+ * default level, yielding false when the file can't be opened.
  */
-#define LOG_INIT_PATH(filepath) boost_log::BoostLogController::init(filepath);
+#define LOG_INIT_PATH(filepath) boost_log::BoostLogController::init(filepath)
 #endif  // LOG_INIT_PATH
 
 #ifndef LOG_INIT_DEFAULTS
-#define LOG_INIT_DEFAULTS() boost_log::BoostLogController::init();
+#define LOG_INIT_DEFAULTS() boost_log::BoostLogController::init_defaults()
 #endif  // LOG_INIT_DEFAULTS
 
 #ifndef LOG_BODY

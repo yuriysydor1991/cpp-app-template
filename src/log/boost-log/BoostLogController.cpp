@@ -2,25 +2,48 @@
 
 #include <array>
 #include <filesystem>
+#include <fstream>
 #include <iostream>
 
 namespace boost_log
 {
 
-void BoostLogController::init(const std::string& filepath,
+bool BoostLogController::init(const std::string& filepath,
                               const unsigned int& nlvl, const bool toPrintValue)
 {
   lfilepath = filepath;
   lvl = get_boost_lvl(nlvl);
   toPrintMsgs = toPrintValue;
 
+  const auto core = logging::core::get();
+
+  // A repeated init replaces the sinks of the previous one instead of adding
+  // a second copy of them, and a sink failing later on (a full disk, a
+  // removed log directory) drops its records instead of the process.
+  core->remove_all_sinks();
+  core->set_exception_handler(logging::make_exception_suppressor());
+
   init_stdout();
 
-  init_file();
+  const bool fileOpened = init_file();
 
-  logging::core::get()->set_filter(logging::trivial::severity >= lvl);
+  core->set_filter(logging::trivial::severity >= lvl);
 
   logging::add_common_attributes();
+
+  return fileOpened;
+}
+
+bool BoostLogController::init_defaults()
+{
+  if (init()) {
+    return true;
+  }
+
+  std::cerr << "Fail to open the log file at " << default_log_name
+            << ", logging into the console only" << std::endl;
+
+  return false;
 }
 
 void BoostLogController::init_stdout()
@@ -41,8 +64,14 @@ void BoostLogController::init_stdout()
            << " " << expr::smessage));
 }
 
-void BoostLogController::init_file()
+bool BoostLogController::init_file()
 {
+  // The text file backend opens the file with the first record alone, which
+  // throws then, so the file gets opened here once to tell a failure first.
+  if (!std::ofstream{lfilepath, std::ios_base::app}) {
+    return false;
+  }
+
   logging::add_file_log(
       keywords::file_name = lfilepath, keywords::open_mode = std::ios_base::app,
       keywords::auto_flush = true,
@@ -54,9 +83,11 @@ void BoostLogController::init_file()
            << expr::attr<boost::log::attributes::current_thread_id::value_type>(
                   "ThreadID")
            << " " << expr::smessage));
+
+  return true;
 }
 
-src::severity_logger<logging::trivial::severity_level>&
+src::severity_logger_mt<logging::trivial::severity_level>&
 BoostLogController::get_lg()
 {
   return logger;

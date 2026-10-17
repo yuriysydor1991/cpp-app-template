@@ -2,8 +2,13 @@
 #include <gtest/gtest.h>
 
 #include <csignal>
+#include <filesystem>
+#include <string>
+#include <vector>
 
+#include "project-global-decls.h"
 #include "src/app/ApplicationFactory.h"
+#include "src/log/log.h"
 #include "src/winui3/WinUI3Controller.h"
 
 using namespace app;
@@ -12,10 +17,41 @@ using namespace testing;
 class CTEST_app : public Test
 {
  public:
-  CTEST_app() = default;
+  CTEST_app() { std::filesystem::remove(default_log_file()); }
+
+  /// @brief The default log file of the factory, which the current working
+  /// directory of the test case keeps.
+  static std::filesystem::path default_log_file()
+  {
+    return default_logger::RealDefaultLogger::get_default_full_log_path();
+  }
+
+  /// @brief Runs the ApplicationFactory::execute with the given command line
+  /// parameters, which follow the binary name.
+  int execute_with(const std::vector<std::string>& params)
+  {
+    args = params;
+    args.insert(args.begin(), "CTEST_app");
+
+    argPointers.clear();
+
+    for (std::string& param : args) {
+      argPointers.push_back(param.data());
+    }
+
+    realArgc = static_cast<int>(argPointers.size());
+    realArgv = argPointers.data();
+
+    return ApplicationFactory::execute(realArgc, realArgv);
+  }
 
   int argc{0};
   char** argv{nullptr};
+
+  std::vector<std::string> args;
+  std::vector<char*> argPointers;
+  int realArgc{0};
+  char** realArgv{nullptr};
 
   ApplicationFactory facade;
 };
@@ -188,4 +224,79 @@ TEST_F(CTEST_app, execute_success)
   int status = ApplicationFactory::execute(argc, argv);
 
   EXPECT_EQ(status, 0);
+}
+
+TEST_F(CTEST_app, help_prints_the_options_without_a_log_file)
+{
+  testing::internal::CaptureStdout();
+
+  EXPECT_EQ(execute_with({"--help"}), 0);
+
+  EXPECT_THAT(testing::internal::GetCapturedStdout(), HasSubstr("--log-file"));
+  EXPECT_FALSE(std::filesystem::exists(default_log_file()));
+}
+
+TEST_F(CTEST_app, version_prints_the_version_without_a_log_file)
+{
+  testing::internal::CaptureStdout();
+
+  EXPECT_EQ(execute_with({"--version"}), 0);
+
+  EXPECT_THAT(testing::internal::GetCapturedStdout(),
+              HasSubstr(project_decls::PROJECT_BUILD_VERSION));
+  EXPECT_FALSE(std::filesystem::exists(default_log_file()));
+}
+
+TEST_F(CTEST_app, unknown_option_fails_with_the_help)
+{
+  testing::internal::CaptureStdout();
+  testing::internal::CaptureStderr();
+
+  EXPECT_NE(execute_with({"--bogus"}), 0);
+
+  EXPECT_THAT(testing::internal::GetCapturedStderr(),
+              HasSubstr("Unknown parameter: --bogus"));
+  EXPECT_THAT(testing::internal::GetCapturedStdout(), HasSubstr("Usage:"));
+  EXPECT_FALSE(std::filesystem::exists(default_log_file()));
+}
+
+TEST_F(CTEST_app, missing_log_file_path_fails_with_the_help)
+{
+  testing::internal::CaptureStdout();
+  testing::internal::CaptureStderr();
+
+  EXPECT_NE(execute_with({"--log-file"}), 0);
+
+  testing::internal::GetCapturedStderr();
+
+  const std::string out = testing::internal::GetCapturedStdout();
+
+  EXPECT_THAT(out, HasSubstr("Usage:"));
+  EXPECT_THAT(out, Not(HasSubstr(project_decls::PROJECT_BUILD_COMMIT)));
+}
+
+TEST_F(CTEST_app, unopenable_log_file_fails_before_the_run)
+{
+  static const std::string unopenable =
+      "no-such-directory-of-CTEST_app/CTEST_app.log";
+
+  testing::internal::CaptureStderr();
+
+  EXPECT_NE(execute_with({"-l", unopenable}), 0);
+
+  EXPECT_THAT(testing::internal::GetCapturedStderr(),
+              HasSubstr("Fail to open the log file at " + unopenable));
+  EXPECT_FALSE(std::filesystem::exists(default_log_file()));
+}
+
+TEST_F(CTEST_app, custom_log_file_is_used)
+{
+  static const std::filesystem::path customLog{"CTEST_app.custom.log"};
+
+  std::filesystem::remove(customLog);
+
+  EXPECT_EQ(execute_with({"--log-file", customLog.string()}), 0);
+
+  EXPECT_TRUE(std::filesystem::exists(customLog));
+  EXPECT_FALSE(std::filesystem::exists(default_log_file()));
 }

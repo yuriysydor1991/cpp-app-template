@@ -98,6 +98,19 @@ class ApplicationFactory
                                                              char**& gargv);
 
   /**
+   * @brief Inits the logging subsystem in accordance with the parsed context:
+   * the -l/--log-file path or the default log file. The help and the version
+   * printers only print into the console, so no log file is opened for them.
+   *
+   * @param ctx A parsed ApplicationContext instance.
+   *
+   * @return Returns false if the explicitly requested log file can not be
+   * opened and true otherwise. A default log file which can not be opened is
+   * not an error: the logging goes into the console only then.
+   */
+  virtual bool init_logging(std::shared_ptr<ApplicationContext> ctx);
+
+  /**
    * @brief Creates application in accordance with a given context data.
    *
    * @param ctx A filled ApplicationContext instance to check which application

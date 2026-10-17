@@ -206,6 +206,7 @@
         1. [Вмикання підтримки статичного аналізатора коду clang-tidy](/doc/sections/uk_UA/5-project-build/code-quality/5-8-enabling-static-code-analyzer-with-clang-tidy.md)
         1. [Вмикання перевірок під час виконання програми (sanitizers)](/doc/sections/uk_UA/5-project-build/code-quality/5-13-enabling-sanitizers.md)
     1. Контейнери та CI
+        1. [Вмикання конвеєра Jenkins всередині Docker контейнера](/doc/sections/uk_UA/5-project-build/containers-ci/5-17-enabling-Jenkins-pipeline-inside-Docker-container.md)
         1. [Конвеєр CI GitHub Actions](/doc/sections/uk_UA/5-project-build/containers-ci/5-38-the-GitHub-Actions-CI-pipeline.md)
         1. [Конвеєр CI/CD GitLab](/doc/sections/uk_UA/5-project-build/containers-ci/5-39-the-GitLab-CI-pipeline.md)
     1. Пакувальники

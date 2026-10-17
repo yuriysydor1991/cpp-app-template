@@ -20,4 +20,26 @@ sudo apt install -y autoconf automake libtool-bin make unzip zlib1g-dev libicu-d
 sudo apt install -y firebird3.0-server
 ```
 
-Стандартні облікові дані, що використовує шаблон (`SYSDBA` / `masterkey`), і стандартну зразкову базу даних `employee` можна змінити у класі `ApplicationContext` або перевизначити для власного розгортання - **не забудьте змінити загальновідомі стандартні облікові дані!**
+### Параметри підключення
+
+Типово виконуваний файл підключається до псевдоніма зразкової бази даних `employee` локального сервера від імені користувача `SYSDBA` з паролем `masterkey`. Типові значення визначені у файлі `src/app/ApplicationContext.cpp` - **не забудьте змінити загальновідомі стандартні облікові дані!** Під час запуску їх перевизначають наступні змінні середовища:
+
+| Змінна | Параметр | Типове значення |
+|---|---|---|
+| `FIREBIRD_DATABASE` | псевдонім або шлях до файлу бази даних | `employee` |
+| `ISC_USER` | ім'я користувача | `SYSDBA` |
+| `ISC_PASSWORD` | пароль | `masterkey` |
+| `FIREBIRD_HOST` | вузол сервера (порожнє значення залишає локальне підключення) | порожнє |
+| `FIREBIRD_PORT` | порт сервера, використовується разом з вузлом | порожнє (3050) |
+
+Наприклад:
+
+```
+FIREBIRD_HOST=localhost FIREBIRD_DATABASE=employee ISC_USER=SYSDBA ISC_PASSWORD='my secret' ./CppAppTemplate
+```
+
+Серверні пакунки Debian та Ubuntu запитують пароль `SYSDBA` під час встановлення і зберігають його у файлі `/etc/firebird/<версія>/SYSDBA.password` у вигляді тих самих змінних оболонки `ISC_USER` та `ISC_PASSWORD` (змінити його можна командою `sudo dpkg-reconfigure firebird<версія>-server`). Файлу бази даних `employee` пакунки не містять: як створити його з доданого SQL-сценарію, описує файл `/usr/share/doc/firebird4.0-examples/examples/README.Debian` пакунка `firebird4.0-examples` (Firebird 4.0). Для підключення від імені окремого користувача створіть його обліковим записом `SYSDBA` в інструменті `isql-fb` і передайте через змінні `ISC_USER` та `ISC_PASSWORD`:
+
+```
+CREATE USER template_test_user PASSWORD 'template_test_password';
+```

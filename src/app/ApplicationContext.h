@@ -152,12 +152,17 @@ class ApplicationContext
   /// default Application class implementation.
   void set_db_connection(const std::shared_ptr<IDBConnection>& newValue);
 
+  /// @brief The default Firebird database, overridden by the
+  /// FIREBIRD_DATABASE environment variable. The FIREBIRD_HOST and the
+  /// FIREBIRD_PORT variables set the host and the port, empty by default.
   static const std::string default_fb_name;
 
   /// @brief Remember to change this publicly visible credentials!!!
+  /// Overridden by the ISC_USER environment variable.
   static const std::string default_fb_user;
 
   /// @brief Remember to change this publicly visible credentials!!!
+  /// Overridden by the ISC_PASSWORD environment variable.
   static const std::string default_fb_password;
 
  private:

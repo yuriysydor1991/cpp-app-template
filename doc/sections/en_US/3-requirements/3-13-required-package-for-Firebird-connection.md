@@ -20,4 +20,26 @@ In order to install the [Firebird](https://firebirdsql.org/) DBMS server by itse
 sudo apt install -y firebird3.0-server
 ```
 
-The default connection credentials used by the template (`SYSDBA` / `masterkey`) and the default `employee` sample database may be changed in the `ApplicationContext` class or overridden for your own deployment - **remember to change the publicly known default credentials!**
+### Connection settings
+
+By default the executable connects to the `employee` sample database alias of the local server as the `SYSDBA` user with the `masterkey` password. The defaults live in the `src/app/ApplicationContext.cpp` file - **remember to change the publicly known default credentials!** At the start the next environment variables override them:
+
+| Variable | Setting | Default |
+|---|---|---|
+| `FIREBIRD_DATABASE` | database alias or file path | `employee` |
+| `ISC_USER` | user name | `SYSDBA` |
+| `ISC_PASSWORD` | password | `masterkey` |
+| `FIREBIRD_HOST` | server host (an empty one keeps the local connection) | empty |
+| `FIREBIRD_PORT` | server port, used together with the host | empty (3050) |
+
+For example:
+
+```
+FIREBIRD_HOST=localhost FIREBIRD_DATABASE=employee ISC_USER=SYSDBA ISC_PASSWORD='my secret' ./CppAppTemplate
+```
+
+The Debian and Ubuntu server packages ask for the `SYSDBA` password during the installation and keep it in the `/etc/firebird/<version>/SYSDBA.password` file as the same `ISC_USER` and `ISC_PASSWORD` shell variables (`sudo dpkg-reconfigure firebird<version>-server` changes it). The packages ship no `employee` database file: the `/usr/share/doc/firebird4.0-examples/examples/README.Debian` file of the `firebird4.0-examples` package (Firebird 4.0) shows how to create it from the bundled SQL script. To connect as a separate user, create it with the `SYSDBA` account in the `isql-fb` tool and pass it through the `ISC_USER` and `ISC_PASSWORD` variables:
+
+```
+CREATE USER template_test_user PASSWORD 'template_test_password';
+```

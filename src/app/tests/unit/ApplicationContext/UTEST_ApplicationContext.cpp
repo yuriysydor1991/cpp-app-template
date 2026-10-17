@@ -1,6 +1,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include <cstdlib>
 #include <thread>
 
 #include "src/app/ApplicationContext.h"
@@ -271,4 +272,42 @@ TEST_F(UTEST_ApplicationContext, raising_the_reload_flag_from_another_thread)
   EXPECT_TRUE(appCtx->get_errors().empty());
   EXPECT_FALSE(appCtx->get_stop());
   EXPECT_FALSE(appCtx->get_pause());
+}
+
+TEST_F(UTEST_ApplicationContext, firebird_defaults_without_environment)
+{
+  for (const char* name : {"FIREBIRD_DATABASE", "ISC_USER", "ISC_PASSWORD",
+                           "FIREBIRD_HOST", "FIREBIRD_PORT"}) {
+    unsetenv(name);
+  }
+
+  const auto ctx = create_context(argc, argv);
+
+  EXPECT_EQ(ctx->get_fb_dbname(), ApplicationContext::default_fb_name);
+  EXPECT_EQ(ctx->get_fb_user(), ApplicationContext::default_fb_user);
+  EXPECT_EQ(ctx->get_fb_password(), ApplicationContext::default_fb_password);
+  EXPECT_TRUE(ctx->get_fb_host().empty());
+  EXPECT_TRUE(ctx->get_fb_port().empty());
+}
+
+TEST_F(UTEST_ApplicationContext, firebird_settings_from_environment)
+{
+  setenv("FIREBIRD_DATABASE", "/var/lib/firebird/data/test.fdb", 1);
+  setenv("ISC_USER", "template_user", 1);
+  setenv("ISC_PASSWORD", "template password", 1);
+  setenv("FIREBIRD_HOST", "db.example.org", 1);
+  setenv("FIREBIRD_PORT", "3051", 1);
+
+  const auto ctx = create_context(argc, argv);
+
+  for (const char* name : {"FIREBIRD_DATABASE", "ISC_USER", "ISC_PASSWORD",
+                           "FIREBIRD_HOST", "FIREBIRD_PORT"}) {
+    unsetenv(name);
+  }
+
+  EXPECT_EQ(ctx->get_fb_dbname(), "/var/lib/firebird/data/test.fdb");
+  EXPECT_EQ(ctx->get_fb_user(), "template_user");
+  EXPECT_EQ(ctx->get_fb_password(), "template password");
+  EXPECT_EQ(ctx->get_fb_host(), "db.example.org");
+  EXPECT_EQ(ctx->get_fb_port(), "3051");
 }

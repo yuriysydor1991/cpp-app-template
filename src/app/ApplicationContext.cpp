@@ -1,10 +1,25 @@
 #include "src/app/ApplicationContext.h"
 
+#include <cstdlib>
 #include <string>
 #include <vector>
 
 namespace app
 {
+
+namespace
+{
+
+/// @brief Returns the value of the name environment variable or the fallback
+/// if the variable is not set.
+std::string env_or(const char* name, const std::string& fallback)
+{
+  const char* value = std::getenv(name);
+
+  return value != nullptr ? value : fallback;
+}
+
+}  // namespace
 
 const std::string ApplicationContext::default_fb_name = "employee";
 
@@ -15,9 +30,11 @@ const std::string ApplicationContext::default_fb_password = "masterkey";
 ApplicationContext::ApplicationContext(int& gargc, char**& gargv)
     : margc{gargc},
       margv{gargv},
-      mfb_dbname{default_fb_name},
-      mfb_user{default_fb_user},
-      mfb_password{default_fb_password}
+      mfb_dbname{env_or("FIREBIRD_DATABASE", default_fb_name)},
+      mfb_user{env_or("ISC_USER", default_fb_user)},
+      mfb_password{env_or("ISC_PASSWORD", default_fb_password)},
+      mfb_host{env_or("FIREBIRD_HOST", {})},
+      mfb_port{env_or("FIREBIRD_PORT", {})}
 {
 }
 

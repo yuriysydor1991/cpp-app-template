@@ -4,7 +4,10 @@ cmake_minimum_required(VERSION 3.13)
 # packages ship no CMake target of it's own for it, while the older ones
 # still need it linked. Hence the optional request and the guarded link
 # below.
-find_package(Boost REQUIRED COMPONENTS thread OPTIONAL_COMPONENTS system)
+# The Beast and the Asio are header only, while their threads need the OS
+# threads library linked (the FreeBSD one isn't part of its libc).
+find_package(Boost REQUIRED OPTIONAL_COMPONENTS system)
+find_package(Threads REQUIRED)
 
 add_library(
   TemplateBoostBeastObj OBJECT
@@ -25,7 +28,7 @@ target_include_directories(
 # the headers into on its own.
 target_link_libraries(
   TemplateBoostBeastObj
-  PUBLIC Boost::thread
+  PUBLIC Boost::boost Threads::Threads
 )
 
 if (TARGET Boost::system)

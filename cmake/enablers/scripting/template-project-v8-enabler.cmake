@@ -62,4 +62,4 @@ message(STATUS "The V8 library: ${V8_LIBRARY}")
 
 # Link the V8::V8 target to your target(s) of interest (e.g. the
 # ${PROJECT_BINARY_NAME} executable or any of your own libraries):
-#   target_link_libraries(${PROJECT_BINARY_NAME} V8::V8)
+#   target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE V8::V8)

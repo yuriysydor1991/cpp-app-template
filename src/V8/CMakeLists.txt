@@ -37,7 +37,7 @@ target_link_libraries(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  TemplateProjectV8ControllerObj
+  PRIVATE TemplateProjectV8ControllerObj
 )
 
 add_subdirectory(tests)

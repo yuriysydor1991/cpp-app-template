@@ -130,17 +130,17 @@ pipeline {
         }
         stage('UTEST_Hostname1QueryHandler') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_Hostname1QueryHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_Hostname1QueryHandler.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_Hostname1QueryHandler\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_Hostname1QueryHandler.junit.xml'
           }
         }
         stage('UTEST_DBusQueryHandlerFactory') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_DBusQueryHandlerFactory\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_DBusQueryHandlerFactory.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_DBusQueryHandlerFactory\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_DBusQueryHandlerFactory.junit.xml'
           }
         }
         stage('UTEST_SDBusCxxController') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_SDBusCxxController\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_SDBusCxxController.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_SDBusCxxController\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_SDBusCxxController.junit.xml'
           }
         }
         stage('UTEST_SignalsHandler') { 
@@ -206,12 +206,12 @@ pipeline {
         }
         stage('CTEST_Hostname1QueryHandler') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_Hostname1QueryHandler\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_Hostname1QueryHandler.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_Hostname1QueryHandler\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_Hostname1QueryHandler.junit.xml'
           }
         }
         stage('CTEST_SDBusCxxController') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_SDBusCxxController\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_SDBusCxxController.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_SDBusCxxController\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_SDBusCxxController.junit.xml'
           }
         }
       }

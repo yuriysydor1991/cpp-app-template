@@ -36,4 +36,4 @@ template_project_default_3rdparty_enabler(
 #   - system install, via find_package(Jolt): Jolt::Jolt
 #   - FetchContent source build:              Jolt::Jolt
 # For example:
-#   target_link_libraries(${PROJECT_BINARY_NAME} Jolt::Jolt)
+#   target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE Jolt::Jolt)

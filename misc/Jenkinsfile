@@ -100,7 +100,7 @@ pipeline {
       parallel {
         stage('UTEST_LzmaController') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_LzmaController\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_LzmaController.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_LzmaController\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_LzmaController.junit.xml'
           }
         }
         stage('UTEST_Application') { 
@@ -181,7 +181,7 @@ pipeline {
       parallel {
         stage('CTEST_LzmaController') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_LzmaController\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_LzmaController.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_LzmaController\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_LzmaController.junit.xml'
           }
         }
         stage('CTEST_DefaultLogger') {

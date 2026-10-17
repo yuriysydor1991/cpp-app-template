@@ -13,7 +13,7 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
   assert(ctx != nullptr);
 
   if (ctx == nullptr) {
-    LOGE("No valid application context pointer provided")
+    LOGE("No valid application context pointer provided");
     return INVALID;
   }
 

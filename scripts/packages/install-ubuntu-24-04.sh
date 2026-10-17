@@ -21,9 +21,8 @@ PACKAGES=(
     libgmock-dev
     libgtest-dev
     libopengl-dev
-    libqt6gui6
-    libqt6opengl6-dev
-    libqt6openglwidgets6
+    libqt6gui6t64
+    libqt6openglwidgets6t64
     libqt6quick6
     libqt6quickcontrols2-6
     libssl-dev

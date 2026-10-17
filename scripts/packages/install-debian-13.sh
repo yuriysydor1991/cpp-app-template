@@ -22,7 +22,6 @@ PACKAGES=(
     libgtest-dev
     libopengl-dev
     libqt6gui6
-    libqt6opengl6-dev
     libqt6openglwidgets6
     libqt6quick6
     libqt6quickcontrols2-6

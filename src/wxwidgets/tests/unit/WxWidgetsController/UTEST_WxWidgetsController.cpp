@@ -15,7 +15,11 @@ using namespace testing;
 // launch(), so the real wxWidgets backed run_wx_application() is never needed.
 namespace wxwi
 {
-int run_wx_application(int& /*argc*/, char**& /*argv*/) { return 0; }
+int run_wx_application(std::shared_ptr<::app::ApplicationContext> /*ctx*/,
+                       int& /*argc*/, char**& /*argv*/)
+{
+  return 0;
+}
 }  // namespace wxwi
 
 namespace

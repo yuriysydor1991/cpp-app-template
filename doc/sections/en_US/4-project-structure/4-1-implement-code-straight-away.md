@@ -7,3 +7,5 @@ To proceed the application implementation right away look for the `WxMainFrame` 
 It's preferable to create other directories which would contain implemented components of the application and include them into the `WxMainFrame` class implementation, rather than put all the code inside the `WxMainFrame` class itself.
 
 Additional code may be introduced into the `Application` class implementation or by creation `IApplication` class descendant in order to provide binary level variety.
+
+The `StopFlagWatcher` timer of the `WxApp` application object leaves the wxWidgets main loop as soon as the OS signals (Ctrl+C, `kill` and so on) raise the application context stop flag, so the window code needs no signal handling of its own.

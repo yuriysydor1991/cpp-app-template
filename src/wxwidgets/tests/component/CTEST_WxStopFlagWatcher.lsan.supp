@@ -1,0 +1,3 @@
+# The wxWidgets library itself never frees the console application traits
+# its wxEntryStart() creates for the default log target.
+leak:wxAppConsoleBase::GetTraits

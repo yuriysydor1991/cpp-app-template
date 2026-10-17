@@ -1,6 +1,10 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_WXLAUNCHER_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_WXLAUNCHER_H
 
+#include <memory>
+
+#include "src/app/ApplicationContext.h"
+
 namespace wxwi
 {
 
@@ -13,12 +17,14 @@ namespace wxwi
  * own definition of this function, so the WxWidgetsController orchestration may
  * be built and run without the wxWidgets library and without launching a GUI.
  *
+ * @param ctx The application context, which stop flag ends the event loop.
  * @param argc The command line arguments count (forwarded to wxEntry).
  * @param argv The command line arguments array (forwarded to wxEntry).
  *
  * @return Returns the wxWidgets application exit status (0 on success).
  */
-int run_wx_application(int& argc, char**& argv);
+int run_wx_application(std::shared_ptr<::app::ApplicationContext> ctx,
+                       int& argc, char**& argv);
 
 }  // namespace wxwi
 

@@ -5,6 +5,7 @@ cmake_minimum_required(VERSION 3.13)
 add_library(
   ${WXWIDGETS_OBJECT_NAME}App OBJECT
   WxApp.cpp
+  StopFlagWatcher.cpp
 )
 
 target_include_directories(

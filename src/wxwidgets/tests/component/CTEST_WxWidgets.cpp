@@ -2,12 +2,11 @@
 #include <gtest/gtest.h>
 
 #include <memory>
-#include <string>
+#include <utility>
 
 #include "src/app/ApplicationContext.h"
 #include "src/wxwidgets/WxLauncher.h"
 #include "src/wxwidgets/WxWidgetsController.h"
-#include "src/wxwidgets/helpers/WindowConfig.h"
 
 using namespace wxwi;
 using namespace app;
@@ -15,23 +14,20 @@ using namespace testing;
 
 namespace
 {
-// Records what the (simulated) wxWidgets application does when the real
-// WxWidgetsController launches it. This keeps the real run() -> launch() ->
-// run_wx_application() seam intact while building a real WindowConfig the way
-// WxApp::OnInit() would, so the whole wxWidgets free part of the component is
-// exercised together without launching a GUI.
+// Records what the real WxWidgetsController hands over to the (simulated)
+// wxWidgets application, which keeps the real run() -> launch() ->
+// run_wx_application() seam intact without launching a GUI.
 int g_seen_argc = -1;
-std::string g_built_title;
+std::shared_ptr<ApplicationContext> g_seen_ctx;
 }  // namespace
 
 namespace wxwi
 {
-int run_wx_application(int& argc, char**& /*argv*/)
+int run_wx_application(std::shared_ptr<::app::ApplicationContext> ctx,
+                       int& argc, char**& /*argv*/)
 {
   g_seen_argc = argc;
-
-  const helpers::WindowConfig config{"ComponentApp", "9.9.9"};
-  g_built_title = config.title();
+  g_seen_ctx = std::move(ctx);
 
   return 0;
 }
@@ -43,8 +39,10 @@ class CTEST_WxWidgets : public Test
   void SetUp() override
   {
     g_seen_argc = -1;
-    g_built_title.clear();
+    g_seen_ctx.reset();
   }
+
+  void TearDown() override { g_seen_ctx.reset(); }
 
   int argc{4};
   char** argv{nullptr};
@@ -60,7 +58,6 @@ TEST_F(CTEST_WxWidgets, run_launches_app_and_forwards_arguments)
   EXPECT_EQ(controller.run(ctx), 0);
 
   EXPECT_EQ(g_seen_argc, 4);
-  EXPECT_EQ(g_built_title, "ComponentApp 9.9.9");
 }
 
 TEST_F(CTEST_WxWidgets, run_forwards_the_current_argument_count)
@@ -70,5 +67,12 @@ TEST_F(CTEST_WxWidgets, run_forwards_the_current_argument_count)
   EXPECT_EQ(controller.run(ctx), 0);
 
   EXPECT_EQ(g_seen_argc, 1);
-  EXPECT_EQ(g_built_title, "ComponentApp 9.9.9");
+}
+
+TEST_F(CTEST_WxWidgets, run_hands_the_context_over_to_the_application)
+{
+  // The wxWidgets application watches the stop flag of this very context.
+  EXPECT_EQ(controller.run(ctx), 0);
+
+  EXPECT_EQ(g_seen_ctx, ctx);
 }

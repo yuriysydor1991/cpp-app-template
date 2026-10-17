@@ -205,6 +205,11 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "CTEST_WxWidgets\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_WxWidgets.junit.xml'
           }
         }
+        stage('CTEST_WxStopFlagWatcher') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "CTEST_WxStopFlagWatcher\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_WxStopFlagWatcher.junit.xml'
+          }
+        }
       }
       post { always { junit "$BUILDDIR/$BDJUNITOUT/CTEST_*.xml" } }
     }

@@ -28,7 +28,7 @@ int WxWidgetsController::run(std::shared_ptr<app::ApplicationContext> nactx)
 
 int WxWidgetsController::launch(int& argc, char**& argv)
 {
-  return run_wx_application(argc, argv);
+  return run_wx_application(actx, argc, argv);
 }
 
 }  // namespace wxwi

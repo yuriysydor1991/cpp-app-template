@@ -20,15 +20,15 @@ cmake --build build --target all
 - `--image <шлях>` / `-i <шлях>` - виконати виявлення обличь OpenCV на вказаному зображенні.
 - `--face-cascade <шлях>` - перевизначити XML-файл каскаду Хаара, який використовує детектор.
 
-Якщо жоден з параметрів не передано, застосунок лише перевіряє, що попередньо встановлений каскад можна завантажити, і коректно завершує роботу.
+Якщо жоден з параметрів не передано, застосунок лише перевіряє, що попередньо встановлений каскад можна завантажити, і коректно завершує роботу. Каскад, який не вдається завантажити (відсутній файл або файл, що взагалі не є XML-файлом каскаду), а також відсутнє чи нерозпізнане OpenCV зображення `--image` завершують роботу застосунку зі статусом помилки.
 
-XML-файл каскаду Хаара, який постачається разом з системною установкою OpenCV (`haarcascade_frontalface_default.xml`), автоматично шукається у наступних відомих локаціях:
+XML-файл каскаду Хаара, який постачається разом з установкою OpenCV (`haarcascade_frontalface_default.xml`), автоматично шукається у директорії `share/opencv4/haarcascades` (або старішій `share/opencv/haarcascades`) наступних префіксів у такому порядку:
 
-- `/usr/share/opencv4/haarcascades/haarcascade_frontalface_default.xml` (Debian/Ubuntu, пакет `opencv-data`)
-- `/usr/share/opencv/haarcascades/haarcascade_frontalface_default.xml`
-- `/usr/local/share/opencv4/haarcascades/haarcascade_frontalface_default.xml`
-- `/usr/local/share/opencv/haarcascades/haarcascade_frontalface_default.xml`
-- Шляхи macOS Homebrew у `/usr/local/Cellar` і `/opt/homebrew`
+- `$SNAP/usr` - пакунок snap (доданий пакунок `opencv-data`)
+- `/app` - пакунок flatpak (OpenCV, яку збирає маніфест)
+- `/usr` - системна установка (пакунок Debian/Ubuntu `opencv-data`)
+- `/usr/local` - локально зібрана OpenCV, пакунок FreeBSD `opencv` та пакунок Homebrew для macOS на Intel
+- `/opt/homebrew` - пакунок Homebrew для macOS на Apple Silicon
 
 Метод `app::Application::run` лише делегує виклик до `opencvi::OpenCVController::run` для того щоб можна було швидко перемикатися між наявними прикладами OpenCV без редагування компоненту `app`. Поточний диспетчер викликає `opencvi::OpenCVController::face_recognition_example`, в якому розміщено код завантаження каскаду Хаара і сканування зображення. Щоб додати новий приклад - оголоси новий метод у класі `opencvi::OpenCVController` і переадресуй на нього виклик з `opencvi::OpenCVController::run`.
 

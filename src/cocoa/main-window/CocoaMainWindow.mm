@@ -15,6 +15,10 @@ CocoaMainWindow::CocoaMainWindow(const helpers::WindowConfig& config)
                   backing:NSBackingStoreBuffered
                     defer:NO];
 
+  // ARC owns the code built window: closing it must not release it once more
+  // (releasedWhenClosed is YES by default for the windows not of a .nib file).
+  [win setReleasedWhenClosed:NO];
+
   [win setTitle:[NSString stringWithUTF8String:config.title().c_str()]];
   [win setMinSize:NSMakeSize(config.min_width(), config.min_height())];
 

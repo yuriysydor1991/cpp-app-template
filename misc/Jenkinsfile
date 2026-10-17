@@ -38,7 +38,7 @@ pipeline {
     stage('Code format configure') {
       steps {
         sh '''
-          cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Debug -DENABLE_CLANGFORMAT=ON
+          cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Debug -DENABLE_CLANGFORMAT=ON -DENABLE_WHISPERCPP_MODEL_DOWNLOAD=OFF
         '''
       }
     }
@@ -218,7 +218,7 @@ pipeline {
         sh 'rm -fr $BUILDDIR'
         sh '''
           cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Debug -DENABLE_CLANG_TIDY=ON \
-            -DMAX_LOG_LEVEL=5
+            -DMAX_LOG_LEVEL=5 -DENABLE_WHISPERCPP_MODEL_DOWNLOAD=OFF
         '''
       }
     }
@@ -235,7 +235,7 @@ pipeline {
       steps {
         sh 'rm -fr $BUILDDIR'
         sh '''
-          cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Release
+          cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Release -DENABLE_WHISPERCPP_MODEL_DOWNLOAD=OFF
         '''
       }
     }
@@ -568,7 +568,7 @@ pipeline {
         sh '''
           BD="$BUILDDIR-pkg-flatpak"
           rm -fr "$BD"
-          cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_FLATPAK=ON
+          cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_FLATPAK=ON -DENABLE_WHISPERCPP_MODEL_DOWNLOAD=OFF
           cmake --build "$BD" -j$(nproc)
           cmake --build "$BD" --target flatpak
           if [ -z "$(find "$BD" -maxdepth 2 -name '*.flatpak' -print -quit)" ]; then
@@ -586,7 +586,7 @@ pipeline {
         sh '''
           BD="$BUILDDIR-pkg-deb"
           rm -fr "$BD"
-          cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_DEB=ON
+          cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_DEB=ON -DENABLE_WHISPERCPP_MODEL_DOWNLOAD=OFF
           cmake --build "$BD" -j$(nproc)
           ( cd "$BD" && cpack -G DEB )
           if [ -z "$(find "$BD" -maxdepth 2 -name '*.deb' -print -quit)" ]; then
@@ -604,7 +604,7 @@ pipeline {
         sh '''
           BD="$BUILDDIR-pkg-rpm"
           rm -fr "$BD"
-          cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_RPM=ON
+          cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_RPM=ON -DENABLE_WHISPERCPP_MODEL_DOWNLOAD=OFF
           cmake --build "$BD" -j$(nproc)
           ( cd "$BD" && cpack -G RPM )
           if [ -z "$(find "$BD" -maxdepth 2 -name '*.rpm' -print -quit)" ]; then
@@ -622,7 +622,7 @@ pipeline {
         sh '''
           BD="$BUILDDIR-pkg-snap"
           rm -fr "$BD"
-          cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_SNAP=ON
+          cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_SNAP=ON -DENABLE_WHISPERCPP_MODEL_DOWNLOAD=OFF
           cmake --build "$BD" -j$(nproc)
           cmake --build "$BD" --target snap
           if [ -z "$(find "$BD" -maxdepth 3 -name '*.snap' -print -quit)" ]; then
@@ -640,7 +640,7 @@ pipeline {
         sh '''
           BD="$BUILDDIR-pkg-freebsd"
           rm -fr "$BD"
-          cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_FREEBSD_PKG=ON
+          cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_FREEBSD_PKG=ON -DENABLE_WHISPERCPP_MODEL_DOWNLOAD=OFF
           cmake --build "$BD" -j$(nproc)
           ( cd "$BD" && cpack -G FREEBSD )
           if [ -z "$(find "$BD" -maxdepth 2 -name '*.pkg' -print -quit)" ]; then
@@ -658,7 +658,7 @@ pipeline {
         sh '''
           BD="$BUILDDIR-pkg-wix"
           rm -fr "$BD"
-          cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_WIX=ON
+          cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_WIX=ON -DENABLE_WHISPERCPP_MODEL_DOWNLOAD=OFF
           cmake --build "$BD" -j$(nproc)
           ( cd "$BD" && cpack -G WIX )
           if [ -z "$(find "$BD" -maxdepth 2 -name '*.msi' -print -quit)" ]; then
@@ -676,7 +676,7 @@ pipeline {
         sh '''
           BD="$BUILDDIR-pkg-appimage"
           rm -fr "$BD"
-          cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_APPIMAGE=ON
+          cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_APPIMAGE=ON -DENABLE_WHISPERCPP_MODEL_DOWNLOAD=OFF
           cmake --build "$BD" --target appimage
           if [ -z "$(find "$BD" -maxdepth 2 -name '*.AppImage' -print -quit)" ]; then
             echo "FAIL: CMake did not produce an .AppImage package"

@@ -35,7 +35,7 @@ jobs:
       - name: Install tools
         run: sudo apt-get update && sudo apt-get install -y build-essential cmake g++ clang-format $DEPENDENCIES
       - name: Code format configure
-        run: cmake -S . -B "$BUILDDIR" -DCMAKE_BUILD_TYPE=Debug -DENABLE_CLANGFORMAT=ON
+        run: cmake -S . -B "$BUILDDIR" -DCMAKE_BUILD_TYPE=Debug -DENABLE_CLANGFORMAT=ON -DENABLE_WHISPERCPP_MODEL_DOWNLOAD=OFF
       - name: Code format build (clang-format)
         run: cmake --build "$BUILDDIR" --target clang-format
       - name: Verify the sources are clang-format clean
@@ -80,7 +80,7 @@ jobs:
       - name: Install tools
         run: sudo apt-get update && sudo apt-get install -y build-essential cmake g++ clang-tidy $DEPENDENCIES
       - name: Debug configure (clang-tidy)
-        run: cmake -S . -B "$BUILDDIR" -DCMAKE_BUILD_TYPE=Debug -DENABLE_CLANG_TIDY=ON -DMAX_LOG_LEVEL=5
+        run: cmake -S . -B "$BUILDDIR" -DCMAKE_BUILD_TYPE=Debug -DENABLE_CLANG_TIDY=ON -DMAX_LOG_LEVEL=5 -DENABLE_WHISPERCPP_MODEL_DOWNLOAD=OFF
       - name: Debug build (clang-tidy runs during compilation)
         run: cmake --build "$BUILDDIR" -j"$(nproc)"
 
@@ -92,7 +92,7 @@ jobs:
       - name: Install tools
         run: sudo apt-get update && sudo apt-get install -y build-essential cmake g++ $DEPENDENCIES
       - name: Release configure
-        run: cmake -S . -B "$BUILDDIR" -DCMAKE_BUILD_TYPE=Release
+        run: cmake -S . -B "$BUILDDIR" -DCMAKE_BUILD_TYPE=Release -DENABLE_WHISPERCPP_MODEL_DOWNLOAD=OFF
       - name: Release build
         run: cmake --build "$BUILDDIR" -j"$(nproc)"
       - name: Release install

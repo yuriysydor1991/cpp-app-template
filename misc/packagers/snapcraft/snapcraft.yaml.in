@@ -25,5 +25,7 @@ parts:
     build-packages:
       - pkg-config
       - libgtkmm-4.0-dev
+      - libadwaita-1-dev
     stage-packages:
       - libgtkmm-4.0-0
+      - libadwaita-1-0

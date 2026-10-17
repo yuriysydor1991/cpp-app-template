@@ -9,11 +9,10 @@ sudo apt install -y flatpak flatpak-builder
 Також знадобиться один з цільових SDK який може бути встановленим за допомогою команди подібної на наступну:
 
 ```
-flatpak install runtime/org.kde.Sdk/x86_64/6.10
-flatpak install runtime/org.kde.Platform/x86_64/6.10
+flatpak install --user flathub runtime/org.kde.Platform/x86_64/6.10 runtime/org.kde.Sdk/x86_64/6.10
 ```
 
-Необіхдно замінити `runtime/org.kde.Sdk/x86_64/6.10` і `runtime/org.kde.Platform/x86_64/6.10` власним варіантом обраного SDK. У документації до flatpak можна визначити як переглянути усі доступні варіанти.
+Версія `6.10` - це `runtime-version`, з якою будується маніфест [misc/packagers/flatpak/flatpak.conf.json.in](/misc/packagers/flatpak/flatpak.conf.json.in): змінюй їх разом, щоб використати інше середовище. У документації до flatpak можна визначити як переглянути усі доступні варіанти.
 
 Ціль `flatpak` самостійно встановлює необхідні їй середовище і SDK з віддаленого сховища `flathub`, тож наведена команда лише виконує їх попереднє встановлення.
 

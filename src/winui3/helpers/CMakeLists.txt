@@ -16,5 +16,5 @@ target_include_directories(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  ${WINUI3_OBJECT_NAME}Helpers
+  PRIVATE ${WINUI3_OBJECT_NAME}Helpers
 )

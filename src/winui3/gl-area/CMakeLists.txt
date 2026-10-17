@@ -26,5 +26,5 @@ target_link_libraries(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  ${WINUI3_OBJECT_NAME}GLArea
+  PRIVATE ${WINUI3_OBJECT_NAME}GLArea
 )

@@ -3,6 +3,9 @@
 
 #include <gmock/gmock.h>
 
+#include <sstream>
+#include <string>
+
 #include "src/lib/facade/public/ILogger.h"
 
 class logMock
@@ -24,51 +27,38 @@ class logMock
   inline static testing::MockFunction<void(const std::string&)> LOGW;
   inline static testing::MockFunction<void(const std::string&)> LOGD;
   inline static testing::MockFunction<void(const std::string&)> LOGT;
+
+  /// @brief Gives the LOG_INIT macro result the real one gives on success.
+  static bool log_init(const std::string& filepath,
+                       const unsigned short& logLvl, const bool printMessages)
+  {
+    LOG_INIT.AsStdFunction()(filepath, logLvl, printMessages);
+
+    return true;
+  }
 };
 
 #define LOG_INIT(filepath, logLvl, printMessages) \
-  logMock::LOG_INIT_DEFAULTS.AsStdFunction()(filepath, logLvl, printMessages);
-#define LOG_INIT_DEFAULTS() logMock::LOG_INIT_DEFAULTS.AsStdFunction()();
+  logMock::log_init(filepath, logLvl, printMessages)
+#define LOG_INIT_DEFAULTS() logMock::LOG_INIT_DEFAULTS.AsStdFunction()()
 #define LOG_INIT_PATH(filepath) \
   logMock::LOG_INIT_PATH.AsStdFunction()(filepath);
 #define LOG_INIT_DEFAULTS_IF_OWN() \
-  logMock::LOG_INIT_DEFAULTS_IF_OWN.AsStdFunction()();
+  logMock::LOG_INIT_DEFAULTS_IF_OWN.AsStdFunction()()
 #define LOG_INIT_REAL_LOGGER(realLogger) \
-  logMock::LOG_INIT_REAL_LOGGER.AsStdFunction()(realLogger);
+  logMock::LOG_INIT_REAL_LOGGER.AsStdFunction()(realLogger)
 
-#define LOGE(msg)                                             \
-  {                                                           \
-    std::stringstream logMessageContainer;                    \
-    logMessageContainer << msg;                               \
-    logMock::LOGE.AsStdFunction()(logMessageContainer.str()); \
-  }
+#define LOG_MOCK_BODY(LOGFUNC, msg)                     \
+  do {                                                  \
+    std::stringstream logMessageContainer;              \
+    logMessageContainer << msg;                         \
+    LOGFUNC.AsStdFunction()(logMessageContainer.str()); \
+  } while (0)
 
-#define LOGI(msg)                                             \
-  {                                                           \
-    std::stringstream logMessageContainer;                    \
-    logMessageContainer << msg;                               \
-    logMock::LOGI.AsStdFunction()(logMessageContainer.str()); \
-  }
-
-#define LOGW(msg)                                             \
-  {                                                           \
-    std::stringstream logMessageContainer;                    \
-    logMessageContainer << msg;                               \
-    logMock::LOGW.AsStdFunction()(logMessageContainer.str()); \
-  }
-
-#define LOGD(msg)                                             \
-  {                                                           \
-    std::stringstream logMessageContainer;                    \
-    logMessageContainer << msg;                               \
-    logMock::LOGD.AsStdFunction()(logMessageContainer.str()); \
-  }
-
-#define LOGT(msg)                                             \
-  {                                                           \
-    std::stringstream logMessageContainer;                    \
-    logMessageContainer << msg;                               \
-    logMock::LOGT.AsStdFunction()(logMessageContainer.str()); \
-  }
+#define LOGE(msg) LOG_MOCK_BODY(logMock::LOGE, msg)
+#define LOGI(msg) LOG_MOCK_BODY(logMock::LOGI, msg)
+#define LOGW(msg) LOG_MOCK_BODY(logMock::LOGW, msg)
+#define LOGD(msg) LOG_MOCK_BODY(logMock::LOGD, msg)
+#define LOGT(msg) LOG_MOCK_BODY(logMock::LOGT, msg)
 
 #endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_LOGGER_SUBSYSTEM_DECLARATIONS_H

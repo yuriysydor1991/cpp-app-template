@@ -78,6 +78,25 @@ class UTEST_ApplicationFactory : public Test
     CppAppTemplate012::LibraryFacade::init_logger_mock.reset();
     logMock::realLogger.reset();
     SignalsHandler::onMockCreate = nullptr;
+    CommandLineParser::mock_get_custom_logfile = nullptr;
+    logMock::log_init_path_result = true;
+  }
+
+  void expect_the_parsed_arguments()
+  {
+    EXPECT_CALL(parserCreationEnsurer, Call(_))
+        .Times(1)
+        .WillOnce(Invoke([](CommandLineParser& instance) {
+          EXPECT_CALL(instance, parse_args(_)).Times(1).WillOnce(Return(true));
+        }));
+
+    CommandLineParser::onMockCreate = parserCreationEnsurer.AsStdFunction();
+  }
+
+  void use_the_custom_log_file(const std::string& path)
+  {
+    CommandLineParser::mock_get_custom_logfile =
+        [path](const int&, char** const&) { return path; };
   }
 
   void expect_the_signals_handler_install()
@@ -100,6 +119,7 @@ class UTEST_ApplicationFactory : public Test
 
   MockFunction<void(SignalsHandler& instance)>
       onMockCreateSignalsHandlerEnsurer;
+  MockFunction<void(CommandLineParser& instance)> parserCreationEnsurer;
 
   std::shared_ptr<ApplicationFactory> factory;
 
@@ -389,4 +409,84 @@ TEST_F(UTEST_ApplicationFactory, factory_execute_default_app)
   Application::onMockCreate = onMockCreateAppEnsurer.AsStdFunction();
 
   EXPECT_EQ(ApplicationFactory::execute(customArgc, customArgv), 0);
+}
+
+TEST_F(UTEST_ApplicationFactory, init_logging_invalid_context_error)
+{
+  EXPECT_FALSE(factory->init_logging({}));
+}
+
+TEST_F(UTEST_ApplicationFactory, init_logging_default_log_file)
+{
+  std::shared_ptr<ApplicationContext> ctx =
+      create_context(customArgc, customArgv);
+
+  EXPECT_TRUE(factory->init_logging(ctx));
+}
+
+TEST_F(UTEST_ApplicationFactory, init_logging_custom_log_file)
+{
+  use_the_custom_log_file("custom.log");
+
+  std::shared_ptr<ApplicationContext> ctx =
+      create_context(customArgc, customArgv);
+
+  EXPECT_TRUE(factory->init_logging(ctx));
+}
+
+TEST_F(UTEST_ApplicationFactory, init_logging_unopenable_log_file_error)
+{
+  use_the_custom_log_file("/nonexistent-directory/custom.log");
+  logMock::log_init_path_result = false;
+
+  std::shared_ptr<ApplicationContext> ctx =
+      create_context(customArgc, customArgv);
+
+  testing::internal::CaptureStderr();
+
+  EXPECT_FALSE(factory->init_logging(ctx));
+
+  EXPECT_THAT(testing::internal::GetCapturedStderr(),
+              HasSubstr("/nonexistent-directory/custom.log"));
+}
+
+TEST_F(UTEST_ApplicationFactory, init_logging_skips_the_help_and_the_version)
+{
+  bool logFileAsked{false};
+
+  CommandLineParser::mock_get_custom_logfile = [&](const int&, char** const&) {
+    logFileAsked = true;
+    return std::string{"custom.log"};
+  };
+
+  std::shared_ptr<ApplicationContext> helpCtx =
+      create_context(customArgc, customArgv);
+  std::shared_ptr<ApplicationContext> versionCtx =
+      create_context(customArgc, customArgv);
+
+  helpCtx->set_print_help_and_exit(true);
+  versionCtx->set_print_version_and_exit(true);
+
+  EXPECT_TRUE(factory->init_logging(helpCtx));
+  EXPECT_TRUE(factory->init_logging(versionCtx));
+  EXPECT_FALSE(logFileAsked);
+}
+
+TEST_F(UTEST_ApplicationFactory, factory_run_unopenable_log_file_error)
+{
+  MockFunction<void(Application & instance)> onMockCreateAppEnsurer;
+
+  EXPECT_CALL(onMockCreateAppEnsurer, Call(_)).Times(0);
+
+  expect_the_parsed_arguments();
+  use_the_custom_log_file("/nonexistent-directory/custom.log");
+  logMock::log_init_path_result = false;
+
+  Application::onMockCreate = onMockCreateAppEnsurer.AsStdFunction();
+
+  testing::internal::CaptureStderr();
+
+  EXPECT_NE(factory->run(customArgc, customArgv), 0);
+
+  testing::internal::GetCapturedStderr();
 }

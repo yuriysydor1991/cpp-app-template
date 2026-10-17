@@ -31,6 +31,17 @@ else
   exit 1
 fi
 
+if command -v sha256sum >/dev/null 2>&1; then
+  checksum() { sha256sum "$1" | cut -d ' ' -f 1; }
+elif command -v shasum >/dev/null 2>&1; then
+  checksum() { shasum -a 256 "$1" | cut -d ' ' -f 1; }
+elif command -v sha256 >/dev/null 2>&1; then
+  checksum() { sha256 -q "$1"; }
+else
+  echo "No sha256sum, shasum or sha256 available to check the downloads with" >&2
+  exit 1
+fi
+
 mkdir -p "$TARGET_DIR"
 
 LICENSES="$TARGET_DIR/LICENSES.md"
@@ -38,21 +49,23 @@ printf '# The sounds of this directory\n\n| Sound | Source | License |\n| --- | 
 
 soundsSeen=0
 
-while IFS='|' read -r soundAlias soundUrl soundLicense; do
+while IFS='|' read -r soundAlias soundUrl soundLicense soundHash; do
   case "$soundAlias" in ''|\#*) continue ;; esac
 
   soundAlias=$(echo "$soundAlias" | tr -d ' ')
   soundUrl=$(echo "$soundUrl" | tr -d ' ')
   soundLicense=$(echo "$soundLicense" | sed 's/^ *//; s/ *$//')
+  soundHash=$(echo "$soundHash" | tr -d ' ' | tr 'A-F' 'a-f')
 
-  if [ -z "$soundUrl" ] || [ -z "$soundLicense" ]; then
-    echo "The '$soundAlias' line of $MANIFEST follows no <category>/<file>|<download URL>|<license> form" >&2
+  if [ -z "$soundUrl" ] || [ -z "$soundLicense" ] || [ ${#soundHash} -ne 64 ]; then
+    echo "The '$soundAlias' line of $MANIFEST follows no <category>/<file>|<download URL>|<license>|<file SHA-256> form" >&2
     exit 1
   fi
 
   soundsSeen=$((soundsSeen + 1))
   soundFile="$TARGET_DIR/$soundAlias"
 
+  # shellcheck disable=SC2016 # the backticks are the markdown code marks
   printf '| `%s` | %s | %s |\n' "$soundAlias" "$soundUrl" "$soundLicense" >> "$LICENSES"
 
   if [ -f "$soundFile" ]; then
@@ -64,12 +77,24 @@ while IFS='|' read -r soundAlias soundUrl soundLicense; do
 
   echo "Downloading $soundAlias ($soundLicense): $soundUrl"
 
-  if ! download "$soundUrl" "$soundFile"; then
-    rm -f "$soundFile"
+  # The file appears only once it is complete and checked, so an interrupted
+  # or altered download leaves nothing behind to be taken for the sound.
+  if ! download "$soundUrl" "$soundFile.part"; then
+    rm -f "$soundFile.part"
     echo "Fail to download the $soundAlias sound from $soundUrl." >&2
     echo "Correct it's line of $MANIFEST or download the sound by hand from https://freesound.org" >&2
     exit 1
   fi
+
+  actualHash=$(checksum "$soundFile.part")
+
+  if [ "$actualHash" != "$soundHash" ]; then
+    rm -f "$soundFile.part"
+    echo "The $soundAlias sound carries the $actualHash SHA-256 checksum instead of the $soundHash one $MANIFEST pins" >&2
+    exit 1
+  fi
+
+  mv "$soundFile.part" "$soundFile"
 done < "$MANIFEST"
 
 if [ "$soundsSeen" -eq 0 ]; then

@@ -13,7 +13,7 @@ set(FREESOUND_AUDIO_CATEGORIES "" CACHE INTERNAL "The categories the sounds mani
 
 set(
   TEMPLATE_APP_FREESOUND_AUDIO_MANIFEST "${CMAKE_SOURCE_DIR}/misc/freesound-sounds.txt"
-  CACHE FILEPATH "The manifest naming every sound together with it's download URL and it's license"
+  CACHE FILEPATH "The manifest naming every sound together with it's download URL, it's license and the file SHA-256 checksum"
 )
 
 if (NOT ENABLE_FREESOUND_AUDIO)

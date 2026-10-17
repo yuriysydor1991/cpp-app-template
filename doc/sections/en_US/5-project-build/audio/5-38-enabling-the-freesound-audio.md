@@ -19,7 +19,7 @@ The `cmake/enablers/audio/template-project-freesound-audio-enabler.cmake` module
 | Variable | Default | Meaning |
 | --- | --- | --- |
 | `ENABLE_FREESOUND_AUDIO` | `ON` | enables the whole integration |
-| `TEMPLATE_APP_FREESOUND_AUDIO_MANIFEST` | `misc/freesound-sounds.txt` | the manifest naming every sound together with it's download URL and it's license |
+| `TEMPLATE_APP_FREESOUND_AUDIO_MANIFEST` | `misc/freesound-sounds.txt` | the manifest naming every sound together with it's download URL, it's license and the file SHA-256 checksum |
 | `TEMPLATE_APP_FREESOUND_AUDIO_DIR` | empty | an already available categories directory to reuse instead of downloading one |
 | `FREESOUND_AUDIO_EXTENSIONS` | `ogg;wav;mp3` | the sound file extensions to pick out of the categories |
 | `FREESOUND_AUDIO_QT_RESOURCE_PREFIX` | `/sounds` | the prefix of the generated `.qrc` manifests |
@@ -31,19 +31,19 @@ The `cmake/enablers/audio/template-project-freesound-audio-enabler.cmake` module
 Freesound publishes it's submissions under CC0, CC-BY and CC-BY-NC alike, **one license per sound** rather than one for the whole database, so this branch records the provenance of every single file. The `misc/freesound-sounds.txt` manifest is the single place naming **which** sound is used, **where** it came from and **what** it is licensed under. Every line follows the
 
 ```
-<category>/<file>|<download URL>|<license>
+<category>/<file>|<download URL>|<license>|<file SHA-256>
 ```
 
 form, the `#` starting a comment and the empty lines being skipped:
 
 ```
-interface/click.ogg|<the preview address of the submission>|CC0-1.0
-feedback/notification.ogg|<the preview address of the submission>|CC-BY-4.0
+interface/click.ogg|<the preview address of the submission>|CC0-1.0|<the sha256sum of the file>
+feedback/notification.ogg|<the preview address of the submission>|CC-BY-4.0|<the sha256sum of the file>
 ```
 
 The category is simply the subdirectory the file is downloaded into and the first part of it's alias, so the grouping is the developer's own rather than anything the site imposes.
 
-**The manifest ships with five CC0 submissions of two categories** - two interface clicks and three feedback beeps - so the branch configures, builds and runs as it is checked out, while picking further submissions, and reading the license of each one at [freesound.org](https://freesound.org), stays the developer's own decision. A sound file sitting in the sounds directory with no manifest entry is refused, so the provenance can not silently go missing.
+**The manifest ships with five CC0 submissions of two categories** - two interface clicks and three feedback beeps - so the branch configures, builds and runs as it is checked out, while picking further submissions, and reading the license of each one at [freesound.org](https://freesound.org), stays the developer's own decision. A sound file sitting in the sounds directory with no manifest entry is refused, so the provenance can not silently go missing, and **the SHA-256 checksum pins the very file the build accepts**: a download carrying anything else stops the configure, an interrupted one leaves nothing behind. Record the `sha256sum` output of a newly added file on it's line.
 
 The Freesound API needs an account token and the `/download/` address of a submission answers a logged in account alone - an anonymous request lands on the login page - so the recorded address is the publicly reachable preview one, `cdn.freesound.org/previews/<first 3 digits of the id>/<id>_<uploader id>-hq.ogg`. The submission itself stays reachable as `freesound.org/s/<id>` and names it's uploader there, so the id inside the recorded address is the provenance of the very file.
 
@@ -68,7 +68,7 @@ misc/scripts/fetch-freesound-audio.sh ~/freesound-audio
 cmake -S . -B build -DTEMPLATE_APP_FREESOUND_AUDIO_DIR=~/freesound-audio
 ```
 
-The script takes the target directory as it's single argument, obeys the `FREESOUND_AUDIO_MANIFEST` environment variable, downloads through `curl` or `wget` (whichever is available) and leaves an already downloaded sound alone.
+The script takes the target directory as it's single argument, obeys the `FREESOUND_AUDIO_MANIFEST` environment variable, downloads through `curl` or `wget` (whichever is available), refuses a file of any other SHA-256 checksum and leaves an already downloaded sound alone.
 
 ### Reaching the sounds from the C++ code
 

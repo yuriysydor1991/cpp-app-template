@@ -5,13 +5,15 @@
 # named here together with the page it came from and the very license it was
 # published under. Every line follows the
 #
-#   <category>/<file>|<download URL>|<license>
+#   <category>/<file>|<download URL>|<license>|<file SHA-256>
 #
 # form, the '#' starting a comment and the empty lines being skipped. The
 # category becomes the subdirectory the file is downloaded into and the first
-# part of it's alias, while the license and the source travel into the binary
-# and are given back by the FreesoundSound::license and the
-# FreesoundSound::sourceUrl accessors.
+# part of it's alias, the license and the source travel into the binary and
+# are given back by the FreesoundSound::license and the
+# FreesoundSound::sourceUrl accessors, while the SHA-256 checksum pins the very
+# file the build accepts: a download carrying anything else stops the
+# configure. Record the "sha256sum" output of a newly added file next to it.
 #
 # Keep this file the single place recording where a sound came from and what it
 # is licensed under: the enabler refuses a sound file carrying no manifest
@@ -30,8 +32,8 @@
 # attribution at all: a CC-BY submission added among them is to be credited by
 # the application on it's own.
 
-interface/click.ogg|https://cdn.freesound.org/previews/623/623175_11545182-hq.ogg|CC0-1.0
-interface/wooden-click.ogg|https://cdn.freesound.org/previews/321/321083_1196020-hq.ogg|CC0-1.0
-feedback/confirmation.ogg|https://cdn.freesound.org/previews/581/581603_5487341-hq.ogg|CC0-1.0
-feedback/error.ogg|https://cdn.freesound.org/previews/581/581604_5487341-hq.ogg|CC0-1.0
-feedback/notification.ogg|https://cdn.freesound.org/previews/571/571513_2226836-hq.ogg|CC0-1.0
+interface/click.ogg|https://cdn.freesound.org/previews/623/623175_11545182-hq.ogg|CC0-1.0|90b8e1132f0dc787a092c19d96c672468c4cac141a0bca902236519b9a2bbe4c
+interface/wooden-click.ogg|https://cdn.freesound.org/previews/321/321083_1196020-hq.ogg|CC0-1.0|c2c64687baca8ed69db5f3a50abf771e53bd2b6892456aac96d5150eabb6a209
+feedback/confirmation.ogg|https://cdn.freesound.org/previews/581/581603_5487341-hq.ogg|CC0-1.0|cc45948d34fc9fc98d078808f352d419f2178badccfd43affaca047d32839166
+feedback/error.ogg|https://cdn.freesound.org/previews/581/581604_5487341-hq.ogg|CC0-1.0|1862a5ff637d0ae74893cd272ac2d1549cea07d054825a4d660fcc5efafe84a9
+feedback/notification.ogg|https://cdn.freesound.org/previews/571/571513_2226836-hq.ogg|CC0-1.0|9118cd47a44d8a3307a5001119406fdabb11a1c004cfff542a783cfa545f7914

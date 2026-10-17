@@ -26,6 +26,8 @@ The `cmake/enablers/audio/template-project-kenney-audio-enabler.cmake` module de
 | `KENNEY_AUDIO_GRESOURCE_PREFIX` | `/ua/org/kytok/template/<binary>/sounds` | the prefix of the generated `.gresource.xml` manifests |
 | `KENNEY_AUDIO_GENERATE_FULL_MANIFESTS` | `ON` | generates the manifests carrying every available sound |
 
+The `src/kenneyaudio` subsystem and the `Application` demo use the sound packs unconditionally, so `-DENABLE_KENNEY_AUDIO=OFF` works only together with their removal: the configure otherwise stops with an explicit error naming what to drop.
+
 ### The packs manifest
 
 The packs to make available are listed in the `misc/kenney-packs.txt` manifest, one `<pack>|<archive URL>|<archive SHA-256>` line each. The pack name becomes the subdirectory the archive is unpacked into and the first part of every sound alias, while **the SHA-256 checksum pins the very archive the build accepts**: a download carrying anything else stops the configure instead of slipping different sounds into the binary, and an interrupted download or extraction leaves nothing behind to be taken for a complete pack.

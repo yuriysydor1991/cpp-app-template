@@ -1,7 +1,7 @@
 #!/bin/bash -e
 #
-# Installs the minimal set of packages required to build and run the project
-# locally on the Red Hat family distributions: Fedora and the RHEL with it's
+# Installs the distribution development packages the template branches build
+# with on the Red Hat family distributions: Fedora and the RHEL with it's
 # CentOS Stream, Rocky Linux and AlmaLinux rebuilds.
 #
 # The --local-pipelines flag adds the tools the local CI pipelines of the
@@ -20,11 +20,8 @@ PACKAGES=(
     autoconf
     automake
     boost-devel
-    btop
     cmake
     curl
-    fdupes
-    ffmpeg-free
     firebird-devel
     freeglut-devel
     gcc-c++
@@ -32,22 +29,16 @@ PACKAGES=(
     glew-devel
     gmock-devel
     gnuplot
-    gstreamer1-devel
-    gstreamermm-devel
     gtest-devel
     gtkmm3.0-devel
     gtkmm4.0-devel
-    htop
     libcurl-devel
     libglvnd-devel
-    libnotify-devel
     libpqxx-devel
     log4cpp-devel
     make
     mesa-libGL-devel
     meson
-    nano
-    nmap
     opencv-data
     opencv-devel
     openssl-devel
@@ -66,10 +57,7 @@ PACKAGES=(
     SDL3-devel
     SDL3_image-devel
     SDL3_ttf-devel
-    traceroute
     webkitgtk6.0-devel
-    wget
-    whois
 )
 
 DNF_SUDO=""

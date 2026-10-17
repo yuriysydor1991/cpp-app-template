@@ -1,7 +1,7 @@
 #!/bin/sh -e
 #
-# Installs the minimal set of packages required to build and run the project
-# locally on FreeBSD.
+# Installs the distribution development packages the template branches build
+# with on FreeBSD.
 #
 # A plain sh script, since the bash the project scripts need is not a part of
 # the FreeBSD base system and is installed below. The base system ships the
@@ -25,29 +25,20 @@ PACKAGES="
     automake
     bash
     boost-libs
-    btop
     cmake
     curl
-    fdupes
-    ffmpeg
     firebird40-client
     freeglut
     git
     glew
     gnuplot
     googletest
-    gstreamer1
-    gstreamermm
     gtkmm30
     gtkmm40
-    htop
     libglvnd
-    libnotify
     log4cpp
     meson
     mysql-connector-c++
-    nano
-    nmap
     opencv
     pkgconf
     postgresql-libpqxx
@@ -64,7 +55,6 @@ PACKAGES="
     sdl3_image
     sdl3_ttf
     webkit2-gtk_60
-    wget
 "
 
 PKG_SUDO=""

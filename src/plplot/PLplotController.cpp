@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <cassert>
 #include <cmath>
+#include <cstddef>
 #include <memory>
 #include <string>
 #include <vector>
@@ -103,7 +104,10 @@ std::vector<std::string> PLplotController::installed_devices()
 
   std::vector<std::string> devices;
 
-  for (int index = 0; index < count && names[index] != nullptr; ++index) {
+  const auto found = static_cast<std::size_t>(std::max(count, 0));
+
+  for (std::size_t index = 0; index < found && names[index] != nullptr;
+       ++index) {
     devices.emplace_back(names[index]);
   }
 

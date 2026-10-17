@@ -176,7 +176,7 @@ pipeline {
       parallel {
         stage('CTEST_PGPLOTController') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_PGPLOTController\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_PGPLOTController.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_PGPLOTController\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_PGPLOTController.junit.xml'
           }
         }
         stage('CTEST_DefaultLogger') {

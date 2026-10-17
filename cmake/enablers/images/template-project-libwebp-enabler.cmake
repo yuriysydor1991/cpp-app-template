@@ -11,7 +11,7 @@ if (NOT ENABLE_LIBWEBP)
 endif()
 
 set(TEMPLATE_APP_LIBWEBP_GIT "https://github.com/webmproject/libwebp.git" CACHE STRING "The libwebp library git source repository")
-set(TEMPLATE_APP_LIBWEBP_GIT_TAG "main" CACHE STRING "The libwebp project git repository tag/branch of interest")
+set(TEMPLATE_APP_LIBWEBP_GIT_TAG "v1.6.0" CACHE STRING "The libwebp project git repository release tag of interest")
 
 template_project_default_3rdparty_enabler(
   NAME WebP

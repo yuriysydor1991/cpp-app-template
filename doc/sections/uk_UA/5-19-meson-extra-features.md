@@ -1,6 +1,6 @@
 ## Додаткові можливості Meson
 
-Гілка `appMeson` пропонує Meson-еквівалент набору можливостей CMake з гілки `app`. Кожна функція вмикається відповідним прапорцем у `meson_options.txt` під час конфігурування: `meson setup -D<OPTION>=true`. Інтеграція виконується через Meson-змінні `template_project_extra_deps`, `template_project_extra_cpp_args` і `template_project_extra_link_args`, до яких кожен модуль `meson/template-project-<feature>-*/meson.build` додає своє значення.
+Гілка `applibMeson` пропонує Meson-еквівалент набору можливостей CMake з гілки `app`. Кожна функція вмикається відповідним прапорцем у `meson_options.txt` під час конфігурування: `meson setup -D<OPTION>=true`. Інтеграція виконується через Meson-змінні `template_project_extra_deps`, `template_project_extra_cpp_args` і `template_project_extra_link_args`, до яких кожен модуль `meson/template-project-<feature>-*/meson.build` додає своє значення.
 
 Матриця нижче ставить у відповідність кожній опції її окрему підсекцію, щоб команди, підказки по встановленню і деталі цілей знаходились поруч з функцією, яку вони вмикають.
 
@@ -54,6 +54,22 @@
 | `-DENABLE_DOCKER=true` | побудова і запуск контейнера | [Вмикання підтримки запуску Docker-контейнера](/doc/sections/uk_UA/5-12-enabling-the-docker-container-build-and-run.md) |
 
 Пакувальники DEB / RPM / FreeBSD pkg / WIX поділяють спільні опції `PROJECT_MAINTAINER` / `PROJECT_MAINTAINER_EMAIL` - див. [Опції супровідника проекту](/doc/sections/uk_UA/5-28-project-maintainer-options.md).
+
+### Журналювання
+
+| Опція | Опис |
+|---|---|
+| `-DMAX_LOG_LEVEL=<0..5>` | Максимальна важливість повідомлень журналу, які потрапляють у скомпільований код, і типовий рівень під час виконання: `1` помилка, `2` попередження, `3` інформація (типово), `4` налагодження, `5` трасування. Помилки `LOGE` компілюються завжди. |
+| `-DDEFAULT_LOG_FILE_PATH=<директорія>` | Директорія, у якій створюється типовий файл журналу (порожнє значення - поточна робоча директорія). |
+| `-DENABLE_LOGS_MICROSECONDS_TIME=false` | Прибирає поле мікросекунд з часових міток повідомлень журналу. |
+
+
+### Бібліотека
+
+| Опція | Підрозділ |
+|---|---|
+| `-DLIB_INCLUDE_MINOR_IN_NAME`, `-DLIB_INCLUDE_MICRO_IN_NAME`, `-DLIB_NAME_SUFFIX` | [Налаштування складових імені встановлюваної бібліотеки](/doc/sections/uk_UA/5-29-customizing-library-name-segments.md) |
+| `-DLIB_INSTALL_DEV_FILES=false` | [Встановлення файлів розробки бібліотеки](/doc/sections/uk_UA/5-30-installing-the-library-development-files.md) |
 
 ### Doxygen
 

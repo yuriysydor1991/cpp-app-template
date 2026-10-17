@@ -5,8 +5,9 @@
  * @brief Marks the entities which make up the installable library interface.
  *
  * The library is compiled with the hidden symbol visibility, so that its
- * implementation - the lib0impl factory and library, the default_logger copy
- * and the project_decls constants - stays private to the shared object. That
+ * implementation - the lib0impl factory and library and the project_decls
+ * constants - stays private to the shared object (the default_logger subsystem
+ * is the one exception on this branch, see src/lib/meson.build). That
  * is a correctness requirement and not a size optimisation: every library
  * derived from this template carries those very same names, and an application
  * which loads two of them would otherwise let the dynamic linker bind the calls

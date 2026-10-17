@@ -1,6 +1,6 @@
 ## Meson extra features
 
-The `appMeson` branch ships with a Meson-based equivalent of the CMake feature set that the `app` branch has. Each feature is gated by a boolean `meson_options.txt` flag and can be turned on at configure time with `meson setup -D<OPTION>=true`. The wiring is centralised through the `template_project_extra_deps`, `template_project_extra_cpp_args` and `template_project_extra_link_args` Meson variables that are appended to by each enabler under `meson/template-project-<feature>-*/meson.build`.
+The `applibMeson` branch ships with a Meson-based equivalent of the CMake feature set that the `app` branch has. Each feature is gated by a boolean `meson_options.txt` flag and can be turned on at configure time with `meson setup -D<OPTION>=true`. The wiring is centralised through the `template_project_extra_deps`, `template_project_extra_cpp_args` and `template_project_extra_link_args` Meson variables that are appended to by each enabler under `meson/template-project-<feature>-*/meson.build`.
 
 The matrix below maps each option to a dedicated subsection so commands, install hints and target descriptions live next to the feature they enable.
 
@@ -54,6 +54,22 @@ Each packager is a `custom_target` that internally runs `meson install` into a s
 | `-DENABLE_DOCKER=true` | container build and run | [Enabling the Docker container build and run](/doc/sections/en_US/5-12-enabling-the-docker-container-build-and-run.md) |
 
 The DEB / RPM / FreeBSD pkg / WIX packagers share the `PROJECT_MAINTAINER` / `PROJECT_MAINTAINER_EMAIL` options - see [Project maintainer options](/doc/sections/en_US/5-28-project-maintainer-options.md).
+
+### Logging
+
+| Option | Description |
+|---|---|
+| `-DMAX_LOG_LEVEL=<0..5>` | The maximum severity of the compiled in log messages and the default runtime level: `1` error, `2` warning, `3` info (the default), `4` debug, `5` trace. The `LOGE` errors are always compiled in. |
+| `-DDEFAULT_LOG_FILE_PATH=<dir>` | The directory the default log file is created in (empty - the current working directory). |
+| `-DENABLE_LOGS_MICROSECONDS_TIME=false` | Drops the microseconds field from the log messages timestamps. |
+
+
+### Library
+
+| Option | Subsection |
+|---|---|
+| `-DLIB_INCLUDE_MINOR_IN_NAME`, `-DLIB_INCLUDE_MICRO_IN_NAME`, `-DLIB_NAME_SUFFIX` | [Customizing the installable library name segments](/doc/sections/en_US/5-29-customizing-library-name-segments.md) |
+| `-DLIB_INSTALL_DEV_FILES=false` | [Installing the library development files](/doc/sections/en_US/5-30-installing-the-library-development-files.md) |
 
 ### Doxygen
 

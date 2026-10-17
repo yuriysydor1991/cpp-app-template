@@ -40,7 +40,7 @@ target_link_libraries(TemplatePgSQLObj TemplatePqxx)
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  TemplatePgSQLObj TemplatePqxx
+  PRIVATE TemplatePgSQLObj TemplatePqxx
 )
 
 add_subdirectory(helpers)

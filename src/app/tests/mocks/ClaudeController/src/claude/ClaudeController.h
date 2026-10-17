@@ -14,7 +14,7 @@ class ClaudeController
  public:
   using ClaudeControllerPtr = std::shared_ptr<ClaudeController>;
 
-  inline static const std::string DEFAULT_MODEL{"claude-opus-5"};
+  inline static const std::string DEFAULT_MODEL{"claude-opus-5-5"};
   inline static const std::string TOKEN_ENV_VAR{"ANTHROPIC_API_KEY"};
   inline static const std::string API_URL{
       "https://api.anthropic.com/v1/messages"};

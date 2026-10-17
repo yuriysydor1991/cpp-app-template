@@ -84,7 +84,7 @@ TEST_F(UTEST_ClaudeController, no_question_no_call)
 
 TEST_F(UTEST_ClaudeController, request_carries_the_question_and_the_model)
 {
-  static const std::string model{"claude-sonnet-5"};
+  static const std::string model{"claude-sonnet-5-5"};
 
   EXPECT_TRUE(controller->set_token(token));
 

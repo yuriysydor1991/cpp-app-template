@@ -26,7 +26,7 @@ class ClaudeController
   using ClaudeControllerPtr = std::shared_ptr<ClaudeController>;
 
   /// @brief The model asked when no other one is requested.
-  inline static const std::string DEFAULT_MODEL{"claude-opus-5"};
+  inline static const std::string DEFAULT_MODEL{"claude-opus-5-5"};
 
   /// @brief The environment variable holding the Anthropic API token when no
   /// token is given in the command line.

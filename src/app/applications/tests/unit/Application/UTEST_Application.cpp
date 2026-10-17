@@ -66,7 +66,7 @@ TEST_F(UTEST_Application, token_from_env_when_no_token_given)
 
 TEST_F(UTEST_Application, given_token_and_model_are_asked_with)
 {
-  static const std::string model{"claude-sonnet-5"};
+  static const std::string model{"claude-sonnet-5-5"};
 
   appCtx->set_claude_question(question);
   appCtx->set_claude_token(token);

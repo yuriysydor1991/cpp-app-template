@@ -24,10 +24,10 @@ export ANTHROPIC_API_KEY=<your-anthropic-api-token>
 ./build/src/CppAppTemplate --question "What is the point of taxes?"
 ```
 
-The `claude-opus-5` model is asked by default. Any other one available for the used token is requested with the `--model` (or `-m`) parameter:
+The `claude-opus-5-5` model is asked by default. Any other one available for the used token is requested with the `--model` (or `-m`) parameter:
 
 ```
-./build/src/CppAppTemplate --model claude-sonnet-5 --question "What is the point of taxes?"
+./build/src/CppAppTemplate --model claude-sonnet-5-5 --question "What is the point of taxes?"
 ```
 
 The executable exits with a non zero status and an error description when the token is rejected or no answer is received. Without a question it only prints the hint on how to provide one, so the component tests keep passing with no token available.
@@ -37,7 +37,7 @@ The executable exits with a non zero status and an error description when the to
 The `claudei::ClaudeController::ask` method sends a single user message to the `https://api.anthropic.com/v1/messages` endpoint:
 
 ```
-{"model":"claude-opus-5","max_tokens":16000,"messages":[{"role":"user","content":"..."}]}
+{"model":"claude-opus-5-5","max_tokens":16000,"messages":[{"role":"user","content":"..."}]}
 ```
 
 Three details of that endpoint are worth keeping in mind when extending the class:

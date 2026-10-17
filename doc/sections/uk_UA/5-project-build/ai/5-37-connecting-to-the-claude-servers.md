@@ -24,10 +24,10 @@ export ANTHROPIC_API_KEY=<ваш-токен-anthropic-api>
 ./build/src/CppAppTemplate --question "У чому сенс податків?"
 ```
 
-За замовчуванням запитується модель `claude-opus-5`. Будь-яка інша, доступна для використаного токена, задається параметром `--model` (або `-m`):
+За замовчуванням запитується модель `claude-opus-5-5`. Будь-яка інша, доступна для використаного токена, задається параметром `--model` (або `-m`):
 
 ```
-./build/src/CppAppTemplate --model claude-sonnet-5 --question "У чому сенс податків?"
+./build/src/CppAppTemplate --model claude-sonnet-5-5 --question "У чому сенс податків?"
 ```
 
 Виконуваний файл завершується з ненульовим статусом і описом помилки, якщо токен відхилено або відповіді не отримано. Без питання він лише виводить підказку про те, як його задати, тому компонентні тести проходять і без доступного токена.
@@ -37,7 +37,7 @@ export ANTHROPIC_API_KEY=<ваш-токен-anthropic-api>
 Метод `claudei::ClaudeController::ask` надсилає одне повідомлення користувача на точку доступу `https://api.anthropic.com/v1/messages`:
 
 ```
-{"model":"claude-opus-5","max_tokens":16000,"messages":[{"role":"user","content":"..."}]}
+{"model":"claude-opus-5-5","max_tokens":16000,"messages":[{"role":"user","content":"..."}]}
 ```
 
 Три особливості цієї точки доступу варто памʼятати при розширенні класу:

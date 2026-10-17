@@ -1,6 +1,9 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include <string>
+#include <vector>
+
 #include "src/app/CommandLineParser.h"
 
 using namespace app;
@@ -35,6 +38,26 @@ class UTEST_CommandLineParser : public Test
 
     argc = 2;
     argv = customArgv;
+  }
+
+  /// @brief Makes the given parameters the command line ones, which follow the
+  /// binary name.
+  void set_args(const std::vector<std::string>& params)
+  {
+    static std::vector<std::string> storage;
+    static std::vector<char*> pointers;
+
+    storage = params;
+    storage.insert(storage.begin(), "binaryName");
+
+    pointers.clear();
+
+    for (std::string& param : storage) {
+      pointers.push_back(param.data());
+    }
+
+    argc = static_cast<int>(pointers.size());
+    argv = pointers.data();
   }
 
   int argc{0};
@@ -122,4 +145,62 @@ TEST_F(UTEST_CommandLineParser, unknown_flag)
   EXPECT_TRUE(appctx->get_print_help_and_exit());
   EXPECT_FALSE(appctx->get_print_version_and_exit());
   EXPECT_THAT(appctx->get_errors(), ElementsAre(expectedError));
+}
+
+TEST_F(UTEST_CommandLineParser, log_file_short)
+{
+  set_args({"-l", "custom.log"});
+
+  EXPECT_CALL(*appctx, push_error(_)).Times(0);
+
+  EXPECT_TRUE(parser->parse_args(appctx));
+
+  EXPECT_FALSE(appctx->get_print_help_and_exit());
+  EXPECT_FALSE(appctx->get_print_version_and_exit());
+  EXPECT_TRUE(appctx->get_errors().empty());
+  EXPECT_EQ(CommandLineParser::get_custom_logfile(argc, argv), "custom.log");
+}
+
+TEST_F(UTEST_CommandLineParser, log_file_long)
+{
+  set_args({"--log-file", "custom.log"});
+
+  EXPECT_CALL(*appctx, push_error(_)).Times(0);
+
+  EXPECT_TRUE(parser->parse_args(appctx));
+
+  EXPECT_FALSE(appctx->get_print_help_and_exit());
+  EXPECT_FALSE(appctx->get_print_version_and_exit());
+  EXPECT_TRUE(appctx->get_errors().empty());
+  EXPECT_EQ(CommandLineParser::get_custom_logfile(argc, argv), "custom.log");
+}
+
+TEST_F(UTEST_CommandLineParser, log_file_value_is_skipped)
+{
+  set_args({"--log-file", "custom.log", "--version"});
+
+  EXPECT_CALL(*appctx, push_error(_)).Times(0);
+
+  EXPECT_TRUE(parser->parse_args(appctx));
+
+  EXPECT_FALSE(appctx->get_print_help_and_exit());
+  EXPECT_TRUE(appctx->get_print_version_and_exit());
+  EXPECT_TRUE(appctx->get_errors().empty());
+}
+
+TEST_F(UTEST_CommandLineParser, log_file_missing_value)
+{
+  static const std::string expectedError =
+      "Parameter --log-file requires the data next to it.";
+
+  set_args({"--log-file"});
+
+  EXPECT_CALL(*appctx, push_error(expectedError)).Times(1);
+
+  EXPECT_FALSE(parser->parse_args(appctx));
+
+  EXPECT_TRUE(appctx->get_print_help_and_exit());
+  EXPECT_FALSE(appctx->get_print_version_and_exit());
+  EXPECT_THAT(appctx->get_errors(), ElementsAre(expectedError));
+  EXPECT_TRUE(CommandLineParser::get_custom_logfile(argc, argv).empty());
 }

@@ -1,4 +1,4 @@
-#include "src/gtkmm4/gl-area/GLTriangleArea.h"
+#include "src/gtkmm4/gl-area/GLCanvasArea.h"
 
 #include <epoxy/gl.h>
 
@@ -7,24 +7,24 @@
 namespace Gtkmm4i::gl_area
 {
 
-GLTriangleArea::GLTriangleArea()
+GLCanvasArea::GLCanvasArea()
 {
   set_expand(true);
   set_size_request(320, 240);
   set_auto_render(true);
 
   signal_realize().connect(
-      sigc::mem_fun(*this, &GLTriangleArea::on_area_realize));
+      sigc::mem_fun(*this, &GLCanvasArea::on_area_realize));
   // unrealize before the default handler so the GL context is still current
   signal_unrealize().connect(
-      sigc::mem_fun(*this, &GLTriangleArea::on_area_unrealize), false);
-  signal_render().connect(sigc::mem_fun(*this, &GLTriangleArea::on_area_render),
+      sigc::mem_fun(*this, &GLCanvasArea::on_area_unrealize), false);
+  signal_render().connect(sigc::mem_fun(*this, &GLCanvasArea::on_area_render),
                           false);
 }
 
-GLTriangleArea::~GLTriangleArea() = default;
+GLCanvasArea::~GLCanvasArea() = default;
 
-void GLTriangleArea::on_area_realize()
+void GLCanvasArea::on_area_realize()
 {
   make_current();
 
@@ -36,11 +36,15 @@ void GLTriangleArea::on_area_realize()
     return;
   }
 
+  LOGD(
+      "The Gtk::GLArea context is ready; add your OpenGL commands in "
+      "GLCanvasArea::on_area_render()");
+
   // The GL context is now current. Allocate your buffers, shaders and other
   // GL resources here.
 }
 
-void GLTriangleArea::on_area_unrealize()
+void GLCanvasArea::on_area_unrealize()
 {
   make_current();
 
@@ -54,7 +58,7 @@ void GLTriangleArea::on_area_unrealize()
   // Release any GL resources allocated in on_area_realize() here.
 }
 
-bool GLTriangleArea::on_area_render(const Glib::RefPtr<Gdk::GLContext>& /*ctx*/)
+bool GLCanvasArea::on_area_render(const Glib::RefPtr<Gdk::GLContext>& /*ctx*/)
 {
   try {
     throw_if_error();
@@ -69,9 +73,6 @@ bool GLTriangleArea::on_area_render(const Glib::RefPtr<Gdk::GLContext>& /*ctx*/)
 
   // Blank black canvas. Enter your own OpenGL draw commands below to render a
   // scene into the Gtk::GLArea framebuffer.
-  LOGI(
-      "Gtk::GLArea blank frame rendered - add your OpenGL commands in "
-      "GLTriangleArea::on_area_render()");
 
   glFlush();
 

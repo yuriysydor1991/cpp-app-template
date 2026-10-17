@@ -1,5 +1,5 @@
-#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMM4_GLTRIANGLEAREA_CLASS_H
-#define YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMM4_GLTRIANGLEAREA_CLASS_H
+#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMM4_GLCANVASAREA_CLASS_H
+#define YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMM4_GLCANVASAREA_CLASS_H
 
 #include "src/gtkmm4/gtkmm4_includes.h"
 
@@ -13,11 +13,11 @@ namespace Gtkmm4i::gl_area
  * canvas. Add your own OpenGL commands inside on_area_render() (and allocate
  * any resources in on_area_realize()) to draw a real scene.
  */
-class GLTriangleArea : public Gtk::GLArea
+class GLCanvasArea : public Gtk::GLArea
 {
  public:
-  GLTriangleArea();
-  ~GLTriangleArea() override;
+  GLCanvasArea();
+  ~GLCanvasArea() override;
 
  protected:
   /** @brief Prepare GL resources once the GL context is available. */
@@ -30,4 +30,4 @@ class GLTriangleArea : public Gtk::GLArea
 
 }  // namespace Gtkmm4i::gl_area
 
-#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMM4_GLTRIANGLEAREA_CLASS_H
+#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_GTKMM4_GLCANVASAREA_CLASS_H

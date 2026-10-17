@@ -7,7 +7,7 @@ pkg_check_modules(EPOXY REQUIRED epoxy)
 
 add_library(
   TemplateGtkmm4GLAreaObj OBJECT
-  GLTriangleArea.cpp
+  GLCanvasArea.cpp
 )
 
 target_include_directories(

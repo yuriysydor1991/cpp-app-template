@@ -36,9 +36,13 @@ set(CPACK_DEBIAN_PACKAGE_MAINTAINER "${PROJECT_MAINTAINER} ${PROJECT_MAINTAINER_
 set(CPACK_DEB_COMPONENT_INSTALL ON)
 set(CPACK_PACKAGE_DESCRIPTION ${CMAKE_PROJECT_DESCRIPTION})
 set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE ${TEMPLATE_PROJECT_DEB_PACKAGE_ARCHITECTURE})
-# Qt loads the Vulkan loader at run time (dlopen), so no Qt package pulls it in
-set(CPACK_DEBIAN_PACKAGE_DEPENDS
-    "libqt6core6, libqt6gui6, libqt6widgets6, libvulkan1"
+# Qt loads the Vulkan loader at run time (dlopen), so no Qt package pulls it in;
+# the 64-bit time_t transition renamed the Qt6 base libraries with a t64 suffix
+# (every release for the core one, Ubuntu 24.04 for the rest)
+string(
+  JOIN ", " CPACK_DEBIAN_PACKAGE_DEPENDS
+  libqt6core6t64 "libqt6gui6 | libqt6gui6t64"
+  "libqt6widgets6 | libqt6widgets6t64" libvulkan1
 )
 
 # the CPACK_SYSTEM_NAME of the default file name names the system alone, so the

@@ -28,7 +28,7 @@ target_include_directories(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  TemplateProjectPLPlotControllerObj
+  PRIVATE TemplateProjectPLPlotControllerObj
 )
 
 add_subdirectory(tests)

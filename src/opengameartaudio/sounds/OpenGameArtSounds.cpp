@@ -1,7 +1,9 @@
 #include "src/opengameartaudio/sounds/OpenGameArtSounds.h"
 
+#include <algorithm>
 #include <cassert>
 #include <cstddef>
+#include <iterator>
 #include <memory>
 #include <string>
 #include <utility>
@@ -30,9 +32,12 @@ OpenGameArtSounds::OpenGameArtSounds(IOpenGameArtPacksPtr gpacks)
     // and the index answers with a reference into it's own storage.
     const auto packName = pack->name();
 
-    for (const auto& soundPath : OpenGameArtGeneratedSounds::names(packName)) {
-      msounds.push_back(OpenGameArtSound::create(pack, soundPath));
-    }
+    const auto& soundPaths = OpenGameArtGeneratedSounds::names(packName);
+
+    std::transform(soundPaths.cbegin(), soundPaths.cend(),
+                   std::back_inserter(msounds), [&pack](const auto& soundPath) {
+                     return OpenGameArtSound::create(pack, soundPath);
+                   });
   }
 }
 
@@ -46,11 +51,10 @@ OpenGameArtSounds::SoundsList OpenGameArtSounds::ofPack(
 {
   SoundsList found;
 
-  for (const auto& sound : msounds) {
-    if (sound->pack()->name() == packName) {
-      found.push_back(sound);
-    }
-  }
+  std::copy_if(msounds.cbegin(), msounds.cend(), std::back_inserter(found),
+               [&packName](const auto& sound) {
+                 return sound->pack()->name() == packName;
+               });
 
   return found;
 }
@@ -58,13 +62,13 @@ OpenGameArtSounds::SoundsList OpenGameArtSounds::ofPack(
 OpenGameArtSoundPtr OpenGameArtSounds::find(const std::string& packName,
                                             const std::string& soundPath) const
 {
-  for (const auto& sound : msounds) {
-    if (sound->pack()->name() == packName && sound->path() == soundPath) {
-      return sound;
-    }
-  }
+  const auto found = std::find_if(msounds.cbegin(), msounds.cend(),
+                                  [&packName, &soundPath](const auto& sound) {
+                                    return sound->pack()->name() == packName &&
+                                           sound->path() == soundPath;
+                                  });
 
-  return {};
+  return found == msounds.cend() ? OpenGameArtSoundPtr{} : *found;
 }
 
 OpenGameArtSounds::SoundsList OpenGameArtSounds::search(
@@ -72,11 +76,10 @@ OpenGameArtSounds::SoundsList OpenGameArtSounds::search(
 {
   SoundsList found;
 
-  for (const auto& sound : msounds) {
-    if (sound->name().find(namePart) != std::string::npos) {
-      found.push_back(sound);
-    }
-  }
+  std::copy_if(msounds.cbegin(), msounds.cend(), std::back_inserter(found),
+               [&namePart](const auto& sound) {
+                 return sound->name().find(namePart) != std::string::npos;
+               });
 
   return found;
 }

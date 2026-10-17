@@ -1,6 +1,8 @@
 #include "src/opengameartaudio/packs/OpenGameArtPacks.h"
 
+#include <algorithm>
 #include <cstddef>
+#include <iterator>
 #include <memory>
 #include <string>
 
@@ -18,10 +20,11 @@ OpenGameArtPacks::OpenGameArtPacks()
 
   mpacks.reserve(packNames.size());
 
-  for (const auto& packName : packNames) {
-    mpacks.push_back(OpenGameArtPack::create(
-        packName, OpenGameArtGeneratedSounds::license(packName)));
-  }
+  std::transform(packNames.cbegin(), packNames.cend(),
+                 std::back_inserter(mpacks), [](const auto& packName) {
+                   return OpenGameArtPack::create(
+                       packName, OpenGameArtGeneratedSounds::license(packName));
+                 });
 }
 
 const OpenGameArtPacks::PacksList& OpenGameArtPacks::all() const
@@ -31,13 +34,11 @@ const OpenGameArtPacks::PacksList& OpenGameArtPacks::all() const
 
 IOpenGameArtPackPtr OpenGameArtPacks::find(const std::string& packName) const
 {
-  for (const auto& pack : mpacks) {
-    if (pack->name() == packName) {
-      return pack;
-    }
-  }
+  const auto found = std::find_if(
+      mpacks.cbegin(), mpacks.cend(),
+      [&packName](const auto& pack) { return pack->name() == packName; });
 
-  return {};
+  return found == mpacks.cend() ? IOpenGameArtPackPtr{} : *found;
 }
 
 std::size_t OpenGameArtPacks::count() const { return mpacks.size(); }

@@ -1,5 +1,7 @@
 #include "src/opengameartaudio/sounds/OpenGameArtGeneratedSounds.h"
 
+#include <algorithm>
+#include <iterator>
 #include <map>
 #include <string>
 
@@ -50,9 +52,9 @@ const OpenGameArtGeneratedSounds::NamesList& OpenGameArtGeneratedSounds::packs()
 
     collected.reserve(generated().size());
 
-    for (const auto& pack : generated()) {
-      collected.push_back(pack.first);
-    }
+    std::transform(generated().cbegin(), generated().cend(),
+                   std::back_inserter(collected),
+                   [](const auto& pack) { return pack.first; });
 
     return collected;
   }();

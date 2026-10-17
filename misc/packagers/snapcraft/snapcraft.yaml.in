@@ -25,5 +25,7 @@ parts:
     build-packages:
       - pkg-config
       - libgtkmm-4.0-dev
+      - libwebkitgtk-6.0-dev
     stage-packages:
       - libgtkmm-4.0-0
+      - libwebkitgtk-6.0-4

@@ -77,8 +77,8 @@ class GtkmmWindow : public Gtk::Window
   inline static constexpr const int W_DEFAULT_WIDTH = 650;
   inline static constexpr const int W_DEFAULT_HEIGHT = 400;
 
-  // Declared before the picture so it (and the dma-buf it owns) outlives the
-  // texture held by the picture.
+  // The texture of the picture holds a dma-buf file descriptor of it's own, so
+  // the member order does not matter for the buffer lifetime.
   std::unique_ptr<vulkani::VulkanDmabufRenderer> renderer;
 
   Gtk::Picture picture;

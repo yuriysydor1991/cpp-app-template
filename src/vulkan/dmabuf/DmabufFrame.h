@@ -12,7 +12,8 @@ namespace vulkani
  * Everything the GTK side needs to wrap the exported buffer into a
  * Gdk::DmabufTexture (the DRM fourcc, the DRM format modifier, the file
  * descriptor, and the linear layout). The owning VulkanDmabufRenderer keeps the
- * file descriptor (and the backing Vulkan memory) valid for its whole lifetime.
+ * file descriptor valid for its whole lifetime; a consumer that may outlive the
+ * renderer duplicates it (the dma-buf stays alive while any descriptor does).
  */
 struct DmabufFrame
 {

@@ -1,5 +1,7 @@
 #include "src/gtkmm4/main-window/GtkmmWindow.h"
 
+#include <unistd.h>
+
 #include <string>
 
 #include "project-global-decls.h"
@@ -64,6 +66,16 @@ bool GtkmmWindow::show_vulkan_surface(VkInstance instance)
 Glib::RefPtr<Gdk::Texture> GtkmmWindow::build_texture(
     const vulkani::DmabufFrame& frame)
 {
+  // The texture gets a file descriptor of it's own, which GTK closes through
+  // the release slot once it is done with the buffer, so the texture never
+  // depends on the renderer outliving it.
+  const int textureFd = dup(frame.fd);
+
+  if (textureFd < 0) {
+    LOGE("Failed to duplicate the Vulkan dma-buf file descriptor");
+    return {};
+  }
+
   try {
     auto builder = Gdk::DmabufTextureBuilder::create();
     builder->set_display(Gdk::Display::get_default());
@@ -72,16 +84,15 @@ Glib::RefPtr<Gdk::Texture> GtkmmWindow::build_texture(
     builder->set_fourcc(frame.fourcc);
     builder->set_modifier(frame.modifier);
     builder->set_n_planes(1);
-    builder->set_fd(0, frame.fd);
+    builder->set_fd(0, textureFd);
     builder->set_stride(0, frame.stride);
     builder->set_offset(0, frame.offset);
 
-    // No release slot: the renderer keeps the file descriptor (and the backing
-    // Vulkan memory) alive for its whole lifetime, which outlives this texture.
-    return builder->build();
+    return builder->build([textureFd]() { ::close(textureFd); });
   }
   catch (const Glib::Error& ex) {
     LOGE("Failed to build the Vulkan dma-buf texture: " << ex.what());
+    ::close(textureFd);
     return {};
   }
 }

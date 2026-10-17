@@ -263,7 +263,6 @@ function(template_project_freesound_audio_generate_index)
   )
 
   set(FREESOUND_AUDIO_GENERATED_SOUNDS_SOURCE "${generatedSource}" CACHE INTERNAL "The generated Freesound sounds index implementation file")
-  set(FREESOUND_AUDIO_SOUNDS_COUNT "${total}" CACHE INTERNAL "The count of the Freesound sounds made available")
 
   message(STATUS "Freesound sounds made available: ${total}")
 endfunction()

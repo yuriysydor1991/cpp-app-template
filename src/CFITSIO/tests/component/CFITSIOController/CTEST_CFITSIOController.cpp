@@ -31,19 +31,19 @@ class CTEST_CFITSIOController : public Test
     std::filesystem::remove(plain_path(), ec);
   }
 
-  static std::string fits_path()
-  {
-    return path_of("CTEST_CFITSIOController.fits");
-  }
+  static std::string fits_path() { return path_of(".fits"); }
 
-  static std::string plain_path()
-  {
-    return path_of("CTEST_CFITSIOController.txt");
-  }
+  static std::string plain_path() { return path_of(".txt"); }
 
-  static std::string path_of(const std::string& filename)
+  /// @brief Names the files after the running test, so the tests started at
+  /// once (ctest -j) never share one.
+  static std::string path_of(const std::string& extension)
   {
-    return (std::filesystem::path{CTEST_CFITSIOController_DATA_DIR} / filename)
+    const std::string test =
+        UnitTest::GetInstance()->current_test_info()->name();
+
+    return (std::filesystem::path{CTEST_CFITSIOController_DATA_DIR} /
+            ("CTEST_CFITSIOController_" + test + extension))
         .string();
   }
 

@@ -36,6 +36,10 @@ class Loader
   WidgetType* get_widget(const std::string& id);
 
   Glib::RefPtr<Gtk::Builder> builder;
+
+  /// @brief The top level window of the UI, which the builder leaves to the
+  /// caller to delete.
+  std::unique_ptr<Gtk::Window> mainWindow;
 };
 
 using LoaderPtr = Loader::LoaderPtr;

@@ -18,29 +18,30 @@ bool Loader::init()
   LOGD("Trying to instantiate a builder from resource: "
        << DataContext::UI_res_path);
 
-  builder = Gtk::Builder::create_from_resource(DataContext::UI_res_path);
+  try {
+    builder = Gtk::Builder::create_from_resource(DataContext::UI_res_path);
+  }
+  catch (const Glib::Error& ex) {
+    LOGE("Fail to build the UI from the resource: " << ex.what());
+    return false;
+  }
 
-  assert(builder);
+  // The builder hands a top level window over to the caller, which has to
+  // delete it, so the loader owns the window from here on.
+  mainWindow.reset(get_widget<Gtk::Window>(DataContext::main_window_id));
 
-  if (!builder) {
-    LOGE("Invalid builder obtained");
+  if (mainWindow == nullptr) {
+    LOGE("No main window in the UI resource");
     return false;
   }
 
   LOGD("Trying to prepare widgets");
 
-  prepare_widgets();
-
-  return true;
+  return prepare_widgets();
 }
 
 bool Loader::prepare_widgets()
 {
-  if (!builder) {
-    LOGE("Failed to create the builder");
-    return false;
-  }
-
   if (!load_css()) {
     LOGE("Fail to load the CSS");
     return false;
@@ -130,12 +131,7 @@ WidgetType* Loader::get_widget(const std::string& id)
   return tptr;
 }
 
-Gtk::Window* Loader::window()
-{
-  assert(builder);
-
-  return get_widget<Gtk::Window>(DataContext::main_window_id);
-}
+Gtk::Window* Loader::window() { return mainWindow.get(); }
 
 Gtk::Image* Loader::central_image()
 {

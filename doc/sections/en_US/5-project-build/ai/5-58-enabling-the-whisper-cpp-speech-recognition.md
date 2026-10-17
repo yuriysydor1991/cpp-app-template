@@ -27,7 +27,7 @@ The fetched sources build the [ggml](https://github.com/ggml-org/ggml) tensor li
 
 The whisper.cpp transcribes the speech with a [ggml model](https://huggingface.co/ggerganov/whisper.cpp) of the Whisper, which is no part of the build, so the configure downloads the `TEMPLATE_APP_WHISPERCPP_MODEL` one into the `models` directory of the build tree. By default it is the multilingual `small` model of 466 MiB, which transcribes the English, the Ukrainian and the other languages of the Whisper.
 
-The download goes through the [download-ggml-model.sh](https://github.com/ggml-org/whisper.cpp/blob/master/models/download-ggml-model.sh) script of the whisper.cpp (the `download-ggml-model.cmd` one on the MS Windows), which needs the `curl` or the `wget` tool. No system package ships the script, so the configure fetches the one of the `TEMPLATE_APP_WHISPERCPP_GIT_TAG` release first. Every build tree downloads a model of it's own once, while a failed download only warns, leaving the `--model` parameter the way to give one. Pick another model with the `TEMPLATE_APP_WHISPERCPP_MODEL` variable:
+The download goes through the [download-ggml-model.sh](https://github.com/ggml-org/whisper.cpp/blob/master/models/download-ggml-model.sh) script of the whisper.cpp (the `download-ggml-model.cmd` one on the MS Windows), which needs the `curl` or the `wget` tool. No system package ships the script, so the configure fetches the one of the `v1.9.4` release first and checks it's SHA256 checksum before running it. The downloaded model is checked against the SHA1 checksum the whisper.cpp models list gives for it (or the `TEMPLATE_APP_WHISPERCPP_MODEL_SHA1` one), and a model of a wrong checksum is removed. Every build tree downloads a model of it's own once, while a failed download only warns, leaving the `--model` parameter the way to give one. Pick another model with the `TEMPLATE_APP_WHISPERCPP_MODEL` variable:
 
 ```
 cmake -S . -B build -DTEMPLATE_APP_WHISPERCPP_MODEL=large-v3-turbo
@@ -37,6 +37,7 @@ cmake -S . -B build -DTEMPLATE_APP_WHISPERCPP_MODEL=large-v3-turbo
 | --- | --- |
 | `TEMPLATE_APP_WHISPERCPP_MODEL` | the model to download, e.g. the multilingual `tiny`, `base`, `small`, `medium`, `large-v3-turbo` one, the quantized `small-q5_1` like one or the English only `.en` variant of them |
 | `ENABLE_WHISPERCPP_MODEL_DOWNLOAD` | downloads the model while configuring, `ON` by default |
+| `TEMPLATE_APP_WHISPERCPP_MODEL_SHA1` | the SHA1 checksum to check a model of no listed one against, empty by default |
 | `PROJECT_WHISPER_MODEL_PATH` | the model the application loads while the `--model` (or `-m`) command line parameter gives none, the downloaded one if empty, so nothing gets downloaded once it is given |
 | `PROJECT_WHISPER_LANGUAGE` | the spoken language code (`en`, `uk`, `de` etc.) the multilingual models transcribe, `auto` to detect it |
 

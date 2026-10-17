@@ -27,7 +27,7 @@ target_link_libraries(${PROJECT_BINARY_NAME} whisper)
 
 whisper.cpp розпізнає мовлення за допомогою [ggml-моделі](https://huggingface.co/ggerganov/whisper.cpp) Whisper, яка не є частиною збірки, тож конфігурування завантажує модель `TEMPLATE_APP_WHISPERCPP_MODEL` у директорію `models` дерева збірки. За замовчуванням це багатомовна модель `small` розміром 466 МіБ, яка розпізнає англійську, українську та інші мови Whisper.
 
-Завантаження виконує скрипт [download-ggml-model.sh](https://github.com/ggml-org/whisper.cpp/blob/master/models/download-ggml-model.sh) з whisper.cpp (у MS Windows - скрипт `download-ggml-model.cmd`), якому потрібен інструмент `curl` або `wget`. Жоден системний пакет не постачає цього скрипта, тож конфігурування спершу завантажує скрипт випуску `TEMPLATE_APP_WHISPERCPP_GIT_TAG`. Кожне дерево збірки один раз завантажує власну модель, а невдале завантаження лише попереджає, залишаючи для моделі параметр `--model`. Іншу модель обирає змінна `TEMPLATE_APP_WHISPERCPP_MODEL`:
+Завантаження виконує скрипт [download-ggml-model.sh](https://github.com/ggml-org/whisper.cpp/blob/master/models/download-ggml-model.sh) з whisper.cpp (у MS Windows - скрипт `download-ggml-model.cmd`), якому потрібен інструмент `curl` або `wget`. Жоден системний пакет не постачає цього скрипта, тож конфігурування спершу завантажує скрипт випуску `v1.9.4` і перевіряє його контрольну суму SHA256 перед запуском. Завантажену модель перевіряє контрольна сума SHA1 зі списку моделей whisper.cpp (або задана змінною `TEMPLATE_APP_WHISPERCPP_MODEL_SHA1`), а модель з хибною контрольною сумою видаляється. Кожне дерево збірки один раз завантажує власну модель, а невдале завантаження лише попереджає, залишаючи для моделі параметр `--model`. Іншу модель обирає змінна `TEMPLATE_APP_WHISPERCPP_MODEL`:
 
 ```
 cmake -S . -B build -DTEMPLATE_APP_WHISPERCPP_MODEL=large-v3-turbo
@@ -37,6 +37,7 @@ cmake -S . -B build -DTEMPLATE_APP_WHISPERCPP_MODEL=large-v3-turbo
 | --- | --- |
 | `TEMPLATE_APP_WHISPERCPP_MODEL` | модель для завантаження, наприклад багатомовна `tiny`, `base`, `small`, `medium`, `large-v3-turbo`, квантована на кшталт `small-q5_1` або їхній англомовний варіант `.en` |
 | `ENABLE_WHISPERCPP_MODEL_DOWNLOAD` | завантажує модель під час конфігурування, за замовчуванням `ON` |
+| `TEMPLATE_APP_WHISPERCPP_MODEL_SHA1` | контрольна сума SHA1 для перевірки моделі, якої немає у списку, за замовчуванням порожня |
 | `PROJECT_WHISPER_MODEL_PATH` | модель, яку завантажує програма, поки параметр командного рядка `--model` (або `-m`) не задає іншої, а якщо змінна порожня - завантажену модель, тож коли змінну задано, нічого не завантажується |
 | `PROJECT_WHISPER_LANGUAGE` | код мови мовлення (`en`, `uk`, `de` тощо), яку розпізнають багатомовні моделі, `auto` для її визначення |
 

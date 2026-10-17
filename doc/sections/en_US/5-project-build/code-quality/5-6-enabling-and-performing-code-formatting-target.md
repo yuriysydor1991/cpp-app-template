@@ -16,4 +16,4 @@ To perform the whole project code format in accordance with available `misc/.cla
 cmake --build build --target clang-format
 ```
 
-The `clang-format` target details may be examined and/or altered in the `cmake/template-project-clang-format-target.cmake` CMake submodule file.
+The `clang-format` target details may be examined and/or altered in the `cmake/enablers/template-project-clang-format-target.cmake` CMake submodule file.

@@ -5,9 +5,20 @@ FLATPAK_PROJECT_URL = 'ua.org.kytok.template.' + meson.project_name()
 FLATPAK_TARGET_ARCH = run_command('flatpak', '--default-arch', check: true).stdout().strip()
 FLATPAK_REPO = join_paths(meson.current_build_dir(), meson.project_name() + '-repo')
 FLATPAK_BUILD = join_paths(meson.current_build_dir(), meson.project_name() + '-flatpak-build')
-FLATPAK_DST_NAME = meson.project_name() + '-' + meson.project_version() + '-' + FLATPAK_TARGET_ARCH + '.flatpak'
 flatpakConfDst = 'flatpak.conf.json'
 FLATPAK_CONF_SRC = join_paths('..', '..', 'misc', 'flatpak.conf.json.meson.in')
+
+# the runtime the bundle demands, the GUI framework picks it (e.g. gnome-49 for
+# the org.gnome.Platform 49), so the bundle names it instead of the build host
+flatpak_conf_text = import('fs').read(FLATPAK_CONF_SRC)
+FLATPAK_RUNTIME = '-'.join([
+  flatpak_conf_text.split('"runtime": "')[1].split('"')[0].split('.')[1],
+  flatpak_conf_text.split('"runtime-version": "')[1].split('"')[0],
+])
+FLATPAK_DST_NAME = '-'.join(
+  [meson.project_name(), meson.project_version(), FLATPAK_TARGET_ARCH, FLATPAK_RUNTIME]
+) + '.flatpak'
+
 FLATPAK_DEPS_REMOTE = 'flathub'
 FLATPAK_DEPS_REMOTE_URL = 'https://dl.flathub.org/repo/flathub.flatpakrepo'
 

@@ -4,7 +4,9 @@ rpm_arch = run_command('uname', '-m', check: true).stdout().strip()
 rpm_topdir = join_paths(meson.project_build_root(), 'rpm-build')
 rpm_stage_dir = join_paths(rpm_topdir, 'STAGE')
 rpm_file_list = join_paths(rpm_topdir, 'files.list')
-rpm_output = meson.project_name() + '-' + meson.project_version() + '-1.' + rpm_arch + '.rpm'
+# the one package the rpmbuild names after its release and dist tag (e.g. the
+# 1.fc44) lands under the name scheme of the other packagers
+rpm_output = meson.project_name() + '-' + meson.project_version() + '-' + rpm_arch + '-' + package_os + '.rpm'
 
 rpm_spec_path = join_paths(meson.current_build_dir(), meson.project_name() + '.spec')
 
@@ -37,7 +39,7 @@ rpm_cmd = [
     'find . -type d -path "*' + meson.project_name() + '*" | cut -c2- | sed "s/^/%dir /") > ' +
     rpm_file_list + ' && ' +
   'rpmbuild --define "_topdir ' + rpm_topdir + '" -bb ' + rpm_spec_path + ' && ' +
-  'cp ' + rpm_topdir + '/RPMS/' + rpm_arch + '/*.rpm ' + meson.project_build_root() + '/'
+  'cp ' + rpm_topdir + '/RPMS/' + rpm_arch + '/*.rpm ' + join_paths(meson.project_build_root(), rpm_output)
 ]
 
 rpm_target = custom_target(

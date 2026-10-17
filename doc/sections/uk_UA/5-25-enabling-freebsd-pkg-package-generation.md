@@ -20,6 +20,6 @@ meson setup build -DENABLE_FREEBSD_PKG=true \
 meson compile -C build freebsd-pkg
 ```
 
-Артефакт іменується за шаблоном `<проект>-<версія>-<арх>.pkg` і потрапляє у директорію побудови. Опції `PROJECT_MAINTAINER` і `PROJECT_MAINTAINER_EMAIL` потрапляють у поле `maintainer:` файлу `+MANIFEST`. Деталі і параметри цілі можна переглянути або змінити у файлах `meson/template-project-freebsd-pkg-enabler/meson.build` чи у шаблоні `misc/freebsd-pkg.manifest.in`.
+Артефакт іменується за шаблоном `<проект>-<версія>-<арх>-<ОС>.pkg` і потрапляє у директорію побудови, де `<ОС>` - цільова ОС, яку містить опція `PACKAGE_OS` (типово: поля `ID` і `VERSION_ID` файлу `/etc/os-release` хоста збирання, наприклад `freebsd-15.1`). Опції `PROJECT_MAINTAINER` і `PROJECT_MAINTAINER_EMAIL` потрапляють у поле `maintainer:` файлу `+MANIFEST`. Деталі і параметри цілі можна переглянути або змінити у файлах `meson/template-project-freebsd-pkg-enabler/meson.build` чи у шаблоні `misc/freebsd-pkg.manifest.in`.
 
 Інструмент `pkg(8)` входить до базової системи FreeBSD і доступний "з коробки" на FreeBSD-хостах.

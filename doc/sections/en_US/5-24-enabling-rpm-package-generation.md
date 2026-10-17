@@ -20,6 +20,6 @@ To produce the RPM package run the `rpm` target for the build:
 meson compile -C build rpm
 ```
 
-The artefact is named like `<project>-<version>-1.<arch>.rpm` and lands in the build directory. The `PROJECT_MAINTAINER` and `PROJECT_MAINTAINER_EMAIL` options feed the `Packager:` field of the `.spec` file. Examine and/or change the RPM generation target parameters in `meson/template-project-rpm-enabler/meson.build` or in the `misc/rpm.spec.in` template.
+The artefact is named like `<project>-<version>-<arch>-<os>.rpm` and lands in the build directory, the `<os>` being the destination OS the `PACKAGE_OS` option holds (default: the `ID` and the `VERSION_ID` of the `/etc/os-release` file of the build host, e.g. `fedora-44`). The `PROJECT_MAINTAINER` and `PROJECT_MAINTAINER_EMAIL` options feed the `Packager:` field of the `.spec` file. Examine and/or change the RPM generation target parameters in `meson/template-project-rpm-enabler/meson.build` or in the `misc/rpm.spec.in` template.
 
 See [Optional for the rpm packager](/doc/sections/en_US/3-14-optional-for-the-rpm-packager.md) for the `rpm-build` install command.

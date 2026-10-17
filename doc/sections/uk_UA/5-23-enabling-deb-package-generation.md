@@ -20,6 +20,6 @@ meson setup build --prefix=/usr -DENABLE_DEB=true \
 meson compile -C build deb
 ```
 
-Артефакт іменується за шаблоном `<проект>-<версія>_<арх>.deb` і потрапляє у директорію побудови. Опції `PROJECT_MAINTAINER` і `PROJECT_MAINTAINER_EMAIL` потрапляють у поле `Maintainer:` маніфесту `DEBIAN/control`. Деталі і параметри цілі можна переглянути або змінити у файлах `meson/template-project-deb-enabler/meson.build` чи у шаблоні `misc/deb-control.in`.
+Артефакт іменується за шаблоном `<проект>-<версія>-<арх>-<ОС>.deb` і потрапляє у директорію побудови, де `<ОС>` - цільова ОС, яку містить опція `PACKAGE_OS` (типово: поля `ID` і `VERSION_ID` файлу `/etc/os-release` хоста збирання, наприклад `ubuntu-24.04`). Опції `PROJECT_MAINTAINER` і `PROJECT_MAINTAINER_EMAIL` потрапляють у поле `Maintainer:` маніфесту `DEBIAN/control`. Деталі і параметри цілі можна переглянути або змінити у файлах `meson/template-project-deb-enabler/meson.build` чи у шаблоні `misc/deb-control.in`.
 
 Інструмент `dpkg-deb` входить до системного пакету `dpkg`, який передвстановлено на Debian/Ubuntu системах.

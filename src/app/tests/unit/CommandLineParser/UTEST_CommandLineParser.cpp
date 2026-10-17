@@ -142,7 +142,7 @@ TEST_F(UTEST_CommandLineParser, unknown_flag)
 
   EXPECT_TRUE(appctx->get_print_help_and_exit());
   EXPECT_FALSE(appctx->get_print_version_and_exit());
-  EXPECT_TRUE(appctx->get_errors().empty());
+  EXPECT_THAT(appctx->get_errors(), ElementsAre(expectedError));
 }
 
 TEST_F(UTEST_CommandLineParser, token_long)

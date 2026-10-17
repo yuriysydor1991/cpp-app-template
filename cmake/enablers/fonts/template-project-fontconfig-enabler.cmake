@@ -22,4 +22,4 @@ message(STATUS "Fontconfig ${Fontconfig_VERSION} found: ${Fontconfig_INCLUDE_DIR
 # ${PROJECT_BINARY_NAME} executable or any of your own libraries):
 #   - system install, via find_package(Fontconfig): Fontconfig::Fontconfig
 # For example:
-#   target_link_libraries(${PROJECT_BINARY_NAME} Fontconfig::Fontconfig)
+#   target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE Fontconfig::Fontconfig)

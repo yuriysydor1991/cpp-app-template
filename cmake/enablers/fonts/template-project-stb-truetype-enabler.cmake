@@ -33,4 +33,4 @@ target_include_directories(stb_truetype SYSTEM INTERFACE "${stb_SOURCE_DIR}")
 #   - FetchContent source download: stb_truetype
 # and define STB_TRUETYPE_IMPLEMENTATION in exactly one source file before it
 # includes <stb_truetype.h>. For example:
-#   target_link_libraries(${PROJECT_BINARY_NAME} stb_truetype)
+#   target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE stb_truetype)

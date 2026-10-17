@@ -21,5 +21,5 @@ target_link_libraries(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  TemplateSDL3PainterObj
+  PRIVATE TemplateSDL3PainterObj
 )

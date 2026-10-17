@@ -24,7 +24,7 @@ target_link_libraries(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  TemplateSDL3Obj
+  PRIVATE TemplateSDL3Obj
   SDL3::SDL3
 )
 

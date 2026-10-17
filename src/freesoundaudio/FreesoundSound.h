@@ -106,13 +106,17 @@ class FreesoundSound
   std::string license() const;
 
   /**
-   * @brief Gives the page the sound file was taken from.
+   * @brief Gives the address the sound file was downloaded from, the one the
+   * manifest records.
    *
    * Keeping the source next to the license is what makes the attribution of a
-   * CC-BY sound - and the provenance of every other one - possible at all.
+   * CC-BY sound - and the provenance of every other one - possible at all. The
+   * default sounds come from their public preview address
+   * (https://cdn.freesound.org/previews/<id prefix>/<id>_<uploader id>-hq.ogg),
+   * whose id names the submission page (https://freesound.org/s/<id>).
    *
-   * @return Returns the source URL, an empty string when the manifest recorded
-   * none.
+   * @return Returns the download URL, an empty string when the manifest
+   * recorded none.
    */
   std::string sourceUrl() const;
 

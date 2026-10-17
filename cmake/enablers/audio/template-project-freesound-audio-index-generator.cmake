@@ -169,7 +169,7 @@ endfunction()
 
 # Gathers the sound file names of every category out of the directory in use
 # and generates the FreesoundGeneratedSounds implementation into the build
-# directory, so the complete sound set - and the license and the source page of
+# directory, so the complete sound set - and the license and the download URL of
 # every single sound - becomes reachable from the code with no directory
 # scanning at the run time and with no sound names hand written into the
 # sources.

@@ -46,11 +46,11 @@ const std::map<std::string, std::string>& generatedSources()
 {
   static const std::map<std::string, std::string> sources{
       {"impact-sounds/Audio/impactMetal_light_000.wav",
-       "https://freesound.org/s/000000/"},
+       "https://cdn.freesound.org/previews/000/000000_0-hq.ogg"},
       {"interface-sounds/Audio/click_001.ogg",
-       "https://freesound.org/s/111111/"},
+       "https://cdn.freesound.org/previews/111/111111_1-hq.ogg"},
       {"interface-sounds/Audio/confirmation_001.wav",
-       "https://freesound.org/s/222222/"},
+       "https://cdn.freesound.org/previews/222/222222_2-hq.ogg"},
   };
 
   return sources;

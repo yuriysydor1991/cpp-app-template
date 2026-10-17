@@ -51,12 +51,12 @@ class FreesoundGeneratedSounds
   static const std::string& license(const std::string& soundAlias);
 
   /**
-   * @brief Gives the page the given sound was taken from.
+   * @brief Gives the address the given sound was downloaded from.
    *
    * @param soundAlias The "<category>/<path>" alias of the sound.
    *
-   * @return Returns the source URL, an empty string when the manifest recorded
-   * none for such a sound.
+   * @return Returns the download URL, an empty string when the manifest
+   * recorded none for such a sound.
    */
   static const std::string& sourceUrl(const std::string& soundAlias);
 };

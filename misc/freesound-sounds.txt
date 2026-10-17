@@ -2,7 +2,7 @@
 #
 # Freesound publishes it's submissions under CC0, CC-BY and CC-BY-NC alike, one
 # license per sound rather than one for the whole database, so every sound is
-# named here together with the page it came from and the very license it was
+# named here together with the address it came from and the very license it was
 # published under. Every line follows the
 #
 #   <category>/<file>|<download URL>|<license>|<file SHA-256>

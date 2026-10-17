@@ -85,7 +85,8 @@ TEST_F(UTEST_FreesoundSound, a_sound_with_no_category_gives_no_alias)
 TEST_F(UTEST_FreesoundSound, carries_the_recorded_license_and_source)
 {
   EXPECT_EQ(sound->license(), "CC0-1.0");
-  EXPECT_EQ(sound->sourceUrl(), "https://freesound.org/s/111111/");
+  EXPECT_EQ(sound->sourceUrl(),
+            "https://cdn.freesound.org/previews/111/111111_1-hq.ogg");
 }
 
 TEST_F(UTEST_FreesoundSound, a_sound_the_manifest_never_named_reports_none)

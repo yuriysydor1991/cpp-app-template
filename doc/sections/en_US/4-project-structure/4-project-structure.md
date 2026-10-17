@@ -4,7 +4,7 @@
 1. [Implement code straight away!](/doc/sections/en_US/4-project-structure/4-1-implement-code-straight-away.md)
 1. [Resource embedding](/doc/sections/en_US/4-project-structure/4-6-gtkmm4-resource-embedding.md)
 1. [Changing the project and executable name](/doc/sections/en_US/4-project-structure/4-2-changing-the-project-and-executable-name.md)
-1. [Introducing custom command line parameters](/doc/sections/en_US/4-project-structure/4-6-introduction-of-the-custom-command-line-parameters.md)
+1. [Introducing custom command line parameters](/doc/sections/en_US/4-project-structure/4-11-introduction-of-the-custom-command-line-parameters.md)
 1. [Implement your own IApplication descendants](/doc/sections/en_US/4-project-structure/4-7-implementing-your-onw-IApplication-descendants.md)
 1. [The toolkit messages](/doc/sections/en_US/4-project-structure/4-8-the-toolkit-messages.md)
 1. [Handling the OS signals](/doc/sections/en_US/4-project-structure/4-8-handling-the-OS-signals.md)

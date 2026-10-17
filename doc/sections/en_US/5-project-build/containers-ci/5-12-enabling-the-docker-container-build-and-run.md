@@ -47,4 +47,6 @@ scripts/docker/single-run.sh --no-reconfigure
 scripts/docker/single-run.sh -DDOCKERFILE_SINGLE_RUN_BASE_IMAGE_VERSION=22.04
 ```
 
+On this branch the `docker-single-run` target hands the container the host system bus socket (`/run/dbus/system_bus_socket`) and no X server access, since the console application reads the hostname1 properties over the system bus alone.
+
 Keep in mind that the `ENABLE_DOCKER` option makes the configure step require the `docker` executable to be present in the system, so the scripts fail the configure step on a machine with no Docker installed (see the [Optional for the Docker container runs](/doc/sections/en_US/3-requirements/3-10-optional-for-docker-container-runs.md) requirements section).

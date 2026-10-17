@@ -8,18 +8,12 @@ set(
       -t ${DOCKER_SINGLE_RUN_NAME} .
 )
 
-# the X server access is revoked on the shell exit, so a failed run drops it too
+# the console application reads the host system bus alone, so the bus socket is
+# all the container needs (no X server access)
 set(
   DOCKER_SINGLE_RUN_CMD
-    xhost +local: &&
-    trap "xhost -local:" EXIT &&
     ${DOCKER_EXEC} run --rm
-    --env DISPLAY=$$DISPLAY
-    --env QT_X11_NO_MITSHM=1
-    --volume /tmp/.X11-unix:/tmp/.X11-unix
-    --volume $$HOME/.Xauthority:/home/${DOCKERFILE_SINGLE_RUN_USER_NAME}/.Xauthority
-    -v $$XDG_RUNTIME_DIR:$$XDG_RUNTIME_DIR
-    --network host
+    --volume /run/dbus/system_bus_socket:/run/dbus/system_bus_socket
     ${DOCKER_SINGLE_RUN_NAME}
 )
 

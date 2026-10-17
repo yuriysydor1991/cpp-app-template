@@ -47,4 +47,6 @@ scripts/docker/single-run.sh --no-reconfigure
 scripts/docker/single-run.sh -DDOCKERFILE_SINGLE_RUN_BASE_IMAGE_VERSION=22.04
 ```
 
+У цій гілці ціль `docker-single-run` надає контейнеру сокет системної шини хоста (`/run/dbus/system_bus_socket`) і не надає доступу до X-сервера, оскільки консольна програма лише зчитує властивості hostname1 через системну шину.
+
 Слід пам'ятати, що параметр `ENABLE_DOCKER` робить наявність виконуваного файлу `docker` у системі обов'язковою для кроку конфігурації, отож на машині без встановленого Docker скрипти завершать крок конфігурації помилкою (див. секцію вимог [Необов'язкові пакети для запуску контейнера Docker](/doc/sections/uk_UA/3-requirements/3-10-optional-for-docker-container-runs.md)).

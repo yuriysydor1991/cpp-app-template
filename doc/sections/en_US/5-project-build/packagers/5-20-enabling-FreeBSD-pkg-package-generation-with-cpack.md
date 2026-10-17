@@ -24,7 +24,9 @@ Finally, execute the `cpack` command inside the template project build directory
 cpack
 ```
 
-The package file should be generated inside the project build root directory. For example, if project name wasn't changed and it's version is `0.12.0` the package name may look like `CppAppTemplate-0.12.0-amd64.pkg` (the actual architecture suffix depends on the build host).
+The package file should be generated inside the project build root directory. For example, if project name wasn't changed and it's version is `0.12.0` the package name may look like `CppAppTemplate-0.12.0-amd64-freebsd-15.1.pkg` (the actual architecture and OS suffixes depend on the build host).
+
+The destination OS closes the package name, so the packages of the different FreeBSD releases differ in name. The `TEMPLATE_PROJECT_PACKAGE_OS` cache variable holds it (default: the `ID` and the `VERSION_ID` of the `/etc/os-release` file, e.g. `freebsd-15.1`), so override it when packaging the project for another FreeBSD release than the one of the build host.
 
 In order to examine details of the FreeBSD `pkg` package configuration visit the [cmake/enablers/packagers/template-project-freebsd-pkg-enabler.cmake](/cmake/enablers/packagers/template-project-freebsd-pkg-enabler.cmake) file.
 

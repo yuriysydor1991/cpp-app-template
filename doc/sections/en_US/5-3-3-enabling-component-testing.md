@@ -1,6 +1,6 @@
 ### Enabling component testing
 
-To enable project component tests (the `CTEST_app` executable under `src/app/tests/component/`) reconfigure the project with the `ENABLE_COMPONENT_TESTS` option set to `true` (GNU/Linux based):
+To enable project component tests (the `CTEST_DefaultLogger` and the `CTEST_LibraryRealLogger` executables under the `src/log/default-logger/tests/component/` and the `src/lib/tests/component/` directories) reconfigure the project with the `ENABLE_COMPONENT_TESTS` option set to `true` (GNU/Linux based):
 
 ```
 # from the project root

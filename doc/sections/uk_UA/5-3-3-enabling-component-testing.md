@@ -1,6 +1,6 @@
 ### Вмикання компонентних тестів
 
-Для того щоб увімкнути побудову компонентних тестів проекту (виконуваний файл `CTEST_app` у директорії `src/app/tests/component/`) необхідно сконфігурувати проект з опцією `ENABLE_COMPONENT_TESTS` встановленою у значення `true` (для GNU/Linux ОС і подібних):
+Для того щоб увімкнути побудову компонентних тестів проекту (виконувані файли `CTEST_DefaultLogger` та `CTEST_LibraryRealLogger` у директоріях `src/log/default-logger/tests/component/` та `src/lib/tests/component/`) необхідно сконфігурувати проект з опцією `ENABLE_COMPONENT_TESTS` встановленою у значення `true` (для GNU/Linux ОС і подібних):
 
 ```
 # з кореневої директорії проекту

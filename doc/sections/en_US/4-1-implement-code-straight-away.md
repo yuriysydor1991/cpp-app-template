@@ -1,6 +1,6 @@
 ## Implement code straight away!
 
-To proceed the application implementation right away look for the `Application` class' `Application.cpp` file which is designed to accept initial code of the application. Specifically, new code may be placed into the `int Application::run(std::shared_ptr<ApplicationContext> ctx)` method.
+To proceed the library implementation right away look for the `LibMain` class' `LibMain.cpp` file which is designed to accept initial code of the library. Specifically, new code may be placed into the `bool LibMain::libcall(std::shared_ptr<LibraryContext> ctx)` method.
 
 **But do not forget about the SOLID principles and code decomposing!**
 

@@ -5,20 +5,21 @@ Execute available install commands from the project's build directory.
 
 ## Default installation
 
-In order to install generated executable (as shown previous) file into your's system binary default folder execute next command in the command line (GNU/Linux based):
+In order to install the built library together with its development files into the default `/usr/local` prefix execute next command in the command line (GNU/Linux based):
 
 ```
-# installs generated binary under the /usr/local/bin/ for example
+# installs the library under the /usr/local/lib/<multiarch> for example and
+# the header include files under the /usr/local/include
 # run from the project's root directory
 
 sudo meson install -C build
 ```
 
-Usually it's the `/usr/local/bin/` directory (on the Unix-like OS) which may be inaccessible from the `PATH` environment variable (e.g. can not be started as a regular command).
+A library is no command to start, so no `PATH` change is needed: a program linked against it finds it through the dynamic loader (run `sudo ldconfig` after the install to refresh its cache), and the downstream projects find it through its pkg-config and CMake package files.
 
 ## Custom installation path
 
-The install location is the installation prefix chosen at the configure stage (the `/usr/local` by default). To install binary into another system globally available directory, for example the `/usr/bin`, reconfigure the build directory with the `--prefix` parameter and install it as shown above:
+The install location is the installation prefix chosen at the configure stage (the `/usr/local` by default). To install the library under another prefix, for example the `/usr` one, reconfigure the build directory with the `--prefix` parameter and install it as shown above:
 
 ```
 # replace the /usr path with our own if needed
@@ -28,7 +29,7 @@ meson configure build --prefix=/usr
 sudo meson install -C build
 ```
 
-Examine the `PATH` environment variable to chose directory best suited for your current OS (execute `echo $PATH` in the terminal). Alternatively, any path may be specified.
+The `/usr` prefix puts the library into the system library directory, which the dynamic loader always searches. Any other path may be specified too: pass it through the `PKG_CONFIG_PATH` or the `CMAKE_PREFIX_PATH` variable to the downstream projects and through the `LD_LIBRARY_PATH` variable (or an RPATH) to the programs linked against the library.
 
 The `--destdir` parameter of the `meson install` command does not replace the prefix, it prepends a staging directory to it (the `meson install -C build --destdir /tmp/stage` installs the executable into the `/tmp/stage/usr/local/bin` directory), which is what the packager targets use.
 

@@ -14,10 +14,10 @@ Alternatively, run the `meson test` command from any location by specifying the 
 meson test -C build
 ```
 
-In order to run particular test execute the `meson test` command with test's name after the `--suite` command line flag. For example, for the `UTEST_ApplicationFactory` test it'll look something like this:
+In order to run particular test execute the `meson test` command with test's name after the `--suite` command line flag. For example, for the `UTEST_LibraryFacade` test it'll look something like this:
 
 ```
 # from the project root directory 
 
-meson test -C build --suite UTEST_ApplicationFactory
+meson test -C build --suite UTEST_LibraryFacade
 ```

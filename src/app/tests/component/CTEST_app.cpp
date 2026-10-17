@@ -10,6 +10,7 @@
 
 #include "project-global-decls.h"
 #include "src/app/ApplicationFactory.h"
+#include "src/log/log.h"
 #include "src/plplot/PLplotController.h"
 
 using namespace app;

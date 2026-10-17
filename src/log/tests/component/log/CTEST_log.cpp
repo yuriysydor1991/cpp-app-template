@@ -8,8 +8,8 @@
 #include <string>
 #include <thread>
 
-#include "src/log/log.h"
 #include "src/lib/facade/public/severity-macro-consts.h"
+#include "src/log/log.h"
 
 using namespace testing;
 

@@ -100,7 +100,7 @@ pipeline {
       parallel {
         stage('UTEST_ZlibController') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_ZlibController\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ZlibController.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_ZlibController\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_ZlibController.junit.xml'
           }
         }
         stage('UTEST_Application') { 
@@ -181,7 +181,7 @@ pipeline {
       parallel {
         stage('CTEST_ZlibController') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_ZlibController\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_ZlibController.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_ZlibController\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_ZlibController.junit.xml'
           }
         }
         stage('CTEST_DefaultLogger') {

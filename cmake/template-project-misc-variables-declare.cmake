@@ -34,18 +34,6 @@ set(
   "Sets the project main binary installation directory"
 )
 
-set(
-  DEFAULT_LOG_FILE_PATH ""
-  CACHE STRING 
-  "Sets the default log file path"
-)
-
-option(
-  ENABLE_LOGS_MICROSECONDS_TIME
-  "Set to OFF to disable the microseconds fields included into the log messages"
-  ON
-)
-
 option(
   ENABLE_DESKTOP_APPLICATION
   "Set to ON when the project binary is a windowed application: the packages then install its desktop entry and mark it as a desktop application"

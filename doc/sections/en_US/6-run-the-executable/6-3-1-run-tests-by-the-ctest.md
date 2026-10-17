@@ -1,6 +1,6 @@
 ### Run tests by the ctest
 
-If enabled by the developer through the `ENABLE_UNIT_TESTS` variable and successfully build, the one may run all available test by the `ctest` command from a project build directory (GNU/Linux based):
+If enabled by the developer through the `ENABLE_UNIT_TESTS` and/or the `ENABLE_COMPONENT_TESTS` variables (see the [Enabling unit testing](/doc/sections/en_US/5-project-build/testing/5-3-1-enabling-unit-testing.md) section) and successfully build, the one may run all available test by the `ctest` command from a project build directory (GNU/Linux based):
 
 ```
 # run from the project build directory

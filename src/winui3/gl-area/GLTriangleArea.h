@@ -8,7 +8,7 @@
 namespace winui3::gl_area
 {
 
-struct RenderState;  // Direct3D device + swap chain; defined in the .cpp
+class RenderState;
 
 /**
  * @brief A minimal, self-contained GPU rendering canvas - the WinUI 3

@@ -6,6 +6,7 @@ cmake_minimum_required(VERSION 3.13)
 add_library(
   ${WINUI3_OBJECT_NAME}GLArea OBJECT
   GLTriangleArea.cpp
+  RenderState.cpp
 )
 
 target_include_directories(

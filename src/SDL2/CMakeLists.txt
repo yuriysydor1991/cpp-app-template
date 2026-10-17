@@ -24,7 +24,7 @@ target_link_libraries(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  TemplateSDL2Obj
+  PRIVATE TemplateSDL2Obj
 )
 
 add_subdirectory(Painter)

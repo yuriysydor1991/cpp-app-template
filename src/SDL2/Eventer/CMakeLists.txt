@@ -21,7 +21,7 @@ target_link_libraries(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  TemplateSDL2EventsObj
+  PRIVATE TemplateSDL2EventsObj
 )
 
 add_subdirectory(EventsHandlers)

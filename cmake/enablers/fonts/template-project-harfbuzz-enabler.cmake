@@ -38,4 +38,4 @@ endif()
 #   - FetchContent source build:                  harfbuzz::harfbuzz
 #     (with the hb-ft.h FreeType glue when ENABLE_FREETYPE is ON too)
 # For example:
-#   target_link_libraries(${PROJECT_BINARY_NAME} harfbuzz::harfbuzz)
+#   target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE harfbuzz::harfbuzz)

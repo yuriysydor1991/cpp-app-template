@@ -1,6 +1,8 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include <memory>
+#include <string>
 #include <thread>
 
 #include "src/app/ApplicationContext.h"
@@ -271,4 +273,19 @@ TEST_F(UTEST_ApplicationContext, raising_the_reload_flag_from_another_thread)
   EXPECT_TRUE(appCtx->get_errors().empty());
   EXPECT_FALSE(appCtx->get_stop());
   EXPECT_FALSE(appCtx->get_pause());
+}
+
+TEST_F(UTEST_ApplicationContext, claude_parameters)
+{
+  EXPECT_TRUE(appCtx->get_claude_token().empty());
+  EXPECT_TRUE(appCtx->get_claude_question().empty());
+  EXPECT_TRUE(appCtx->get_claude_model().empty());
+
+  appCtx->set_claude_token("an-anthropic-api-token");
+  appCtx->set_claude_question("What is the point of taxes?");
+  appCtx->set_claude_model("a-model");
+
+  EXPECT_EQ(appCtx->get_claude_token(), "an-anthropic-api-token");
+  EXPECT_EQ(appCtx->get_claude_question(), "What is the point of taxes?");
+  EXPECT_EQ(appCtx->get_claude_model(), "a-model");
 }

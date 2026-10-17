@@ -3,9 +3,20 @@
 Наявна можливість підтримки встановлення документації за допомогою встановлення змінних `ENABLE_DOC_DOXYGEN` і `DOXYGEN_DO_INSTALL` у значення `ON` під час конфігурування прокету-шаблону за допомогою команди:
 
 ```
-# inside the project build directory
+# в середині кореневої директорії проекту
 
-cmake ../ -DENABLE_DOC_DOXYGEN=ON -DDOXYGEN_DO_INSTALL=ON
+cmake -B build -S . -DENABLE_DOC_DOXYGEN=ON -DDOXYGEN_DO_INSTALL=ON
 ```
+
+З увімкненою підтримкою встановлення ціль `Doxygen-doc` стає частиною типової побудови, отож звичайні команди побудови і встановлення генерують і встановлюють документацію без окремої побудови документації:
+
+```
+# в середині кореневої директорії проекту
+
+cmake --build build
+cmake --install build
+```
+
+Директорія HTML документації встановлюється до стандартної директорії документації префікса встановлення (директорія `CMAKE_INSTALL_DOCDIR` CMake модуля `GNUInstallDirs`), наприклад `/usr/local/share/doc/CppAppTemplate/CppAppTemplate-html`.
 
 Змінна `DOXYGEN_OUT_HTML_NAME` сконфігурує назву для директорії HTML документації (передається до файлу `Doxyfile`).

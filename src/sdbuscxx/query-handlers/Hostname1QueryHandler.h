@@ -4,6 +4,7 @@
 #include <memory>
 #include <string>
 
+#include "src/sdbuscxx/query-handlers/Hostname1Properties.h"
 #include "src/sdbuscxx/query-handlers/IDBusQueryHandler.h"
 #include "src/sdbuscxx/sdbuscxx-includes.h"
 
@@ -46,7 +47,7 @@ class Hostname1QueryHandler : public IDBusQueryHandler
   inline static const sdbus::PropertyName osPrettyNameProperty{
       "OperatingSystemPrettyName"};
 
-  virtual ~Hostname1QueryHandler() = default;
+  ~Hostname1QueryHandler() override = default;
   Hostname1QueryHandler() = default;
 
   /**
@@ -61,16 +62,6 @@ class Hostname1QueryHandler : public IDBusQueryHandler
   bool handle(sdbus::IConnection* connection) override;
 
  protected:
-  /**
-   * @brief The aggregated set of hostname1 properties read from the bus.
-   */
-  struct Hostname1Properties
-  {
-    std::string hostname;
-    std::string prettyHostname;
-    std::string osPrettyName;
-  };
-
   /**
    * @brief Creates a proxy bound to the hostname1 service and reads the three
    * well known properties from it.

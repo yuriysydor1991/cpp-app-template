@@ -2,7 +2,7 @@
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_SDBUS_CXX_MOCK_H
 
 // Header-only mock of the subset of the sdbus-c++ API used by the project's
-// D-Bus client and server sources. It lets the sdbus-cpp unit tests compile and
+// D-Bus client sources. It lets the sdbus-cpp unit tests compile and
 // run without linking the real sdbus-c++ or touching a live bus: the
 // bus-touching members are no-ops that return defaults. The real bus
 // interactions stay covered by the component tests, which link the real
@@ -123,54 +123,11 @@ class IProxy
   PendingPropertyGet getProperty(const PropertyName&) { return {}; }
 };
 
-// ---- vtable registration (server object side) -----------------------------
-class PropertyVTableItem
-{
- public:
-  template <typename Getter>
-  PropertyVTableItem& withGetter(Getter&&)
-  {
-    return *this;
-  }
-
-  template <typename Setter>
-  PropertyVTableItem& withSetter(Setter&&)
-  {
-    return *this;
-  }
-};
-
-inline PropertyVTableItem registerProperty(const PropertyName&) { return {}; }
-
-class VTableAdder
-{
- public:
-  void forInterface(const InterfaceName&) {}
-};
-
-class IObject
-{
- public:
-  virtual ~IObject() = default;
-
-  template <typename... VTableItems>
-  VTableAdder addVTable(VTableItems&&...)
-  {
-    return {};
-  }
-};
-
 // ---- connection -----------------------------------------------------------
 class IConnection
 {
  public:
   virtual ~IConnection() = default;
-
-  void requestName(const ServiceName&) {}
-  void releaseName(const ServiceName&) {}
-  void enterEventLoop() {}
-  void enterEventLoopAsync() {}
-  void leaveEventLoop() {}
 };
 
 inline std::unique_ptr<IConnection> createSystemBusConnection()
@@ -183,25 +140,10 @@ inline std::unique_ptr<IConnection> createSystemBusConnection()
   return std::make_unique<IConnection>();
 }
 
-inline std::unique_ptr<IConnection> createSessionBusConnection()
-{
-  if (mock::fail_bus_connection()) {
-    throw Error(Error::Name{"org.freedesktop.DBus.Error.Failed"},
-                "mock: session bus is not reachable");
-  }
-
-  return std::make_unique<IConnection>();
-}
-
 inline std::unique_ptr<IProxy> createProxy(IConnection&, ServiceName,
                                            ObjectPath)
 {
   return std::make_unique<IProxy>();
-}
-
-inline std::unique_ptr<IObject> createObject(IConnection&, ObjectPath)
-{
-  return std::make_unique<IObject>();
 }
 
 }  // namespace sdbus

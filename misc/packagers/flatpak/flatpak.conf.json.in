@@ -22,6 +22,7 @@
   ],
   "finish-args": [
     "--share=ipc", 
+    "--system-talk-name=org.freedesktop.hostname1",
     "--socket=fallback-x11",
     "--socket=wayland",
     "--device=dri"

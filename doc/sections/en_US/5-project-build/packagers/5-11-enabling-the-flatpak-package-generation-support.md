@@ -8,6 +8,8 @@ In order to enable the flatpak generation of the redistribution package on the t
 cmake -B build -S . -DENABLE_FLATPAK=ON
 ```
 
+The `flatpak-builder` compiles the project inside it's own sandbox, which carries no network access, while the Kenney enabler downloads it's packs through the Internet. The generated manifest therefore hands the packs directory the host configure has filled - the downloaded one, or the one the `TEMPLATE_APP_KENNEY_AUDIO_DIR` variable has pointed it at - over to the module as a source of it's own, and the sandboxed configure reaches it through that very same variable. The install step copies the sounds and the pack licenses into the `/app/share` directory of the package, and the packaged application is granted `--socket=pulseaudio`, so the sound player really reaches an audio device.
+
 Which in order will enable the `flatpak` target.
 
 And finally to generate the flatpak package run the `flatpak` target for the build:

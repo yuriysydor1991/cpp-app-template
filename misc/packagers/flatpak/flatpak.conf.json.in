@@ -59,7 +59,7 @@
         {
           "type": "archive",
           "url": "https://github.com/yuriysydor1991/darknetxx/archive/${TEMPLATE_APP_DARKNETXX_GIT_TAG}.tar.gz",
-          "sha256": "387a78d9bafe7c187a2a988e7f6a2744a4175738f18bfda1def32530398630a1",
+          "sha256": "${TEMPLATE_APP_DARKNETXX_ARCHIVE_SHA256}",
           "dest": "darknetxx"
         },
         {

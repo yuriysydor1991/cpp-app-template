@@ -129,6 +129,6 @@ The `UTEST_DarknetXXController` test loads the tiny network of it's own into the
 
 ### Packaging
 
-The darknetxx core is linked into the executable statically, so no package carries a darknetxx library, while the DEB package depends on the OpenCV and the other ones the executable links against through the `dpkg-shlibdeps` tool. The flatpak builds the OpenCV modules the core needs from their sources first and takes the darknetxx sources as an archive of the very commit, while the snap stages the OpenCV libraries of the Ubuntu.
+The darknetxx core is linked into the executable statically, so no package carries a darknetxx library, while the DEB package depends on the OpenCV and the other ones the executable links against through the `dpkg-shlibdeps` tool. The flatpak builds the OpenCV modules the core needs from their sources first and takes the darknetxx sources as an archive of the very commit, checked against the `TEMPLATE_APP_DARKNETXX_ARCHIVE_SHA256` hash (set it together with a changed `TEMPLATE_APP_DARKNETXX_GIT_TAG`), while the snap stages the OpenCV libraries of the Ubuntu.
 
 The network files stay in the build tree, so no package carries them and the flatpak and the snap builds download none: give them with the `--cfg`, the `--weights` (or the `--dxxwjz1`), the `--names` and the `--image` parameters, or with the `--dxxwjz2` and the `--image` ones. The flatpak reads them from the home directory.

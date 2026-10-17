@@ -13,6 +13,11 @@ endif()
 set(TEMPLATE_APP_DARKNETXX_GIT "https://github.com/yuriysydor1991/darknetxx.git" CACHE STRING "The darknetxx project git source repository")
 set(TEMPLATE_APP_DARKNETXX_GIT_TAG "f37cf3175d112008a6f44589552d22668629cd09" CACHE STRING "The darknetxx project git repository commit (or branch) of interest")
 
+# The flatpak manifest builds the archive of the very same commit, which it
+# checks against this hash, so a changed TEMPLATE_APP_DARKNETXX_GIT_TAG needs
+# the hash of its archive too.
+set(TEMPLATE_APP_DARKNETXX_ARCHIVE_SHA256 "387a78d9bafe7c187a2a988e7f6a2744a4175738f18bfda1def32530398630a1" CACHE STRING "The SHA256 hash of the TEMPLATE_APP_DARKNETXX_GIT_TAG source archive the flatpak manifest builds")
+
 # The darknetxx core is the original Darknet C code computing with the C++
 # network infrastructure of the darknetxx, which needs the very libraries the
 # darknetxx application does.

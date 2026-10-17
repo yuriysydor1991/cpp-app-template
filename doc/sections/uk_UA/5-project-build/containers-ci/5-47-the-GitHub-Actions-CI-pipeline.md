@@ -22,7 +22,7 @@ env:
   BUILDDIR: build
   BDJUNITOUT: junit-out
   # The development packages of the branch specific libraries.
-  DEPENDENCIES: qt6-base-dev qt6-declarative-dev qt6-location-dev qt6-positioning-dev
+  DEPENDENCIES: qt6-base-dev qt6-declarative-dev qt6-location-dev qt6-positioning-dev qt6-location-plugins
 ```
 
 Саме ця змінна містить пакунки, якими різняться гілки шаблону, отож проект, який долучає власну бібліотеку, дописує туди її пакунок розробки. Окрім неї, ця гілка робить завдання `clang-tidy` ручним, див. параметри нижче.

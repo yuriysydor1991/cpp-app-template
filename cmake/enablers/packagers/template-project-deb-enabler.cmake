@@ -47,7 +47,7 @@ string(
   qml6-module-qtqml-workerscript qml6-module-qtquick
   qml6-module-qtquick-controls qml6-module-qtquick-layouts
   qml6-module-qtquick-templates qml6-module-qtquick-window
-  qml6-module-qtlocation qml6-module-qtpositioning
+  qml6-module-qtlocation qml6-module-qtpositioning qt6-location-plugins
 )
 
 # the CPACK_SYSTEM_NAME of the default file name names the system alone, so the

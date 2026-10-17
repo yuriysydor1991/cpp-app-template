@@ -80,4 +80,6 @@ TEST_F(CTEST_Qt6Controller, main_window_finds_every_resource)
 
   EXPECT_THAT(logs, Not(HasSubstr("Cannot open")));
   EXPECT_THAT(logs, Not(HasSubstr("is not a type")));
+  // The map draws nothing without the osm geo services plugin.
+  EXPECT_THAT(logs, Not(HasSubstr("NotSupportedError")));
 }

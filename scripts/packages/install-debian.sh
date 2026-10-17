@@ -46,6 +46,7 @@ PACKAGES=(
     qt6-base-dev-tools
     qt6-declarative-dev
     qt6-location-dev
+    qt6-location-plugins
     qt6-positioning-dev
     qt6-tools-dev
     qt6-tools-dev-tools

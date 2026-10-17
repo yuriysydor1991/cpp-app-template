@@ -24,7 +24,7 @@ variables:
   # The tools every job needs on top of the bare image.
   TOOLS: build-essential cmake g++ git ca-certificates pkg-config
   # The development packages of the branch specific libraries.
-  DEPENDENCIES: qt6-base-dev qt6-declarative-dev qt6-location-dev qt6-positioning-dev
+  DEPENDENCIES: qt6-base-dev qt6-declarative-dev qt6-location-dev qt6-positioning-dev qt6-location-plugins
 ```
 
 Саме остання змінна містить пакунки, якими різняться гілки шаблону, отож проект, який долучає власну бібліотеку, дописує туди її пакунок розробки. Окрім неї, ця гілка робить завдання `clang-tidy` ручним, див. змінні нижче.

@@ -24,7 +24,7 @@ variables:
   # The tools every job needs on top of the bare image.
   TOOLS: build-essential cmake g++ git ca-certificates pkg-config
   # The development packages of the branch specific libraries.
-  DEPENDENCIES: qt6-base-dev qt6-declarative-dev qt6-location-dev qt6-positioning-dev
+  DEPENDENCIES: qt6-base-dev qt6-declarative-dev qt6-location-dev qt6-positioning-dev qt6-location-plugins
 ```
 
 That last variable holds the packages the branches of the template differ by, so a project which links a library of its own appends the development package of the library there. Besides it, this branch makes the `clang-tidy` job a manual one, see the variables below.

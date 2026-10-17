@@ -27,6 +27,6 @@ endif()
 
 add_custom_target (
   clang-format
-  COMMAND ${CLANG_FORMAT_EXEC} -style=file:'./misc/.clang-format' --verbose -i ${ALLSOURCES}
+  COMMAND ${CLANG_FORMAT_EXEC} -style=file:'./misc/.clang-format' --verbose -i ${ALLSOURCES} ${OBJCXXSOURCES}
   WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )

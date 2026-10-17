@@ -8,7 +8,7 @@ In order to make `clang-format` target available set the `ENABLE_CLANGFORMAT` va
 cmake -B build -S . -DENABLE_CLANGFORMAT=ON
 ```
 
-To perform the whole project code format in accordance with available `misc/.clang-format` code formatter configuration execute next building command:
+To perform the whole project code format in accordance with available `misc/.clang-format` code formatter configuration (it covers the C++ `.h`/`.cpp` and the Objective-C++ `.mm` sources alike) execute next building command:
 
 ```
 # inside the project root directory

@@ -28,14 +28,16 @@ NSWindow* CocoaMainWindow::window() const { return win; }
 void CocoaMainWindow::build_content(const helpers::WindowConfig& config)
 {
   NSTextField* header = [NSTextField
-      labelWithString:[NSString stringWithUTF8String:config.header_text().c_str()]];
+      labelWithString:[NSString
+                          stringWithUTF8String:config.header_text().c_str()]];
   [header setFont:[NSFont boldSystemFontOfSize:24]];
 
   NSTextField* explanation = [NSTextField
-      labelWithString:[NSString
-                          stringWithUTF8String:config.explanation_text().c_str()]];
+      labelWithString:[NSString stringWithUTF8String:config.explanation_text()
+                                                         .c_str()]];
 
-  NSStackView* stack = [NSStackView stackViewWithViews:@[ header, explanation ]];
+  NSStackView* stack =
+      [NSStackView stackViewWithViews:@[ header, explanation ]];
   [stack setOrientation:NSUserInterfaceLayoutOrientationVertical];
   [stack setAlignment:NSLayoutAttributeCenterX];
   [stack setSpacing:12];

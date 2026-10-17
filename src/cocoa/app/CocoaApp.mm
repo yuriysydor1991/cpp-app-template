@@ -1,7 +1,6 @@
-#import "src/cocoa/cocoa_includes.h"
-
 #include "project-global-decls.h"
 #include "src/cocoa/CocoaLauncher.h"
+#import "src/cocoa/cocoa_includes.h"
 #include "src/cocoa/helpers/WindowConfig.h"
 #include "src/cocoa/main-window/CocoaMainWindow.h"
 
@@ -16,8 +15,8 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification*)notification
 {
-  const cocoa::helpers::WindowConfig config{project_decls::PROJECT_NAME,
-                                            project_decls::PROJECT_BUILD_VERSION};
+  const cocoa::helpers::WindowConfig config{
+      project_decls::PROJECT_NAME, project_decls::PROJECT_BUILD_VERSION};
 
   cocoa::main_window::CocoaMainWindow mainWindow{config};
   _window = mainWindow.window();
@@ -42,7 +41,8 @@ int run_cocoa_application(int& /*argc*/, char**& /*argv*/)
     NSApplication* app = [NSApplication sharedApplication];
     [app setActivationPolicy:NSApplicationActivationPolicyRegular];
 
-    TemplateCocoaAppDelegate* delegate = [[TemplateCocoaAppDelegate alloc] init];
+    TemplateCocoaAppDelegate* delegate =
+        [[TemplateCocoaAppDelegate alloc] init];
     [app setDelegate:delegate];
 
     [app run];

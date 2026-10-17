@@ -1,5 +1,6 @@
 ---
-Language:        Cpp
+# No Language key: the style applies to the C++ and to the Objective-C++ (.mm)
+# sources alike.
 # BasedOnStyle:  Google
 AccessModifierOffset: -1
 AlignAfterOpenBracket: Align

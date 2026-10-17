@@ -21,3 +21,13 @@ file(
   CONFIGURE_DEPENDS
   "src/*.h" "src/*.cpp"
 )
+
+# The Objective-C++ sources of the macOS Cocoa window: formatted by the
+# clang-format target, but kept away from the C++ only cppcheck one.
+file(
+  GLOB_RECURSE
+  OBJCXXSOURCES
+  LIST_DIRECTORIES false
+  CONFIGURE_DEPENDS
+  "src/*.mm"
+)

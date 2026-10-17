@@ -249,7 +249,6 @@ function(template_project_kenney_audio_generate_index)
   )
 
   set(KENNEY_AUDIO_GENERATED_SOUNDS_SOURCE "${generatedSource}" CACHE INTERNAL "The generated Kenney sounds index implementation file")
-  set(KENNEY_AUDIO_SOUNDS_COUNT "${total}" CACHE INTERNAL "The count of the Kenney sounds made available")
 
   message(STATUS "Kenney sounds made available: ${total}")
 endfunction()

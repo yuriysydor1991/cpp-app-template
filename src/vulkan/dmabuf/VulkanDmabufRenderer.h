@@ -81,12 +81,21 @@ class VulkanDmabufRenderer
   std::uint32_t find_memory_type(std::uint32_t typeBits,
                                  VkMemoryPropertyFlags want) const;
 
+  /**
+   * @brief Records the release of the image to the foreign (GTK) queue family.
+   *
+   * @param commandBuffer The recording command buffer of the frame.
+   */
+  void release_to_foreign_consumer(VkCommandBuffer commandBuffer) const;
+
   void cleanup();
 
   /// @brief The shared instance, not owned by the renderer.
   VkInstance instance{VK_NULL_HANDLE};
   VkPhysicalDevice physicalDevice{VK_NULL_HANDLE};
   std::uint32_t queueFamily{0};
+  /// @brief Whether the device supports the VK_EXT_queue_family_foreign.
+  bool foreignQueueFamily{false};
   VkDevice device{VK_NULL_HANDLE};
   VkQueue queue{VK_NULL_HANDLE};
   VkImage image{VK_NULL_HANDLE};

@@ -41,29 +41,100 @@ const std::array<const char*, 3> kRequiredDeviceExtensions{
     VK_EXT_IMAGE_DRM_FORMAT_MODIFIER_EXTENSION_NAME,
 };
 
-bool device_supports_required_extensions(VkPhysicalDevice candidate)
+std::vector<VkExtensionProperties> device_extensions(VkPhysicalDevice candidate)
 {
   std::uint32_t count = 0;
-  vkEnumerateDeviceExtensionProperties(candidate, nullptr, &count, nullptr);
+
+  if (vkEnumerateDeviceExtensionProperties(candidate, nullptr, &count,
+                                           nullptr) != VK_SUCCESS) {
+    return {};
+  }
 
   std::vector<VkExtensionProperties> available(count);
-  vkEnumerateDeviceExtensionProperties(candidate, nullptr, &count,
-                                       available.data());
+
+  if (vkEnumerateDeviceExtensionProperties(candidate, nullptr, &count,
+                                           available.data()) != VK_SUCCESS) {
+    return {};
+  }
+
+  available.resize(count);
+
+  return available;
+}
+
+bool has_extension(const std::vector<VkExtensionProperties>& available,
+                   const char* const name)
+{
+  for (const VkExtensionProperties& props : available) {
+    if (std::strcmp(props.extensionName, name) == 0) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+bool device_supports_required_extensions(VkPhysicalDevice candidate)
+{
+  const std::vector<VkExtensionProperties> available =
+      device_extensions(candidate);
 
   for (const char* required : kRequiredDeviceExtensions) {
-    bool found = false;
-    for (const VkExtensionProperties& props : available) {
-      if (std::strcmp(props.extensionName, required) == 0) {
-        found = true;
-        break;
-      }
-    }
-    if (!found) {
+    if (!has_extension(available, required)) {
       return false;
     }
   }
 
   return true;
+}
+
+bool device_supports_vulkan_1_2(VkPhysicalDevice candidate)
+{
+  VkPhysicalDeviceProperties properties{};
+  vkGetPhysicalDeviceProperties(candidate, &properties);
+
+  return properties.apiVersion >= VK_API_VERSION_1_2;
+}
+
+// The extensions alone do not promise the very image the renderer creates: a
+// linear DRM format modifier color attachment of the IMAGE_FORMAT whose memory
+// is exportable as a dma-buf, so the device is asked about it explicitly.
+bool device_exports_linear_dmabuf_images(VkPhysicalDevice candidate)
+{
+  VkPhysicalDeviceImageDrmFormatModifierInfoEXT modifierInfo{};
+  modifierInfo.sType =
+      VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_DRM_FORMAT_MODIFIER_INFO_EXT;
+  modifierInfo.drmFormatModifier = DRM_FORMAT_MODIFIER_LINEAR;
+  modifierInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+
+  VkPhysicalDeviceExternalImageFormatInfo externalInfo{};
+  externalInfo.sType =
+      VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_IMAGE_FORMAT_INFO;
+  externalInfo.pNext = &modifierInfo;
+  externalInfo.handleType = VK_EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF_BIT_EXT;
+
+  VkPhysicalDeviceImageFormatInfo2 formatInfo{};
+  formatInfo.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_FORMAT_INFO_2;
+  formatInfo.pNext = &externalInfo;
+  formatInfo.format = IMAGE_FORMAT;
+  formatInfo.type = VK_IMAGE_TYPE_2D;
+  formatInfo.tiling = VK_IMAGE_TILING_DRM_FORMAT_MODIFIER_EXT;
+  formatInfo.usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
+
+  VkExternalImageFormatProperties externalProperties{};
+  externalProperties.sType = VK_STRUCTURE_TYPE_EXTERNAL_IMAGE_FORMAT_PROPERTIES;
+
+  VkImageFormatProperties2 formatProperties{};
+  formatProperties.sType = VK_STRUCTURE_TYPE_IMAGE_FORMAT_PROPERTIES_2;
+  formatProperties.pNext = &externalProperties;
+
+  if (vkGetPhysicalDeviceImageFormatProperties2(
+          candidate, &formatInfo, &formatProperties) != VK_SUCCESS) {
+    return false;
+  }
+
+  return (externalProperties.externalMemoryProperties.externalMemoryFeatures &
+          VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT) != 0U;
 }
 
 }  // namespace
@@ -102,18 +173,27 @@ bool VulkanDmabufRenderer::init(std::uint32_t width, std::uint32_t height,
 bool VulkanDmabufRenderer::select_physical_device()
 {
   std::uint32_t count = 0;
-  vkEnumeratePhysicalDevices(instance, &count, nullptr);
 
-  if (count == 0) {
+  if (vkEnumeratePhysicalDevices(instance, &count, nullptr) != VK_SUCCESS ||
+      count == 0) {
     LOGE("No Vulkan physical devices available");
     return false;
   }
 
   std::vector<VkPhysicalDevice> devices(count, VK_NULL_HANDLE);
-  vkEnumeratePhysicalDevices(instance, &count, devices.data());
+
+  if (vkEnumeratePhysicalDevices(instance, &count, devices.data()) !=
+      VK_SUCCESS) {
+    LOGE("Failed to enumerate the Vulkan physical devices");
+    return false;
+  }
+
+  devices.resize(count);
 
   for (const VkPhysicalDevice candidate : devices) {
-    if (!device_supports_required_extensions(candidate)) {
+    if (!device_supports_vulkan_1_2(candidate) ||
+        !device_supports_required_extensions(candidate) ||
+        !device_exports_linear_dmabuf_images(candidate)) {
       continue;
     }
 
@@ -128,14 +208,19 @@ bool VulkanDmabufRenderer::select_physical_device()
       if ((families[i].queueFlags & VK_QUEUE_GRAPHICS_BIT) != 0U) {
         physicalDevice = candidate;
         queueFamily = i;
+        // The image is released to the foreign (GTK) consumer when the device
+        // can tell it so; the release is optional and skipped otherwise.
+        foreignQueueFamily =
+            has_extension(device_extensions(candidate),
+                          VK_EXT_QUEUE_FAMILY_FOREIGN_EXTENSION_NAME);
         return true;
       }
     }
   }
 
   LOGE(
-      "No Vulkan device exposes the dma-buf / DRM format modifier extensions "
-      "required to render into a GTK surface");
+      "No Vulkan 1.2 device exports linear DRM format modifier images as "
+      "dma-bufs, which rendering into a GTK surface requires");
   return false;
 }
 
@@ -153,9 +238,16 @@ bool VulkanDmabufRenderer::create_logical_device()
   createInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
   createInfo.queueCreateInfoCount = 1;
   createInfo.pQueueCreateInfos = &queueInfo;
+  std::vector<const char*> extensions{kRequiredDeviceExtensions.begin(),
+                                      kRequiredDeviceExtensions.end()};
+
+  if (foreignQueueFamily) {
+    extensions.push_back(VK_EXT_QUEUE_FAMILY_FOREIGN_EXTENSION_NAME);
+  }
+
   createInfo.enabledExtensionCount =
-      static_cast<std::uint32_t>(kRequiredDeviceExtensions.size());
-  createInfo.ppEnabledExtensionNames = kRequiredDeviceExtensions.data();
+      static_cast<std::uint32_t>(extensions.size());
+  createInfo.ppEnabledExtensionNames = extensions.data();
 
   const VkResult result =
       vkCreateDevice(physicalDevice, &createInfo, nullptr, &device);
@@ -410,7 +502,10 @@ bool VulkanDmabufRenderer::render(std::uint32_t width, std::uint32_t height,
   VkCommandBufferBeginInfo beginInfo{};
   beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
   beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
-  vkBeginCommandBuffer(commandBuffer, &beginInfo);
+  if (vkBeginCommandBuffer(commandBuffer, &beginInfo) != VK_SUCCESS) {
+    LOGE("vkBeginCommandBuffer failed");
+    return false;
+  }
 
   VkClearValue clearValue{};
   clearValue.color.float32[0] = r;
@@ -431,7 +526,14 @@ bool VulkanDmabufRenderer::render(std::uint32_t width, std::uint32_t height,
   vkCmdBeginRenderPass(commandBuffer, &passBegin, VK_SUBPASS_CONTENTS_INLINE);
   vkCmdEndRenderPass(commandBuffer);
 
-  vkEndCommandBuffer(commandBuffer);
+  if (foreignQueueFamily) {
+    release_to_foreign_consumer(commandBuffer);
+  }
+
+  if (vkEndCommandBuffer(commandBuffer) != VK_SUCCESS) {
+    LOGE("vkEndCommandBuffer failed");
+    return false;
+  }
 
   VkFenceCreateInfo fenceInfo{};
   fenceInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
@@ -462,6 +564,33 @@ bool VulkanDmabufRenderer::render(std::uint32_t width, std::uint32_t height,
   }
 
   return true;
+}
+
+void VulkanDmabufRenderer::release_to_foreign_consumer(
+    VkCommandBuffer commandBuffer) const
+{
+  // The queue family ownership release half of the transfer to the foreign
+  // (GTK / EGL) consumer of the dma-buf; the image stays in the GENERAL layout
+  // the render pass left it in.
+  VkImageMemoryBarrier release{};
+  release.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
+  release.srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+  release.dstAccessMask = 0;
+  release.oldLayout = VK_IMAGE_LAYOUT_GENERAL;
+  release.newLayout = VK_IMAGE_LAYOUT_GENERAL;
+  release.srcQueueFamilyIndex = queueFamily;
+  release.dstQueueFamilyIndex = VK_QUEUE_FAMILY_FOREIGN_EXT;
+  release.image = image;
+  release.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+  release.subresourceRange.baseMipLevel = 0;
+  release.subresourceRange.levelCount = 1;
+  release.subresourceRange.baseArrayLayer = 0;
+  release.subresourceRange.layerCount = 1;
+
+  vkCmdPipelineBarrier(commandBuffer,
+                       VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
+                       VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT, 0, 0, nullptr, 0,
+                       nullptr, 1, &release);
 }
 
 bool VulkanDmabufRenderer::export_dmabuf(std::uint32_t width,

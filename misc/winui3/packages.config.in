@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   NuGet packages restored by cmake/enablers/template-project-WinUI3-enabler.cmake
-  on Windows. Versions are taken from the TEMPLATE_APP_WINAPPSDK_VERSION /
-  TEMPLATE_APP_CPPWINRT_VERSION CMake cache variables.
+  on Windows. Versions are taken from the TEMPLATE_APP_WINAPPSDK_VERSION,
+  TEMPLATE_APP_CPPWINRT_VERSION and TEMPLATE_APP_WEBVIEW2_VERSION CMake cache
+  variables (packages.config restores no dependencies, so the WebView2 one the
+  Windows App SDK metadata references is listed too).
 -->
 <packages>
   <package id="Microsoft.WindowsAppSDK" version="@TEMPLATE_APP_WINAPPSDK_VERSION@" targetFramework="native" />
   <package id="Microsoft.Windows.CppWinRT" version="@TEMPLATE_APP_CPPWINRT_VERSION@" targetFramework="native" />
+  <package id="Microsoft.Web.WebView2" version="@TEMPLATE_APP_WEBVIEW2_VERSION@" targetFramework="native" />
 </packages>

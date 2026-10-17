@@ -17,9 +17,10 @@ This branch fast-starts a [Microsoft WinUI 3](https://learn.microsoft.com/window
 The native UI is set up by the CMake enabler `cmake/enablers/template-project-WinUI3-enabler.cmake`, controlled by:
 
 - `ENABLE_WINUI3` (default `ON`) - set to `OFF` to drop the WinUI 3 integration.
-- `TEMPLATE_APP_WINAPPSDK_VERSION` / `TEMPLATE_APP_CPPWINRT_VERSION` - the Windows App SDK and C++/WinRT NuGet package versions restored on Windows.
+- `TEMPLATE_APP_WINAPPSDK_VERSION` / `TEMPLATE_APP_CPPWINRT_VERSION` / `TEMPLATE_APP_WEBVIEW2_VERSION` - the Windows App SDK, C++/WinRT and WebView2 (a Windows App SDK dependency) NuGet package versions restored on Windows.
+- `WINUI3_CPPWINRT_GEN` (default `<build directory>/winui3-cppwinrt`) - the output directory of the generated C++/WinRT projection headers.
 
-On Windows the enabler restores the Windows App SDK + C++/WinRT NuGet packages (the NuGet CLI is required) and exposes the `winui3::sdk` target the native UI links against; the C++/WinRT projection (`cppwinrt.exe`) and the Windows SDK must be present (Visual Studio 2022 with the *Desktop development with C++* workload and the Windows App SDK). On every other host the enabler is a no-op and the stub launch seam is built instead, so the portable code keeps building and testing.
+On Windows the enabler restores the Windows App SDK, C++/WinRT and WebView2 NuGet packages (the NuGet CLI is required), generates the C++/WinRT projection headers (`winrt/*.h`) of the Windows SDK, Windows App SDK and WebView2 metadata with the restored `cppwinrt.exe` (again only when the package versions change) and exposes the `winui3::sdk` target (C++20, `/bigobj`) the native UI links against; the Windows SDK must be present (Visual Studio 2022 with the *Desktop development with C++* workload). On every other host the enabler is a no-op and the stub launch seam is built instead, so the portable code keeps building and testing.
 
 > WinUI 3 with CMake is not the Microsoft default (Visual Studio drives WinUI 3 through MSBuild/.vcxproj). The CMake setup here is a starting point: the portable orchestration, the launch seam, the tests and the WIX packaging are wired up; finish the Windows App SDK / `cppwinrt` projection wiring on a Windows host to produce the native window.
 

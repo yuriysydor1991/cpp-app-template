@@ -8,3 +8,4 @@ endif()
 add_compile_options(-DNDEBUG=1)
 
 add_subdirectory(Eventer)
+add_subdirectory(Controller)

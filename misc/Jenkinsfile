@@ -189,6 +189,11 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "CTEST_app\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_app.junit.xml'
           }
         }
+        stage('CTEST_MatPlotxxController') { 
+          steps { 
+            sh 'cd $BUILDDIR && ctest -R "CTEST_MatPlotxxController\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_MatPlotxxController.junit.xml'
+          }
+        }
       }
       post { always { junit "$BUILDDIR/$BDJUNITOUT/CTEST_*.xml" } }
     }

@@ -22,3 +22,5 @@ target_link_libraries(
   TemplateProjectMatPlotxxControllerObj
   Matplot++::matplot
 )
+
+add_subdirectory(tests)

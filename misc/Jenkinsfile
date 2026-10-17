@@ -130,32 +130,32 @@ pipeline {
         }
         stage('UTEST_FreesoundSound') { 
           steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_FreesoundSound\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_FreesoundSound.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_FreesoundSound\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_FreesoundSound.junit.xml'
           }
         }
         stage('UTEST_FreesoundCategories') { 
           steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_FreesoundCategories\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_FreesoundCategories.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_FreesoundCategories\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_FreesoundCategories.junit.xml'
           }
         }
         stage('UTEST_FreesoundSounds') { 
           steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_FreesoundSounds\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_FreesoundSounds.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_FreesoundSounds\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_FreesoundSounds.junit.xml'
           }
         }
         stage('UTEST_FreesoundResourcePath') { 
           steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_FreesoundResourcePath\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_FreesoundResourcePath.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_FreesoundResourcePath\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_FreesoundResourcePath.junit.xml'
           }
         }
         stage('UTEST_FreesoundRandomSound') { 
           steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_FreesoundRandomSound\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_FreesoundRandomSound.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_FreesoundRandomSound\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_FreesoundRandomSound.junit.xml'
           }
         }
         stage('UTEST_FreesoundSoundsController') { 
           steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_FreesoundSoundsController\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_FreesoundSoundsController.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_FreesoundSoundsController\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_FreesoundSoundsController.junit.xml'
           }
         }
         stage('UTEST_SignalsHandler') { 
@@ -221,12 +221,12 @@ pipeline {
         }
         stage('CTEST_FreesoundSounds') { 
           steps { 
-            sh 'cd $BUILDDIR && ctest -R "CTEST_FreesoundSounds\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_FreesoundSounds.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_FreesoundSounds\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_FreesoundSounds.junit.xml'
           }
         }
         stage('CTEST_FreesoundSoundPlayer') { 
           steps { 
-            sh 'cd $BUILDDIR && ctest -R "CTEST_FreesoundSoundPlayer\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_FreesoundSoundPlayer.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_FreesoundSoundPlayer\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_FreesoundSoundPlayer.junit.xml'
           }
         }
       }

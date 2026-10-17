@@ -8,6 +8,8 @@
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DENABLE_CALLGRIND=ON
 ```
 
+За відсутності команди `valgrind` (дивись розділ [Необов'язкові пакети для перевірки використання пам'яті за допомогою Valgrind](/doc/sections/uk_UA/3-requirements/3-8-optional-for-the-memory-checkwith-Valgrind.md)) конфігурування лише видає попередження і не оголошує ціль `callgrind`, отож скрипти швидкої побудови, які завжди її вмикають, продовжують працювати.
+
 Після конфігурації проекту з увімкненою підтримкою профілювальника `valgrind` необхідно побудувати ціль `callgrind`:
 
 ```

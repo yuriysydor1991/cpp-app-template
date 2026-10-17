@@ -17,7 +17,7 @@ namespace templateSFML::events::eventsHandlers
 class EventClosedHandler : public IEventHandler
 {
  public:
-  virtual ~EventClosedHandler() = default;
+  ~EventClosedHandler() override = default;
 
   /**
    * @brief The closed event handler routine.

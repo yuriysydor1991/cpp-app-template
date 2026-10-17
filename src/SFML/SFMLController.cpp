@@ -2,7 +2,6 @@
 
 #include <cassert>
 #include <memory>
-#include <stdexcept>
 
 #include "src/SFML/SFMLContext.h"
 #include "src/app/applications/IApplication.h"
@@ -45,23 +44,10 @@ int SFMLController::run(std::shared_ptr<app::ApplicationContext> ctx)
 
 void SFMLController::event_loop()
 {
+  // run() hands over a built context with its window
   assert(sfmlContext != nullptr);
-  assert(sfmlContext->appCtx != nullptr);
-  assert(sfmlContext->window != nullptr);
   assert(events != nullptr);
   assert(painter2d != nullptr);
-
-  if (sfmlContext == nullptr || sfmlContext->window == nullptr) {
-    throw std::runtime_error("No valid SFML context given");
-  }
-
-  if (painter2d == nullptr) {
-    throw std::runtime_error("No scene painter given");
-  }
-
-  if (events == nullptr) {
-    throw std::runtime_error("No event handler given");
-  }
 
   while (!sfmlContext->appCtx->get_stop() && sfmlContext->window->isOpen()) {
     events->handle(sfmlContext);

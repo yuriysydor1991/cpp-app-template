@@ -11,7 +11,6 @@ namespace templateSFML::painter
 bool Painter::paint(std::shared_ptr<SFMLContext> ctx)
 {
   assert(ctx != nullptr);
-  assert(ctx->window != nullptr);
 
   if (ctx == nullptr || ctx->window == nullptr) {
     return false;

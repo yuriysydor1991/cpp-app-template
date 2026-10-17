@@ -41,7 +41,8 @@ set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE ${TEMPLATE_PROJECT_DEB_PACKAGE_ARCHITECTUR
 # (every release for the core one, Ubuntu 24.04 for the rest)
 string(
   JOIN ", " CPACK_DEBIAN_PACKAGE_DEPENDS
-  libqt6core6 libqt6gui6 libqt6widgets6 libqt6qml6 libqt6quick6
+  libqt6core6t64 "libqt6gui6 | libqt6gui6t64"
+  "libqt6widgets6 | libqt6widgets6t64" libqt6qml6 libqt6quick6
   libqt6quickcontrols2-6 libqt6charts6
   qml6-module-qtqml-workerscript qml6-module-qtquick
   qml6-module-qtquick-controls qml6-module-qtcharts

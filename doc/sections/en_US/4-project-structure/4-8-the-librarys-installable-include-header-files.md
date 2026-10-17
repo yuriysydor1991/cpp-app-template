@@ -45,7 +45,7 @@ grep -rl -e CppAppTemplate012 -e CPP_APP_TEMPLATE_012_ -e lib0impl src \
       -e 's/\blib0impl\b/yourlib0impl/g'
 ```
 
-The version segment is a part of the public namespace on purpose: the installable library name carries the very same major and minor pair, so two minor versions of one library install completely side by side and an application may depend on both of them at once. Rename the namespace along with a minor version bump to keep that pair in step.
+The version segment is a part of the public namespace on purpose: the installable library name carries the very same major and minor pair, so two minor versions of one library install completely side by side and an application may depend on both of them at once. That holds for the `cmake --install` installs: the deb, the RPM and the FreeBSD packages are all named after the project (`CppAppTemplate`) with no version in the package name, so a package manager replaces one minor version with another - give every minor version an own `CPACK_PACKAGE_NAME` in the packager enablers whenever the distribution packages have to coexist too. Rename the namespace along with a minor version bump to keep that pair in step.
 
 The logging subsystem namespace is deliberately **not** on that list - see the next section.
 

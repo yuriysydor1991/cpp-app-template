@@ -17,7 +17,7 @@ The minor segment is on by default, because the library public namespace carries
 the very same major and minor pair - `CppAppTemplate012`, see [The library's
 installable include header files](/doc/sections/en_US/4-project-structure/4-8-the-librarys-installable-include-header-files.md).
 Two minor versions of the library then install completely side by side and an
-application may depend on both of them at once.
+application may depend on both of them at once. That holds for the `cmake --install` installs: the deb, the RPM and the FreeBSD packages are all named after the project (`CppAppTemplate`) with no version in the package name, so a package manager replaces one minor version with another - give every minor version an own `CPACK_PACKAGE_NAME` in the packager enablers whenever the distribution packages have to coexist too.
 
 Resulting library name examples for a `0.12.0` project:
 

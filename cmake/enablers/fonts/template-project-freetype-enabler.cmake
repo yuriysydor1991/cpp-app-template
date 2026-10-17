@@ -32,4 +32,4 @@ endif()
 #   - system install, via find_package(Freetype): Freetype::Freetype
 #   - FetchContent source build:                  Freetype::Freetype
 # For example:
-#   target_link_libraries(${PROJECT_BINARY_NAME} Freetype::Freetype)
+#   target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE Freetype::Freetype)

@@ -24,3 +24,19 @@ target_link_libraries(
 )
 
 add_subdirectory(tests)
+
+# The session bus starts the server on the first call of its name with this
+# activation file installed. The name is the CurrentDateServerObject one.
+set(TEMPLATE_PROJECT_DBUS_SERVICE_NAME "org.cppapptemplate.SimpleServer")
+
+configure_file(
+  ${CMAKE_SOURCE_DIR}/misc/packagers/dbus/dbus-session-service.in
+  ${CMAKE_BINARY_DIR}/${TEMPLATE_PROJECT_DBUS_SERVICE_NAME}.service
+  @ONLY
+)
+
+install(
+  FILES ${CMAKE_BINARY_DIR}/${TEMPLATE_PROJECT_DBUS_SERVICE_NAME}.service
+  DESTINATION ${CMAKE_INSTALL_DATADIR}/dbus-1/services
+)
+

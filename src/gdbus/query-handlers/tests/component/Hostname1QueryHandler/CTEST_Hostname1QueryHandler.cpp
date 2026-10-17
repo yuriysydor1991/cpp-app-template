@@ -28,6 +28,33 @@ class CTEST_Hostname1QueryHandler : public Test
     }
   }
 
+  /**
+   * @brief Whether the hostname1 service answers on the system bus. A system
+   * bus without the systemd-hostnamed (a container, a non systemd host) skips
+   * the live cases instead of failing them.
+   */
+  static bool hostnamed_reachable()
+  {
+    try {
+      const auto bus =
+          Gio::DBus::Connection::get_sync(Gio::DBus::BusType::SYSTEM);
+
+      if (!bus) {
+        return false;
+      }
+
+      bus->call_sync(Hostname1QueryHandler::objectPath,
+                     "org.freedesktop.DBus.Peer", "Ping",
+                     Glib::VariantContainerBase{},
+                     Hostname1QueryHandler::serviceName);
+
+      return true;
+    }
+    catch (const Glib::Error&) {
+      return false;
+    }
+  }
+
   DBusQueryHandlerFactory factory;
 };
 
@@ -47,8 +74,9 @@ TEST_F(CTEST_Hostname1QueryHandler, factory_default_handler_is_hostname1)
 
 TEST_F(CTEST_Hostname1QueryHandler, live_system_bus_query)
 {
-  if (!system_bus_reachable()) {
-    GTEST_SKIP() << "System bus is not reachable in this environment";
+  if (!hostnamed_reachable()) {
+    GTEST_SKIP()
+        << "The hostname1 service is not reachable in this environment";
   }
 
   Glib::RefPtr<Gio::DBus::Connection> bus =

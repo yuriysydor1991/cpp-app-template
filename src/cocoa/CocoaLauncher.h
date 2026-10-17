@@ -1,6 +1,8 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_COCOALAUNCHER_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_COCOALAUNCHER_H
 
+#include <functional>
+
 namespace cocoa
 {
 
@@ -16,10 +18,14 @@ namespace cocoa
  *
  * @param argc The command line arguments count.
  * @param argv The command line arguments array.
+ * @param stop_requested Tells whether the application stop is requested (the
+ * signals handlers raise the context stop flag); the Cocoa application polls
+ * it and leaves its event loop then.
  *
  * @return Returns the application exit status (0 on success).
  */
-int run_cocoa_application(int& argc, char**& argv);
+int run_cocoa_application(int& argc, char**& argv,
+                          const std::function<bool()>& stop_requested);
 
 }  // namespace cocoa
 

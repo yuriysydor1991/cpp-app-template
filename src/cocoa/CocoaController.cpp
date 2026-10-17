@@ -28,7 +28,8 @@ int CocoaController::run(std::shared_ptr<app::ApplicationContext> nactx)
 
 int CocoaController::launch(int& argc, char**& argv)
 {
-  return run_cocoa_application(argc, argv);
+  return run_cocoa_application(argc, argv,
+                               [ctx = actx]() { return ctx->get_stop(); });
 }
 
 }  // namespace cocoa

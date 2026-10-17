@@ -1,6 +1,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include <functional>
 #include <memory>
 
 #include "src/app/ApplicationContext.h"
@@ -15,7 +16,11 @@ using namespace testing;
 // launch(), so the real AppKit backed run_cocoa_application() is never needed.
 namespace cocoa
 {
-int run_cocoa_application(int& /*argc*/, char**& /*argv*/) { return 0; }
+int run_cocoa_application(int& /*argc*/, char**& /*argv*/,
+                          const std::function<bool()>& /*stop_requested*/)
+{
+  return 0;
+}
 }  // namespace cocoa
 
 namespace

@@ -17,6 +17,8 @@
 
 `Application::run()` (`src/app/applications/Application.cpp`) створює `CocoaController` і делегує йому, так само як інші GUI-гілки делегують своєму контролеру.
 
+Обробники сигналів програми лише піднімають прапорець зупинки контексту (дивись секцію [Обробка сигналів операційної системи](/doc/sections/uk_UA/4-project-structure/4-8-handling-the-OS-signals.md)), тож `CocoaController` передає у `run_cocoa_application()` запит зупинки, який читає `ApplicationContext::get_stop()`. Делегат програми перевіряє його кожні 100 мс і виходить з циклу подій AppKit, щойно його піднято, тож Ctrl+C, `kill` та інші сигнали зупинки завершують програму звичайним чином.
+
 ### Збирання
 
 Нативний UI налаштовує CMake-модуль `cmake/enablers/template-project-Cocoa-enabler.cmake`, що керується `ENABLE_COCOA` (типово `ON`). На macOS він вмикає мову `OBJCXX`, знаходить фреймворк Cocoa і надає ціль `cocoa::sdk` (лінкується з `-framework Cocoa`, компілюється з `-fobjc-arc` для автоматичного підрахунку посилань). На будь-якому іншому хості він нічого не робить, і замість нього збирається шов-заглушка, тож платформонезалежний код продовжує збиратися й тестуватися. На macOS виконуваний файл створюється як пакунок `.app` (`MACOSX_BUNDLE`), ідентифікатором якого є змінна CMake `TEMPLATE_PROJECT_MACOS_BUNDLE_IDENTIFIER` (типово `ua.org.kytok.template.cppapptemplate`; її використовує й інсталятор `.pkg`), тож задай у ній власну назву у зворотному DNS-форматі.

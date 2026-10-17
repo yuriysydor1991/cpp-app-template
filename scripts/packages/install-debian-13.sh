@@ -12,9 +12,6 @@ PROJECT_ROOT=$(realpath "$(dirname "$0")/../..")
 . "${PROJECT_ROOT}/scripts/packages/common.sh"
 
 PACKAGES=(
-    <<<<<<< HEAD
-    =======
-    >>>>>>> ae8bf2734 (Splitting the packages install scripts per OS release)
     build-essential
     cmake
     g++
@@ -25,7 +22,6 @@ PACKAGES=(
     libnode-dev
     libssl-dev
     libstdc++6
-    x
 )
 
 apt_install "${PACKAGES[@]}"

@@ -186,7 +186,7 @@
 1. [Структура проекту](/doc/sections/uk_UA/4-project-structure/4-project-structure.md)
     1. [Діаграми проекту](/doc/sections/uk_UA/4-project-structure/4-0-project-diagrams.md)
     1. [Реалізуй код одразу!](/doc/sections/uk_UA/4-project-structure/4-1-implement-code-straight-away.md)
-    1. [Інтеграція WinUI 3 + C++/WinRT](/doc/sections/uk_UA/4-project-structure/4-8-winui3-cppwinrt-integration.md)
+    1. [Інтеграція WinUI 3 + C++/WinRT](/doc/sections/uk_UA/4-project-structure/4-9-winui3-cppwinrt-integration.md)
     1. [Зміна назви проекту і головного виконуваного файлу](/doc/sections/uk_UA/4-project-structure/4-2-changing-the-project-and-executable-name.md)
     1. [Впровадження нових параметрів командного рядка](/doc/sections/uk_UA/4-project-structure/4-6-introduction-of-the-custom-command-line-parameters.md)
     1. [Реалізація власних нащадків IApplication](/doc/sections/uk_UA/4-project-structure/4-7-implementing-your-onw-IApplication-descendants.md)

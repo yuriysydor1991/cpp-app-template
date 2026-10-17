@@ -11,3 +11,4 @@
 1. [Тести проекту](/doc/sections/uk_UA/4-project-structure/4-4-project-tests.md)
     1. [Фреймворк тестів Google Test](/doc/sections/uk_UA/4-project-structure/4-4-1-google-test.md)
 1. [Розширення](/doc/sections/uk_UA/4-project-structure/4-5-extensions.md)
+1. [Інтеграція WinUI 3 + C++/WinRT](/doc/sections/uk_UA/4-project-structure/4-9-winui3-cppwinrt-integration.md)

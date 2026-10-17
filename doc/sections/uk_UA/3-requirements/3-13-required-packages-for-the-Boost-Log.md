@@ -6,6 +6,6 @@
 sudo apt install -y libboost-log-dev libboost-thread-dev libboost-filesystem-dev
 ```
 
-Їх містить і пакунок `libboost-all-dev`, який встановлюють скрипти встановлення пакунків, у родині Red Hat вони називаються `boost-devel`, а у FreeBSD - `boost-libs`. Виконуваному файлу потрібні лише бібліотеки часу виконання Boost.Log, від яких залежить пакунок DEB (їх визначає інструмент `dpkg-shlibdeps`) і які додає пакунок snap.
+Саме ці пакунки встановлюють скрипти `scripts/packages/install-<release>.sh` окремих випусків родини Debian, а образи Docker беруть пакунок `libboost-all-dev`, який їх теж містить; у родині Red Hat вони називаються `boost-devel`, а у FreeBSD - `boost-libs`. Виконуваному файлу потрібні лише бібліотеки часу виконання Boost.Log, від яких залежить пакунок DEB (їх визначає інструмент `dpkg-shlibdeps`) і які додає пакунок snap.
 
 Як проект веде журнал через неї, описує секція [Логер Boost.Log](/doc/sections/uk_UA/5-project-build/5-66-the-Boost-Log-logger.md).

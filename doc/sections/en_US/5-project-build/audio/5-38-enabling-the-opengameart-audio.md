@@ -19,7 +19,7 @@ The `cmake/enablers/audio/template-project-opengameart-audio-enabler.cmake` modu
 | Variable | Default | Meaning |
 | --- | --- | --- |
 | `ENABLE_OPENGAMEART_AUDIO` | `ON` | enables the whole integration |
-| `TEMPLATE_APP_OPENGAMEART_AUDIO_MANIFEST` | `misc/opengameart-packs.txt` | the manifest naming every pack together with it's archive URL and it's license |
+| `TEMPLATE_APP_OPENGAMEART_AUDIO_MANIFEST` | `misc/opengameart-packs.txt` | the manifest naming every pack together with it's archive URL, it's license and the archive SHA-256 checksum |
 | `TEMPLATE_APP_OPENGAMEART_AUDIO_DIR` | empty | an already available packs directory to reuse instead of downloading one |
 | `OPENGAMEART_AUDIO_EXTENSIONS` | `ogg;wav;mp3` | the sound file extensions to pick out of the packs |
 | `OPENGAMEART_AUDIO_QT_RESOURCE_PREFIX` | `/sounds` | the prefix of the generated `.qrc` manifests |
@@ -31,20 +31,20 @@ The `cmake/enablers/audio/template-project-opengameart-audio-enabler.cmake` modu
 OpenGameArt hosts it's submissions under several different licenses, so the `misc/opengameart-packs.txt` manifest is the single place recording **which** pack is used, **where** it came from and **what** it is licensed under. Every line follows the
 
 ```
-<pack>|<archive URL>|<license>
+<pack>|<archive URL>|<license>|<archive SHA-256>
 ```
 
 form, the `#` starting a comment and the empty lines being skipped:
 
 ```
-interface-sounds|https://opengameart.org/sites/default/files/kenney_interfaceSounds.zip|CC0-1.0
-digital-sounds|https://opengameart.org/sites/default/files/Digital_SFX_Set.zip|CC0-1.0
-retro-sounds|https://opengameart.org/sites/default/files/strange_retrosfx_wav_0.zip|CC0-1.0
+interface-sounds|https://opengameart.org/sites/default/files/kenney_interfaceSounds.zip|CC0-1.0|f2193d072726d6758a5f7871b2dcc54dcce0d5c35c6f0a62f92549b327c81232
+digital-sounds|https://opengameart.org/sites/default/files/Digital_SFX_Set.zip|CC0-1.0|022f0f4b73da55989567fe2b373c8af89d74f5d015257e293cab497ca606d063
+retro-sounds|https://opengameart.org/sites/default/files/strange_retrosfx_wav_0.zip|CC0-1.0|a34cb439ad34561fed200a8532e51034469d4dc4c7a0882e34db1bf2972a4486
 ```
 
 Those three CC0 submissions are the ones the manifest ships with, one per sound file format the `OPENGAMEART_AUDIO_EXTENSIONS` variable names: the `.ogg` [Interface Sounds](https://opengameart.org/content/interface-sounds), the `.mp3` [63 Digital sound effects](https://opengameart.org/content/63-digital-sound-effects-lasers-phasers-space-etc) and the `.wav` [15 Strange Retro SFX](https://opengameart.org/content/15-strange-retro-sfx). Drop them, replace them or add the submissions of interest next to them - reading the license of each one at [opengameart.org](https://opengameart.org) - and reconfigure.
 
-**A pack with no recorded license is refused** rather than silently assumed to be a CC0 one, and an emptied manifest stops the configure step instead of building a soundless application.
+**A pack with no recorded license is refused** rather than silently assumed to be a CC0 one, and an emptied manifest stops the configure step instead of building a soundless application. **The SHA-256 checksum pins the very archive the build accepts**: a download carrying anything else stops the configure instead of slipping different sounds into the binary, and an interrupted download or extraction leaves nothing behind to be taken for a complete pack. Record the `sha256sum` output of a newly added archive on it's line.
 
 The recorded license travels all the way into the binary, so the code answers for it as well:
 
@@ -64,7 +64,7 @@ misc/scripts/fetch-opengameart-audio.sh ~/opengameart-audio
 cmake -S . -B build -DTEMPLATE_APP_OPENGAMEART_AUDIO_DIR=~/opengameart-audio
 ```
 
-The script takes the target directory as it's single argument, reads the very manifest the build does (the `OPENGAMEART_AUDIO_MANIFEST` environment variable points it at another one), downloads through `curl` or `wget` (whichever is available) and leaves an already unpacked pack alone.
+The script takes the target directory as it's single argument, reads the very manifest the build does (the `OPENGAMEART_AUDIO_MANIFEST` environment variable points it at another one), downloads through `curl` or `wget` (whichever is available), refuses an archive of any other SHA-256 checksum and leaves an already unpacked pack alone.
 
 ### Reaching the sounds from the C++ code
 

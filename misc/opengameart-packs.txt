@@ -4,12 +4,15 @@
 # pack is named here together with the very license it was published under
 # rather than assumed to be a CC0 one. Every line follows the
 #
-#   <pack>|<archive URL>|<license>
+#   <pack>|<archive URL>|<license>|<archive SHA-256>
 #
 # form, the '#' starting a comment and the empty lines being skipped. The pack
 # name becomes the subdirectory the archive is unpacked into and the first part
-# of every sound alias, while the license is compiled into the binary and given
-# back by the OpenGameArtPack::license accessor.
+# of every sound alias, the license is compiled into the binary and given back
+# by the OpenGameArtPack::license accessor, while the SHA-256 checksum pins the
+# very archive the build accepts: a download carrying anything else stops the
+# configure instead of slipping different sounds into the binary. Record the
+# "sha256sum" output of a newly added archive next to it.
 #
 # Keep this file the single place recording where a pack came from and what it
 # is licensed under: the enabler refuses to build a pack carrying no license
@@ -20,6 +23,6 @@
 # them or add the submissions of interest from https://opengameart.org next to
 # them, taking the license of each one from it's very submission page.
 
-interface-sounds|https://opengameart.org/sites/default/files/kenney_interfaceSounds.zip|CC0-1.0
-digital-sounds|https://opengameart.org/sites/default/files/Digital_SFX_Set.zip|CC0-1.0
-retro-sounds|https://opengameart.org/sites/default/files/strange_retrosfx_wav_0.zip|CC0-1.0
+interface-sounds|https://opengameart.org/sites/default/files/kenney_interfaceSounds.zip|CC0-1.0|f2193d072726d6758a5f7871b2dcc54dcce0d5c35c6f0a62f92549b327c81232
+digital-sounds|https://opengameart.org/sites/default/files/Digital_SFX_Set.zip|CC0-1.0|022f0f4b73da55989567fe2b373c8af89d74f5d015257e293cab497ca606d063
+retro-sounds|https://opengameart.org/sites/default/files/strange_retrosfx_wav_0.zip|CC0-1.0|a34cb439ad34561fed200a8532e51034469d4dc4c7a0882e34db1bf2972a4486

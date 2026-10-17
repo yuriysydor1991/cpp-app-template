@@ -6,16 +6,12 @@ option(
   ON
 )
 
-# The packager manifests carry the very same packs, so their coordinates stay
-# declared even with the enabler itself switched off.
 # The packs are read out of the manifest rather than listed here, so the single
-# place naming a pack also records where it came from and what it is licensed
-# under.
-set(OPENGAMEART_AUDIO_PACKS "" CACHE INTERNAL "The OpenGameArt sound packs the manifest names")
-
+# place naming a pack also records where it came from, what it is licensed
+# under and the very archive it comes from.
 set(
   TEMPLATE_APP_OPENGAMEART_AUDIO_MANIFEST "${CMAKE_SOURCE_DIR}/misc/opengameart-packs.txt"
-  CACHE FILEPATH "The manifest naming every pack together with it's archive URL and it's license"
+  CACHE FILEPATH "The manifest naming every pack together with it's archive URL, it's license and the archive SHA-256 checksum"
 )
 
 if (NOT ENABLE_OPENGAMEART_AUDIO)

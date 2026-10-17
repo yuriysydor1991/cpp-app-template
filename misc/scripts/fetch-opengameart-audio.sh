@@ -28,6 +28,17 @@ else
   exit 1
 fi
 
+if command -v sha256sum >/dev/null 2>&1; then
+  checksum() { sha256sum "$1" | cut -d ' ' -f 1; }
+elif command -v shasum >/dev/null 2>&1; then
+  checksum() { shasum -a 256 "$1" | cut -d ' ' -f 1; }
+elif command -v sha256 >/dev/null 2>&1; then
+  checksum() { sha256 -q "$1"; }
+else
+  echo "No sha256sum, shasum or sha256 available to check the downloads with" >&2
+  exit 1
+fi
+
 if ! command -v unzip >/dev/null 2>&1; then
   echo "No unzip available to unpack the downloaded archives with" >&2
   exit 1
@@ -38,16 +49,18 @@ mkdir -p "$TARGET_DIR"
 packsSeen=0
 
 # The manifest records the license next to every pack, so the provenance of the
-# downloaded material stays written down rather than assumed.
-while IFS='|' read -r pack packUrl packLicense; do
+# downloaded material stays written down rather than assumed, and the SHA-256
+# checksum of it's archive, so no other archive is ever taken for it.
+while IFS='|' read -r pack packUrl packLicense packHash; do
   case "$pack" in ''|\#*) continue ;; esac
 
   pack=$(echo "$pack" | tr -d ' ')
   packUrl=$(echo "$packUrl" | tr -d ' ')
   packLicense=$(echo "$packLicense" | sed 's/^ *//; s/ *$//')
+  packHash=$(echo "$packHash" | tr -d ' ' | tr 'A-F' 'a-f')
 
-  if [ -z "$packUrl" ] || [ -z "$packLicense" ]; then
-    echo "The '$pack' line of $MANIFEST follows no <pack>|<archive URL>|<license> form" >&2
+  if [ -z "$packUrl" ] || [ -z "$packLicense" ] || [ ${#packHash} -ne 64 ]; then
+    echo "The '$pack' line of $MANIFEST follows no <pack>|<archive URL>|<license>|<archive SHA-256> form" >&2
     exit 1
   fi
 
@@ -59,7 +72,7 @@ while IFS='|' read -r pack packUrl packLicense; do
     continue
   fi
 
-  packArchive="$TARGET_DIR/$pack.zip"
+  packArchive="$packDir.zip"
 
   echo "Downloading $pack ($packLicense): $packUrl"
 
@@ -70,14 +83,30 @@ while IFS='|' read -r pack packUrl packLicense; do
     exit 1
   fi
 
-  mkdir -p "$packDir"
+  actualHash=$(checksum "$packArchive")
 
-  if ! unzip -q "$packArchive" -d "$packDir"; then
-    rm -rf "$packDir" "$packArchive"
+  if [ "$actualHash" != "$packHash" ]; then
+    rm -f "$packArchive"
+    echo "The $pack pack archive carries the $actualHash SHA-256 checksum instead of the $packHash one $MANIFEST pins" >&2
+    exit 1
+  fi
+
+  # The pack directory appears only once the whole archive is out, so an
+  # interrupted run leaves no half unpacked pack behind. An archive made on
+  # Windows may carry the DOS read-only attribute on a directory of it's own,
+  # which the extraction turns into a directory no file may be created inside
+  # any more: the packs are a build input and not a read-only tree, so the
+  # write permission goes back on.
+  rm -rf "${packDir:?}.unpacked"
+
+  if ! unzip -q "$packArchive" -d "$packDir.unpacked"; then
+    rm -rf "${packDir:?}.unpacked" "$packArchive"
     echo "Fail to unpack the downloaded $pack pack archive" >&2
     exit 1
   fi
 
+  chmod -R u+w "$packDir.unpacked"
+  mv "$packDir.unpacked" "$packDir"
   rm -f "$packArchive"
 done < "$MANIFEST"
 

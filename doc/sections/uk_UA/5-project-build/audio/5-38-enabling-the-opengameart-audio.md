@@ -19,7 +19,7 @@ OpenGameArt публікує набори на умовах [CC0](https://creati
 | Змінна | Типове значення | Призначення |
 | --- | --- | --- |
 | `ENABLE_OPENGAMEART_AUDIO` | `ON` | вмикає усю інтеграцію |
-| `TEMPLATE_APP_OPENGAMEART_AUDIO_MANIFEST` | `misc/opengameart-packs.txt` | маніфест, що називає кожен набір разом з адресою його архіву і його ліцензією |
+| `TEMPLATE_APP_OPENGAMEART_AUDIO_MANIFEST` | `misc/opengameart-packs.txt` | маніфест, що називає кожен набір разом з адресою його архіву, його ліцензією та контрольною сумою SHA-256 архіву |
 | `TEMPLATE_APP_OPENGAMEART_AUDIO_DIR` | порожнє | вже наявна директорія з наборами, яку слід використати замість завантаження |
 | `OPENGAMEART_AUDIO_EXTENSIONS` | `ogg;wav;mp3` | розширення звукових файлів, які слід обрати з наборів |
 | `OPENGAMEART_AUDIO_QT_RESOURCE_PREFIX` | `/sounds` | префікс згенерованих маніфестів `.qrc` |
@@ -31,20 +31,20 @@ OpenGameArt публікує набори на умовах [CC0](https://creati
 OpenGameArt розміщує свої матеріали під декількома різними ліцензіями, тому маніфест `misc/opengameart-packs.txt` є єдиним місцем, що фіксує, **який** набір використовується, **звідки** він походить і **під якою** ліцензією опублікований. Кожен рядок має вигляд
 
 ```
-<набір>|<адреса архіву>|<ліцензія>
+<набір>|<адреса архіву>|<ліцензія>|<SHA-256 архіву>
 ```
 
 де `#` починає коментар, а порожні рядки пропускаються:
 
 ```
-interface-sounds|https://opengameart.org/sites/default/files/kenney_interfaceSounds.zip|CC0-1.0
-digital-sounds|https://opengameart.org/sites/default/files/Digital_SFX_Set.zip|CC0-1.0
-retro-sounds|https://opengameart.org/sites/default/files/strange_retrosfx_wav_0.zip|CC0-1.0
+interface-sounds|https://opengameart.org/sites/default/files/kenney_interfaceSounds.zip|CC0-1.0|f2193d072726d6758a5f7871b2dcc54dcce0d5c35c6f0a62f92549b327c81232
+digital-sounds|https://opengameart.org/sites/default/files/Digital_SFX_Set.zip|CC0-1.0|022f0f4b73da55989567fe2b373c8af89d74f5d015257e293cab497ca606d063
+retro-sounds|https://opengameart.org/sites/default/files/strange_retrosfx_wav_0.zip|CC0-1.0|a34cb439ad34561fed200a8532e51034469d4dc4c7a0882e34db1bf2972a4486
 ```
 
 Саме ці три матеріали під ліцензією CC0 і постачаються у маніфесті, по одному на кожен формат звукових файлів, які називає змінна `OPENGAMEART_AUDIO_EXTENSIONS`: `.ogg` [Interface Sounds](https://opengameart.org/content/interface-sounds), `.mp3` [63 Digital sound effects](https://opengameart.org/content/63-digital-sound-effects-lasers-phasers-space-etc) та `.wav` [15 Strange Retro SFX](https://opengameart.org/content/15-strange-retro-sfx). Приберіть їх, замініть їх або додайте поруч потрібні матеріали — прочитавши ліцензію кожного з них на [opengameart.org](https://opengameart.org) — та повторіть етап налаштування.
 
-**Набір без записаної ліцензії відхиляється**, а не вважається мовчазно таким, що має ліцензію CC0, а спорожнений маніфест зупиняє етап налаштування, замість того щоб зібрати програму без жодного звуку.
+**Набір без записаної ліцензії відхиляється**, а не вважається мовчазно таким, що має ліцензію CC0, а спорожнений маніфест зупиняє етап налаштування, замість того щоб зібрати програму без жодного звуку. **Контрольна сума SHA-256 закріплює саме той архів, який приймає побудова**: завантаження з будь-яким іншим вмістом зупиняє налаштування, замість того щоб непомітно підсунути до виконуваного файлу інші звуки, а перерване завантаження чи розпакування не залишає після себе нічого, що могло б бути сприйняте за повний набір. Запишіть вивід `sha256sum` для щойно доданого архіву у його рядок.
 
 Записана ліцензія потрапляє аж до виконуваного файлу, тому код також відповідає за неї:
 
@@ -64,7 +64,7 @@ misc/scripts/fetch-opengameart-audio.sh ~/opengameart-audio
 cmake -S . -B build -DTEMPLATE_APP_OPENGAMEART_AUDIO_DIR=~/opengameart-audio
 ```
 
-Скрипт приймає директорію призначення як свій єдиний аргумент, читає той самий маніфест, що й побудова (змінна середовища `OPENGAMEART_AUDIO_MANIFEST` вказує йому на інший), завантажує за допомогою `curl` або `wget` (залежно від того, що доступне) і не чіпає вже розпакований набір.
+Скрипт приймає директорію призначення як свій єдиний аргумент, читає той самий маніфест, що й побудова (змінна середовища `OPENGAMEART_AUDIO_MANIFEST` вказує йому на інший), завантажує за допомогою `curl` або `wget` (залежно від того, що доступне), відхиляє архів з будь-якою іншою контрольною сумою SHA-256 і не чіпає вже розпакований набір.
 
 ### Доступ до звуків з коду C++
 

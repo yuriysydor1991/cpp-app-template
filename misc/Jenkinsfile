@@ -126,12 +126,12 @@ pipeline {
         }
         stage('UTEST_CommandLineParser') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_CommandLineParser\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_CommandLineParser.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_CommandLineParser\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_CommandLineParser.junit.xml'
           }
         }
         stage('UTEST_OpenCVController') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_OpenCVController\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_OpenCVController.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_OpenCVController\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_OpenCVController.junit.xml'
           }
         }
         stage('UTEST_SignalsHandler') { 
@@ -192,12 +192,12 @@ pipeline {
         }
         stage('CTEST_app') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_app\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_app.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_app\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_app.junit.xml'
           }
         }
         stage('CTEST_opencv') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_opencv\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_opencv.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_opencv\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_opencv.junit.xml'
           }
         }
       }

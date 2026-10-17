@@ -2,12 +2,14 @@
 
 1. [Побудова за допомогою IDE](/doc/sections/uk_UA/5-project-build/5-1-IDE-build.md)
 1. [Побудова проекту-шаблону через командний рядок](/doc/sections/uk_UA/5-project-build/5-2-command-line-build.md)
+1. [Швидкі скрипти побудови](/doc/sections/uk_UA/5-project-build/5-36-quick-build-scripts.md)
 1. Вмикання тестів
     1. [Вмикання юніт-тестів](/doc/sections/uk_UA/5-project-build/testing/5-3-1-enabling-unit-testing.md)
     1. [Запобігання використання GTest з ОС](/doc/sections/uk_UA/5-project-build/testing/5-3-2-disabling-system-GTest-probe.md)
 1. [Побудова документації](/doc/sections/uk_UA/5-project-build/documentation/5-4-documentation-build.md)
 1. [Вмикання підтримки встановлення документації](/doc/sections/uk_UA/5-project-build/documentation/5-5-configuring-the-documentation-install-support.md)
 1. [Налаштування складових імені встановлюваної бібліотеки](/doc/sections/uk_UA/5-project-build/5-41-customizing-library-name-segments.md)
+1. [Встановлення файлів розробки бібліотеки](/doc/sections/uk_UA/5-project-build/5-37-installing-the-library-development-files.md)
 1. Якість коду та санітайзери
     1. [Вмикання підтримки форматування коду](/doc/sections/uk_UA/5-project-build/code-quality/5-6-enabling-and-performing-code-formatting-target.md)
     1. [Вмикання підтримки цілі статичного аналізатора коду cppcheck](/doc/sections/uk_UA/5-project-build/code-quality/5-7-enabling-the-static-code-analyzer-target-with-cppcheck.md)
@@ -25,6 +27,9 @@
 1. Бібліотеки
     1. [Вмикання інтеграції libcurl](/doc/sections/uk_UA/5-project-build/5-14-enabling-libcurl.md)
     1. [Вмикання інтеграції бібліотеки nlohmann JSON](/doc/sections/uk_UA/5-project-build/5-18-enabling-the-nlohmann-json-library.md)
+1. Безпека / Криптографія
+    1. [Вмикання інтеграції OpenSSL](/doc/sections/uk_UA/5-project-build/security/5-35-enabling-the-openssl-library.md)
+    1. [Параметри захисту бінарних файлів](/doc/sections/uk_UA/5-project-build/security/5-49-the-binary-hardening-options.md)
 1. Стиснення даних
     1. [Вмикання інтеграції zlib](/doc/sections/uk_UA/5-project-build/compression/5-23-enabling-the-zlib-library.md)
     1. [Вмикання інтеграції liblzma](/doc/sections/uk_UA/5-project-build/compression/5-34-enabling-the-liblzma-library.md)

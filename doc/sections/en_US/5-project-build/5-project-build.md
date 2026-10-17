@@ -2,12 +2,14 @@
 
 1. [IDE build](/doc/sections/en_US/5-project-build/5-1-IDE-build.md)
 1. [Command line build](/doc/sections/en_US/5-project-build/5-2-command-line-build.md)
+1. [Quick build scripts](/doc/sections/en_US/5-project-build/5-36-quick-build-scripts.md)
 1. Enabling testing
     1. [Enabling unit testing](/doc/sections/en_US/5-project-build/testing/5-3-1-enabling-unit-testing.md)
     1. [Disabling system GTest probe](/doc/sections/en_US/5-project-build/testing/5-3-2-disabling-system-GTest-probe.md)
 1. [Documentation build](/doc/sections/en_US/5-project-build/documentation/5-4-documentation-build.md)
 1. [Configuring the documentation install support](/doc/sections/en_US/5-project-build/documentation/5-5-configuring-the-documentation-install-support.md)
 1. [Customizing the installable library name segments](/doc/sections/en_US/5-project-build/5-41-customizing-library-name-segments.md)
+1. [Installing the library development files](/doc/sections/en_US/5-project-build/5-37-installing-the-library-development-files.md)
 1. Code quality & sanitizers
     1. [Enabling and performing code formatting target](/doc/sections/en_US/5-project-build/code-quality/5-6-enabling-and-performing-code-formatting-target.md)
     1. [Enabling the static code analyzer target with cppcheck](/doc/sections/en_US/5-project-build/code-quality/5-7-enabling-the-static-code-analyzer-target-with-cppcheck.md)
@@ -25,6 +27,9 @@
 1. Libraries
     1. [Enabling the libcurl](/doc/sections/en_US/5-project-build/5-14-enabling-libcurl.md)
     1. [Enabling the nlohmann JSON library](/doc/sections/en_US/5-project-build/5-18-enabling-the-nlohmann-json-library.md)
+1. Security / Cryptography
+    1. [Enabling the OpenSSL library](/doc/sections/en_US/5-project-build/security/5-35-enabling-the-openssl-library.md)
+    1. [The binary hardening options](/doc/sections/en_US/5-project-build/security/5-49-the-binary-hardening-options.md)
 1. Compression
     1. [Enabling the zlib library](/doc/sections/en_US/5-project-build/compression/5-23-enabling-the-zlib-library.md)
     1. [Enabling the liblzma library](/doc/sections/en_US/5-project-build/compression/5-34-enabling-the-liblzma-library.md)

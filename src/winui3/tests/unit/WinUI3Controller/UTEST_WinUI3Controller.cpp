@@ -1,6 +1,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include <functional>
 #include <memory>
 
 #include "src/app/ApplicationContext.h"
@@ -16,7 +17,11 @@ using namespace testing;
 // needed.
 namespace winui3
 {
-int run_winui_application(int& /*argc*/, char**& /*argv*/) { return 0; }
+int run_winui_application(int& /*argc*/, char**& /*argv*/,
+                          const std::function<bool()>& /*stop_requested*/)
+{
+  return 0;
+}
 }  // namespace winui3
 
 namespace

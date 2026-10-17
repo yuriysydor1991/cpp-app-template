@@ -1,3 +1,4 @@
+#include <functional>
 #include <iostream>
 
 #include "project-global-decls.h"
@@ -13,7 +14,8 @@ namespace winui3
 // reports the GUI is unavailable (printing the portable WindowConfig content)
 // instead of opening a window. This keeps the portable parts of the project
 // cross-platform buildable and testable.
-int run_winui_application(int& /*argc*/, char**& /*argv*/)
+int run_winui_application(int& /*argc*/, char**& /*argv*/,
+                          const std::function<bool()>& /*stop_requested*/)
 {
   const helpers::WindowConfig config{project_decls::PROJECT_NAME,
                                      project_decls::PROJECT_BUILD_VERSION};

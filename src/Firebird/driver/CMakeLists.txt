@@ -21,7 +21,7 @@ if (ENABLE_FIREBIRD)
 
   target_link_libraries(
     ${PROJECT_BINARY_NAME}
-    TemplateFirebirdDriverObj Firebird::fbclient
+    PRIVATE TemplateFirebirdDriverObj Firebird::fbclient
   )
 else()
   add_library(
@@ -31,7 +31,7 @@ else()
 
   target_link_libraries(
     ${PROJECT_BINARY_NAME}
-    TemplateFirebirdDriverObj
+    PRIVATE TemplateFirebirdDriverObj
   )
 endif()
 

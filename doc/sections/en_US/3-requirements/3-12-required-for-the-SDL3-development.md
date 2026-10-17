@@ -1,6 +1,6 @@
 ## Required packages for the SDL3 development
 
-The template project depends on the [SDL3](https://wiki.libsdl.org/SDL3/FrontPage) library together with the [OpenGL](https://www.opengl.org/) headers. CMake acquires SDL3 through the dedicated `cmake/enablers/template-project-SDL3-enabler.cmake` enabler module: it probes the system SDL3 first (`find_package(SDL3 QUIET)`) and, when none is installed, clones `libsdl-org/SDL` at the tag pinned in `TEMPLATE_APP_SDL3_GIT_TAG` (default `release-3.2.10`) through **FetchContent** and builds `SDL3::SDL3` from source as part of the project build. OpenGL is still required from the host (`find_package(OpenGL REQUIRED)`).
+The template project depends on the [SDL3](https://wiki.libsdl.org/SDL3/FrontPage) library together with the [OpenGL](https://www.opengl.org/) headers. CMake acquires SDL3 through the dedicated `cmake/enablers/template-project-SDL3-enabler.cmake` enabler module: it probes the system SDL3 first (`find_package(SDL3 QUIET)`) and, when none is installed, clones `libsdl-org/SDL` at the tag pinned in `TEMPLATE_APP_SDL3_GIT_TAG` (default `release-3.2.10`) through **FetchContent** and builds `SDL3::SDL3` from source as part of the project build, as a static library linked into the binary (the project installs no SDL3 library of its own). OpenGL is still required from the host (`find_package(OpenGL REQUIRED)`).
 
 ### The system SDL3 or the FetchContent build
 

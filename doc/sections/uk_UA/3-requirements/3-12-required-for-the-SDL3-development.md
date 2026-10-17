@@ -1,6 +1,6 @@
 ## Обов'язкові пакети для розробки з SDL3
 
-Проект-шаблон залежить від бібліотеки [SDL3](https://wiki.libsdl.org/SDL3/FrontPage) разом з заголовковими файлами [OpenGL](https://www.opengl.org/). CMake отримує SDL3 через окремий enabler-модуль `cmake/enablers/template-project-SDL3-enabler.cmake`: спершу він шукає SDL3 у системі (`find_package(SDL3 QUIET)`), а якщо його не встановлено, клонує `libsdl-org/SDL` за тегом з `TEMPLATE_APP_SDL3_GIT_TAG` (за замовчуванням `release-3.2.10`) через **FetchContent** і збирає `SDL3::SDL3` з джерел разом з проектом. OpenGL все ще шукається у системі через `find_package(OpenGL REQUIRED)`.
+Проект-шаблон залежить від бібліотеки [SDL3](https://wiki.libsdl.org/SDL3/FrontPage) разом з заголовковими файлами [OpenGL](https://www.opengl.org/). CMake отримує SDL3 через окремий enabler-модуль `cmake/enablers/template-project-SDL3-enabler.cmake`: спершу він шукає SDL3 у системі (`find_package(SDL3 QUIET)`), а якщо його не встановлено, клонує `libsdl-org/SDL` за тегом з `TEMPLATE_APP_SDL3_GIT_TAG` (за замовчуванням `release-3.2.10`) через **FetchContent** і збирає `SDL3::SDL3` з джерел разом з проектом як статичну бібліотеку, скомпоновану з бінарним файлом (власної бібліотеки SDL3 проект не встановлює). OpenGL все ще шукається у системі через `find_package(OpenGL REQUIRED)`.
 
 ### Системний SDL3 чи побудова через FetchContent
 

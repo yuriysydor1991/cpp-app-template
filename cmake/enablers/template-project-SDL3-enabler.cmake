@@ -15,6 +15,11 @@ set(TEMPLATE_APP_SDL3_GIT_TAG "release-3.2.10" CACHE STRING "The SDL3 project gi
 
 find_package(OpenGL REQUIRED)
 
+# the project installs no SDL3 build of its own (SDL_INSTALL is OFF for a subproject),
+# so the downloaded SDL3 links statically into the binary
+set(SDL_SHARED OFF CACHE BOOL "Build a shared version of the downloaded SDL3 library")
+set(SDL_STATIC ON CACHE BOOL "Build a static version of the downloaded SDL3 library")
+
 template_project_default_3rdparty_enabler(
   NAME SDL3
   GIT_REPOSITORY ${TEMPLATE_APP_SDL3_GIT}

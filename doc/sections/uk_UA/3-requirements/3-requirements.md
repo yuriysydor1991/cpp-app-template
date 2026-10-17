@@ -12,4 +12,6 @@
 1. [Необов'язкові пакет для перевірки використання пам'яті за допомогю Valgrind](/doc/sections/uk_UA/3-requirements/3-8-optional-for-the-memory-checkwith-Valgrind.md)
 1. [Необов'язковий програми для генерації пакету flatpak](/doc/sections/uk_UA/3-requirements/3-9-optional-for-the-flatpak-packager.md)
 1. [Необов'язкові пакети для запуску контейнера Docker](/doc/sections/uk_UA/3-requirements/3-10-optional-for-docker-container-runs.md)
+1. [Необов'язкові пакети для snap пакувальника](/doc/sections/uk_UA/3-requirements/3-11-optional-for-snap-packager.md)
 1. [Обов'язкові пакети для розробки з SDL3](/doc/sections/uk_UA/3-requirements/3-12-required-for-the-SDL3-development.md)
+1. [Необов'язкові програми для генерації пакунку AppImage](/doc/sections/uk_UA/3-requirements/3-13-optional-for-the-AppImage-packager.md)

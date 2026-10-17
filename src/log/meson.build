@@ -15,3 +15,7 @@ add_project_arguments(
 )
 
 subdir('default-logger')
+
+if get_option('ENABLE_COMPONENT_TESTS')
+  subdir('tests/component/log')
+endif

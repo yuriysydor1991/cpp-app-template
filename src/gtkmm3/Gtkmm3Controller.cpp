@@ -1,5 +1,6 @@
 #include "src/gtkmm3/Gtkmm3Controller.h"
 
+#include <algorithm>
 #include <cassert>
 
 #include "project-global-decls.h"
@@ -30,7 +31,12 @@ int Gtkmm3Controller::run(std::shared_ptr<app::ApplicationContext> nactx)
 
   LOGD("Trying to create the GTK3 app instance");
 
-  auto app = Gtk::Application::create(actx->get_argc(), actx->get_argv(),
+  // The command line belongs to the CommandLineParser alone, so the toolkit
+  // gets the program name only and never rejects the application parameters.
+  int toolkitArgc = std::min(actx->get_argc(), 1);
+  char** toolkitArgv = actx->get_argv();
+
+  auto app = Gtk::Application::create(toolkitArgc, toolkitArgv,
                                       project_decls::PROJECT_FLATPAK_URL);
 
   LOGD("Trying to create the GtkmmWindow instance");

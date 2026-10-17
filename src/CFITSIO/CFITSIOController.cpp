@@ -38,8 +38,10 @@ bool CFITSIOController::write(const context& ctx)
   // one replaces it with a freshly created image.
   const bool headerOnly = ctx->get_write_header_only();
 
+  // The image creation fails with the file created already, whose handle gets
+  // released as well.
   if (!(headerOnly ? open(ctx, true) : create(ctx))) {
-    return false;
+    return release(false);
   }
 
   return release((headerOnly || write_image(ctx)) && write_keywords(ctx));

@@ -15,7 +15,7 @@
 
 ### Образ та залежності гілки
 
-Завдання виконуються всередині образу [ubuntu:26.04](https://hub.docker.com/_/ubuntu) - того самого випуску, до якого прив'язаний виконавець [робочого процесу GitHub Actions](/doc/sections/uk_UA/5-project-build/containers-ci/5-41-the-GitHub-Actions-CI-pipeline.md), отож обидва конвеєри беруть ті самі пакунки. Образ містить голу систему, отож завдання встановлює увесь свій набір інструментів самотужки єдиним рядком `apt-get install` у `before_script`: `TOOLS`, потрібні кожному завданню, `JOB_TOOLS` самого завдання та `DEPENDENCIES` гілки:
+Завдання виконуються всередині образу [ubuntu:26.04](https://hub.docker.com/_/ubuntu) - того самого випуску, до якого прив'язаний виконавець [робочого процесу GitHub Actions](/doc/sections/uk_UA/5-project-build/containers-ci/5-47-the-GitHub-Actions-CI-pipeline.md), отож обидва конвеєри беруть ті самі пакунки. Образ містить голу систему, отож завдання встановлює увесь свій набір інструментів самотужки єдиним рядком `apt-get install` у `before_script`: `TOOLS`, потрібні кожному завданню, `JOB_TOOLS` самого завдання та `DEPENDENCIES` гілки:
 
 ```
 variables:

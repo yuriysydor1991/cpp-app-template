@@ -15,7 +15,7 @@ Every `ctest` run writes a JUnit XML report, which the job hands to GitLab as it
 
 ### The image and the branch dependencies
 
-The jobs run inside the [ubuntu:26.04](https://hub.docker.com/_/ubuntu) image - the release the [GitHub Actions workflow](/doc/sections/en_US/5-project-build/containers-ci/5-41-the-GitHub-Actions-CI-pipeline.md) pins its runner to, so both pipelines take the very same packages. The image carries a bare system, so a job installs its whole tool chain itself with the single `apt-get install` line of the `before_script`: the `TOOLS` every job needs, the `JOB_TOOLS` of the job itself and the `DEPENDENCIES` of the branch:
+The jobs run inside the [ubuntu:26.04](https://hub.docker.com/_/ubuntu) image - the release the [GitHub Actions workflow](/doc/sections/en_US/5-project-build/containers-ci/5-47-the-GitHub-Actions-CI-pipeline.md) pins its runner to, so both pipelines take the very same packages. The image carries a bare system, so a job installs its whole tool chain itself with the single `apt-get install` line of the `before_script`: the `TOOLS` every job needs, the `JOB_TOOLS` of the job itself and the `DEPENDENCIES` of the branch:
 
 ```
 variables:

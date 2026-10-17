@@ -30,6 +30,14 @@ add_subdirectory(app)
 if(WIN32 AND TARGET winui3::sdk)
   add_subdirectory(main-window)
 
+  # A GUI subsystem executable opens no console window behind the GUI; the
+  # entry point stays the standard main() of src/main.cpp.
+  set_target_properties(${PROJECT_BINARY_NAME} PROPERTIES WIN32_EXECUTABLE ON)
+
+  if(MSVC)
+    target_link_options(${PROJECT_BINARY_NAME} PRIVATE /ENTRY:mainCRTStartup)
+  endif()
+
   # The Windows App SDK bootstrapper DLL is loaded from the executable directory.
   add_custom_command(
     TARGET ${PROJECT_BINARY_NAME} POST_BUILD

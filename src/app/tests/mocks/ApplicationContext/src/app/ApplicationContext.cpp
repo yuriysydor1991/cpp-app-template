@@ -19,6 +19,12 @@ ApplicationContext::ApplicationContext(int& gargc, char**& gargv)
       mmysql_host{default_mysql_host},
       mmysql_port{default_mysql_port}
 {
+  // The pushed errors are kept like the real context keeps them, so the test
+  // cases see them through the get_errors accessor too.
+  ON_CALL(*this, push_error(testing::_))
+      .WillByDefault([this](const std::string& errorDescription) {
+        merrors.push_back(errorDescription);
+      });
 }
 
 }  // namespace app

@@ -27,4 +27,4 @@ template_project_default_3rdparty_enabler(
 #   - system install, via find_package(box2d): box2d::box2d
 #   - FetchContent source build:               box2d::box2d
 # For example:
-#   target_link_libraries(${PROJECT_BINARY_NAME} box2d::box2d)
+#   target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE box2d::box2d)

@@ -53,8 +53,31 @@ else()
   set(macosArchitecture ${CMAKE_SYSTEM_PROCESSOR})
 endif()
 
+# the oldest macOS release the bundle runs on (the deployment target, else the
+# build host release), so the packages of the different releases differ in name
+if(CMAKE_OSX_DEPLOYMENT_TARGET)
+  set(macosVersion ${CMAKE_OSX_DEPLOYMENT_TARGET})
+else()
+  execute_process(
+    COMMAND sw_vers -productVersion
+    OUTPUT_VARIABLE macosVersion
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+  )
+  string(REGEX MATCH "^[0-9]+(\\.[0-9]+)?" macosVersion "${macosVersion}")
+endif()
+
+set(
+  TEMPLATE_PROJECT_PACKAGE_OS
+  macos-${macosVersion}
+  CACHE STRING
+  "The destination OS of the package file names (e.g. macos-15.1)"
+)
+
 # the CPACK_SYSTEM_NAME of the default file name names the system alone, so the
-# destination CPU takes its place
-set(CPACK_PACKAGE_FILE_NAME ${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${macosArchitecture})
+# destination CPU and OS take its place
+set(
+  CPACK_PACKAGE_FILE_NAME
+  ${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${macosArchitecture}-${TEMPLATE_PROJECT_PACKAGE_OS}
+)
 
 include(CPack)

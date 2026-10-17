@@ -1,10 +1,11 @@
 #ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_SFML_INCLUDES_H
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_SFML_INCLUDES_H
 
+#if defined(__GNUC__)
 #pragma GCC system_header
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wall -Wextra -Werror -Wunknown-pragmas"
-#pragma warning(push, 0)  // MSVC
+#elif defined(_MSC_VER)
+#pragma warning(push, 0)
+#endif
 
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/Color.hpp>
@@ -13,7 +14,8 @@
 #include <SFML/Window/VideoMode.hpp>
 #include <SFML/Window/WindowStyle.hpp>
 
+#if defined(_MSC_VER) && !defined(__GNUC__)
 #pragma warning(pop)
-#pragma GCC diagnostic pop
+#endif
 
 #endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_SFML_INCLUDES_H

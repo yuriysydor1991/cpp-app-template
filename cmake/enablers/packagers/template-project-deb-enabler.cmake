@@ -11,6 +11,7 @@ if(NOT ENABLE_DEB)
 endif()
 
 include(InstallRequiredSystemLibraries)
+include(template-project-package-os)
 
 # the Debian name of the destination CPU, the one the CPack DEB generator asks
 # the dpkg for when given none
@@ -49,10 +50,10 @@ string(
 )
 
 # the CPACK_SYSTEM_NAME of the default file name names the system alone, so the
-# destination CPU takes its place
+# destination CPU and OS take its place
 set(
   CPACK_PACKAGE_FILE_NAME
-  ${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${TEMPLATE_PROJECT_DEB_PACKAGE_ARCHITECTURE}
+  ${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${TEMPLATE_PROJECT_DEB_PACKAGE_ARCHITECTURE}-${TEMPLATE_PROJECT_PACKAGE_OS}
 )
 
 include(CPack)

@@ -16,8 +16,6 @@ PACKAGES="
     cmake
     freeglut
     git
-    glew
-    glm
     googletest
     libglvnd
 "

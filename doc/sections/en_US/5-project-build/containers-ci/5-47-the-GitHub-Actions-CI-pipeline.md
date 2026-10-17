@@ -22,7 +22,7 @@ env:
   BUILDDIR: build
   BDJUNITOUT: junit-out
   # The development packages of the branch specific libraries.
-  DEPENDENCIES: freeglut3-dev libglew-dev libxi-dev
+  DEPENDENCIES: freeglut3-dev libxi-dev
 ```
 
 That variable is the single line the branches of the template differ by, so a project which links a library of its own appends the development package of the library there.

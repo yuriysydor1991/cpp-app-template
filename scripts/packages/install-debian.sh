@@ -14,8 +14,6 @@ PACKAGES=(
     g++
     git
     googletest
-    libglew-dev
-    libglm-dev
     libgmock-dev
     libgtest-dev
     libssl-dev

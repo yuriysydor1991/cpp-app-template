@@ -22,7 +22,7 @@ env:
   BUILDDIR: build
   BDJUNITOUT: junit-out
   # The development packages of the branch specific libraries.
-  DEPENDENCIES: freeglut3-dev libglew-dev libxi-dev
+  DEPENDENCIES: freeglut3-dev libxi-dev
 ```
 
 Саме ця змінна - єдиний рядок, яким різняться гілки шаблону, отож проект, який долучає власну бібліотеку, дописує туди її пакунок розробки.

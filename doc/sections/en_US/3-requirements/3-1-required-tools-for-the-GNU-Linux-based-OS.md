@@ -9,5 +9,5 @@ sudo apt install -y git g++ cmake
 The FreeGlut library may be installed with help of a next command:
 
 ```
-sudo apt install -y freeglut3-dev mesa-common-dev libglew-dev libglm-dev
+sudo apt install -y freeglut3-dev mesa-common-dev
 ```

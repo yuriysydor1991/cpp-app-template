@@ -15,8 +15,6 @@ PACKAGES=(
     freeglut-devel
     gcc-c++
     git
-    glew-devel
-    glm-devel
     gmock-devel
     gtest-devel
     make

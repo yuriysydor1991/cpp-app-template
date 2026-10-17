@@ -42,10 +42,11 @@ set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE ${TEMPLATE_PROJECT_DEB_PACKAGE_ARCHITECTUR
 string(
   JOIN ", " CPACK_DEBIAN_PACKAGE_DEPENDS
   libqt6core6t64 "libqt6gui6 | libqt6gui6t64"
-  libqt6qml6 libqt6quick6 libqt6quickcontrols2-6
+  libqt6qml6 libqt6quick6 libqt6quickcontrols2-6 libqt6webenginequick6
   qml6-module-qtqml-workerscript qml6-module-qtquick
   qml6-module-qtquick-controls qml6-module-qtquick-layouts
   qml6-module-qtquick-templates qml6-module-qtquick-window
+  qml6-module-qtwebengine
 )
 
 # the CPACK_SYSTEM_NAME of the default file name names the system alone, so the

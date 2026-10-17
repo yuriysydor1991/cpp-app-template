@@ -9,10 +9,10 @@ sudo apt install -y flatpak flatpak-builder
 You'll also need the one of it's target SDK which may be installed by a command that may look like this:
 
 ```
-flatpak install --user flathub runtime/org.kde.Platform/x86_64/${FLATPAK_RUNTIME_VERSION} runtime/org.kde.Sdk/x86_64/${FLATPAK_RUNTIME_VERSION}
+flatpak install --user flathub runtime/org.kde.Platform/x86_64/6.10 runtime/org.kde.Sdk/x86_64/6.10
 ```
 
-The `${FLATPAK_RUNTIME_VERSION}` is the `runtime-version` the [misc/packagers/flatpak/flatpak.conf.json.in](/misc/packagers/flatpak/flatpak.conf.json.in) manifest builds against: change both together to use another runtime. Consult the flatpak documentation on how to list all available options.
+The `6.10` is the `FLATPAK_RUNTIME_VERSION` of the [cmake/enablers/packagers/template-project-flatpak-target.cmake](/cmake/enablers/packagers/template-project-flatpak-target.cmake) module, the `runtime-version` the [misc/packagers/flatpak/flatpak.conf.json.in](/misc/packagers/flatpak/flatpak.conf.json.in) manifest builds against: change both together to use another runtime. Consult the flatpak documentation on how to list all available options.
 
 The `flatpak` target installs the runtime and the SDK it needs from the `flathub` remote on its own, so the command above only preinstalls them.
 

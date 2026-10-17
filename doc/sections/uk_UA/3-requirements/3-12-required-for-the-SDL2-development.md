@@ -1,6 +1,6 @@
 ## Обов'язкові пакети для розробки з SDL2
 
-Проект-шаблон залежить від бібліотеки [SDL2](https://en.wikipedia.org/wiki/Simple_DirectMedia_Layer) разом з заголовковими файлами [OpenGL](https://www.opengl.org/). CMake отримує SDL2 через окремий enabler-модуль `cmake/enablers/template-project-SDL2-enabler.cmake`: спершу він шукає SDL2 у системі (`find_package(SDL2 QUIET)`), а якщо його не встановлено, клонує `libsdl-org/SDL` за тегом з `TEMPLATE_APP_SDL2_GIT_TAG` (за замовчуванням `release-2.32.10`) через **FetchContent** і збирає `SDL2::SDL2` з джерел разом з проектом. OpenGL все ще шукається у системі через `find_package(OpenGL REQUIRED)`.
+Проект-шаблон залежить від бібліотеки [SDL2](https://en.wikipedia.org/wiki/Simple_DirectMedia_Layer) разом з заголовковими файлами [OpenGL](https://www.opengl.org/). CMake отримує SDL2 через окремий enabler-модуль `cmake/enablers/template-project-SDL2-enabler.cmake`: спершу він шукає SDL2 у системі (`find_package(SDL2 QUIET)`), а якщо його не встановлено, клонує `libsdl-org/SDL` за тегом з `TEMPLATE_APP_SDL2_GIT_TAG` (за замовчуванням `release-2.32.10`) через **FetchContent** і збирає `SDL2::SDL2` з джерел разом з проектом як статичну бібліотеку, скомпоновану з бінарним файлом (власної бібліотеки SDL2 проект не встановлює). OpenGL все ще шукається у системі через `find_package(OpenGL REQUIRED)`.
 
 ### Системний SDL2 чи побудова через FetchContent
 

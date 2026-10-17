@@ -15,6 +15,11 @@ set(TEMPLATE_APP_SDL2_GIT_TAG "release-2.32.10" CACHE STRING "The SDL2 project g
 
 find_package(OpenGL REQUIRED)
 
+# the project installs no SDL2 build of its own (SDL2_DISABLE_INSTALL is ON for a subproject),
+# so the downloaded SDL2 links statically into the binary
+set(SDL_SHARED OFF CACHE BOOL "Build a shared version of the downloaded SDL2 library")
+set(SDL_STATIC ON CACHE BOOL "Build a static version of the downloaded SDL2 library")
+
 template_project_default_3rdparty_enabler(
   NAME SDL2
   GIT_REPOSITORY ${TEMPLATE_APP_SDL2_GIT}

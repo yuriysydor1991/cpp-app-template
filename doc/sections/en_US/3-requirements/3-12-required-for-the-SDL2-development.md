@@ -1,6 +1,6 @@
 ## Required packages for the SDL2 development
 
-The template project depends on the [SDL2](https://en.wikipedia.org/wiki/Simple_DirectMedia_Layer) library together with the [OpenGL](https://www.opengl.org/) headers. CMake acquires SDL2 through the dedicated `cmake/enablers/template-project-SDL2-enabler.cmake` enabler module: it probes the system SDL2 first (`find_package(SDL2 QUIET)`) and, when none is installed, clones `libsdl-org/SDL` at the tag pinned in `TEMPLATE_APP_SDL2_GIT_TAG` (default `release-2.32.10`) through **FetchContent** and builds `SDL2::SDL2` from source as part of the project build. OpenGL is still required from the host (`find_package(OpenGL REQUIRED)`).
+The template project depends on the [SDL2](https://en.wikipedia.org/wiki/Simple_DirectMedia_Layer) library together with the [OpenGL](https://www.opengl.org/) headers. CMake acquires SDL2 through the dedicated `cmake/enablers/template-project-SDL2-enabler.cmake` enabler module: it probes the system SDL2 first (`find_package(SDL2 QUIET)`) and, when none is installed, clones `libsdl-org/SDL` at the tag pinned in `TEMPLATE_APP_SDL2_GIT_TAG` (default `release-2.32.10`) through **FetchContent** and builds `SDL2::SDL2` from source as part of the project build, as a static library linked into the binary (the project installs no SDL2 library of its own). OpenGL is still required from the host (`find_package(OpenGL REQUIRED)`).
 
 ### The system SDL2 or the FetchContent build
 

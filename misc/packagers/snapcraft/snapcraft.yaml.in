@@ -22,3 +22,12 @@ parts:
     cmake-parameters:
       - -DCMAKE_BUILD_TYPE=Release
       - -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
+    build-packages:
+      - freeglut3-dev
+      - libgl-dev
+    stage-packages:
+      - libglut3.12
+      - libopengl0
+      - libglx0
+      - libgl1
+      - libgl1-mesa-dri

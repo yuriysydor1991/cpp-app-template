@@ -84,7 +84,7 @@ bool ClaudeController::set_token_from_env()
 }
 
 std::string ClaudeController::build_request(const std::string& question,
-                                            const std::string& model) const
+                                            const std::string& model)
 {
   nlohmann::json message;
 
@@ -107,7 +107,7 @@ std::vector<std::string> ClaudeController::build_headers() const
           "x-api-key: " + token};
 }
 
-std::string ClaudeController::extract_answer(const std::string& response) const
+std::string ClaudeController::extract_answer(const std::string& response)
 {
   const auto parsed = nlohmann::json::parse(response, nullptr, false);
 

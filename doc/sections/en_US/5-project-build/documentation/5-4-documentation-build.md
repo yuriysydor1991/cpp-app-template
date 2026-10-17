@@ -10,7 +10,7 @@ To enable Doxygen documentation CMake-target during the project configure proces
 cmake -B build -S . -DENABLE_DOC_DOXYGEN=ON
 ```
 
-Which effectively will create a directory named `build` inside the project root directory, enters it by a `cd` command and configures project to enable Doxygen documentation build.
+Which effectively will create a directory named `build` inside the project root directory, enters it by a `cd` command and configures project to enable Doxygen documentation build. Without the `doxygen` command (see the [Optional for the documentation](/doc/sections/en_US/3-requirements/3-4-optional-for-the-documentation.md) section) the configure only warns and declares no `Doxygen-doc` target, so the quick build scripts, which always enable the documentation, keep working.
 
 Finally build the documentation by executing the command:
 

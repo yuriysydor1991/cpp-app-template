@@ -9,6 +9,8 @@ cmake -S . -B build -DENABLE_DARKNETXX=ON
 cmake --build build --target all
 ```
 
+The application of this branch is built around the darknetxx, so the option is a hard requirement here: the CMake configure step fails with an explanatory message when the option is turned `OFF`.
+
 The darknetxx is an application made of this very template, so no system package ships it, while the shared library it builds exports the facade alone, which saves the detected objects into the files rather than hands them over. So the [cmake/enablers/ai/template-project-darknetxx-enabler.cmake](/cmake/enablers/ai/template-project-darknetxx-enabler.cmake) module fetches the sources of the `TEMPLATE_APP_DARKNETXX_GIT_TAG` commit (a tested one by default, the darknetxx has no release tags yet) of the `TEMPLATE_APP_DARKNETXX_GIT` repository through the Internet and builds the network core of them into the `darknetxx` static library: the original Darknet C code computing with the C++ network infrastructure of the darknetxx (the layers and the networks memory, the network cfg files loader, the readers, the writers and the validators of the network weights files). The core needs the [OpenCV](https://opencv.org/), the [zlib](https://zlib.net/) and the [nlohmann JSON](https://github.com/nlohmann/json) libraries, the last one gets fetched while not installed, and runs the Darknet kernels on all of the CPU cores with the OpenMP of the compiler:
 
 ```

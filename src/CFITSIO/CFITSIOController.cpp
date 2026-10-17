@@ -1,10 +1,9 @@
-#include "src/CFITSIO/CFITSIOController.h"
-
 #include <cassert>
 #include <memory>
 #include <string>
 #include <tuple>
 
+#include "src/CFITSIO/CFITSIOController.h"
 #include "src/log/log.h"
 
 namespace cfitsioi
@@ -70,7 +69,11 @@ bool CFITSIOController::open(const context& ctx, const bool writable)
 
   status = 0;
 
-  fits_open_file(&fits, path.c_str(), writable ? READWRITE : READONLY, &status);
+  // The image of a multi-extension file (the tile-compressed ones included)
+  // often sits in an extension behind an empty primary HDU, so the first HDU
+  // holding an image is the one opened.
+  fits_open_image(&fits, path.c_str(), writable ? READWRITE : READONLY,
+                  &status);
 
   return succeeded("open the " + path + " FITS file");
 }

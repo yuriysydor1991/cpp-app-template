@@ -1,9 +1,12 @@
+#include <fitsio.h>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include <cmath>
 #include <filesystem>
 #include <fstream>
 #include <string>
+#include <vector>
 
 #include "src/CFITSIO/CFITSIOContext.h"
 #include "src/CFITSIO/CFITSIOController.h"
@@ -72,11 +75,49 @@ class CTEST_CFITSIOController : public Test
     return reading;
   }
 
+  /// @brief Writes the image of the given type and axes with the CFITSIO
+  /// calls themselves, behind an empty primary HDU when asked, so the files
+  /// the controller doesn't write itself get read.
+  static int write_raw_image(const std::string& path, const int type,
+                             std::vector<long> axes, const int pixelsType,
+                             void* pixels, const bool behindEmptyPrimary)
+  {
+    int status = 0;
+    fitsfile* file = nullptr;
+    LONGLONG count = 1;
+
+    for (const long axis : axes) {
+      count *= axis;
+    }
+
+    fits_create_file(&file, ("!" + path).c_str(), &status);
+
+    if (behindEmptyPrimary) {
+      fits_create_img(file, BYTE_IMG, 0, nullptr, &status);
+    }
+
+    fits_create_img(file, type, static_cast<int>(axes.size()), axes.data(),
+                    &status);
+
+    if (type == SHORT_IMG) {
+      long blank = BLANK_VALUE;
+      fits_update_key(file, TLONG, "BLANK", &blank, nullptr, &status);
+    }
+
+    fits_write_img(file, pixelsType, 1, count, pixels, &status);
+
+    int closeStatus = 0;
+    fits_close_file(file, &closeStatus);
+
+    return status != 0 ? status : closeStatus;
+  }
+
   static constexpr const long WIDTH = 8;
   static constexpr const long HEIGHT = 4;
   static constexpr const char* OBJECT = "Template project sample";
   static constexpr const double REFERENCE = 10.5;
   static constexpr const std::string::size_type KEYRECORD_LENGTH = 80U;
+  static constexpr const short BLANK_VALUE = -32768;
 
   CFITSIOControllerPtr controller;
   CFITSIOContextPtr ctx;
@@ -221,4 +262,22 @@ TEST_F(CTEST_CFITSIOController, repeated_calls_hold_no_file_in_between)
   ASSERT_TRUE(controller->read(reading));
 
   EXPECT_EQ(reading->get_pixels(), make_pixels());
+}
+
+TEST_F(CTEST_CFITSIOController, the_image_behind_an_empty_primary_hdu_is_read)
+{
+  auto pixels = make_pixels();
+
+  ASSERT_EQ(write_raw_image(fits_path(), DOUBLE_IMG, {WIDTH, HEIGHT}, TDOUBLE,
+                            pixels.data(), true),
+            0);
+
+  auto reading = empty_context();
+
+  ASSERT_TRUE(controller->read(reading));
+
+  EXPECT_EQ(reading->get_hdu_count(), 2);
+  EXPECT_EQ(reading->get_image_size(),
+            CFITSIOContext::image_size(WIDTH, HEIGHT));
+  EXPECT_EQ(reading->get_pixels(), pixels);
 }

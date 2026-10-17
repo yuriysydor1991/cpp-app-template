@@ -7,7 +7,7 @@ The [CURLController](/src/CURL/CURLController.cpp) of the template performs no r
 | `PROJECT_CURL_MAX_RESPONSE_BYTES` | `8388608` (8 MiB) | the size of the response body a single request may receive |
 | `PROJECT_CURL_CONNECT_TIMEOUT_SECONDS` | `10` | the time the establishing of the connection may take |
 | `PROJECT_CURL_TRANSFER_TIMEOUT_SECONDS` | `30` | the time a whole download or reachability check may take |
-| `PROJECT_CURL_POST_TIMEOUT_SECONDS` | `300` | the time a whole POST request may take |
+| `PROJECT_CURL_POST_TIMEOUT_SECONDS` | `600` | the time a whole POST request may take (a long Claude answer takes minutes) |
 | `PROJECT_CURL_ALLOWED_PROTOCOLS` | `http,https,file` | the protocols a request URL may use |
 
 A build tightening every one of them looks like this:

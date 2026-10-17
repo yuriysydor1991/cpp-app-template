@@ -7,7 +7,7 @@
 | `PROJECT_CURL_MAX_RESPONSE_BYTES` | `8388608` (8 МіБ) | розмір тіла відповіді, яку може отримати один запит |
 | `PROJECT_CURL_CONNECT_TIMEOUT_SECONDS` | `10` | час, який може тривати встановлення з'єднання |
 | `PROJECT_CURL_TRANSFER_TIMEOUT_SECONDS` | `30` | час, який може тривати ціле звантаження чи перевірка досяжності |
-| `PROJECT_CURL_POST_TIMEOUT_SECONDS` | `300` | час, який може тривати цілий запит POST |
+| `PROJECT_CURL_POST_TIMEOUT_SECONDS` | `600` | час, який може тривати цілий запит POST (довга відповідь Claude триває хвилини) |
 | `PROJECT_CURL_ALLOWED_PROTOCOLS` | `http,https,file` | протоколи, які може використовувати URL запиту |
 
 Побудова, яка стискає кожне з них, виглядає так:

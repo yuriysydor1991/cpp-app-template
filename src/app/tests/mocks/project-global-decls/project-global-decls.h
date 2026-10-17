@@ -15,7 +15,7 @@ const std::string PROJECT_HOME_URL = "http://www.kytok.org.ua/";
 constexpr const unsigned long long PROJECT_CURL_MAX_RESPONSE_BYTES = 8388608;
 constexpr const long PROJECT_CURL_CONNECT_TIMEOUT_SECONDS = 10;
 constexpr const long PROJECT_CURL_TRANSFER_TIMEOUT_SECONDS = 30;
-constexpr const long PROJECT_CURL_POST_TIMEOUT_SECONDS = 300;
+constexpr const long PROJECT_CURL_POST_TIMEOUT_SECONDS = 600;
 const std::string PROJECT_CURL_ALLOWED_PROTOCOLS = "http,https,file";
 
 }  // namespace project_decls

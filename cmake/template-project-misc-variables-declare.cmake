@@ -57,7 +57,9 @@ string(TIMESTAMP PROJECT_CONFIGURE_DATE "%Y-%m-%d %H:%M:%S")
 set(PROJECT_CURL_MAX_RESPONSE_BYTES "8388608" CACHE STRING "The maximum accepted response size of a single libcurl request in bytes (8 MiB by default)")
 set(PROJECT_CURL_CONNECT_TIMEOUT_SECONDS "10" CACHE STRING "The seconds a libcurl request may take to establish the connection")
 set(PROJECT_CURL_TRANSFER_TIMEOUT_SECONDS "30" CACHE STRING "The seconds a whole libcurl download or reachability check may take")
-set(PROJECT_CURL_POST_TIMEOUT_SECONDS "300" CACHE STRING "The seconds a whole libcurl POST request may take, the answer composing of the server included")
+# A non streamed Claude answer of the 16000 tokens limit may take minutes, so
+# the POST requests wait the 600 seconds the Anthropic SDKs wait as well.
+set(PROJECT_CURL_POST_TIMEOUT_SECONDS "600" CACHE STRING "The seconds a whole libcurl POST request may take, the answer composing of the server included")
 set(PROJECT_CURL_ALLOWED_PROTOCOLS "http,https,file" CACHE STRING "The comma separated protocols a libcurl request is allowed to use")
 
 message(STATUS "CMAKE_PROJECT_NAME: ${CMAKE_PROJECT_NAME}")

@@ -1,5 +1,6 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <libintl.h>
 
 #include <clocale>
 #include <cstdlib>
@@ -7,8 +8,6 @@
 #include <fstream>
 #include <sstream>
 #include <string>
-
-#include <libintl.h>
 
 #include "project-global-decls.h"
 #include "src/gettext/CatalogsLocator.h"

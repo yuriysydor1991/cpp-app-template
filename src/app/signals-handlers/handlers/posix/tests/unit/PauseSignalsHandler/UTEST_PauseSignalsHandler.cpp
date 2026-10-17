@@ -69,15 +69,21 @@ TEST_F(UTEST_PauseSignalsHandler, the_suspension_signals_are_covered)
 #ifdef SIGTSTP
   EXPECT_EQ(handler->get_handled_signals().count(SIGTSTP), 1U);
 #endif  // SIGTSTP
-#ifdef SIGTTIN
-  EXPECT_EQ(handler->get_handled_signals().count(SIGTTIN), 1U);
-#endif  // SIGTTIN
-#ifdef SIGTTOU
-  EXPECT_EQ(handler->get_handled_signals().count(SIGTTOU), 1U);
-#endif  // SIGTTOU
 
   EXPECT_EQ(handler->get_handled_signals().count(SIGINT), 0U);
   EXPECT_EQ(handler->get_handled_signals().count(SIGTERM), 0U);
+}
+
+TEST_F(UTEST_PauseSignalsHandler, the_terminal_access_signals_are_not_covered)
+{
+  // A returning handler of them makes a background process retry the terminal
+  // access forever, so they keep the shell job control disposition.
+#ifdef SIGTTIN
+  EXPECT_EQ(handler->get_handled_signals().count(SIGTTIN), 0U);
+#endif  // SIGTTIN
+#ifdef SIGTTOU
+  EXPECT_EQ(handler->get_handled_signals().count(SIGTTOU), 0U);
+#endif  // SIGTTOU
 }
 
 TEST_F(UTEST_PauseSignalsHandler, the_uncatchable_stop_signal_is_not_covered)

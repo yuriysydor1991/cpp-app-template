@@ -5,6 +5,7 @@
 #include <array>
 #include <cstddef>
 #include <cstdint>
+#include <filesystem>
 #include <fstream>
 #include <nlohmann/json.hpp>
 #include <opencv2/core.hpp>
@@ -36,6 +37,8 @@ class UTEST_DarknetXXController : public Test
  public:
   UTEST_DarknetXXController()
   {
+    std::filesystem::create_directories(data_dir());
+
     std::ofstream{path(CFG)} << CFG_TEXT;
     std::ofstream{path(NAMES)} << THING << "\n";
     std::ofstream{path(NOT_AN_IMAGE)} << "not an image";
@@ -52,9 +55,23 @@ class UTEST_DarknetXXController : public Test
     write_gzip(NETWORK_DXXWJZ2, "{" + network_members() + "}");
   }
 
+  ~UTEST_DarknetXXController() override
+  {
+    std::error_code ignored;
+    std::filesystem::remove_all(data_dir(), ignored);
+  }
+
+  /// @brief The directory of the running test's own files, so the tests run
+  /// at once (ctest -j) never rewrite the files of each other.
+  static std::string data_dir()
+  {
+    return std::string{UTEST_DarknetXXController_DATA_DIR} + "/" +
+           UnitTest::GetInstance()->current_test_info()->name();
+  }
+
   static std::string path(const char* const name)
   {
-    return std::string{UTEST_DarknetXXController_DATA_DIR} + "/" + name;
+    return data_dir() + "/" + name;
   }
 
   /// @brief The convolution biases: the x, y, w, h, objectness and class

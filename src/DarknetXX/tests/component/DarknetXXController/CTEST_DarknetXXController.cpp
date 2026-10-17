@@ -49,8 +49,12 @@ class CTEST_DarknetXXController : public Test
 
   bool init() { return controller->init(CFG, OrigWeights{WEIGHTS}, NAMES); }
 
-  inline static const std::string logFile{CTEST_DarknetXXController_DATA_DIR
-                                          "/CTEST_DarknetXXController.log"};
+  /// @brief The log of the running test's own, so the tests run at once
+  /// (ctest -j) never write into the same file.
+  const std::string logFile{
+      std::string{CTEST_DarknetXXController_DATA_DIR} +
+      "/CTEST_DarknetXXController_" +
+      UnitTest::GetInstance()->current_test_info()->name() + ".log"};
 
   inline static constexpr const char* const CFG = CTEST_DarknetXXController_CFG;
   inline static constexpr const char* const WEIGHTS =

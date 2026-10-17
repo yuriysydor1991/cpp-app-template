@@ -48,7 +48,6 @@ execute_process(
 
 set(FLATPAK_RUNTIME_VERSION 6.10)
 set(FLATPAK_REPO ${PROJECT_BINARY_NAME}-repo)
-set(FLATPAK_DST_NAME ${PROJECT_BINARY_NAME}-${CMAKE_PROJECT_VERSION}-${FLATPAK_TARGET_ARCH}.flatpak)
 set(flatpakConfDst ${CMAKE_BINARY_DIR}/flatpak.conf.json)
 set(FLATPAK_DEPS_REMOTE flathub)
 set(FLATPAK_DEPS_REMOTE_URL https://dl.flathub.org/repo/flathub.flatpakrepo)
@@ -59,6 +58,18 @@ set(
 )
 
 configure_file(${FLATPAK_CONF_SRC} ${flatpakConfDst})
+
+# the runtime the bundle demands, the GUI framework picks it (e.g. gnome-49 for
+# the org.gnome.Platform 49), so the bundle names it instead of the build host
+file(STRINGS ${flatpakConfDst} flatpakRuntime REGEX "\"runtime(-version)?\"")
+string(
+  REGEX MATCH "\"runtime\" *: *\"[^.\"]+\\.([^.\"]+).*\"runtime-version\" *: *\"([^\"]+)\""
+  flatpakRuntime "${flatpakRuntime}"
+)
+set(
+  FLATPAK_DST_NAME
+  ${PROJECT_BINARY_NAME}-${CMAKE_PROJECT_VERSION}-${FLATPAK_TARGET_ARCH}-${CMAKE_MATCH_1}-${CMAKE_MATCH_2}.flatpak
+)
 
 message(STATUS "flatpak-builder: ${FLATPAKB_EXEC}")
 message(STATUS "flatpak: ${FLATPAK_EXEC}")

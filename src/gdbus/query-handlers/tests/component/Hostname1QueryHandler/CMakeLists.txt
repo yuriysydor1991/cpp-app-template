@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.13)
 
 # Component test: the real Hostname1QueryHandler reads from the live system bus.
 # giomm needs Gio::init() before any Gio::DBus usage, so the test provides its

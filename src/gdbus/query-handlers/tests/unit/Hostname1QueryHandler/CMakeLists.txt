@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.13)
 
 # Pure unit test: the handle() orchestration is exercised against an overridden
 # fetch_properties() seam, so no live D-Bus is touched. giomm is linked only

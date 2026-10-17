@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.13)
 
 set(GDBUS_MOCKS_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/mocks")
 

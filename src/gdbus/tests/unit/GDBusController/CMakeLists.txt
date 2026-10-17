@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.13)
 
 # Pure unit test: only the unit under test (GDBusController) is compiled,
 # against header-replacement mocks (the query handler factory and its handler

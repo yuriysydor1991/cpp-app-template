@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.13)
 
 # Component test: the real GDBusController, factory and handler are exercised
 # against a live system bus. giomm needs Gio::init() before any Gio::DBus usage,

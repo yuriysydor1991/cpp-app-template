@@ -211,6 +211,12 @@ function(template_project_kenney_audio_generate_index)
 
     foreach(packFile IN LISTS packFiles)
       file(RELATIVE_PATH packRelative "${packDir}" "${packFile}")
+
+      # A file name is free to carry the characters a C++ string literal
+      # gives a meaning of it's own.
+      string(REPLACE "\\" "\\\\" packRelative "${packRelative}")
+      string(REPLACE "\"" "\\\"" packRelative "${packRelative}")
+
       list(APPEND names "         \"${packRelative}\"")
     endforeach()
 

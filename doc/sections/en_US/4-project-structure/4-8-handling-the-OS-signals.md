@@ -48,7 +48,7 @@ ISignalsHandler                          the only type the application depends o
 └── ASignalsHandler                      the std::signal install and uninstall mechanics
     └── PosixSignalsHandler              the POSIX platforms family
         ├── StopSignalsHandler           SIGINT, SIGTERM, SIGQUIT
-        ├── PauseSignalsHandler          SIGTSTP, SIGTTIN, SIGTTOU
+        ├── PauseSignalsHandler          SIGTSTP
         ├── ContinueSignalsHandler       SIGCONT
         ├── ReloadSignalsHandler         SIGHUP
         ├── UserSignalsHandler           SIGUSR1, SIGUSR2
@@ -70,7 +70,7 @@ So the application implementation is expected to poll the `ApplicationContext::g
 
 ### The application pause signals
 
-The `PauseSignalsHandler` class covers the POSIX signals which are asking the process to suspend itself - the `SIGTSTP` one of the Ctrl+Z keys combination, the `SIGTTIN` one of a background process reading from the terminal and the `SIGTTOU` one of a background process writing to it. All the three raise the context pause flag through the `ApplicationContext::set_pause` setter. The `ContinueSignalsHandler` class covers the `SIGCONT` signal of the `fg` and `bg` shell job control commands and lowers the very same flag back.
+The `PauseSignalsHandler` class covers the POSIX signal which asks the process to suspend itself - the `SIGTSTP` one of the Ctrl+Z keys combination - and raises the context pause flag through the `ApplicationContext::set_pause` setter on it. The `SIGTTIN` and the `SIGTTOU` signals of a background process reading from the terminal or writing to it are deliberately left to the shell job control: the OS retries such a terminal access after a returning handler, so a handled one would spin the background process forever instead of suspending it. The `ContinueSignalsHandler` class covers the `SIGCONT` signal of the `fg` and `bg` shell job control commands and lowers the very same flag back.
 
 So the application implementation is expected to poll the `ApplicationContext::get_pause` flag the same way the stop one is polled and to hold it's work - to stop rendering the frames, to stop feeding the worker threads, to release the exclusive devices and so on - while the flag is raised, instead of leaving the `IApplication::run` method. The flag is an atomic one too.
 

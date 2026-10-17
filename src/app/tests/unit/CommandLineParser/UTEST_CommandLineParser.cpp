@@ -49,6 +49,8 @@ class UTEST_CommandLineParser : public Test
     secondArg = secondParam;
     thirdArg = thirdParam;
 
+    // False positive: the arguments have a static storage duration.
+    // cppcheck-suppress invalidContainer
     customArgv[1] = secondArg.data();
     customArgv[2] = thirdArg.data();
 

@@ -185,6 +185,7 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
     1. [Optional for the Docker container runs](/doc/sections/en_US/3-requirements/3-10-optional-for-docker-container-runs.md)
     1. [Optional for the snap packager](/doc/sections/en_US/3-requirements/3-11-optional-for-snap-packager.md)
     1. [Optional for the AppImage packager](/doc/sections/en_US/3-requirements/3-13-optional-for-the-AppImage-packager.md)
+    1. [Required packages for the Claude client](/doc/sections/en_US/3-requirements/3-12-required-packages-for-the-claude-client.md)
 1. [Project structure](/doc/sections/en_US/4-project-structure/4-project-structure.md)
     1. [Project diagrams](/doc/sections/en_US/4-project-structure/4-0-project-diagrams.md)
     1. [Implement code straight away!](/doc/sections/en_US/4-project-structure/4-1-implement-code-straight-away.md)
@@ -229,6 +230,8 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
         1. [Enabling RPM package generation with cpack](/doc/sections/en_US/5-project-build/packagers/5-22-enabling-RPM-package-generation-with-cpack.md)
         1. [Enabling the AppImage packager](/doc/sections/en_US/5-project-build/packagers/5-38-enabling-the-AppImage-packager.md)
         1. [Enabling the desktop application packaging](/doc/sections/en_US/5-project-build/packagers/5-46-enabling-the-desktop-application-packaging.md)
+    1. Artificial intelligence
+        1. [Connecting to the Claude servers](/doc/sections/en_US/5-project-build/ai/5-37-connecting-to-the-claude-servers.md)
     1. Libraries
         1. [Enabling the libcurl](/doc/sections/en_US/5-project-build/5-14-enabling-libcurl.md)
         1. [Enabling the nlohmann json library](/doc/sections/en_US/5-project-build/5-18-enabling-the-nlohmann-json-library.md)

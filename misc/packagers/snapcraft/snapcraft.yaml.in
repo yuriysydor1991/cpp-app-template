@@ -22,3 +22,7 @@ parts:
     cmake-parameters:
       - -DCMAKE_BUILD_TYPE=Release
       - -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
+    build-packages:
+      - libboost-log-dev
+    stage-packages:
+      - libboost-log1.83.0

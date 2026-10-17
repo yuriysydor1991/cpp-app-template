@@ -18,7 +18,8 @@
       "build-commands": [
         "./bootstrap.sh",
         "./b2 --prefix=/app -j$(nproc) threading=multi --with-system --with-thread --with-chrono --with-date_time --with-log install"
-      ]
+      ],
+      "cleanup": ["/include", "/lib/cmake", "*.a"]
     },
     {
       "name": "${CMAKE_PROJECT_NAME}",

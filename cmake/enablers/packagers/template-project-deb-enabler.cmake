@@ -36,7 +36,11 @@ set(CPACK_DEBIAN_PACKAGE_MAINTAINER "${PROJECT_MAINTAINER} ${PROJECT_MAINTAINER_
 set(CPACK_DEB_COMPONENT_INSTALL ON)
 set(CPACK_PACKAGE_DESCRIPTION ${CMAKE_PROJECT_DESCRIPTION})
 set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE ${TEMPLATE_PROJECT_DEB_PACKAGE_ARCHITECTURE})
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "libboost-all-dev")
+# The executable links the shared Boost.Log libraries of the system, so the
+# dpkg-shlibdeps tool names their runtime packages instead of the whole Boost
+# development set.
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "")
+set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
 
 # the CPACK_SYSTEM_NAME of the default file name names the system alone, so the
 # destination CPU takes its place

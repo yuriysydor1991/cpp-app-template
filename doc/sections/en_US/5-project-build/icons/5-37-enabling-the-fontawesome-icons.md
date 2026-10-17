@@ -39,7 +39,7 @@ A checkout is a heavy download, so reuse one across the build directories (or wo
 cmake -S . -B build -DTEMPLATE_APP_FONTAWESOME_DIR=/opt/Font-Awesome
 ```
 
-Once configured, the module exports the checkout layout for the rest of the CMake files: `FONTAWESOME_ROOT_DIR`, `FONTAWESOME_SVGS_DIR`, `FONTAWESOME_WEBFONTS_DIR`, `FONTAWESOME_SPRITES_DIR`, `FONTAWESOME_METADATA_DIR`, `FONTAWESOME_LICENSE_FILE` and `FONTAWESOME_ICONS_COUNT`.
+Once configured, the module exports the checkout layout for the rest of the CMake files: `FONTAWESOME_ROOT_DIR`, `FONTAWESOME_SVGS_DIR`, `FONTAWESOME_WEBFONTS_DIR` and `FONTAWESOME_LICENSE_FILE`.
 
 ### Reaching the icons from the code
 

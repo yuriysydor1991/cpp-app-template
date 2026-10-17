@@ -39,7 +39,7 @@ cmake -S . -B build -DENABLE_FONTAWESOME=ON
 cmake -S . -B build -DTEMPLATE_APP_FONTAWESOME_DIR=/opt/Font-Awesome
 ```
 
-Після конфігурації модуль експортує структуру копії для решти CMake файлів: `FONTAWESOME_ROOT_DIR`, `FONTAWESOME_SVGS_DIR`, `FONTAWESOME_WEBFONTS_DIR`, `FONTAWESOME_SPRITES_DIR`, `FONTAWESOME_METADATA_DIR`, `FONTAWESOME_LICENSE_FILE` та `FONTAWESOME_ICONS_COUNT`.
+Після конфігурації модуль експортує структуру копії для решти CMake файлів: `FONTAWESOME_ROOT_DIR`, `FONTAWESOME_SVGS_DIR`, `FONTAWESOME_WEBFONTS_DIR` та `FONTAWESOME_LICENSE_FILE`.
 
 ### Доступ до іконок із коду
 

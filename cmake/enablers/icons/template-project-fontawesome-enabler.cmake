@@ -77,8 +77,6 @@ endif()
 
 set(FONTAWESOME_SVGS_DIR "${FONTAWESOME_ROOT_DIR}/svgs" CACHE INTERNAL "The per style individual SVG icon files directory")
 set(FONTAWESOME_WEBFONTS_DIR "${FONTAWESOME_ROOT_DIR}/webfonts" CACHE INTERNAL "The webfont files directory")
-set(FONTAWESOME_SPRITES_DIR "${FONTAWESOME_ROOT_DIR}/sprites" CACHE INTERNAL "The per style SVG sprite sheets directory")
-set(FONTAWESOME_METADATA_DIR "${FONTAWESOME_ROOT_DIR}/metadata" CACHE INTERNAL "The icon metadata (categories, aliases, unicode points) directory")
 set(FONTAWESOME_LICENSE_FILE "${FONTAWESOME_ROOT_DIR}/LICENSE.txt" CACHE INTERNAL "The Font Awesome Free license file")
 
 if (NOT EXISTS "${FONTAWESOME_SVGS_DIR}")

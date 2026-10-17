@@ -81,7 +81,6 @@ function(template_project_fontawesome_generate_index)
   )
 
   set(FONTAWESOME_GENERATED_ICONS_SOURCE "${generatedSource}" CACHE INTERNAL "The generated Font Awesome icons index implementation file")
-  set(FONTAWESOME_ICONS_COUNT "${total}" CACHE INTERNAL "The count of the Font Awesome icons made available")
 
   message(STATUS "Font Awesome icons made available: ${total}")
 endfunction()

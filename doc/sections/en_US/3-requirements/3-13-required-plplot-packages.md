@@ -32,3 +32,5 @@ cmake --build plplot-build -j$(nproc)
 # install it into the system
 sudo cmake --install plplot-build --prefix /usr
 ```
+
+The `ENABLE_PLPLOT` CMake option (`ON` by default) makes the configure step use a system wide installed PLplot or fetch and build the `TEMPLATE_APP_PLPLOT_GIT_TAG` commit itself. Since the `src/plplot` example requires the library, turning the option `OFF` stops the configuration with an explanation, until the `add_subdirectory(plplot)` call of the `src/CMakeLists.txt` file is dropped together with the `src/plplot` subdirectory and the PLplot example of the `src/app/applications/Application.cpp` file.

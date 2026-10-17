@@ -33,3 +33,5 @@ cmake --build plplot-build -j$(nproc)
 # встановлення у систему
 sudo cmake --install plplot-build --prefix /usr
 ```
+
+Параметр CMake `ENABLE_PLPLOT` (типово `ON`) змушує крок конфігурації використати встановлену в системі бібліотеку PLplot або самостійно завантажити і зібрати коміт `TEMPLATE_APP_PLPLOT_GIT_TAG`. Оскільки приклад `src/plplot` потребує бібліотеки, значення `OFF` зупиняє конфігурацію з поясненням, доки з файлу `src/CMakeLists.txt` не буде вилучено виклик `add_subdirectory(plplot)` разом з підкаталогом `src/plplot` і прикладом PLplot у файлі `src/app/applications/Application.cpp`.

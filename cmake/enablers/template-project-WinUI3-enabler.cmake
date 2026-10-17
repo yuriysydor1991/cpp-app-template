@@ -34,13 +34,6 @@ if(NOT MSVC)
   message(WARNING "WinUI 3 + C++/WinRT is only supported with the MSVC toolchain")
 endif()
 
-# C++/WinRT needs C++17 at minimum; the Windows App SDK projection is happier on
-# C++20, so raise the standard when the project asked for something older.
-if(CMAKE_CXX_STANDARD LESS 17)
-  set(CMAKE_CXX_STANDARD 20 PARENT_SCOPE)
-  set(CMAKE_CXX_STANDARD_REQUIRED ON PARENT_SCOPE)
-endif()
-
 set(
   TEMPLATE_APP_WINAPPSDK_VERSION "1.6.250228001"
   CACHE STRING "The Microsoft.WindowsAppSDK NuGet package version to restore"

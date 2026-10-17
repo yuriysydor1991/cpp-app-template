@@ -100,12 +100,12 @@ pipeline {
       parallel {
         stage('UTEST_Wt4ArgsFilter') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_Wt4ArgsFilter\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_Wt4ArgsFilter.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_Wt4ArgsFilter\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_Wt4ArgsFilter.junit.xml'
           }
         }
         stage('UTEST_Wt4Context') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "UTEST_Wt4Context\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_Wt4Context.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "UTEST_Wt4Context\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_Wt4Context.junit.xml'
           }
         }
         stage('UTEST_Application') { 
@@ -186,7 +186,7 @@ pipeline {
       parallel {
         stage('CTEST_Wt4Server') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_Wt4Server\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_Wt4Server.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_Wt4Server\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_Wt4Server.junit.xml'
           }
         }
         stage('CTEST_DefaultLogger') {

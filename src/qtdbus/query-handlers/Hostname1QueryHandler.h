@@ -47,7 +47,7 @@ class Hostname1QueryHandler : public IDBusQueryHandler
   /// @brief The chassis type property name.
   inline static const QString chassisProperty{"Chassis"};
 
-  virtual ~Hostname1QueryHandler() = default;
+  ~Hostname1QueryHandler() override = default;
   Hostname1QueryHandler() = default;
 
   /**

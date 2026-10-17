@@ -10,7 +10,6 @@ PROJECT_ROOT=$(realpath "$(dirname "$0")/../..")
 PACKAGES=(
     build-essential
     cmake
-    freeglut3
     freeglut3-dev
     g++
     git

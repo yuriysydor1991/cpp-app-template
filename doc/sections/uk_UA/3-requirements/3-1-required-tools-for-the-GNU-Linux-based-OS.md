@@ -5,3 +5,9 @@
 ```
 sudo apt install -y git g++ cmake
 ```
+
+Бібліотеку FreeGlut можна встановити за допомогою наступної команди:
+
+```
+sudo apt install -y freeglut3-dev mesa-common-dev libglew-dev libglm-dev
+```

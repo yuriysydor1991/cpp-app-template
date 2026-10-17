@@ -22,3 +22,5 @@ target_link_libraries(
   ${PROJECT_BINARY_NAME}
   TemplateGtkmm4ComponentsObj
 )
+
+add_subdirectory(tests)

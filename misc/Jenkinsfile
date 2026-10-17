@@ -200,6 +200,11 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "CTEST_StopFlagWatcher\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_StopFlagWatcher.junit.xml'
           }
         }
+        stage('CTEST_Map') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "CTEST_Map\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_Map.junit.xml'
+          }
+        }
       }
       post { always { junit "$BUILDDIR/$BDJUNITOUT/CTEST_*.xml" } }
     }

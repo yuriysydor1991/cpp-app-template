@@ -15,11 +15,12 @@ class Map : public Gtk::Box
  public:
   Map();
 
- private:
-  void show_leaflet(GtkWidget* web_view);
-
+  /// @brief The GResource path of the shown Leaflet map page.
   inline static constexpr const char* const map_html_res_path =
       GTKMM_APP_RESOURCES_PREFIX "/resources/html/map.html";
+
+ private:
+  void show_leaflet(GtkWidget* web_view);
 };
 
 }  // namespace Gtkmm4i::components

@@ -6,6 +6,12 @@
 sudo apt install -y git g++ cmake
 ```
 
+Усі необхідні пакунки розробника для GTKmm-3.0:
+
+```
+sudo apt install -y pkg-config libgtkmm-3.0-dev
+```
+
 Для того щоб мати змогу розробляти візуальний інтерфейс необіхдно встановити спеціалізований інструмент розробки [Glade](https://en.wikipedia.org/wiki/Glade_Interface_Designer) за допомогою команди:
 
 ```

@@ -22,6 +22,8 @@ The `libsfml-dev` package of the Ubuntu 26.04 carries the SFML 3, which the prob
 sudo apt install -y libfreetype-dev libx11-dev libxrandr-dev libxcursor-dev libudev-dev libgl-dev
 ```
 
+The [install-ubuntu-26-04.sh](/scripts/packages/install-ubuntu-26-04.sh) script installs those packages and builds and installs the SFML `2.6.2` release from source, so the probe finds a system wide SFML 2 there as well.
+
 ### Installing
 
 The PlotGenCpp library installs itself next to the executable (together with it's `PlotterExamples` demo) and the fetched SFML installs into the `lib` directory of the installation prefix. On GNU/Linux the installed executable carries the `$ORIGIN` and the `$ORIGIN/../lib` RPATH to find both, so it starts from any installation prefix and from the generated packages.

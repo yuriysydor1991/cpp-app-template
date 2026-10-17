@@ -22,6 +22,8 @@ cmake -S . -B build -DTEMPLATE_APP_PLOTGENCPP_GIT_TAG=main
 sudo apt install -y libfreetype-dev libx11-dev libxrandr-dev libxcursor-dev libudev-dev libgl-dev
 ```
 
+Скрипт [install-ubuntu-26-04.sh](/scripts/packages/install-ubuntu-26-04.sh) встановлює ці пакунки, а також збирає з вихідного коду та встановлює випуск SFML `2.6.2`, тож пошук і там знаходить встановлену у системі SFML 2.
+
 ### Встановлення
 
 Бібліотека PlotGenCpp встановлює себе поруч із виконуваним файлом (разом зі своєю демонстрацією `PlotterExamples`), а завантажена SFML встановлюється до директорії `lib` префікса встановлення. На GNU/Linux встановлений виконуваний файл містить RPATH `$ORIGIN` та `$ORIGIN/../lib`, щоб знайти обидві, тож він запускається з будь-якого префікса встановлення та зі згенерованих пакунків.

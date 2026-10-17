@@ -8,6 +8,8 @@ In order to perform the application profiler analysis with help of the `valgrind
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DENABLE_CALLGRIND=ON
 ```
 
+Without the `valgrind` command (see the [Optional for the memory check with Valgrind](/doc/sections/en_US/3-requirements/3-8-optional-for-the-memory-checkwith-Valgrind.md) section) the configure only warns and declares no `callgrind` target, so the quick build scripts, which always enable it, keep working.
+
 After configuring project with support for the `valgrind` profiling facility build the `callgrind` target:
 
 ```

@@ -8,6 +8,8 @@ sudo apt install -y libsdbus-c++-dev pkg-config libsystemd-dev
 
 A system with no sdbus-c++ or with an older one (the 1.x of the Ubuntu 24.04, the EPEL 9 or the Fedora up to 42) gets the sources of the `TEMPLATE_APP_SDBUSCXX_GIT_TAG` release (`v2.1.0` by default) fetched and built into the executable statically, which needs the `pkg-config` tool and the `libsystemd-dev` files. None of the fetched sdbus-c++ files is installed with the project.
 
+On the Ubuntu 24.04 the [scripts/packages/install-ubuntu-24-04.sh](/scripts/packages/install-ubuntu-24-04.sh) script builds the `v2.1.0` release out of its sources and installs it into the system instead, so the configuration finds it there.
+
 The `ENABLE_LIBSDBUSCXX` CMake option is `ON` by default on this branch: the `src/sdbuscxx` example requires the library, so turning the option `OFF` stops the configuration with an explanation, until the `add_subdirectory(sdbuscxx)` call of the `src/CMakeLists.txt` file is dropped together with the `src/sdbuscxx` subdirectory and its usage of the `src/app/applications/Application.cpp` file.
 
 The executable reads the `Hostname`, the `PrettyHostname` and the `OperatingSystemPrettyName` properties of the `org.freedesktop.hostname1` service (the `systemd-hostnamed`) on the system bus. With no system bus or no such service it exits with a failure status, and the live component tests skip themselves. The same properties may be checked with the `busctl` tool:

@@ -3,7 +3,7 @@
 
 #pragma GCC system_header
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wall -Wextra -Werror -Wunknown-pragmas"
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
 #pragma warning(push, 0)  // MSVC
 
 #include <sdbus-c++/sdbus-c++.h>

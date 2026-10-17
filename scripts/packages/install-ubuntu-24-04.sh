@@ -17,10 +17,37 @@ PACKAGES=(
     g++
     git
     googletest
+    libgl-dev
     libgmock-dev
     libgtest-dev
+    libopengl-dev
+    libqt6gui6t64
+    libqt6openglwidgets6t64
+    libqt6quick6
+    libqt6quickcontrols2-6
     libssl-dev
     libstdc++6
+    qml6-module-qtqml-workerscript
+    qml6-module-qtquick
+    qml6-module-qtquick-controls
+    qml6-module-qtquick-dialogs
+    qml6-module-qtquick-layouts
+    qml6-module-qtquick-localstorage
+    qml6-module-qtquick-particles
+    qml6-module-qtquick-pdf
+    qml6-module-qtquick-scene2d
+    qml6-module-qtquick-scene3d
+    qml6-module-qtquick-shapes
+    qml6-module-qtquick-templates
+    qml6-module-qtquick-timeline
+    qml6-module-qtquick-tooling
+    qml6-module-qtquick-virtualkeyboard
+    qml6-module-qtquick-window
+    qt6-base-dev
+    qt6-base-dev-tools
+    qt6-declarative-dev
+    qt6-tools-dev
+    qt6-tools-dev-tools
 )
 
 apt_install "${PACKAGES[@]}"

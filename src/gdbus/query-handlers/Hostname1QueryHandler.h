@@ -5,6 +5,7 @@
 
 #include <string>
 
+#include "src/gdbus/query-handlers/Hostname1Properties.h"
 #include "src/gdbus/query-handlers/IDBusQueryHandler.h"
 
 namespace Gio
@@ -74,19 +75,6 @@ class Hostname1QueryHandler : public IDBusQueryHandler
   bool handle(Gio::DBus::Connection* connection) override;
 
  protected:
-  /**
-   * @brief The aggregated set of hostname1 properties read from the bus.
-   */
-  struct Hostname1Properties
-  {
-    std::string hostname;
-    std::string prettyHostname;
-    std::string osPrettyName;
-    std::string kernelName;
-    std::string kernelRelease;
-    std::string chassis;
-  };
-
   /**
    * @brief Reads the well known hostname1 properties from the bus in a single
    * org.freedesktop.DBus.Properties.GetAll round trip.

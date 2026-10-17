@@ -41,8 +41,6 @@ Gio::DBus::Connection* fake_connection()
 class TestableHostname1QueryHandler : public Hostname1QueryHandler
 {
  public:
-  using Hostname1QueryHandler::Hostname1Properties;
-
   std::function<bool(Gio::DBus::Connection*, Hostname1Properties&,
                      std::string&)>
       onFetch;
@@ -72,8 +70,7 @@ TEST_F(UTEST_Hostname1QueryHandler, handle_returns_true_on_successful_fetch)
   Gio::DBus::Connection* received = nullptr;
 
   handler.onFetch = [&](Gio::DBus::Connection* connection,
-                        TestableHostname1QueryHandler::Hostname1Properties& out,
-                        std::string&) {
+                        Hostname1Properties& out, std::string&) {
     received = connection;
 
     out.hostname = "unit-test-host";
@@ -92,8 +89,7 @@ TEST_F(UTEST_Hostname1QueryHandler, handle_returns_true_on_successful_fetch)
 
 TEST_F(UTEST_Hostname1QueryHandler, handle_returns_false_on_dbus_error)
 {
-  handler.onFetch = [&](Gio::DBus::Connection*,
-                        TestableHostname1QueryHandler::Hostname1Properties&,
+  handler.onFetch = [&](Gio::DBus::Connection*, Hostname1Properties&,
                         std::string& error) {
     error =
         "org.freedesktop.DBus.Error.ServiceUnknown: the name "
@@ -108,8 +104,7 @@ TEST_F(UTEST_Hostname1QueryHandler, handle_returns_false_on_null_connection)
 {
   bool fetchCalled = false;
 
-  handler.onFetch = [&](Gio::DBus::Connection*,
-                        TestableHostname1QueryHandler::Hostname1Properties&,
+  handler.onFetch = [&](Gio::DBus::Connection*, Hostname1Properties&,
                         std::string&) {
     fetchCalled = true;
     return true;

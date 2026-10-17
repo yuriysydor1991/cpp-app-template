@@ -22,14 +22,14 @@ std::shared_ptr<SDL2Context> SDL2ContextBuilder::build_context(
   sdl2ctx->window = create_window(sdl2ctx);
 
   if (sdl2ctx->window == nullptr) {
-    LOGE("No window object pointer provided");
+    LOGE("Fail to create the SDL2 window, SDL_Error: " << SDL_GetError());
     return {};
   }
 
   sdl2ctx->glContext = create_context(sdl2ctx);
 
   if (sdl2ctx->glContext == nullptr) {
-    LOGE("No OpenGL context object pointer provided");
+    LOGE("Fail to create the OpenGL context, SDL_Error: " << SDL_GetError());
     return {};
   }
 

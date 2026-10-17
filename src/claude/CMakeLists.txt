@@ -38,7 +38,7 @@ target_link_libraries(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  TemplateProjectClaudeControllerObj
+  PRIVATE TemplateProjectClaudeControllerObj
   nlohmann_json::nlohmann_json
 )
 

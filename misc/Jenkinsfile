@@ -29,9 +29,11 @@ pipeline {
 
     stage('Configure') {
       steps {
-        bat 'cmake -S . -B %BUILDDIR% -G "%CMAKE_GENERATOR%" -A x64 ^
-              -DENABLE_UNIT_TESTS=ON -DENABLE_COMPONENT_TESTS=ON ^
-              -DENABLE_WIX=ON -DMAX_LOG_LEVEL=5'
+        bat '''
+          cmake -S . -B %BUILDDIR% -G "%CMAKE_GENERATOR%" -A x64 ^
+            -DENABLE_UNIT_TESTS=ON -DENABLE_COMPONENT_TESTS=ON ^
+            -DENABLE_CPPCHECK=ON -DENABLE_WIX=ON -DMAX_LOG_LEVEL=5
+        '''
       }
     }
 
@@ -92,44 +94,44 @@ pipeline {
             bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_WinUI3Controller\\." --output-on-failure --output-junit %BDJUNITOUT%/UTEST_WinUI3Controller.junit.xml'
           }
         }
-        stage('UTEST_SignalsHandler') { 
-          steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_SignalsHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_SignalsHandler.junit.xml'
+        stage('UTEST_SignalsHandler') {
+          steps {
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_SignalsHandler\\." --output-on-failure --output-junit %BDJUNITOUT%/UTEST_SignalsHandler.junit.xml'
           }
         }
-        stage('UTEST_ASignalsHandler') { 
-          steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_ASignalsHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ASignalsHandler.junit.xml'
+        stage('UTEST_ASignalsHandler') {
+          steps {
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_ASignalsHandler\\." --output-on-failure --output-junit %BDJUNITOUT%/UTEST_ASignalsHandler.junit.xml'
           }
         }
-        stage('UTEST_ContinueSignalsHandler') { 
-          steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_ContinueSignalsHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ContinueSignalsHandler.junit.xml'
+        stage('UTEST_ContinueSignalsHandler') {
+          steps {
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_ContinueSignalsHandler\\." --output-on-failure --output-junit %BDJUNITOUT%/UTEST_ContinueSignalsHandler.junit.xml'
           }
         }
-        stage('UTEST_IgnoredSignalsHandler') { 
-          steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_IgnoredSignalsHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_IgnoredSignalsHandler.junit.xml'
+        stage('UTEST_IgnoredSignalsHandler') {
+          steps {
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_IgnoredSignalsHandler\\." --output-on-failure --output-junit %BDJUNITOUT%/UTEST_IgnoredSignalsHandler.junit.xml'
           }
         }
-        stage('UTEST_PauseSignalsHandler') { 
-          steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_PauseSignalsHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_PauseSignalsHandler.junit.xml'
+        stage('UTEST_PauseSignalsHandler') {
+          steps {
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_PauseSignalsHandler\\." --output-on-failure --output-junit %BDJUNITOUT%/UTEST_PauseSignalsHandler.junit.xml'
           }
         }
-        stage('UTEST_ReloadSignalsHandler') { 
-          steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_ReloadSignalsHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_ReloadSignalsHandler.junit.xml'
+        stage('UTEST_ReloadSignalsHandler') {
+          steps {
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_ReloadSignalsHandler\\." --output-on-failure --output-junit %BDJUNITOUT%/UTEST_ReloadSignalsHandler.junit.xml'
           }
         }
-        stage('UTEST_StopSignalsHandler') { 
-          steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_StopSignalsHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_StopSignalsHandler.junit.xml'
+        stage('UTEST_StopSignalsHandler') {
+          steps {
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_StopSignalsHandler\\." --output-on-failure --output-junit %BDJUNITOUT%/UTEST_StopSignalsHandler.junit.xml'
           }
         }
-        stage('UTEST_UserSignalsHandler') { 
-          steps { 
-            sh 'cd $BUILDDIR && ctest -R "UTEST_UserSignalsHandler\\." --output-on-failure --output-junit $BDJUNITOUT/UTEST_UserSignalsHandler.junit.xml'
+        stage('UTEST_UserSignalsHandler') {
+          steps {
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "UTEST_UserSignalsHandler\\." --output-on-failure --output-junit %BDJUNITOUT%/UTEST_UserSignalsHandler.junit.xml'
           }
         }
       }
@@ -140,12 +142,12 @@ pipeline {
       parallel {
         stage('CTEST_DefaultLogger') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_DefaultLogger" --output-on-failure --output-junit $BDJUNITOUT/CTEST_DefaultLogger.junit.xml'
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "CTEST_DefaultLogger" --output-on-failure --output-junit %BDJUNITOUT%/CTEST_DefaultLogger.junit.xml'
           }
         }
         stage('CTEST_log') {
           steps {
-            sh 'cd $BUILDDIR && ctest -R "CTEST_log\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_log.junit.xml'
+            bat 'cd %BUILDDIR% && ctest -C Debug -R "CTEST_log\\." --output-on-failure --output-junit %BDJUNITOUT%/CTEST_log.junit.xml'
           }
         }
         stage('CTEST_app') {
@@ -191,295 +193,315 @@ pipeline {
     // the other template branches.
     // =====================================================================
 
-    stage('Template: no git conflict markers') {
-      steps {
-        sh '''
-          if git grep -nE "^(<<<<<<<|>>>>>>>)" -- .; then
-            echo "FAIL: the files listed above contain git conflict markers (unmerged content)"
-            exit 1
-          fi
-          echo "OK: no git conflict markers found in the tracked files"
-        '''
-      }
-    }
+    // The template checks are POSIX shell scripts (git grep, find, sed, curl),
+    // so they run on a GNU/Linux agent: label your Jenkins GNU/Linux node
+    // 'linux' (or adjust the agent below).
+    stage('Template checks') {
+      agent { label 'linux' }
 
-    stage('Template: no en_US doc sections in the uk_UA README') {
-      steps {
-        sh '''
-          if grep -nE "doc/sections/en_US/" doc/README.uk_UA.md; then
-            echo "FAIL: the uk_UA README links en_US sections; it must use uk_UA sections only"
-            exit 1
-          fi
-          echo "OK: the uk_UA README references no en_US sections"
-        '''
-      }
-    }
+      stages {
+        stage('Template: checkout') {
+          when {
+            expression { return !fileExists('CMakeLists.txt') }
+          }
 
-    stage('Template: no uk_UA doc sections in the top-level README') {
-      steps {
-        sh '''
-          if grep -nE "doc/sections/uk_UA/" README.md; then
-            echo "FAIL: the top-level README links uk_UA sections; it must use en_US sections only"
-            exit 1
-          fi
-          echo "OK: the top-level README references no uk_UA sections"
-        '''
-      }
-    }
+          steps {
+            git branch: 'appWinUI3',
+                url: 'https://github.com/yuriysydor1991/cpp-app-template.git'
+          }
+        }
 
-    stage('Template: every doc section is linked in its README') {
-      steps {
-        sh '''
-          status=0
-          for langdir in doc/sections/*/; do
-            [ -d "$langdir" ] || continue
-            lang="$(basename "$langdir")"
-            if [ "$lang" = "en_US" ]; then
-              readme="README.md"
-            else
-              readme="doc/README.${lang}.md"
-            fi
-            if [ ! -f "$readme" ]; then
-              echo "FAIL: no README ($readme) found for the doc/sections/$lang language"
-              status=1
-              continue
-            fi
-            for f in "$langdir"*; do
-              [ -f "$f" ] || continue
-              if ! grep -qF "$f" "$readme"; then
-                echo "FAIL: $f is not linked in $readme"
-                status=1
-              fi
-            done
-          done
-          [ "$status" -eq 0 ] || exit 1
-          echo "OK: every doc/sections file is linked in its README"
-        '''
-      }
-    }
-
-    stage('Template: no broken markdown links') {
-      steps {
-        sh '''
-          MDLIST=$(mktemp)
-          LINKLIST=$(mktemp)
-          trap 'rm -f "$MDLIST" "$LINKLIST"' EXIT
-
-          # The repository own documentation only: a build tree keeps the
-          # fetched third-party sources with the markdown files of their own.
-          git ls-files -z '*.md' | tr '\\0' '\\n' | sort > "$MDLIST"
-
-          while IFS= read -r mdfile; do
-            grep -oE '[[][^]]*[]][(][^)]+[)]' "$mdfile" 2>/dev/null \
-              | sed 's/.*][(]\\(.*\\)[)]$/\\1/' > "$LINKLIST"
-
-            while IFS= read -r link; do
-              [ -z "$link" ] && continue
-              target="${link%%#*}"
-              [ -z "$target" ] && continue
-              case "$target" in http://*|https://*|mailto:*|ftp://*) continue ;; esac
-              if [ "${target#/}" != "$target" ]; then
-                resolved="${target#/}"
-              else
-                resolved="$(dirname "$mdfile")/${target}"
-              fi
-              if [ ! -e "$resolved" ]; then
-                echo "FAIL: broken link in $mdfile"
-                echo "  link:     $link"
-                echo "  resolved: $resolved"
+        stage('Template: no git conflict markers') {
+          steps {
+            sh '''
+              if git grep -nE "^(<<<<<<<|>>>>>>>)" -- .; then
+                echo "FAIL: the files listed above contain git conflict markers (unmerged content)"
                 exit 1
               fi
-            done < "$LINKLIST"
-          done < "$MDLIST"
-
-          echo "OK: all *.md files have valid links"
-        '''
-      }
-    }
-
-    stage('Template: no broken external documentation URLs') {
-      steps {
-        sh '''
-          set +x
-
-          MDLIST=$(mktemp)
-          URLLIST=$(mktemp)
-          UNIQLIST=$(mktemp)
-          BADLIST=$(mktemp)
-          WARNLIST=$(mktemp)
-          trap 'rm -f "$MDLIST" "$URLLIST" "$UNIQLIST" "$BADLIST" "$WARNLIST"' EXIT
-
-          BT='`'
-          DQ='"'
-          CURLOPTS="--silent --location --globoff --connect-timeout 15 --max-time 45 --output /dev/null"
-          ATTEMPTS=3
-          RETRY_DELAY=5
-
-          # The repository own documentation only: a build tree keeps the
-          # fetched third-party sources with the markdown files of their own.
-          git ls-files -z '*.md' | tr '\\0' '\\n' | sort > "$MDLIST"
-
-          # Collect every external URL together with the documentation file it
-          # sits in, unwrapping it from the markdown link, the inline code and
-          # the HTML decorations and dropping the local and the templated ones.
-          while IFS= read -r mdfile; do
-            grep -oE "(https?|ftps?|git)://[^[:space:]]+" "$mdfile" 2>/dev/null |
-            while IFS= read -r raw; do
-              url="$raw"
-              url="${url%%${BT}*}"
-              url="${url%%${DQ}*}"
-              url="${url%%<*}"
-              url="${url%%>*}"
-              url="${url%%]*}"
-              case "$url" in *"("*) ;; *) url="${url%%)*}" ;; esac
-              url=$(printf '%s' "$url" | sed 's/[.,;:!?]*$//')
-              case "$url" in
-                *://) continue ;;
-                *'$'*|*'{'*|*'@'*) continue ;;
-                *//localhost*|*//127.*|*//0.0.0.0*|*//'[::1]'*|*//192.168.*) continue ;;
-                *//example.com*|*//example.org*) continue ;;
-              esac
-              printf '%s %s\\n' "$url" "$mdfile"
-            done
-          done < "$MDLIST" | sort -u > "$URLLIST"
-
-          awk '{print $1}' "$URLLIST" | sort -u > "$UNIQLIST"
-          echo "Checking $(wc -l < "$UNIQLIST") external URL(s) from $(wc -l < "$MDLIST") documentation file(s)"
-
-          # A single reachability probe printing the HTTP status code or the
-          # word telling how the request of a non-HTTP scheme has ended.
-          probe_url() {
-            case "$1" in
-              git://*)
-                git ls-remote "$1" > /dev/null 2>&1 && echo git-ok || echo git-unreachable
-                return
-                ;;
-              ftp://*|ftps://*)
-                curl $CURLOPTS "$1" > /dev/null 2>&1 && echo ftp-ok || echo ftp-unreachable
-                return
-                ;;
-            esac
-
-            code=$(curl $CURLOPTS --head --write-out '%{http_code}' "$1" 2>/dev/null) || true
-            case "$code" in
-              2*|3*) echo "$code" ; return ;;
-            esac
-
-            # Some servers reject or mishandle HEAD - retry the URL with a GET.
-            code=$(curl $CURLOPTS --request GET --write-out '%{http_code}' "$1" 2>/dev/null) || true
-            case "$code" in
-              2*|3*) echo "$code" ; return ;;
-            esac
-
-            echo "$code"
+              echo "OK: no git conflict markers found in the tracked files"
+            '''
           }
+        }
 
-          # A connection failure, a rate limit or a server-side error can be a
-          # single hiccup, while the other answers are the server final word.
-          retry_worthy() {
-            case "$1" in
-              000|408|429|5*|git-unreachable|ftp-unreachable) return 0 ;;
-            esac
-            return 1
+        stage('Template: no en_US doc sections in the uk_UA README') {
+          steps {
+            sh '''
+              if grep -nE "doc/sections/en_US/" doc/README.uk_UA.md; then
+                echo "FAIL: the uk_UA README links en_US sections; it must use uk_UA sections only"
+                exit 1
+              fi
+              echo "OK: the uk_UA README references no en_US sections"
+            '''
           }
+        }
 
-          while IFS= read -r url; do
-            attempt=1
-            while : ; do
-              result=$(probe_url "$url")
-              retry_worthy "$result" || break
-              [ "$attempt" -lt "$ATTEMPTS" ] || break
-              echo "  RETRY   $url ($result on the attempt $attempt of $ATTEMPTS, the next one in ${RETRY_DELAY}s)"
-              attempt=$((attempt + 1))
-              sleep "$RETRY_DELAY"
-            done
+        stage('Template: no uk_UA doc sections in the top-level README') {
+          steps {
+            sh '''
+              if grep -nE "doc/sections/uk_UA/" README.md; then
+                echo "FAIL: the top-level README links uk_UA sections; it must use en_US sections only"
+                exit 1
+              fi
+              echo "OK: the top-level README references no uk_UA sections"
+            '''
+          }
+        }
 
-            case "$result" in
-              git-ok) echo "  OK      $url (reachable as a git remote)" ;;
-              ftp-ok) echo "  OK      $url" ;;
-              2*|3*) echo "  OK      $url ($result)" ;;
-              403) echo "  OK      $url (403 - the server refuses the automated requests)" ;;
-              405) echo "  OK      $url (405 - the endpoint exists but refuses the HEAD and GET requests)" ;;
-              401|418|429)
-                echo "  WARN    $url ($result - the server refuses the automated requests)"
-                echo "$url $result" >> "$WARNLIST"
-                ;;
-              000)
-                echo "  BROKEN  $url (no response: DNS, TLS or connection failure)"
-                echo "$url no-response" >> "$BADLIST"
-                ;;
-              git-unreachable)
-                echo "  BROKEN  $url (git ls-remote failed)"
-                echo "$url git-unreachable" >> "$BADLIST"
-                ;;
-              ftp-unreachable)
-                echo "  BROKEN  $url (FTP request failed)"
-                echo "$url ftp-unreachable" >> "$BADLIST"
-                ;;
-              *)
-                echo "  BROKEN  $url ($result)"
-                echo "$url $result" >> "$BADLIST"
-                ;;
-            esac
-          done < "$UNIQLIST"
+        stage('Template: every doc section is linked in its README') {
+          steps {
+            sh '''
+              status=0
+              for langdir in doc/sections/*/; do
+                [ -d "$langdir" ] || continue
+                lang="$(basename "$langdir")"
+                if [ "$lang" = "en_US" ]; then
+                  readme="README.md"
+                else
+                  readme="doc/README.${lang}.md"
+                fi
+                if [ ! -f "$readme" ]; then
+                  echo "FAIL: no README ($readme) found for the doc/sections/$lang language"
+                  status=1
+                  continue
+                fi
+                for f in "$langdir"*; do
+                  [ -f "$f" ] || continue
+                  if ! grep -qF "$f" "$readme"; then
+                    echo "FAIL: $f is not linked in $readme"
+                    status=1
+                  fi
+                done
+              done
+              [ "$status" -eq 0 ] || exit 1
+              echo "OK: every doc/sections file is linked in its README"
+            '''
+          }
+        }
 
-          if [ -s "$WARNLIST" ]; then
-            echo ""
-            echo "WARNING: the servers below refuse the automated requests, so their pages are left unverified:"
-            while read -r url code; do
-              echo "  $url ($code)"
-              awk -v u="$url" '$1 == u {print "      referenced by " $2}' "$URLLIST" | sort -u
-            done < "$WARNLIST"
-          fi
+        stage('Template: no broken markdown links') {
+          steps {
+            sh '''
+              MDLIST=$(mktemp)
+              LINKLIST=$(mktemp)
+              trap 'rm -f "$MDLIST" "$LINKLIST"' EXIT
 
-          if [ -s "$BADLIST" ]; then
-            echo ""
-            echo "FAIL: the documentation references the unreachable external URLs:"
-            while read -r url code; do
-              echo "  $url ($code)"
-              awk -v u="$url" '$1 == u {print "      referenced by " $2}' "$URLLIST" | sort -u
-            done < "$BADLIST"
-            exit 1
-          fi
+              # The repository own documentation only: a build tree keeps the
+              # fetched third-party sources with the markdown files of their own.
+              git ls-files -z '*.md' | tr '\\0' '\\n' | sort > "$MDLIST"
 
-          echo ""
-          echo "OK: every external documentation URL is reachable"
-        '''
-      }
-    }
+              while IFS= read -r mdfile; do
+                grep -oE '[[][^]]*[]][(][^)]+[)]' "$mdfile" 2>/dev/null \
+                  | sed 's/.*][(]\\(.*\\)[)]$/\\1/' > "$LINKLIST"
 
-    stage('Template: every enabler is registered') {
-      steps {
-        sh '''
-          included="$( { cat cmake/template-project-feature-enabler.cmake cmake/template-project-feature-enabler-post.cmake; find cmake/enablers -name "*.cmake" -exec cat {} +; } | grep "include(" | sed "s/.*include(//; s/).*//" | tr -d " " | sort -u )"
-          status=0
-          for f in $(find cmake/enablers -name "*.cmake" | sort); do
-            mod="$(basename "$f" .cmake)"
-            if ! echo "$included" | grep -qx "$mod"; then
-              echo "FAIL: enabler $mod ($f) is not registered in the template-project-feature-enabler files"
-              status=1
-            fi
-          done
-          [ "$status" -eq 0 ] || exit 1
-          echo "OK: every enabler under cmake/enablers is registered"
-        '''
-      }
-    }
+                while IFS= read -r link; do
+                  [ -z "$link" ] && continue
+                  target="${link%%#*}"
+                  [ -z "$target" ] && continue
+                  case "$target" in http://*|https://*|mailto:*|ftp://*) continue ;; esac
+                  if [ "${target#/}" != "$target" ]; then
+                    resolved="${target#/}"
+                  else
+                    resolved="$(dirname "$mdfile")/${target}"
+                  fi
+                  if [ ! -e "$resolved" ]; then
+                    echo "FAIL: broken link in $mdfile"
+                    echo "  link:     $link"
+                    echo "  resolved: $resolved"
+                    exit 1
+                  fi
+                done < "$LINKLIST"
+              done < "$MDLIST"
 
-    stage('Template: every declared test is registered in the pipeline') {
-      steps {
-        sh '''
-          declared="$(grep -rA3 "gtest_add_tests" --include=CMakeLists.txt src | grep -oE "TARGET[[:space:]]+[A-Za-z0-9_]+" | awk '{print $2}' | sort -u)"
-          status=0
-          for t in $declared; do
-            if ! grep -qF "$t" misc/Jenkinsfile; then
-              echo "FAIL: test $t is declared in the CMake files but not registered in this Jenkinsfile"
-              status=1
-            fi
-          done
-          [ "$status" -eq 0 ] || exit 1
-          echo "OK: every CMake-declared test is registered in the pipeline"
-        '''
+              echo "OK: all *.md files have valid links"
+            '''
+          }
+        }
+
+        stage('Template: no broken external documentation URLs') {
+          steps {
+            sh '''
+              set +x
+
+              MDLIST=$(mktemp)
+              URLLIST=$(mktemp)
+              UNIQLIST=$(mktemp)
+              BADLIST=$(mktemp)
+              WARNLIST=$(mktemp)
+              trap 'rm -f "$MDLIST" "$URLLIST" "$UNIQLIST" "$BADLIST" "$WARNLIST"' EXIT
+
+              BT='`'
+              DQ='"'
+              CURLOPTS="--silent --location --globoff --connect-timeout 15 --max-time 45 --output /dev/null"
+              ATTEMPTS=3
+              RETRY_DELAY=5
+
+              # The repository own documentation only: a build tree keeps the
+              # fetched third-party sources with the markdown files of their own.
+              git ls-files -z '*.md' | tr '\\0' '\\n' | sort > "$MDLIST"
+
+              # Collect every external URL together with the documentation file it
+              # sits in, unwrapping it from the markdown link, the inline code and
+              # the HTML decorations and dropping the local and the templated ones.
+              while IFS= read -r mdfile; do
+                grep -oE "(https?|ftps?|git)://[^[:space:]]+" "$mdfile" 2>/dev/null |
+                while IFS= read -r raw; do
+                  url="$raw"
+                  url="${url%%${BT}*}"
+                  url="${url%%${DQ}*}"
+                  url="${url%%<*}"
+                  url="${url%%>*}"
+                  url="${url%%]*}"
+                  case "$url" in *"("*) ;; *) url="${url%%)*}" ;; esac
+                  url=$(printf '%s' "$url" | sed 's/[.,;:!?]*$//')
+                  case "$url" in
+                    *://) continue ;;
+                    *'$'*|*'{'*|*'@'*) continue ;;
+                    *//localhost*|*//127.*|*//0.0.0.0*|*//'[::1]'*|*//192.168.*) continue ;;
+                    *//example.com*|*//example.org*) continue ;;
+                  esac
+                  printf '%s %s\\n' "$url" "$mdfile"
+                done
+              done < "$MDLIST" | sort -u > "$URLLIST"
+
+              awk '{print $1}' "$URLLIST" | sort -u > "$UNIQLIST"
+              echo "Checking $(wc -l < "$UNIQLIST") external URL(s) from $(wc -l < "$MDLIST") documentation file(s)"
+
+              # A single reachability probe printing the HTTP status code or the
+              # word telling how the request of a non-HTTP scheme has ended.
+              probe_url() {
+                case "$1" in
+                  git://*)
+                    git ls-remote "$1" > /dev/null 2>&1 && echo git-ok || echo git-unreachable
+                    return
+                    ;;
+                  ftp://*|ftps://*)
+                    curl $CURLOPTS "$1" > /dev/null 2>&1 && echo ftp-ok || echo ftp-unreachable
+                    return
+                    ;;
+                esac
+
+                code=$(curl $CURLOPTS --head --write-out '%{http_code}' "$1" 2>/dev/null) || true
+                case "$code" in
+                  2*|3*) echo "$code" ; return ;;
+                esac
+
+                # Some servers reject or mishandle HEAD - retry the URL with a GET.
+                code=$(curl $CURLOPTS --request GET --write-out '%{http_code}' "$1" 2>/dev/null) || true
+                case "$code" in
+                  2*|3*) echo "$code" ; return ;;
+                esac
+
+                echo "$code"
+              }
+
+              # A connection failure, a rate limit or a server-side error can be a
+              # single hiccup, while the other answers are the server final word.
+              retry_worthy() {
+                case "$1" in
+                  000|408|429|5*|git-unreachable|ftp-unreachable) return 0 ;;
+                esac
+                return 1
+              }
+
+              while IFS= read -r url; do
+                attempt=1
+                while : ; do
+                  result=$(probe_url "$url")
+                  retry_worthy "$result" || break
+                  [ "$attempt" -lt "$ATTEMPTS" ] || break
+                  echo "  RETRY   $url ($result on the attempt $attempt of $ATTEMPTS, the next one in ${RETRY_DELAY}s)"
+                  attempt=$((attempt + 1))
+                  sleep "$RETRY_DELAY"
+                done
+
+                case "$result" in
+                  git-ok) echo "  OK      $url (reachable as a git remote)" ;;
+                  ftp-ok) echo "  OK      $url" ;;
+                  2*|3*) echo "  OK      $url ($result)" ;;
+                  403) echo "  OK      $url (403 - the server refuses the automated requests)" ;;
+                  405) echo "  OK      $url (405 - the endpoint exists but refuses the HEAD and GET requests)" ;;
+                  401|418|429)
+                    echo "  WARN    $url ($result - the server refuses the automated requests)"
+                    echo "$url $result" >> "$WARNLIST"
+                    ;;
+                  000)
+                    echo "  BROKEN  $url (no response: DNS, TLS or connection failure)"
+                    echo "$url no-response" >> "$BADLIST"
+                    ;;
+                  git-unreachable)
+                    echo "  BROKEN  $url (git ls-remote failed)"
+                    echo "$url git-unreachable" >> "$BADLIST"
+                    ;;
+                  ftp-unreachable)
+                    echo "  BROKEN  $url (FTP request failed)"
+                    echo "$url ftp-unreachable" >> "$BADLIST"
+                    ;;
+                  *)
+                    echo "  BROKEN  $url ($result)"
+                    echo "$url $result" >> "$BADLIST"
+                    ;;
+                esac
+              done < "$UNIQLIST"
+
+              if [ -s "$WARNLIST" ]; then
+                echo ""
+                echo "WARNING: the servers below refuse the automated requests, so their pages are left unverified:"
+                while read -r url code; do
+                  echo "  $url ($code)"
+                  awk -v u="$url" '$1 == u {print "      referenced by " $2}' "$URLLIST" | sort -u
+                done < "$WARNLIST"
+              fi
+
+              if [ -s "$BADLIST" ]; then
+                echo ""
+                echo "FAIL: the documentation references the unreachable external URLs:"
+                while read -r url code; do
+                  echo "  $url ($code)"
+                  awk -v u="$url" '$1 == u {print "      referenced by " $2}' "$URLLIST" | sort -u
+                done < "$BADLIST"
+                exit 1
+              fi
+
+              echo ""
+              echo "OK: every external documentation URL is reachable"
+            '''
+          }
+        }
+
+        stage('Template: every enabler is registered') {
+          steps {
+            sh '''
+              included="$( { cat cmake/template-project-feature-enabler.cmake cmake/template-project-feature-enabler-post.cmake; find cmake/enablers -name "*.cmake" -exec cat {} +; } | grep "include(" | sed "s/.*include(//; s/).*//" | tr -d " " | sort -u )"
+              status=0
+              for f in $(find cmake/enablers -name "*.cmake" | sort); do
+                mod="$(basename "$f" .cmake)"
+                if ! echo "$included" | grep -qx "$mod"; then
+                  echo "FAIL: enabler $mod ($f) is not registered in the template-project-feature-enabler files"
+                  status=1
+                fi
+              done
+              [ "$status" -eq 0 ] || exit 1
+              echo "OK: every enabler under cmake/enablers is registered"
+            '''
+          }
+        }
+
+        stage('Template: every declared test is registered in the pipeline') {
+          steps {
+            sh '''
+              declared="$(grep -rA3 "gtest_add_tests" --include=CMakeLists.txt src | grep -oE "TARGET[[:space:]]+[A-Za-z0-9_]+" | awk '{print $2}' | sort -u)"
+              status=0
+              for t in $declared; do
+                if ! grep -qF "$t" misc/Jenkinsfile; then
+                  echo "FAIL: test $t is declared in the CMake files but not registered in this Jenkinsfile"
+                  status=1
+                fi
+              done
+              [ "$status" -eq 0 ] || exit 1
+              echo "OK: every CMake-declared test is registered in the pipeline"
+            '''
+          }
+        }
       }
     }
   }

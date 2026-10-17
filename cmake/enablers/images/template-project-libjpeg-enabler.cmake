@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.13)
 
 option(
     ENABLE_LIBJPEG
-    "Enables the libjpeg-turbo (JPG/JPEG image format) library for the project usage through system installed one or FetchContent by internet"
+    "Enables the libjpeg-turbo (JPG/JPEG image format) library for the project (system installation only)"
     OFF
 )
 
@@ -10,20 +10,24 @@ if (NOT ENABLE_LIBJPEG)
     return()
 endif()
 
-set(TEMPLATE_APP_LIBJPEG_GIT "https://github.com/libjpeg-turbo/libjpeg-turbo.git" CACHE STRING "The libjpeg-turbo library git source repository")
-set(TEMPLATE_APP_LIBJPEG_GIT_TAG "main" CACHE STRING "The libjpeg-turbo project git repository tag/branch of interest")
+# libjpeg-turbo refuses to be built through add_subdirectory(), which the CMake
+# FetchContent relies on, so it is probed from the system exclusively.
+find_package(JPEG)
 
-template_project_default_3rdparty_enabler(
-  NAME JPEG
-  GIT_REPOSITORY ${TEMPLATE_APP_LIBJPEG_GIT}
-  GIT_TAG ${TEMPLATE_APP_LIBJPEG_GIT_TAG}
-)
+if (NOT JPEG_FOUND)
+  message(
+    FATAL_ERROR
+    "The ENABLE_LIBJPEG=ON requires the system installed libjpeg-turbo "
+    "development package: libjpeg-dev on Debian/Ubuntu, libjpeg-turbo-devel on "
+    "Fedora/RHEL, jpeg-turbo on Homebrew and FreeBSD. Install it or set "
+    "ENABLE_LIBJPEG=OFF."
+  )
+endif()
 
-# Link one of the following JPEG targets to your target(s) of interest (e.g. the
+message(STATUS "libjpeg ${JPEG_VERSION} found: ${JPEG_INCLUDE_DIRS}")
+
+# Link the following JPEG target to your target(s) of interest (e.g. the
 # ${PROJECT_BINARY_NAME} executable or any of your own libraries):
 #   - system install, via find_package(JPEG): JPEG::JPEG
-#   - FetchContent source build (libjpeg-turbo): jpeg-static (static) or jpeg
-#     (shared) for the libjpeg API, turbojpeg / turbojpeg-static for the
-#     TurboJPEG API
 # For example:
 #   target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE JPEG::JPEG)

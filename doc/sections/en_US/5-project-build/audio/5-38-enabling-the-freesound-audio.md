@@ -113,7 +113,7 @@ template_project_freesound_audio_write_qrc(
 )
 ```
 
-Requesting neither `PACKS` nor `SOUNDS` selects the whole available set. The manifests carrying everything are generated already, at `generated/freesoundaudio/freesound-audio-all.qrc` and `generated/freesoundaudio/freesound-audio-all.gresource.xml` of the build directory.
+Requesting neither `CATEGORIES` nor `SOUNDS` selects the whole available set. The manifests carrying everything are generated already, at `generated/freesoundaudio/freesound-audio-all.qrc` and `generated/freesoundaudio/freesound-audio-all.gresource.xml` of the build directory.
 
 The sounds keep their `<category>/<path>` aliases inside the manifests, so the `FreesoundQtResourcePath` and the `FreesoundGResourcePath` classes resolve them at the run time:
 
@@ -130,7 +130,7 @@ The `COMPRESSED` flag of the GResource writer stays available for the uncompress
 
 ### Playing the sounds
 
-The branch ships a player, so the packs are not only reachable but audible. It is built upon the **SDL2 audio subsystem** and the **SDL_mixer decoders**, and enabled by the `ENABLE_SDL2_AUDIO` CMake variable, which is `ON` by default:
+The branch ships a player, so the sounds are not only reachable but audible. It is built upon the **SDL2 audio subsystem** and the **SDL_mixer decoders**, and enabled by the `ENABLE_SDL2_AUDIO` CMake variable, which is `ON` by default:
 
 | Variable | Default | Meaning |
 | --- | --- | --- |
@@ -193,10 +193,10 @@ auto vorbis = drawn.pick(sounds, "ogg");  // only what the player really decodes
 
 ### The demo
 
-`Application::run` of this branch puts the three together: it reports how many sounds the configured packs carry, draws a playable one, prints it's file path and both resource system paths, and plays it:
+`Application::run` of this branch puts the three together: it reports how many sounds the configured categories carry, draws a playable one, prints it's file path and both resource system paths, and plays it:
 
 ```
-INF : The Freesound packs carry 5 sounds at /.../resources/freesound-audio
+INF : The Freesound categories carry 5 sounds at /.../resources/freesound-audio
 INF : The drawn feedback/confirmation.ogg sound file: /.../feedback/confirmation.ogg
 INF : ... published under CC0-1.0 at https://cdn.freesound.org/previews/581/581603_5487341-hq.ogg
 INF : ... embedded into the Qt resources: :/sounds/feedback/confirmation.ogg
@@ -204,4 +204,4 @@ INF : ... embedded into the GResource ones: /ua/org/kytok/template/CppAppTemplat
 INF : Playing the feedback/confirmation.ogg sound ...
 ```
 
-With the packs empty, or with no sound of a format the player decodes, the demo says so and returns cleanly instead of failing.
+With the categories empty, or with no sound of a format the player decodes, the demo says so and returns cleanly instead of failing.

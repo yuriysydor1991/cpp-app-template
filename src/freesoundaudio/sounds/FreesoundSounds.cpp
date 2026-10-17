@@ -18,16 +18,16 @@
 namespace freesoundaudio
 {
 
-FreesoundSounds::FreesoundSounds(IFreesoundCategoriesPtr gpacks)
+FreesoundSounds::FreesoundSounds(IFreesoundCategoriesPtr gcategories)
 {
-  assert(gpacks != nullptr);
+  assert(gcategories != nullptr);
 
-  if (gpacks == nullptr) {
+  if (gcategories == nullptr) {
     LOGE("No categories to gather the sounds of");
     return;
   }
 
-  for (const auto& category : gpacks->all()) {
+  for (const auto& category : gcategories->all()) {
     // The name is materialized because IFreesoundCategory::name gives it by
     // value and the index answers with a reference into it's own storage.
     const auto categoryName = category->name();
@@ -93,9 +93,9 @@ IFreesoundSoundsPtr FreesoundSounds::create()
   return create(FreesoundCategories::create());
 }
 
-IFreesoundSoundsPtr FreesoundSounds::create(IFreesoundCategoriesPtr gpacks)
+IFreesoundSoundsPtr FreesoundSounds::create(IFreesoundCategoriesPtr gcategories)
 {
-  return std::make_shared<FreesoundSounds>(std::move(gpacks));
+  return std::make_shared<FreesoundSounds>(std::move(gcategories));
 }
 
 }  // namespace freesoundaudio

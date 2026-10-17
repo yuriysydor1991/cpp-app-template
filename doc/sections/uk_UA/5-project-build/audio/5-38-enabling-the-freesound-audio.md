@@ -20,7 +20,7 @@ Freesound публікує кожен матеріал під власною л�
 | --- | --- | --- |
 | `ENABLE_FREESOUND_AUDIO` | `ON` | вмикає усю інтеграцію |
 | `TEMPLATE_APP_FREESOUND_AUDIO_MANIFEST` | `misc/freesound-sounds.txt` | маніфест, що називає кожен звук разом з адресою його завантаження, його ліцензією та контрольною сумою SHA-256 файлу |
-| `TEMPLATE_APP_FREESOUND_AUDIO_DIR` | порожнє | вже наявна директорія з наборами, яку слід використати замість завантаження |
+| `TEMPLATE_APP_FREESOUND_AUDIO_DIR` | порожнє | вже наявна директорія з категоріями, яку слід використати замість завантаження |
 | `FREESOUND_AUDIO_EXTENSIONS` | `ogg;wav;mp3;flac` | розширення звукових файлів, які слід обрати з категорій |
 | `FREESOUND_AUDIO_QT_RESOURCE_PREFIX` | `/sounds` | префікс згенерованих маніфестів `.qrc` |
 | `FREESOUND_AUDIO_GRESOURCE_PREFIX` | `/ua/org/kytok/template/<binary>/sounds` | префікс згенерованих маніфестів `.gresource.xml` |
@@ -60,7 +60,7 @@ click->sourceUrl();  // "https://cdn.freesound.org/previews/623/623175_11545182-
 
 ### Завантаження звуків вручну
 
-Хост, етап налаштування якого не має власного доступу до мережі, директорія наборів, спільна для декількох дерев побудови, і бажання тримати завантажене поза деревом побудови — усе це обслуговує скрипт `misc/scripts/fetch-freesound-audio.sh`:
+Хост, етап налаштування якого не має власного доступу до мережі, директорія звуків, спільна для декількох дерев побудови, і бажання тримати завантажене поза деревом побудови — усе це обслуговує скрипт `misc/scripts/fetch-freesound-audio.sh`:
 
 ```
 misc/scripts/fetch-freesound-audio.sh ~/freesound-audio
@@ -72,24 +72,24 @@ cmake -S . -B build -DTEMPLATE_APP_FREESOUND_AUDIO_DIR=~/freesound-audio
 
 ### Доступ до звуків з коду C++
 
-Механізм вмикання генерує покажчик звуків з тих самих наборів, що використовуються, тому увесь набір доступний без сканування директорій під час роботи і без жодної назви звуку, написаної у вихідних кодах вручну:
+Механізм вмикання генерує покажчик звуків з тих самих категорій, що використовуються, тому увесь набір доступний без сканування директорій під час роботи і без жодної назви звуку, написаної у вихідних кодах вручну:
 
 ```cpp
 #include "src/freesoundaudio/sounds/FreesoundSounds.h"
 
 auto sounds = freesoundaudio::FreesoundSounds::create();
 
-// кожен звук кожного налаштованого набору
+// кожен звук кожної налаштованої категорії
 for (const auto& sound : sounds->all()) {
   sound->name();       // "click_001"
   sound->alias();      // "interface-sounds/Audio/click_001.ogg"
-  sound->filePath();   // абсолютний шлях всередині директорії наборів
+  sound->filePath();   // абсолютний шлях всередині директорії звуків
 }
 
-// звуки одного набору
+// звуки однієї категорії
 auto interfaceSounds = sounds->ofPack("interface-sounds");
 
-// окремий звук за його набором і відносним шляхом
+// окремий звук за його категорією і відносним шляхом
 auto click = sounds->find("interface-sounds", "Audio/click_001.ogg");
 
 // кожен звук, назва якого містить задану частину
@@ -102,7 +102,7 @@ auto clicks = sounds->search("click");
 
 ### Вбудовування звуків до виконуваного файлу
 
-Кожен набір залишається недоторканим всередині директорії наборів, і лише ті звуки, які програма дійсно запитує, потрапляють до її виконуваного файлу. Обрати їх можна за допомогою функції `template_project_freesound_audio_write_qrc` (Qt) або `template_project_freesound_audio_write_gresource` (Gtkmm), після чого записаний маніфест передається компілятору ресурсів того інструментарію, що використовується:
+Кожна категорія залишається недоторканою всередині директорії звуків, і лише ті звуки, які програма дійсно запитує, потрапляють до її виконуваного файлу. Обрати їх можна за допомогою функції `template_project_freesound_audio_write_qrc` (Qt) або `template_project_freesound_audio_write_gresource` (Gtkmm), після чого записаний маніфест передається компілятору ресурсів того інструментарію, що використовується:
 
 ```cmake
 template_project_freesound_audio_write_qrc(
@@ -113,9 +113,9 @@ template_project_freesound_audio_write_qrc(
 )
 ```
 
-Запит без `PACKS` і без `SOUNDS` обирає увесь доступний набір. Маніфести, що містять усе, генеруються вже зараз, у файлах `generated/freesoundaudio/freesound-audio-all.qrc` та `generated/freesoundaudio/freesound-audio-all.gresource.xml` директорії побудови.
+Запит без `CATEGORIES` і без `SOUNDS` обирає увесь доступний набір. Маніфести, що містять усе, генеруються вже зараз, у файлах `generated/freesoundaudio/freesound-audio-all.qrc` та `generated/freesoundaudio/freesound-audio-all.gresource.xml` директорії побудови.
 
-Всередині маніфестів звуки зберігають свої псевдоніми виду `<набір>/<шлях>`, тому класи `FreesoundQtResourcePath` та `FreesoundGResourcePath` розв'язують їх під час роботи:
+Всередині маніфестів звуки зберігають свої псевдоніми виду `<категорія>/<шлях>`, тому класи `FreesoundQtResourcePath` та `FreesoundGResourcePath` розв'язують їх під час роботи:
 
 ```cpp
 #include "src/freesoundaudio/resources/FreesoundQtResourcePath.h"
@@ -130,7 +130,7 @@ qtPath->uriOf(click);  // "qrc:/sounds/interface-sounds/Audio/click_001.ogg"
 
 ### Відтворення звуків
 
-Гілка постачає програвач, тому набори не лише доступні, а й чутні. Його побудовано на **звуковій підсистемі SDL2** та **декодерах SDL_mixer** і вмикається він змінною CMake `ENABLE_SDL2_AUDIO`, яка типово має значення `ON`:
+Гілка постачає програвач, тому звуки не лише доступні, а й чутні. Його побудовано на **звуковій підсистемі SDL2** та **декодерах SDL_mixer** і вмикається він змінною CMake `ENABLE_SDL2_AUDIO`, яка типово має значення `ON`:
 
 | Змінна | Типове значення | Призначення |
 | --- | --- | --- |
@@ -193,10 +193,10 @@ auto vorbis = drawn.pick(sounds, "ogg");  // лише те, що програв�
 
 ### Демонстрація
 
-Метод `Application::run` даної гілки поєднує усі три складові: повідомляє, скільки звуків містять налаштовані набори, витягує придатний для відтворення, друкує шлях до його файлу і обидва шляхи у системах ресурсів, та відтворює його:
+Метод `Application::run` даної гілки поєднує усі три складові: повідомляє, скільки звуків містять налаштовані категорії, витягує придатний для відтворення, друкує шлях до його файлу і обидва шляхи у системах ресурсів, та відтворює його:
 
 ```
-INF : The Freesound packs carry 5 sounds at /.../resources/freesound-audio
+INF : The Freesound categories carry 5 sounds at /.../resources/freesound-audio
 INF : The drawn feedback/confirmation.ogg sound file: /.../feedback/confirmation.ogg
 INF : ... published under CC0-1.0 at https://cdn.freesound.org/previews/581/581603_5487341-hq.ogg
 INF : ... embedded into the Qt resources: :/sounds/feedback/confirmation.ogg
@@ -204,4 +204,4 @@ INF : ... embedded into the GResource ones: /ua/org/kytok/template/CppAppTemplat
 INF : Playing the feedback/confirmation.ogg sound ...
 ```
 
-Якщо набори порожні або серед них немає звуку у форматі, який декодує програвач, демонстрація повідомляє про це і завершується коректно, а не з помилкою.
+Якщо категорії порожні або серед них немає звуку у форматі, який декодує програвач, демонстрація повідомляє про це і завершується коректно, а не з помилкою.

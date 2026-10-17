@@ -74,7 +74,7 @@ class CTEST_FreesoundSounds : public Test
   IFreesoundSoundsPtr sounds{FreesoundSounds::create()};
 };
 
-TEST_F(CTEST_FreesoundSounds, the_configured_packs_carry_sounds)
+TEST_F(CTEST_FreesoundSounds, the_configured_categories_carry_sounds)
 {
   EXPECT_GT(sounds->count(), 0u);
   EXPECT_EQ(sounds->all().size(), sounds->count());
@@ -91,7 +91,8 @@ TEST_F(CTEST_FreesoundSounds, every_sound_file_is_really_there)
   }
 }
 
-TEST_F(CTEST_FreesoundSounds, every_sound_is_reachable_by_it_s_pack_and_path)
+TEST_F(CTEST_FreesoundSounds,
+       every_sound_is_reachable_by_it_s_category_and_path)
 {
   for (const auto& sound : sounds->all()) {
     EXPECT_EQ(sounds->find(sound->category()->name(), sound->path()), sound);

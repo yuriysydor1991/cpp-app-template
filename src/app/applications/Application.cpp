@@ -27,7 +27,7 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
 
   assert(sounds != nullptr);
 
-  LOGI("The Freesound packs carry "
+  LOGI("The Freesound categories carry "
        << sounds->count() << " sounds at "
        << freesoundaudio::FreesoundRootDirectory::path());
 
@@ -39,7 +39,8 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
   const auto sound = controller->draw();
 
   if (sound == nullptr) {
-    LOGW("No sound to play: fill the packs in and reconfigure the project");
+    LOGW(
+        "No sound to play: fill the categories in and reconfigure the project");
     return 0;
   }
 

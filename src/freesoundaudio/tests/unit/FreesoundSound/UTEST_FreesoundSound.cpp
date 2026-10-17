@@ -25,7 +25,7 @@ class UTEST_FreesoundSound : public Test
   FreesoundSoundPtr sound{create_sound(expectedPath)};
 };
 
-TEST_F(UTEST_FreesoundSound, keeps_the_pack_and_the_path)
+TEST_F(UTEST_FreesoundSound, keeps_the_category_and_the_path)
 {
   EXPECT_EQ(sound->category()->name(), expectedCategory);
   EXPECT_EQ(sound->path(), expectedPath);
@@ -63,7 +63,7 @@ TEST_F(UTEST_FreesoundSound, a_file_with_no_extension_reports_none)
   EXPECT_TRUE(extensionless->extension().empty());
 }
 
-TEST_F(UTEST_FreesoundSound, the_alias_carries_the_pack_and_the_path)
+TEST_F(UTEST_FreesoundSound, the_alias_carries_the_category_and_the_path)
 {
   EXPECT_EQ(sound->alias(), expectedCategory + "/" + expectedPath);
 }
@@ -74,7 +74,7 @@ TEST_F(UTEST_FreesoundSound, the_file_path_sits_under_the_sounds_root)
             FreesoundRootDirectory::path() + "/" + sound->alias());
 }
 
-TEST_F(UTEST_FreesoundSound, a_sound_with_no_pack_gives_no_alias)
+TEST_F(UTEST_FreesoundSound, a_sound_with_no_category_gives_no_alias)
 {
   auto orphan = FreesoundSound::create(nullptr, expectedPath);
 

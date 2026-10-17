@@ -12,13 +12,13 @@ class UTEST_FreesoundCategories : public Test
   IFreesoundCategoriesPtr categories{FreesoundCategories::create()};
 };
 
-TEST_F(UTEST_FreesoundCategories, carries_every_pack_of_the_index)
+TEST_F(UTEST_FreesoundCategories, carries_every_category_of_the_index)
 {
   EXPECT_EQ(categories->count(), 2u);
   EXPECT_EQ(categories->all().size(), categories->count());
 }
 
-TEST_F(UTEST_FreesoundCategories, the_packs_stay_ordered_by_the_name)
+TEST_F(UTEST_FreesoundCategories, the_categories_stay_ordered_by_the_name)
 {
   ASSERT_EQ(categories->all().size(), 2u);
 
@@ -26,7 +26,7 @@ TEST_F(UTEST_FreesoundCategories, the_packs_stay_ordered_by_the_name)
   EXPECT_EQ(categories->all().back()->name(), "interface-sounds");
 }
 
-TEST_F(UTEST_FreesoundCategories, finds_a_pack_by_it_s_name)
+TEST_F(UTEST_FreesoundCategories, finds_a_category_by_it_s_name)
 {
   auto found = categories->find("interface-sounds");
 
@@ -34,7 +34,7 @@ TEST_F(UTEST_FreesoundCategories, finds_a_pack_by_it_s_name)
   EXPECT_EQ(found->name(), "interface-sounds");
 }
 
-TEST_F(UTEST_FreesoundCategories, gives_no_pack_of_an_unknown_name)
+TEST_F(UTEST_FreesoundCategories, gives_no_category_of_an_unknown_name)
 {
   EXPECT_EQ(categories->find("no-such-category"), nullptr);
 }

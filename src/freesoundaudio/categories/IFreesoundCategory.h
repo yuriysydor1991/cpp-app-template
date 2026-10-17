@@ -1,5 +1,5 @@
-#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_IFREESOUNDPACK_CLASS_H
-#define YOUR_CPP_APP_TEMPLATE_PROJECT_IFREESOUNDPACK_CLASS_H
+#ifndef YOUR_CPP_APP_TEMPLATE_PROJECT_IFREESOUNDCATEGORY_CLASS_H
+#define YOUR_CPP_APP_TEMPLATE_PROJECT_IFREESOUNDCATEGORY_CLASS_H
 
 #include <memory>
 #include <string>
@@ -14,7 +14,7 @@ namespace freesoundaudio
  * @brief A single Freesound sound category.
  *
  * Freesound publishes it's sound effects as separate CC0 categories, each one
- * downloaded as an own archive and unpacked into an own subdirectory of the
+ * downloaded into an own subdirectory of the
  * categories root directory. Every descendant answers for one of those
  * categories, so the calling code names a category by an instance instead of an
  * enumeration value and gains a new category by a new descendant alone.
@@ -39,4 +39,4 @@ using IFreesoundCategoryPtr = IFreesoundCategory::IFreesoundCategoryPtr;
 
 }  // namespace freesoundaudio
 
-#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_IFREESOUNDPACK_CLASS_H
+#endif  // YOUR_CPP_APP_TEMPLATE_PROJECT_IFREESOUNDCATEGORY_CLASS_H

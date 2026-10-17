@@ -24,9 +24,9 @@ class FreesoundSounds : public IFreesoundSounds
   /**
    * @brief Constructs the set out of the given categories.
    *
-   * @param gpacks The categories to gather the sounds of.
+   * @param gcategories The categories to gather the sounds of.
    */
-  explicit FreesoundSounds(IFreesoundCategoriesPtr gpacks);
+  explicit FreesoundSounds(IFreesoundCategoriesPtr gcategories);
 
   const SoundsList& all() const override;
 
@@ -41,7 +41,7 @@ class FreesoundSounds : public IFreesoundSounds
 
   static IFreesoundSoundsPtr create();
 
-  static IFreesoundSoundsPtr create(IFreesoundCategoriesPtr gpacks);
+  static IFreesoundSoundsPtr create(IFreesoundCategoriesPtr gcategories);
 
  private:
   SoundsList msounds;

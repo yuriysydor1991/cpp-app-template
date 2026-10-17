@@ -9,7 +9,7 @@ namespace freesoundaudio
 {
 
 /**
- * @brief The sounds of the packs, ready to be drawn and heard.
+ * @brief The sounds of the categories, ready to be drawn and heard.
  *
  * Keeps the backend of the build together with the set it plays from, so the
  * calling code asks for a sound and plays it without knowing which audio
@@ -27,7 +27,7 @@ class IFreesoundSoundsController
   /**
    * @brief Tells if the project carries a backend able to play a sound.
    *
-   * @return Returns false when the packs are reachable but nothing can sound
+   * @return Returns false when the sounds are reachable but nothing can sound
    * them.
    */
   virtual bool playable() const = 0;
@@ -36,8 +36,8 @@ class IFreesoundSoundsController
    * @brief Draws a sound to play out of the whole available set.
    *
    * The sounds the backend in use really decodes come first, so the draw is
-   * playable whenever the packs carry such a sound at all. It falls back to
-   * any sound of the set otherwise, which keeps the drawn one worth showing
+   * playable whenever the categories carry such a sound at all. It falls back
+   * to any sound of the set otherwise, which keeps the drawn one worth showing
    * even where nothing can play it.
    *
    * @return Returns the drawn sound or a nullptr one for an empty set.

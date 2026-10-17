@@ -1,7 +1,9 @@
 #include "src/qt6/gl-area/GLTriangleRenderer.h"
 
+#include <QOpenGLContext>
 #include <QOpenGLFramebufferObject>
 #include <QOpenGLFramebufferObjectFormat>
+#include <QSurfaceFormat>
 
 #include "src/log/log.h"
 
@@ -30,6 +32,8 @@ constexpr int COLOUR_OFFSET =
 constexpr const char* POSITION_ATTRIBUTE = "vertexPosition";
 constexpr const char* COLOUR_ATTRIBUTE = "vertexColour";
 
+// The GLSL 1.10 / GLSL ES 1.00 sources of the compatibility and the ES
+// contexts, which Qt prefixes with the matching precision defines.
 constexpr const char* VERTEX_SHADER = R"GLSL(
 attribute highp vec2 vertexPosition;
 attribute lowp vec3 vertexColour;
@@ -51,6 +55,41 @@ void main()
   gl_FragColor = vec4(cornerColour, 1.0);
 }
 )GLSL";
+
+// The GLSL 1.50 sources of the core profile contexts, which refuse the
+// attribute / varying / gl_FragColor forms above.
+constexpr const char* CORE_VERTEX_SHADER = R"GLSL(#version 150 core
+in vec2 vertexPosition;
+in vec3 vertexColour;
+
+out vec3 cornerColour;
+
+void main()
+{
+  cornerColour = vertexColour;
+  gl_Position = vec4(vertexPosition, 0.0, 1.0);
+}
+)GLSL";
+
+constexpr const char* CORE_FRAGMENT_SHADER = R"GLSL(#version 150 core
+in vec3 cornerColour;
+
+out vec4 fragmentColour;
+
+void main()
+{
+  fragmentColour = vec4(cornerColour, 1.0);
+}
+)GLSL";
+
+/** @brief Tells whether the current context is a core profile one. */
+bool core_profile_context()
+{
+  const QOpenGLContext* const context = QOpenGLContext::currentContext();
+
+  return context != nullptr && !context->isOpenGLES() &&
+         context->format().profile() == QSurfaceFormat::CoreProfile;
+}
 
 }  // namespace
 
@@ -90,9 +129,13 @@ bool GLTriangleRenderer::initialize()
 
   program = std::make_unique<QOpenGLShaderProgram>();
 
-  if (!program->addShaderFromSourceCode(QOpenGLShader::Vertex, VERTEX_SHADER) ||
-      !program->addShaderFromSourceCode(QOpenGLShader::Fragment,
-                                        FRAGMENT_SHADER) ||
+  const bool core = core_profile_context();
+
+  if (!program->addShaderFromSourceCode(
+          QOpenGLShader::Vertex, core ? CORE_VERTEX_SHADER : VERTEX_SHADER) ||
+      !program->addShaderFromSourceCode(
+          QOpenGLShader::Fragment,
+          core ? CORE_FRAGMENT_SHADER : FRAGMENT_SHADER) ||
       !program->link()) {
     LOGE("Fail to build the triangle shader program: "
          << program->log().toStdString());
@@ -116,7 +159,8 @@ bool GLTriangleRenderer::initialize()
   vertices.allocate(TRIANGLE, static_cast<int>(sizeof(TRIANGLE)));
   vertices.release();
 
-  LOGI("The QQuickFramebufferObject OpenGL renderer is ready");
+  LOGI("The QQuickFramebufferObject OpenGL renderer is ready ("
+       << (core ? "core profile" : "compatibility or ES") << " shaders)");
 
   return true;
 }

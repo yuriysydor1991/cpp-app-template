@@ -11,14 +11,20 @@ if (NOT ENABLE_OPENGAMEART_AUDIO)
   )
 endif()
 
+# The sources come out of the OPENGAMEART_AUDIO_SUBSYSTEM_SOURCES list of
+# src/CMakeLists.txt, the very one the app tests build, so no source is listed
+# twice. The generated index carries the sound paths the project has been
+# configured with, so the whole set is reachable from the code with no run time
+# directory scanning: the enabler writes it and points the
+# OPENGAMEART_AUDIO_GENERATED_SOUNDS_SOURCE variable at it.
 add_library(
-  TemplateProjectOpenGameArtSoundObj OBJECT
-  OpenGameArtSound.cpp
-  OpenGameArtRootDirectory.cpp
+  TemplateProjectOpenGameArtAudioObj OBJECT
+  ${OPENGAMEART_AUDIO_SUBSYSTEM_SOURCES}
+  ${OPENGAMEART_AUDIO_GENERATED_SOUNDS_SOURCE}
 )
 
 target_include_directories(
-  TemplateProjectOpenGameArtSoundObj
+  TemplateProjectOpenGameArtAudioObj
   PRIVATE
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
@@ -26,12 +32,8 @@ target_include_directories(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  TemplateProjectOpenGameArtSoundObj
+  TemplateProjectOpenGameArtAudioObj
 )
 
-add_subdirectory(packs)
-add_subdirectory(sounds)
-add_subdirectory(resources)
 add_subdirectory(player)
-add_subdirectory(controller)
 add_subdirectory(tests)

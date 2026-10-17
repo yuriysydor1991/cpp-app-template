@@ -11,7 +11,7 @@ if get_option('ENABLE_UNIT_TESTS') or get_option('ENABLE_COMPONENT_TESTS')
   gtest_deps = [gtest_dep, gmock_dep, gtest_main_dep] + template_project_sanitizers_deps
 endif
 
-if get_option('ENABLE_UNIT_TESTS')
+if get_option('ENABLE_UNIT_TESTS') or get_option('ENABLE_COMPONENT_TESTS')
   subdir('tests/mocks')
 endif
 

@@ -24,7 +24,7 @@ CTEST_app = executable(
   include_directories: [
     MOCK_log,
     APP_MOCK_LibraryFacade,
-    APP_MOCK_LibMain,
+    MOCK_LibMain,
     APP_MOCK_ApplicationContext2LibraryContext,
     configuration_inc,
     lib_public_includes,

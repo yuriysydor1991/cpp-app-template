@@ -12,7 +12,7 @@ UTEST_Application = executable(
     MOCK_ApplicationContext,
     APP_MOCK_ApplicationContext2LibraryContext,
     APP_MOCK_LibraryFacade,
-    APP_MOCK_LibMain,
+    MOCK_LibMain,
     MOCK_LibraryContext,
     MOCK_log,
     configuration_inc,

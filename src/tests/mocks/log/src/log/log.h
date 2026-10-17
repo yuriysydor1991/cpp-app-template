@@ -13,6 +13,8 @@ class logMock
                                            const bool printMessages)>
       LOG_INIT;
   inline static testing::MockFunction<void()> LOG_INIT_DEFAULTS;
+  inline static testing::MockFunction<void(const std::string& filepath)>
+      LOG_INIT_PATH;
   inline static testing::MockFunction<void()> LOG_INIT_DEFAULTS_IF_OWN;
   inline static testing::MockFunction<void(const logger::ILoggerPtr&)>
       LOG_INIT_REAL_LOGGER;
@@ -27,6 +29,8 @@ class logMock
 #define LOG_INIT(filepath, logLvl, printMessages) \
   logMock::LOG_INIT_DEFAULTS.AsStdFunction()(filepath, logLvl, printMessages);
 #define LOG_INIT_DEFAULTS() logMock::LOG_INIT_DEFAULTS.AsStdFunction()();
+#define LOG_INIT_PATH(filepath) \
+  logMock::LOG_INIT_PATH.AsStdFunction()(filepath);
 #define LOG_INIT_DEFAULTS_IF_OWN() \
   logMock::LOG_INIT_DEFAULTS_IF_OWN.AsStdFunction()();
 #define LOG_INIT_REAL_LOGGER(realLogger) \

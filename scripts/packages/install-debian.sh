@@ -16,6 +16,7 @@ PACKAGES=(
     libgmock-dev
     libgtest-dev
     libplplot-dev
+    plplot-driver-qt
     libssl-dev
     libstdc++6
 )

@@ -38,7 +38,7 @@ target_link_libraries(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  TemplateProjectChatGPTControllerObj
+  PRIVATE TemplateProjectChatGPTControllerObj
   nlohmann_json::nlohmann_json
 )
 

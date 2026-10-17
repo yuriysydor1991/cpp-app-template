@@ -33,7 +33,7 @@ target_include_directories(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  TemplateProjectFontAwesomeObj
+  PRIVATE TemplateProjectFontAwesomeObj
 )
 
 add_subdirectory(tests)

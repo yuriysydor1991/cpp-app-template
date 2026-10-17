@@ -26,15 +26,15 @@ bool SQLiteController::connect(std::shared_ptr<app::ApplicationContext> nctx)
   qmaker = create_query_maker();
 
   const std::filesystem::path dbpath{nctx->get_db_dbname()};
-  std::error_code ec;
+  std::error_code dirError;
 
   if (dbpath.has_parent_path()) {
-    std::filesystem::create_directories(dbpath.parent_path(), ec);
+    std::filesystem::create_directories(dbpath.parent_path(), dirError);
   }
 
-  if (ec) {
-    LOGE("Failure to create the database directory " << dbpath.parent_path()
-                                                     << ": " << ec.message());
+  if (dirError) {
+    LOGE("Failure to create the database directory "
+         << dbpath.parent_path() << ": " << dirError.message());
     return false;
   }
 

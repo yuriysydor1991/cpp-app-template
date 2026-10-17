@@ -3,7 +3,7 @@
 In order to be able to generate the `deb` package file configure project to support the `cpack` command feature with a `ENABLE_DEB` variable enabled:
 
 ```
-# inside the project root directory
+# inside the project root directory 
 
 cmake -B build -S . -DENABLE_DEB=ON
 ```
@@ -28,4 +28,4 @@ The package file should be generated inside the project build root directory. Fo
 
 The package name ends with the destination CPU architecture, the one of the package `Architecture` field as well. The `TEMPLATE_PROJECT_DEB_PACKAGE_ARCHITECTURE` cache variable holds it (default: the `dpkg --print-architecture` output, e.g. `amd64` or `arm64`), so override it when cross compiling the project or packaging it on a host without the `dpkg`.
 
-In order to examine details of the `deb` package configuration visit the `cmake/template-project-deb-enabler.cmake` file.
+In order to examine details of the `deb` package configuration visit the `cmake/enablers/packagers/template-project-deb-enabler.cmake` file.

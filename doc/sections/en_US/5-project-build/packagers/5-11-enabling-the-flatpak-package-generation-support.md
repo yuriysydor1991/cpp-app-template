@@ -3,7 +3,7 @@
 In order to enable the flatpak generation of the redistribution package on the template project configure it with enabled option `ENABLE_FLATPAK` (GNU/Linux and alike):
 
 ```
-# inside the project root directory
+# inside the project root directory 
 
 cmake -B build -S . -DENABLE_FLATPAK=ON
 ```
@@ -13,12 +13,12 @@ Which in order will enable the `flatpak` target.
 And finally to generate the flatpak package run the `flatpak` target for the build:
 
 ```
-# inside the project root directory
+# inside the project root directory 
 
 cmake --build build --target flatpak
 ```
 
-In case of the success target build, there will be created the flatpak file under the root build directory named, for example, the `CppAppTemplate-0.9.0-x86_64.flatpak`. In order to examine and/or change the flatpak generation target parameters visit the `cmake/template-project-flatpak-target.cmake` or `misc/packagers/flatpak/flatpak.conf.json.in ` files.
+In case of the success target build, there will be created the flatpak file under the root build directory named, for example, the `CppAppTemplate-0.9.0-x86_64.flatpak`. In order to examine and/or change the flatpak generation target parameters visit the `cmake/enablers/packagers/template-project-flatpak-target.cmake` or `misc/packagers/flatpak/flatpak.conf.json.in ` files.
 
 Refer to the flatpak documentation on how to install and run applications distributed from a flatpaks files. For the current template project's defaults the install and run command may look like this:
 

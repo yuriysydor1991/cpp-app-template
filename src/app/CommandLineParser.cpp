@@ -53,7 +53,7 @@ bool CommandLineParser::check_4_data(
   const bool requiresData = requires_data(param);
 
   if (requiresData && !hasNext) {
-    ctx->set_print_version_and_exit(true);
+    ctx->set_print_help_and_exit(true);
     ctx->push_error("Parameter " + param + " requires the data next to it.");
     LOGE("Parameter " << param << " requires the data next to it.");
     return false;

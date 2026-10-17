@@ -18,7 +18,7 @@ namespace beasthttp::pages
 class PageBuilder : public IPageBuilder
 {
  public:
-  virtual ~PageBuilder() = default;
+  ~PageBuilder() override = default;
   PageBuilder() = default;
 
   /**

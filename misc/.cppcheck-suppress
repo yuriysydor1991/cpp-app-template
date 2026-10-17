@@ -2,4 +2,3 @@ nullPointer:assert.cpp
 missingIncludeSystem
 unusedStructMember
 nullPointerRedundantCheck
-knownConditionTrueFalse

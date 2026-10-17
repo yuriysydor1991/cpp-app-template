@@ -20,7 +20,7 @@ namespace beasthttp::rhandlers
 class DefaultHandler : public IRequestHandler
 {
  public:
-  virtual ~DefaultHandler() = default;
+  ~DefaultHandler() override = default;
   DefaultHandler() = default;
 
   /**

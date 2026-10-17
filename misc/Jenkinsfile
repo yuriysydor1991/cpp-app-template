@@ -191,7 +191,7 @@ pipeline {
         }
         stage('CTEST_beasthttp') { 
           steps { 
-            sh 'cd $BUILDDIR && ctest -R "CTEST_beasthttp\\." --output-on-failure --output-junit $BDJUNITOUT/CTEST_beasthttp.junit.xml'
+            sh 'cd $BUILDDIR && ctest -R "CTEST_beasthttp\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_beasthttp.junit.xml'
           }
         }
       }

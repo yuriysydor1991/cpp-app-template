@@ -28,5 +28,5 @@ cmake --build . --target flatpak
 flatpak install --user CppAppTemplate-0.9.0-x86_64.flatpak
 
 # для запуску встановленої програми
-flatpak run ua.org.kytok.template.gtkmm3.0.CppAppTemplate
+flatpak run ua.org.kytok.template.gtkmm3.CppAppTemplate
 ```

@@ -58,12 +58,12 @@ jobs:
       - name: cppcheck
         if: ${{ inputs.run_cppcheck }}
         run: cmake --build "$BUILDDIR" -j"$(nproc)" --target cppcheck
-      - name: Unit Tests
+      # main has no unit tests: see the other branches of the cpp-app-template
+      # for the "Unit Tests" step running them with ctest -R "UTEST_".
+      - name: Component Tests
         run: |
           mkdir -p "$BUILDDIR/$BDJUNITOUT"
-          cd "$BUILDDIR" && ctest -R "UTEST_" --output-on-failure --output-junit "$BDJUNITOUT/UTEST.junit.xml"
-      - name: Component Tests
-        run: cd "$BUILDDIR" && ctest -R "CTEST_" --output-on-failure --output-junit "$BDJUNITOUT/CTEST.junit.xml"
+          cd "$BUILDDIR" && ctest -R "CTEST_" --no-tests=error --output-on-failure --output-junit "$BDJUNITOUT/CTEST.junit.xml"
       - name: Upload JUnit test results
         if: always()
         uses: actions/upload-artifact@v7

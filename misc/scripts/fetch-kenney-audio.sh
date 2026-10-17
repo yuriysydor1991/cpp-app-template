@@ -11,8 +11,13 @@
 # packs directory and for keeping the downloads out of the build tree.
 set -eu
 
-TARGET_DIR="${1:-./resources/kenney-audio}"
-MANIFEST="${KENNEY_AUDIO_MANIFEST:-misc/kenney-packs.txt}"
+if [ "$#" -ne 1 ]; then
+  echo "Usage: $0 <packs directory outside of the source tree>" >&2
+  exit 1
+fi
+
+TARGET_DIR="$1"
+MANIFEST="${KENNEY_AUDIO_MANIFEST:-$(dirname "$0")/../kenney-packs.txt}"
 
 if [ ! -f "$MANIFEST" ]; then
   echo "No $MANIFEST packs manifest to read the packs of" >&2

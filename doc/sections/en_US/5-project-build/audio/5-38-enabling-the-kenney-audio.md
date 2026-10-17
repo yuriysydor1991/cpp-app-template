@@ -42,7 +42,7 @@ misc/scripts/fetch-kenney-audio.sh ~/kenney-audio
 cmake -S . -B build -DTEMPLATE_APP_KENNEY_AUDIO_DIR=~/kenney-audio
 ```
 
-The script takes the target directory as it's single argument, reads the packs out of the very same manifest (or out of the one the `KENNEY_AUDIO_MANIFEST` environment variable names), downloads through `curl` or `wget` (whichever is available), refuses an archive of any other SHA-256 checksum and leaves an already unpacked pack alone.
+The script takes the target directory as it's single and mandatory argument (keep it outside of the source tree, so the packs never get committed), reads the packs out of the very same manifest (or out of the one the `KENNEY_AUDIO_MANIFEST` environment variable names), downloads through `curl` or `wget` (whichever is available), refuses an archive of any other SHA-256 checksum and leaves an already unpacked pack alone.
 
 ### Reaching the sounds from the C++ code
 

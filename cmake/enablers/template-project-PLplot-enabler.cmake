@@ -11,7 +11,10 @@ if (NOT ENABLE_PLPLOT)
 endif()
 
 set(TEMPLATE_APP_PLPLOT_GIT "https://git.code.sf.net/p/plplot/plplot" CACHE STRING "The PLplot library git source repository")
-set(TEMPLATE_APP_PLPLOT_GIT_TAG "master" CACHE STRING "The PLplot project git repository tag of interest")
+# The CMake package of the last PLplot release (5.15.0 of 2019) exports no
+# include directory to the standalone build below, so a reviewed master commit
+# (of 2026-05-16) is pinned instead of the moving master branch.
+set(TEMPLATE_APP_PLPLOT_GIT_TAG "df0c00e11f2c289bb186e20b44651aa0184beb8b" CACHE STRING "The PLplot project git repository tag or commit of interest")
 
 # The PLplot modules resolve their own sources through the ${CMAKE_SOURCE_DIR}
 # so the library is built standalone instead of being added as a subdirectory.

@@ -21,7 +21,7 @@
         {
           "type": "git",
           "url": "https://git.code.sf.net/p/plplot/plplot",
-          "tag": "master"
+          "commit": "df0c00e11f2c289bb186e20b44651aa0184beb8b"
         }
       ]
     },

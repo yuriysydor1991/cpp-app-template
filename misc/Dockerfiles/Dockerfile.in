@@ -13,6 +13,7 @@ ARG PLPLOTB=$srcD/plplot-build-docker-singlerun
 # PLplot is cloned, built and erased inside a single layer, so neither the
 # sources nor the build tree reach the image.
 RUN git clone https://git.code.sf.net/p/plplot/plplot plplot && \
+  git -C plplot checkout df0c00e11f2c289bb186e20b44651aa0184beb8b && \
   cmake -B $PLPLOTB -S plplot -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$prefixD -DENABLE_fortran=OFF && \
   cmake --build $PLPLOTB -j$(nproc) && \
   cmake --install $PLPLOTB --prefix $prefixD && \

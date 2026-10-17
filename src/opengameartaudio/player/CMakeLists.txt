@@ -18,7 +18,7 @@ if (NOT ENABLE_SDL2_AUDIO)
 
   target_link_libraries(
     ${PROJECT_BINARY_NAME}
-    TemplateProjectOpenGameArtSoundPlayerObj
+    PRIVATE TemplateProjectOpenGameArtSoundPlayerObj
   )
 
   return()
@@ -45,7 +45,7 @@ target_link_libraries(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  TemplateProjectOpenGameArtSoundPlayerObj
+  PRIVATE TemplateProjectOpenGameArtSoundPlayerObj
   ${TEMPLATE_APP_SDL2_MIXER_TARGET}
   ${TEMPLATE_APP_SDL2_AUDIO_TARGET}
 )

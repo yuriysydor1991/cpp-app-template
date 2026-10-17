@@ -32,7 +32,7 @@ target_include_directories(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  TemplateProjectOpenGameArtAudioObj
+  PRIVATE TemplateProjectOpenGameArtAudioObj
 )
 
 add_subdirectory(player)

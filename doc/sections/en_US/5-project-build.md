@@ -35,5 +35,5 @@
     1. [Enabling the nlohmann JSON library](/doc/sections/en_US/5-18-enabling-the-nlohmann-json-library.md)
     1. [Enabling the libxml2](/doc/sections/en_US/5-20-enabling-libxml2.md)
     1. [Enabling the OpenCV](/doc/sections/en_US/5-21-enabling-OpenCV.md)
-    1. [The binary hardening options](/doc/sections/en_US/5-31-the-binary-hardening-options.md)
+1. [The binary hardening options](/doc/sections/en_US/5-31-the-binary-hardening-options.md)
 1. [Project maintainer options](/doc/sections/en_US/5-28-project-maintainer-options.md)

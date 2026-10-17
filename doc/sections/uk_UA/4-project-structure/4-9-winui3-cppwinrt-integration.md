@@ -8,6 +8,7 @@
 - `src/winui3/helpers/WindowConfig.{h,cpp}` - незалежний від WinUI тримач заголовка / текстів / розмірів вікна, тестується ізольовано.
 - `src/winui3/app/WinUI3App.{h,cpp}` - нативний об'єкт програми C++/WinRT (він також надає метадані типів XAML елементів керування WinUI 3 через `IXamlMetadataProvider`, що інакше робить код, згенерований компілятором XAML) і справжнє визначення `run_winui_application()`. **Лише Windows.**
 - `src/winui3/app/WinUI3AppStub.cpp` - визначення `run_winui_application()` для не-Windows, щоб виконуваний файл усе одно збирався, лінкувався і запускався (друкуючи повідомлення) поза Windows. Справжнє вікно WinUI 3 відкривається лише на Windows.
+- `src/winui3/gl-area/` - полотно GPU-рендерингу Direct3D головного вікна, див. розділ [Полотно GPU-рендерингу Direct3D для WinUI 3](/doc/sections/uk_UA/4-project-structure/4-9-1-winui3-direct3d-gpu-canvas.md). **Лише Windows.**
 - `src/winui3/main-window/WinUI3MainWindow.{h,cpp}` - вікно WinUI 3, побудоване програмно (без XAML-файлу) з `WindowConfig`. **Лише Windows.**
 
 `Application::run()` (`src/app/applications/Application.cpp`) створює `WinUI3Controller` і делегує йому, так само як інші GUI-гілки делегують своєму контролеру.

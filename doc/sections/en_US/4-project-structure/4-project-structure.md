@@ -12,3 +12,4 @@
     1. [Google Test](/doc/sections/en_US/4-project-structure/4-4-1-google-test.md)
 1. [Extensions](/doc/sections/en_US/4-project-structure/4-5-extensions.md)
 1. [WinUI 3 + C++/WinRT integration](/doc/sections/en_US/4-project-structure/4-9-winui3-cppwinrt-integration.md)
+    1. [WinUI 3 Direct3D GPU canvas](/doc/sections/en_US/4-project-structure/4-9-1-winui3-direct3d-gpu-canvas.md)

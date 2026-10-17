@@ -2,6 +2,7 @@
 
 #include <array>
 #include <cassert>
+#include <cstdlib>
 #include <filesystem>
 #include <memory>
 #include <opencv2/imgcodecs.hpp>
@@ -176,23 +177,29 @@ bool OpenCVController::face_recognition_example(appctx ctx)
 
 std::string OpenCVController::default_cascade_path()
 {
-  static const std::array<const char*, 6> kCandidates{{
-      "/usr/share/opencv4/haarcascades/haarcascade_frontalface_default.xml",
-      "/usr/share/opencv/haarcascades/haarcascade_frontalface_default.xml",
-      "/usr/local/share/opencv4/haarcascades/"
-      "haarcascade_frontalface_default.xml",
-      "/usr/local/share/opencv/haarcascades/"
-      "haarcascade_frontalface_default.xml",
-      "/usr/local/Cellar/opencv/HEAD/share/opencv4/haarcascades/"
-      "haarcascade_frontalface_default.xml",
-      "/opt/homebrew/share/opencv4/haarcascades/"
-      "haarcascade_frontalface_default.xml",
+  static const std::array<const char*, 2> kDataDirs{{
+      "share/opencv4/haarcascades/haarcascade_frontalface_default.xml",
+      "share/opencv/haarcascades/haarcascade_frontalface_default.xml",
   }};
 
-  for (const auto* candidate : kCandidates) {
-    std::error_code ec;
-    if (std::filesystem::exists(candidate, ec) && !ec) {
-      return candidate;
+  std::vector<std::filesystem::path> prefixes;
+
+  // The snap packages stage the opencv-data files under their own root.
+  if (const char* snap = std::getenv("SNAP"); snap != nullptr) {
+    prefixes.emplace_back(std::filesystem::path{snap} / "usr");
+  }
+
+  prefixes.insert(prefixes.end(),
+                  {"/app", "/usr", "/usr/local", "/opt/homebrew"});
+
+  for (const auto& prefix : prefixes) {
+    for (const auto* dataPath : kDataDirs) {
+      const auto candidate = prefix / dataPath;
+
+      std::error_code ec;
+      if (std::filesystem::exists(candidate, ec) && !ec) {
+        return candidate.string();
+      }
     }
   }
 

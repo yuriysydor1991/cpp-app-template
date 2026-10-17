@@ -127,7 +127,10 @@ class OpenCVController
 
   /**
    * @brief Returns the first cascade path candidate found on the
-   * filesystem out of the well-known system-wide install locations.
+   * filesystem out of the well-known install locations: the snap one
+   * (under the $SNAP directory), the flatpak one (/app), the system wide
+   * ones (/usr, /usr/local) and the Apple Silicon Homebrew one
+   * (/opt/homebrew; the Intel one is /usr/local).
    *
    * Empty string is returned if no candidate exists.
    */

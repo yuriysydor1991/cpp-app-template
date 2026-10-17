@@ -171,3 +171,21 @@ TEST_F(CTEST_opencv, an_unreadable_image_fails_the_example)
 
   EXPECT_FALSE(controller->face_recognition_example(ctx));
 }
+
+TEST_F(CTEST_opencv, the_snap_cascade_goes_first)
+{
+  const std::filesystem::path snap{fixture_path("opencv-snap-fixture")};
+  const auto cascade = snap / "usr/share/opencv4/haarcascades" /
+                       "haarcascade_frontalface_default.xml";
+
+  std::filesystem::create_directories(cascade.parent_path());
+  std::ofstream{cascade} << "<opencv_storage></opencv_storage>";
+
+  setenv("SNAP", snap.c_str(), 1);
+
+  const auto found = OpenCVController::default_cascade_path();
+
+  unsetenv("SNAP");
+
+  EXPECT_EQ(found, cascade.string());
+}

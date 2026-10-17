@@ -11,7 +11,7 @@ if (NOT ENABLE_LIBTIFF)
 endif()
 
 set(TEMPLATE_APP_LIBTIFF_GIT "https://gitlab.com/libtiff/libtiff.git" CACHE STRING "The libtiff library git source repository")
-set(TEMPLATE_APP_LIBTIFF_GIT_TAG "master" CACHE STRING "The libtiff project git repository tag/branch of interest")
+set(TEMPLATE_APP_LIBTIFF_GIT_TAG "v4.7.2" CACHE STRING "The libtiff project git repository release tag of interest")
 
 template_project_default_3rdparty_enabler(
   NAME TIFF

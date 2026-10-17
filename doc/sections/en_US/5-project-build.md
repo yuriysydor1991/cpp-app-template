@@ -19,7 +19,7 @@
     1. [Enabling vagrind's callgrind profiler analysis](/doc/sections/en_US/5-16-enabling-valgrinds-callgrind-profiler-analysis.md)
 1. Containers & CI
     1. [Enabling the Docker container build and run](/doc/sections/en_US/5-12-enabling-the-docker-container-build-and-run.md)
-    1. [Enabling Jenkins pipeline inside Docker container](/doc/sections/en_US/5-17-enabling-Jenkins-pipeline-inside-Docker-container.md)
+    1. [Running the Jenkins pipeline](/doc/sections/en_US/5-17-enabling-Jenkins-pipeline-inside-Docker-container.md)
 1. Packagers
     1. [Enabling the flatpak package generation support](/doc/sections/en_US/5-11-enabling-the-flatpak-package-generation-support.md)
     1. [Enabling the snap package generation support](/doc/sections/en_US/5-22-enabling-snap-package-generation.md)

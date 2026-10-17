@@ -8,18 +8,20 @@ set(
       -t ${DOCKER_SINGLE_RUN_NAME} .
 )
 
+# The X server access granted to the container is revoked on every exit of the
+# run, the failed and the interrupted ones included.
 set(
   DOCKER_SINGLE_RUN_CMD
-    xhost +local:docker &&
-    ${DOCKER_EXEC} run --rm 
-    --env DISPLAY=$$DISPLAY
-    --env XDG_RUNTIME_DIR=$$XDG_RUNTIME_DIR
-    --volume /tmp/.X11-unix:/tmp/.X11-unix
-    --volume $$XDG_RUNTIME_DIR:$$XDG_RUNTIME_DIR
-    --device /dev/dri
-    --group-add video
-    ${DOCKER_SINGLE_RUN_NAME} &&
-    xhost -local:docker
+    sh -c "trap 'xhost -local:docker' EXIT && trap 'exit 130' INT TERM && \
+      xhost +local:docker && \
+      ${DOCKER_EXEC} run --rm \
+      --env DISPLAY=$DISPLAY \
+      --env XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR \
+      --volume /tmp/.X11-unix:/tmp/.X11-unix \
+      --volume $XDG_RUNTIME_DIR:$XDG_RUNTIME_DIR \
+      --device /dev/dri \
+      --group-add video \
+      ${DOCKER_SINGLE_RUN_NAME}"
 )
 
 message(STATUS "docker single build command: ${DOCKER_SINGLE_BUILD_CMD}")
@@ -36,4 +38,5 @@ add_custom_target(
   COMMAND ${DOCKER_SINGLE_RUN_CMD}
   DEPENDS docker-single-build
   COMMENT "Running the docker single run instance"
+  VERBATIM
 )

@@ -36,7 +36,7 @@ class CurrentDateServerObject : public IDBusServerObject
   /// @brief The current date property name.
   inline static const sdbus::PropertyName currentDateProperty{"CurrentDate"};
 
-  virtual ~CurrentDateServerObject() = default;
+  ~CurrentDateServerObject() override = default;
   CurrentDateServerObject() = default;
 
   const sdbus::ServiceName& service_name() const override;

@@ -36,7 +36,10 @@ set(CPACK_DEBIAN_PACKAGE_MAINTAINER "${PROJECT_MAINTAINER} ${PROJECT_MAINTAINER_
 set(CPACK_DEB_COMPONENT_INSTALL ON)
 set(CPACK_PACKAGE_DESCRIPTION ${CMAKE_PROJECT_DESCRIPTION})
 set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE ${TEMPLATE_PROJECT_DEB_PACKAGE_ARCHITECTURE})
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "libboost-all-dev")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "")
+# The Beast and the Asio are header only, so the executable needs no Boost
+# package at all and the dpkg-shlibdeps tool finds the libraries it links.
+set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
 
 # the CPACK_SYSTEM_NAME of the default file name names the system alone, so the
 # destination CPU takes its place

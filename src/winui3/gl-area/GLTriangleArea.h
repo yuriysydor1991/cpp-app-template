@@ -17,10 +17,11 @@ class RenderState;
  * WinUI 3 has no native OpenGL; its surface for custom GPU rendering is the
  * Microsoft.UI.Xaml.Controls.SwapChainPanel driven by Direct3D. This class owns
  * a SwapChainPanel, wires a Direct3D 11 swap chain to it through
- * ISwapChainPanelNative and clears the back buffer to black every frame,
- * leaving a blank canvas. Add your own Direct3D rendering commands inside
- * RenderState::render() (and create your resources in ensure_device()/
- * create_swapchain()) to draw a real scene.
+ * ISwapChainPanelNative and clears the back buffer to black whenever the panel
+ * gets a new size, leaving a blank canvas. There is no render loop: add your
+ * own Direct3D rendering commands inside RenderState::render() (and create your
+ * resources in ensure_device()/create_swapchain()) to draw a real scene, and
+ * call it from a CompositionTarget::Rendering handler to animate it.
  *
  * The Direct3D device and swap chain live in a RenderState kept alive by the
  * SwapChainPanel's SizeChanged handler, so rendering keeps working even after

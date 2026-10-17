@@ -87,9 +87,7 @@ void RenderState::render()
 
   // Blank black canvas. Enter your own Direct3D draw commands below to render
   // a scene into the SwapChainPanel back buffer.
-  LOGI(
-      "WinUI 3 GLTriangleArea blank frame rendered - add your Direct3D "
-      "commands in RenderState::render()");
+  LOGD("WinUI 3 GLTriangleArea frame rendered");
 
   winrt::check_hresult(swap_chain->Present(1, 0));
 }

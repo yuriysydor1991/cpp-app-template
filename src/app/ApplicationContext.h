@@ -115,7 +115,7 @@ class ApplicationContext
   /// named in it's TOKEN_ENV_VAR field.
   const std::string& get_claude_token() const;
 
-  /// @brief Sets the the Anthropic API token to authorize the Claude calls
+  /// @brief Sets the Anthropic API token to authorize the Claude calls
   /// with. When empty the ClaudeController takes the token from the environment
   /// variable named in it's TOKEN_ENV_VAR field.
   void set_claude_token(const std::string& newValue);
@@ -124,7 +124,7 @@ class ApplicationContext
   /// Application::run only prints the hint on how to provide one.
   const std::string& get_claude_question() const;
 
-  /// @brief Sets the the question to ask the Claude model about. When empty the
+  /// @brief Sets the question to ask the Claude model about. When empty the
   /// Application::run only prints the hint on how to provide one.
   void set_claude_question(const std::string& newValue);
 
@@ -132,7 +132,7 @@ class ApplicationContext
   /// it's DEFAULT_MODEL one.
   const std::string& get_claude_model() const;
 
-  /// @brief Sets the an optional model override. When empty the
+  /// @brief Sets an optional model override. When empty the
   /// ClaudeController asks it's DEFAULT_MODEL one.
   void set_claude_model(const std::string& newValue);
 

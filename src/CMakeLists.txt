@@ -29,10 +29,12 @@ target_include_directories(
   PRIVATE ${CMAKE_BINARY_DIR}
 )
 
+# The macOS .app bundle goes into the install prefix root, so the .dmg shows it
+# next to the Applications link and the .pkg installs it into /Applications.
 install(
   TARGETS ${PROJECT_BINARY_NAME}
   RUNTIME DESTINATION ${PROJECT_BINARY_INSTALLATION_DIR}
-  BUNDLE DESTINATION ${PROJECT_BINARY_INSTALLATION_DIR}
+  BUNDLE DESTINATION .
 )
 
 configure_file(

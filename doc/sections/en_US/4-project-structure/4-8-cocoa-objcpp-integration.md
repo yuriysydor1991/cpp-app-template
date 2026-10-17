@@ -22,7 +22,7 @@ The native UI is set up by the CMake enabler `cmake/enablers/template-project-Co
 
 ### Packaging
 
-`cmake/enablers/packagers/template-project-macos-package-enabler.cmake` (configure with `-DENABLE_MACOS_PACKAGE=ON`) wires up two CPack generators: `DragNDrop` (a `.dmg` disk image with the `.app` and a drag-to-Applications link) and `productbuild` (a `.pkg` installer). Run `cpack` in the build directory to produce both. Their names end with the CPUs the bundle is built for, `CppAppTemplate-<version>-arm64.dmg` for example: the `CMAKE_OSX_ARCHITECTURES` joined with `-` (`arm64-x86_64` for a universal bundle), the host CPU by default. Set `TEMPLATE_PROJECT_PRODUCTBUILD_IDENTITY` to a *Developer ID Installer* identity to sign the `.pkg`.
+`cmake/enablers/packagers/template-project-macos-package-enabler.cmake` (configure with `-DENABLE_MACOS_PACKAGE=ON`) wires up two CPack generators: `DragNDrop` (a `.dmg` disk image with the `.app` and a drag-to-Applications link) and `productbuild` (a `.pkg` installer). Run `cpack` in the build directory to produce both. The `.app` bundle is installed into the install prefix root (`BUNDLE DESTINATION .`), so the `.dmg` shows it next to the Applications link and the `.pkg` installs it as `/Applications/CppAppTemplate.app`. Their names end with the CPUs the bundle is built for, `CppAppTemplate-<version>-arm64.dmg` for example: the `CMAKE_OSX_ARCHITECTURES` joined with `-` (`arm64-x86_64` for a universal bundle), the host CPU by default. Set `TEMPLATE_PROJECT_PRODUCTBUILD_IDENTITY` to a *Developer ID Installer* identity to sign the `.pkg`.
 
 ### Tests
 

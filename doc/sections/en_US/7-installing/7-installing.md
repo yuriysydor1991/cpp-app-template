@@ -16,6 +16,8 @@ sudo cmake --install .
 
 Usually it's the `/usr/local/bin/` directory (on the Unix-like OS) which may be inaccessible from the `PATH` environment variable (e.g. can not be started as a regular command).
 
+On macOS the executable is a `CppAppTemplate.app` bundle, which is installed into the install prefix root instead, e.g. `/usr/local/CppAppTemplate.app` (use the `--prefix "/Applications"` parameter of the next section to get `/Applications/CppAppTemplate.app`).
+
 ## Custom installation path
 
 To install binary into the system globally available directory add the `--prefix` parameter to the command above as next:

@@ -25,7 +25,7 @@ target_link_libraries(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  TemplateGtkmm3LogObj
+  PRIVATE TemplateGtkmm3LogObj
 )
 
 add_subdirectory(tests)

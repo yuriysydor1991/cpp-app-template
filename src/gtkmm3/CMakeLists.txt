@@ -26,7 +26,7 @@ target_link_libraries(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  ${GTKMM_OBJECT_NAME}
+  PRIVATE ${GTKMM_OBJECT_NAME}
 )
 
 add_subdirectory(log)

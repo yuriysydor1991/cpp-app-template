@@ -16,8 +16,6 @@ if (NOT (ENABLE_SANITIZERS OR ENABLE_SANITIZERS_THREADS))
   return()
 endif()
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/sanitizers")
-
 if (ENABLE_SANITIZERS)
   include(template-project-sanitizers-leak-and-address)
 endif()

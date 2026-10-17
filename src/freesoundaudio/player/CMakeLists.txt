@@ -1,26 +1,8 @@
 cmake_minimum_required(VERSION 3.13)
 
-# The picker reaches no audio library at all, so it stays buildable with the
-# SDL2 audio enabler switched off and the player dropped.
-add_library(
-  TemplateProjectFreesoundRandomSoundObj OBJECT
-  FreesoundRandomSound.cpp
-)
-
-target_include_directories(
-  TemplateProjectFreesoundRandomSoundObj
-  PRIVATE
-    ${CMAKE_SOURCE_DIR}
-    ${CMAKE_BINARY_DIR}
-)
-
-target_link_libraries(
-  ${PROJECT_BINARY_NAME}
-  TemplateProjectFreesoundRandomSoundObj
-)
-
-# Which factory implementation is compiled is what decides the backend of the
-# build, so no calling place ever branches on it with the preprocessor.
+# The audio library free part of the subsystem, the random sound picker
+# included, comes with the TemplateProjectFreesoundAudioObj library, so only the
+# backend in use is built here.
 if (NOT ENABLE_SDL2_AUDIO)
   add_library(
     TemplateProjectFreesoundSoundPlayerObj OBJECT

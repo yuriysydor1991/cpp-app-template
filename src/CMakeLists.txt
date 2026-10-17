@@ -27,8 +27,8 @@ configure_file(
 )
 
 # The Freesound audio subsystem sources, gathered before the subdirectories below
-# so every test executable linking a part of it (the app ones included) builds
-# the very same set.
+# so the binary (see src/freesoundaudio) and every test executable linking a part
+# of it (the app ones included) build the very same set.
 # The backend free factory the app tests take, so they exercise the demo with
 # no audio library linked at all.
 set(

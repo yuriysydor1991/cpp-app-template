@@ -11,14 +11,20 @@ if (NOT ENABLE_FREESOUND_AUDIO)
   )
 endif()
 
+# The sources come out of the FREESOUND_AUDIO_SUBSYSTEM_SOURCES list of
+# src/CMakeLists.txt, the very one the app tests build, so no source is listed
+# twice. The generated index carries the sound paths the project has been
+# configured with, so the whole set is reachable from the code with no run time
+# directory scanning: the enabler writes it and points the
+# FREESOUND_AUDIO_GENERATED_SOUNDS_SOURCE variable at it.
 add_library(
-  TemplateProjectFreesoundSoundObj OBJECT
-  FreesoundSound.cpp
-  FreesoundRootDirectory.cpp
+  TemplateProjectFreesoundAudioObj OBJECT
+  ${FREESOUND_AUDIO_SUBSYSTEM_SOURCES}
+  ${FREESOUND_AUDIO_GENERATED_SOUNDS_SOURCE}
 )
 
 target_include_directories(
-  TemplateProjectFreesoundSoundObj
+  TemplateProjectFreesoundAudioObj
   PRIVATE
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
@@ -26,12 +32,8 @@ target_include_directories(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  TemplateProjectFreesoundSoundObj
+  TemplateProjectFreesoundAudioObj
 )
 
-add_subdirectory(categories)
-add_subdirectory(sounds)
-add_subdirectory(resources)
 add_subdirectory(player)
-add_subdirectory(controller)
 add_subdirectory(tests)

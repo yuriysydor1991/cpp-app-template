@@ -6,6 +6,7 @@ add_executable(
   ${CMAKE_SOURCE_DIR}/src/app/applications/Application.cpp
   ${FREESOUND_AUDIO_SUBSYSTEM_SOURCES}
   ${FREESOUND_AUDIO_NO_PLAYER_SOURCE}
+  ${CMAKE_SOURCE_DIR}/src/freesoundaudio/tests/mocks/FreesoundGeneratedSounds/FreesoundGeneratedSounds.cpp
   ${APP_MOCKS_ROOT}/ApplicationContext/src/app/ApplicationContext.cpp
 )
 
@@ -14,7 +15,6 @@ target_include_directories(
   PRIVATE ${APP_MOCKS_ROOT}/ApplicationContext
   PRIVATE ${APP_MOCKS_ROOT}/project-global-decls
   PRIVATE ${APP_MOCKS_ROOT}/log
-  PRIVATE ${APP_MOCKS_ROOT}/FreesoundGeneratedSounds
   PRIVATE ${APP_MOCKS_ROOT}/freesound-audio-decls
   PRIVATE ${CMAKE_SOURCE_DIR}
 )

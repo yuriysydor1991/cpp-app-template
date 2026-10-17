@@ -243,14 +243,13 @@ TEST_F(UTEST_ASignalsHandler, an_inherited_ignored_signal_stays_ignored)
 
   std::raise(SIGINT);
 
+  // False positive: the raise does return, since the signal is ignored.
+  // cppcheck-suppress unreachableCode
   EXPECT_EQ(TestSignalsHandler::touchesCount.load(), 0);
   EXPECT_FALSE(appCtx->get_stop());
 
   std::raise(SIGTERM);
 
-  // False positive: the raise does return, since the installed handler
-  // does return too.
-  // cppcheck-suppress unreachableCode
   EXPECT_EQ(TestSignalsHandler::touchesCount.load(), 1);
   EXPECT_TRUE(appCtx->get_stop());
 

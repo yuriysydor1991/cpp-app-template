@@ -52,6 +52,7 @@ TEST_F(UTEST_Application, delegates_to_opencv_controller_run)
 
   EXPECT_EQ(app->run(appCtx), 0);
   EXPECT_TRUE(appCtx->get_errors().empty());
+  EXPECT_FALSE(appCtx->get_stop());
 }
 
 TEST_F(UTEST_Application, opencv_controller_run_failure_returns_invalid)

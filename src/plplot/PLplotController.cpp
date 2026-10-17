@@ -54,6 +54,12 @@ bool PLplotController::draw_simple_plot()
     return false;
   }
 
+  // The logarithmic axis of the PLplot takes the log10 values of the data.
+  std::vector<PLFLT> logY(n);
+
+  std::transform(y.begin(), y.end(), logY.begin(),
+                 [](const PLFLT value) { return std::log10(value); });
+
   LOGI("Showing the default example exponential logarithmic plot on the "
        << device << " device");
 
@@ -67,14 +73,14 @@ bool PLplotController::draw_simple_plot()
 
   // Set plotting environment:
   // xmin, xmax, ymin, ymax, just, axis
-  // axis = 1 -> logarithmic Y axis
-  pls.env(0.0, x.back(), y.front(), y.back(), 0, 1);
+  // axis = 20 -> logarithmic Y axis of the log10 data
+  pls.env(0.0, x.back(), logY.front(), logY.back(), 0, 20);
 
   // Labels
   pls.lab("X", "exp(X)", "Exponential Growth (log scale)");
 
   // Draw line
-  pls.line(n, x.data(), y.data());
+  pls.line(n, x.data(), logY.data());
 
   return true;
 }

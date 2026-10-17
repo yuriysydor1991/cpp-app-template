@@ -23,7 +23,7 @@ target_link_libraries(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  TemplateMongoDBCppConnObj
+  PRIVATE TemplateMongoDBCppConnObj
   mongo::mongocxx_shared mongo::bsoncxx_shared
 )
 

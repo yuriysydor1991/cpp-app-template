@@ -48,4 +48,4 @@ endif()
 # Both of the paths above provide the very same mongo::mongocxx_shared and
 # mongo::bsoncxx_shared targets, so link them to your target(s) of interest
 # (e.g. the ${PROJECT_BINARY_NAME} executable or any of your own libraries):
-#   target_link_libraries(${PROJECT_BINARY_NAME} mongo::mongocxx_shared mongo::bsoncxx_shared)
+#   target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE mongo::mongocxx_shared mongo::bsoncxx_shared)

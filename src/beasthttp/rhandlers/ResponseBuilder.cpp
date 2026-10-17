@@ -19,12 +19,37 @@ bool ResponseBuilder::build_response(std::shared_ptr<HTTPSessionContext> sctx)
     return false;
   }
 
-  sctx->response = http::response<http::string_body>{http::status::ok,
+  sctx->response = http::response<http::string_body>{pick_status(sctx),
                                                      sctx->request.version()};
 
   set_defaults(sctx);
 
+  if (sctx->response.result() == http::status::method_not_allowed) {
+    sctx->response.set(http::field::allow, "GET, HEAD");
+  }
+
   return true;
+}
+
+http::status ResponseBuilder::pick_status(
+    std::shared_ptr<HTTPSessionContext> sctx)
+{
+  assert(sctx != nullptr);
+
+  const auto method = sctx->request.method();
+
+  if (method != http::verb::get && method != http::verb::head) {
+    return http::status::method_not_allowed;
+  }
+
+  const auto target = sctx->request.target();
+
+  // The query string selects no other page.
+  if (target.substr(0, target.find('?')) != "/") {
+    return http::status::not_found;
+  }
+
+  return http::status::ok;
 }
 
 void ResponseBuilder::set_defaults(std::shared_ptr<HTTPSessionContext> sctx)

@@ -76,6 +76,16 @@ bool DefaultHandler::build_request_response(
     return false;
   }
 
+  // The refused requests get the bare reason phrase instead of the page.
+  if (sctx->response.result() != http::status::ok) {
+    const auto reason = http::obsolete_reason(sctx->response.result());
+
+    sctx->response.set(http::field::content_type, "text/plain");
+    sctx->response.body().assign(reason.data(), reason.size());
+
+    return true;
+  }
+
   auto responseBuilder = create_request_response_builder(sctx);
 
   return responseBuilder->build_request_page(sctx);

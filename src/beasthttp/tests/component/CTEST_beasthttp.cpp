@@ -212,3 +212,51 @@ TEST_F(CTEST_beasthttp, a_request_within_the_limits_is_answered)
   EXPECT_THAT(response, HasSubstr("200 OK"));
   EXPECT_THAT(response, HasSubstr(expected_standard_response));
 }
+
+TEST_F(CTEST_beasthttp, a_query_string_keeps_the_root_page)
+{
+  static const std::string request =
+      "GET /?lang=en HTTP/1.1\r\nHost: " + tests_address + "\r\n\r\n";
+
+  const auto response = serve_once(request);
+
+  EXPECT_THAT(response, HasSubstr("200 OK"));
+  EXPECT_THAT(response, HasSubstr(expected_standard_response));
+}
+
+TEST_F(CTEST_beasthttp, a_head_request_gets_the_headers_alone)
+{
+  static const std::string request =
+      "HEAD / HTTP/1.1\r\nHost: " + tests_address + "\r\n\r\n";
+
+  const auto response = serve_once(request);
+
+  EXPECT_THAT(response, HasSubstr("200 OK"));
+  EXPECT_THAT(response,
+              HasSubstr("Content-Length: " +
+                        std::to_string(expected_standard_response.size())));
+  EXPECT_THAT(response, Not(HasSubstr("<!DOCTYPE html>")));
+}
+
+TEST_F(CTEST_beasthttp, an_unsupported_method_is_not_allowed)
+{
+  static const std::string request =
+      "DELETE / HTTP/1.1\r\nHost: " + tests_address + "\r\n\r\n";
+
+  const auto response = serve_once(request);
+
+  EXPECT_THAT(response, HasSubstr("405 Method Not Allowed"));
+  EXPECT_THAT(response, HasSubstr("Allow: GET, HEAD"));
+  EXPECT_THAT(response, Not(HasSubstr("<!DOCTYPE html>")));
+}
+
+TEST_F(CTEST_beasthttp, an_unknown_path_is_not_found)
+{
+  static const std::string request =
+      "GET /missing HTTP/1.1\r\nHost: " + tests_address + "\r\n\r\n";
+
+  const auto response = serve_once(request);
+
+  EXPECT_THAT(response, HasSubstr("404 Not Found"));
+  EXPECT_THAT(response, Not(HasSubstr("<!DOCTYPE html>")));
+}

@@ -23,6 +23,12 @@ bool ResponseWriter::write_response(std::shared_ptr<HTTPSessionContext> sctx)
 
   sctx->response.prepare_payload();
 
+  // The HEAD request gets the headers of the GET one alone, the Content-Length
+  // of the page among them.
+  if (sctx->request.method() == http::verb::head) {
+    sctx->response.body().clear();
+  }
+
   std::size_t writtenBytes{0U};
 
   // The timeout is the Boost.Beast stream own one, since a blocking socket

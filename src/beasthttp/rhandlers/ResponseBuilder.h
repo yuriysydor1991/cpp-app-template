@@ -35,6 +35,20 @@ class ResponseBuilder
 
  protected:
   /**
+   * @brief Picks the status of the response to the request in the provided
+   * single HTTP session context: the 405 one for the methods other than the
+   * GET and the HEAD ones, the 404 one for the targets other than the root
+   * page and the 200 one otherwise. Override it in the descendant to serve
+   * more pages or methods.
+   *
+   * @param sctx The single HTTP session context object to hold available
+   * relevant information.
+   *
+   * @return Returns the status of the response.
+   */
+  virtual http::status pick_status(std::shared_ptr<HTTPSessionContext> sctx);
+
+  /**
    * @brief Sets the default values to the response object available in
    * the provided single HTTP session context. Override it in the descendant to
    * change class instance behavior.

@@ -20,7 +20,7 @@ const std::map<std::string, FreesoundGeneratedSounds::NamesList>& generated()
 }
 
 // Freesound licenses a sound rather than a collection, so both the license and
-// the page it came from are keyed by the single sound alias.
+// the address it came from are keyed by the single sound alias.
 const std::map<std::string, std::string>& generatedLicenses()
 {
   static const std::map<std::string, std::string> licenses{

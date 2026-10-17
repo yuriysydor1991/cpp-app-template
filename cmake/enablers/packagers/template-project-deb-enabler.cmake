@@ -36,10 +36,13 @@ set(CPACK_DEBIAN_PACKAGE_MAINTAINER "${PROJECT_MAINTAINER} ${PROJECT_MAINTAINER_
 set(CPACK_DEB_COMPONENT_INSTALL ON)
 set(CPACK_PACKAGE_DESCRIPTION ${CMAKE_PROJECT_DESCRIPTION})
 set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE ${TEMPLATE_PROJECT_DEB_PACKAGE_ARCHITECTURE})
-# the Qt6 libraries the binary links and the QML modules its QML files import
+# the Qt6 libraries the binary links and the QML modules its QML files import;
+# the 64-bit time_t transition renamed the Qt6 base libraries with a t64 suffix
+# (every release for the core one, Ubuntu 24.04 for the rest)
 string(
   JOIN ", " CPACK_DEBIAN_PACKAGE_DEPENDS
-  libqt6core6 libqt6gui6 libqt6qml6 libqt6quick6 libqt6quickcontrols2-6
+  libqt6core6t64 "libqt6gui6 | libqt6gui6t64"
+  libqt6qml6 libqt6quick6 libqt6quickcontrols2-6
   qml6-module-qtqml-workerscript qml6-module-qtquick
   qml6-module-qtquick-controls qml6-module-qtquick-layouts
   qml6-module-qtquick-templates qml6-module-qtquick-window

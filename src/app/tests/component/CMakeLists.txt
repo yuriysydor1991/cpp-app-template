@@ -29,10 +29,10 @@ add_executable(
   ${CMAKE_SOURCE_DIR}/src/DarknetXX/weights/OrigWeights.cpp
 )
 
+# The real logger, so the log file effects of the command line are covered too.
 target_include_directories(
   CTEST_app
   PRIVATE
-    ${APP_MOCKS_ROOT}/log
     ${APP_MOCKS_ROOT}/DarknetXXController
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}

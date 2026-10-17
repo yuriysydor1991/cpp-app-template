@@ -14,7 +14,19 @@ if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
   message(FATAL_ERROR "Profiling is only for the Debug builds")
 endif()
 
-find_program(VALGRIND_EXEC valgrind REQUIRED)
+find_program(VALGRIND_EXEC valgrind)
+
+if (NOT VALGRIND_EXEC)
+    message(
+      WARNING
+      "No valgrind executable found. "
+      "No callgrind profiler target will be declared. "
+      "Install valgrind by using command (GNU/Linux based):\n"
+      "sudo apt install -y valgrind\n"
+    )
+
+    return()
+endif()
 
 message(STATUS "valgrind (callgrind): ${VALGRIND_EXEC}")
 

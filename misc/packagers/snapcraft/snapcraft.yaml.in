@@ -22,3 +22,34 @@ parts:
     cmake-parameters:
       - -DCMAKE_BUILD_TYPE=Release
       - -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
+    # core24 packages no SDL3: the build downloads it, so its windowing system files are needed
+    build-packages:
+      - git
+      - libgl-dev
+      - libegl-dev
+      - libx11-dev
+      - libxext-dev
+      - libxrandr-dev
+      - libxcursor-dev
+      - libxi-dev
+      - libxfixes-dev
+      - libxss-dev
+      - libwayland-dev
+      - libxkbcommon-dev
+      - libdecor-0-dev
+    stage-packages:
+      - libgl1
+      - libegl1
+      - libgl1-mesa-dri
+      - libx11-6
+      - libxext6
+      - libxrandr2
+      - libxcursor1
+      - libxi6
+      - libxfixes3
+      - libxss1
+      - libwayland-client0
+      - libwayland-cursor0
+      - libwayland-egl1
+      - libxkbcommon0
+      - libdecor-0-0

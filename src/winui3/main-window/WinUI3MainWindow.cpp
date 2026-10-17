@@ -11,6 +11,10 @@ WinUI3MainWindow::WinUI3MainWindow(const helpers::WindowConfig& config)
 {
   win.Title(winrt::to_hstring(config.title()));
 
+  // The AppWindow size is in physical pixels. The minimum size needs the
+  // OverlappedPresenter PreferredMinimumWidth/Height of Windows App SDK 1.7+.
+  win.AppWindow().Resize({config.width(), config.height()});
+
   build_content(config);
 }
 

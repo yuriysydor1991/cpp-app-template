@@ -27,8 +27,8 @@ PACKAGES=(
 
 apt_install "${PACKAGES[@]}"
 
-# The MongoDB C++ driver is no package of the release and its MongoDB C driver
-# is older than the 2.0.0 one the C++ driver 4.1.0 needs, so both are built.
+# The release packages no MongoDB C++ driver and a MongoDB C driver older than
+# the 2.0.0 one the C++ driver r4.1.0 needs, so both are built from sources.
 cmake_install_from_source https://github.com/mongodb/mongo-c-driver.git 2.0.0 \
     -DENABLE_TESTS=OFF -DENABLE_EXAMPLES=OFF
 

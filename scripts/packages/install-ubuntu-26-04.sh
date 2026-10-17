@@ -29,7 +29,7 @@ PACKAGES=(
 
 apt_install "${PACKAGES[@]}"
 
-# The MongoDB C++ driver is no package of the release, so it is built.
+# The release packages no MongoDB C++ driver, so it is built from sources.
 cmake_install_from_source https://github.com/mongodb/mongo-cxx-driver.git r4.1.0 \
     -DBUILD_SHARED_LIBS=ON -DENABLE_TESTS=OFF -DENABLE_UNINSTALL=OFF
 

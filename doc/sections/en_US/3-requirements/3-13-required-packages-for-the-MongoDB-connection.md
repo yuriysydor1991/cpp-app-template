@@ -8,6 +8,8 @@ sudo apt install -y libmongoc-dev libbson-dev
 
 The archives of the most of the distributions carry no MongoDB C++ driver package at all, so the [mongocxx enabler](/doc/sections/en_US/5-project-build/5-38-enabling-the-mongocxx-library.md) fetches and builds that driver itself when the system carries none. The C driver packages above are the optional ones which spare the fetched sources that part of the build.
 
+The C++ driver `r4.1.0` release needs the C driver `2.0.0` or a newer one, which the Ubuntu 26.04 packages (`2.2.2`), while the `1.x` packages of the Ubuntu 24.04 and the Debian 13 are of no use to it. So the `install-ubuntu-24-04.sh` and `install-debian-13.sh` scripts of the [scripts/packages](/scripts/packages) directory build and install the C driver `2.0.0` and the C++ driver `r4.1.0` out of their sources, while the `install-ubuntu-26-04.sh` one installs the C driver packages and builds the C++ driver only. The project configure finds the installed C++ driver afterwards instead of fetching it.
+
 ### Connecting to the MongoDB server
 
 The executable connects to the [MongoDB](https://www.mongodb.com/) server at the `localhost:27017` address with no credentials by default. The distribution archives carry no MongoDB server package, so install it from the [MongoDB Community Edition](https://www.mongodb.com/docs/manual/administration/install-community/) repositories or start the official container image, for example:

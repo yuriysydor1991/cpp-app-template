@@ -10,9 +10,9 @@ if(NOT ENABLE_GTKMM3)
   return()
 endif()
 
-find_package(PkgConfig)
+find_package(PkgConfig REQUIRED)
 
-pkg_check_modules(GTKMM gtkmm-3.0 REQUIRED IMPORTED_TARGET gtkmm-3.0)
+pkg_check_modules(GTKMM REQUIRED gtkmm-3.0)
 
 string(REPLACE  "." "/" GTKMM_APP_RESOURCES_PREFIX_COMPUTED "/${PROJECT_URI}")
 

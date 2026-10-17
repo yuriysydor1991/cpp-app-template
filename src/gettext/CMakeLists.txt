@@ -37,7 +37,7 @@ target_link_libraries(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  TemplateProjectGettextControllerObj
+  PRIVATE TemplateProjectGettextControllerObj
 )
 
 # The executable started from the build tree translates with the catalogs the

@@ -96,4 +96,4 @@ message(STATUS "The gettext message catalogs: ${TEMPLATE_PROJECT_GETTEXT_PO_FILE
 # Translate with the gettexti::tr and the gettexti::trn functions of the
 # src/gettext/tr.h header and link the Intl::Intl target to your target(s) of
 # interest, e.g.:
-#   target_link_libraries(${PROJECT_BINARY_NAME} Intl::Intl)
+#   target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE Intl::Intl)

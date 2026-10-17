@@ -20,7 +20,8 @@ TEST_F(UTEST_PLplotDevicePicker, the_qt_device_goes_first)
   EXPECT_EQ(picker.pick({"xwin", "svg", "xcairo", "qtwidget"}), "qtwidget");
 }
 
-TEST_F(UTEST_PLplotDevicePicker, the_next_preferred_device_replaces_a_missing_one)
+TEST_F(UTEST_PLplotDevicePicker,
+       the_next_preferred_device_replaces_a_missing_one)
 {
   EXPECT_EQ(picker.pick({"null", "xwin", "svg", "xcairo"}), "xcairo");
   EXPECT_EQ(picker.pick({"null", "xwin", "svg"}), "xwin");

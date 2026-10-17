@@ -48,9 +48,10 @@ bool PLplotController::draw_simple_plot()
   const std::string device = PLplotDevicePicker{}.pick(installed_devices());
 
   if (device.empty()) {
-    LOGE("No interactive PLplot device is installed, install the "
-         "plplot-driver-qt, the plplot-driver-cairo or the plplot-driver-xwin "
-         "package");
+    LOGE(
+        "No interactive PLplot device is installed, install the "
+        "plplot-driver-qt, the plplot-driver-cairo or the plplot-driver-xwin "
+        "package");
     return false;
   }
 

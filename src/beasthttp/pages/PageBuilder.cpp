@@ -31,7 +31,6 @@ bool PageBuilder::build_default_page(
 
   return build_page_header(sctx) && build_page_body(sctx) &&
          build_page_footer(sctx);
-  ;
 }
 
 bool PageBuilder::build_page_header(
@@ -57,9 +56,9 @@ bool PageBuilder::build_page_header(
   sctx->response.body() += "</title>";
 
   sctx->response.body() += "<meta name=\"description\" content=\"" +
-                           build_page_keywords(sctx) + "\" />";
-  sctx->response.body() += "<meta name=\"keywords\" content=\"" +
                            build_page_description(sctx) + "\" />";
+  sctx->response.body() += "<meta name=\"keywords\" content=\"" +
+                           build_page_keywords(sctx) + "\" />";
 
   if (!prepend_page_headers(sctx)) {
     return false;

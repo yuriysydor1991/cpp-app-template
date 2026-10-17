@@ -9,6 +9,7 @@
 #include <string>
 #include <thread>
 
+#include "DistinctMetaPageBuilder.h"
 #include "HTTPHelper.h"
 #include "LimitedController.h"
 #include "project-global-decls.h"
@@ -259,4 +260,18 @@ TEST_F(CTEST_beasthttp, an_unknown_path_is_not_found)
 
   EXPECT_THAT(response, HasSubstr("404 Not Found"));
   EXPECT_THAT(response, Not(HasSubstr("<!DOCTYPE html>")));
+}
+
+TEST_F(CTEST_beasthttp, the_meta_tags_carry_their_own_values)
+{
+  auto sctx = std::make_shared<rhandlers::HTTPSessionContext>();
+  DistinctMetaPageBuilder builder;
+
+  EXPECT_TRUE(builder.build_request_page(sctx));
+  EXPECT_THAT(sctx->response.body(),
+              HasSubstr("<meta name=\"description\" content=\"" +
+                        DistinctMetaPageBuilder::description + "\" />"));
+  EXPECT_THAT(sctx->response.body(),
+              HasSubstr("<meta name=\"keywords\" content=\"" +
+                        DistinctMetaPageBuilder::keywords + "\" />"));
 }

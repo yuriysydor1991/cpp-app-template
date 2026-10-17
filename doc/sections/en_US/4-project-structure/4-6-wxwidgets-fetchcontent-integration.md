@@ -4,7 +4,7 @@ The wxWidgets library is not assumed to be installed on the build host. The reus
 
 The behaviour is controlled by the next options and cache variables:
 
-- `ENABLE_WXWIDGETS` (default `ON`) - set to `OFF` to drop the wxWidgets integration entirely.
+- `ENABLE_WXWIDGETS` (default `ON`) - keep it `ON`: the wxWidgets GUI is the very application of this branch, so the `src/wxwidgets` component always links the `wx::core` / `wx::base` targets and the configuration stops with an explanatory error when they are switched `OFF` and no other project part provides them.
 - `TEMPLATE_APP_WXWIDGETS_GIT` / `TEMPLATE_APP_WXWIDGETS_GIT_TAG` (default `v3.3.2`) - the source repository and the tag (version) of wxWidgets to fetch; bump the tag to build against a newer wxWidgets release.
 
 The probe is a CONFIG-mode `find_package(wxWidgets)`: when a CMake-package wxWidgets that provides the `wx::core` / `wx::base` targets is already available - a system installation (for example the one the project Dockerfiles preinstall), or the dedicated wxWidgets module of the [Flatpak package](/doc/sections/en_US/5-project-build/packagers/5-11-enabling-the-flatpak-package-generation-support.md) - it is used as-is and nothing is downloaded; otherwise wxWidgets is fetched and built from source. The CMake-shipped `FindwxWidgets` module (MODULE mode) is intentionally not used for the probe because it only fills `wxWidgets_LIBRARIES` and never defines those imported targets.

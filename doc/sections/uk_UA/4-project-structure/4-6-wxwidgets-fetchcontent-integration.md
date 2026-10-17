@@ -4,7 +4,7 @@
 
 Поведінкою керують наступні опції і кеш-змінні:
 
-- `ENABLE_WXWIDGETS` (типово `ON`) - встанови `OFF` щоб повністю прибрати інтеграцію з wxWidgets.
+- `ENABLE_WXWIDGETS` (типово `ON`) - залиш `ON`: графічний інтерфейс wxWidgets і є програмою цієї гілки, тому компонент `src/wxwidgets` завжди лінкує цілі `wx::core` / `wx::base`, і конфігурування зупиняється з поясненням помилки, якщо їх вимкнено значенням `OFF`, а жодна інша частина проекту їх не надає.
 - `TEMPLATE_APP_WXWIDGETS_GIT` / `TEMPLATE_APP_WXWIDGETS_GIT_TAG` (типово `v3.3.2`) - репозиторій вихідних кодів і тег (версія) wxWidgets для завантаження; зміни тег щоб будувати з новішим випуском wxWidgets.
 
 Пошук виконується у режимі CONFIG через `find_package(wxWidgets)`: якщо вже доступний CMake-пакунок wxWidgets, що надає цілі `wx::core` / `wx::base` - системне встановлення (наприклад, те, що попередньо встановлюють Dockerfile'и проєкту) або окремий модуль wxWidgets [пакунку Flatpak](/doc/sections/uk_UA/5-project-build/packagers/5-11-enabling-the-flatpak-package-generation-support.md) - він використовується як є і нічого не завантажується; інакше wxWidgets завантажується і будується з вихідних кодів. Модуль `FindwxWidgets` з постачання CMake (режим MODULE) навмисно не використовується для пошуку, бо він лише заповнює `wxWidgets_LIBRARIES` і не визначає цих імпортованих цілей.

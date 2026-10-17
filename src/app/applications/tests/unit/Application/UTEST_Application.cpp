@@ -127,7 +127,8 @@ TEST_F(UTEST_Application, failure_exit_invalid_context_conversion_result)
 
   EXPECT_NE(app->run(appCtx), 0);
 
-  EXPECT_TRUE(appCtx->get_errors().empty());
+  EXPECT_THAT(appCtx->get_errors(),
+              ElementsAre(std::string{"Failure during context conversion"}));
 
   EXPECT_FALSE(appCtx->get_print_help_and_exit());
   EXPECT_FALSE(appCtx->get_print_version_and_exit());
@@ -200,7 +201,8 @@ TEST_F(UTEST_Application, failure_exit_invalid_lib_result)
 
   EXPECT_NE(app->run(appCtx), 0);
 
-  EXPECT_TRUE(appCtx->get_errors().empty());
+  EXPECT_THAT(appCtx->get_errors(),
+              ElementsAre(std::string{"Invalid library execution status"}));
 
   EXPECT_FALSE(appCtx->get_print_help_and_exit());
   EXPECT_FALSE(appCtx->get_print_version_and_exit());

@@ -10,8 +10,8 @@
 
 #include "project-global-decls.h"
 #include "src/app/ApplicationFactory.h"
-#include "src/winui3/WinUI3Controller.h"
 #include "src/log/log.h"
+#include "src/winui3/WinUI3Controller.h"
 
 using namespace app;
 using namespace testing;

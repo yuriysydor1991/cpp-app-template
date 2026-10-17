@@ -6,9 +6,10 @@
 #include <GL/glut.h>
 
 #include <cassert>
-#include <functional>
 #include <memory>
-#include <stdexcept>
+
+#include "src/app/applications/IApplication.h"
+#include "src/log/log.h"
 
 namespace templateFreeGlut
 {
@@ -18,8 +19,12 @@ namespace
 constexpr const unsigned int W_DEFAULT_WIDTH = 650;
 constexpr const unsigned int W_DEFAULT_HEIGHT = 200;
 
+constexpr const unsigned int STOP_CHECK_PERIOD_MS = 100;
+
 int current_width{0};
 int current_height{0};
+
+std::shared_ptr<app::ApplicationContext> runCtx;
 }  // namespace
 
 void FreeGlutController::display()
@@ -49,7 +54,18 @@ void FreeGlutController::init()
 
 int FreeGlutController::run(std::shared_ptr<app::ApplicationContext> ctx)
 {
+  assert(ctx != nullptr);
+
+  if (ctx == nullptr) {
+    LOGE("No valid application context provided");
+    return app::IApplication::INVALID;
+  }
+
+  runCtx = ctx;
+
   glutInit(&ctx->get_argc(), ctx->get_argv());
+  // the window close returns from the main loop instead of the exit() call
+  glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
   glutInitWindowSize(W_DEFAULT_WIDTH, W_DEFAULT_HEIGHT);
   glutCreateWindow(ctx->get_argv()[0]);
@@ -58,10 +74,24 @@ int FreeGlutController::run(std::shared_ptr<app::ApplicationContext> ctx)
 
   glutDisplayFunc(&FreeGlutController::display);
   glutReshapeFunc(&FreeGlutController::reshape);
+  glutTimerFunc(STOP_CHECK_PERIOD_MS, &FreeGlutController::check_stop, 0);
 
   glutMainLoop();
 
+  runCtx.reset();
+
   return 0;
+}
+
+void FreeGlutController::check_stop([[maybe_unused]] int value)
+{
+  // the stop signals handlers only raise the context stop flag
+  if (runCtx == nullptr || runCtx->get_stop()) {
+    glutLeaveMainLoop();
+    return;
+  }
+
+  glutTimerFunc(STOP_CHECK_PERIOD_MS, &FreeGlutController::check_stop, 0);
 }
 
 void FreeGlutController::reshape(int w, int h)

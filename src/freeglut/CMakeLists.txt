@@ -25,3 +25,7 @@ target_link_libraries(
   ${PROJECT_BINARY_NAME}
   TemplateFreeGlutObj
 )
+
+if(ENABLE_UNIT_TESTS OR ENABLE_COMPONENT_TESTS)
+  add_subdirectory(tests)
+endif()

@@ -27,3 +27,5 @@ cmake --build matplotplusplus-build -j$(nproc)
 # install the MatPlot++ project into system
 sudo cmake --install matplotplusplus-build --prefix /usr
 ```
+
+The `ENABLE_MATPLOTCXX` CMake option (`ON` by default) makes the configure step use a system wide installed Matplot++ or fetch and build the `TEMPLATE_APP_MATPLOTCXX_GIT_TAG` release (`v1.2.2`) itself. Since the `src/matplotxx` example requires the library, turning the option `OFF` stops the configuration with an explanation, until the `add_subdirectory(matplotxx)` call of the `src/CMakeLists.txt` file is dropped together with the `src/matplotxx` subdirectory and the Matplot++ example of the `src/app/applications/Application.cpp` file.

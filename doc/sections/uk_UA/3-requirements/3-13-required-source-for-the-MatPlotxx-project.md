@@ -27,3 +27,5 @@ cmake --build matplotplusplus-build -j$(nproc)
 # встановлення бібліотеки MatPlot++ у систему
 sudo cmake --install matplotplusplus-build --prefix /usr
 ```
+
+Параметр CMake `ENABLE_MATPLOTCXX` (типово `ON`) змушує крок конфігурації використати встановлену в системі бібліотеку Matplot++ або самостійно завантажити і зібрати випуск `TEMPLATE_APP_MATPLOTCXX_GIT_TAG` (`v1.2.2`). Оскільки приклад `src/matplotxx` потребує бібліотеки, значення `OFF` зупиняє конфігурацію з поясненням, доки з файлу `src/CMakeLists.txt` не буде вилучено виклик `add_subdirectory(matplotxx)` разом з підкаталогом `src/matplotxx` і прикладом Matplot++ у файлі `src/app/applications/Application.cpp`.

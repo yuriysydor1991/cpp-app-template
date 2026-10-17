@@ -5,6 +5,7 @@
 #include <memory>
 
 #include "src/SDL2/Eventer/EventsHandlers/EventQuitHandler.h"
+#include "src/SDL2/Eventer/EventsHandlers/EventWindowResizedHandler.h"
 #include "src/SDL2/Eventer/EventsHandlers/EventsHandlersFactory.h"
 #include "src/SDL2/SDL2Context.h"
 #include "src/app/ApplicationContext.h"
@@ -44,6 +45,27 @@ TEST_F(UTEST_EventsHandlersFactory, quit_event_returns_quit_handler)
   auto casted = std::dynamic_pointer_cast<EventQuitHandler>(handler);
 
   EXPECT_NE(casted, nullptr);
+}
+
+TEST_F(UTEST_EventsHandlersFactory, resize_event_returns_resize_handler)
+{
+  SDL_Event event{};
+  event.type = SDL_WINDOWEVENT;
+  event.window.event = SDL_WINDOWEVENT_SIZE_CHANGED;
+
+  auto handler = factory->create(event, sdlCtx);
+
+  EXPECT_NE(std::dynamic_pointer_cast<EventWindowResizedHandler>(handler),
+            nullptr);
+}
+
+TEST_F(UTEST_EventsHandlersFactory, other_window_event_returns_null)
+{
+  SDL_Event event{};
+  event.type = SDL_WINDOWEVENT;
+  event.window.event = SDL_WINDOWEVENT_MOVED;
+
+  EXPECT_EQ(factory->create(event, sdlCtx), nullptr);
 }
 
 TEST_F(UTEST_EventsHandlersFactory, unknown_event_returns_null)

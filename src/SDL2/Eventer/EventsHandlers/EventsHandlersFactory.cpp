@@ -6,6 +6,7 @@
 #include <memory>
 
 #include "src/SDL2/Eventer/EventsHandlers/EventQuitHandler.h"
+#include "src/SDL2/Eventer/EventsHandlers/EventWindowResizedHandler.h"
 #include "src/SDL2/Eventer/EventsHandlers/IEventHandler.h"
 #include "src/SDL2/SDL2Context.h"
 
@@ -19,6 +20,11 @@ std::shared_ptr<IEventHandler> EventsHandlersFactory::create(
 
   if (event.type == SDL_QUIT) {
     return std::make_shared<EventQuitHandler>();
+  }
+
+  if (event.type == SDL_WINDOWEVENT &&
+      event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED) {
+    return std::make_shared<EventWindowResizedHandler>();
   }
 
   return {};

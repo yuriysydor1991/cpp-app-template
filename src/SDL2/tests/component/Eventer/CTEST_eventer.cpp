@@ -1,4 +1,5 @@
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_opengl.h>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
@@ -7,7 +8,9 @@
 #include "src/SDL2/Eventer/EventsHandlers/EventQuitHandler.h"
 #include "src/SDL2/Eventer/EventsHandlers/EventsHandlersFactory.h"
 #include "src/SDL2/Eventer/EventsHandlers/IEventHandler.h"
+#include "src/SDL2/OpenGLIniter.h"
 #include "src/SDL2/SDL2Context.h"
+#include "src/SDL2/SDL2ContextBuilder.h"
 #include "src/app/ApplicationContext.h"
 
 using namespace app;
@@ -74,4 +77,43 @@ TEST_F(CTEST_eventer, multiple_quit_events_keep_stop_flag_set)
   }
 
   EXPECT_TRUE(appCtx->get_stop());
+}
+
+TEST_F(CTEST_eventer, resize_event_updates_the_opengl_viewport)
+{
+  SDL_SetHintWithPriority(SDL_HINT_VIDEODRIVER, "offscreen", SDL_HINT_OVERRIDE);
+
+  ASSERT_EQ(SDL_Init(SDL_INIT_VIDEO), 0);
+
+  OpenGLIniter initer;
+  SDL2ContextBuilder builder;
+
+  std::shared_ptr<SDL2Context> glCtx =
+      initer.init_opengl() ? builder.build_context(appCtx) : nullptr;
+
+  if (glCtx == nullptr) {
+    SDL_Quit();
+    GTEST_SKIP() << "No offscreen OpenGL 3.3 core context available";
+  }
+
+  SDL_Event event{};
+  event.type = SDL_WINDOWEVENT;
+  event.window.event = SDL_WINDOWEVENT_SIZE_CHANGED;
+  event.window.data1 = 320;
+  event.window.data2 = 200;
+
+  std::shared_ptr<IEventHandler> handler = factory->create(event, glCtx);
+
+  ASSERT_NE(handler, nullptr);
+  EXPECT_TRUE(handler->handle(event, glCtx));
+
+  GLint viewport[4]{};
+  glGetIntegerv(GL_VIEWPORT, viewport);
+
+  EXPECT_EQ(viewport[2], 320);
+  EXPECT_EQ(viewport[3], 200);
+  EXPECT_FALSE(appCtx->get_stop());
+
+  glCtx.reset();
+  SDL_Quit();
 }

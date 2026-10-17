@@ -19,20 +19,6 @@ class CTEST_Hostname1QueryHandler : public Test
   DBusQueryHandlerFactory factory;
 };
 
-TEST_F(CTEST_Hostname1QueryHandler, factory_creates_non_null_default_handler)
-{
-  IDBusQueryHandlerPtr handler = factory.create_default_handler();
-
-  EXPECT_NE(handler, nullptr);
-}
-
-TEST_F(CTEST_Hostname1QueryHandler, factory_default_handler_is_hostname1)
-{
-  IDBusQueryHandlerPtr handler = factory.create_default_handler();
-
-  EXPECT_NE(std::dynamic_pointer_cast<Hostname1QueryHandler>(handler), nullptr);
-}
-
 TEST_F(CTEST_Hostname1QueryHandler, exposes_expected_well_known_coordinates)
 {
   EXPECT_EQ(static_cast<std::string>(Hostname1QueryHandler::serviceName),

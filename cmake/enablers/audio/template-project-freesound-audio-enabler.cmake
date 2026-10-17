@@ -133,5 +133,5 @@ endif()
 # manifest over to the resource compiler of the toolkit in use. For example:
 #   template_project_freesound_audio_write_qrc(
 #     "${CMAKE_CURRENT_BINARY_DIR}/freesound-audio.qrc"
-#     SOUNDS interface/click.ogg interface/notification.ogg
+#     SOUNDS interface/click.ogg feedback/notification.ogg
 #   )

@@ -1,6 +1,6 @@
 ## Enabling the Freesound sound effects
 
-The [Freesound](https://freesound.org) CC0 sound effect categories are made available to the project by the `ENABLE_FREESOUND_AUDIO` CMake variable, which is `ON` by default on this branch:
+The curated [Freesound](https://freesound.org) sound effects are made available to the project by the `ENABLE_FREESOUND_AUDIO` CMake variable, which is `ON` by default on this branch:
 
 ```
 # Inside the source root directory
@@ -8,9 +8,9 @@ The [Freesound](https://freesound.org) CC0 sound effect categories are made avai
 cmake -S . -B build -DENABLE_FREESOUND_AUDIO=ON
 ```
 
-The enabler downloads every configured category, unpacks it into a resources directory of the build tree, keeps it **intact** and reachable both from CMake and from the C++ code, and leaves the decision of what ends up inside the application binary to the developer. No browser, no sound by sound "save as" ritual and no network access at the application run time.
+The enabler downloads every sound the manifest names into a resources directory of the build tree, one subdirectory per category, keeps them **intact** and reachable both from CMake and from the C++ code, and leaves the decision of what ends up inside the application binary to the developer. No browser, no sound by sound "save as" ritual and no network access at the application run time.
 
-Freesound publishes the categories under the [CC0](https://creativecommons.org/publicdomain/zero/1.0/) terms, so they need no attribution and stay usable commercially. **The categories are never committed into this repository**: they are fetched at the configure time, exactly the way the Font Awesome icon set is on the `appFontAwesome` branch.
+Freesound publishes every submission under a license of it's own (CC0, CC-BY or CC-BY-NC), so the manifest records the license of every single sound and that license travels into the binary (see the `FreesoundSound::license` accessor). The sounds this branch defaults to are [CC0](https://creativecommons.org/publicdomain/zero/1.0/) ones and need no attribution, while a CC-BY sound added to the manifest is to be credited by the application and a CC-BY-NC one rules any commercial use out. **The sounds are never committed into this repository**: they are fetched at the configure time.
 
 ### The enabler variables
 
@@ -21,7 +21,7 @@ The `cmake/enablers/audio/template-project-freesound-audio-enabler.cmake` module
 | `ENABLE_FREESOUND_AUDIO` | `ON` | enables the whole integration |
 | `TEMPLATE_APP_FREESOUND_AUDIO_MANIFEST` | `misc/freesound-sounds.txt` | the manifest naming every sound together with it's download URL, it's license and the file SHA-256 checksum |
 | `TEMPLATE_APP_FREESOUND_AUDIO_DIR` | empty | an already available categories directory to reuse instead of downloading one |
-| `FREESOUND_AUDIO_EXTENSIONS` | `ogg;wav;mp3` | the sound file extensions to pick out of the categories |
+| `FREESOUND_AUDIO_EXTENSIONS` | `ogg;wav;mp3;flac` | the sound file extensions to pick out of the categories |
 | `FREESOUND_AUDIO_QT_RESOURCE_PREFIX` | `/sounds` | the prefix of the generated `.qrc` manifests |
 | `FREESOUND_AUDIO_GRESOURCE_PREFIX` | `/ua/org/kytok/template/<binary>/sounds` | the prefix of the generated `.gresource.xml` manifests |
 | `FREESOUND_AUDIO_GENERATE_FULL_MANIFESTS` | `ON` | generates the manifests carrying every available sound |

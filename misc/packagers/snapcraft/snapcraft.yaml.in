@@ -13,6 +13,7 @@ apps:
     command: ${PROJECT_BINARY_INSTALLATION_DIR}/${PROJECT_BINARY_NAME}${SNAP_APP_DESKTOP}
     plugs:
       - home${SNAP_APP_DESKTOP_PLUGS}
+      - system-observe
 
 parts:
   ${PROJECT_BINARY_NAME}:

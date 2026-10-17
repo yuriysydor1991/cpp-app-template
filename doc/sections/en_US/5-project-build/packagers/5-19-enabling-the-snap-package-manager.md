@@ -7,3 +7,9 @@ cmake -S . -B build -DENABLE_SNAP=ON
 ```
 
 Visit the [cmake/enablers/packagers/template-project-snap-enabler.cmake](/cmake/enablers/packagers/template-project-snap-enabler.cmake) file to examine the details.
+
+The snap reads the hostname1 properties on the system bus through the `system-observe` interface, which is not connected automatically, so connect it once after the installation:
+
+```
+sudo snap connect <snap name>:system-observe
+```

@@ -106,6 +106,7 @@
     "--device=dri",
     "--talk-name=org.freedesktop.DBus",
     "--talk-name=org.freedesktop.Notifications",
+    "--system-talk-name=org.freedesktop.hostname1",
     "--own-name=${FLATPAK_PROJECT_URL}"
   ]
 }

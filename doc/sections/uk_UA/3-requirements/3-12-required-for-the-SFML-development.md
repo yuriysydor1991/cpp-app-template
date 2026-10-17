@@ -16,14 +16,14 @@ sudo apt install -y libsfml-dev
 
 ```
 sudo apt install -y git g++ cmake \
-  libx11-dev libxrandr-dev libxcursor-dev libxi-dev libudev-dev \
+  libx11-dev libxrandr-dev libxcursor-dev libudev-dev \
   libgl1-mesa-dev libfreetype-dev
 ```
 
 ### Інші дистрибутиви GNU/Лінукс
 
-- **Fedora / RHEL / openSUSE**: `SFML-devel` (або набір інструментів плюс `libX11-devel`, `libXrandr-devel`, `libXcursor-devel`, `libXi-devel`, `systemd-devel`, `mesa-libGL-devel` та `freetype-devel` для побудови з вихідних кодів).
-- **Arch Linux**: `sfml` (або `libx11`, `libxrandr`, `libxcursor`, `libxi`, `systemd-libs`, `mesa` та `freetype2` для побудови з вихідних кодів).
+- **Fedora / RHEL / openSUSE**: `SFML-devel` (або набір інструментів плюс `libX11-devel`, `libXrandr-devel`, `libXcursor-devel`, `systemd-devel`, `mesa-libGL-devel` та `freetype-devel` для побудови з вихідних кодів).
+- **Arch Linux**: `sfml` (або `libx11`, `libxrandr`, `libxcursor`, `systemd-libs`, `mesa` та `freetype2` для побудови з вихідних кодів).
 
 ### MS Windows
 

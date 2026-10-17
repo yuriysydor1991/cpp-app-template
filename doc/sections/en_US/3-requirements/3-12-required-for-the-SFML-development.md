@@ -16,14 +16,14 @@ If you prefer (or are forced to) let the `FetchContent` fallback build SFML from
 
 ```
 sudo apt install -y git g++ cmake \
-  libx11-dev libxrandr-dev libxcursor-dev libxi-dev libudev-dev \
+  libx11-dev libxrandr-dev libxcursor-dev libudev-dev \
   libgl1-mesa-dev libfreetype-dev
 ```
 
 ### Other GNU/Linux distributions
 
-- **Fedora / RHEL / openSUSE**: `SFML-devel` (or the toolchain plus `libX11-devel`, `libXrandr-devel`, `libXcursor-devel`, `libXi-devel`, `systemd-devel`, `mesa-libGL-devel` and `freetype-devel` for the source build).
-- **Arch Linux**: `sfml` (or `libx11`, `libxrandr`, `libxcursor`, `libxi`, `systemd-libs`, `mesa` and `freetype2` for the source build).
+- **Fedora / RHEL / openSUSE**: `SFML-devel` (or the toolchain plus `libX11-devel`, `libXrandr-devel`, `libXcursor-devel`, `systemd-devel`, `mesa-libGL-devel` and `freetype-devel` for the source build).
+- **Arch Linux**: `sfml` (or `libx11`, `libxrandr`, `libxcursor`, `systemd-libs`, `mesa` and `freetype2` for the source build).
 
 ### MS Windows
 

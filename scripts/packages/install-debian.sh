@@ -23,7 +23,6 @@ PACKAGES=(
     libudev-dev
     libx11-dev
     libxcursor-dev
-    libxi-dev
     libxrandr-dev
 )
 

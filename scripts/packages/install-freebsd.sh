@@ -21,7 +21,6 @@ PACKAGES="
     libudev-devd
     libX11
     libXcursor
-    libXi
     libXrandr
     SFML
 "

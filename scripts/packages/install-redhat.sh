@@ -19,7 +19,6 @@ PACKAGES=(
     gtest-devel
     libX11-devel
     libXcursor-devel
-    libXi-devel
     libXrandr-devel
     make
     mesa-libGL-devel

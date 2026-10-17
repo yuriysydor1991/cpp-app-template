@@ -14,7 +14,7 @@ add_executable(
 target_include_directories(
   CTEST_opencv
   PRIVATE
-    ${OPENCV_MOCKS_ROOT}/log
+    ${CMAKE_SOURCE_DIR}/src/app/tests/mocks/log
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
 )

@@ -9,6 +9,8 @@ cmake -S . -B build -DENABLE_V8=ON
 cmake --build build --target all
 ```
 
+Застосунок цієї гілки побудовано навколо V8, тож тут ця опція є обов'язковою: крок конфігурування CMake завершується з пояснювальним повідомленням, якщо опцію вимкнути (`OFF`).
+
 V8 збирається лише власним набором інструментів Google, що триває години і займає десятки гігабайтів, тому, на відміну від інших модулів, модуль [cmake/enablers/scripting/template-project-v8-enabler.cmake](/cmake/enablers/scripting/template-project-v8-enabler.cmake) нічого не завантажує з мережі, а натомість шукає вже встановлений V8. Дистрибутиви на базі Debian постачають V8 у складі спільної бібліотеки [Node.js](https://nodejs.org/), тому встанови її пакет розробки (скрипти `scripts/packages/install-ubuntu.sh` і `scripts/packages/install-debian.sh` також це роблять):
 
 ```

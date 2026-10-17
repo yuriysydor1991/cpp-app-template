@@ -9,6 +9,8 @@ cmake -S . -B build -DENABLE_V8=ON
 cmake --build build --target all
 ```
 
+The application of this branch is built around the V8, so the option is a hard requirement here: the CMake configure step fails with an explanatory message when the option is turned `OFF`.
+
 The V8 builds with the Google toolchain of it's own only, which takes hours and tens of gigabytes, so unlike the other enablers the [cmake/enablers/scripting/template-project-v8-enabler.cmake](/cmake/enablers/scripting/template-project-v8-enabler.cmake) module fetches nothing through the Internet and looks for an already installed V8 instead. The Debian based distributions ship the V8 inside the [Node.js](https://nodejs.org/) shared library, so install it's development package (the `scripts/packages/install-ubuntu.sh` and the `scripts/packages/install-debian.sh` scripts do it too):
 
 ```

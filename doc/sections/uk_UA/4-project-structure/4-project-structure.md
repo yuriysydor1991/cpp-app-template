@@ -5,7 +5,7 @@
 1. [Реалізування UI](/doc/sections/uk_UA/4-project-structure/4-8-gtkmm3glade-ui-implementation.md)
 1. [Компіляція ресурсів](/doc/sections/uk_UA/4-project-structure/4-6-gtkmm3glade-resource-embedding.md)
 1. [Зміна назви проекту і головного виконуваного файлу](/doc/sections/uk_UA/4-project-structure/4-2-changing-the-project-and-executable-name.md)
-1. [Впровадження нових параметрів командного рядка](/doc/sections/uk_UA/4-project-structure/4-6-introduction-of-the-custom-command-line-parameters.md)
+1. [Впровадження нових параметрів командного рядка](/doc/sections/uk_UA/4-project-structure/4-11-introduction-of-the-custom-command-line-parameters.md)
 1. [Реалізація власних нащадків IApplication](/doc/sections/uk_UA/4-project-structure/4-7-implementing-your-onw-IApplication-descendants.md)
 1. [Повідомлення інструментарію](/doc/sections/uk_UA/4-project-structure/4-9-the-toolkit-messages.md)
 1. [Обробка сигналів операційної системи](/doc/sections/uk_UA/4-project-structure/4-8-handling-the-OS-signals.md)

@@ -49,4 +49,4 @@ endif()
 # Both of the paths above provide the very same CFITSIO::cfitsio target, so
 # link it to your target(s) of interest (e.g. the ${PROJECT_BINARY_NAME}
 # executable or any of your own libraries):
-#   target_link_libraries(${PROJECT_BINARY_NAME} CFITSIO::cfitsio)
+#   target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE CFITSIO::cfitsio)

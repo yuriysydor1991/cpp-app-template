@@ -51,4 +51,4 @@ add_library(WCSLIB::wcslib ALIAS PkgConfig::WCSLIB)
 # Both of the paths above provide the very same WCSLIB::wcslib target, so link
 # it to your target(s) of interest (e.g. the ${PROJECT_BINARY_NAME} executable
 # or any of your own libraries):
-#   target_link_libraries(${PROJECT_BINARY_NAME} WCSLIB::wcslib)
+#   target_link_libraries(${PROJECT_BINARY_NAME} PRIVATE WCSLIB::wcslib)

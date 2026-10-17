@@ -34,7 +34,7 @@ target_link_libraries(
 
 target_link_libraries(
   ${PROJECT_BINARY_NAME}
-  TemplateProjectCFITSIOControllerObj
+  PRIVATE TemplateProjectCFITSIOControllerObj
 )
 
 add_subdirectory(tests)

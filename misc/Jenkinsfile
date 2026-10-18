@@ -30,7 +30,7 @@ pipeline {
       }
       
       steps {
-        git branch: 'app',
+        git branch: 'appRHVoice',
             url: 'https://github.com/yuriysydor1991/cpp-app-template.git'
       }
     }
@@ -128,6 +128,26 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "UTEST_CommandLineParser\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_CommandLineParser.junit.xml'
           }
         }
+        stage('UTEST_AudioPlayer') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_AudioPlayer\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_AudioPlayer.junit.xml'
+          }
+        }
+        stage('UTEST_Speech') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_Speech\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_Speech.junit.xml'
+          }
+        }
+        stage('UTEST_WavWriter') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_WavWriter\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_WavWriter.junit.xml'
+          }
+        }
+        stage('UTEST_RHVoiceController') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_RHVoiceController\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_RHVoiceController.junit.xml'
+          }
+        }
         stage('UTEST_SignalsHandler') { 
           steps { 
             sh 'cd $BUILDDIR && ctest -R "UTEST_SignalsHandler\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_SignalsHandler.junit.xml'
@@ -187,6 +207,11 @@ pipeline {
         stage('CTEST_app') { 
           steps { 
             sh 'cd $BUILDDIR && ctest -R "CTEST_app\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_app.junit.xml'
+          }
+        }
+        stage('CTEST_RHVoiceController') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "CTEST_RHVoiceController\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_RHVoiceController.junit.xml'
           }
         }
       }

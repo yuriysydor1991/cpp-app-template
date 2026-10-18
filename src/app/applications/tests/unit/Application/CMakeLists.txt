@@ -5,6 +5,7 @@ add_executable(
   UTEST_Application.cpp
   ${CMAKE_SOURCE_DIR}/src/app/applications/Application.cpp
   ${APP_MOCKS_ROOT}/ApplicationContext/src/app/ApplicationContext.cpp
+  ${CMAKE_SOURCE_DIR}/src/TTS/Speech.cpp
 )
 
 target_include_directories(
@@ -12,6 +13,9 @@ target_include_directories(
   PRIVATE ${APP_MOCKS_ROOT}/ApplicationContext
   PRIVATE ${APP_MOCKS_ROOT}/project-global-decls
   PRIVATE ${APP_MOCKS_ROOT}/log
+  PRIVATE ${APP_MOCKS_ROOT}/ISpeechSynthesizer
+  PRIVATE ${APP_MOCKS_ROOT}/AudioPlayer
+  PRIVATE ${APP_MOCKS_ROOT}/WavWriter
   PRIVATE ${CMAKE_SOURCE_DIR}
 )
 

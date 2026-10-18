@@ -6,6 +6,14 @@ In order to build minimum template project install the GCC C++ compiler with CMa
 sudo apt install -y git g++ cmake
 ```
 
+The `appRHVoice` branch additionally needs the development files of the [RHVoice](https://github.com/RHVoice/RHVoice) speech synthesis library together with it's English and Ukrainian voices, and of the [SDL2](https://www.libsdl.org/) library it plays the speech with:
+
+```
+sudo apt install -y librhvoice-dev rhvoice-english rhvoice-ukrainian libsdl2-dev
+```
+
+The `scripts/packages/install-ubuntu.sh` (or the `scripts/packages/install-debian.sh`) script installs them together with the rest of the required packages. The Ubuntu takes them from it's `multiverse` component, while the Debian has them in the `non-free` one alone, which has to be enabled first. The RPM-based distributions package no RHVoice, so the `scripts/packages/install-redhat.sh` script builds it out of it's sources next to the `SDL2-devel` package; on FreeBSD the packages are `audio/rhvoice` and `devel/sdl20` from `pkg`. See the [Enabling the RHVoice speech synthesis](/doc/sections/en_US/5-project-build/tts/5-69-enabling-the-RHVoice-speech-synthesis.md) section for the details and for the LGPL-2.1-or-later license of the library and the own licenses of the voices.
+
 The [scripts/packages](/scripts/packages) directory holds the scripts which install every package the project needs in one go. The [install-ubuntu.sh](/scripts/packages/install-ubuntu.sh) and [install-debian.sh](/scripts/packages/install-debian.sh) ones run the script of the running release - the [install-ubuntu-24-04.sh](/scripts/packages/install-ubuntu-24-04.sh), the [install-ubuntu-26-04.sh](/scripts/packages/install-ubuntu-26-04.sh) or the [install-debian-13.sh](/scripts/packages/install-debian-13.sh) one - since every release names and versions its packages its own way, and fail with the list of the supported releases on any other one. A dependency a release packages no usable version of is built by its script out of a pinned release tag of the dependency sources. The [install-redhat.sh](/scripts/packages/install-redhat.sh) script covers Fedora, RHEL and its rebuilds, and the [install-freebsd.sh](/scripts/packages/install-freebsd.sh) one covers FreeBSD:
 
 ```

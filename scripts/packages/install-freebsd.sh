@@ -16,6 +16,8 @@ PACKAGES="
     cmake
     git
     googletest
+    rhvoice
+    sdl2
 "
 
 PKG_SUDO=""

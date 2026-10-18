@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include <map>
 #include <memory>
 #include <set>
 #include <string>
@@ -12,6 +13,27 @@
 
 namespace app
 {
+
+namespace
+{
+
+using DataSetter = void (ApplicationContext::*)(const std::string&);
+
+/// @brief The parameters of the speech with the context setters of theirs.
+const std::map<std::string, DataSetter>& speech_params()
+{
+  static const std::map<std::string, DataSetter> params{
+      {CMDParamNames::TEXTW, &ApplicationContext::set_text},
+      {CMDParamNames::TEXT, &ApplicationContext::set_text},
+      {CMDParamNames::VOICEW, &ApplicationContext::set_voice},
+      {CMDParamNames::VOICE, &ApplicationContext::set_voice},
+      {CMDParamNames::OUTPUTW, &ApplicationContext::set_output_path},
+      {CMDParamNames::OUTPUT, &ApplicationContext::set_output_path}};
+
+  return params;
+}
+
+}  // namespace
 
 bool CommandLineParser::parse_args(std::shared_ptr<ApplicationContext> ctx)
 {
@@ -64,8 +86,7 @@ bool CommandLineParser::check_4_data(
 
 bool CommandLineParser::parse_arg(std::shared_ptr<ApplicationContext> ctx,
                                   const std::string& param, const bool hasNext,
-                                  [[maybe_unused]] const std::string& nextParam,
-                                  int& paramIndex)
+                                  const std::string& nextParam, int& paramIndex)
 {
   assert(ctx != nullptr);
 
@@ -87,6 +108,9 @@ bool CommandLineParser::parse_arg(std::shared_ptr<ApplicationContext> ctx,
     // skipping already parsed cmd params
     paramIndex++;
     return true;
+  } else if (const auto speech = speech_params().find(param);
+             speech != speech_params().cend()) {
+    ((*ctx).*(speech->second))(nextParam);
   } else {
     ctx->set_print_help_and_exit(true);
     ctx->push_error("Unknown parameter: " + param);
@@ -105,8 +129,10 @@ const std::set<std::string>& CommandLineParser::get_params_requiring_data()
 {
   // Place here command line parameters that are requiring
   // some data after it.
-  static const std::set<std::string> requireNext{CMDParamNames::LOGPATHW,
-                                                 CMDParamNames::LOGPATH};
+  static const std::set<std::string> requireNext{
+      CMDParamNames::LOGPATHW, CMDParamNames::LOGPATH, CMDParamNames::TEXTW,
+      CMDParamNames::TEXT,     CMDParamNames::VOICEW,  CMDParamNames::VOICE,
+      CMDParamNames::OUTPUTW,  CMDParamNames::OUTPUT};
 
   return requireNext;
 }

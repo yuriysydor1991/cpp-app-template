@@ -24,7 +24,7 @@ Examine available branches to find your most applicable variant of the template 
 
 - `main` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template)] just the clear `main` function and all available CMake integrations with no additional app infrastructure classes.
 
-- `app` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/app), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/app)] (**current**) with just general application related classes to generate a single binary executable.
+- `app` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/app), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/app)] with just general application related classes to generate a single binary executable.
 
 - `applib` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/applib), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/applib)] for the application binary with additional separate library binary and header files (available for the installation) in order to provide library's code reusability across multiple applications.
 
@@ -138,6 +138,11 @@ Examine available branches to find your most applicable variant of the template 
 
 - `appDarknetXX` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appDarknetXX), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appDarknetXX)] with general application related classes to generate a single binary executable that detects the objects in an image with the [darknetxx](https://github.com/yuriysydor1991/darknetxx) (the C++ port of the [Darknet](https://github.com/AlexeyAB/darknet) neural network): a small controller loads a Darknet network of a cfg file with the weights of the original `*.weights` file or of the darknetxx `*.dxxwjz1` one, or the whole network of the darknetxx `*.dxxwjz2` file, so the Application logs every detected object through the `LOGI` macro. The configure fetches the darknetxx sources, builds its network core into the executable and downloads the weights of the YOLOv4-tiny network of the COCO data set.
 
+## Text to speech (TTS)
+
+- `appESpeakNG` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appESpeakNG), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appESpeakNG)] with general application related classes to generate a single binary executable that speaks the text given in the command line with the [eSpeak NG](https://github.com/espeak-ng/espeak-ng) speech synthesis library: the engine neutral text to speech classes play the synthesized speech through the default audio device with the [SDL2](https://www.libsdl.org/) audio subsystem or write it into a WAV file, so another speech engine takes the place of the eSpeak NG by a single controller class. The eSpeak NG speaks more than a hundred languages (the English and the Ukrainian among them) and is licensed under the GPL-3.0-or-later, which the distributed executable inherits.
+- `appRHVoice` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appRHVoice), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appRHVoice)] (**current**) with general application related classes to generate a single binary executable that speaks the text given in the command line with the [RHVoice](https://github.com/RHVoice/RHVoice) speech synthesis library and it's English (Alan etc.) and Ukrainian (Anatol, Natalia etc.) voices: the engine neutral text to speech classes play the synthesized speech through the default audio device with the [SDL2](https://www.libsdl.org/) audio subsystem or write it into a WAV file, the same ones the `appESpeakNG` branch uses with the RHVoice controller class in place of the eSpeak NG one. The RHVoice library is licensed under the LGPL-2.1-or-later, while it's voices carry licenses of their own, a part of them forbidding the commercial use or the modifications (the reason the Debian keeps the RHVoice in it's non-free component).
+
 ## System / DBus
 
 - `appSDBusCxxClient` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSDBusCxxClient), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSDBusCxxClient)] with just general application related classes to generate a single binary executable with the usage of [Kistler-Group's sdbus-c++](https://github.com/Kistler-Group/sdbus-cpp.git) library as a [DBus](https://en.wikipedia.org/wiki/D-Bus) services client.
@@ -249,6 +254,10 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
         1. [Enabling the OpenJPEG library (JPEG 2000)](/doc/sections/en_US/5-project-build/image-libraries/5-31-enabling-the-openjpeg-library.md)
         1. [Enabling the libavif library (AVIF)](/doc/sections/en_US/5-project-build/image-libraries/5-32-enabling-the-libavif-library.md)
         1. [Enabling the libheif library (HEIF/HEIC)](/doc/sections/en_US/5-project-build/image-libraries/5-33-enabling-the-libheif-library.md)
+    1. Text to speech
+        1. [Enabling the RHVoice speech synthesis](/doc/sections/en_US/5-project-build/tts/5-69-enabling-the-RHVoice-speech-synthesis.md)
+    1. Audio
+        1. [Enabling the SDL2 audio playback](/doc/sections/en_US/5-project-build/audio/5-68-enabling-the-SDL2-audio-playback.md)
 1. [Run the executable](/doc/sections/en_US/6-run-the-executable/6-run-the-executable.md)
     1. [IDE run](/doc/sections/en_US/6-run-the-executable/6-1-IDE-run.md)
     1. Command line run

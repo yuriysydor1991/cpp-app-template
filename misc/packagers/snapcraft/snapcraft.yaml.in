@@ -13,6 +13,10 @@ apps:
     command: ${SNAP_APP_COMMAND}${SNAP_APP_DESKTOP}
     plugs:
       - home${SNAP_APP_DESKTOP_PLUGS}
+      - audio-playback
+    environment:
+      RHVOICE_DATA_PATH: $SNAP/usr/share/RHVoice
+      RHVOICE_CONFIG_PATH: $SNAP/etc/RHVoice
 
 parts:
   ${PROJECT_BINARY_NAME}:
@@ -22,3 +26,11 @@ parts:
     cmake-parameters:
       - -DCMAKE_BUILD_TYPE=Release
       - -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
+    build-packages:
+      - librhvoice-dev
+      - libsdl2-dev
+    stage-packages:
+      - librhvoice5
+      - rhvoice-english
+      - rhvoice-ukrainian
+      - libsdl2-2.0-0

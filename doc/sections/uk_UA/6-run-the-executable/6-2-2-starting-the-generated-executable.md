@@ -8,4 +8,17 @@
 ./src/CppAppTemplate
 ```
 
+Виконуваний файл гілки `appRHVoice` промовляє англійським голосом `Alan` привітання `Hello, RHVoice! Insert your text here!` через типовий аудіопристрій системи і завершується, щойно мовлення відтворено (або його зупинять клавіші Ctrl+C). Параметр `--text` (або `-t`) задає інший текст, параметр `--voice` (або `-s`) - інший голос RHVoice (`Anatol` чи `Natalia` для українського тексту), а параметр `--output` (або `-o`) записує мовлення у 16-бітний монофонічний WAV-файл PCM замість відтворення:
+
+```
+# з директорії побудови
+./src/CppAppTemplate --text "Привіт, світе!" --voice Anatol
+./src/CppAppTemplate -t "Hello, world!" -s Slt -o hello.wav
+```
+
+```
+2026-10-18 13:00:51 DBG 140354055991680 RHVoiceController.cpp:118 : Synthesized 36360 samples with the Anatol RHVoice voice
+2026-10-18 13:00:51 DBG 140354055991680 AudioPlayer.cpp:48 : Playing the 1515 ms speech through the pulseaudio audio driver
+```
+
 І ще раз, ім'я `CppAppTemplate` являється ім'ям головного виконуваного бінарного файлу за замовчуванням. Його необхідно замінити у разі заміни ім'я за умовчанням у кореневому файлі `CMakeLists.txt` (змінні `CMAKE_PROJECT_NAME` або `PROJECT_BINARY_NAME`).

@@ -1,8 +1,10 @@
+#include <SDL.h>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 #include <algorithm>
 #include <csignal>
+#include <cstddef>
 #include <filesystem>
 #include <iterator>
 #include <string>
@@ -18,7 +20,41 @@ using namespace testing;
 class CTEST_app : public Test
 {
  public:
-  CTEST_app() { std::filesystem::remove(default_log_file()); }
+  /// @brief The dummy audio driver of the SDL plays the speech, so no sound
+  /// card takes part. The variable of the SDL3 run sdl2-compat library is
+  /// given as well.
+  CTEST_app()
+  {
+    std::filesystem::remove(default_log_file());
+    std::filesystem::remove(wavFile);
+
+    SDL_setenv("SDL_AUDIODRIVER", "dummy", 1);
+    SDL_setenv("SDL_AUDIO_DRIVER", "dummy", 1);
+  }
+
+  /// @brief Reads the WAV file the application writes, checking the format of
+  /// it.
+  static std::size_t wav_samples_count()
+  {
+    SDL_AudioSpec spec{};
+    Uint8* wave{nullptr};
+    Uint32 length{0U};
+
+    if (SDL_LoadWAV(wavFile.c_str(), &spec, &wave, &length) == nullptr) {
+      ADD_FAILURE() << "The SDL fails to load the WAV: " << SDL_GetError();
+      return 0U;
+    }
+
+    SDL_FreeWAV(wave);
+
+    EXPECT_EQ(spec.freq, 24000);
+    EXPECT_EQ(spec.format, AUDIO_S16LSB);
+    EXPECT_EQ(spec.channels, 1U);
+
+    return length / 2U;
+  }
+
+  inline static const std::string wavFile{"CTEST_app.speech.wav"};
 
   /// @brief The default log file of the factory, which the current working
   /// directory of the test case keeps.
@@ -303,4 +339,39 @@ TEST_F(CTEST_app, custom_log_file_is_used)
 
   EXPECT_TRUE(std::filesystem::exists(customLog));
   EXPECT_FALSE(std::filesystem::exists(default_log_file()));
+}
+
+TEST_F(CTEST_app, output_writes_the_spoken_default_text)
+{
+  EXPECT_EQ(execute_with({"--output", wavFile}), 0);
+
+  EXPECT_GT(wav_samples_count(), 24000U);
+}
+
+TEST_F(CTEST_app, ukrainian_text_and_voice_are_spoken)
+{
+  EXPECT_EQ(
+      execute_with({"-t", "Привіт, світе!", "-s", "Anatol", "-o", wavFile}), 0);
+
+  EXPECT_GT(wav_samples_count(), 12000U);
+}
+
+TEST_F(CTEST_app, unknown_voice_fails_with_no_output)
+{
+  EXPECT_NE(execute_with({"--voice", "nosuchvoice", "--output", wavFile}), 0);
+
+  EXPECT_FALSE(std::filesystem::exists(wavFile));
+}
+
+TEST_F(CTEST_app, help_lists_the_speech_options)
+{
+  testing::internal::CaptureStdout();
+
+  EXPECT_EQ(execute_with({"--help"}), 0);
+
+  const std::string help = testing::internal::GetCapturedStdout();
+
+  EXPECT_THAT(help, HasSubstr("--text"));
+  EXPECT_THAT(help, HasSubstr("--voice"));
+  EXPECT_THAT(help, HasSubstr("--output"));
 }

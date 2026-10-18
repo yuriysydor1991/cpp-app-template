@@ -3,6 +3,7 @@
 
 #include <string>
 
+#include "project-global-decls.h"
 #include "src/app/applications/ApplicationHelpPrinter.h"
 
 using namespace app;
@@ -66,4 +67,21 @@ TEST_F(UTEST_ApplicationHelpPrinter, the_log_file_option_is_listed)
 
   EXPECT_THAT(help, HasSubstr("--log-file"));
   EXPECT_THAT(help, HasSubstr("-l"));
+}
+
+TEST_F(UTEST_ApplicationHelpPrinter, the_speech_options_are_listed)
+{
+  testing::internal::CaptureStdout();
+
+  EXPECT_EQ(app->run(appCtx), 0);
+
+  const std::string help = testing::internal::GetCapturedStdout();
+
+  for (const char* const option :
+       {"--text or -t", "--voice or -s", "--output or -o"}) {
+    EXPECT_THAT(help, HasSubstr(option));
+  }
+
+  EXPECT_THAT(help, HasSubstr(project_decls::PROJECT_TTS_TEXT));
+  EXPECT_THAT(help, HasSubstr(project_decls::PROJECT_TTS_VOICE));
 }

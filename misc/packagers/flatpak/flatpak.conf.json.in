@@ -6,6 +6,85 @@
   "command": "${PROJECT_BINARY_NAME}",
   "modules": [
     {
+      "name": "rhvoice",
+      "buildsystem": "cmake-ninja",
+      "builddir": true,
+      "config-opts": [
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_POLICY_VERSION_MINIMUM=3.5",
+        "-DRHVOICE_VERSION_FROM_GIT=1.18.4"
+      ],
+      "post-install": [
+        "install -Dm644 -t /app/include $FLATPAK_BUILDER_BUILDDIR/src/include/RHVoice.h $FLATPAK_BUILDER_BUILDDIR/src/include/RHVoice_common.h"
+      ],
+      "cleanup": [
+        "/bin",
+        "/include",
+        "/share/dbus-1"
+      ],
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://github.com/RHVoice/RHVoice/archive/refs/tags/1.18.4.tar.gz",
+          "sha256": "cfb336dbb31fd84b96ac1cfc9285ad2888eea7f11efbf11f4da66b1cb6fae682"
+        },
+        {
+          "type": "archive",
+          "url": "https://github.com/TheLartians/Ccache.cmake/archive/17084300aa02f338a9ddf9e0352426d59b3d6eec.tar.gz",
+          "sha256": "a595ed09df33b7c391da14baf8651b6da359f1b0d11c31a6290b52051e0192a5",
+          "dest": "cmake/thirdParty/CCache"
+        },
+        {
+          "type": "archive",
+          "url": "https://github.com/arsenm/sanitizers-cmake/archive/99e159ec9bc8dd362b08d18436bd40ff0648417b.tar.gz",
+          "sha256": "f9cf386638f455c5d2e7a835b95941201387d2531b8682942d59827663b58341",
+          "dest": "cmake/thirdParty/sanitizers"
+        },
+        {
+          "type": "archive",
+          "url": "https://github.com/waywardgeek/sonic/archive/ba331411f17702e01f6c2d7016eefebaa695871f.tar.gz",
+          "sha256": "469a66b6b54bb825efdc4cbaef1bbd45f87ddc6ce9f73ce7b1060f26b33ec6a9",
+          "dest": "external/libs/sonic"
+        },
+        {
+          "type": "archive",
+          "url": "https://github.com/RHVoice/English/archive/8a2ea34df72a190dae245460aeb20a867d64775c.tar.gz",
+          "sha256": "426536cbf954a116e434b0cf7212aa5a665236b53d3064f4ccaa300a6a0af426",
+          "dest": "data/languages/English"
+        },
+        {
+          "type": "archive",
+          "url": "https://github.com/RHVoice/Ukrainian/archive/44e0a5d1728ebef776f2f56cdb09253b0d3a210a.tar.gz",
+          "sha256": "34c2a5fb31e97bfc34bf019a9a48460f13ea3801e19a8097e59d7c5ca1f701d9",
+          "dest": "data/languages/Ukrainian"
+        },
+        {
+          "type": "archive",
+          "url": "https://github.com/RHVoice/alan-eng/archive/bb3fdb15b9c64109f396f56f6155965bfcf89977.tar.gz",
+          "sha256": "9969feae415f6b570e415c4f151146ee94c2bad4f290bdf110492e5892469f12",
+          "dest": "data/voices/alan"
+        },
+        {
+          "type": "archive",
+          "url": "https://github.com/RHVoice/anatol-ukr/archive/84fe4de6d724b45c0a66ddb1d009dce2ca5a8e9e.tar.gz",
+          "sha256": "055e90a4637370f254741e1d67fdca9bef3cd8e0978247ae8ec433caca64a84f",
+          "dest": "data/voices/anatol"
+        },
+        {
+          "type": "archive",
+          "url": "https://github.com/RHVoice/natalia-ukr/archive/d259dbe509187efa5eebe7dd449f2181216bcda5.tar.gz",
+          "sha256": "43572f14d677fe0592cdb426b4b2a8a276de19f3bd0f7588eab9fd53449fafe9",
+          "dest": "data/voices/natalia"
+        },
+        {
+          "type": "shell",
+          "commands": [
+            "rmdir data/languages/* data/voices/* 2> /dev/null || true"
+          ]
+        }
+      ]
+    },
+    {
       "name": "${CMAKE_PROJECT_NAME}",
       "buildsystem": "cmake",
       "config-opts": [
@@ -19,5 +98,9 @@
         }
       ]
     }
+  ],
+  "finish-args": [
+    "--socket=pulseaudio",
+    "--filesystem=home"
   ]
 }

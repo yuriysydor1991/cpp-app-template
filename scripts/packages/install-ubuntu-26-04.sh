@@ -6,6 +6,9 @@
 # Every package of the list exists in the Ubuntu 26.04 archive. A dependency the
 # release packages no usable version of is built out of a pinned release tag
 # of its sources with the cmake_install_from_source helper of the common.sh.
+#
+# The RHVoice packages (librhvoice-dev and the rhvoice-* voices) come from the
+# multiverse component, which the Ubuntu enables by default.
 
 PROJECT_ROOT=$(realpath "$(dirname "$0")/../..")
 
@@ -19,8 +22,12 @@ PACKAGES=(
     googletest
     libgmock-dev
     libgtest-dev
+    librhvoice-dev
+    libsdl2-dev
     libssl-dev
     libstdc++6
+    rhvoice-english
+    rhvoice-ukrainian
 )
 
 apt_install "${PACKAGES[@]}"

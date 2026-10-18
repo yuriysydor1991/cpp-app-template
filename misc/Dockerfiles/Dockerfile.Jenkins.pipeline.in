@@ -2,6 +2,8 @@ FROM jenkins/jenkins:lts
 
 USER root 
 
+# The Debian carries the RHVoice in it's non-free component alone.
+RUN sed -i 's/^Components: main$/Components: main non-free/' /etc/apt/sources.list.d/debian.sources
 RUN apt update
 RUN apt install -y libstdc++6 build-essential git cmake g++
 RUN apt install -y clang-format
@@ -14,6 +16,7 @@ RUN apt install -y doxygen graphviz
 RUN apt install -y clang-tidy
 RUN apt install -y libgtest-dev
 RUN apt install -y libgmock-dev
+RUN apt install -y librhvoice-dev rhvoice-english rhvoice-ukrainian libsdl2-dev
 
 USER jenkins
 

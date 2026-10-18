@@ -45,6 +45,30 @@ void ApplicationContext::push_error(const std::string& errorDescription)
   merrors.emplace_back(errorDescription);
 }
 
+const std::string& ApplicationContext::get_text() const { return mtext; }
+
+void ApplicationContext::set_text(const std::string& newValue)
+{
+  mtext = newValue;
+}
+
+const std::string& ApplicationContext::get_voice() const { return mvoice; }
+
+void ApplicationContext::set_voice(const std::string& newValue)
+{
+  mvoice = newValue;
+}
+
+const std::string& ApplicationContext::get_output_path() const
+{
+  return moutput_path;
+}
+
+void ApplicationContext::set_output_path(const std::string& newValue)
+{
+  moutput_path = newValue;
+}
+
 bool ApplicationContext::get_stop() const { return mstop.load(); }
 
 void ApplicationContext::set_stop(const bool newValue)

@@ -66,6 +66,30 @@ class ApplicationContext
   /// @brief Pushes a new error description into the merrors field.
   void push_error(const std::string& errorDescription);
 
+  /// @brief Provides the text the Application speaks. Empty while the command
+  /// line carries none.
+  const std::string& get_text() const;
+
+  /// @brief Sets the text for the Application to speak. The CommandLineParser
+  /// fills it out of the command line.
+  void set_text(const std::string& newValue);
+
+  /// @brief Provides the voice of the speech engine the Application speaks
+  /// with. Empty while the command line carries none.
+  const std::string& get_voice() const;
+
+  /// @brief Sets the voice of the speech engine for the Application to speak
+  /// with. The CommandLineParser fills it out of the command line.
+  void set_voice(const std::string& newValue);
+
+  /// @brief Provides the path of the WAV file the Application writes the
+  /// speech into. Empty while the speech is played instead.
+  const std::string& get_output_path() const;
+
+  /// @brief Sets the path of the WAV file for the Application to write the
+  /// speech into. The CommandLineParser fills it out of the command line.
+  void set_output_path(const std::string& newValue);
+
   /// @brief Tells if the application was asked to stop. Atomic, so it is safe
   /// to poll it from any thread.
   bool get_stop() const;
@@ -129,6 +153,17 @@ class ApplicationContext
 
   /// @brief Errors description.
   std::vector<std::string> merrors;
+
+  /// @brief The text to speak. See the ApplicationContext::set_text setter.
+  std::string mtext;
+
+  /// @brief The voice to speak with. See the ApplicationContext::set_voice
+  /// setter.
+  std::string mvoice;
+
+  /// @brief The WAV file path to write the speech into. See the
+  /// ApplicationContext::set_output_path setter.
+  std::string moutput_path;
 
   /// @brief The thread safe application stop flag. See the
   /// ApplicationContext::set_stop setter.

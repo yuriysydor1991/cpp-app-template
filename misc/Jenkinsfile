@@ -30,7 +30,7 @@ pipeline {
       }
       
       steps {
-        git branch: 'app',
+        git branch: 'appSherpaONNX',
             url: 'https://github.com/yuriysydor1991/cpp-app-template.git'
       }
     }
@@ -38,7 +38,8 @@ pipeline {
     stage('Code format configure') {
       steps {
         sh '''
-          cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Debug -DENABLE_CLANGFORMAT=ON
+          cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Debug -DENABLE_CLANGFORMAT=ON \
+            -DENABLE_SHERPA_ONNX_MODEL_DOWNLOAD=OFF
         '''
       }
     }
@@ -128,6 +129,31 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "UTEST_CommandLineParser\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_CommandLineParser.junit.xml'
           }
         }
+        stage('UTEST_AudioPlayer') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_AudioPlayer\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_AudioPlayer.junit.xml'
+          }
+        }
+        stage('UTEST_Speech') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_Speech\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_Speech.junit.xml'
+          }
+        }
+        stage('UTEST_WavWriter') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_WavWriter\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_WavWriter.junit.xml'
+          }
+        }
+        stage('UTEST_SherpaONNXController') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_SherpaONNXController\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_SherpaONNXController.junit.xml'
+          }
+        }
+        stage('UTEST_SherpaONNXModel') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_SherpaONNXModel\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_SherpaONNXModel.junit.xml'
+          }
+        }
         stage('UTEST_SignalsHandler') { 
           steps { 
             sh 'cd $BUILDDIR && ctest -R "UTEST_SignalsHandler\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_SignalsHandler.junit.xml'
@@ -189,6 +215,11 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "CTEST_app\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_app.junit.xml'
           }
         }
+        stage('CTEST_SherpaONNXController') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "CTEST_SherpaONNXController\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/CTEST_SherpaONNXController.junit.xml'
+          }
+        }
       }
       post { always { junit "$BUILDDIR/$BDJUNITOUT/CTEST_*.xml" } }
     }
@@ -198,7 +229,7 @@ pipeline {
         sh 'rm -fr $BUILDDIR'
         sh '''
           cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Debug -DENABLE_CLANG_TIDY=ON \
-            -DMAX_LOG_LEVEL=5
+            -DMAX_LOG_LEVEL=5 -DENABLE_SHERPA_ONNX_MODEL_DOWNLOAD=OFF
         '''
       }
     }

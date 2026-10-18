@@ -1,8 +1,10 @@
+#include <SDL.h>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 #include <algorithm>
 #include <csignal>
+#include <cstddef>
 #include <filesystem>
 #include <iterator>
 #include <string>
@@ -18,7 +20,56 @@ using namespace testing;
 class CTEST_app : public Test
 {
  public:
-  CTEST_app() { std::filesystem::remove(default_log_file()); }
+  /// @brief The dummy audio driver of the SDL plays the speech, so no sound
+  /// card takes part. The variable of the SDL3 run sdl2-compat library is
+  /// given as well.
+  CTEST_app()
+  {
+    std::filesystem::remove(default_log_file());
+    std::filesystem::remove(wavFile);
+
+    SDL_setenv("SDL_AUDIODRIVER", "dummy", 1);
+    SDL_setenv("SDL_AUDIO_DRIVER", "dummy", 1);
+  }
+
+  /// @brief Reads the WAV file the application writes, checking the format of
+  /// it.
+  static std::size_t wav_samples_count()
+  {
+    SDL_AudioSpec spec{};
+    Uint8* wave{nullptr};
+    Uint32 length{0U};
+
+    if (SDL_LoadWAV(wavFile.c_str(), &spec, &wave, &length) == nullptr) {
+      ADD_FAILURE() << "The SDL fails to load the WAV: " << SDL_GetError();
+      return 0U;
+    }
+
+    SDL_FreeWAV(wave);
+
+    EXPECT_EQ(spec.freq, SAMPLE_RATE);
+    EXPECT_EQ(spec.format, AUDIO_S16LSB);
+    EXPECT_EQ(spec.channels, 1U);
+
+    return length / 2U;
+  }
+
+  /// @brief Tells if the Kokoro model the configure downloads is at hand,
+  /// which the test cases speaking with the default voice need.
+  static bool voice_downloaded()
+  {
+    return std::filesystem::exists(project_decls::PROJECT_TTS_VOICE +
+                                   "/voices.bin");
+  }
+
+  inline static const std::string wavFile{"CTEST_app.speech.wav"};
+
+  /// @brief The Kokoro models speak at the 24 kHz rate.
+  inline static constexpr const int SAMPLE_RATE = 24000;
+
+  inline static const std::string NO_VOICE{
+      "No Kokoro model downloaded, configure with the "
+      "-DENABLE_SHERPA_ONNX_MODEL_DOWNLOAD=ON for it"};
 
   /// @brief The default log file of the factory, which the current working
   /// directory of the test case keeps.
@@ -225,6 +276,10 @@ TEST_F(CTEST_app, signals_handler_ignores_the_broken_pipe)
 
 TEST_F(CTEST_app, execute_success)
 {
+  if (!voice_downloaded()) {
+    GTEST_SKIP() << NO_VOICE;
+  }
+
   int status = ApplicationFactory::execute(argc, argv);
 
   EXPECT_EQ(status, 0);
@@ -295,6 +350,10 @@ TEST_F(CTEST_app, unopenable_log_file_fails_before_the_run)
 
 TEST_F(CTEST_app, custom_log_file_is_used)
 {
+  if (!voice_downloaded()) {
+    GTEST_SKIP() << NO_VOICE;
+  }
+
   static const std::filesystem::path customLog{"CTEST_app.custom.log"};
 
   std::filesystem::remove(customLog);
@@ -303,4 +362,49 @@ TEST_F(CTEST_app, custom_log_file_is_used)
 
   EXPECT_TRUE(std::filesystem::exists(customLog));
   EXPECT_FALSE(std::filesystem::exists(default_log_file()));
+}
+
+TEST_F(CTEST_app, output_writes_the_spoken_default_text)
+{
+  if (!voice_downloaded()) {
+    GTEST_SKIP() << NO_VOICE;
+  }
+
+  EXPECT_EQ(execute_with({"--output", wavFile}), 0);
+
+  EXPECT_GT(wav_samples_count(), static_cast<std::size_t>(SAMPLE_RATE));
+}
+
+TEST_F(CTEST_app, text_and_voice_speaker_are_spoken)
+{
+  if (!voice_downloaded()) {
+    GTEST_SKIP() << NO_VOICE;
+  }
+
+  EXPECT_EQ(
+      execute_with({"-t", "Hello, world!", "-s",
+                    project_decls::PROJECT_TTS_VOICE + ":3", "-o", wavFile}),
+      0);
+
+  EXPECT_GT(wav_samples_count(), static_cast<std::size_t>(SAMPLE_RATE / 2));
+}
+
+TEST_F(CTEST_app, unknown_voice_fails_with_no_output)
+{
+  EXPECT_NE(execute_with({"--voice", "nosuchvoice", "--output", wavFile}), 0);
+
+  EXPECT_FALSE(std::filesystem::exists(wavFile));
+}
+
+TEST_F(CTEST_app, help_lists_the_speech_options)
+{
+  testing::internal::CaptureStdout();
+
+  EXPECT_EQ(execute_with({"--help"}), 0);
+
+  const std::string help = testing::internal::GetCapturedStdout();
+
+  EXPECT_THAT(help, HasSubstr("--text"));
+  EXPECT_THAT(help, HasSubstr("--voice"));
+  EXPECT_THAT(help, HasSubstr("--output"));
 }

@@ -43,8 +43,8 @@ class ISpeechSynthesizer
 
   /**
    * @brief Creates the synthesizer of the speech engine the build links in.
-   * The engine sources define it (the src/ESpeakNG/ESpeakNGController.cpp
-   * file does), so swapping the engine leaves the callers untouched.
+   * The engine sources of the flavor define it, so swapping the engine
+   * leaves the callers untouched.
    *
    * @return The created synthesizer.
    */

@@ -17,7 +17,9 @@ PACKAGES=(
     gmock-devel
     gtest-devel
     make
+    onnxruntime-devel
     openssl-devel
+    SDL2-devel
 )
 
 DNF_SUDO=""

@@ -38,6 +38,10 @@ set(CPACK_DEB_COMPONENT_INSTALL ON)
 set(CPACK_PACKAGE_DESCRIPTION ${CMAKE_PROJECT_DESCRIPTION})
 set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE ${TEMPLATE_PROJECT_DEB_PACKAGE_ARCHITECTURE})
 set(CPACK_DEBIAN_PACKAGE_DEPENDS "")
+# The executable links the SDL2 and, through the libpiper the package carries,
+# the onnxruntime shared libraries, so the dpkg-shlibdeps tool finds the
+# packages to depend on.
+set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
 
 # the CPACK_SYSTEM_NAME of the default file name names the system alone, so the
 # destination CPU and OS take its place

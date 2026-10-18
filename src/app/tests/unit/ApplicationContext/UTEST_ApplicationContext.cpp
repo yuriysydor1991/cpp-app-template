@@ -34,6 +34,9 @@ TEST_F(UTEST_ApplicationContext, empty_context)
   EXPECT_EQ(appCtx->get_argc(), 0);
   EXPECT_EQ(appCtx->get_argv(), nullptr);
 
+  EXPECT_TRUE(appCtx->get_text().empty());
+  EXPECT_TRUE(appCtx->get_voice().empty());
+  EXPECT_TRUE(appCtx->get_output_path().empty());
   EXPECT_TRUE(appCtx->get_errors().empty());
   EXPECT_FALSE(appCtx->get_print_help_and_exit());
   EXPECT_FALSE(appCtx->get_print_version_and_exit());
@@ -159,6 +162,29 @@ TEST_F(UTEST_ApplicationContext, setting_the_print_version_and_exit_flag)
 
   EXPECT_FALSE(appCtx->get_print_version_and_exit());
   EXPECT_FALSE(appCtx->get_print_help_and_exit());
+}
+
+TEST_F(UTEST_ApplicationContext, setting_the_speech_parameters)
+{
+  appCtx->set_text("Привіт, світе!");
+  appCtx->set_voice("uk");
+  appCtx->set_output_path("/tmp/a-speech.wav");
+
+  EXPECT_EQ(appCtx->get_text(), "Привіт, світе!");
+  EXPECT_EQ(appCtx->get_voice(), "uk");
+  EXPECT_EQ(appCtx->get_output_path(), "/tmp/a-speech.wav");
+
+  appCtx->set_text({});
+  appCtx->set_voice({});
+  appCtx->set_output_path({});
+
+  EXPECT_TRUE(appCtx->get_text().empty());
+  EXPECT_TRUE(appCtx->get_voice().empty());
+  EXPECT_TRUE(appCtx->get_output_path().empty());
+
+  EXPECT_TRUE(appCtx->get_errors().empty());
+  EXPECT_FALSE(appCtx->get_print_help_and_exit());
+  EXPECT_FALSE(appCtx->get_print_version_and_exit());
 }
 
 TEST_F(UTEST_ApplicationContext, setting_the_stop_flag)

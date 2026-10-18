@@ -1,8 +1,10 @@
+#include <SDL.h>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 #include <algorithm>
 #include <csignal>
+#include <cstddef>
 #include <filesystem>
 #include <iterator>
 #include <string>
@@ -18,7 +20,51 @@ using namespace testing;
 class CTEST_app : public Test
 {
  public:
-  CTEST_app() { std::filesystem::remove(default_log_file()); }
+  /// @brief The dummy audio driver of the SDL plays the speech, so no sound
+  /// card takes part. The variable of the SDL3 run sdl2-compat library is
+  /// given as well.
+  CTEST_app()
+  {
+    std::filesystem::remove(default_log_file());
+    std::filesystem::remove(wavFile);
+
+    SDL_setenv("SDL_AUDIODRIVER", "dummy", 1);
+    SDL_setenv("SDL_AUDIO_DRIVER", "dummy", 1);
+  }
+
+  /// @brief Reads the WAV file the application writes, checking the format of
+  /// it.
+  static std::size_t wav_samples_count()
+  {
+    SDL_AudioSpec spec{};
+    Uint8* wave{nullptr};
+    Uint32 length{0U};
+
+    if (SDL_LoadWAV(wavFile.c_str(), &spec, &wave, &length) == nullptr) {
+      ADD_FAILURE() << "The SDL fails to load the WAV: " << SDL_GetError();
+      return 0U;
+    }
+
+    SDL_FreeWAV(wave);
+
+    EXPECT_EQ(spec.freq, 22050);
+    EXPECT_EQ(spec.format, AUDIO_S16LSB);
+    EXPECT_EQ(spec.channels, 1U);
+
+    return length / 2U;
+  }
+
+  inline static const std::string wavFile{"CTEST_app.speech.wav"};
+
+  /// @brief Tells if the configure downloaded no voice for the application to
+  /// speak with by default, which the speaking cases are skipped without.
+  static bool no_voice()
+  {
+    return !std::filesystem::exists(project_decls::PROJECT_TTS_VOICE);
+  }
+
+  inline static const std::string NO_VOICE{
+      "No Piper voice, configure with -DENABLE_PIPER_VOICE_DOWNLOAD=ON"};
 
   /// @brief The default log file of the factory, which the current working
   /// directory of the test case keeps.
@@ -225,6 +271,10 @@ TEST_F(CTEST_app, signals_handler_ignores_the_broken_pipe)
 
 TEST_F(CTEST_app, execute_success)
 {
+  if (no_voice()) {
+    GTEST_SKIP() << NO_VOICE;
+  }
+
   int status = ApplicationFactory::execute(argc, argv);
 
   EXPECT_EQ(status, 0);
@@ -295,6 +345,10 @@ TEST_F(CTEST_app, unopenable_log_file_fails_before_the_run)
 
 TEST_F(CTEST_app, custom_log_file_is_used)
 {
+  if (no_voice()) {
+    GTEST_SKIP() << NO_VOICE;
+  }
+
   static const std::filesystem::path customLog{"CTEST_app.custom.log"};
 
   std::filesystem::remove(customLog);
@@ -303,4 +357,48 @@ TEST_F(CTEST_app, custom_log_file_is_used)
 
   EXPECT_TRUE(std::filesystem::exists(customLog));
   EXPECT_FALSE(std::filesystem::exists(default_log_file()));
+}
+
+TEST_F(CTEST_app, output_writes_the_spoken_default_text)
+{
+  if (no_voice()) {
+    GTEST_SKIP() << NO_VOICE;
+  }
+
+  EXPECT_EQ(execute_with({"--output", wavFile}), 0);
+
+  EXPECT_GT(wav_samples_count(), 22050U);
+}
+
+TEST_F(CTEST_app, given_text_and_voice_are_spoken)
+{
+  if (no_voice()) {
+    GTEST_SKIP() << NO_VOICE;
+  }
+
+  EXPECT_EQ(execute_with({"-t", "One, two, three.", "-s",
+                          project_decls::PROJECT_TTS_VOICE, "-o", wavFile}),
+            0);
+
+  EXPECT_GT(wav_samples_count(), 11025U);
+}
+
+TEST_F(CTEST_app, unknown_voice_fails_with_no_output)
+{
+  EXPECT_NE(execute_with({"--voice", "nosuchvoice", "--output", wavFile}), 0);
+
+  EXPECT_FALSE(std::filesystem::exists(wavFile));
+}
+
+TEST_F(CTEST_app, help_lists_the_speech_options)
+{
+  testing::internal::CaptureStdout();
+
+  EXPECT_EQ(execute_with({"--help"}), 0);
+
+  const std::string help = testing::internal::GetCapturedStdout();
+
+  EXPECT_THAT(help, HasSubstr("--text"));
+  EXPECT_THAT(help, HasSubstr("--voice"));
+  EXPECT_THAT(help, HasSubstr("--output"));
 }

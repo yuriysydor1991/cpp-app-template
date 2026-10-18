@@ -24,7 +24,7 @@
 
 - гілка `main` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template)] один файл з функцією `main` і з усіма можливими інтеграціями для генерації одного бінарного виконуваного файлу.
 
-- гілка `app` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/app), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/app)] (**поточна**) яка містить загальні інфраструктурні класи програми для генераці одинарного бінарного виконуваного файлу.
+- гілка `app` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/app), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/app)] яка містить загальні інфраструктурні класи програми для генераці одинарного бінарного виконуваного файлу.
 
 - гілка `applib` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/applib), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/applib)] яка складається з класів банарного виконуваного файлу з додатковими інфраструктурними класами для генерації підключаємої бібліотеки і заголовкових файлів (доступні для встановлення), що призначені для поширення коду бібліотеки для повторного перевикористання іншими бінарнами файлами.
 
@@ -138,6 +138,11 @@
 
 - гілка `appDarknetXX` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appDarknetXX), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appDarknetXX)] яка містить загальні інфраструктурні класи програми для генерації одинарного бінарного виконуваного файлу, що виявляє об'єкти на зображенні засобами [darknetxx](https://github.com/yuriysydor1991/darknetxx) (порту нейронної мережі [Darknet](https://github.com/AlexeyAB/darknet) на C++): невеликий контролер завантажує мережу Darknet з cfg-файлу з вагами оригінального файлу `*.weights` або файлу `*.dxxwjz1` darknetxx чи всю мережу з файлу `*.dxxwjz2` darknetxx, тож клас Application записує кожен виявлений об'єкт у журнал макросом `LOGI`. Конфігурування завантажує вихідні коди darknetxx, збирає її мережеве ядро у виконуваний файл і завантажує ваги мережі YOLOv4-tiny, навченої на наборі даних COCO.
 
+## Синтез мовлення (TTS)
+
+- гілка `appESpeakNG` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appESpeakNG), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appESpeakNG)] яка містить загальні інфраструктурні класи програми для генерації одинарного бінарного виконуваного файлу, що промовляє заданий у командному рядку текст бібліотекою синтезу мовлення [eSpeak NG](https://github.com/espeak-ng/espeak-ng): незалежні від рушія класи синтезу мовлення відтворюють синтезоване мовлення типовим аудіопристроєм через аудіопідсистему [SDL2](https://www.libsdl.org/) або записують його у WAV-файл, тож інший рушій мовлення заступає eSpeak NG одним класом-контролером. eSpeak NG розмовляє понад сотнею мов (серед них англійською й українською) і поширюється за ліцензією GPL-3.0-or-later, яку успадковує поширюваний виконуваний файл.
+- гілка `appPiperTTS` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appPiperTTS), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appPiperTTS)] (**поточна**) яка містить загальні інфраструктурні класи програми для генерації одинарного бінарного виконуваного файлу, що промовляє заданий у командному рядку текст нейронною бібліотекою синтезу мовлення [Piper](https://github.com/OHF-Voice/piper1-gpl) (її C/C++ бібліотекою `libpiper`, зібраною з вихідних кодів разом з espeak-ng, якою вона перетворює текст на фонеми, а голоси виконує [onnxruntime](https://onnxruntime.ai/)): незалежні від рушія класи синтезу мовлення відтворюють синтезоване мовлення типовим аудіопристроєм через аудіопідсистему [SDL2](https://www.libsdl.org/) або записують його у WAV-файл. Конфігурування завантажує англійський голос `en_US-lessac-medium`, а параметр `--voice` приймає будь-який інший, серед них і український `uk_UA-ukrainian_tts-medium`. Piper поширюється за ліцензією GPL-3.0-or-later, яку успадковує поширюваний виконуваний файл, а кожен голос має власну ліцензію.
+
 ## System / DBus
 
 - гілка `appSDBusCxxClient` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appSDBusCxxClient), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appSDBusCxxClient)] яка містить загальні інфраструктурні класи програми для генераці одинарного бінарного виконуваного файлу з використанням [Kistler-Group's sdbus-c++](https://github.com/Kistler-Group/sdbus-cpp.git) бібліотеки для побудови клієнта сервісів розміщених на шині [DBus](https://uk.wikipedia.org/wiki/D-Bus)
@@ -249,6 +254,10 @@
         1. [Вмикання інтеграції OpenJPEG (JPEG 2000)](/doc/sections/uk_UA/5-project-build/image-libraries/5-31-enabling-the-openjpeg-library.md)
         1. [Вмикання інтеграції libavif (AVIF)](/doc/sections/uk_UA/5-project-build/image-libraries/5-32-enabling-the-libavif-library.md)
         1. [Вмикання інтеграції libheif (HEIF/HEIC)](/doc/sections/uk_UA/5-project-build/image-libraries/5-33-enabling-the-libheif-library.md)
+    1. Синтез мовлення
+        1. [Вмикання синтезу мовлення Piper](/doc/sections/uk_UA/5-project-build/tts/5-70-enabling-the-Piper-speech-synthesis.md)
+    1. Звук
+        1. [Вмикання відтворення звуку SDL2](/doc/sections/uk_UA/5-project-build/audio/5-68-enabling-the-SDL2-audio-playback.md)
 1. [Запуск головного виконуваного файлу](/doc/sections/uk_UA/6-run-the-executable/6-run-the-executable.md)
     1. [Запуск через IDE](/doc/sections/uk_UA/6-run-the-executable/6-1-IDE-run.md)
     1. Запуск з терміналу

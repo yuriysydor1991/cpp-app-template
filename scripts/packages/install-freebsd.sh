@@ -16,6 +16,8 @@ PACKAGES="
     cmake
     git
     googletest
+    onnxruntime
+    sdl2
 "
 
 PKG_SUDO=""

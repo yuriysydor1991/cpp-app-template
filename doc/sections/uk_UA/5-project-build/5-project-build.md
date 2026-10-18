@@ -51,3 +51,7 @@
     1. [Вмикання інтеграції OpenJPEG (JPEG 2000)](/doc/sections/uk_UA/5-project-build/image-libraries/5-31-enabling-the-openjpeg-library.md)
     1. [Вмикання інтеграції libavif (AVIF)](/doc/sections/uk_UA/5-project-build/image-libraries/5-32-enabling-the-libavif-library.md)
     1. [Вмикання інтеграції libheif (HEIF/HEIC)](/doc/sections/uk_UA/5-project-build/image-libraries/5-33-enabling-the-libheif-library.md)
+1. Синтез мовлення
+    1. [Вмикання синтезу мовлення Piper](/doc/sections/uk_UA/5-project-build/tts/5-70-enabling-the-Piper-speech-synthesis.md)
+1. Звук
+    1. [Вмикання відтворення звуку SDL2](/doc/sections/uk_UA/5-project-build/audio/5-68-enabling-the-SDL2-audio-playback.md)

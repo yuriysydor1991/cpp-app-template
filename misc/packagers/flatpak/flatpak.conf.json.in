@@ -8,9 +8,15 @@
     {
       "name": "${CMAKE_PROJECT_NAME}",
       "buildsystem": "cmake",
+      "build-options": {
+        "build-args": [
+          "--share=network"
+        ]
+      },
       "config-opts": [
         "-DCMAKE_BUILD_TYPE=Release",
-        "-DENABLE_FLATPAK_METAINFO=ON"
+        "-DENABLE_FLATPAK_METAINFO=ON",
+        "-DENABLE_PIPER_VOICE_DOWNLOAD=OFF"
       ],
       "sources": [
         {
@@ -19,5 +25,9 @@
         }
       ]
     }
+  ],
+  "finish-args": [
+    "--socket=pulseaudio",
+    "--filesystem=home"
   ]
 }

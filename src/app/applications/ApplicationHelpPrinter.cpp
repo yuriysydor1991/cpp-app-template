@@ -50,6 +50,17 @@ int ApplicationHelpPrinter::run(std::shared_ptr<ApplicationContext> ctx)
             << CMDParamNames::LOGPATH
             << " <path> - append the log messages to the given file instead of "
                "the default one"
+            << std::endl
+            << "\t" << CMDParamNames::TEXTW << " or " << CMDParamNames::TEXT
+            << " <text> - speak the given text instead of the \""
+            << project_decls::PROJECT_TTS_TEXT << "\" one" << std::endl
+            << "\t" << CMDParamNames::VOICEW << " or " << CMDParamNames::VOICE
+            << " <voice> - speak with the given voice of the speech engine "
+               "instead of the "
+            << project_decls::PROJECT_TTS_VOICE << " one" << std::endl
+            << "\t" << CMDParamNames::OUTPUTW << " or " << CMDParamNames::OUTPUT
+            << " <path> - write the speech into the given 16-bit PCM mono WAV "
+               "file instead of playing it through the default audio device"
             << std::endl;
 
   // A help message printed because of a bad usage is a failure.

@@ -209,3 +209,59 @@ TEST_F(UTEST_CommandLineParser, log_file_missing_value)
   EXPECT_THAT(appctx->get_errors(), ElementsAre(expectedError));
   EXPECT_TRUE(CommandLineParser::get_custom_logfile(argc, argv).empty());
 }
+
+TEST_F(UTEST_CommandLineParser, speech_parameters_short)
+{
+  set_args({"-t", "Привіт, світе!", "-s", "uk", "-o", "speech.wav"});
+
+  EXPECT_CALL(*appctx, push_error(_)).Times(0);
+
+  EXPECT_TRUE(parser->parse_args(appctx));
+
+  EXPECT_EQ(appctx->get_text(), "Привіт, світе!");
+  EXPECT_EQ(appctx->get_voice(), "uk");
+  EXPECT_EQ(appctx->get_output_path(), "speech.wav");
+  EXPECT_FALSE(appctx->get_print_help_and_exit());
+  EXPECT_FALSE(appctx->get_print_version_and_exit());
+}
+
+TEST_F(UTEST_CommandLineParser, speech_parameters_long)
+{
+  set_args({"--text", "Hello", "--voice", "en-us", "--output", "speech.wav"});
+
+  EXPECT_CALL(*appctx, push_error(_)).Times(0);
+
+  EXPECT_TRUE(parser->parse_args(appctx));
+
+  EXPECT_EQ(appctx->get_text(), "Hello");
+  EXPECT_EQ(appctx->get_voice(), "en-us");
+  EXPECT_EQ(appctx->get_output_path(), "speech.wav");
+  EXPECT_TRUE(appctx->get_errors().empty());
+}
+
+TEST_F(UTEST_CommandLineParser, text_value_is_not_a_flag)
+{
+  set_args({"--text", "--version"});
+
+  EXPECT_TRUE(parser->parse_args(appctx));
+
+  EXPECT_EQ(appctx->get_text(), "--version");
+  EXPECT_FALSE(appctx->get_print_version_and_exit());
+}
+
+TEST_F(UTEST_CommandLineParser, speech_parameters_missing_value)
+{
+  for (const std::string param :
+       {"--text", "-t", "--voice", "-s", "--output", "-o"}) {
+    appctx = create_context(argc, argv);
+
+    set_args({param});
+
+    EXPECT_CALL(*appctx, push_error("Parameter " + param +
+                                    " requires the data next to it."))
+        .Times(1);
+
+    EXPECT_FALSE(parser->parse_args(appctx)) << param;
+    EXPECT_TRUE(appctx->get_print_help_and_exit()) << param;
+  }
+}

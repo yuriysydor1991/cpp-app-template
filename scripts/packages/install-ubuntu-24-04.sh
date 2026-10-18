@@ -17,10 +17,13 @@ PACKAGES=(
     g++
     git
     googletest
+    libespeak-ng-dev
     libgmock-dev
     libgtest-dev
+    libsdl2-dev
     libssl-dev
     libstdc++6
+    pkg-config
 )
 
 apt_install "${PACKAGES[@]}"

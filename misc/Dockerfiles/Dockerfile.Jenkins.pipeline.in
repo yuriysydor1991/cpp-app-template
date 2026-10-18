@@ -14,6 +14,7 @@ RUN apt install -y doxygen graphviz
 RUN apt install -y clang-tidy
 RUN apt install -y libgtest-dev
 RUN apt install -y libgmock-dev
+RUN apt install -y pkg-config libespeak-ng-dev libsdl2-dev
 
 USER jenkins
 

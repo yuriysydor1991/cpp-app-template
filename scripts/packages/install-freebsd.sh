@@ -14,8 +14,11 @@ PROJECT_ROOT=$(realpath "$(dirname "$0")/../..")
 PACKAGES="
     bash
     cmake
+    espeak-ng
     git
     googletest
+    pkgconf
+    sdl2
 "
 
 PKG_SUDO=""

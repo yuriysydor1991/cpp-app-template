@@ -8,4 +8,17 @@
 ./src/CppAppTemplate
 ```
 
+Виконуваний файл гілки `appESpeakNG` промовляє англійським голосом привітання `Hello, eSpeak NG! Insert your text here!` через типовий аудіопристрій системи і завершується, щойно мовлення відтворено (або його зупинять клавіші Ctrl+C). Параметр `--text` (або `-t`) задає інший текст, параметр `--voice` (або `-s`) - інший голос eSpeak NG, а параметр `--output` (або `-o`) записує мовлення у 16-бітний монофонічний WAV-файл PCM замість відтворення:
+
+```
+# з директорії побудови
+./src/CppAppTemplate --text "Привіт, світе!" --voice uk
+./src/CppAppTemplate -t "Hello, world!" -s en-us -o hello.wav
+```
+
+```
+2026-10-18 12:06:09 DBG 140669197309312 ESpeakNGController.cpp:125 : Synthesized 32828 samples with the uk eSpeak NG voice
+2026-10-18 12:06:09 DBG 140669197309312 AudioPlayer.cpp:48 : Playing the 1488 ms speech through the pulseaudio audio driver
+```
+
 І ще раз, ім'я `CppAppTemplate` являється ім'ям головного виконуваного бінарного файлу за замовчуванням. Його необхідно замінити у разі заміни ім'я за умовчанням у кореневому файлі `CMakeLists.txt` (змінні `CMAKE_PROJECT_NAME` або `PROJECT_BINARY_NAME`).

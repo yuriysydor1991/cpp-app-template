@@ -12,12 +12,15 @@ PROJECT_ROOT=$(realpath "$(dirname "$0")/../..")
 
 PACKAGES=(
     cmake
+    espeak-ng-devel
     gcc-c++
     git
     gmock-devel
     gtest-devel
     make
     openssl-devel
+    pkgconf-pkg-config
+    SDL2-devel
 )
 
 DNF_SUDO=""

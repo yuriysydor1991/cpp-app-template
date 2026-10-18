@@ -6,6 +6,33 @@
   "command": "${PROJECT_BINARY_NAME}",
   "modules": [
     {
+      "name": "espeak-ng",
+      "buildsystem": "cmake-ninja",
+      "builddir": true,
+      "config-opts": [
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DBUILD_SHARED_LIBS=ON",
+        "-DBUILD_TESTING=OFF",
+        "-DESPEAK_BUILD_MANPAGES=OFF",
+        "-DUSE_LIBPCAUDIO=OFF",
+        "-DUSE_LIBSONIC=OFF",
+        "-DUSE_MBROLA=OFF"
+      ],
+      "cleanup": [
+        "/bin",
+        "/include",
+        "/lib/pkgconfig",
+        "/share/vim"
+      ],
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://github.com/espeak-ng/espeak-ng/archive/refs/tags/1.52.0.tar.gz",
+          "sha256": "bb4338102ff3b49a81423da8a1a158b420124b055b60fa76cfb4b18677130a23"
+        }
+      ]
+    },
+    {
       "name": "${CMAKE_PROJECT_NAME}",
       "buildsystem": "cmake",
       "config-opts": [
@@ -19,5 +46,9 @@
         }
       ]
     }
+  ],
+  "finish-args": [
+    "--socket=pulseaudio",
+    "--filesystem=home"
   ]
 }

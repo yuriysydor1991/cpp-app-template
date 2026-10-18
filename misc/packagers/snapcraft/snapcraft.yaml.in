@@ -13,6 +13,9 @@ apps:
     command: ${SNAP_APP_COMMAND}${SNAP_APP_DESKTOP}
     plugs:
       - home${SNAP_APP_DESKTOP_PLUGS}
+      - audio-playback
+    environment:
+      ESPEAK_DATA_PATH: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/espeak-ng-data
 
 parts:
   ${PROJECT_BINARY_NAME}:
@@ -22,3 +25,11 @@ parts:
     cmake-parameters:
       - -DCMAKE_BUILD_TYPE=Release
       - -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
+    build-packages:
+      - pkg-config
+      - libespeak-ng-dev
+      - libsdl2-dev
+    stage-packages:
+      - libespeak-ng1
+      - espeak-ng-data
+      - libsdl2-2.0-0

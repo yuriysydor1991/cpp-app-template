@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.13)
 
 # The engine neutral text to speech sources: the speech, the synthesizer
 # interface and the WAV file and the SDL2 playback outputs of the speech. The
-# engine sources (the src/PiperTTS ones) implement the synthesizer on top.
+# engine sources of the flavor implement the synthesizer on top.
 if (NOT ENABLE_SDL2_AUDIO)
   message(
     FATAL_ERROR

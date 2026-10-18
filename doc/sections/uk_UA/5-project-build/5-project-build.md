@@ -34,6 +34,7 @@
 1. Бібліотеки
     1. [Вмикання інтеграції libcurl](/doc/sections/uk_UA/5-project-build/5-14-enabling-libcurl.md)
     1. [Вмикання інтеграції бібліотеки nlohmann JSON](/doc/sections/uk_UA/5-project-build/5-18-enabling-the-nlohmann-json-library.md)
+    1. [Вмикання інтеграції бібліотеки HTML шаблонів inja](/doc/sections/uk_UA/5-project-build/5-72-enabling-the-inja-HTML-templates-library.md)
 1. Безпека / Криптографія
     1. [Вмикання інтеграції OpenSSL](/doc/sections/uk_UA/5-project-build/security/5-35-enabling-the-openssl-library.md)
     1. [Параметри захисту бінарних файлів](/doc/sections/uk_UA/5-project-build/security/5-49-the-binary-hardening-options.md)

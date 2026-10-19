@@ -50,6 +50,15 @@ int ApplicationHelpPrinter::run(std::shared_ptr<ApplicationContext> ctx)
             << CMDParamNames::LOGPATH
             << " <path> - append the log messages to the given file instead of "
                "the default one"
+            << std::endl
+            << "\t" << CMDParamNames::QUESTIONW << " or "
+            << CMDParamNames::QUESTION
+            << " <question> - answer the given question instead of the ones "
+               "typed line by line into the standard input"
+            << std::endl
+            << "\t" << CMDParamNames::MODELW << " or " << CMDParamNames::MODEL
+            << " <path> - load the given GGUF language model instead of the "
+            << project_decls::PROJECT_LLAMACPP_MODEL_PATH << " one"
             << std::endl;
 
   // A help message printed because of a bad usage is a failure.

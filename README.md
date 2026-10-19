@@ -24,7 +24,7 @@ Examine available branches to find your most applicable variant of the template 
 
 - `main` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template)] just the clear `main` function and all available CMake integrations with no additional app infrastructure classes.
 
-- `app` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/app), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/app)] (**current**) with just general application related classes to generate a single binary executable.
+- `app` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/app), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/app)] with just general application related classes to generate a single binary executable.
 
 - `applib` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/applib), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/applib)] for the application binary with additional separate library binary and header files (available for the installation) in order to provide library's code reusability across multiple applications.
 
@@ -137,6 +137,8 @@ Examine available branches to find your most applicable variant of the template 
 - `appWhisperCPP` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appWhisperCPP), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appWhisperCPP)] with general application related classes to generate a single binary executable that recognizes the speech with the [whisper.cpp](https://github.com/ggml-org/whisper.cpp) library: a small controller captures the default microphone of the system through the [SDL2](https://www.libsdl.org/) audio subsystem, cuts the captured audio into the utterances at the pauses of the speech and transcribes them, so the Application logs every recognized utterance through the `LOGI` macro. The configure downloads the multilingual model (the English and the Ukrainian among the others) with the download script of the whisper.cpp.
 
 - `appDarknetXX` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appDarknetXX), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appDarknetXX)] with general application related classes to generate a single binary executable that detects the objects in an image with the [darknetxx](https://github.com/yuriysydor1991/darknetxx) (the C++ port of the [Darknet](https://github.com/AlexeyAB/darknet) neural network): a small controller loads a Darknet network of a cfg file with the weights of the original `*.weights` file or of the darknetxx `*.dxxwjz1` one, or the whole network of the darknetxx `*.dxxwjz2` file, so the Application logs every detected object through the `LOGI` macro. The configure fetches the darknetxx sources, builds its network core into the executable and downloads the weights of the YOLOv4-tiny network of the COCO data set.
+
+- `appLlamaCPP` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appLlamaCPP), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appLlamaCPP)] (**current**) with general application related classes to generate a single binary executable that answers the questions with a local large language model through the [llama.cpp](https://github.com/ggml-org/llama.cpp) library: a small controller loads a GGUF model and keeps the conversation, so the Application prints the answer to the question of the `--question` command line parameter or chats over the standard input, printing every answer piece by piece as the model generates it. The configure downloads the multilingual [Gemma 4](https://deepmind.google/models/gemma/) E4B model of the Google for the machines of 8 GB of RAM (the English and the Ukrainian among the others), while the bigger 12B one fits the machines of 16 GB.
 
 ## Text to speech (TTS)
 
@@ -259,6 +261,8 @@ Alter current `README.md` and a `CHANGELOG.md` files to match your implementatio
         1. [Enabling the OpenJPEG library (JPEG 2000)](/doc/sections/en_US/5-project-build/image-libraries/5-31-enabling-the-openjpeg-library.md)
         1. [Enabling the libavif library (AVIF)](/doc/sections/en_US/5-project-build/image-libraries/5-32-enabling-the-libavif-library.md)
         1. [Enabling the libheif library (HEIF/HEIC)](/doc/sections/en_US/5-project-build/image-libraries/5-33-enabling-the-libheif-library.md)
+    1. Artificial intelligence
+        1. [Enabling the llama.cpp language models](/doc/sections/en_US/5-project-build/ai/5-73-enabling-the-llama-cpp-language-models.md)
 1. [Run the executable](/doc/sections/en_US/6-run-the-executable/6-run-the-executable.md)
     1. [IDE run](/doc/sections/en_US/6-run-the-executable/6-1-IDE-run.md)
     1. Command line run

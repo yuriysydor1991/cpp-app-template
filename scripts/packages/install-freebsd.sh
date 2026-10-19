@@ -16,6 +16,7 @@ PACKAGES="
     cmake
     git
     googletest
+    llama-cpp
 "
 
 PKG_SUDO=""

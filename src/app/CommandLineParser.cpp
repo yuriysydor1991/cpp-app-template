@@ -64,8 +64,7 @@ bool CommandLineParser::check_4_data(
 
 bool CommandLineParser::parse_arg(std::shared_ptr<ApplicationContext> ctx,
                                   const std::string& param, const bool hasNext,
-                                  [[maybe_unused]] const std::string& nextParam,
-                                  int& paramIndex)
+                                  const std::string& nextParam, int& paramIndex)
 {
   assert(ctx != nullptr);
 
@@ -87,6 +86,11 @@ bool CommandLineParser::parse_arg(std::shared_ptr<ApplicationContext> ctx,
     // skipping already parsed cmd params
     paramIndex++;
     return true;
+  } else if (param == CMDParamNames::QUESTIONW ||
+             param == CMDParamNames::QUESTION) {
+    ctx->set_question(nextParam);
+  } else if (param == CMDParamNames::MODELW || param == CMDParamNames::MODEL) {
+    ctx->set_model_path(nextParam);
   } else {
     ctx->set_print_help_and_exit(true);
     ctx->push_error("Unknown parameter: " + param);
@@ -105,8 +109,9 @@ const std::set<std::string>& CommandLineParser::get_params_requiring_data()
 {
   // Place here command line parameters that are requiring
   // some data after it.
-  static const std::set<std::string> requireNext{CMDParamNames::LOGPATHW,
-                                                 CMDParamNames::LOGPATH};
+  static const std::set<std::string> requireNext{
+      CMDParamNames::LOGPATHW, CMDParamNames::LOGPATH, CMDParamNames::QUESTIONW,
+      CMDParamNames::QUESTION, CMDParamNames::MODELW,  CMDParamNames::MODEL};
 
   return requireNext;
 }

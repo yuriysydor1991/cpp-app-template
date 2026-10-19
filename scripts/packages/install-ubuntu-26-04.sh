@@ -25,4 +25,9 @@ PACKAGES=(
 
 apt_install "${PACKAGES[@]}"
 
+# The libllama-dev package of the release is too old for the Gemma 4 models,
+# while a llama.cpp built out of its sources would shadow the libggml0 one the
+# other packages of the release (the whisper.cpp one, for example) link
+# against, so the project configure fetches a llama.cpp of its own instead.
+
 log "The required packages are installed"

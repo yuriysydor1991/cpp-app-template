@@ -44,7 +44,7 @@ code-format:
   variables:
     JOB_TOOLS: clang-format
   script:
-    - cmake -S . -B "$BUILDDIR" -DCMAKE_BUILD_TYPE=Debug -DENABLE_CLANGFORMAT=ON
+    - cmake -S . -B "$BUILDDIR" -DCMAKE_BUILD_TYPE=Debug -DENABLE_CLANGFORMAT=ON -DENABLE_LLAMACPP_MODEL_DOWNLOAD=OFF
     - cmake --build "$BUILDDIR" --target clang-format
     # Fails when the formatter has changed a tracked file.
     - git diff --exit-code
@@ -57,7 +57,7 @@ build-and-test:
     - |
       cmake -S . -B "$BUILDDIR" -DCMAKE_BUILD_TYPE=Debug -DENABLE_UNIT_TESTS=ON \
         -DENABLE_SANITIZERS=ON -DENABLE_CPPCHECK=ON \
-        -DMAX_LOG_LEVEL=5 -DENABLE_COMPONENT_TESTS=ON
+        -DMAX_LOG_LEVEL=5 -DENABLE_COMPONENT_TESTS=ON -DENABLE_LLAMACPP_MODEL_DOWNLOAD=OFF
     - cmake --build "$BUILDDIR" -j"$(nproc)"
     - if [ "$RUN_CPPCHECK" = "true" ]; then cmake --build "$BUILDDIR" -j"$(nproc)" --target cppcheck; fi
     - mkdir -p "$BUILDDIR/$BDJUNITOUT"
@@ -74,13 +74,13 @@ clang-tidy:
   variables:
     JOB_TOOLS: clang-tidy
   script:
-    - cmake -S . -B "$BUILDDIR" -DCMAKE_BUILD_TYPE=Debug -DENABLE_CLANG_TIDY=ON -DMAX_LOG_LEVEL=5
+    - cmake -S . -B "$BUILDDIR" -DCMAKE_BUILD_TYPE=Debug -DENABLE_CLANG_TIDY=ON -DMAX_LOG_LEVEL=5 -DENABLE_LLAMACPP_MODEL_DOWNLOAD=OFF
     # clang-tidy runs during the compilation.
     - cmake --build "$BUILDDIR" -j"$(nproc)"
 
 release:
   stage: check
   script:
-    - cmake -S . -B "$BUILDDIR" -DCMAKE_BUILD_TYPE=Release
+    - cmake -S . -B "$BUILDDIR" -DCMAKE_BUILD_TYPE=Release -DENABLE_LLAMACPP_MODEL_DOWNLOAD=OFF
     - cmake --build "$BUILDDIR" -j"$(nproc)"
     - cmake --install "$BUILDDIR" --prefix "$BUILDDIR/install-try"

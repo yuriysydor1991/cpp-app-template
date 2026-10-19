@@ -4,21 +4,37 @@
 #include <algorithm>
 #include <csignal>
 #include <filesystem>
+#include <iostream>
 #include <iterator>
+#include <sstream>
 #include <string>
 #include <vector>
 
 #include "project-global-decls.h"
+#include "src/LlamaCPP/LlamaCPPController.h"
 #include "src/app/ApplicationFactory.h"
 #include "src/log/log.h"
 
 using namespace app;
+using namespace llamacppi;
 using namespace testing;
 
 class CTEST_app : public Test
 {
  public:
-  CTEST_app() { std::filesystem::remove(default_log_file()); }
+  /// @brief The Application chats over the standard input while no question is
+  /// given, so the empty input field ends the chat right away.
+  CTEST_app() : standardInput{std::cin.rdbuf(input.rdbuf())}
+  {
+    std::filesystem::remove(default_log_file());
+  }
+
+  ~CTEST_app() override
+  {
+    LlamaCPPController::onMockCreate = nullptr;
+    std::cin.rdbuf(standardInput);
+    std::cin.clear();
+  }
 
   /// @brief The default log file of the factory, which the current working
   /// directory of the test case keeps.
@@ -58,6 +74,9 @@ class CTEST_app : public Test
   char** realArgv{nullptr};
 
   ApplicationFactory facade;
+
+  std::istringstream input;
+  std::streambuf* const standardInput;
 };
 
 TEST_F(CTEST_app, create_default_context_success)
@@ -303,4 +322,48 @@ TEST_F(CTEST_app, custom_log_file_is_used)
 
   EXPECT_TRUE(std::filesystem::exists(customLog));
   EXPECT_FALSE(std::filesystem::exists(default_log_file()));
+}
+
+TEST_F(CTEST_app, question_gets_answered)
+{
+  LlamaCPPController::onMockCreate = [](LlamaCPPController& llama) {
+    EXPECT_CALL(llama, init(project_decls::PROJECT_LLAMACPP_MODEL_PATH));
+    EXPECT_CALL(llama, ask("Why?", _))
+        .WillOnce(Return(LlamaCPPController::result{"Because."}));
+  };
+
+  EXPECT_EQ(execute_with({"--question", "Why?"}), 0);
+}
+
+TEST_F(CTEST_app, typed_questions_get_answered)
+{
+  input.str("first\nsecond\n");
+
+  LlamaCPPController::onMockCreate = [](LlamaCPPController& llama) {
+    EXPECT_CALL(llama, ask(_, _)).Times(2);
+  };
+
+  EXPECT_EQ(execute_with({}), 0);
+}
+
+TEST_F(CTEST_app, unloadable_model_fails_the_run)
+{
+  LlamaCPPController::onMockCreate = [](LlamaCPPController& llama) {
+    EXPECT_CALL(llama, init("no-such-model.gguf")).WillOnce(Return(false));
+    EXPECT_CALL(llama, ask(_, _)).Times(0);
+  };
+
+  EXPECT_NE(execute_with({"-m", "no-such-model.gguf", "-q", "Why?"}), 0);
+}
+
+TEST_F(CTEST_app, help_lists_the_question_and_model_options)
+{
+  testing::internal::CaptureStdout();
+
+  EXPECT_EQ(execute_with({"--help"}), 0);
+
+  const std::string help = testing::internal::GetCapturedStdout();
+
+  EXPECT_THAT(help, HasSubstr("--question"));
+  EXPECT_THAT(help, HasSubstr("--model"));
 }

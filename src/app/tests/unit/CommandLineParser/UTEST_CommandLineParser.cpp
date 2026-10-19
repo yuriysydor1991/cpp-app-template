@@ -209,3 +209,56 @@ TEST_F(UTEST_CommandLineParser, log_file_missing_value)
   EXPECT_THAT(appctx->get_errors(), ElementsAre(expectedError));
   EXPECT_TRUE(CommandLineParser::get_custom_logfile(argc, argv).empty());
 }
+
+TEST_F(UTEST_CommandLineParser, question_and_model_short)
+{
+  set_args({"-q", "Яка столиця України?", "-m", "/tmp/a-model.gguf"});
+
+  EXPECT_CALL(*appctx, push_error(_)).Times(0);
+
+  EXPECT_TRUE(parser->parse_args(appctx));
+
+  EXPECT_EQ(appctx->get_question(), "Яка столиця України?");
+  EXPECT_EQ(appctx->get_model_path(), "/tmp/a-model.gguf");
+  EXPECT_FALSE(appctx->get_print_help_and_exit());
+  EXPECT_FALSE(appctx->get_print_version_and_exit());
+}
+
+TEST_F(UTEST_CommandLineParser, question_and_model_long)
+{
+  set_args({"--question", "Why?", "--model", "/tmp/a-model.gguf"});
+
+  EXPECT_CALL(*appctx, push_error(_)).Times(0);
+
+  EXPECT_TRUE(parser->parse_args(appctx));
+
+  EXPECT_EQ(appctx->get_question(), "Why?");
+  EXPECT_EQ(appctx->get_model_path(), "/tmp/a-model.gguf");
+  EXPECT_TRUE(appctx->get_errors().empty());
+}
+
+TEST_F(UTEST_CommandLineParser, question_value_is_not_a_flag)
+{
+  set_args({"--question", "--version"});
+
+  EXPECT_TRUE(parser->parse_args(appctx));
+
+  EXPECT_EQ(appctx->get_question(), "--version");
+  EXPECT_FALSE(appctx->get_print_version_and_exit());
+}
+
+TEST_F(UTEST_CommandLineParser, question_and_model_missing_value)
+{
+  for (const std::string param : {"--question", "-q", "--model", "-m"}) {
+    appctx = create_context(argc, argv);
+
+    set_args({param});
+
+    EXPECT_CALL(*appctx, push_error("Parameter " + param +
+                                    " requires the data next to it."))
+        .Times(1);
+
+    EXPECT_FALSE(parser->parse_args(appctx)) << param;
+    EXPECT_TRUE(appctx->get_print_help_and_exit()) << param;
+  }
+}

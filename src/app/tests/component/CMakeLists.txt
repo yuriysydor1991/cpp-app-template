@@ -26,10 +26,12 @@ add_executable(
   ${CMAKE_SOURCE_DIR}/src/log/default-logger/real-default-logger/RealDefaultLogger.cpp
 )
 
-# The real logger, so the log file effects of the command line are covered too.
+# The real logger, so the log file effects of the command line are covered too,
+# and the mocked llama.cpp controller, so no model takes part.
 target_include_directories(
   CTEST_app
   PRIVATE
+    ${APP_MOCKS_ROOT}/LlamaCPPController
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}
 )

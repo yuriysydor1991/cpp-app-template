@@ -6,11 +6,35 @@
   "command": "${PROJECT_BINARY_NAME}",
   "modules": [
     {
+      "name": "llama.cpp",
+      "buildsystem": "cmake-ninja",
+      "builddir": true,
+      "config-opts": [
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DGGML_NATIVE=OFF",
+        "-DLLAMA_BUILD_APP=OFF",
+        "-DLLAMA_BUILD_COMMON=OFF"
+      ],
+      "cleanup": [
+        "/include",
+        "/lib/cmake",
+        "/lib/pkgconfig"
+      ],
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://github.com/ggml-org/llama.cpp/archive/refs/tags/v0.7.0.tar.gz",
+          "sha256": "55d67acf3ad2ad747a9bbeb75f9f0e173dbcc0d1753a471038a90c819421c5e1"
+        }
+      ]
+    },
+    {
       "name": "${CMAKE_PROJECT_NAME}",
       "buildsystem": "cmake",
       "config-opts": [
         "-DCMAKE_BUILD_TYPE=Release",
-        "-DENABLE_FLATPAK_METAINFO=ON"
+        "-DENABLE_FLATPAK_METAINFO=ON",
+        "-DENABLE_LLAMACPP_MODEL_DOWNLOAD=OFF"
       ],
       "sources": [
         {
@@ -19,5 +43,8 @@
         }
       ]
     }
+  ],
+  "finish-args": [
+    "--filesystem=home:ro"
   ]
 }

@@ -84,7 +84,7 @@ set(TEMPLATE_APP_PIPER_VOICES_URL "https://huggingface.co/rhasspy/piper-voices/r
 
 option(
     ENABLE_PIPER_VOICE_DOWNLOAD
-    "Downloads the TEMPLATE_APP_PIPER_VOICE voice into the build directory while configuring"
+    "Downloads the TEMPLATE_APP_PIPER_VOICE voice into the build directory while configuring and installs it with the binary"
     ON
 )
 
@@ -99,6 +99,18 @@ set(
 )
 
 set(PROJECT_TTS_VOICE "" CACHE STRING "The Piper voice model (an .onnx file with it's .onnx.json config beside it) the application speaks with while no --voice parameter is given, the downloaded TEMPLATE_APP_PIPER_VOICE one if empty")
+
+# The install step copies the downloaded voice into the data directory of the
+# project, where the installed binary looks for it relative to it's own
+# location first (see the src/app/DataLocator.h file), so the installation
+# needs no build tree.
+set(PROJECT_DATA_INSTALL_DIR "${CMAKE_INSTALL_DATADIR}/${PROJECT_BINARY_NAME}")
+set(PROJECT_DATA_INSTALLED_DIR "${CMAKE_INSTALL_FULL_DATADIR}/${PROJECT_BINARY_NAME}")
+
+file(
+  RELATIVE_PATH PROJECT_DATA_INSTALLED_RELATIVE_DIR
+  "/${PROJECT_BINARY_INSTALLATION_DIR}" "/${PROJECT_DATA_INSTALL_DIR}"
+)
 
 if (NOT PROJECT_TTS_VOICE)
     set(voiceDir "${CMAKE_BINARY_DIR}/voices")
@@ -145,6 +157,12 @@ if (NOT PROJECT_TTS_VOICE)
             message(WARNING "Fail to download the ${voiceFile} Piper voice file (${voiceStatus}), so the application needs the --voice parameter")
         endif()
     endforeach()
+
+    # The installation takes the downloaded voice with it's config, while a
+    # failed download leaves none to install.
+    if (ENABLE_PIPER_VOICE_DOWNLOAD)
+        install(FILES "${PROJECT_TTS_VOICE}" "${PROJECT_TTS_VOICE}.json" DESTINATION "${PROJECT_DATA_INSTALL_DIR}" OPTIONAL)
+    endif()
 endif()
 
 message(STATUS "The Piper voice: ${PROJECT_TTS_VOICE}")

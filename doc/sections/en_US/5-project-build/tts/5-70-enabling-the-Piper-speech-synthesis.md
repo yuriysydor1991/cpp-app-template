@@ -28,14 +28,14 @@ target_link_libraries(${PROJECT_BINARY_NAME} Piper::piper)
 | `PROJECT_TTS_TEXT` | the text the application speaks while the `--text` (or `-t`) command line parameter gives none, the `Hello, Piper! Insert your text here!` one by default |
 | `PROJECT_TTS_VOICE` | the voice model the application speaks with while the `--voice` (or `-s`) command line parameter gives none, the downloaded `<build>/voices/<TEMPLATE_APP_PIPER_VOICE>.onnx` one if empty |
 | `TEMPLATE_APP_PIPER_VOICE` | the voice the configure downloads, the `en_US-lessac-medium` one by default |
-| `ENABLE_PIPER_VOICE_DOWNLOAD` | downloads the `TEMPLATE_APP_PIPER_VOICE` voice into the `<build>/voices` directory while configuring, `ON` by default |
+| `ENABLE_PIPER_VOICE_DOWNLOAD` | downloads the `TEMPLATE_APP_PIPER_VOICE` voice into the `<build>/voices` directory while configuring and installs it with the binary, `ON` by default |
 | `TEMPLATE_APP_PIPER_VOICES_URL` | the pinned revision of the [rhasspy/piper-voices](https://huggingface.co/rhasspy/piper-voices) repository the voice is downloaded from |
 
 ### The license
 
 The Piper is licensed under the [GPL-3.0-or-later](https://github.com/OHF-Voice/piper1-gpl/blob/main/COPYING) license, the espeak-ng it builds in under the GPL-3.0-or-later as well. The executable links the library, so the executable distributed to the others (in a package, an image or as is) is a combined work with it and has to be distributed under the terms of the GPL-3.0 (or a later version) as a whole: with it's complete corresponding sources and the same rights granted to it's users. The own sources of the project may keep a GPL compatible license of their own, while a project which can not distribute it's executable that way picks a speech engine of another license instead. The packages of the branch (the DEB, the flatpak, the snap etc.) carry the library, so they fall under these terms as well, while the onnxruntime is licensed under the MIT license.
 
-Every voice has a license of it's own, the one of the dataset it is trained on, which the `MODEL_CARD` file beside the voice in the voices repository names: the `en_US-lessac-medium` voice is trained on the [Lessac Blizzard 2013](https://www.cstr.ed.ac.uk/projects/blizzard/2013/lessac_blizzard2013/license.html) dataset of it's own license terms, the `uk_UA-ukrainian_tts-medium` one on the CC0 dataset. Review the license of the voice before distributing it or the speech of it. The voices are no part of the packages of the branch.
+Every voice has a license of it's own, the one of the dataset it is trained on, which the `MODEL_CARD` file beside the voice in the voices repository names: the `en_US-lessac-medium` voice is trained on the [Lessac Blizzard 2013](https://www.cstr.ed.ac.uk/projects/blizzard/2013/lessac_blizzard2013/license.html) dataset of it's own license terms, the `uk_UA-ukrainian_tts-medium` one on the CC0 dataset. Review the license of the voice before distributing it or the speech of it, the packages built with the downloaded voice included (see the installing of the voice below), while the `-DENABLE_PIPER_VOICE_DOWNLOAD=OFF` option keeps it out of them.
 
 ### The voices
 
@@ -47,9 +47,13 @@ cmake --build build
 ./build/src/CppAppTemplate --voice build/voices/uk_UA-ukrainian_tts-medium.onnx --text "Привіт, світе!"
 ```
 
-The [VOICES.md](https://github.com/OHF-Voice/piper1-gpl/blob/main/docs/VOICES.md) file lists the voices and their samples. The medium quality voices speak at the 22.05 kHz rate, while the speech takes the rate of the voice config. The installed application has no voice of it's own, so it needs the `--voice` parameter (or a `PROJECT_TTS_VOICE` path given to the configure).
+The [VOICES.md](https://github.com/OHF-Voice/piper1-gpl/blob/main/docs/VOICES.md) file lists the voices and their samples. The medium quality voices speak at the 22.05 kHz rate, while the speech takes the rate of the voice config.
 
 The controller hands the `espeak-ng-data` directory beside the loaded `libpiper` over to the library (the `<build>/piper/lib` one of the build directory or the `<prefix>/lib/<project>` one of the installation), so the build directory and the relocated installations (the DEB, the snap, the AppImage etc.) find it alike, while the `ESPEAK_DATA_PATH` environment variable takes it's place when it is missing. The `libpiper` initializes the espeak-ng so, that a missing data ends the whole process with the `Error processing file` message of the espeak-ng.
+
+### Installing the voice
+
+The downloaded voice is a file of the build tree, so the install step (and every package built out of it: deb, rpm, AppImage, FreeBSD pkg, the MS Windows installer) copies it with it's config into the `<prefix>/share/<project>` directory, the `/usr/share/CppAppTemplate/en_US-lessac-medium.onnx` file for example, and the installed application speaks with no build tree around. The `app::DataLocator` class of the [src/app/DataLocator.h](/src/app/DataLocator.h) file picks the voice the running binary speaks with while no `--voice` parameter is given: the installed one relative to the binary location first (so a relocated package, an AppImage for example, keeps working), then the downloaded one of the build tree (a binary run out of it), then the installed one under the configured prefix. The download turned off or failed installs no voice, so the installed application needs the `--voice` parameter then, while the voice of the `PROJECT_TTS_VOICE` variable gets loaded from where it is.
 
 ### The components
 
@@ -81,4 +85,4 @@ The `UTEST_PiperController` test drives the controller over a mock of the `libpi
 
 ### Packaging
 
-The installation (and so the DEB, the RPM and the other packages) carries the `libpiper`, the downloaded onnxruntime (when no system one is taken) and the `espeak-ng-data` in the `<prefix>/lib/<project>` directory, where the executable finds them through it's `$ORIGIN` relative run path, while the DEB depends on the system onnxruntime and the SDL2 packages through the `dpkg-shlibdeps` tool. The flatpak and the snap build the `libpiper` the same way with the network access, take the SDL2 of the runtime (the snap of the Ubuntu archive) and download no voice. The flatpak plays the speech through the PulseAudio socket and reads the voices and writes the `--output` files in the home directory, while the snap plays it through the `audio-playback` interface.
+The installation (and so the DEB, the RPM and the other packages) carries the `libpiper`, the downloaded onnxruntime (when no system one is taken) and the `espeak-ng-data` in the `<prefix>/lib/<project>` directory, where the executable finds them through it's `$ORIGIN` relative run path, and the downloaded voice in the `<prefix>/share/<project>` one, while the DEB depends on the system onnxruntime and the SDL2 packages through the `dpkg-shlibdeps` tool. The flatpak and the snap build the `libpiper` the same way with the network access, take the SDL2 of the runtime (the snap of the Ubuntu archive) and download no voice. The flatpak plays the speech through the PulseAudio socket and reads the voices and writes the `--output` files in the home directory, while the snap plays it through the `audio-playback` interface.

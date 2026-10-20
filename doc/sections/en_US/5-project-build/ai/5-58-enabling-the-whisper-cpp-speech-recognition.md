@@ -38,7 +38,7 @@ cmake -S . -B build -DTEMPLATE_APP_WHISPERCPP_MODEL=large-v3-turbo
 | Variable | What it holds |
 | --- | --- |
 | `TEMPLATE_APP_WHISPERCPP_MODEL` | the model to download, e.g. the multilingual `tiny`, `base`, `small`, `medium`, `large-v3-turbo` one, the quantized `small-q5_1` like one or the English only `.en` variant of them |
-| `ENABLE_WHISPERCPP_MODEL_DOWNLOAD` | downloads the model while configuring, `ON` by default |
+| `ENABLE_WHISPERCPP_MODEL_DOWNLOAD` | downloads the model while configuring and installs it with the binary, `ON` by default |
 | `TEMPLATE_APP_WHISPERCPP_MODEL_SHA1` | the SHA1 checksum to check a model of no listed one against, empty by default |
 | `PROJECT_WHISPER_MODEL_PATH` | the model the application loads while the `--model` (or `-m`) command line parameter gives none, the downloaded one if empty, so nothing gets downloaded once it is given |
 | `PROJECT_WHISPER_LANGUAGE` | the spoken language code (`en`, `uk`, `de` etc.) the multilingual models transcribe, `auto` to detect it |
@@ -48,6 +48,10 @@ The bigger models recognize more precisely and take longer to transcribe an utte
 ```
 ./src/CppAppTemplate --model /path/to/ggml-small.bin
 ```
+
+### Installing the model
+
+The downloaded model is a file of the build tree, so the install step (and every package built out of it: deb, rpm, AppImage, FreeBSD pkg, the MS Windows installer) copies it into the `share/<binary>` directory of the installation prefix, the `/usr/share/CppAppTemplate/ggml-small.bin` file for example, and the installed binary runs with no build tree around. The `app::DataLocator` class of the [src/app/DataLocator.h](/src/app/DataLocator.h) file picks the model the running binary loads while no `--model` parameter is given: the installed one relative to the binary location first (so a relocated package, an AppImage for example, keeps working), then the downloaded one of the build tree (a binary run out of it), then the installed one under the configured prefix. The download turned off or failed installs no model, and the model of the `PROJECT_WHISPER_MODEL_PATH` variable gets loaded from where it is.
 
 ### The components
 
@@ -87,7 +91,7 @@ The `UTEST_WhisperController` and the `CTEST_WhisperController` tests transcribe
 
 The DEB package depends on the whisper.cpp, the ggml and the SDL2 ones the executable links against through the `dpkg-shlibdeps` tool. The flatpak builds the whisper.cpp from it's sources first and takes the SDL2 of the freedesktop runtime, while the snap fetches the whisper.cpp through the enabler and stages the SDL2. The fetched whisper.cpp installs it's libraries next to the executable (and it's headers too), so the packages built without the system one carry them.
 
-The model stays in the build tree, so no package carries one and the flatpak and the snap builds download none: pass one with the `--model` parameter. The flatpak reads it from the home directory and records the microphone through the PulseAudio socket, while the snap needs it's `audio-record` interface connected by hand:
+The packages of a build with the downloaded model carry it (see the installing of the model above), while the flatpak and the snap builds download none: pass one with the `--model` parameter. The flatpak reads it from the home directory and records the microphone through the PulseAudio socket, while the snap needs it's `audio-record` interface connected by hand:
 
 ```
 sudo snap connect cppapptemplate:audio-record

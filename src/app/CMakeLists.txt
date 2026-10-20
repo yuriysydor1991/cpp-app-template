@@ -10,6 +10,7 @@ target_sources(
   PRIVATE ApplicationContext.cpp
   PRIVATE ApplicationFactory.cpp
   PRIVATE CommandLineParser.cpp
+  PRIVATE DataLocator.cpp
 )
 
 add_subdirectory(applications)

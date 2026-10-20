@@ -13,6 +13,8 @@ const std::string PROJECT_BUILD_COMMIT =
 const std::string PROJECT_CONFIGURE_DATE = "2025-03-05 12:39:11 EET";
 const std::string PROJECT_WHISPER_MODEL_PATH = "models/ggml-base.en.bin";
 const std::string PROJECT_WHISPER_LANGUAGE = "auto";
+const std::string PROJECT_DATA_INSTALLED_RELATIVE_DIR = "mock-installed-data";
+const std::string PROJECT_DATA_INSTALLED_DIR = "mock-prefix-data";
 
 }  // namespace project_decls
 

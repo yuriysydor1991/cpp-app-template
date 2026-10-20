@@ -7,6 +7,7 @@
 
 #include "project-global-decls.h"
 #include "src/app/CMDParamNames.h"
+#include "src/app/DataLocator.h"
 #include "src/log/log.h"
 
 namespace app
@@ -53,7 +54,8 @@ int ApplicationHelpPrinter::run(std::shared_ptr<ApplicationContext> ctx)
             << std::endl
             << "\t" << CMDParamNames::MODELW << " or " << CMDParamNames::MODEL
             << " <path> - load the given whisper model instead of the "
-            << project_decls::PROJECT_WHISPER_MODEL_PATH << " one" << std::endl;
+            << DataLocator::locate(project_decls::PROJECT_WHISPER_MODEL_PATH)
+            << " one" << std::endl;
 
   // A help message printed because of a bad usage is a failure.
   return ctx->get_errors().empty() ? 0 : INVALID;

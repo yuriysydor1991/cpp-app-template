@@ -18,6 +18,10 @@ const std::string PROJECT_CONFIGURE_DATE = "${PROJECT_CONFIGURE_DATE}" ;
 const std::string PROJECT_WHISPER_MODEL_PATH = "${PROJECT_WHISPER_MODEL_PATH}" ;
 /// @brief The spoken language the multilingual whisper.cpp models transcribe, auto to detect it
 const std::string PROJECT_WHISPER_LANGUAGE = "${PROJECT_WHISPER_LANGUAGE}" ;
+/// @brief The installed data directory of the project relative to the installed binary one
+const std::string PROJECT_DATA_INSTALLED_RELATIVE_DIR = "${PROJECT_DATA_INSTALLED_RELATIVE_DIR}" ;
+/// @brief The installed data directory of the project under the configured installation prefix
+const std::string PROJECT_DATA_INSTALLED_DIR = "${PROJECT_DATA_INSTALLED_DIR}" ;
 
 } // namespace project_decls
 

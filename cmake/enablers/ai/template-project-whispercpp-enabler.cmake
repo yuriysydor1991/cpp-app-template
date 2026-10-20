@@ -36,7 +36,7 @@ set(TEMPLATE_APP_WHISPERCPP_MODEL "small" CACHE STRING "The whisper.cpp ggml mod
 
 option(
     ENABLE_WHISPERCPP_MODEL_DOWNLOAD
-    "Downloads the TEMPLATE_APP_WHISPERCPP_MODEL model into the build directory with the whisper.cpp download script while configuring"
+    "Downloads the TEMPLATE_APP_WHISPERCPP_MODEL model into the build directory with the whisper.cpp download script while configuring and installs it with the binary"
     ON
 )
 
@@ -74,6 +74,18 @@ foreach(knownModel IN LISTS whisperKnownModelsSha1)
 endforeach()
 
 set(PROJECT_WHISPER_MODEL_PATH "" CACHE STRING "The whisper.cpp model the application loads while no --model parameter is given, the downloaded TEMPLATE_APP_WHISPERCPP_MODEL one if empty")
+
+# The install step copies the downloaded model into the data directory of the
+# project, where the installed binary looks for it relative to it's own
+# location first (see the src/app/DataLocator.h file), so the installation
+# needs no build tree.
+set(PROJECT_DATA_INSTALL_DIR "${CMAKE_INSTALL_DATADIR}/${PROJECT_BINARY_NAME}")
+set(PROJECT_DATA_INSTALLED_DIR "${CMAKE_INSTALL_FULL_DATADIR}/${PROJECT_BINARY_NAME}")
+
+file(
+  RELATIVE_PATH PROJECT_DATA_INSTALLED_RELATIVE_DIR
+  "/${PROJECT_BINARY_INSTALLATION_DIR}" "/${PROJECT_DATA_INSTALL_DIR}"
+)
 
 if (NOT PROJECT_WHISPER_MODEL_PATH)
     set(modelDir "${CMAKE_BINARY_DIR}/models")
@@ -139,6 +151,12 @@ if (NOT PROJECT_WHISPER_MODEL_PATH)
             file(REMOVE "${PROJECT_WHISPER_MODEL_PATH}")
             message(WARNING "Fail to download the ${TEMPLATE_APP_WHISPERCPP_MODEL} whisper.cpp model, so the application needs the --model parameter")
         endif()
+    endif()
+
+    # The installation takes the downloaded model, while a failed download
+    # leaves none to install.
+    if (ENABLE_WHISPERCPP_MODEL_DOWNLOAD)
+        install(FILES "${PROJECT_WHISPER_MODEL_PATH}" DESTINATION "${PROJECT_DATA_INSTALL_DIR}" OPTIONAL)
     endif()
 endif()
 

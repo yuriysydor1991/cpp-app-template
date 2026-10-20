@@ -19,7 +19,7 @@
     1. [Вмикання підтримки профілювання за допомогою vagrind/callgrind](/doc/sections/uk_UA/5-16-enabling-valgrinds-callgrind-profiler-analysis.md)
 1. Контейнери та CI
     1. [Вмикання підтримки запуску Docker-контейнера](/doc/sections/uk_UA/5-12-enabling-the-docker-container-build-and-run.md)
-    1. [Запуск конвеєра Jenkins](/doc/sections/uk_UA/5-17-enabling-Jenkins-pipeline-inside-Docker-container.md)
+    1. [Вмикання конвеєра Jenkins всередині Docker контейнера](/doc/sections/uk_UA/5-17-enabling-Jenkins-pipeline-inside-Docker-container.md)
     1. [Конвеєр CI GitHub Actions](/doc/sections/uk_UA/5-31-the-GitHub-Actions-CI-pipeline.md)
     1. [Конвеєр CI/CD GitLab](/doc/sections/uk_UA/5-32-the-GitLab-CI-pipeline.md)
 1. Пакувальники

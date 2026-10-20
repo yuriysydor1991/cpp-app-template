@@ -52,6 +52,7 @@ Each packager is a `custom_target` that internally runs `meson install` into a s
 | `-DENABLE_APPIMAGE=true` | `<project>-<version>-<arch>-<os>.AppImage` | [Enabling the AppImage bundle generation support](/doc/sections/en_US/5-26-enabling-the-AppImage-bundle-generation.md) |
 | `-DENABLE_WIX=true` | `<project>-<version>-<arch>-<os>.msi` | [Enabling the WIX MSI installer generation support](/doc/sections/en_US/5-27-enabling-the-WIX-MSI-installer-generation.md) |
 | `-DENABLE_DOCKER=true` | container build and run | [Enabling the Docker container build and run](/doc/sections/en_US/5-12-enabling-the-docker-container-build-and-run.md) |
+| `-DENABLE_JENKINS_DOCKER_PIPELINE=true` | Jenkins pipeline container build and run | [Enabling Jenkins pipeline inside Docker container](/doc/sections/en_US/5-17-enabling-Jenkins-pipeline-inside-Docker-container.md) |
 
 The `<os>` is the destination OS, so the packages of the different OS releases differ in name: the `PACKAGE_OS` option holds it (default: the `ID` and the `VERSION_ID` of the `/etc/os-release` file of the build host, e.g. `ubuntu-24.04` or `freebsd-15.1`, and the `windows-10.0` the Windows 10 and 11 share on the Windows). The `<runtime>` is the runtime of the flatpak manifest (e.g. `freedesktop-24.08`), since the GUI framework of the project picks it.
 

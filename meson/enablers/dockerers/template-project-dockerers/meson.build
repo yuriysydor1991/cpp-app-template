@@ -15,14 +15,22 @@ configure_file(
   configuration : conf_data
 )
 
-docker_single_run_cmd_str = 'docker build -f ' + DOCKERFILE_DST_PATH + ' --build-context project='
-docker_single_run_cmd_str += meson.project_source_root() + ' --build-arg CACHEBUST="' + timestamp + '" -t' + DOCKER_SINGLE_RUN_NAME
-docker_single_run_cmd_str += ' . && docker run --rm ' + DOCKER_SINGLE_RUN_NAME
+docker_single_build_cmd_str = 'docker build -f ' + DOCKERFILE_DST_PATH + ' --build-context project='
+docker_single_build_cmd_str += meson.project_source_root() + ' --build-arg CACHEBUST="' + timestamp + '" -t' + DOCKER_SINGLE_RUN_NAME + ' .'
+
+docker_single_build_target = custom_target(
+  'docker-single-build',
+  command: ['sh', '-c', docker_single_build_cmd_str],
+  env: ['DOCKER_BUILDKIT=1'],
+  build_always_stale: false,
+  output: 'docker-build-output-stub.txt',
+  console: true
+)
 
 docker_single_run_target = custom_target(
   'docker-single-run',
-  command: ['sh', '-c', docker_single_run_cmd_str],
-  env: ['DOCKER_BUILDKIT=1'],
+  command: ['docker', 'run', '--rm', DOCKER_SINGLE_RUN_NAME],
+  depends: docker_single_build_target,
   build_always_stale: false,
   output: 'docker-output-stub.txt',
   console: true

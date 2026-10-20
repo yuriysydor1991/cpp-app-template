@@ -7,6 +7,7 @@
 
 #include "project-global-decls.h"
 #include "src/app/CMDParamNames.h"
+#include "src/app/DataLocator.h"
 #include "src/log/log.h"
 
 namespace app
@@ -57,7 +58,8 @@ int ApplicationHelpPrinter::run(std::shared_ptr<ApplicationContext> ctx)
             << "\t" << CMDParamNames::VOICEW << " or " << CMDParamNames::VOICE
             << " <voice> - speak with the given voice of the speech engine "
                "instead of the "
-            << project_decls::PROJECT_TTS_VOICE << " one" << std::endl
+            << DataLocator::locate(project_decls::PROJECT_TTS_VOICE) << " one"
+            << std::endl
             << "\t" << CMDParamNames::OUTPUTW << " or " << CMDParamNames::OUTPUT
             << " <path> - write the speech into the given 16-bit PCM mono WAV "
                "file instead of playing it through the default audio device"

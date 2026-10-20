@@ -9,6 +9,7 @@
 #include "src/TTS/ISpeechSynthesizer.h"
 #include "src/TTS/WavWriter.h"
 #include "src/app/CMDParamNames.h"
+#include "src/app/DataLocator.h"
 #include "src/log/log.h"
 
 namespace app
@@ -26,9 +27,10 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
   const std::string& text = ctx->get_text().empty()
                                 ? project_decls::PROJECT_TTS_TEXT
                                 : ctx->get_text();
-  const std::string& voice = ctx->get_voice().empty()
-                                 ? project_decls::PROJECT_TTS_VOICE
-                                 : ctx->get_voice();
+  const std::string voice =
+      ctx->get_voice().empty()
+          ? DataLocator::locate(project_decls::PROJECT_TTS_VOICE)
+          : ctx->get_voice();
 
   auto synthesizer = tts::ISpeechSynthesizer::create();
 

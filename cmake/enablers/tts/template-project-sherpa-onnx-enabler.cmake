@@ -76,7 +76,7 @@ set(TEMPLATE_APP_SHERPA_ONNX_MODEL "kokoro-int8-multi-lang-v1_0" CACHE STRING "T
 
 option(
     ENABLE_SHERPA_ONNX_MODEL_DOWNLOAD
-    "Downloads the TEMPLATE_APP_SHERPA_ONNX_MODEL model into the build directory while configuring"
+    "Downloads the TEMPLATE_APP_SHERPA_ONNX_MODEL model into the build directory while configuring and installs it with the binary"
     ON
 )
 
@@ -103,6 +103,18 @@ foreach(knownModel IN LISTS sherpaOnnxKnownModelsSha256)
 endforeach()
 
 set(PROJECT_TTS_VOICE "" CACHE STRING "The sherpa-onnx model directory, optionally with the :<id> speaker id suffix, the application speaks with while no --voice parameter is given, the downloaded TEMPLATE_APP_SHERPA_ONNX_MODEL one if empty")
+
+# The install step copies the downloaded model directory into the data
+# directory of the project, where the installed binary looks for it relative
+# to it's own location first (see the src/app/DataLocator.h file), so the
+# installation needs no build tree.
+set(PROJECT_DATA_INSTALL_DIR "${CMAKE_INSTALL_DATADIR}/${PROJECT_BINARY_NAME}")
+set(PROJECT_DATA_INSTALLED_DIR "${CMAKE_INSTALL_FULL_DATADIR}/${PROJECT_BINARY_NAME}")
+
+file(
+  RELATIVE_PATH PROJECT_DATA_INSTALLED_RELATIVE_DIR
+  "/${PROJECT_BINARY_INSTALLATION_DIR}" "/${PROJECT_DATA_INSTALL_DIR}"
+)
 
 if (NOT PROJECT_TTS_VOICE)
     set(modelDir "${CMAKE_BINARY_DIR}/models")
@@ -149,6 +161,12 @@ if (NOT PROJECT_TTS_VOICE)
         if (NOT modelDownloadCode EQUAL 0 OR NOT EXISTS "${PROJECT_TTS_VOICE}/tokens.txt")
             message(WARNING "Fail to download the ${TEMPLATE_APP_SHERPA_ONNX_MODEL} sherpa-onnx model, so the application needs the --voice parameter")
         endif()
+    endif()
+
+    # The installation takes the downloaded model directory, while a failed
+    # download leaves none to install.
+    if (ENABLE_SHERPA_ONNX_MODEL_DOWNLOAD)
+        install(DIRECTORY "${PROJECT_TTS_VOICE}" DESTINATION "${PROJECT_DATA_INSTALL_DIR}" OPTIONAL)
     endif()
 endif()
 

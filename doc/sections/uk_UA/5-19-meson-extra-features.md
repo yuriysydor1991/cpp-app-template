@@ -52,6 +52,7 @@
 | `-DENABLE_APPIMAGE=true` | `<проект>-<версія>-<арх>-<ОС>.AppImage` | [Вмикання підтримки генерації AppImage-збірки](/doc/sections/uk_UA/5-26-enabling-the-AppImage-bundle-generation.md) |
 | `-DENABLE_WIX=true` | `<проект>-<версія>-<арх>-<ОС>.msi` | [Вмикання підтримки генерації WIX MSI-інсталятора](/doc/sections/uk_UA/5-27-enabling-the-WIX-MSI-installer-generation.md) |
 | `-DENABLE_DOCKER=true` | побудова і запуск контейнера | [Вмикання підтримки запуску Docker-контейнера](/doc/sections/uk_UA/5-12-enabling-the-docker-container-build-and-run.md) |
+| `-DENABLE_JENKINS_DOCKER_PIPELINE=true` | побудова і запуск контейнера конвеєра Jenkins | [Вмикання конвеєра Jenkins всередині Docker контейнера](/doc/sections/uk_UA/5-17-enabling-Jenkins-pipeline-inside-Docker-container.md) |
 
 `<ОС>` - цільова ОС, тож пакунки різних випусків ОС відрізняються назвою: її містить опція `PACKAGE_OS` (типово: поля `ID` і `VERSION_ID` файлу `/etc/os-release` хоста збирання, наприклад `ubuntu-24.04` чи `freebsd-15.1`, а на Windows - спільне для Windows 10 і 11 значення `windows-10.0`). `<середовище>` - середовище виконання (runtime) маніфесту flatpak (наприклад `freedesktop-24.08`), адже його обирає графічний фреймворк проекту.
 

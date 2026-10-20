@@ -17,3 +17,24 @@ meson compile -C build docker-single-run
 ```
 
 Для деталей цілі побудови `docker-single-run` слід звернутись до файлу `meson/enablers/dockerers/template-project-dockerers/meson.build`.
+
+### Скрипти запуску
+
+Директорія [scripts/docker](/scripts/docker) містить скорочення, які виконують обидві наведені вище команди, отож увесь запуск виконується однією командою:
+
+| Скрипт | Запускає Meson-ціль |
+| --- | --- |
+| [single-run.sh](/scripts/docker/single-run.sh) | `docker-single-run` |
+| [single-build.sh](/scripts/docker/single-build.sh) | `docker-single-build` |
+
+```
+# в середині кореневої директорії проекту
+
+scripts/docker/single-run.sh
+```
+
+Кожен з них конфігурує директорію `build/release` з параметром `ENABLE_DOCKER` у значенні `true` (вже сконфігурована директорія переконфігуровується і зберігає інші свої параметри) і потім будує потрібну ціль, отож жодної власної команди `docker` не виконується. Meson-ціль `docker-single-run` залежить від цілі `docker-single-build`, а отже скрипт [single-run.sh](/scripts/docker/single-run.sh) будує і образ теж, а скрипт [single-build.sh](/scripts/docker/single-build.sh) потрібен лише для побудови образу без запуску контейнера.
+
+Усі додаткові параметри скриптів передаються кроку `meson setup` директорії `build/release`. Образ конфігурує проект всередині себе з параметрами за замовчуванням, отож вони не впливають на виконуваний файл, який запускає контейнер.
+
+Слід пам'ятати, що параметр `ENABLE_DOCKER` робить наявність виконуваного файлу `docker` у системі обов'язковою для кроку конфігурації, отож на машині без встановленого Docker скрипти завершать крок конфігурації помилкою (див. секцію вимог [Необов'язкові пакети для запуску контейнера Docker](/doc/sections/uk_UA/3-10-optional-for-docker-container-runs.md)).

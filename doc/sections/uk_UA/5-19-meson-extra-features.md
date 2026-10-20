@@ -45,6 +45,7 @@
 | `-DENABLE_RPM=true` | `<проект>-<версія>-<арх>-<ОС>.rpm` | [Вмикання підтримки генерації RPM-пакету](/doc/sections/uk_UA/5-24-enabling-rpm-package-generation.md) |
 | `-DENABLE_FREEBSD_PKG=true` | `<проект>-<версія>-<арх>-<ОС>.pkg` | [Вмикання підтримки генерації FreeBSD pkg-пакету](/doc/sections/uk_UA/5-25-enabling-freebsd-pkg-package-generation.md) |
 | `-DENABLE_WIX=true` | `<проект>-<версія>-<арх>-<ОС>.msi` | [Вмикання підтримки генерації WIX MSI-інсталятора](/doc/sections/uk_UA/5-27-enabling-the-WIX-MSI-installer-generation.md) |
+| `-DENABLE_DOCKER=true -DENABLE_JENKINS_DOCKER_PIPELINE=true` | побудова і запуск контейнера конвеєра Jenkins | [Вмикання конвеєра Jenkins всередині Docker контейнера](/doc/sections/uk_UA/5-17-enabling-Jenkins-pipeline-inside-Docker-container.md) |
 
 `<ОС>` - цільова ОС, тож пакунки різних випусків ОС відрізняються назвою: її містить опція `PACKAGE_OS` (типово: поля `ID` і `VERSION_ID` файлу `/etc/os-release` хоста збирання, наприклад `ubuntu-24.04` чи `freebsd-15.1`, а на Windows - спільне для Windows 10 і 11 значення `windows-10.0`).
 

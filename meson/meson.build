@@ -59,3 +59,7 @@ endif
 if get_option('ENABLE_WIX')
   subdir('enablers/packagers/template-project-wix-enabler')
 endif
+
+if get_option('ENABLE_DOCKER') and get_option('ENABLE_JENKINS_DOCKER_PIPELINE')
+  subdir('enablers/dockerers/template-project-docker-Jenkins-pipeline-runner-target')
+endif

@@ -76,6 +76,36 @@ option(
 )
 
 option(
+  'ENABLE_DOCKER',
+  type: 'boolean',
+  value: false,
+  description: 'Enables the docker container targets (the Jenkins pipeline ones) in the current project'
+)
+
+option(
+  'ENABLE_JENKINS_DOCKER_PIPELINE',
+  type: 'boolean',
+  value: false,
+  description: 'Enables the Jenkins pipeline docker container build and run targets (along with the ENABLE_DOCKER option)'
+)
+
+option(
+  'JENKINS_PIPELINE_FORCE_REBUILD',
+  type: 'boolean',
+  value: false,
+  description: 'Erase the Jenkins pipeline container and image and build the image anew with no builder cache reused'
+)
+
+option(
+  'JENKINS_PIPELINES_PANEL_HTTP_PORT',
+  type: 'integer',
+  value: 8080,
+  min: 1,
+  max: 65535,
+  description: 'The host port of the Jenkins Web GUI of the Jenkins pipeline docker container'
+)
+
+option(
   'ENABLE_SANITIZERS',
   type: 'boolean',
   value: false,

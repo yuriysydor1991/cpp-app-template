@@ -12,7 +12,7 @@ filter_script_args()
     BUILD_ARGS=()
 
     for arg in "$@" ; do
-        if [[ ${arg} != --install ]] ; then
+        if [[ ${arg} != --install && ${arg} != --rebuild ]] ; then
             BUILD_ARGS+=("${arg}")
         fi
     done

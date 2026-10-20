@@ -8,7 +8,7 @@
 meson setup build -DENABLE_SANITIZERS=true
 ```
 
-Для вмикання загальних перевірок (`address`, `leak`, `undefined`). Деталі і список прапорців компіляції та лінкування у файлі `meson/template-project-sanitizers/meson.build`.
+Для вмикання загальних перевірок (`address`, `leak`, `undefined`). Деталі і список прапорців компіляції та лінкування у файлі `meson/compile-options/sanitizers/template-project-sanitizers/meson.build`.
 
 Також доступна можливість вмикання перевірок виконання потоків на предмет помилок і спотворення даних (data races) наступною командою:
 

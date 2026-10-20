@@ -16,4 +16,4 @@ meson setup build -DENABLE_CLANGFORMAT=true
 meson compile -C build clang-format
 ```
 
-Деталі цілі `clang-format` можна перегляну у файлі `meson/template-project-clang-format-target/meson.build` субмодуля системи Meson.
+Деталі цілі `clang-format` можна перегляну у файлі `meson/enablers/template-project-clang-format-target/meson.build` субмодуля системи Meson.

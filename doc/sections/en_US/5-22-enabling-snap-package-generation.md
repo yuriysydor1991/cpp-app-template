@@ -18,6 +18,6 @@ To produce the snap package run the `snap` target for the build:
 meson compile -C build snap
 ```
 
-The artefact is named like `<project>_<version>_<arch>.snap` and lands in the build directory. Examine and/or change the snap generation target parameters in `meson/template-project-snap-enabler/meson.build` or in the `misc/snap/snapcraft.yaml.meson.in` template.
+The artefact is named like `<project>_<version>_<arch>.snap` and lands in the build directory. Examine and/or change the snap generation target parameters in `meson/enablers/packagers/template-project-snap-enabler/meson.build` or in the `misc/snap/snapcraft.yaml.meson.in` template.
 
 See [Optional for the snap packager](/doc/sections/en_US/3-13-optional-for-the-snap-packager.md) for the `snapcraft` install command.

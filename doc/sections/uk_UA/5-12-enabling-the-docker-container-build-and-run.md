@@ -16,4 +16,4 @@ meson setup build -DENABLE_DOCKER=true
 meson compile -C build docker-single-run 
 ```
 
-Для деталей цілі побудови `docker-single-run` слід звернутись до файлу `meson/template-project-dockerers/meson.build`.
+Для деталей цілі побудови `docker-single-run` слід звернутись до файлу `meson/enablers/dockerers/template-project-dockerers/meson.build`.

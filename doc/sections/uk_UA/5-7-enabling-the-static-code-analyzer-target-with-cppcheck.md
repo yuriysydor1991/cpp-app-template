@@ -16,4 +16,4 @@ meson setup builddir -DENABLE_CPPCHECK=true
 meson compile -C builddir cppcheck
 ```
 
-Деталі цілі `cppcheck` можна перегляну і/або змінити у файлі `meson/template-project-cppcheck-target/meson.build` системи збірки Meson.
+Деталі цілі `cppcheck` можна перегляну і/або змінити у файлі `meson/enablers/template-project-cppcheck-target/meson.build` системи збірки Meson.

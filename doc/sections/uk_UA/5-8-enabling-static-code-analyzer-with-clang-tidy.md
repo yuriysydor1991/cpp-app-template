@@ -16,7 +16,7 @@ meson setup build -DENABLE_CLANG_TIDY=true
 meson compile -C build clang-tidy
 ```
 
-Щоб переглянути докладну інформацію по статичному аналізатору `clang-tidy` необхідно переглянути файли `meson/template-project-clang-tidy-target/meson.build`, `misc/.clang-tidy` і документацію до відповідної використовуваної версії `clang-tidy`.
+Щоб переглянути докладну інформацію по статичному аналізатору `clang-tidy` необхідно переглянути файли `meson/enablers/template-project-clang-tidy-target/meson.build`, `misc/.clang-tidy` і документацію до відповідної використовуваної версії `clang-tidy`.
 
 **Попередження** Виконання статичного аналізу коду за допомогою `clang-tidy` може значно збільшити час побудови цілей.
 

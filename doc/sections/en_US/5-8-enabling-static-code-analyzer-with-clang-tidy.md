@@ -16,7 +16,7 @@ And to perform the actual static code analysis by itself build the `clang-tidy` 
 meson compile -C build clang-tidy
 ```
 
-For more information about the `clang-tidy` examine the `meson/template-project-clang-tidy-target/meson.build` Meson submodule, the project's `misc/.clang-tidy` configuration file and the `clang-tidy` application documentation of a used version.
+For more information about the `clang-tidy` examine the `meson/enablers/template-project-clang-tidy-target/meson.build` Meson submodule, the project's `misc/.clang-tidy` configuration file and the `clang-tidy` application documentation of a used version.
 
 **Warning!** The `clang-tidy` static code analysis may dramatically increase the code compilation time.
 

@@ -20,6 +20,6 @@ meson setup build -DENABLE_RPM=true \
 meson compile -C build rpm
 ```
 
-Артефакт іменується за шаблоном `<проект>-<версія>-<арх>-<ОС>.rpm` і потрапляє у директорію побудови, де `<ОС>` - цільова ОС, яку містить опція `PACKAGE_OS` (типово: поля `ID` і `VERSION_ID` файлу `/etc/os-release` хоста збирання, наприклад `fedora-44`). Опції `PROJECT_MAINTAINER` і `PROJECT_MAINTAINER_EMAIL` потрапляють у поле `Packager:` `.spec`-файлу. Деталі і параметри цілі можна переглянути або змінити у файлах `meson/template-project-rpm-enabler/meson.build` чи у шаблоні `misc/rpm.spec.in`.
+Артефакт іменується за шаблоном `<проект>-<версія>-<арх>-<ОС>.rpm` і потрапляє у директорію побудови, де `<ОС>` - цільова ОС, яку містить опція `PACKAGE_OS` (типово: поля `ID` і `VERSION_ID` файлу `/etc/os-release` хоста збирання, наприклад `fedora-44`). Опції `PROJECT_MAINTAINER` і `PROJECT_MAINTAINER_EMAIL` потрапляють у поле `Packager:` `.spec`-файлу. Деталі і параметри цілі можна переглянути або змінити у файлах `meson/enablers/packagers/template-project-rpm-enabler/meson.build` чи у шаблоні `misc/rpm.spec.in`.
 
 Деталі встановлення `rpmbuild`: [Необов'язкові пакети для пакувальника rpm](/doc/sections/uk_UA/3-14-optional-for-the-rpm-packager.md).

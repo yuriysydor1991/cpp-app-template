@@ -6,7 +6,7 @@ FLATPAK_TARGET_ARCH = run_command('flatpak', '--default-arch', check: true).stdo
 FLATPAK_REPO = join_paths(meson.current_build_dir(), meson.project_name() + '-repo')
 FLATPAK_BUILD = join_paths(meson.current_build_dir(), meson.project_name() + '-flatpak-build')
 flatpakConfDst = 'flatpak.conf.json'
-FLATPAK_CONF_SRC = join_paths('..', '..', 'misc', 'flatpak.conf.json.meson.in')
+FLATPAK_CONF_SRC = join_paths(meson.project_source_root(), 'misc', 'flatpak.conf.json.meson.in')
 
 # the runtime the bundle demands, the GUI framework picks it (e.g. gnome-49 for
 # the org.gnome.Platform 49), so the bundle names it instead of the build host

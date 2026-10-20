@@ -18,4 +18,4 @@ meson compile -C build gprof-analyze
 
 Дана команда у свою чергу побудує і запустить цільовий бінарний виконуваний файл проекту у директорії `src` дерева побудови для генерації там файлу `gmon.out` (наприклад, `build/src/gmon.out`). Після чого Meson-скрипт запустить програму `gprof` для генерації цільового файлу аналізу `gprof-analyze.txt`, який буде розміщений поруч (наприклад, `build/src/gprof-analyze.txt`).
 
-Профілювання за допомогою програми gprof може бути здійснене тільки у режимі побудови `--buildtype=debug`. Meson-підмодуль `meson/template-project-profiler-gprof/meson.build` повертає явну помилку якщо проект сконфігуровано з іншим типом побудови.
+Профілювання за допомогою програми gprof може бути здійснене тільки у режимі побудови `--buildtype=debug`. Meson-підмодуль `meson/enablers/profilers/template-project-profiler-gprof/meson.build` повертає явну помилку якщо проект сконфігуровано з іншим типом побудови.

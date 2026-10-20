@@ -1,6 +1,6 @@
 ## Meson extra features
 
-The `applibMeson` branch ships with a Meson-based equivalent of the CMake feature set that the `app` branch has. Each feature is gated by a boolean `meson_options.txt` flag and can be turned on at configure time with `meson setup -D<OPTION>=true`. The wiring is centralised through the `template_project_extra_deps`, `template_project_extra_cpp_args` and `template_project_extra_link_args` Meson variables that are appended to by each enabler under `meson/template-project-<feature>-*/meson.build`.
+The `applibMeson` branch ships with a Meson-based equivalent of the CMake feature set that the `app` branch has. Each feature is gated by a boolean `meson_options.txt` flag and can be turned on at configure time with `meson setup -D<OPTION>=true`. The wiring is centralised through the `template_project_extra_deps`, `template_project_extra_cpp_args` and `template_project_extra_link_args` Meson variables that are appended to by each enabler under `meson/<group>/template-project-<feature>-*/meson.build`. The groups follow the `cmake/` directory of the CMake branches: `compile-options/` with its `hardening/` and `sanitizers/` subgroups, `enablers/` with its `dockerers/`, `packagers/` and `profilers/` subgroups, and `tools/`.
 
 The matrix below maps each option to a dedicated subsection so commands, install hints and target descriptions live next to the feature they enable.
 

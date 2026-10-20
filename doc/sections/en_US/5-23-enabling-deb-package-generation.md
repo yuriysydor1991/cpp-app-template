@@ -20,6 +20,6 @@ To produce the DEB package run the `deb` target for the build:
 meson compile -C build deb
 ```
 
-The artefact is named like `<project>-<version>-<arch>-<os>.deb` and lands in the build directory, the `<os>` being the destination OS the `PACKAGE_OS` option holds (default: the `ID` and the `VERSION_ID` of the `/etc/os-release` file of the build host, e.g. `ubuntu-24.04`). The `PROJECT_MAINTAINER` and `PROJECT_MAINTAINER_EMAIL` options feed the `Maintainer:` field of the `DEBIAN/control` manifest. Examine and/or change the DEB generation target parameters in `meson/template-project-deb-enabler/meson.build` or in the `misc/deb-control.in` template.
+The artefact is named like `<project>-<version>-<arch>-<os>.deb` and lands in the build directory, the `<os>` being the destination OS the `PACKAGE_OS` option holds (default: the `ID` and the `VERSION_ID` of the `/etc/os-release` file of the build host, e.g. `ubuntu-24.04`). The `PROJECT_MAINTAINER` and `PROJECT_MAINTAINER_EMAIL` options feed the `Maintainer:` field of the `DEBIAN/control` manifest. Examine and/or change the DEB generation target parameters in `meson/enablers/packagers/template-project-deb-enabler/meson.build` or in the `misc/deb-control.in` template.
 
 The `dpkg-deb` tool is shipped by the `dpkg` system package which is preinstalled on Debian/Ubuntu hosts.

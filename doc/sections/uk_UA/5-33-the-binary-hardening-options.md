@@ -1,6 +1,6 @@
 ## Параметри захисту (hardening) бінарних файлів
 
-Шаблон захищає кожен бінарний файл, який будує, отож вмикати для цього нічого не потрібно. Параметри відповідають [Compiler Options Hardening Guide for C and C++](https://best.openssf.org/Compiler-Hardening-Guides/Compiler-Options-Hardening-Guide-for-C-and-C++.html) від OpenSSF і містяться у модулі [meson/template-project-hardening/meson.build](/meson/template-project-hardening/meson.build), який передає їх командам `add_project_arguments` та `add_project_link_arguments`, отож їх отримує кожна ціль проекту.
+Шаблон захищає кожен бінарний файл, який будує, отож вмикати для цього нічого не потрібно. Параметри відповідають [Compiler Options Hardening Guide for C and C++](https://best.openssf.org/Compiler-Hardening-Guides/Compiler-Options-Hardening-Guide-for-C-and-C++.html) від OpenSSF і містяться у модулі [meson/compile-options/hardening/template-project-hardening/meson.build](/meson/compile-options/hardening/template-project-hardening/meson.build), який передає їх командам `add_project_arguments` та `add_project_link_arguments`, отож їх отримує кожна ціль проекту.
 
 ### Параметри компіляції GCC та clang
 

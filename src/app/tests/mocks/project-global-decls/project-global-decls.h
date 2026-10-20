@@ -15,6 +15,8 @@ const std::string PROJECT_DARKNETXX_CFG_PATH = "cfg/yolov4-tiny.cfg";
 const std::string PROJECT_DARKNETXX_WEIGHTS_PATH = "models/yolov4-tiny.weights";
 const std::string PROJECT_DARKNETXX_NAMES_PATH = "cfg/coco.names";
 const std::string PROJECT_DARKNETXX_IMAGE_PATH = "data/dog.jpg";
+const std::string PROJECT_DATA_INSTALLED_RELATIVE_DIR = "mock-installed-data";
+const std::string PROJECT_DATA_INSTALLED_DIR = "mock-prefix-data";
 
 }  // namespace project_decls
 

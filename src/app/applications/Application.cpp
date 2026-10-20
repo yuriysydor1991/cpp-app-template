@@ -11,6 +11,7 @@
 #include "src/DarknetXX/weights/Dxxwjz2Weights.h"
 #include "src/DarknetXX/weights/OrigWeights.h"
 #include "src/app/CMDParamNames.h"
+#include "src/app/DataLocator.h"
 #include "src/log/log.h"
 
 namespace app
@@ -49,7 +50,7 @@ darknetxxi::NetworkWeightsPtr weights_of(const ApplicationContext& ctx)
 
   if (given.empty()) {
     return std::make_shared<darknetxxi::OrigWeights>(
-        project_decls::PROJECT_DARKNETXX_WEIGHTS_PATH);
+        DataLocator::locate(project_decls::PROJECT_DARKNETXX_WEIGHTS_PATH));
   }
 
   return given.size() == 1U ? given.front() : nullptr;
@@ -81,11 +82,14 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
   const std::string& dxxwjz2 = ctx->get_dxxwjz2_path();
   const std::string cfg = or_default(
       ctx->get_cfg_path(),
-      or_default(dxxwjz2, project_decls::PROJECT_DARKNETXX_CFG_PATH));
+      or_default(dxxwjz2, DataLocator::locate(
+                              project_decls::PROJECT_DARKNETXX_CFG_PATH)));
   const std::string names =
-      dxxwjz2.empty() ? or_default(ctx->get_names_path(),
-                                   project_decls::PROJECT_DARKNETXX_NAMES_PATH)
-                      : ctx->get_names_path();
+      dxxwjz2.empty()
+          ? or_default(ctx->get_names_path(),
+                       DataLocator::locate(
+                           project_decls::PROJECT_DARKNETXX_NAMES_PATH))
+          : ctx->get_names_path();
 
   auto darknetxx = darknetxxi::DarknetXXController::create();
 
@@ -101,7 +105,8 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
   }
 
   const std::string image = or_default(
-      ctx->get_image_path(), project_decls::PROJECT_DARKNETXX_IMAGE_PATH);
+      ctx->get_image_path(),
+      DataLocator::locate(project_decls::PROJECT_DARKNETXX_IMAGE_PATH));
 
   const auto objects = darknetxx->detect(image);
 

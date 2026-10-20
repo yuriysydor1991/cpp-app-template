@@ -170,7 +170,7 @@ set(TEMPLATE_APP_DARKNETXX_WEIGHTS_SHA256 "cf9fbfd0f6d4869b35762f56100f50ed05268
 
 option(
   ENABLE_DARKNETXX_WEIGHTS_DOWNLOAD
-  "Downloads the TEMPLATE_APP_DARKNETXX_WEIGHTS_URL weights file into the build directory while configuring"
+  "Downloads the TEMPLATE_APP_DARKNETXX_WEIGHTS_URL weights file into the build directory while configuring and installs it with the binary"
   ON
 )
 
@@ -179,16 +179,31 @@ set(PROJECT_DARKNETXX_WEIGHTS_PATH "" CACHE STRING "The network weights file the
 set(PROJECT_DARKNETXX_NAMES_PATH "" CACHE STRING "The class names file the application labels the objects with while neither the --names nor the --dxxwjz2 parameter is given, the darknetxx coco.names one if empty")
 set(PROJECT_DARKNETXX_IMAGE_PATH "" CACHE STRING "The image the application detects the objects of while no --image parameter is given, the darknetxx dog.jpg one if empty")
 
+# The install step copies the default files of the build tree into the data
+# directory of the project, where the installed binary looks for them relative
+# to it's own location first (see the src/app/DataLocator.h file), so the
+# installation needs no build tree.
+set(PROJECT_DATA_INSTALL_DIR "${CMAKE_INSTALL_DATADIR}/${PROJECT_BINARY_NAME}")
+set(PROJECT_DATA_INSTALLED_DIR "${CMAKE_INSTALL_FULL_DATADIR}/${PROJECT_BINARY_NAME}")
+
+file(
+  RELATIVE_PATH PROJECT_DATA_INSTALLED_RELATIVE_DIR
+  "/${PROJECT_BINARY_INSTALLATION_DIR}" "/${PROJECT_DATA_INSTALL_DIR}"
+)
+
 if (NOT PROJECT_DARKNETXX_CFG_PATH)
   set(PROJECT_DARKNETXX_CFG_PATH "${darknetxx_SOURCE_DIR}/misc/examples/cfg/yolov4-tiny.cfg")
+  list(APPEND darknetxxDataFiles "${PROJECT_DARKNETXX_CFG_PATH}")
 endif()
 
 if (NOT PROJECT_DARKNETXX_NAMES_PATH)
   set(PROJECT_DARKNETXX_NAMES_PATH "${darknetxx_SOURCE_DIR}/misc/examples/cfg/coco.names")
+  list(APPEND darknetxxDataFiles "${PROJECT_DARKNETXX_NAMES_PATH}")
 endif()
 
 if (NOT PROJECT_DARKNETXX_IMAGE_PATH)
   set(PROJECT_DARKNETXX_IMAGE_PATH "${darknetxx_SOURCE_DIR}/misc/data/dog.jpg")
+  list(APPEND darknetxxDataFiles "${PROJECT_DARKNETXX_IMAGE_PATH}")
 endif()
 
 if (NOT PROJECT_DARKNETXX_WEIGHTS_PATH)
@@ -218,6 +233,16 @@ if (NOT PROJECT_DARKNETXX_WEIGHTS_PATH)
       message(WARNING "Fail to download the ${TEMPLATE_APP_DARKNETXX_WEIGHTS_URL} weights file (${weightsStatus}), so the application needs the --weights, the --dxxwjz1 or the --dxxwjz2 parameter")
     endif()
   endif()
+
+  # The installation takes the downloaded weights, while a failed download
+  # leaves none to install.
+  if (ENABLE_DARKNETXX_WEIGHTS_DOWNLOAD)
+    list(APPEND darknetxxDataFiles "${PROJECT_DARKNETXX_WEIGHTS_PATH}")
+  endif()
+endif()
+
+if (darknetxxDataFiles)
+  install(FILES ${darknetxxDataFiles} DESTINATION "${PROJECT_DATA_INSTALL_DIR}" OPTIONAL)
 endif()
 
 message(STATUS "The darknetxx network: ${PROJECT_DARKNETXX_CFG_PATH} with ${PROJECT_DARKNETXX_WEIGHTS_PATH}")

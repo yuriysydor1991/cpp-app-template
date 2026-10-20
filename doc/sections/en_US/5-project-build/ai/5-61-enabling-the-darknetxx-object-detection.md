@@ -50,7 +50,7 @@ By default the application detects the objects with the [YOLOv4-tiny](https://gi
 | --- | --- |
 | `TEMPLATE_APP_DARKNETXX_WEIGHTS_URL` | the weights file to download, the YOLOv4-tiny one by default |
 | `TEMPLATE_APP_DARKNETXX_WEIGHTS_SHA256` | the SHA256 hash of the downloaded file, empty to skip the check |
-| `ENABLE_DARKNETXX_WEIGHTS_DOWNLOAD` | downloads the weights file while configuring, `ON` by default |
+| `ENABLE_DARKNETXX_WEIGHTS_DOWNLOAD` | downloads the weights file while configuring and installs it with the binary, `ON` by default |
 | `PROJECT_DARKNETXX_CFG_PATH` | the network cfg file the application loads while neither the `--cfg` (or `-c`) nor the `--dxxwjz2` parameter gives one, the darknetxx `yolov4-tiny.cfg` one if empty |
 | `PROJECT_DARKNETXX_WEIGHTS_PATH` | the original weights file the application loads while none of the `--weights` (or `-w`), the `--dxxwjz1` and the `--dxxwjz2` parameters gives one, the downloaded one if empty, so nothing gets downloaded once it is given |
 | `PROJECT_DARKNETXX_NAMES_PATH` | the class names file the application labels the objects with while neither the `--names` (or `-n`) nor the `--dxxwjz2` parameter gives one, the darknetxx `coco.names` one if empty |
@@ -61,6 +61,10 @@ Any network of the Darknet does, the ones trained by the darknetxx included, so 
 ```
 ./src/CppAppTemplate --cfg yolov4.cfg --weights yolov4.weights --names coco.names --image /path/to/image.jpg
 ```
+
+### Installing the network
+
+The default network files and the sample image are files of the build tree, so the install step (and every package built out of it: deb, rpm, AppImage, FreeBSD pkg, the MS Windows installer) copies them into the `share/<binary>` directory of the installation prefix, the `/usr/share/CppAppTemplate/yolov4-tiny.weights` file for example, and the installed binary runs with no build tree around. The `app::DataLocator` class of the [src/app/DataLocator.h](/src/app/DataLocator.h) file picks every default file the running binary loads: the installed one relative to the binary location first (so a relocated package, an AppImage for example, keeps working), then the one of the build tree (a binary run out of it), then the installed one under the configured prefix. The weights download turned off or failed installs no weights, and the files of the `PROJECT_DARKNETXX_*_PATH` variables get loaded from where they are.
 
 ### The network weights files
 
@@ -131,4 +135,4 @@ The `UTEST_DarknetXXController` test loads the tiny network of it's own into the
 
 The darknetxx core is linked into the executable statically, so no package carries a darknetxx library, while the DEB package depends on the OpenCV and the other ones the executable links against through the `dpkg-shlibdeps` tool. The flatpak builds the OpenCV modules the core needs from their sources first and takes the darknetxx sources as an archive of the very commit, checked against the `TEMPLATE_APP_DARKNETXX_ARCHIVE_SHA256` hash (set it together with a changed `TEMPLATE_APP_DARKNETXX_GIT_TAG`), while the snap stages the OpenCV libraries of the Ubuntu.
 
-The network files stay in the build tree, so no package carries them and the flatpak and the snap builds download none: give them with the `--cfg`, the `--weights` (or the `--dxxwjz1`), the `--names` and the `--image` parameters, or with the `--dxxwjz2` and the `--image` ones. The flatpak reads them from the home directory.
+The packages carry the network cfg file, the class names and the sample image, and the weights too when built with the downloaded ones (see the installing of the network above), while the flatpak and the snap builds download no weights: give them with the `--weights` (or the `--dxxwjz1`) parameter, or the whole network with the `--dxxwjz2` one. The flatpak reads them from the home directory.

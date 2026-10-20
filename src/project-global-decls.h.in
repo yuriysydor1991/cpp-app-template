@@ -22,6 +22,10 @@ const std::string PROJECT_DARKNETXX_WEIGHTS_PATH = "${PROJECT_DARKNETXX_WEIGHTS_
 const std::string PROJECT_DARKNETXX_NAMES_PATH = "${PROJECT_DARKNETXX_NAMES_PATH}" ;
 /// @brief The image the application detects the objects in while no --image parameter is given
 const std::string PROJECT_DARKNETXX_IMAGE_PATH = "${PROJECT_DARKNETXX_IMAGE_PATH}" ;
+/// @brief The installed data directory of the project relative to the installed binary one
+const std::string PROJECT_DATA_INSTALLED_RELATIVE_DIR = "${PROJECT_DATA_INSTALLED_RELATIVE_DIR}" ;
+/// @brief The installed data directory of the project under the configured installation prefix
+const std::string PROJECT_DATA_INSTALLED_DIR = "${PROJECT_DATA_INSTALLED_DIR}" ;
 
 } // namespace project_decls
 

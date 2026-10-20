@@ -6,56 +6,56 @@ template_project_extra_link_args = []
 # The sanitizers instrumentation every target, the tests among them, carries.
 template_project_sanitizers_deps = []
 
-subdir('template-project-hardening')
+subdir('compile-options/hardening/template-project-hardening')
 
-subdir('template-project-all-source-files')
+subdir('tools/template-project-all-source-files')
 subdir('template-project-misc-variables-declare')
 subdir('template-project-configure-file')
 
 if get_option('ENABLE_SANITIZERS') or get_option('ENABLE_SANITIZERS_THREADS')
-  subdir('template-project-sanitizers')
+  subdir('compile-options/sanitizers/template-project-sanitizers')
 endif
 
 if get_option('ENABLE_CPPCHECK')
-  subdir('template-project-cppcheck-target')
+  subdir('enablers/template-project-cppcheck-target')
 endif
 
 if get_option('ENABLE_CLANGFORMAT')
-  subdir('template-project-clang-format-target')
+  subdir('enablers/template-project-clang-format-target')
 endif
 
 if get_option('ENABLE_CLANG_TIDY')
-  subdir('template-project-clang-tidy-target')
+  subdir('enablers/template-project-clang-tidy-target')
 endif
 
 if get_option('ENABLE_LIBCURL')
-  subdir('template-project-libcurl-enabler')
+  subdir('enablers/template-project-libcurl-enabler')
 endif
 
 if get_option('ENABLE_LIBXML2')
-  subdir('template-project-libxml2-enabler')
+  subdir('enablers/template-project-libxml2-enabler')
 endif
 
 if get_option('ENABLE_NLOHMANN_JSON')
-  subdir('template-project-nlohmann-json-enabler')
+  subdir('enablers/template-project-nlohmann-json-enabler')
 endif
 
 if get_option('ENABLE_OPENCV')
-  subdir('template-project-OpenCV-enabler')
+  subdir('enablers/template-project-OpenCV-enabler')
 endif
 
 if get_option('ENABLE_DEB')
-  subdir('template-project-deb-enabler')
+  subdir('enablers/packagers/template-project-deb-enabler')
 endif
 
 if get_option('ENABLE_RPM')
-  subdir('template-project-rpm-enabler')
+  subdir('enablers/packagers/template-project-rpm-enabler')
 endif
 
 if get_option('ENABLE_FREEBSD_PKG')
-  subdir('template-project-freebsd-pkg-enabler')
+  subdir('enablers/packagers/template-project-freebsd-pkg-enabler')
 endif
 
 if get_option('ENABLE_WIX')
-  subdir('template-project-wix-enabler')
+  subdir('enablers/packagers/template-project-wix-enabler')
 endif

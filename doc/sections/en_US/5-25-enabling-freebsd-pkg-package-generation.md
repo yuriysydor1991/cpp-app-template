@@ -20,6 +20,6 @@ To produce the FreeBSD pkg package run the `freebsd-pkg` target for the build:
 meson compile -C build freebsd-pkg
 ```
 
-The artefact is named like `<project>-<version>-<arch>-<os>.pkg` and lands in the build directory, the `<os>` being the destination OS the `PACKAGE_OS` option holds (default: the `ID` and the `VERSION_ID` of the `/etc/os-release` file of the build host, e.g. `freebsd-15.1`). The `PROJECT_MAINTAINER` and `PROJECT_MAINTAINER_EMAIL` options feed the `maintainer:` field of the `+MANIFEST` file. Examine and/or change the FreeBSD pkg generation target parameters in `meson/template-project-freebsd-pkg-enabler/meson.build` or in the `misc/freebsd-pkg.manifest.in` template.
+The artefact is named like `<project>-<version>-<arch>-<os>.pkg` and lands in the build directory, the `<os>` being the destination OS the `PACKAGE_OS` option holds (default: the `ID` and the `VERSION_ID` of the `/etc/os-release` file of the build host, e.g. `freebsd-15.1`). The `PROJECT_MAINTAINER` and `PROJECT_MAINTAINER_EMAIL` options feed the `maintainer:` field of the `+MANIFEST` file. Examine and/or change the FreeBSD pkg generation target parameters in `meson/enablers/packagers/template-project-freebsd-pkg-enabler/meson.build` or in the `misc/freebsd-pkg.manifest.in` template.
 
 The `pkg(8)` tool is shipped by the FreeBSD base system and is available out of the box on FreeBSD hosts.

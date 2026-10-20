@@ -8,7 +8,7 @@ In order to enable the sanitizers to check application at the runtime, configure
 meson setup build -DENABLE_SANITIZERS=true
 ```
 
-For a general purpose sanitizers (`address`, `leak`, `undefined`). See the `meson/template-project-sanitizers/meson.build` Meson submodule file to examine the available list of the sanitizer compile and link flags.
+For a general purpose sanitizers (`address`, `leak`, `undefined`). See the `meson/compile-options/sanitizers/template-project-sanitizers/meson.build` Meson submodule file to examine the available list of the sanitizer compile and link flags.
 
 Alternatively, enable the thread sanitizer with the command:
 

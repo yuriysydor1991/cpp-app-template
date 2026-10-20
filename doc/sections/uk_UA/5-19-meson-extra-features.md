@@ -1,6 +1,6 @@
 ## Додаткові можливості Meson
 
-Гілка `libMeson` пропонує Meson-еквівалент набору можливостей CMake з гілки `lib`. Кожна функція вмикається відповідним прапорцем у `meson_options.txt` під час конфігурування: `meson setup -D<OPTION>=true`. Інтеграція виконується через Meson-змінні `template_project_extra_deps`, `template_project_extra_cpp_args` і `template_project_extra_link_args`, до яких кожен модуль `meson/template-project-<feature>-*/meson.build` додає своє значення.
+Гілка `libMeson` пропонує Meson-еквівалент набору можливостей CMake з гілки `lib`. Кожна функція вмикається відповідним прапорцем у `meson_options.txt` під час конфігурування: `meson setup -D<OPTION>=true`. Інтеграція виконується через Meson-змінні `template_project_extra_deps`, `template_project_extra_cpp_args` і `template_project_extra_link_args`, до яких кожен модуль `meson/<group>/template-project-<feature>-*/meson.build` додає своє значення. Групи повторюють каталог `cmake/` CMake-гілок: `compile-options/` з підгрупами `hardening/` і `sanitizers/`, `enablers/` з підгрупою `packagers/`, а також `tools/`.
 
 Матриця нижче ставить у відповідність кожній опції її окрему підсекцію, щоб команди, підказки по встановленню і деталі цілей знаходились поруч з функцією, яку вони вмикають.
 

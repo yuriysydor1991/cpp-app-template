@@ -8,6 +8,6 @@
 meson setup build -DENABLE_NLOHMANN_JSON=true
 ```
 
-Залежність шукається через `dependency('nlohmann_json', required: true)` (спочатку pkg-config, потім CMake-конфіг). Знайдена залежність додається до змінної `template_project_extra_deps` у файлі `meson/template-project-nlohmann-json-enabler/meson.build` і підключається до головного бінарника і `applib`.
+Залежність шукається через `dependency('nlohmann_json', required: true)` (спочатку pkg-config, потім CMake-конфіг). Знайдена залежність додається до змінної `template_project_extra_deps` у файлі `meson/enablers/template-project-nlohmann-json-enabler/meson.build` і підключається до головного бінарника і `applib`.
 
 Деталі встановлення системного пакету: [Необов'язкові пакети для інтеграції nlohmann JSON](/doc/sections/uk_UA/3-17-optional-for-the-nlohmann-json-integration.md).

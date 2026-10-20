@@ -8,6 +8,7 @@
 #include "project-global-decls.h"
 #include "src/LlamaCPP/LlamaCPPController.h"
 #include "src/app/CMDParamNames.h"
+#include "src/app/DataLocator.h"
 #include "src/log/log.h"
 
 namespace app
@@ -48,9 +49,10 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
     return INVALID;
   }
 
-  const std::string& model = ctx->get_model_path().empty()
-                                 ? project_decls::PROJECT_LLAMACPP_MODEL_PATH
-                                 : ctx->get_model_path();
+  const std::string model =
+      ctx->get_model_path().empty()
+          ? DataLocator::locate(project_decls::PROJECT_LLAMACPP_MODEL_PATH)
+          : ctx->get_model_path();
 
   auto llama = llamacppi::LlamaCPPController::create();
 

@@ -72,7 +72,7 @@ set_property(CACHE TEMPLATE_APP_LLAMACPP_MODEL PROPERTY STRINGS gemma-4-E4B gemm
 
 option(
     ENABLE_LLAMACPP_MODEL_DOWNLOAD
-    "Downloads the TEMPLATE_APP_LLAMACPP_MODEL model into the TEMPLATE_APP_LLAMACPP_MODELS_DIR directory while configuring"
+    "Downloads the TEMPLATE_APP_LLAMACPP_MODEL model into the TEMPLATE_APP_LLAMACPP_MODELS_DIR directory while configuring and installs it with the binary"
     ON
 )
 
@@ -90,6 +90,18 @@ set(
 )
 
 set(PROJECT_LLAMACPP_MODEL_PATH "" CACHE STRING "The GGUF model the application loads while no --model parameter is given, the downloaded TEMPLATE_APP_LLAMACPP_MODEL one if empty")
+
+# The install step copies the downloaded model into the data directory of the
+# project, where the installed binary looks for it relative to it's own
+# location first (see the src/app/DataLocator.h file), so the installation
+# needs no source tree.
+set(PROJECT_DATA_INSTALL_DIR "${CMAKE_INSTALL_DATADIR}/${PROJECT_BINARY_NAME}")
+set(PROJECT_DATA_INSTALLED_DIR "${CMAKE_INSTALL_FULL_DATADIR}/${PROJECT_BINARY_NAME}")
+
+file(
+  RELATIVE_PATH PROJECT_DATA_INSTALLED_RELATIVE_DIR
+  "/${PROJECT_BINARY_INSTALLATION_DIR}" "/${PROJECT_DATA_INSTALL_DIR}"
+)
 
 if (NOT PROJECT_LLAMACPP_MODEL_PATH)
     foreach(knownModel IN LISTS llamaKnownModels)
@@ -133,6 +145,12 @@ if (NOT PROJECT_LLAMACPP_MODEL_PATH)
         if (NOT EXISTS "${PROJECT_LLAMACPP_MODEL_PATH}")
             message(WARNING "Fail to download the ${TEMPLATE_APP_LLAMACPP_MODEL} llama.cpp model (${modelStatus}), so the application needs the --model parameter")
         endif()
+    endif()
+
+    # The installation takes the downloaded model, while a failed download
+    # leaves none to install.
+    if (ENABLE_LLAMACPP_MODEL_DOWNLOAD)
+        install(FILES "${PROJECT_LLAMACPP_MODEL_PATH}" DESTINATION "${PROJECT_DATA_INSTALL_DIR}" OPTIONAL)
     endif()
 endif()
 

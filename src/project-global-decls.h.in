@@ -16,6 +16,10 @@ const std::string PROJECT_BUILD_COMMIT = "${PROJECT_GIT_COMMIT}" ;
 const std::string PROJECT_CONFIGURE_DATE = "${PROJECT_CONFIGURE_DATE}" ;
 /// @brief The llama.cpp GGUF model the application loads while no --model parameter is given
 const std::string PROJECT_LLAMACPP_MODEL_PATH = "${PROJECT_LLAMACPP_MODEL_PATH}" ;
+/// @brief The installed data directory of the project relative to the installed binary one
+const std::string PROJECT_DATA_INSTALLED_RELATIVE_DIR = "${PROJECT_DATA_INSTALLED_RELATIVE_DIR}" ;
+/// @brief The installed data directory of the project under the configured installation prefix
+const std::string PROJECT_DATA_INSTALLED_DIR = "${PROJECT_DATA_INSTALLED_DIR}" ;
 
 } // namespace project_decls
 

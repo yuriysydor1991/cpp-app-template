@@ -43,7 +43,7 @@ cmake -S . -B build -DTEMPLATE_APP_LLAMACPP_MODEL=gemma-4-12B
 | Variable | What it holds |
 | --- | --- |
 | `TEMPLATE_APP_LLAMACPP_MODEL` | the model to download, the `gemma-4-E4B` or the `gemma-4-12B` one |
-| `ENABLE_LLAMACPP_MODEL_DOWNLOAD` | downloads the model while configuring, `ON` by default |
+| `ENABLE_LLAMACPP_MODEL_DOWNLOAD` | downloads the model while configuring and installs it with the binary, `ON` by default |
 | `TEMPLATE_APP_LLAMACPP_MODELS_DIR` | the directory the model is downloaded into, the `build/models` one of the source tree by default |
 | `PROJECT_LLAMACPP_MODEL_PATH` | the model the application loads while the `--model` (or `-m`) command line parameter gives none, the downloaded one if empty, so nothing gets downloaded once it is given |
 
@@ -52,6 +52,10 @@ The download of gigabytes takes a while, so the models directory stays out of th
 ```
 ./src/CppAppTemplate --model /path/to/Qwen3-8B-Q4_K_M.gguf
 ```
+
+### Installing the model
+
+The downloaded model lives in the models directory of the source tree, so the install step (and every package built out of it: deb, rpm, AppImage, FreeBSD pkg, the MS Windows installer) copies it into the `share/<binary>` directory of the installation prefix, the `/usr/share/CppAppTemplate/gemma-4-E4B_q4_0-it.gguf` file for example, and the installed binary runs with no source tree around. The `app::DataLocator` class of the [src/app/DataLocator.h](/src/app/DataLocator.h) file picks the model the running binary loads while no `--model` parameter is given: the installed one relative to the binary location first (so a relocated package, an AppImage for example, keeps working), then the downloaded one of the models directory (a binary run out of the build tree), then the installed one under the configured prefix. The download turned off or failed installs no model, so the `-DENABLE_LLAMACPP_MODEL_DOWNLOAD=OFF` option keeps the gigabytes of the model out of the packages, while the model of the `PROJECT_LLAMACPP_MODEL_PATH` variable gets loaded from where it is.
 
 ### The components
 
@@ -90,4 +94,4 @@ The `UTEST_LlamaCPPController` test, the ones of the chat templates and the `CTE
 
 ### Packaging
 
-The DEB package depends on the system llama.cpp and ggml packages the executable links against through the `dpkg-shlibdeps` tool, while the fetched llama.cpp gets linked into the executable statically and installs nothing, so the packages built without the system one carry the executable alone, with no files to clash with the ggml packages of the distribution. The flatpak builds the llama.cpp out of it's sources first, while the snap fetches it through the enabler. No package carries a model and the flatpak and the snap builds download none, so pass one with the `--model` parameter: the flatpak reads it from the home directory.
+The DEB package depends on the system llama.cpp and ggml packages the executable links against through the `dpkg-shlibdeps` tool, while the fetched llama.cpp gets linked into the executable statically and installs nothing, so the packages built without the system one carry no files of it to clash with the ggml packages of the distribution. The flatpak builds the llama.cpp out of it's sources first, while the snap fetches it through the enabler. The packages of a build with the downloaded model carry it (see the installing of the model above), while the flatpak and the snap builds download none, so pass one with the `--model` parameter: the flatpak reads it from the home directory.

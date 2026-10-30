@@ -20,10 +20,10 @@ add_custom_target(CTEST_GettextController_catalog DEPENDS ${CTEST_GettextControl
 add_executable(
   CTEST_GettextController
   CTEST_GettextController.cpp
-  ${CMAKE_SOURCE_DIR}/src/gettext/CatalogsLocator.cpp
-  ${CMAKE_SOURCE_DIR}/src/gettext/GettextController.cpp
-  ${CMAKE_SOURCE_DIR}/src/log/default-logger/DefaultLogger.cpp
-  ${CMAKE_SOURCE_DIR}/src/log/default-logger/real-default-logger/RealDefaultLogger.cpp
+  ${PROJECT_SOURCE_DIR}/src/gettext/CatalogsLocator.cpp
+  ${PROJECT_SOURCE_DIR}/src/gettext/GettextController.cpp
+  ${PROJECT_SOURCE_DIR}/src/log/default-logger/DefaultLogger.cpp
+  ${PROJECT_SOURCE_DIR}/src/log/default-logger/real-default-logger/RealDefaultLogger.cpp
 )
 
 target_compile_definitions(
@@ -34,8 +34,8 @@ target_compile_definitions(
 target_include_directories(
   CTEST_GettextController
   PRIVATE
-    ${CMAKE_SOURCE_DIR}
-    ${CMAKE_BINARY_DIR}
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(

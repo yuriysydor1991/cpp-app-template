@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   UTEST_CatalogsLocator
   UTEST_CatalogsLocator.cpp
-  ${CMAKE_SOURCE_DIR}/src/gettext/CatalogsLocator.cpp
+  ${PROJECT_SOURCE_DIR}/src/gettext/CatalogsLocator.cpp
 )
 
 target_compile_definitions(
@@ -13,7 +13,7 @@ target_compile_definitions(
 
 target_include_directories(
   UTEST_CatalogsLocator
-  PRIVATE ${CMAKE_SOURCE_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
 )
 
 target_link_libraries(

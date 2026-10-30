@@ -186,7 +186,7 @@ endfunction()
 # which differs from pack to pack, hence the recursive glob and the pack
 # relative alias built out of the found path.
 function(template_project_kenney_audio_generate_index)
-  set(generatedSource "${CMAKE_BINARY_DIR}/generated/kenneyaudio/sounds/KenneyGeneratedSounds.cpp")
+  set(generatedSource "${PROJECT_BINARY_DIR}/generated/kenneyaudio/sounds/KenneyGeneratedSounds.cpp")
 
   set(KENNEY_AUDIO_GENERATED_SOUNDS "")
   set(total 0)
@@ -249,7 +249,7 @@ function(template_project_kenney_audio_generate_index)
   endif()
 
   configure_file(
-    "${CMAKE_SOURCE_DIR}/src/kenneyaudio/sounds/KenneyGeneratedSounds.cpp.in"
+    "${PROJECT_SOURCE_DIR}/src/kenneyaudio/sounds/KenneyGeneratedSounds.cpp.in"
     "${generatedSource}"
     @ONLY
   )

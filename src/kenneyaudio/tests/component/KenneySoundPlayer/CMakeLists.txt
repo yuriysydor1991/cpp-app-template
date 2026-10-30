@@ -7,21 +7,21 @@ endif()
 add_executable(
   CTEST_KenneySoundPlayer
   CTEST_KenneySoundPlayer.cpp
-  ${CMAKE_SOURCE_DIR}/src/kenneyaudio/KenneySound.cpp
-  ${CMAKE_SOURCE_DIR}/src/kenneyaudio/KenneyRootDirectory.cpp
-  ${CMAKE_SOURCE_DIR}/src/kenneyaudio/packs/KenneyPack.cpp
-  ${CMAKE_SOURCE_DIR}/src/kenneyaudio/packs/KenneyPacks.cpp
-  ${CMAKE_SOURCE_DIR}/src/kenneyaudio/sounds/KenneySounds.cpp
-  ${CMAKE_SOURCE_DIR}/src/kenneyaudio/player/KenneyRandomSound.cpp
-  ${CMAKE_SOURCE_DIR}/src/kenneyaudio/player/KenneySdlMixerSoundPlayer.cpp
+  ${PROJECT_SOURCE_DIR}/src/kenneyaudio/KenneySound.cpp
+  ${PROJECT_SOURCE_DIR}/src/kenneyaudio/KenneyRootDirectory.cpp
+  ${PROJECT_SOURCE_DIR}/src/kenneyaudio/packs/KenneyPack.cpp
+  ${PROJECT_SOURCE_DIR}/src/kenneyaudio/packs/KenneyPacks.cpp
+  ${PROJECT_SOURCE_DIR}/src/kenneyaudio/sounds/KenneySounds.cpp
+  ${PROJECT_SOURCE_DIR}/src/kenneyaudio/player/KenneyRandomSound.cpp
+  ${PROJECT_SOURCE_DIR}/src/kenneyaudio/player/KenneySdlMixerSoundPlayer.cpp
   ${KENNEY_AUDIO_GENERATED_SOUNDS_SOURCE}
 )
 
 target_include_directories(
   CTEST_KenneySoundPlayer
   PRIVATE ${KENNEY_AUDIO_MOCKS_ROOT}/log
-  PRIVATE ${CMAKE_SOURCE_DIR}
-  PRIVATE ${CMAKE_BINARY_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
+  PRIVATE ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(

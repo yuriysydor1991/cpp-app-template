@@ -21,7 +21,7 @@ set(
   "The destination CPU architecture of the AppImage package (e.g. x86_64, aarch64, armhf, i686)"
 )
 
-set(APPIMAGE_APPDIR ${CMAKE_BINARY_DIR}/AppDir)
+set(APPIMAGE_APPDIR ${PROJECT_BINARY_DIR}/AppDir)
 set(
   APPIMAGE_DST_NAME
   ${PROJECT_BINARY_NAME}-${CMAKE_PROJECT_VERSION}-${TEMPLATE_PROJECT_APPIMAGE_ARCHITECTURE}-${TEMPLATE_PROJECT_PACKAGE_OS}.AppImage
@@ -31,12 +31,12 @@ set(
 # AppDir root, next to the ones the install step places
 file(COPY ${DESKTOP_ENTRY_FILE} ${DESKTOP_ICON_FILE} DESTINATION ${APPIMAGE_APPDIR})
 
-configure_file(${CMAKE_SOURCE_DIR}/misc/packagers/appimage/appimage.AppRun.in ${CMAKE_BINARY_DIR}/AppRun)
+configure_file(${PROJECT_SOURCE_DIR}/misc/packagers/appimage/appimage.AppRun.in ${PROJECT_BINARY_DIR}/AppRun)
 
 # the AppImage runtime executes the AppRun, which the configure_file leaves
 # without the execution permission
 file(
-  COPY ${CMAKE_BINARY_DIR}/AppRun
+  COPY ${PROJECT_BINARY_DIR}/AppRun
   DESTINATION ${APPIMAGE_APPDIR}
   FILE_PERMISSIONS
     OWNER_READ OWNER_WRITE OWNER_EXECUTE
@@ -50,10 +50,10 @@ add_custom_target(
   appimage
   COMMAND
     ${CMAKE_COMMAND} -E env DESTDIR=${APPIMAGE_APPDIR}
-      ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR} --target install
+      ${CMAKE_COMMAND} --build ${PROJECT_BINARY_DIR} --target install
   COMMAND
     ${CMAKE_COMMAND} -E env ARCH=${TEMPLATE_PROJECT_APPIMAGE_ARCHITECTURE}
       ${APPIMAGETOOL_EXEC} ${APPIMAGE_APPDIR} ${APPIMAGE_DST_NAME}
-  WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+  WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
   COMMENT "Executing the appimagetool command to generate the ${APPIMAGE_DST_NAME} AppImage package."
 )

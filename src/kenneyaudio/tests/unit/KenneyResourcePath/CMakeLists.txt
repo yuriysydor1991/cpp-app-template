@@ -3,19 +3,19 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   UTEST_KenneyResourcePath
   UTEST_KenneyResourcePath.cpp
-  ${CMAKE_SOURCE_DIR}/src/kenneyaudio/KenneySound.cpp
-  ${CMAKE_SOURCE_DIR}/src/kenneyaudio/KenneyRootDirectory.cpp
-  ${CMAKE_SOURCE_DIR}/src/kenneyaudio/packs/KenneyPack.cpp
-  ${CMAKE_SOURCE_DIR}/src/kenneyaudio/resources/KenneyResourcePath.cpp
-  ${CMAKE_SOURCE_DIR}/src/kenneyaudio/resources/KenneyQtResourcePath.cpp
-  ${CMAKE_SOURCE_DIR}/src/kenneyaudio/resources/KenneyGResourcePath.cpp
+  ${PROJECT_SOURCE_DIR}/src/kenneyaudio/KenneySound.cpp
+  ${PROJECT_SOURCE_DIR}/src/kenneyaudio/KenneyRootDirectory.cpp
+  ${PROJECT_SOURCE_DIR}/src/kenneyaudio/packs/KenneyPack.cpp
+  ${PROJECT_SOURCE_DIR}/src/kenneyaudio/resources/KenneyResourcePath.cpp
+  ${PROJECT_SOURCE_DIR}/src/kenneyaudio/resources/KenneyQtResourcePath.cpp
+  ${PROJECT_SOURCE_DIR}/src/kenneyaudio/resources/KenneyGResourcePath.cpp
 )
 
 target_include_directories(
   UTEST_KenneyResourcePath
   PRIVATE ${KENNEY_AUDIO_MOCKS_ROOT}/log
-  PRIVATE ${CMAKE_SOURCE_DIR}
-  PRIVATE ${CMAKE_BINARY_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
+  PRIVATE ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(

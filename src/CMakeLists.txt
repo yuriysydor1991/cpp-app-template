@@ -11,9 +11,9 @@ add_executable(
 
 target_include_directories(
   ${PROJECT_BINARY_NAME}
-  PRIVATE ${CMAKE_SOURCE_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
   PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
-  PRIVATE ${CMAKE_BINARY_DIR}
+  PRIVATE ${PROJECT_BINARY_DIR}
 )
 
 install(
@@ -23,7 +23,7 @@ install(
 
 configure_file(
   project-global-decls.h.in
-  ${CMAKE_BINARY_DIR}/project-global-decls.h
+  ${PROJECT_BINARY_DIR}/project-global-decls.h
 )
 
 # The Kenney audio subsystem sources, gathered before the subdirectories below

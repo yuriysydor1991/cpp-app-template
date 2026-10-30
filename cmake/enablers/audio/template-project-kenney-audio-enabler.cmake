@@ -9,7 +9,7 @@ option(
 # The packs are read out of the manifest rather than listed here, so the single
 # place naming a pack also pins the very archive it comes from.
 set(
-  TEMPLATE_APP_KENNEY_AUDIO_MANIFEST "${CMAKE_SOURCE_DIR}/misc/kenney-packs.txt"
+  TEMPLATE_APP_KENNEY_AUDIO_MANIFEST "${PROJECT_SOURCE_DIR}/misc/kenney-packs.txt"
   CACHE FILEPATH "The manifest naming every pack together with it's archive URL and the archive SHA-256 checksum"
 )
 
@@ -53,7 +53,7 @@ if (TEMPLATE_APP_KENNEY_AUDIO_DIR)
 
   set(KENNEY_AUDIO_ROOT_DIR "${TEMPLATE_APP_KENNEY_AUDIO_DIR}" CACHE INTERNAL "The Kenney sound packs root directory")
 else()
-  set(KENNEY_AUDIO_ROOT_DIR "${CMAKE_BINARY_DIR}/resources/kenney-audio" CACHE INTERNAL "The Kenney sound packs root directory")
+  set(KENNEY_AUDIO_ROOT_DIR "${PROJECT_BINARY_DIR}/resources/kenney-audio" CACHE INTERNAL "The Kenney sound packs root directory")
 
   message(STATUS "Trying to make the Kenney sound packs available through the Internet")
 
@@ -96,8 +96,8 @@ foreach(pack IN LISTS KENNEY_AUDIO_PACKS)
 endforeach()
 
 configure_file(
-  "${CMAKE_SOURCE_DIR}/src/kenneyaudio/kenney-audio-decls.h.in"
-  "${CMAKE_BINARY_DIR}/kenney-audio-decls.h"
+  "${PROJECT_SOURCE_DIR}/src/kenneyaudio/kenney-audio-decls.h.in"
+  "${PROJECT_BINARY_DIR}/kenney-audio-decls.h"
 )
 
 option(
@@ -107,8 +107,8 @@ option(
 )
 
 if (KENNEY_AUDIO_GENERATE_FULL_MANIFESTS)
-  set(KENNEY_AUDIO_FULL_QRC "${CMAKE_BINARY_DIR}/generated/kenneyaudio/kenney-audio-all.qrc" CACHE INTERNAL "The Qt resource manifest carrying every available Kenney sound")
-  set(KENNEY_AUDIO_FULL_GRESOURCE_XML "${CMAKE_BINARY_DIR}/generated/kenneyaudio/kenney-audio-all.gresource.xml" CACHE INTERNAL "The GResource manifest carrying every available Kenney sound")
+  set(KENNEY_AUDIO_FULL_QRC "${PROJECT_BINARY_DIR}/generated/kenneyaudio/kenney-audio-all.qrc" CACHE INTERNAL "The Qt resource manifest carrying every available Kenney sound")
+  set(KENNEY_AUDIO_FULL_GRESOURCE_XML "${PROJECT_BINARY_DIR}/generated/kenneyaudio/kenney-audio-all.gresource.xml" CACHE INTERNAL "The GResource manifest carrying every available Kenney sound")
 
   template_project_kenney_audio_write_qrc("${KENNEY_AUDIO_FULL_QRC}")
   template_project_kenney_audio_write_gresource("${KENNEY_AUDIO_FULL_GRESOURCE_XML}")

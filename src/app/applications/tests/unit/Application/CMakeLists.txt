@@ -3,10 +3,10 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   UTEST_Application  
   UTEST_Application.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/applications/Application.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/applications/Application.cpp
   ${KENNEY_AUDIO_SUBSYSTEM_SOURCES}
   ${KENNEY_AUDIO_NO_PLAYER_SOURCE}
-  ${CMAKE_SOURCE_DIR}/src/kenneyaudio/tests/mocks/KenneyGeneratedSounds/KenneyGeneratedSounds.cpp
+  ${PROJECT_SOURCE_DIR}/src/kenneyaudio/tests/mocks/KenneyGeneratedSounds/KenneyGeneratedSounds.cpp
   ${APP_MOCKS_ROOT}/ApplicationContext/src/app/ApplicationContext.cpp
 )
 
@@ -16,7 +16,7 @@ target_include_directories(
   PRIVATE ${APP_MOCKS_ROOT}/project-global-decls
   PRIVATE ${APP_MOCKS_ROOT}/log
   PRIVATE ${APP_MOCKS_ROOT}/kenney-audio-decls
-  PRIVATE ${CMAKE_SOURCE_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
 )
 
 target_link_libraries(

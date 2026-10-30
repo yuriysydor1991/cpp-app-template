@@ -28,7 +28,7 @@ set(
 
 set(
   GITHUB_ACTIONS_PIPELINE_DOCKERFILE_SRC
-  "${CMAKE_SOURCE_DIR}/misc/Dockerfiles/Dockerfile.GitHub.Actions.pipeline.in"
+  "${PROJECT_SOURCE_DIR}/misc/Dockerfiles/Dockerfile.GitHub.Actions.pipeline.in"
   CACHE STRING
   "The local GitHub Actions runner Dockerfile full path"
 )
@@ -72,7 +72,7 @@ include(template-project-docker-local-pipeline-variables-declare)
 if (GITHUB_ACTIONS_PIPELINE_RUNNER_LABEL STREQUAL "")
   execute_process(
     COMMAND "${GIT_EXECUTABLE}" grep -h -E "^[[:space:]]*runs-on:" "${LOCAL_PIPELINE_BRANCH_NAME}" -- .github/workflows
-    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+    WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}"
     OUTPUT_VARIABLE GITHUB_ACTIONS_PIPELINE_RUNS_ON_LINES
   )
 
@@ -169,7 +169,7 @@ add_custom_target(
   github-actions-pipeline-docker-run
   COMMAND ${CMAKE_COMMAND}
     -DGIT_EXECUTABLE=${GIT_EXECUTABLE}
-    -DLOCAL_PIPELINE_SOURCE_DIR=${CMAKE_SOURCE_DIR}
+    -DLOCAL_PIPELINE_SOURCE_DIR=${PROJECT_SOURCE_DIR}
     -DLOCAL_PIPELINE_BRANCH=${LOCAL_PIPELINE_BRANCH_NAME}
     -DLOCAL_PIPELINE_WORKSPACE=${GITHUB_ACTIONS_PIPELINE_WORKSPACE}
     -P ${LOCAL_PIPELINE_WORKSPACE_SCRIPT}

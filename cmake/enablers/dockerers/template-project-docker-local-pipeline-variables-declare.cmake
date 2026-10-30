@@ -27,7 +27,7 @@ set(
 
 set(
   LOCAL_PIPELINE_WORKSPACE_SCRIPT
-  "${CMAKE_SOURCE_DIR}/cmake/tools/template-project-local-pipeline-workspace.cmake"
+  "${PROJECT_SOURCE_DIR}/cmake/tools/template-project-local-pipeline-workspace.cmake"
 )
 
 if (LOCAL_PIPELINE_BRANCH STREQUAL "")
@@ -42,7 +42,7 @@ endif()
 
 execute_process(
   COMMAND "${GIT_EXECUTABLE}" rev-parse --verify --quiet "refs/heads/${LOCAL_PIPELINE_BRANCH_NAME}"
-  WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+  WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}"
   OUTPUT_QUIET
   RESULT_VARIABLE LOCAL_PIPELINE_BRANCH_RESULT
 )

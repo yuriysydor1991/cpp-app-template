@@ -48,7 +48,7 @@ set(
 # <build>/Jenkins-exported-jobs directory instead.
 set(
     JENKINS_IMPORT_JOBS_DIR
-    "${CMAKE_SOURCE_DIR}/misc/Jenkins/Jenkins-exported-jobs"
+    "${PROJECT_SOURCE_DIR}/misc/Jenkins/Jenkins-exported-jobs"
     CACHE STRING
     "The directory holding the *.xml Jenkins job configurations to import into the target server"
 )

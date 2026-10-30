@@ -58,7 +58,7 @@ list(REMOVE_ITEM JENKINS_ALL_JOBS_LIST "")
 set(JENKINS_JOBS_EXPORT_COMMAND "")
 
 foreach(JENKINS_JOB IN LISTS JENKINS_ALL_JOBS_LIST)
-    set(JENKINS_JOB_PATH "${CMAKE_BINARY_DIR}/Jenkins-exported-jobs/${JENKINS_JOB}.xml")
+    set(JENKINS_JOB_PATH "${PROJECT_BINARY_DIR}/Jenkins-exported-jobs/${JENKINS_JOB}.xml")
 
     message(STATUS "Exporting the Jenkins job: '${JENKINS_JOB}' into ${JENKINS_JOB_PATH}")
 

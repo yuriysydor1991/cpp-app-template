@@ -10,8 +10,8 @@ target_include_directories(
   ${GTKMM_OBJECT_NAME}
   PRIVATE 
     ${GTKMM_INCLUDE_DIRS}
-    ${CMAKE_SOURCE_DIR}
-    ${CMAKE_BINARY_DIR}
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_BINARY_DIR}
 )
 
 target_link_directories(

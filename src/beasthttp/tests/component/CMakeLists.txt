@@ -15,15 +15,15 @@ add_executable(
   CTEST_beasthttp  
   CTEST_beasthttp.cpp
   HTTPHelper.cpp
-  ${CMAKE_SOURCE_DIR}/src/beasthttp/HttpContext.cpp
-  ${CMAKE_SOURCE_DIR}/src/beasthttp/HttpController.cpp
-  ${CMAKE_SOURCE_DIR}/src/beasthttp/rhandlers/ResponseWriter.cpp
-  ${CMAKE_SOURCE_DIR}/src/beasthttp/rhandlers/ResponseBuilder.cpp
-  ${CMAKE_SOURCE_DIR}/src/beasthttp/rhandlers/RequestReader.cpp
-  ${CMAKE_SOURCE_DIR}/src/beasthttp/rhandlers/HTTPSessionContext.cpp
-  ${CMAKE_SOURCE_DIR}/src/beasthttp/rhandlers/HandlersFactory.cpp
-  ${CMAKE_SOURCE_DIR}/src/beasthttp/rhandlers/DefaultHandler.cpp
-  ${CMAKE_SOURCE_DIR}/src/beasthttp/pages/PageBuilder.cpp
+  ${PROJECT_SOURCE_DIR}/src/beasthttp/HttpContext.cpp
+  ${PROJECT_SOURCE_DIR}/src/beasthttp/HttpController.cpp
+  ${PROJECT_SOURCE_DIR}/src/beasthttp/rhandlers/ResponseWriter.cpp
+  ${PROJECT_SOURCE_DIR}/src/beasthttp/rhandlers/ResponseBuilder.cpp
+  ${PROJECT_SOURCE_DIR}/src/beasthttp/rhandlers/RequestReader.cpp
+  ${PROJECT_SOURCE_DIR}/src/beasthttp/rhandlers/HTTPSessionContext.cpp
+  ${PROJECT_SOURCE_DIR}/src/beasthttp/rhandlers/HandlersFactory.cpp
+  ${PROJECT_SOURCE_DIR}/src/beasthttp/rhandlers/DefaultHandler.cpp
+  ${PROJECT_SOURCE_DIR}/src/beasthttp/pages/PageBuilder.cpp
   ${APP_MOCKS_ROOT}/ApplicationContext/src/app/ApplicationContext.cpp
 )
 
@@ -33,8 +33,8 @@ target_include_directories(
   PRIVATE
     ${APP_MOCKS_ROOT}/ApplicationContext
     ${APP_MOCKS_ROOT}/log
-    ${CMAKE_SOURCE_DIR}
-    ${CMAKE_BINARY_DIR}
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(

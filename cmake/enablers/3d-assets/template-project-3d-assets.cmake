@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.13)
 include_guard(GLOBAL)
 
 set(
-  TEMPLATE_APP_ASSETS_DIR "${CMAKE_BINARY_DIR}/assets"
+  TEMPLATE_APP_ASSETS_DIR "${PROJECT_BINARY_DIR}/assets"
   CACHE PATH "The directory the 3D assets are fetched into (or reused from): a <type>s/<name> subdirectory per asset and a licenses/<type>s/<name>.txt record of its source and license"
 )
 
@@ -99,7 +99,7 @@ function(template_project_assets_download_into assetDir path url)
 endfunction()
 
 function(template_project_assets_read url outVar)
-  set(pageFile "${CMAKE_BINARY_DIR}/CMakeFiles/template-project-assets-page.tmp")
+  set(pageFile "${PROJECT_BINARY_DIR}/CMakeFiles/template-project-assets-page.tmp")
 
   template_project_assets_download("${url}" "${pageFile}" ${ARGN})
 

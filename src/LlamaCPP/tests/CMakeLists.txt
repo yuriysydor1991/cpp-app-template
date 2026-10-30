@@ -6,7 +6,7 @@ endif()
 
 # The log mock of the whole project is kept under the app tests, so it is taken
 # from there rather than duplicated.
-set(LLAMACPP_APP_MOCKS_ROOT "${CMAKE_SOURCE_DIR}/src/app/tests/mocks")
+set(LLAMACPP_APP_MOCKS_ROOT "${PROJECT_SOURCE_DIR}/src/app/tests/mocks")
 
 # The tiny llama model of the TinyStories, the one of a megabyte the llama.cpp
 # own tests run, gets downloaded once, so the tests evaluate a real model with

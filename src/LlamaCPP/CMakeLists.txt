@@ -24,8 +24,8 @@ add_library(
 target_include_directories(
   TemplateProjectLlamaCPPObj
   PRIVATE
-    ${CMAKE_SOURCE_DIR}
-    ${CMAKE_BINARY_DIR}
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_BINARY_DIR}
 )
 
 # The llama.cpp itself is made available by it's enabler. The PUBLIC keyword

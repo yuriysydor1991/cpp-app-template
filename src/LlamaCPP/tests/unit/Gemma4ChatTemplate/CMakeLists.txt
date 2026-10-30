@@ -3,12 +3,12 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   UTEST_Gemma4ChatTemplate
   UTEST_Gemma4ChatTemplate.cpp
-  ${CMAKE_SOURCE_DIR}/src/LlamaCPP/Gemma4ChatTemplate.cpp
+  ${PROJECT_SOURCE_DIR}/src/LlamaCPP/Gemma4ChatTemplate.cpp
 )
 
 target_include_directories(
   UTEST_Gemma4ChatTemplate
-  PRIVATE ${CMAKE_SOURCE_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
 )
 
 target_link_libraries(

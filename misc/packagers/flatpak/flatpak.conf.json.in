@@ -64,7 +64,7 @@
       "sources": [
         {
           "type": "dir",
-          "path": "${CMAKE_SOURCE_DIR}"
+          "path": "${PROJECT_SOURCE_DIR}"
         }
       ]
     }

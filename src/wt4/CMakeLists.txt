@@ -10,8 +10,8 @@ add_library(
 target_include_directories(
   TemplateWt4Obj
   PRIVATE
-    ${CMAKE_SOURCE_DIR}
-    ${CMAKE_BINARY_DIR}
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_BINARY_DIR}
 )
 
 # The Wt4 framework itself is made available by the Wt4 enabler. The PUBLIC

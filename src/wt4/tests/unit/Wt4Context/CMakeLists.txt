@@ -3,14 +3,14 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   UTEST_Wt4Context
   UTEST_Wt4Context.cpp
-  ${CMAKE_SOURCE_DIR}/src/wt4/Wt4Context.cpp
+  ${PROJECT_SOURCE_DIR}/src/wt4/Wt4Context.cpp
   ${APP_MOCKS_ROOT}/ApplicationContext/src/app/ApplicationContext.cpp
 )
 
 target_include_directories(
   UTEST_Wt4Context
   PRIVATE ${APP_MOCKS_ROOT}/ApplicationContext
-  PRIVATE ${CMAKE_SOURCE_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
 )
 
 target_link_libraries(

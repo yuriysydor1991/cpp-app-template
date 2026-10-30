@@ -6,23 +6,27 @@ if (NOT EMSCRIPTEN OR NOT TARGET "${PROJECT_BINARY_NAME}")
   return()
 endif()
 
-# The .html suffix makes the emcc generate the page next to the .js loader and
-# the .wasm module. The --emrun passes the page URL query to the main function
-# as the command line arguments and exits the runtime the way a native binary
-# exits: with the return code and the static destructors. The page minifier is
-# off, since the Debian and the Ubuntu emscripten packages lack it.
-set_target_properties(${PROJECT_BINARY_NAME} PROPERTIES SUFFIX ".html")
-
+# The SINGLE_FILE embeds the .wasm module into the .js loader, so the page runs
+# when opened from the disk as well, while the EXIT_RUNTIME exits the binary
+# the way a native one exits: with the return code and the static destructors.
 target_link_options(
   ${PROJECT_BINARY_NAME}
-  PRIVATE --emrun -sALLOW_MEMORY_GROWTH=1 -sMINIFY_HTML=0
+  PRIVATE -sSINGLE_FILE=1 -sEXIT_RUNTIME=1 -sALLOW_MEMORY_GROWTH=1
+)
+
+get_target_property(WEBASSEMBLY_PAGE_DIR ${PROJECT_BINARY_NAME} BINARY_DIR)
+
+set(WEBASSEMBLY_PAGE "${WEBASSEMBLY_PAGE_DIR}/${PROJECT_BINARY_NAME}.html")
+
+configure_file(
+  ${CMAKE_SOURCE_DIR}/misc/webassembly/webassembly.html.in
+  ${WEBASSEMBLY_PAGE}
+  @ONLY
 )
 
 install(
-  FILES
-    $<TARGET_FILE_DIR:${PROJECT_BINARY_NAME}>/${PROJECT_BINARY_NAME}.js
-    $<TARGET_FILE_DIR:${PROJECT_BINARY_NAME}>/${PROJECT_BINARY_NAME}.wasm
+  FILES ${WEBASSEMBLY_PAGE}
   DESTINATION ${PROJECT_BINARY_INSTALLATION_DIR}
 )
 
-message(STATUS "WebAssembly page: ${PROJECT_BINARY_NAME}.html")
+message(STATUS "WebAssembly page: ${WEBASSEMBLY_PAGE}")

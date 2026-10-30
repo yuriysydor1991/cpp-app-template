@@ -110,7 +110,7 @@ The `cmake -B` configure call accepts neither the `--target` nor the `--verbose`
 
 ### WebAssembly scripts
 
-The scripts below perform the same steps for the binary of the web browsers the [Building the WebAssembly binary for the browsers](/doc/sections/en_US/5-project-build/platforms/5-74-building-the-WebAssembly-binary-for-the-browsers.md) section describes: their configure step runs the `cmake` through the `emcmake` command of the Emscripten inside the `build/webassembly` directory, while their `--install` parameter puts the page, its loader and its module into the `/var/www/html` root directory of the web server:
+The scripts below perform the same steps for the binary of the web browsers the [Building the WebAssembly binary for the browsers](/doc/sections/en_US/5-project-build/platforms/5-74-building-the-WebAssembly-binary-for-the-browsers.md) section describes: their configure step runs the `cmake` through the `emcmake` command of the Emscripten inside the `build/webassembly` directory, while their `--install` parameter puts the page and its loader into the `/var/www/html` root directory of the web server:
 
 | Script | Performs |
 | --- | --- |

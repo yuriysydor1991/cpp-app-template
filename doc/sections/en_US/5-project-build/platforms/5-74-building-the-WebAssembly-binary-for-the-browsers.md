@@ -9,7 +9,7 @@ emcmake cmake -S . -B build-wasm -DCMAKE_BUILD_TYPE=Release
 cmake --build build-wasm
 ```
 
-The [cmake/enablers/template-project-webassembly-enabler.cmake](/cmake/enablers/template-project-webassembly-enabler.cmake) module makes the build produce three files instead of the native executable: the `CppAppTemplate.html` page, the `CppAppTemplate.js` loader and the `CppAppTemplate.wasm` module, all of them inside the `build-wasm/src` directory. The module stays idle during a configure without the Emscripten, so the same source tree keeps building the native binary, its tests, analyzers and packages.
+The [cmake/enablers/template-project-webassembly-enabler.cmake](/cmake/enablers/template-project-webassembly-enabler.cmake) module makes the build produce two files inside the `build-wasm/src` directory instead of the native executable: the `CppAppTemplate.js` loader, which embeds the WebAssembly module, and the `CppAppTemplate.html` page out of the [misc/webassembly/webassembly.html.in](/misc/webassembly/webassembly.html.in) template, which runs the loader and prints the output of the binary, every log message among it. The module stays idle during a configure without the Emscripten, so the same source tree keeps building the native binary, its tests, analyzers and packages.
 
 The [scripts/build/webassembly-release.sh](/scripts/build/webassembly-release.sh) script performs both steps at once, as the [Quick build scripts](/doc/sections/en_US/5-project-build/5-36-quick-build-scripts.md) section tells.
 
@@ -33,19 +33,15 @@ source ./emsdk_env.sh
 
 ### Running the page
 
-The browsers refuse to load the WebAssembly module of a page opened as a local `file://` one, so the page needs a web server. The [emrun](https://emscripten.org/docs/compiling/Running-html-files-with-emrun.html) command of the Emscripten serves the directory of the page, opens the page in the default browser and prints the output and the exit code of the binary in the terminal:
+The loader carries the module inside, so the browser runs the page opened right from the disk, with no web server:
 
 ```
 # Inside the source root directory
 
-emrun build-wasm/src/CppAppTemplate.html
+xdg-open build-wasm/src/CppAppTemplate.html
 ```
 
-The page hands its URL query, split at the `&` characters, to the `main` function as the command line arguments, so the `http://localhost:6931/CppAppTemplate.html?--version` address prints the version, and so does the `emrun` command with the arguments after the `--` one:
-
-```
-emrun build-wasm/src/CppAppTemplate.html -- --version
-```
+The page hands its URL query to the `main` function as the command line arguments, so the `CppAppTemplate.html?--version` address prints the version, while the `&` characters separate several arguments: `CppAppTemplate.html?--log-file&app.log`. A page of your own has to keep the UTF-8 encoding declaration of the template, since the loader of the Emscripten 4.0.18 and newer embeds the module as the UTF-8 text.
 
 The [Node.js](https://nodejs.org/) runs the loader as a command line application too:
 
@@ -55,7 +51,7 @@ node build-wasm/src/CppAppTemplate.js --version
 
 ### Installing the page
 
-The install step copies the loader and the module next to the page into the `PROJECT_BINARY_INSTALLATION_DIR` directory, so a web server gets all three of them, for example:
+The install step copies the page next to the loader into the `PROJECT_BINARY_INSTALLATION_DIR` directory, so a web server gets both of them, for example:
 
 ```
 emcmake cmake -S . -B build-wasm -DCMAKE_BUILD_TYPE=Release -DPROJECT_BINARY_INSTALLATION_DIR=.
@@ -67,4 +63,4 @@ cmake --install build-wasm --prefix /var/www/html/CppAppTemplate
 
 The browser runs the binary inside its sandbox, so the binary gets no OS signals and sees an in-memory file system, which keeps the log file as well. The libraries the binary links have to be built by the Emscripten too: its [ports](https://emscripten.org/docs/compiling/Building-Projects.html#emscripten-ports) (the `-sUSE_SDL=2` one, for example) or the sources fetched and compiled by the configure, since the system installed native libraries never link into the WebAssembly binary. The unit and the component tests run with the native build, as they rely on the threads and the build directory files the Emscripten build of the tests lacks.
 
-The module modifies the `PROJECT_BINARY_NAME` target only, so it fits the other branches of the template as it is: copy the module together with its `include` line of the [cmake/template-project-feature-enabler-post.cmake](/cmake/template-project-feature-enabler-post.cmake) file to build their binaries for the browsers.
+The module modifies the `PROJECT_BINARY_NAME` target only, so it fits the other branches of the template as it is: copy the module and the page template together with the `include` line of the module in the [cmake/template-project-feature-enabler-post.cmake](/cmake/template-project-feature-enabler-post.cmake) file to build their binaries for the browsers.

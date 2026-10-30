@@ -9,7 +9,7 @@ emcmake cmake -S . -B build-wasm -DCMAKE_BUILD_TYPE=Release
 cmake --build build-wasm
 ```
 
-Модуль [cmake/enablers/template-project-webassembly-enabler.cmake](/cmake/enablers/template-project-webassembly-enabler.cmake) змушує побудову створити замість нативного виконуваного файлу три файли: сторінку `CppAppTemplate.html`, завантажувач `CppAppTemplate.js` та модуль `CppAppTemplate.wasm`, усі всередині каталогу `build-wasm/src`. Під час конфігурації без Emscripten модуль нічого не робить, отож те саме дерево сирців і надалі будує нативний бінарний файл, його тести, аналізатори та пакунки.
+Модуль [cmake/enablers/template-project-webassembly-enabler.cmake](/cmake/enablers/template-project-webassembly-enabler.cmake) змушує побудову створити всередині каталогу `build-wasm/src` замість нативного виконуваного файлу два файли: завантажувач `CppAppTemplate.js`, який містить у собі модуль WebAssembly, та сторінку `CppAppTemplate.html` з шаблону [misc/webassembly/webassembly.html.in](/misc/webassembly/webassembly.html.in), яка запускає завантажувач і друкує вивід бінарного файлу, зокрема всі повідомлення журналу. Під час конфігурації без Emscripten модуль нічого не робить, отож те саме дерево сирців і надалі будує нативний бінарний файл, його тести, аналізатори та пакунки.
 
 Скрипт [scripts/build/webassembly-release.sh](/scripts/build/webassembly-release.sh) виконує обидва кроки однією командою, як описує розділ [Швидкі скрипти побудови](/doc/sections/uk_UA/5-project-build/5-36-quick-build-scripts.md).
 
@@ -33,19 +33,15 @@ source ./emsdk_env.sh
 
 ### Запуск сторінки
 
-Браузери відмовляються завантажувати модуль WebAssembly сторінки, відкритої як локальна `file://`, тож сторінці потрібен веб-сервер. Команда [emrun](https://emscripten.org/docs/compiling/Running-html-files-with-emrun.html) з Emscripten роздає каталог сторінки, відкриває сторінку у браузері за замовчуванням та друкує у терміналі вивід і код завершення бінарного файлу:
+Завантажувач містить модуль у собі, тож браузер виконує сторінку, відкриту прямо з диска, без жодного веб-сервера:
 
 ```
 # в середині кореневої директорії проекту
 
-emrun build-wasm/src/CppAppTemplate.html
+xdg-open build-wasm/src/CppAppTemplate.html
 ```
 
-Сторінка передає свій URL-запит, розділений символами `&`, функції `main` як аргументи командного рядка, отож адреса `http://localhost:6931/CppAppTemplate.html?--version` друкує версію, як і команда `emrun` з аргументами після `--`:
-
-```
-emrun build-wasm/src/CppAppTemplate.html -- --version
-```
+Сторінка передає свій URL-запит функції `main` як аргументи командного рядка, отож адреса `CppAppTemplate.html?--version` друкує версію, а символи `&` розділяють кілька аргументів: `CppAppTemplate.html?--log-file&app.log`. Власна сторінка має зберегти оголошення кодування UTF-8 з шаблону, адже завантажувач Emscripten 4.0.18 і новіших вбудовує модуль як текст UTF-8.
 
 [Node.js](https://nodejs.org/) також запускає завантажувач як застосунок командного рядка:
 
@@ -55,7 +51,7 @@ node build-wasm/src/CppAppTemplate.js --version
 
 ### Встановлення сторінки
 
-Крок встановлення копіює завантажувач і модуль поруч зі сторінкою до каталогу `PROJECT_BINARY_INSTALLATION_DIR`, тож веб-сервер отримує всі три файли, наприклад:
+Крок встановлення копіює сторінку поруч із завантажувачем до каталогу `PROJECT_BINARY_INSTALLATION_DIR`, тож веб-сервер отримує обидва файли, наприклад:
 
 ```
 emcmake cmake -S . -B build-wasm -DCMAKE_BUILD_TYPE=Release -DPROJECT_BINARY_INSTALLATION_DIR=.
@@ -67,4 +63,4 @@ cmake --install build-wasm --prefix /var/www/html/CppAppTemplate
 
 Браузер виконує бінарний файл у своїй пісочниці, тож бінарний файл не отримує сигналів ОС і бачить файлову систему в пам'яті, яка зберігає й файл журналу. Бібліотеки, з якими компонується бінарний файл, також мають бути побудовані Emscripten: його [порти](https://emscripten.org/docs/compiling/Building-Projects.html#emscripten-ports) (наприклад, `-sUSE_SDL=2`) або сирці, завантажені та скомпільовані конфігурацією, адже встановлені в системі нативні бібліотеки ніколи не компонуються з бінарним файлом WebAssembly. Юніт- та компонентні тести виконуються з нативною побудовою, оскільки вони покладаються на потоки та файли каталогу побудови, яких бракує побудові тестів з Emscripten.
 
-Модуль змінює лише ціль `PROJECT_BINARY_NAME`, тож він підходить іншим гілкам шаблону без змін: скопіюйте модуль разом з його рядком `include` файлу [cmake/template-project-feature-enabler-post.cmake](/cmake/template-project-feature-enabler-post.cmake), щоб будувати їхні бінарні файли для браузерів.
+Модуль змінює лише ціль `PROJECT_BINARY_NAME`, тож він підходить іншим гілкам шаблону без змін: скопіюйте модуль і шаблон сторінки разом з рядком `include` модуля у файлі [cmake/template-project-feature-enabler-post.cmake](/cmake/template-project-feature-enabler-post.cmake), щоб будувати їхні бінарні файли для браузерів.

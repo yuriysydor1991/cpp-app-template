@@ -110,7 +110,7 @@ scripts/build/debug-test.sh --test -R "CTEST_log\."
 
 ### Скрипти WebAssembly
 
-Скрипти нижче виконують ті самі кроки для бінарного файлу веб-браузерів, який описує розділ [Побудова бінарного файлу WebAssembly для браузерів](/doc/sections/uk_UA/5-project-build/platforms/5-74-building-the-WebAssembly-binary-for-the-browsers.md): їхній крок конфігурації запускає `cmake` через команду `emcmake` з Emscripten всередині директорії `build/webassembly`, а їхній параметр `--install` розміщує сторінку, її завантажувач і модуль у кореневій директорії веб-сервера `/var/www/html`:
+Скрипти нижче виконують ті самі кроки для бінарного файлу веб-браузерів, який описує розділ [Побудова бінарного файлу WebAssembly для браузерів](/doc/sections/uk_UA/5-project-build/platforms/5-74-building-the-WebAssembly-binary-for-the-browsers.md): їхній крок конфігурації запускає `cmake` через команду `emcmake` з Emscripten всередині директорії `build/webassembly`, а їхній параметр `--install` розміщує сторінку та її завантажувач у кореневій директорії веб-сервера `/var/www/html`:
 
 | Скрипт | Виконує |
 | --- | --- |

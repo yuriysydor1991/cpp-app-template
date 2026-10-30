@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>@PROJECT_BINARY_NAME@</title>
+</head>
+<body>
+  <pre id="output"></pre>
+  <script>
+    // The page URL query holds the command line arguments: ?--log-file&app.log
+    var Module = {
+      arguments: location.search.slice(1).split("&").filter(Boolean).map(decodeURIComponent),
+      print: (text) => document.getElementById("output").append(text + "\n"),
+    };
+    Module.printErr = Module.print;
+  </script>
+  <script src="@PROJECT_BINARY_NAME@.js"></script>
+</body>
+</html>

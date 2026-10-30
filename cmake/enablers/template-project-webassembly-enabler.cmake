@@ -19,7 +19,7 @@ get_target_property(WEBASSEMBLY_PAGE_DIR ${PROJECT_BINARY_NAME} BINARY_DIR)
 set(WEBASSEMBLY_PAGE "${WEBASSEMBLY_PAGE_DIR}/${PROJECT_BINARY_NAME}.html")
 
 configure_file(
-  ${CMAKE_SOURCE_DIR}/misc/webassembly/webassembly.html.in
+  ${PROJECT_SOURCE_DIR}/misc/webassembly/webassembly.html.in
   ${WEBASSEMBLY_PAGE}
   @ONLY
 )

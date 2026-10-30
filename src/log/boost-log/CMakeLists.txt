@@ -10,8 +10,8 @@ add_library(
 target_include_directories(
   TemplateBoostLogControllerObj 
   PRIVATE
-    ${CMAKE_SOURCE_DIR}
-    ${CMAKE_BINARY_DIR}
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_BINARY_DIR}
 )
 
 target_compile_definitions(TemplateBoostLogControllerObj PRIVATE BOOST_LOG_DYN_LINK)

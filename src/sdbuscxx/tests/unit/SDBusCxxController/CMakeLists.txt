@@ -6,7 +6,7 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   UTEST_SDBusCxxController
   UTEST_SDBusCxxController.cpp
-  ${CMAKE_SOURCE_DIR}/src/sdbuscxx/SDBusCxxController.cpp
+  ${PROJECT_SOURCE_DIR}/src/sdbuscxx/SDBusCxxController.cpp
   ${GENERAL_MOCKS_ROOT}/ApplicationContext/src/app/ApplicationContext.cpp
 )
 
@@ -17,8 +17,8 @@ target_include_directories(
   PRIVATE ${GENERAL_MOCKS_ROOT}/sdbus-c++
   PRIVATE ${GENERAL_MOCKS_ROOT}/ApplicationContext
   PRIVATE ${GENERAL_MOCKS_ROOT}/log
-  PRIVATE ${CMAKE_SOURCE_DIR}
-  PRIVATE ${CMAKE_BINARY_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
+  PRIVATE ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(

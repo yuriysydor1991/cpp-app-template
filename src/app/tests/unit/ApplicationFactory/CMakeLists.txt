@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   UTEST_ApplicationFactory  
   UTEST_ApplicationFactory.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/ApplicationFactory.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/ApplicationFactory.cpp
   ${GENERAL_MOCKS_ROOT}/ApplicationContext/src/app/ApplicationContext.cpp
 )
 
@@ -19,8 +19,8 @@ target_include_directories(
   PRIVATE ${APP_MOCKS_ROOT}/project-global-decls
   PRIVATE ${GENERAL_MOCKS_ROOT}/LibraryContext
   PRIVATE ${GENERAL_MOCKS_ROOT}/log
-  PRIVATE ${CMAKE_SOURCE_DIR}
-  PRIVATE ${CMAKE_SOURCE_DIR}/src/lib/facade/public
+  PRIVATE ${PROJECT_SOURCE_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}/src/lib/facade/public
 )
 
 target_link_libraries(

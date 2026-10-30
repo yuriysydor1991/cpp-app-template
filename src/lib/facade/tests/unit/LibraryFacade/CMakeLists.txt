@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   UTEST_LibraryFacade  
   UTEST_LibraryFacade.cpp
-  ${CMAKE_SOURCE_DIR}/src/lib/facade/LibraryFacade.cpp
+  ${PROJECT_SOURCE_DIR}/src/lib/facade/LibraryFacade.cpp
 )
 
 target_include_directories(
@@ -12,8 +12,8 @@ target_include_directories(
   PRIVATE ${GENERAL_MOCKS_ROOT}/LibMain
   PRIVATE ${GENERAL_MOCKS_ROOT}/log
   PRIVATE ${FACADE_MOCK_DIR}/LibFactory
-  PRIVATE ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR}
-  PRIVATE ${CMAKE_SOURCE_DIR}/src/lib/facade/public
+  PRIVATE ${PROJECT_SOURCE_DIR} ${PROJECT_BINARY_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}/src/lib/facade/public
 )
 
 target_link_libraries(

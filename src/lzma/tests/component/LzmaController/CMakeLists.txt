@@ -3,14 +3,14 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   CTEST_LzmaController
   CTEST_LzmaController.cpp
-  ${CMAKE_SOURCE_DIR}/src/lzma/LzmaController.cpp
+  ${PROJECT_SOURCE_DIR}/src/lzma/LzmaController.cpp
 )
 
 target_include_directories(
   CTEST_LzmaController
-  PRIVATE ${CMAKE_SOURCE_DIR}/src/app/tests/mocks/log
-  PRIVATE ${CMAKE_SOURCE_DIR}
-  PRIVATE ${CMAKE_BINARY_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}/src/app/tests/mocks/log
+  PRIVATE ${PROJECT_SOURCE_DIR}
+  PRIVATE ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(

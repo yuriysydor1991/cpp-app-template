@@ -86,5 +86,7 @@ install_built_package()
 }
 
 INSTALL_PREFIX="/usr"
+WEBASSEMBLY_INSTALL_PREFIX="/var/www/html"
+WEBASSEMBLY_BUILD_DIR="${PROJECT_ROOT}/build/webassembly"
 RELEASE_BUILD_DIR="${PROJECT_ROOT}/build/release"
 DEBUG_BUILD_DIR="${PROJECT_ROOT}/build/debug"

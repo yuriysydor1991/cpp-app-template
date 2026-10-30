@@ -107,3 +107,23 @@ scripts/build/debug-test.sh --test -R "CTEST_log\."
 ```
 
 The `cmake -B` configure call accepts neither the `--target` nor the `--verbose` option, so passing such an argument to an entry point script fails the configure step.
+
+### WebAssembly scripts
+
+The scripts below perform the same steps for the binary of the web browsers the [Building the WebAssembly binary for the browsers](/doc/sections/en_US/5-project-build/platforms/5-74-building-the-WebAssembly-binary-for-the-browsers.md) section describes: their configure step runs the `cmake` through the `emcmake` command of the Emscripten inside the `build/webassembly` directory, while their `--install` parameter puts the page, its loader and its module into the `/var/www/html` root directory of the web server:
+
+| Script | Performs |
+| --- | --- |
+| [webassembly-release.sh](/scripts/build/webassembly-release.sh) | the `Release` WebAssembly build |
+| [webassembly-debug.sh](/scripts/build/webassembly-debug.sh) | the `Debug` WebAssembly build with the trace log messages (`MAX_LOG_LEVEL=5`) |
+| [webassembly-configure.sh](/scripts/build/webassembly-configure.sh) | the `emcmake cmake -B build/webassembly -S .` configure step |
+| [webassembly-build.sh](/scripts/build/webassembly-build.sh) | the `cmake --build build/webassembly` build step |
+| [webassembly-install.sh](/scripts/build/webassembly-install.sh) | the `sudo cmake --install build/webassembly` install step |
+
+The tests run with the native `Debug` build alone, so the WebAssembly scripts have no test step, while the `CMAKE_INSTALL_PREFIX` variable picks another web server directory:
+
+```
+# inside the project root directory
+
+scripts/build/webassembly-release.sh --install -DCMAKE_INSTALL_PREFIX=/srv/www
+```

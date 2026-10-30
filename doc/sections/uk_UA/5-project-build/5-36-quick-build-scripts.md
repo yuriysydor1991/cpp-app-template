@@ -107,3 +107,23 @@ scripts/build/debug-test.sh --test -R "CTEST_log\."
 ```
 
 Виклик конфігурації `cmake -B` не приймає ані параметра `--target`, ані `--verbose`, отож передача такого аргументу скрипту повного циклу завершить крок конфігурації помилкою.
+
+### Скрипти WebAssembly
+
+Скрипти нижче виконують ті самі кроки для бінарного файлу веб-браузерів, який описує розділ [Побудова бінарного файлу WebAssembly для браузерів](/doc/sections/uk_UA/5-project-build/platforms/5-74-building-the-WebAssembly-binary-for-the-browsers.md): їхній крок конфігурації запускає `cmake` через команду `emcmake` з Emscripten всередині директорії `build/webassembly`, а їхній параметр `--install` розміщує сторінку, її завантажувач і модуль у кореневій директорії веб-сервера `/var/www/html`:
+
+| Скрипт | Виконує |
+| --- | --- |
+| [webassembly-release.sh](/scripts/build/webassembly-release.sh) | побудову WebAssembly `Release` |
+| [webassembly-debug.sh](/scripts/build/webassembly-debug.sh) | побудову WebAssembly `Debug` з повідомленнями журналу рівня трасування (`MAX_LOG_LEVEL=5`) |
+| [webassembly-configure.sh](/scripts/build/webassembly-configure.sh) | крок конфігурації `emcmake cmake -B build/webassembly -S .` |
+| [webassembly-build.sh](/scripts/build/webassembly-build.sh) | крок побудови `cmake --build build/webassembly` |
+| [webassembly-install.sh](/scripts/build/webassembly-install.sh) | крок встановлення `sudo cmake --install build/webassembly` |
+
+Тести виконуються лише з нативною побудовою `Debug`, тож скрипти WebAssembly не мають кроку тестування, а змінна `CMAKE_INSTALL_PREFIX` обирає іншу директорію веб-сервера:
+
+```
+# в середині кореневої директорії проекту
+
+scripts/build/webassembly-release.sh --install -DCMAKE_INSTALL_PREFIX=/srv/www
+```

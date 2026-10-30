@@ -11,6 +11,8 @@ cmake --build build-wasm
 
 Модуль [cmake/enablers/template-project-webassembly-enabler.cmake](/cmake/enablers/template-project-webassembly-enabler.cmake) змушує побудову створити замість нативного виконуваного файлу три файли: сторінку `CppAppTemplate.html`, завантажувач `CppAppTemplate.js` та модуль `CppAppTemplate.wasm`, усі всередині каталогу `build-wasm/src`. Під час конфігурації без Emscripten модуль нічого не робить, отож те саме дерево сирців і надалі будує нативний бінарний файл, його тести, аналізатори та пакунки.
 
+Скрипт [scripts/build/webassembly-release.sh](/scripts/build/webassembly-release.sh) виконує обидва кроки однією командою, як описує розділ [Швидкі скрипти побудови](/doc/sections/uk_UA/5-project-build/5-36-quick-build-scripts.md).
+
 ### Встановлення Emscripten
 
 Debian 13 та Ubuntu 26.04 постачають Emscripten пакунком:

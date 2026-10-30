@@ -6,7 +6,7 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   UTEST_Hostname1QueryHandler
   UTEST_Hostname1QueryHandler.cpp
-  ${CMAKE_SOURCE_DIR}/src/gdbus/query-handlers/Hostname1QueryHandler.cpp
+  ${PROJECT_SOURCE_DIR}/src/gdbus/query-handlers/Hostname1QueryHandler.cpp
 )
 
 target_include_directories(
@@ -16,9 +16,9 @@ target_include_directories(
 
 target_include_directories(
   UTEST_Hostname1QueryHandler
-  PRIVATE ${CMAKE_SOURCE_DIR}/src/app/tests/mocks/log
-  PRIVATE ${CMAKE_SOURCE_DIR}
-  PRIVATE ${CMAKE_BINARY_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}/src/app/tests/mocks/log
+  PRIVATE ${PROJECT_SOURCE_DIR}
+  PRIVATE ${PROJECT_BINARY_DIR}
 )
 
 target_link_directories(

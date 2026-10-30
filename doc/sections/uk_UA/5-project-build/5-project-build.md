@@ -51,3 +51,7 @@
     1. [Вмикання інтеграції OpenJPEG (JPEG 2000)](/doc/sections/uk_UA/5-project-build/image-libraries/5-31-enabling-the-openjpeg-library.md)
     1. [Вмикання інтеграції libavif (AVIF)](/doc/sections/uk_UA/5-project-build/image-libraries/5-32-enabling-the-libavif-library.md)
     1. [Вмикання інтеграції libheif (HEIF/HEIC)](/doc/sections/uk_UA/5-project-build/image-libraries/5-33-enabling-the-libheif-library.md)
+1. Штучний інтелект
+    1. [Вмикання розпізнавання мовлення sherpa-onnx](/doc/sections/uk_UA/5-project-build/ai/5-75-enabling-the-sherpa-onnx-speech-recognition.md)
+1. Звук
+    1. [Вмикання захоплення мікрофона SDL2](/doc/sections/uk_UA/5-project-build/audio/5-59-enabling-the-SDL2-microphone-capture.md)

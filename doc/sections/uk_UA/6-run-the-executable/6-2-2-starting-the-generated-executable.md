@@ -8,4 +8,16 @@
 ./src/CppAppTemplate
 ```
 
+Виконуваний файл гілки `appSherpaONNXSTT` завантажує модель sherpa-onnx, яку завантажило конфігурування (за замовчуванням багатомовну `sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-int8`), і слухає типовий мікрофон системи, записуючи кожне розпізнане висловлювання у журнал, доки його не зупинять клавіші Ctrl+C. Іншу директорію моделі задає параметр `--model` (або `-m`):
+
+```
+# з директорії побудови
+./src/CppAppTemplate --model ~/models/sherpa-onnx-nemo-parakeet-tdt-0.6b-v2-int8
+```
+
+```
+2026-10-30 14:04:55.109735 INF 131019520904448 Application.cpp:41 : Listening to the default microphone, press Ctrl+C to stop
+2026-10-30 14:05:01.924416 INF 131019520904448 Application.cpp:53 : Ask what you can do for your country.
+```
+
 І ще раз, ім'я `CppAppTemplate` являється ім'ям головного виконуваного бінарного файлу за замовчуванням. Його необхідно замінити у разі заміни ім'я за умовчанням у кореневому файлі `CMakeLists.txt` (змінні `CMAKE_PROJECT_NAME` або `PROJECT_BINARY_NAME`).

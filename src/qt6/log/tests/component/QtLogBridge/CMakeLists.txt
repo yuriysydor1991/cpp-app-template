@@ -7,9 +7,9 @@ cmake_minimum_required(VERSION 3.16)
 add_executable(
   CTEST_QtLogBridge
   CTEST_QtLogBridge.cpp
-  ${CMAKE_SOURCE_DIR}/src/qt6/log/QtLogBridge.cpp
-  ${CMAKE_SOURCE_DIR}/src/log/default-logger/DefaultLogger.cpp
-  ${CMAKE_SOURCE_DIR}/src/log/default-logger/real-default-logger/RealDefaultLogger.cpp
+  ${PROJECT_SOURCE_DIR}/src/qt6/log/QtLogBridge.cpp
+  ${PROJECT_SOURCE_DIR}/src/log/default-logger/DefaultLogger.cpp
+  ${PROJECT_SOURCE_DIR}/src/log/default-logger/real-default-logger/RealDefaultLogger.cpp
 )
 
 target_compile_definitions(
@@ -20,8 +20,8 @@ target_compile_definitions(
 target_include_directories(
   CTEST_QtLogBridge
   PRIVATE
-    ${CMAKE_SOURCE_DIR}
-    ${CMAKE_BINARY_DIR}
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(

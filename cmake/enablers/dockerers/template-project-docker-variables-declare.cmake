@@ -37,7 +37,7 @@ set(
 
 set(
   DOCKERFILE_SRC 
-  "${CMAKE_SOURCE_DIR}/misc/Dockerfiles/Dockerfile.in" 
+  "${PROJECT_SOURCE_DIR}/misc/Dockerfiles/Dockerfile.in" 
   CACHE STRING 
   "The Dockerfile full path"
 )
@@ -51,7 +51,7 @@ set(
 
 set(
   PROJECT_BINARY_PATH
-  ${CMAKE_BINARY_DIR}/src/${PROJECT_BINARY_NAME}
+  ${PROJECT_BINARY_DIR}/src/${PROJECT_BINARY_NAME}
 )
 
 message(STATUS "Docker executable: ${DOCKER_EXEC}")

@@ -6,14 +6,14 @@ add_executable(
   UTEST_RHVoiceController
   UTEST_RHVoiceController.cpp
   ${RHVOICE_MOCKS_ROOT}/RHVoiceLibrary/RHVoiceLibraryMock.cpp
-  ${CMAKE_SOURCE_DIR}/src/RHVoice/RHVoiceController.cpp
-  ${CMAKE_SOURCE_DIR}/src/TTS/Speech.cpp
+  ${PROJECT_SOURCE_DIR}/src/RHVoice/RHVoiceController.cpp
+  ${PROJECT_SOURCE_DIR}/src/TTS/Speech.cpp
 )
 
 target_include_directories(
   UTEST_RHVoiceController
   PRIVATE ${RHVOICE_APP_MOCKS_ROOT}/log
-  PRIVATE ${CMAKE_SOURCE_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
 )
 
 target_include_directories(

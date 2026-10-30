@@ -3,12 +3,12 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   UTEST_QueryMaker
   UTEST_QueryMaker.cpp
-  ${CMAKE_SOURCE_DIR}/src/Firebird/sql/QueryMaker.cpp
+  ${PROJECT_SOURCE_DIR}/src/Firebird/sql/QueryMaker.cpp
 )
 
 target_include_directories(
   UTEST_QueryMaker
-  PRIVATE ${CMAKE_SOURCE_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
 )
 
 target_link_libraries(

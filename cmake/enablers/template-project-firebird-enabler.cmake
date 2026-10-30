@@ -36,7 +36,7 @@ include(ProcessorCount)
 
 ProcessorCount(fbJobs)
 
-set(fbStageDir ${CMAKE_BINARY_DIR}/_deps/firebird-src/gen/Release/firebird)
+set(fbStageDir ${PROJECT_BINARY_DIR}/_deps/firebird-src/gen/Release/firebird)
 
 ExternalProject_Add(
   FirebirdClient
@@ -45,7 +45,7 @@ ExternalProject_Add(
   GIT_SHALLOW ON
   GIT_SUBMODULES ""
   UPDATE_DISCONNECTED ON
-  SOURCE_DIR ${CMAKE_BINARY_DIR}/_deps/firebird-src
+  SOURCE_DIR ${PROJECT_BINARY_DIR}/_deps/firebird-src
   BUILD_IN_SOURCE ON
   CONFIGURE_COMMAND
     ./autogen.sh --enable-client-only --enable-binreloc

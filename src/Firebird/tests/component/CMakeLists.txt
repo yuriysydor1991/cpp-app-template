@@ -7,17 +7,17 @@ endif()
 add_executable(
   CTEST_Firebird
   CTEST_Firebird.cpp
-  ${CMAKE_SOURCE_DIR}/src/Firebird/Firebird.cpp
-  ${CMAKE_SOURCE_DIR}/src/Firebird/sql/QueryMaker.cpp
-  ${CMAKE_SOURCE_DIR}/src/Firebird/helpers/FbConnStringMaker.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/ApplicationContext.cpp
+  ${PROJECT_SOURCE_DIR}/src/Firebird/Firebird.cpp
+  ${PROJECT_SOURCE_DIR}/src/Firebird/sql/QueryMaker.cpp
+  ${PROJECT_SOURCE_DIR}/src/Firebird/helpers/FbConnStringMaker.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/ApplicationContext.cpp
 )
 
 target_include_directories(
   CTEST_Firebird
   PRIVATE ${APP_MOCKS_ROOT}/log
-  PRIVATE ${CMAKE_SOURCE_DIR}
-  PRIVATE ${CMAKE_BINARY_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
+  PRIVATE ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(

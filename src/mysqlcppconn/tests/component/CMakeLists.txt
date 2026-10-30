@@ -7,17 +7,17 @@ endif()
 add_executable(
   CTEST_MySQLController
   CTEST_MySQLController.cpp
-  ${CMAKE_SOURCE_DIR}/src/mysqlcppconn/MySQLController.cpp
-  ${CMAKE_SOURCE_DIR}/src/mysqlcppconn/sql/QueryMaker.cpp
-  ${CMAKE_SOURCE_DIR}/src/mysqlcppconn/helpers/MySQLConnStrMaker.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/ApplicationContext.cpp
+  ${PROJECT_SOURCE_DIR}/src/mysqlcppconn/MySQLController.cpp
+  ${PROJECT_SOURCE_DIR}/src/mysqlcppconn/sql/QueryMaker.cpp
+  ${PROJECT_SOURCE_DIR}/src/mysqlcppconn/helpers/MySQLConnStrMaker.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/ApplicationContext.cpp
 )
 
 target_include_directories(
   CTEST_MySQLController
   PRIVATE ${APP_MOCKS_ROOT}/log
-  PRIVATE ${CMAKE_SOURCE_DIR}
-  PRIVATE ${CMAKE_BINARY_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
+  PRIVATE ${PROJECT_BINARY_DIR}
   PRIVATE ${MySQL_INCLUDE_DIRS}
 )
 

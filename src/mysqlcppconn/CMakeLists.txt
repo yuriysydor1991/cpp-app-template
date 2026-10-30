@@ -37,8 +37,8 @@ message(STATUS "MySQL_LIBRARIES: ${MySQL_LIBRARIES}")
 target_include_directories(
   TemplateMySQLCppConnObj 
   PRIVATE
-    ${CMAKE_SOURCE_DIR}
-    ${CMAKE_BINARY_DIR}
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_BINARY_DIR}
     ${MySQL_INCLUDE_DIRS}
 )
 

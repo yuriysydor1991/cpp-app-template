@@ -3,13 +3,13 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   UTEST_MySQLConnStrMaker
   UTEST_MySQLConnStrMaker.cpp
-  ${CMAKE_SOURCE_DIR}/src/mysqlcppconn/helpers/MySQLConnStrMaker.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/ApplicationContext.cpp
+  ${PROJECT_SOURCE_DIR}/src/mysqlcppconn/helpers/MySQLConnStrMaker.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/ApplicationContext.cpp
 )
 
 target_include_directories(
   UTEST_MySQLConnStrMaker
-  PRIVATE ${CMAKE_SOURCE_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
 )
 
 target_link_libraries(

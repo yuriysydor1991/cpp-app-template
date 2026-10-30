@@ -3,13 +3,13 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   UTEST_OAIController
   UTEST_OAIController.cpp
-  ${CMAKE_SOURCE_DIR}/src/liboai/OAIController.cpp
+  ${PROJECT_SOURCE_DIR}/src/liboai/OAIController.cpp
 )
 
 target_include_directories(
   UTEST_OAIController
   PRIVATE ${LIBOAI_MOCKS_ROOT}/log
-  PRIVATE ${CMAKE_SOURCE_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
 )
 
 target_link_libraries(

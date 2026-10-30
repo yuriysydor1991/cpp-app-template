@@ -23,8 +23,8 @@ add_library(
 target_include_directories(
   TemplateProjectV8ControllerObj
   PRIVATE
-    ${CMAKE_SOURCE_DIR}
-    ${CMAKE_BINARY_DIR}
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_BINARY_DIR}
 )
 
 # The V8 itself is made available by the V8 enabler. The PUBLIC keyword hands

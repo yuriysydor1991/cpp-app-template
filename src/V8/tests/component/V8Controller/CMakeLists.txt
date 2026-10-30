@@ -5,11 +5,11 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   CTEST_V8Controller
   CTEST_V8Controller.cpp
-  ${CMAKE_SOURCE_DIR}/src/V8/V8Console.cpp
-  ${CMAKE_SOURCE_DIR}/src/V8/V8Controller.cpp
-  ${CMAKE_SOURCE_DIR}/src/V8/V8Platform.cpp
-  ${CMAKE_SOURCE_DIR}/src/log/default-logger/DefaultLogger.cpp
-  ${CMAKE_SOURCE_DIR}/src/log/default-logger/real-default-logger/RealDefaultLogger.cpp
+  ${PROJECT_SOURCE_DIR}/src/V8/V8Console.cpp
+  ${PROJECT_SOURCE_DIR}/src/V8/V8Controller.cpp
+  ${PROJECT_SOURCE_DIR}/src/V8/V8Platform.cpp
+  ${PROJECT_SOURCE_DIR}/src/log/default-logger/DefaultLogger.cpp
+  ${PROJECT_SOURCE_DIR}/src/log/default-logger/real-default-logger/RealDefaultLogger.cpp
 )
 
 target_compile_definitions(
@@ -20,8 +20,8 @@ target_compile_definitions(
 target_include_directories(
   CTEST_V8Controller
   PRIVATE
-    ${CMAKE_SOURCE_DIR}
-    ${CMAKE_BINARY_DIR}
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(

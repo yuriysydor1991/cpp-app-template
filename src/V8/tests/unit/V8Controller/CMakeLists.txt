@@ -3,15 +3,15 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   UTEST_V8Controller
   UTEST_V8Controller.cpp
-  ${CMAKE_SOURCE_DIR}/src/V8/V8Controller.cpp
-  ${CMAKE_SOURCE_DIR}/src/V8/V8Platform.cpp
+  ${PROJECT_SOURCE_DIR}/src/V8/V8Controller.cpp
+  ${PROJECT_SOURCE_DIR}/src/V8/V8Platform.cpp
 )
 
 target_include_directories(
   UTEST_V8Controller
   PRIVATE ${V8_MOCKS_ROOT}/V8Console
   PRIVATE ${V8_LOG_MOCK_ROOT}
-  PRIVATE ${CMAKE_SOURCE_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
 )
 
 target_link_libraries(

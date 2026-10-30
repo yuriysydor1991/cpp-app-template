@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   CTEST_AdwaitaWindow  
   CTEST_AdwaitaWindow.cpp
-  ${CMAKE_SOURCE_DIR}/src/gtkmm4/main-window/AdwaitaWindow.cpp
+  ${PROJECT_SOURCE_DIR}/src/gtkmm4/main-window/AdwaitaWindow.cpp
 )
 
 # The window guards its arguments with an assert first and with a returned
@@ -17,7 +17,7 @@ target_compile_definitions(
 
 # The window logs through the LOG* macros, so the test takes the project wide
 # header only logging mock instead of linking the real logger into a GUI test.
-set(LOG_MOCK_ROOT "${CMAKE_SOURCE_DIR}/src/app/tests/mocks/log")
+set(LOG_MOCK_ROOT "${PROJECT_SOURCE_DIR}/src/app/tests/mocks/log")
 
 target_include_directories(
   CTEST_AdwaitaWindow
@@ -25,8 +25,8 @@ target_include_directories(
     ${LOG_MOCK_ROOT}
     ${GTKMM_INCLUDE_DIRS}
     ${ADWAITA_INCLUDE_DIRS}
-    ${CMAKE_SOURCE_DIR}
-    ${CMAKE_BINARY_DIR}
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_BINARY_DIR}
 )
 
 target_link_directories(

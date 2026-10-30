@@ -3,12 +3,12 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   UTEST_MongoDBDate2String
   UTEST_MongoDBDate2String.cpp
-  ${CMAKE_SOURCE_DIR}/src/mongodbcxx/converters/MongoDBDate2String.cpp
+  ${PROJECT_SOURCE_DIR}/src/mongodbcxx/converters/MongoDBDate2String.cpp
 )
 
 target_include_directories(
   UTEST_MongoDBDate2String
-  PRIVATE ${CMAKE_SOURCE_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
 )
 
 target_link_libraries(

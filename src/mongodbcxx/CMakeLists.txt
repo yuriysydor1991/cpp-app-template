@@ -8,8 +8,8 @@ add_library(
 target_include_directories(
   TemplateMongoDBCppConnObj 
   PRIVATE
-    ${CMAKE_SOURCE_DIR}
-    ${CMAKE_BINARY_DIR}
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_BINARY_DIR}
 )
 
 # The imported targets are linked and not the plain mongocxx and bsoncxx

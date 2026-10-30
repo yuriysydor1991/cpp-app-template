@@ -3,14 +3,14 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   UTEST_ClaudeController
   UTEST_ClaudeController.cpp
-  ${CMAKE_SOURCE_DIR}/src/claude/ClaudeController.cpp
+  ${PROJECT_SOURCE_DIR}/src/claude/ClaudeController.cpp
 )
 
 target_include_directories(
   UTEST_ClaudeController
   PRIVATE ${CLAUDE_MOCKS_ROOT}/CURLController
   PRIVATE ${CLAUDE_MOCKS_ROOT}/log
-  PRIVATE ${CMAKE_SOURCE_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
 )
 
 target_link_libraries(

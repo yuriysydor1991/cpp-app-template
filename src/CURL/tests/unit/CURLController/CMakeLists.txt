@@ -3,15 +3,15 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   UTEST_CURLController
   UTEST_CURLController.cpp
-  ${CMAKE_SOURCE_DIR}/src/CURL/CURLController.cpp
-  ${CMAKE_SOURCE_DIR}/src/CURL/HeadersList.cpp
+  ${PROJECT_SOURCE_DIR}/src/CURL/CURLController.cpp
+  ${PROJECT_SOURCE_DIR}/src/CURL/HeadersList.cpp
 )
 
 target_include_directories(
   UTEST_CURLController
   PRIVATE ${CURL_MOCKS_ROOT}/log
   PRIVATE ${CURL_MOCKS_ROOT}/project-global-decls
-  PRIVATE ${CMAKE_SOURCE_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
 )
 
 target_link_libraries(

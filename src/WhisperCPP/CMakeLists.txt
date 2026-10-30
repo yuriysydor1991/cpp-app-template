@@ -23,8 +23,8 @@ add_library(
 target_include_directories(
   TemplateProjectWhisperControllerObj
   PRIVATE
-    ${CMAKE_SOURCE_DIR}
-    ${CMAKE_BINARY_DIR}
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_BINARY_DIR}
 )
 
 # The whisper.cpp and the SDL2 themselves are made available by their

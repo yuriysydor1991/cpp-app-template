@@ -7,7 +7,7 @@ endif()
 # The log and the project global declarations mocks of the whole project are
 # kept under the app tests, so they are taken from there rather than
 # duplicated.
-set(WHISPERCPP_APP_MOCKS_ROOT "${CMAKE_SOURCE_DIR}/src/app/tests/mocks")
+set(WHISPERCPP_APP_MOCKS_ROOT "${PROJECT_SOURCE_DIR}/src/app/tests/mocks")
 set(WHISPERCPP_MOCKS_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/mocks")
 
 # The whisper.cpp sources carry an empty model (one holding no weights) for

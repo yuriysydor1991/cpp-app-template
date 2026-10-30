@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   UTEST_Microphone
   UTEST_Microphone.cpp
-  ${CMAKE_SOURCE_DIR}/src/WhisperCPP/Microphone.cpp
+  ${PROJECT_SOURCE_DIR}/src/WhisperCPP/Microphone.cpp
 )
 
 target_compile_definitions(
@@ -14,7 +14,7 @@ target_compile_definitions(
 target_include_directories(
   UTEST_Microphone
   PRIVATE ${WHISPERCPP_APP_MOCKS_ROOT}/log
-  PRIVATE ${CMAKE_SOURCE_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
 )
 
 target_link_libraries(

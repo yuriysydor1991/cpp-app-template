@@ -7,15 +7,15 @@ cmake_minimum_required(VERSION 3.16)
 add_executable(
   CTEST_PhysicalDeviceInfoHandler
   CTEST_PhysicalDeviceInfoHandler.cpp
-  ${CMAKE_SOURCE_DIR}/src/qtvulkan/device-info/PhysicalDeviceInfoHandler.cpp
-  ${CMAKE_SOURCE_DIR}/src/qtvulkan/device-info/DeviceInfoHandlerFactory.cpp
+  ${PROJECT_SOURCE_DIR}/src/qtvulkan/device-info/PhysicalDeviceInfoHandler.cpp
+  ${PROJECT_SOURCE_DIR}/src/qtvulkan/device-info/DeviceInfoHandlerFactory.cpp
 )
 
 target_include_directories(
   CTEST_PhysicalDeviceInfoHandler
-  PRIVATE ${CMAKE_SOURCE_DIR}/src/app/tests/mocks/log
-  PRIVATE ${CMAKE_SOURCE_DIR}
-  PRIVATE ${CMAKE_BINARY_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}/src/app/tests/mocks/log
+  PRIVATE ${PROJECT_SOURCE_DIR}
+  PRIVATE ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(

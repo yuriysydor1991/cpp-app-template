@@ -17,13 +17,20 @@ set(EXTRA_COMPILE_OPTIONS
   -Wdouble-promotion
   -Wformat=2
   -Wimplicit-fallthrough
-  -Wduplicated-cond
-  -Wduplicated-branches
-  -Wlogical-op
-  -Wuseless-cast
   -Wmisleading-indentation
   -Wzero-as-null-pointer-constant
 )
+
+# The clang (the emcc of the WebAssembly builds among them) knows none of these.
+if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+  set(EXTRA_COMPILE_OPTIONS
+    ${EXTRA_COMPILE_OPTIONS}
+    -Wduplicated-cond
+    -Wduplicated-branches
+    -Wlogical-op
+    -Wuseless-cast
+  )
+endif()
 
 if (COMPILE_WARNINGS_AS_ERRORS)
   set(EXTRA_COMPILE_OPTIONS ${EXTRA_COMPILE_OPTIONS} -Werror)

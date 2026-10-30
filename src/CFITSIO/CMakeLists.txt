@@ -20,8 +20,8 @@ add_library(
 target_include_directories(
   TemplateProjectCFITSIOControllerObj
   PRIVATE
-    ${CMAKE_SOURCE_DIR}
-    ${CMAKE_BINARY_DIR}
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_BINARY_DIR}
 )
 
 # The CFITSIO itself is made available by the CFITSIO enabler. The PUBLIC

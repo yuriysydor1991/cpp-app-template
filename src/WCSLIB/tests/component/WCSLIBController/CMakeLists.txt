@@ -6,9 +6,9 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   CTEST_WCSLIBController
   CTEST_WCSLIBController.cpp
-  ${CMAKE_SOURCE_DIR}/src/WCSLIB/WCSLIBController.cpp
-  ${CMAKE_SOURCE_DIR}/src/CFITSIO/CFITSIOController.cpp
-  ${CMAKE_SOURCE_DIR}/src/CFITSIO/CFITSIOContext.cpp
+  ${PROJECT_SOURCE_DIR}/src/WCSLIB/WCSLIBController.cpp
+  ${PROJECT_SOURCE_DIR}/src/CFITSIO/CFITSIOController.cpp
+  ${PROJECT_SOURCE_DIR}/src/CFITSIO/CFITSIOContext.cpp
 )
 
 target_compile_definitions(
@@ -18,8 +18,8 @@ target_compile_definitions(
 
 target_include_directories(
   CTEST_WCSLIBController
-  PRIVATE ${CMAKE_SOURCE_DIR}/src/app/tests/mocks/log
-  PRIVATE ${CMAKE_SOURCE_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}/src/app/tests/mocks/log
+  PRIVATE ${PROJECT_SOURCE_DIR}
 )
 
 target_link_libraries(

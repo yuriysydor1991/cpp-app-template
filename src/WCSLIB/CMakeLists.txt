@@ -19,8 +19,8 @@ add_library(
 target_include_directories(
   TemplateProjectWCSLIBControllerObj
   PRIVATE
-    ${CMAKE_SOURCE_DIR}
-    ${CMAKE_BINARY_DIR}
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_BINARY_DIR}
 )
 
 # The WCSLIB itself is made available by the WCSLIB enabler. The PUBLIC keyword

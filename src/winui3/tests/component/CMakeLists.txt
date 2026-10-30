@@ -7,16 +7,16 @@ endif()
 add_executable(
   CTEST_WinUI3
   CTEST_WinUI3.cpp
-  ${CMAKE_SOURCE_DIR}/src/winui3/WinUI3Controller.cpp
-  ${CMAKE_SOURCE_DIR}/src/winui3/helpers/WindowConfig.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/ApplicationContext.cpp
+  ${PROJECT_SOURCE_DIR}/src/winui3/WinUI3Controller.cpp
+  ${PROJECT_SOURCE_DIR}/src/winui3/helpers/WindowConfig.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/ApplicationContext.cpp
 )
 
 target_include_directories(
   CTEST_WinUI3
   PRIVATE ${APP_MOCKS_ROOT}/log
-  PRIVATE ${CMAKE_SOURCE_DIR}
-  PRIVATE ${CMAKE_BINARY_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
+  PRIVATE ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(

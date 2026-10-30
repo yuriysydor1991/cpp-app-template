@@ -3,14 +3,14 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   UTEST_ChatGPTController
   UTEST_ChatGPTController.cpp
-  ${CMAKE_SOURCE_DIR}/src/chatgpt/ChatGPTController.cpp
+  ${PROJECT_SOURCE_DIR}/src/chatgpt/ChatGPTController.cpp
 )
 
 target_include_directories(
   UTEST_ChatGPTController
   PRIVATE ${CHATGPT_MOCKS_ROOT}/CURLController
   PRIVATE ${CHATGPT_MOCKS_ROOT}/log
-  PRIVATE ${CMAKE_SOURCE_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
 )
 
 target_link_libraries(

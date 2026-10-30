@@ -17,7 +17,7 @@ set(
 
 set(
   DESKTOP_ICON_SRC
-  ${CMAKE_SOURCE_DIR}/misc/packagers/desktop/desktop.icon.svg.in
+  ${PROJECT_SOURCE_DIR}/misc/packagers/desktop/desktop.icon.svg.in
   CACHE STRING "The SVG icon source file of the application cmake configured"
 )
 
@@ -30,10 +30,10 @@ endif()
 
 string(SUBSTRING ${CMAKE_PROJECT_NAME} 0 1 DESKTOP_ICON_LETTER)
 
-set(DESKTOP_ENTRY_FILE ${CMAKE_BINARY_DIR}/${FLATPAK_PROJECT_URL}.desktop)
-set(DESKTOP_ICON_FILE ${CMAKE_BINARY_DIR}/${FLATPAK_PROJECT_URL}.svg)
+set(DESKTOP_ENTRY_FILE ${PROJECT_BINARY_DIR}/${FLATPAK_PROJECT_URL}.desktop)
+set(DESKTOP_ICON_FILE ${PROJECT_BINARY_DIR}/${FLATPAK_PROJECT_URL}.svg)
 
-configure_file(${CMAKE_SOURCE_DIR}/misc/packagers/desktop/desktop.entry.in ${DESKTOP_ENTRY_FILE})
+configure_file(${PROJECT_SOURCE_DIR}/misc/packagers/desktop/desktop.entry.in ${DESKTOP_ENTRY_FILE})
 configure_file(${DESKTOP_ICON_SRC} ${DESKTOP_ICON_FILE})
 
 if(ENABLE_DESKTOP_APPLICATION OR ENABLE_APPIMAGE OR ENABLE_APPIMAGE_CPACK)

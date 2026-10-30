@@ -5,17 +5,17 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   CTEST_VulkanDmabufRenderer
   CTEST_VulkanDmabufRenderer.cpp
-  ${CMAKE_SOURCE_DIR}/src/vulkan/dmabuf/VulkanDmabufRenderer.cpp
-  ${CMAKE_SOURCE_DIR}/src/vulkan/VulkanController.cpp
-  ${CMAKE_SOURCE_DIR}/src/vulkan/device-info/DeviceInfoHandlerFactory.cpp
-  ${CMAKE_SOURCE_DIR}/src/vulkan/device-info/PhysicalDeviceInfoHandler.cpp
+  ${PROJECT_SOURCE_DIR}/src/vulkan/dmabuf/VulkanDmabufRenderer.cpp
+  ${PROJECT_SOURCE_DIR}/src/vulkan/VulkanController.cpp
+  ${PROJECT_SOURCE_DIR}/src/vulkan/device-info/DeviceInfoHandlerFactory.cpp
+  ${PROJECT_SOURCE_DIR}/src/vulkan/device-info/PhysicalDeviceInfoHandler.cpp
 )
 
 target_include_directories(
   CTEST_VulkanDmabufRenderer
-  PRIVATE ${CMAKE_SOURCE_DIR}/src/app/tests/mocks/log
-  PRIVATE ${CMAKE_SOURCE_DIR}
-  PRIVATE ${CMAKE_BINARY_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}/src/app/tests/mocks/log
+  PRIVATE ${PROJECT_SOURCE_DIR}
+  PRIVATE ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(

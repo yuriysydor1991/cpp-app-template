@@ -7,7 +7,7 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   UTEST_VulkanController
   UTEST_VulkanController.cpp
-  ${CMAKE_SOURCE_DIR}/src/vulkan/VulkanController.cpp
+  ${PROJECT_SOURCE_DIR}/src/vulkan/VulkanController.cpp
 )
 
 target_include_directories(
@@ -15,9 +15,9 @@ target_include_directories(
   PRIVATE ${VULKAN_MOCKS_ROOT}/DeviceInfoHandlerFactory
   PRIVATE ${VULKAN_MOCKS_ROOT}/IDeviceInfoHandler
   PRIVATE ${GENERAL_MOCKS_ROOT}/vulkan
-  PRIVATE ${CMAKE_SOURCE_DIR}/src/app/tests/mocks/log
-  PRIVATE ${CMAKE_SOURCE_DIR}
-  PRIVATE ${CMAKE_BINARY_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}/src/app/tests/mocks/log
+  PRIVATE ${PROJECT_SOURCE_DIR}
+  PRIVATE ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(

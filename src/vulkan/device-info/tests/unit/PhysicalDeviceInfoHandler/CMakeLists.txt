@@ -3,15 +3,15 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   UTEST_PhysicalDeviceInfoHandler
   UTEST_PhysicalDeviceInfoHandler.cpp
-  ${CMAKE_SOURCE_DIR}/src/vulkan/device-info/PhysicalDeviceInfoHandler.cpp
+  ${PROJECT_SOURCE_DIR}/src/vulkan/device-info/PhysicalDeviceInfoHandler.cpp
 )
 
 target_include_directories(
   UTEST_PhysicalDeviceInfoHandler
   PRIVATE ${GENERAL_MOCKS_ROOT}/vulkan
-  PRIVATE ${CMAKE_SOURCE_DIR}/src/app/tests/mocks/log
-  PRIVATE ${CMAKE_SOURCE_DIR}
-  PRIVATE ${CMAKE_BINARY_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}/src/app/tests/mocks/log
+  PRIVATE ${PROJECT_SOURCE_DIR}
+  PRIVATE ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(

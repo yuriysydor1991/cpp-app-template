@@ -7,16 +7,16 @@ endif()
 add_executable(
   CTEST_opencv
   CTEST_opencv.cpp
-  ${CMAKE_SOURCE_DIR}/src/opencv/OpenCVController.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/ApplicationContext.cpp
+  ${PROJECT_SOURCE_DIR}/src/opencv/OpenCVController.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/ApplicationContext.cpp
 )
 
 target_include_directories(
   CTEST_opencv
   PRIVATE
-    ${CMAKE_SOURCE_DIR}/src/app/tests/mocks/log
-    ${CMAKE_SOURCE_DIR}
-    ${CMAKE_BINARY_DIR}
+    ${PROJECT_SOURCE_DIR}/src/app/tests/mocks/log
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(

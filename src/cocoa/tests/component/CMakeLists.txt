@@ -7,16 +7,16 @@ endif()
 add_executable(
   CTEST_Cocoa
   CTEST_Cocoa.cpp
-  ${CMAKE_SOURCE_DIR}/src/cocoa/CocoaController.cpp
-  ${CMAKE_SOURCE_DIR}/src/cocoa/helpers/WindowConfig.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/ApplicationContext.cpp
+  ${PROJECT_SOURCE_DIR}/src/cocoa/CocoaController.cpp
+  ${PROJECT_SOURCE_DIR}/src/cocoa/helpers/WindowConfig.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/ApplicationContext.cpp
 )
 
 target_include_directories(
   CTEST_Cocoa
   PRIVATE ${APP_MOCKS_ROOT}/log
-  PRIVATE ${CMAKE_SOURCE_DIR}
-  PRIVATE ${CMAKE_BINARY_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
+  PRIVATE ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(

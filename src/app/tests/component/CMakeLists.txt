@@ -7,23 +7,23 @@ endif()
 add_executable(
   CTEST_app  
   CTEST_app.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/applications/Application.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/ApplicationContext.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/ApplicationFactory.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/applications/ApplicationHelpPrinter.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/CommandLineParser.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/applications/ApplicationVersionPrinter.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/SignalsHandler.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/handlers/ASignalsHandler.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/ContinueSignalsHandler.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/IgnoredSignalsHandler.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/ReloadSignalsHandler.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/UserSignalsHandler.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/PauseSignalsHandler.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/PosixSignalsHandler.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/StopSignalsHandler.cpp
-  ${CMAKE_SOURCE_DIR}/src/log/default-logger/DefaultLogger.cpp
-  ${CMAKE_SOURCE_DIR}/src/log/default-logger/real-default-logger/RealDefaultLogger.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/applications/Application.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/ApplicationContext.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/ApplicationFactory.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/applications/ApplicationHelpPrinter.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/CommandLineParser.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/applications/ApplicationVersionPrinter.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/signals-handlers/SignalsHandler.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/signals-handlers/handlers/ASignalsHandler.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/ContinueSignalsHandler.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/IgnoredSignalsHandler.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/ReloadSignalsHandler.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/UserSignalsHandler.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/PauseSignalsHandler.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/PosixSignalsHandler.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/signals-handlers/handlers/posix/StopSignalsHandler.cpp
+  ${PROJECT_SOURCE_DIR}/src/log/default-logger/DefaultLogger.cpp
+  ${PROJECT_SOURCE_DIR}/src/log/default-logger/real-default-logger/RealDefaultLogger.cpp
 )
 
 # The real logger, so the log file effects of the command line are covered too.
@@ -31,8 +31,8 @@ target_include_directories(
   CTEST_app
   PRIVATE
     ${APP_MOCKS_ROOT}/CocoaController
-    ${CMAKE_SOURCE_DIR}
-    ${CMAKE_BINARY_DIR}
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(

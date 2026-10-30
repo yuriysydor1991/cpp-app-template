@@ -18,8 +18,8 @@ endif()
 target_include_directories(
   ${COCOA_OBJECT_NAME}App
   PUBLIC
-    ${CMAKE_SOURCE_DIR}
-    ${CMAKE_BINARY_DIR}
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(

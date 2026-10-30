@@ -24,9 +24,9 @@ endif()
 
 target_include_directories(
   ${PROJECT_BINARY_NAME}
-  PRIVATE ${CMAKE_SOURCE_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
   PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
-  PRIVATE ${CMAKE_BINARY_DIR}
+  PRIVATE ${PROJECT_BINARY_DIR}
 )
 
 # The macOS .app bundle goes into the install prefix root, so the .dmg shows it
@@ -39,7 +39,7 @@ install(
 
 configure_file(
   project-global-decls.h.in
-  ${CMAKE_BINARY_DIR}/project-global-decls.h
+  ${PROJECT_BINARY_DIR}/project-global-decls.h
 )
 
 add_subdirectory(app)

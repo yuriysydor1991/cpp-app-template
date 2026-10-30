@@ -36,7 +36,7 @@ if(ENABLE_DESKTOP_APPLICATION)
 endif()
 
 configure_file(
-  ${CMAKE_SOURCE_DIR}/misc/packagers/snapcraft/snapcraft.yaml.in
+  ${PROJECT_SOURCE_DIR}/misc/packagers/snapcraft/snapcraft.yaml.in
   ${CMAKE_CURRENT_BINARY_DIR}/snap/snapcraft.yaml
 )
 

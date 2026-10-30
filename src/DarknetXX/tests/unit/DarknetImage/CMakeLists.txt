@@ -9,7 +9,7 @@ add_executable(
 # sources do (see the src/DarknetXX/CMakeLists.txt).
 target_include_directories(
   UTEST_DarknetImage
-  SYSTEM PRIVATE ${DARKNETXX_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR}
+  SYSTEM PRIVATE ${DARKNETXX_INCLUDE_DIRS} ${PROJECT_SOURCE_DIR}
 )
 
 target_compile_definitions(

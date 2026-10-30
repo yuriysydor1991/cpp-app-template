@@ -35,7 +35,7 @@ The darknetxx is made of this very template, so it's headers take the paths of t
 So compile the sources of your own, which include the darknetxx headers, the way the [src/DarknetXX/CMakeLists.txt](/src/DarknetXX/CMakeLists.txt) file compiles the adaptor:
 
 ```
-target_include_directories(<target> SYSTEM PRIVATE ${DARKNETXX_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR})
+target_include_directories(<target> SYSTEM PRIVATE ${DARKNETXX_INCLUDE_DIRS} ${PROJECT_SOURCE_DIR})
 target_compile_definitions(<target> PRIVATE ${DARKNETXX_COMPILE_DEFINITIONS})
 target_link_libraries(<target> PUBLIC darknetxx)
 ```

@@ -3,15 +3,15 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   UTEST_NetworkWeights
   UTEST_NetworkWeights.cpp
-  ${CMAKE_SOURCE_DIR}/src/DarknetXX/weights/Dxxwjz1Weights.cpp
-  ${CMAKE_SOURCE_DIR}/src/DarknetXX/weights/Dxxwjz2Weights.cpp
-  ${CMAKE_SOURCE_DIR}/src/DarknetXX/weights/NetworkWeights.cpp
-  ${CMAKE_SOURCE_DIR}/src/DarknetXX/weights/OrigWeights.cpp
+  ${PROJECT_SOURCE_DIR}/src/DarknetXX/weights/Dxxwjz1Weights.cpp
+  ${PROJECT_SOURCE_DIR}/src/DarknetXX/weights/Dxxwjz2Weights.cpp
+  ${PROJECT_SOURCE_DIR}/src/DarknetXX/weights/NetworkWeights.cpp
+  ${PROJECT_SOURCE_DIR}/src/DarknetXX/weights/OrigWeights.cpp
 )
 
 target_include_directories(
   UTEST_NetworkWeights
-  PRIVATE ${CMAKE_SOURCE_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
 )
 
 target_link_libraries(

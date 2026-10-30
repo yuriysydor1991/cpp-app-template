@@ -35,7 +35,7 @@ darknetxx створено з цього самого шаблону, тож ї�
 Тож компілюй власні вихідні коди, які включають заголовки darknetxx, так само, як файл [src/DarknetXX/CMakeLists.txt](/src/DarknetXX/CMakeLists.txt) компілює адаптер:
 
 ```
-target_include_directories(<target> SYSTEM PRIVATE ${DARKNETXX_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR})
+target_include_directories(<target> SYSTEM PRIVATE ${DARKNETXX_INCLUDE_DIRS} ${PROJECT_SOURCE_DIR})
 target_compile_definitions(<target> PRIVATE ${DARKNETXX_COMPILE_DEFINITIONS})
 target_link_libraries(<target> PUBLIC darknetxx)
 ```

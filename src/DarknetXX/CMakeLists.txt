@@ -33,7 +33,7 @@ add_library(
 
 target_include_directories(
   TemplateProjectDarknetXXObj
-  SYSTEM PRIVATE ${DARKNETXX_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR}
+  SYSTEM PRIVATE ${DARKNETXX_INCLUDE_DIRS} ${PROJECT_SOURCE_DIR}
 )
 
 target_compile_definitions(
@@ -58,7 +58,7 @@ add_library(
 
 target_include_directories(
   TemplateProjectDarknetXXLogObj
-  PRIVATE ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR} ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(

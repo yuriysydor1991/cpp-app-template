@@ -91,7 +91,7 @@ set(
   "${MOD_DARKNET_SRC_ROOT}"
   "${MOD_DARKNET_SRC_ROOT}/src"
   "${MOD_DARKNET_SRC_ROOT}/3rdparty/stb/include"
-  "${CMAKE_BINARY_DIR}"
+  "${PROJECT_BINARY_DIR}"
 )
 
 set(
@@ -208,7 +208,7 @@ endif()
 
 if (NOT PROJECT_DARKNETXX_WEIGHTS_PATH)
   get_filename_component(weightsName "${TEMPLATE_APP_DARKNETXX_WEIGHTS_URL}" NAME)
-  set(PROJECT_DARKNETXX_WEIGHTS_PATH "${CMAKE_BINARY_DIR}/models/${weightsName}")
+  set(PROJECT_DARKNETXX_WEIGHTS_PATH "${PROJECT_BINARY_DIR}/models/${weightsName}")
 
   if (ENABLE_DARKNETXX_WEIGHTS_DOWNLOAD AND NOT EXISTS "${PROJECT_DARKNETXX_WEIGHTS_PATH}")
     message(STATUS "Downloading the ${TEMPLATE_APP_DARKNETXX_WEIGHTS_URL} weights file")
@@ -250,6 +250,6 @@ message(STATUS "The darknetxx network: ${PROJECT_DARKNETXX_CFG_PATH} with ${PROJ
 # Link the darknetxx target to your target(s) of interest. Compile the
 # sources including the darknetxx headers with the darknetxx include
 # directories and definitions (see the src/DarknetXX/CMakeLists.txt):
-#   target_include_directories(<target> PRIVATE ${DARKNETXX_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR})
+#   target_include_directories(<target> PRIVATE ${DARKNETXX_INCLUDE_DIRS} ${PROJECT_SOURCE_DIR})
 #   target_compile_definitions(<target> PRIVATE ${DARKNETXX_COMPILE_DEFINITIONS})
 #   target_link_libraries(<target> PUBLIC darknetxx)

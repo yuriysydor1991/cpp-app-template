@@ -3,8 +3,8 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   UTEST_WavWriter
   UTEST_WavWriter.cpp
-  ${CMAKE_SOURCE_DIR}/src/TTS/Speech.cpp
-  ${CMAKE_SOURCE_DIR}/src/TTS/WavWriter.cpp
+  ${PROJECT_SOURCE_DIR}/src/TTS/Speech.cpp
+  ${PROJECT_SOURCE_DIR}/src/TTS/WavWriter.cpp
 )
 
 target_compile_definitions(
@@ -15,7 +15,7 @@ target_compile_definitions(
 target_include_directories(
   UTEST_WavWriter
   PRIVATE ${TTS_APP_MOCKS_ROOT}/log
-  PRIVATE ${CMAKE_SOURCE_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
 )
 
 target_link_libraries(

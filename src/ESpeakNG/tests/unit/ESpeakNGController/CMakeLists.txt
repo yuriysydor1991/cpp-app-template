@@ -6,14 +6,14 @@ add_executable(
   UTEST_ESpeakNGController
   UTEST_ESpeakNGController.cpp
   ${ESPEAKNG_MOCKS_ROOT}/ESpeakNGLibrary/ESpeakNGLibraryMock.cpp
-  ${CMAKE_SOURCE_DIR}/src/ESpeakNG/ESpeakNGController.cpp
-  ${CMAKE_SOURCE_DIR}/src/TTS/Speech.cpp
+  ${PROJECT_SOURCE_DIR}/src/ESpeakNG/ESpeakNGController.cpp
+  ${PROJECT_SOURCE_DIR}/src/TTS/Speech.cpp
 )
 
 target_include_directories(
   UTEST_ESpeakNGController
   PRIVATE ${ESPEAKNG_APP_MOCKS_ROOT}/log
-  PRIVATE ${CMAKE_SOURCE_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
 )
 
 target_include_directories(

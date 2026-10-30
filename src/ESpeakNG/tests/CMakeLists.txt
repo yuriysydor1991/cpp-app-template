@@ -6,7 +6,7 @@ endif()
 
 # The log mock of the whole project is kept under the app tests, so it is taken
 # from there rather than duplicated.
-set(ESPEAKNG_APP_MOCKS_ROOT "${CMAKE_SOURCE_DIR}/src/app/tests/mocks")
+set(ESPEAKNG_APP_MOCKS_ROOT "${PROJECT_SOURCE_DIR}/src/app/tests/mocks")
 set(ESPEAKNG_MOCKS_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/mocks")
 
 add_subdirectory(unit)

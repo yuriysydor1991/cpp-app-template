@@ -5,7 +5,7 @@ include(ProcessorCount)
 
 # Populates the declared project and installs it into the build tree by a
 # separate CMake invocation. Required by the projects which resolve their own
-# sources through the ${CMAKE_SOURCE_DIR} and thus can not be added as a
+# sources through the ${PROJECT_SOURCE_DIR} and thus can not be added as a
 # subdirectory of the current one. The install prefix is provided through the
 # TEMPLATE_PROJECT_STANDALONE_INSTALL_DIR variable of the caller scope.
 function(template_project_standalone_3rdparty_build)

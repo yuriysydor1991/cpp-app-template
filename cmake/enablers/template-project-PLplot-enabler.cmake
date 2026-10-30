@@ -16,7 +16,7 @@ set(TEMPLATE_APP_PLPLOT_GIT "https://git.code.sf.net/p/plplot/plplot" CACHE STRI
 # (of 2026-05-16) is pinned instead of the moving master branch.
 set(TEMPLATE_APP_PLPLOT_GIT_TAG "df0c00e11f2c289bb186e20b44651aa0184beb8b" CACHE STRING "The PLplot project git repository tag or commit of interest")
 
-# The PLplot modules resolve their own sources through the ${CMAKE_SOURCE_DIR}
+# The PLplot modules resolve their own sources through the ${PROJECT_SOURCE_DIR}
 # so the library is built standalone instead of being added as a subdirectory.
 # The gnu17 C dialect keeps its pre-C23 configuration checks compilable and the
 # PLPLOT_USE_QT5 keeps the installed plplotConfig.cmake valid when no Qt device

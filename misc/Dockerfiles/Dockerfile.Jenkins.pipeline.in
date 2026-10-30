@@ -50,6 +50,7 @@ RUN sed -i 's/^Components: main$/Components: main non-free/' \
     giza-dev gnuplot libcfitsio-dev libopencv-dev opencv-data wcslib-dev \
     libespeak-ng-dev libonnxruntime-dev librhvoice-dev rhvoice-english \
     rhvoice-ukrainian \
+    emscripten \
     btop curl fdupes htop nano nmap traceroute wget whois && \
   apt-get clean && \
   rm -fr /var/lib/apt/lists/*

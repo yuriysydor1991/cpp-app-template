@@ -6,11 +6,11 @@ add_executable(
   UTEST_SherpaONNXController
   UTEST_SherpaONNXController.cpp
   ${SHERPAONNX_MOCKS_ROOT}/SherpaONNXLibrary/SherpaONNXLibraryMock.cpp
-  ${CMAKE_SOURCE_DIR}/src/SherpaONNX/KokoroModel.cpp
-  ${CMAKE_SOURCE_DIR}/src/SherpaONNX/SherpaONNXController.cpp
-  ${CMAKE_SOURCE_DIR}/src/SherpaONNX/SherpaONNXModel.cpp
-  ${CMAKE_SOURCE_DIR}/src/SherpaONNX/VitsModel.cpp
-  ${CMAKE_SOURCE_DIR}/src/TTS/Speech.cpp
+  ${PROJECT_SOURCE_DIR}/src/SherpaONNX/KokoroModel.cpp
+  ${PROJECT_SOURCE_DIR}/src/SherpaONNX/SherpaONNXController.cpp
+  ${PROJECT_SOURCE_DIR}/src/SherpaONNX/SherpaONNXModel.cpp
+  ${PROJECT_SOURCE_DIR}/src/SherpaONNX/VitsModel.cpp
+  ${PROJECT_SOURCE_DIR}/src/TTS/Speech.cpp
 )
 
 target_compile_definitions(
@@ -21,7 +21,7 @@ target_compile_definitions(
 target_include_directories(
   UTEST_SherpaONNXController
   PRIVATE ${SHERPAONNX_APP_MOCKS_ROOT}/log
-  PRIVATE ${CMAKE_SOURCE_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
 )
 
 target_include_directories(

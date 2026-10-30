@@ -6,15 +6,15 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   CTEST_SherpaONNXController
   CTEST_SherpaONNXController.cpp
-  ${CMAKE_SOURCE_DIR}/src/SherpaONNX/KokoroModel.cpp
-  ${CMAKE_SOURCE_DIR}/src/SherpaONNX/SherpaONNXController.cpp
-  ${CMAKE_SOURCE_DIR}/src/SherpaONNX/SherpaONNXModel.cpp
-  ${CMAKE_SOURCE_DIR}/src/SherpaONNX/VitsModel.cpp
-  ${CMAKE_SOURCE_DIR}/src/TTS/AudioPlayer.cpp
-  ${CMAKE_SOURCE_DIR}/src/TTS/Speech.cpp
-  ${CMAKE_SOURCE_DIR}/src/TTS/WavWriter.cpp
-  ${CMAKE_SOURCE_DIR}/src/log/default-logger/DefaultLogger.cpp
-  ${CMAKE_SOURCE_DIR}/src/log/default-logger/real-default-logger/RealDefaultLogger.cpp
+  ${PROJECT_SOURCE_DIR}/src/SherpaONNX/KokoroModel.cpp
+  ${PROJECT_SOURCE_DIR}/src/SherpaONNX/SherpaONNXController.cpp
+  ${PROJECT_SOURCE_DIR}/src/SherpaONNX/SherpaONNXModel.cpp
+  ${PROJECT_SOURCE_DIR}/src/SherpaONNX/VitsModel.cpp
+  ${PROJECT_SOURCE_DIR}/src/TTS/AudioPlayer.cpp
+  ${PROJECT_SOURCE_DIR}/src/TTS/Speech.cpp
+  ${PROJECT_SOURCE_DIR}/src/TTS/WavWriter.cpp
+  ${PROJECT_SOURCE_DIR}/src/log/default-logger/DefaultLogger.cpp
+  ${PROJECT_SOURCE_DIR}/src/log/default-logger/real-default-logger/RealDefaultLogger.cpp
 )
 
 target_compile_definitions(
@@ -25,8 +25,8 @@ target_compile_definitions(
 target_include_directories(
   CTEST_SherpaONNXController
   PRIVATE
-    ${CMAKE_SOURCE_DIR}
-    ${CMAKE_BINARY_DIR}
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(

@@ -3,8 +3,8 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   UTEST_AudioPlayer
   UTEST_AudioPlayer.cpp
-  ${CMAKE_SOURCE_DIR}/src/TTS/AudioPlayer.cpp
-  ${CMAKE_SOURCE_DIR}/src/TTS/Speech.cpp
+  ${PROJECT_SOURCE_DIR}/src/TTS/AudioPlayer.cpp
+  ${PROJECT_SOURCE_DIR}/src/TTS/Speech.cpp
 )
 
 target_compile_definitions(
@@ -15,7 +15,7 @@ target_compile_definitions(
 target_include_directories(
   UTEST_AudioPlayer
   PRIVATE ${TTS_APP_MOCKS_ROOT}/log
-  PRIVATE ${CMAKE_SOURCE_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
 )
 
 target_link_libraries(

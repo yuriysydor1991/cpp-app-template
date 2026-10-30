@@ -5,9 +5,9 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   UTEST_SherpaONNXModel
   UTEST_SherpaONNXModel.cpp
-  ${CMAKE_SOURCE_DIR}/src/SherpaONNX/KokoroModel.cpp
-  ${CMAKE_SOURCE_DIR}/src/SherpaONNX/SherpaONNXModel.cpp
-  ${CMAKE_SOURCE_DIR}/src/SherpaONNX/VitsModel.cpp
+  ${PROJECT_SOURCE_DIR}/src/SherpaONNX/KokoroModel.cpp
+  ${PROJECT_SOURCE_DIR}/src/SherpaONNX/SherpaONNXModel.cpp
+  ${PROJECT_SOURCE_DIR}/src/SherpaONNX/VitsModel.cpp
 )
 
 target_compile_definitions(
@@ -17,7 +17,7 @@ target_compile_definitions(
 
 target_include_directories(
   UTEST_SherpaONNXModel
-  PRIVATE ${CMAKE_SOURCE_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
 )
 
 target_include_directories(

@@ -117,7 +117,7 @@ file(
 )
 
 if (NOT PROJECT_TTS_VOICE)
-    set(modelDir "${CMAKE_BINARY_DIR}/models")
+    set(modelDir "${PROJECT_BINARY_DIR}/models")
     set(PROJECT_TTS_VOICE "${modelDir}/${TEMPLATE_APP_SHERPA_ONNX_MODEL}")
 
     if (ENABLE_SHERPA_ONNX_MODEL_DOWNLOAD AND NOT EXISTS "${PROJECT_TTS_VOICE}/tokens.txt")

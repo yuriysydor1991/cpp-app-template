@@ -10,7 +10,7 @@ add_test(
   NAME ITEST_many_libs.noArgs
   COMMAND
     ${CMAKE_CURRENT_SOURCE_DIR}/ITEST_many_libs.sh
-      --source-dir ${CMAKE_SOURCE_DIR}
+      --source-dir ${PROJECT_SOURCE_DIR}
       --work-dir ${CMAKE_CURRENT_BINARY_DIR}/work
       --count ${MANY_LIBS_COUNT}
 )

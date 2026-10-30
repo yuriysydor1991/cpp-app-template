@@ -17,7 +17,7 @@ set(
 )
 
 set(
-  DOXYGEN_OUTPUT_DIR ${CMAKE_SOURCE_DIR}/doc
+  DOXYGEN_OUTPUT_DIR ${PROJECT_SOURCE_DIR}/doc
   CACHE STRING "Sets the doxygen documentation output directory."
 )
 
@@ -56,7 +56,7 @@ if (NOT DOXYGEN_FOUND)
 endif()
 
 set(DOXYGEN_IN Doxyfile.in)
-set(DOXYGEN_OUT ${CMAKE_BINARY_DIR}/Doxyfile)
+set(DOXYGEN_OUT ${PROJECT_BINARY_DIR}/Doxyfile)
 
 if (DOXYGEN_OUTPUT_LANGUAGE STREQUAL "Ukrainian")
   set(DOXYGEN_MAIN_PAGE_MD "doc/README.uk_UA.md")
@@ -76,7 +76,7 @@ endif()
 add_custom_target(
   Doxygen-doc ${DOXYGEN_DOC_IN_ALL}
   COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
-  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
   COMMENT "Generating project documentation with Doxygen"
   VERBATIM
 )

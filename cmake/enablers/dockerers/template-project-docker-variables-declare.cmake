@@ -32,7 +32,7 @@ set(
 
 set(
   PROJECT_BINARY_PATH
-  ${CMAKE_BINARY_DIR}/src/${PROJECT_LIBRARY_NAME}
+  ${PROJECT_BINARY_DIR}/src/${PROJECT_LIBRARY_NAME}
 )
 
 message(STATUS "Docker executable: ${DOCKER_EXEC}")

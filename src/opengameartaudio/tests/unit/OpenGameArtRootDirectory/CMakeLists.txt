@@ -3,14 +3,14 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   UTEST_OpenGameArtRootDirectory
   UTEST_OpenGameArtRootDirectory.cpp
-  ${CMAKE_SOURCE_DIR}/src/opengameartaudio/OpenGameArtRootDirectory.cpp
+  ${PROJECT_SOURCE_DIR}/src/opengameartaudio/OpenGameArtRootDirectory.cpp
 )
 
 target_include_directories(
   UTEST_OpenGameArtRootDirectory
   PRIVATE ${OPENGAMEART_AUDIO_MOCKS_ROOT}/log
-  PRIVATE ${CMAKE_SOURCE_DIR}
-  PRIVATE ${CMAKE_BINARY_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
+  PRIVATE ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(

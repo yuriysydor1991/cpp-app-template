@@ -195,7 +195,7 @@ endfunction()
 # pack to pack, hence the recursive glob and the pack relative alias built out
 # of the found path.
 function(template_project_opengameart_audio_generate_index)
-  set(generatedSource "${CMAKE_BINARY_DIR}/generated/opengameartaudio/sounds/OpenGameArtGeneratedSounds.cpp")
+  set(generatedSource "${PROJECT_BINARY_DIR}/generated/opengameartaudio/sounds/OpenGameArtGeneratedSounds.cpp")
 
   set(OPENGAMEART_AUDIO_GENERATED_SOUNDS "")
   set(OPENGAMEART_AUDIO_GENERATED_LICENSES "")
@@ -266,7 +266,7 @@ function(template_project_opengameart_audio_generate_index)
   endif()
 
   configure_file(
-    "${CMAKE_SOURCE_DIR}/src/opengameartaudio/sounds/OpenGameArtGeneratedSounds.cpp.in"
+    "${PROJECT_SOURCE_DIR}/src/opengameartaudio/sounds/OpenGameArtGeneratedSounds.cpp.in"
     "${generatedSource}"
     @ONLY
   )

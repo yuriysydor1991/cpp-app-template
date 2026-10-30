@@ -10,7 +10,7 @@ option(
 # place naming a pack also records where it came from, what it is licensed
 # under and the very archive it comes from.
 set(
-  TEMPLATE_APP_OPENGAMEART_AUDIO_MANIFEST "${CMAKE_SOURCE_DIR}/misc/opengameart-packs.txt"
+  TEMPLATE_APP_OPENGAMEART_AUDIO_MANIFEST "${PROJECT_SOURCE_DIR}/misc/opengameart-packs.txt"
   CACHE FILEPATH "The manifest naming every pack together with it's archive URL, it's license and the archive SHA-256 checksum"
 )
 
@@ -54,7 +54,7 @@ if (TEMPLATE_APP_OPENGAMEART_AUDIO_DIR)
 
   set(OPENGAMEART_AUDIO_ROOT_DIR "${TEMPLATE_APP_OPENGAMEART_AUDIO_DIR}" CACHE INTERNAL "The OpenGameArt sound packs root directory")
 else()
-  set(OPENGAMEART_AUDIO_ROOT_DIR "${CMAKE_BINARY_DIR}/resources/opengameart-audio" CACHE INTERNAL "The OpenGameArt sound packs root directory")
+  set(OPENGAMEART_AUDIO_ROOT_DIR "${PROJECT_BINARY_DIR}/resources/opengameart-audio" CACHE INTERNAL "The OpenGameArt sound packs root directory")
 
   message(STATUS "Trying to make the OpenGameArt sound packs available through the Internet")
 
@@ -104,8 +104,8 @@ install(
 )
 
 configure_file(
-  "${CMAKE_SOURCE_DIR}/src/opengameartaudio/opengameart-audio-decls.h.in"
-  "${CMAKE_BINARY_DIR}/opengameart-audio-decls.h"
+  "${PROJECT_SOURCE_DIR}/src/opengameartaudio/opengameart-audio-decls.h.in"
+  "${PROJECT_BINARY_DIR}/opengameart-audio-decls.h"
 )
 
 option(
@@ -115,8 +115,8 @@ option(
 )
 
 if (OPENGAMEART_AUDIO_GENERATE_FULL_MANIFESTS)
-  set(OPENGAMEART_AUDIO_FULL_QRC "${CMAKE_BINARY_DIR}/generated/opengameartaudio/opengameart-audio-all.qrc" CACHE INTERNAL "The Qt resource manifest carrying every available OpenGameArt sound")
-  set(OPENGAMEART_AUDIO_FULL_GRESOURCE_XML "${CMAKE_BINARY_DIR}/generated/opengameartaudio/opengameart-audio-all.gresource.xml" CACHE INTERNAL "The GResource manifest carrying every available OpenGameArt sound")
+  set(OPENGAMEART_AUDIO_FULL_QRC "${PROJECT_BINARY_DIR}/generated/opengameartaudio/opengameart-audio-all.qrc" CACHE INTERNAL "The Qt resource manifest carrying every available OpenGameArt sound")
+  set(OPENGAMEART_AUDIO_FULL_GRESOURCE_XML "${PROJECT_BINARY_DIR}/generated/opengameartaudio/opengameart-audio-all.gresource.xml" CACHE INTERNAL "The GResource manifest carrying every available OpenGameArt sound")
 
   template_project_opengameart_audio_write_qrc("${OPENGAMEART_AUDIO_FULL_QRC}")
   template_project_opengameart_audio_write_gresource("${OPENGAMEART_AUDIO_FULL_GRESOURCE_XML}")

@@ -10,7 +10,7 @@ Its jobs share the single `check` stage, so they all run in parallel, each one i
 | `build-and-test` | configures the Debug build with the sanitizers, the unit and the component tests, builds it and runs the `UTEST_` and the `CTEST_` `ctest` suites |
 | `clang-tidy` | configures with `-DENABLE_CLANG_TIDY=ON` and builds, so the checks run during the compilation |
 | `release` | builds the Release configuration and installs it into a prefix inside the build directory |
-| `webassembly` | builds the binary for the browsers with the `emscripten` package and the `emcmake` command, runs it with the Node.js and installs the page, the loader and the module into a prefix inside the build directory |
+| `webassembly` | builds the binary for the browsers with the `emscripten` package and the `emcmake` command, runs it with the Node.js and installs the page and the loader into a prefix inside the build directory |
 
 Every `ctest` run writes a JUnit XML report, which the job hands to GitLab as its test report, so a failed test case is readable at the *Tests* tab of the pipeline page with no digging through the logs. The jobs are `interruptible`, so a new push to a branch cancels the still running pipeline of its previous commit as long as the *Auto-cancel redundant pipelines* setting of the project stays on.
 

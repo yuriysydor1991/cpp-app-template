@@ -10,7 +10,7 @@ Its jobs run in parallel, each one on a runner of its own:
 | `Debug build & tests` | configures the Debug build with the sanitizers, the unit and the component tests, builds it and runs the `UTEST_` and the `CTEST_` `ctest` suites |
 | `clang-tidy` | configures with `-DENABLE_CLANG_TIDY=ON` and builds, so the checks run during the compilation |
 | `Release build & install` | builds the Release configuration and installs it into a prefix inside the build directory |
-| `WebAssembly build & install` | builds the binary for the browsers with the `emscripten` package and the `emcmake` command, runs it with the Node.js and installs the page, the loader and the module into a prefix inside the build directory |
+| `WebAssembly build & install` | builds the binary for the browsers with the `emscripten` package and the `emcmake` command, runs it with the Node.js and installs the page and the loader into a prefix inside the build directory |
 
 Every `ctest` run writes a JUnit XML report, which the job uploads as the `junit-results` artifact of the run, so a failed test case is readable at the run page with no digging through the logs. A new push to a branch cancels the still running pipeline of its previous commit - the `concurrency` group of the workflow takes care of that.
 

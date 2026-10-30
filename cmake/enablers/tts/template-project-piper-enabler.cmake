@@ -35,7 +35,7 @@ endif()
 # looks for it. The espeak-ng limits it's data paths to 160 characters, so the
 # directories are kept short and the build directory path has to stay below 90
 # characters or so.
-set(piperPrefix "${CMAKE_BINARY_DIR}/piper")
+set(piperPrefix "${PROJECT_BINARY_DIR}/piper")
 set(piperLibrary "${piperPrefix}/lib/${CMAKE_SHARED_LIBRARY_PREFIX}piper${CMAKE_SHARED_LIBRARY_SUFFIX}")
 
 ExternalProject_Add(
@@ -113,7 +113,7 @@ file(
 )
 
 if (NOT PROJECT_TTS_VOICE)
-    set(voiceDir "${CMAKE_BINARY_DIR}/voices")
+    set(voiceDir "${PROJECT_BINARY_DIR}/voices")
     set(PROJECT_TTS_VOICE "${voiceDir}/${TEMPLATE_APP_PIPER_VOICE}.onnx")
 
     # The voices are kept by the language, the region, the name and the

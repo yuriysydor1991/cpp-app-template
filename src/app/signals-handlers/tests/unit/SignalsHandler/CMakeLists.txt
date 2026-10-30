@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   UTEST_SignalsHandler
   UTEST_SignalsHandler.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/signals-handlers/SignalsHandler.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/signals-handlers/SignalsHandler.cpp
   ${APP_MOCKS_ROOT}/ApplicationContext/src/app/ApplicationContext.cpp
 )
 
@@ -17,8 +17,8 @@ target_include_directories(
   PRIVATE ${POSIX_SIGNALS_HANDLERS_MOCKS_ROOT}/StopSignalsHandler
   PRIVATE ${POSIX_SIGNALS_HANDLERS_MOCKS_ROOT}/UserSignalsHandler
   PRIVATE ${APP_MOCKS_ROOT}/log
-  PRIVATE ${CMAKE_SOURCE_DIR}
-  PRIVATE ${CMAKE_BINARY_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
+  PRIVATE ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(

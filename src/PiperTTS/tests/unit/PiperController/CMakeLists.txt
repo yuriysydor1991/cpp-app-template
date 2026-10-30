@@ -6,8 +6,8 @@ add_executable(
   UTEST_PiperController
   UTEST_PiperController.cpp
   ${PIPER_MOCKS_ROOT}/PiperLibrary/PiperLibraryMock.cpp
-  ${CMAKE_SOURCE_DIR}/src/PiperTTS/PiperController.cpp
-  ${CMAKE_SOURCE_DIR}/src/TTS/Speech.cpp
+  ${PROJECT_SOURCE_DIR}/src/PiperTTS/PiperController.cpp
+  ${PROJECT_SOURCE_DIR}/src/TTS/Speech.cpp
 )
 
 target_compile_definitions(
@@ -18,7 +18,7 @@ target_compile_definitions(
 target_include_directories(
   UTEST_PiperController
   PRIVATE ${PIPER_APP_MOCKS_ROOT}/log
-  PRIVATE ${CMAKE_SOURCE_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
 )
 
 target_include_directories(

@@ -3,16 +3,16 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   UTEST_SQLiteController
   UTEST_SQLiteController.cpp
-  ${CMAKE_SOURCE_DIR}/src/sqlite3cpp/SQLiteController.cpp
-  ${CMAKE_SOURCE_DIR}/src/sqlite3cpp/sqlmaker/QueryMaker.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/ApplicationContext.cpp
+  ${PROJECT_SOURCE_DIR}/src/sqlite3cpp/SQLiteController.cpp
+  ${PROJECT_SOURCE_DIR}/src/sqlite3cpp/sqlmaker/QueryMaker.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/ApplicationContext.cpp
 )
 
 target_include_directories(
   UTEST_SQLiteController
   PRIVATE ${APP_MOCKS_ROOT}/log
   PRIVATE ${APP_MOCKS_ROOT}/project-global-decls
-  PRIVATE ${CMAKE_SOURCE_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
 )
 
 target_link_libraries(

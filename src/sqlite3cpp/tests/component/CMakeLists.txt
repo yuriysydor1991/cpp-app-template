@@ -7,16 +7,16 @@ endif()
 add_executable(
   CTEST_SQLiteController
   CTEST_SQLiteController.cpp
-  ${CMAKE_SOURCE_DIR}/src/sqlite3cpp/SQLiteController.cpp
-  ${CMAKE_SOURCE_DIR}/src/sqlite3cpp/sqlmaker/QueryMaker.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/ApplicationContext.cpp
+  ${PROJECT_SOURCE_DIR}/src/sqlite3cpp/SQLiteController.cpp
+  ${PROJECT_SOURCE_DIR}/src/sqlite3cpp/sqlmaker/QueryMaker.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/ApplicationContext.cpp
 )
 
 target_include_directories(
   CTEST_SQLiteController
   PRIVATE ${APP_MOCKS_ROOT}/log
-  PRIVATE ${CMAKE_SOURCE_DIR}
-  PRIVATE ${CMAKE_BINARY_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
+  PRIVATE ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(

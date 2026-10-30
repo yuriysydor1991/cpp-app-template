@@ -12,8 +12,8 @@ get_target_property(SQLITECPP_INCLUDE_DIRS SQLiteCpp INTERFACE_INCLUDE_DIRECTORI
 target_include_directories(
   TemplateSQLiteControllerObj 
   PRIVATE
-    ${CMAKE_SOURCE_DIR}
-    ${CMAKE_BINARY_DIR}
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_BINARY_DIR}
     ${SQLITECPP_INCLUDE_DIRS}
 )
 

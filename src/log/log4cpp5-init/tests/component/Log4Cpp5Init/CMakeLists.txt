@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   CTEST_Log4Cpp5Init
   CTEST_Log4Cpp5Init.cpp
-  ${CMAKE_SOURCE_DIR}/src/log/log4cpp5-init/Log4Cpp5Init.cpp
+  ${PROJECT_SOURCE_DIR}/src/log/log4cpp5-init/Log4Cpp5Init.cpp
 )
 
 target_compile_definitions(
@@ -14,8 +14,8 @@ target_compile_definitions(
 target_include_directories(
   CTEST_Log4Cpp5Init
   PRIVATE
-    ${CMAKE_SOURCE_DIR}
-    ${CMAKE_BINARY_DIR}
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(

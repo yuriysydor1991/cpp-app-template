@@ -49,7 +49,7 @@ else()
     get_property(LOG4CPP_FETCHED_TESTS DIRECTORY "${log4cpp_SOURCE_DIR}/tests" PROPERTY TESTS)
 
     file(
-      WRITE "${CMAKE_BINARY_DIR}/CTestCustom.cmake"
+      WRITE "${PROJECT_BINARY_DIR}/CTestCustom.cmake"
       "set(CTEST_CUSTOM_TESTS_IGNORE ${LOG4CPP_FETCHED_TESTS})\n"
     )
 

@@ -3,6 +3,8 @@
 1. [Побудова за допомогою IDE](/doc/sections/uk_UA/5-project-build/5-1-IDE-build.md)
 1. [Побудова проекту-шаблону через командний рядок](/doc/sections/uk_UA/5-project-build/5-2-command-line-build.md)
 1. [Швидкі скрипти побудови](/doc/sections/uk_UA/5-project-build/5-36-quick-build-scripts.md)
+1. Платформи
+    1. [Побудова бінарного файлу WebAssembly для браузерів](/doc/sections/uk_UA/5-project-build/platforms/5-74-building-the-WebAssembly-binary-for-the-browsers.md)
 1. Вмикання тестів
     1. [Вмикання юніт-тестів](/doc/sections/uk_UA/5-project-build/testing/5-3-1-enabling-unit-testing.md)
     1. [Запобігання використання GTest з ОС](/doc/sections/uk_UA/5-project-build/testing/5-3-2-disabling-system-GTest-probe.md)

@@ -174,7 +174,7 @@ endfunction()
 # scanning at the run time and with no sound names hand written into the
 # sources.
 function(template_project_freesound_audio_generate_index)
-  set(generatedSource "${CMAKE_BINARY_DIR}/generated/freesoundaudio/sounds/FreesoundGeneratedSounds.cpp")
+  set(generatedSource "${PROJECT_BINARY_DIR}/generated/freesoundaudio/sounds/FreesoundGeneratedSounds.cpp")
 
   set(FREESOUND_AUDIO_GENERATED_SOUNDS "")
   set(FREESOUND_AUDIO_GENERATED_LICENSES "")
@@ -264,7 +264,7 @@ function(template_project_freesound_audio_generate_index)
   endif()
 
   configure_file(
-    "${CMAKE_SOURCE_DIR}/src/freesoundaudio/sounds/FreesoundGeneratedSounds.cpp.in"
+    "${PROJECT_SOURCE_DIR}/src/freesoundaudio/sounds/FreesoundGeneratedSounds.cpp.in"
     "${generatedSource}"
     @ONLY
   )

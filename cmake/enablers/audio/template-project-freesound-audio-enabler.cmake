@@ -12,7 +12,7 @@ option(
 set(FREESOUND_AUDIO_CATEGORIES "" CACHE INTERNAL "The categories the sounds manifest groups the sounds into")
 
 set(
-  TEMPLATE_APP_FREESOUND_AUDIO_MANIFEST "${CMAKE_SOURCE_DIR}/misc/freesound-sounds.txt"
+  TEMPLATE_APP_FREESOUND_AUDIO_MANIFEST "${PROJECT_SOURCE_DIR}/misc/freesound-sounds.txt"
   CACHE FILEPATH "The manifest naming every sound together with it's download URL, it's license and the file SHA-256 checksum"
 )
 
@@ -57,7 +57,7 @@ if (TEMPLATE_APP_FREESOUND_AUDIO_DIR)
 
   set(FREESOUND_AUDIO_ROOT_DIR "${TEMPLATE_APP_FREESOUND_AUDIO_DIR}" CACHE INTERNAL "The Freesound sounds root directory")
 else()
-  set(FREESOUND_AUDIO_ROOT_DIR "${CMAKE_BINARY_DIR}/resources/freesound-audio" CACHE INTERNAL "The Freesound sounds root directory")
+  set(FREESOUND_AUDIO_ROOT_DIR "${PROJECT_BINARY_DIR}/resources/freesound-audio" CACHE INTERNAL "The Freesound sounds root directory")
 
   message(STATUS "Trying to make the Freesound sounds available through the Internet")
 
@@ -107,8 +107,8 @@ install(
 )
 
 configure_file(
-  "${CMAKE_SOURCE_DIR}/src/freesoundaudio/freesound-audio-decls.h.in"
-  "${CMAKE_BINARY_DIR}/freesound-audio-decls.h"
+  "${PROJECT_SOURCE_DIR}/src/freesoundaudio/freesound-audio-decls.h.in"
+  "${PROJECT_BINARY_DIR}/freesound-audio-decls.h"
 )
 
 option(
@@ -118,8 +118,8 @@ option(
 )
 
 if (FREESOUND_AUDIO_GENERATE_FULL_MANIFESTS)
-  set(FREESOUND_AUDIO_FULL_QRC "${CMAKE_BINARY_DIR}/generated/freesoundaudio/freesound-audio-all.qrc" CACHE INTERNAL "The Qt resource manifest carrying every available Freesound sound")
-  set(FREESOUND_AUDIO_FULL_GRESOURCE_XML "${CMAKE_BINARY_DIR}/generated/freesoundaudio/freesound-audio-all.gresource.xml" CACHE INTERNAL "The GResource manifest carrying every available Freesound sound")
+  set(FREESOUND_AUDIO_FULL_QRC "${PROJECT_BINARY_DIR}/generated/freesoundaudio/freesound-audio-all.qrc" CACHE INTERNAL "The Qt resource manifest carrying every available Freesound sound")
+  set(FREESOUND_AUDIO_FULL_GRESOURCE_XML "${PROJECT_BINARY_DIR}/generated/freesoundaudio/freesound-audio-all.gresource.xml" CACHE INTERNAL "The GResource manifest carrying every available Freesound sound")
 
   template_project_freesound_audio_write_qrc("${FREESOUND_AUDIO_FULL_QRC}")
   template_project_freesound_audio_write_gresource("${FREESOUND_AUDIO_FULL_GRESOURCE_XML}")

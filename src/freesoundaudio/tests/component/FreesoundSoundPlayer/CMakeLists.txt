@@ -7,21 +7,21 @@ endif()
 add_executable(
   CTEST_FreesoundSoundPlayer
   CTEST_FreesoundSoundPlayer.cpp
-  ${CMAKE_SOURCE_DIR}/src/freesoundaudio/FreesoundSound.cpp
-  ${CMAKE_SOURCE_DIR}/src/freesoundaudio/FreesoundRootDirectory.cpp
-  ${CMAKE_SOURCE_DIR}/src/freesoundaudio/categories/FreesoundCategory.cpp
-  ${CMAKE_SOURCE_DIR}/src/freesoundaudio/categories/FreesoundCategories.cpp
-  ${CMAKE_SOURCE_DIR}/src/freesoundaudio/sounds/FreesoundSounds.cpp
-  ${CMAKE_SOURCE_DIR}/src/freesoundaudio/player/FreesoundRandomSound.cpp
-  ${CMAKE_SOURCE_DIR}/src/freesoundaudio/player/FreesoundSdlMixerSoundPlayer.cpp
+  ${PROJECT_SOURCE_DIR}/src/freesoundaudio/FreesoundSound.cpp
+  ${PROJECT_SOURCE_DIR}/src/freesoundaudio/FreesoundRootDirectory.cpp
+  ${PROJECT_SOURCE_DIR}/src/freesoundaudio/categories/FreesoundCategory.cpp
+  ${PROJECT_SOURCE_DIR}/src/freesoundaudio/categories/FreesoundCategories.cpp
+  ${PROJECT_SOURCE_DIR}/src/freesoundaudio/sounds/FreesoundSounds.cpp
+  ${PROJECT_SOURCE_DIR}/src/freesoundaudio/player/FreesoundRandomSound.cpp
+  ${PROJECT_SOURCE_DIR}/src/freesoundaudio/player/FreesoundSdlMixerSoundPlayer.cpp
   ${FREESOUND_AUDIO_GENERATED_SOUNDS_SOURCE}
 )
 
 target_include_directories(
   CTEST_FreesoundSoundPlayer
   PRIVATE ${FREESOUND_AUDIO_MOCKS_ROOT}/log
-  PRIVATE ${CMAKE_SOURCE_DIR}
-  PRIVATE ${CMAKE_BINARY_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
+  PRIVATE ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(

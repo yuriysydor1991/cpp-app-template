@@ -18,8 +18,8 @@ target_compile_definitions(
 target_include_directories(
   CTEST_FontAwesomeIcons
   PRIVATE ${FONTAWESOME_MOCKS_ROOT}/log
-  PRIVATE ${CMAKE_SOURCE_DIR}
-  PRIVATE ${CMAKE_BINARY_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
+  PRIVATE ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(

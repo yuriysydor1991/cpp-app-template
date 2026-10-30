@@ -42,6 +42,6 @@ add_custom_target(
   COMMAND
     ${CMAKE_COMMAND} -E env ARCH=${TEMPLATE_PROJECT_APPIMAGE_ARCHITECTURE}
       ${CMAKE_CPACK_COMMAND}
-  WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+  WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
   COMMENT "Executing the cpack command to generate the AppImage package."
 )

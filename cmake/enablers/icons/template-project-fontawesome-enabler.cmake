@@ -119,8 +119,8 @@ install(
 )
 
 configure_file(
-  "${CMAKE_SOURCE_DIR}/src/fontawesome/fontawesome-decls.h.in"
-  "${CMAKE_BINARY_DIR}/fontawesome-decls.h"
+  "${PROJECT_SOURCE_DIR}/src/fontawesome/fontawesome-decls.h.in"
+  "${PROJECT_BINARY_DIR}/fontawesome-decls.h"
 )
 
 option(
@@ -130,8 +130,8 @@ option(
 )
 
 if (FONTAWESOME_GENERATE_FULL_MANIFESTS)
-  set(FONTAWESOME_FULL_QRC "${CMAKE_BINARY_DIR}/generated/fontawesome/fontawesome-all.qrc" CACHE INTERNAL "The Qt resource manifest carrying the whole available Font Awesome icon set")
-  set(FONTAWESOME_FULL_GRESOURCE_XML "${CMAKE_BINARY_DIR}/generated/fontawesome/fontawesome-all.gresource.xml" CACHE INTERNAL "The GResource manifest carrying the whole available Font Awesome icon set")
+  set(FONTAWESOME_FULL_QRC "${PROJECT_BINARY_DIR}/generated/fontawesome/fontawesome-all.qrc" CACHE INTERNAL "The Qt resource manifest carrying the whole available Font Awesome icon set")
+  set(FONTAWESOME_FULL_GRESOURCE_XML "${PROJECT_BINARY_DIR}/generated/fontawesome/fontawesome-all.gresource.xml" CACHE INTERNAL "The GResource manifest carrying the whole available Font Awesome icon set")
 
   template_project_fontawesome_write_qrc("${FONTAWESOME_FULL_QRC}")
   template_project_fontawesome_write_gresource("${FONTAWESOME_FULL_GRESOURCE_XML}" COMPRESSED)

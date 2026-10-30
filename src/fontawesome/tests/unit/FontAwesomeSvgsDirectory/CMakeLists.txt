@@ -3,14 +3,14 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   UTEST_FontAwesomeSvgsDirectory
   UTEST_FontAwesomeSvgsDirectory.cpp
-  ${CMAKE_SOURCE_DIR}/src/fontawesome/FontAwesomeSvgsDirectory.cpp
+  ${PROJECT_SOURCE_DIR}/src/fontawesome/FontAwesomeSvgsDirectory.cpp
 )
 
 target_include_directories(
   UTEST_FontAwesomeSvgsDirectory
   PRIVATE ${FONTAWESOME_MOCKS_ROOT}/log
-  PRIVATE ${CMAKE_SOURCE_DIR}
-  PRIVATE ${CMAKE_BINARY_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
+  PRIVATE ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(

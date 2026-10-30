@@ -3,11 +3,11 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   UTEST_FontAwesomeResourcePath
   UTEST_FontAwesomeResourcePath.cpp
-  ${CMAKE_SOURCE_DIR}/src/fontawesome/resources/FontAwesomeResourcePath.cpp
-  ${CMAKE_SOURCE_DIR}/src/fontawesome/resources/FontAwesomeQtResourcePath.cpp
-  ${CMAKE_SOURCE_DIR}/src/fontawesome/resources/FontAwesomeGResourcePath.cpp
-  ${CMAKE_SOURCE_DIR}/src/fontawesome/FontAwesomeIcon.cpp
-  ${CMAKE_SOURCE_DIR}/src/fontawesome/FontAwesomeSvgsDirectory.cpp
+  ${PROJECT_SOURCE_DIR}/src/fontawesome/resources/FontAwesomeResourcePath.cpp
+  ${PROJECT_SOURCE_DIR}/src/fontawesome/resources/FontAwesomeQtResourcePath.cpp
+  ${PROJECT_SOURCE_DIR}/src/fontawesome/resources/FontAwesomeGResourcePath.cpp
+  ${PROJECT_SOURCE_DIR}/src/fontawesome/FontAwesomeIcon.cpp
+  ${PROJECT_SOURCE_DIR}/src/fontawesome/FontAwesomeSvgsDirectory.cpp
   ${FONTAWESOME_STYLES_SOURCES}
 )
 
@@ -15,7 +15,7 @@ target_include_directories(
   UTEST_FontAwesomeResourcePath
   PRIVATE ${FONTAWESOME_MOCKS_ROOT}/fontawesome-decls
   PRIVATE ${FONTAWESOME_MOCKS_ROOT}/log
-  PRIVATE ${CMAKE_SOURCE_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
 )
 
 target_link_libraries(

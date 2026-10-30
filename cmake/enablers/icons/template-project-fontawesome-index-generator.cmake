@@ -28,7 +28,7 @@ endfunction()
 # from the code with no directory scanning at the run time and with no icon
 # names hand written into the sources.
 function(template_project_fontawesome_generate_index)
-  set(generatedSource "${CMAKE_BINARY_DIR}/generated/fontawesome/icons/FontAwesomeGeneratedIcons.cpp")
+  set(generatedSource "${PROJECT_BINARY_DIR}/generated/fontawesome/icons/FontAwesomeGeneratedIcons.cpp")
 
   set(FONTAWESOME_GENERATED_ICONS "")
   set(total 0)
@@ -75,7 +75,7 @@ function(template_project_fontawesome_generate_index)
   endif()
 
   configure_file(
-    "${CMAKE_SOURCE_DIR}/src/fontawesome/icons/FontAwesomeGeneratedIcons.cpp.in"
+    "${PROJECT_SOURCE_DIR}/src/fontawesome/icons/FontAwesomeGeneratedIcons.cpp.in"
     "${generatedSource}"
     @ONLY
   )

@@ -30,7 +30,7 @@ pipeline {
       }
       
       steps {
-        git branch: 'app',
+        git branch: 'appWebAssembly',
             url: 'https://github.com/yuriysydor1991/cpp-app-template.git'
       }
     }
@@ -229,6 +229,35 @@ pipeline {
     }
     
     stage('Release install') {
+      steps {
+        sh '''
+          cmake --install $BUILDDIR --prefix $BUILDDIR/install-try
+        '''
+      }
+    }
+    stage('WebAssembly configure') {
+      steps {
+        sh 'rm -fr $BUILDDIR'
+        sh '''
+          emcmake cmake -S . -B $BUILDDIR -DCMAKE_BUILD_TYPE=Release
+        '''
+      }
+    }
+    stage('WebAssembly build') {
+      steps {
+        sh '''
+          cmake --build $BUILDDIR -j$(nproc)
+        '''
+      }
+    }
+    stage('WebAssembly run (Node.js)') {
+      steps {
+        sh '''
+          node $BUILDDIR/src/*.js --version
+        '''
+      }
+    }
+    stage('WebAssembly install') {
       steps {
         sh '''
           cmake --install $BUILDDIR --prefix $BUILDDIR/install-try

@@ -24,7 +24,7 @@ Examine available branches to find your most applicable variant of the template 
 
 - `main` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template)] just the clear `main` function and all available CMake integrations with no additional app infrastructure classes.
 
-- `app` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/app), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/app)] (**current**) with just general application related classes to generate a single binary executable.
+- `app` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/app), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/app)] with just general application related classes to generate a single binary executable.
 
 - `applib` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/applib), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/applib)] for the application binary with additional separate library binary and header files (available for the installation) in order to provide library's code reusability across multiple applications.
 
@@ -91,6 +91,8 @@ Examine available branches to find your most applicable variant of the template 
 - `appBoostBeast` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appBoostBeast), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appBoostBeast)] the template infrastructure for the Web application fast start development with the [Boost Beast](https://www.boost.org/libs/beast) HTTP server.
 
 - `appCURL` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appCURL), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appCURL)] the template infrastructure to fast start the application development with the [CURL](https://en.wikipedia.org/wiki/CURL) multi protocol client library (including the [HTTP](https://uk.wikipedia.org/wiki/HTTP)) to download data from the network.
+
+- `appWebAssembly` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appWebAssembly), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appWebAssembly)] (**current**) with general application related classes to generate a single binary executable, which the [Emscripten](https://emscripten.org/) toolchain builds into the [WebAssembly](https://webassembly.org/) page the web browsers run, while the page URL query becomes the command line arguments of the application.
 
 ## Database Management systems (DBMS) / SQL / NoSQL
 

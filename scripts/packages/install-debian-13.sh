@@ -14,6 +14,7 @@ PROJECT_ROOT=$(realpath "$(dirname "$0")/../..")
 PACKAGES=(
     build-essential
     cmake
+    emscripten
     g++
     git
     googletest

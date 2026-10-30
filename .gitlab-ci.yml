@@ -3,8 +3,8 @@
 #
 # It mirrors the Jenkins stages inside an Ubuntu container: a clang-format
 # check, a Debug build with sanitizers running the unit and component tests
-# (with an optional cppcheck pass), a clang-tidy build, and a Release build +
-# install.
+# (with an optional cppcheck pass), a clang-tidy build, a Release build +
+# install, and a WebAssembly build run by the Node.js + install.
 
 # A merge request pipeline while a merge request is open, a branch pipeline
 # otherwise, so a single push never starts two pipelines at once.
@@ -83,4 +83,14 @@ release:
   script:
     - cmake -S . -B "$BUILDDIR" -DCMAKE_BUILD_TYPE=Release
     - cmake --build "$BUILDDIR" -j"$(nproc)"
+    - cmake --install "$BUILDDIR" --prefix "$BUILDDIR/install-try"
+
+webassembly:
+  stage: check
+  variables:
+    JOB_TOOLS: emscripten
+  script:
+    - emcmake cmake -S . -B "$BUILDDIR" -DCMAKE_BUILD_TYPE=Release
+    - cmake --build "$BUILDDIR" -j"$(nproc)"
+    - node "$BUILDDIR"/src/*.js --version
     - cmake --install "$BUILDDIR" --prefix "$BUILDDIR/install-try"

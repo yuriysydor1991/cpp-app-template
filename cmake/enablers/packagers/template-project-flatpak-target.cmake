@@ -9,7 +9,7 @@ option(
 )
 
 if(ENABLE_FLATPAK_METAINFO)
-  set(flatpakMetainfoDst ${CMAKE_BINARY_DIR}/${FLATPAK_PROJECT_URL}.metainfo.xml)
+  set(flatpakMetainfoDst ${PROJECT_BINARY_DIR}/${FLATPAK_PROJECT_URL}.metainfo.xml)
 
   # a desktop application launches through the desktop entry named after its id
   if(ENABLE_DESKTOP_APPLICATION)
@@ -22,7 +22,7 @@ if(ENABLE_FLATPAK_METAINFO)
     set(FLATPAK_METAINFO_TYPE console-application)
   endif()
 
-  configure_file(${CMAKE_SOURCE_DIR}/misc/packagers/flatpak/flatpak.metainfo.xml.in ${flatpakMetainfoDst})
+  configure_file(${PROJECT_SOURCE_DIR}/misc/packagers/flatpak/flatpak.metainfo.xml.in ${flatpakMetainfoDst})
 
   install(FILES ${flatpakMetainfoDst} DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/metainfo)
 endif()
@@ -47,12 +47,12 @@ execute_process(
 )
 
 set(FLATPAK_REPO ${PROJECT_BINARY_NAME}-repo)
-set(flatpakConfDst ${CMAKE_BINARY_DIR}/flatpak.conf.json)
+set(flatpakConfDst ${PROJECT_BINARY_DIR}/flatpak.conf.json)
 set(FLATPAK_DEPS_REMOTE flathub)
 set(FLATPAK_DEPS_REMOTE_URL https://dl.flathub.org/repo/flathub.flatpakrepo)
 set(
   FLATPAK_CONF_SRC 
-  ${CMAKE_SOURCE_DIR}/misc/packagers/flatpak/flatpak.conf.json.in 
+  ${PROJECT_SOURCE_DIR}/misc/packagers/flatpak/flatpak.conf.json.in 
   CACHE STRING "The flatpak json conf source file cmake configured"
 )
 
@@ -79,8 +79,8 @@ add_custom_target(
   COMMAND 
     ${FLATPAK_EXEC} remote-add --user --if-not-exists ${FLATPAK_DEPS_REMOTE} ${FLATPAK_DEPS_REMOTE_URL} &&
     ${FLATPAKB_EXEC} --user --install-deps-from=${FLATPAK_DEPS_REMOTE} --assumeyes --force-clean
-      --repo=${FLATPAK_REPO} "${CMAKE_BINARY_DIR}/flatpak-build" ${flatpakConfDst} &&
+      --repo=${FLATPAK_REPO} "${PROJECT_BINARY_DIR}/flatpak-build" ${flatpakConfDst} &&
     ${FLATPAK_EXEC} build-bundle ${FLATPAK_REPO} ${FLATPAK_DST_NAME} ${FLATPAK_PROJECT_URL}
-  WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+  WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
   COMMENT "Executing the flatpak-builder command to generate the ${FLATPAK_DST_NAME} flatpak package."
 )

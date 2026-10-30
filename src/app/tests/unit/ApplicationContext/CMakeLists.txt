@@ -3,12 +3,12 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   UTEST_ApplicationContext
   UTEST_ApplicationContext.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/ApplicationContext.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/ApplicationContext.cpp
 )
 
 target_include_directories(
   UTEST_ApplicationContext
-  PRIVATE ${CMAKE_SOURCE_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
 )
 
 target_link_libraries(

@@ -10,8 +10,8 @@ add_compile_options(-DNDEBUG=1)
 add_executable(
   CTEST_plotgencpp
   CTEST_plotgencpp.cpp
-  ${CMAKE_SOURCE_DIR}/src/plotgencpp/PlotGenCppController.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/ApplicationContext.cpp
+  ${PROJECT_SOURCE_DIR}/src/plotgencpp/PlotGenCppController.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/ApplicationContext.cpp
 )
 
 target_include_directories(
@@ -19,8 +19,8 @@ target_include_directories(
   PRIVATE
     ${PLOTGENCPP_MOCKS_ROOT}/plotgen
     ${PLOTGENCPP_LOG_MOCK_ROOT}
-    ${CMAKE_SOURCE_DIR}
-    ${CMAKE_BINARY_DIR}
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(

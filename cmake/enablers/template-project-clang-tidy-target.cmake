@@ -33,8 +33,8 @@ list(TRANSFORM implicitSysIncludes PREPEND "--extra-arg=-isystem")
 set(
   CTCOMMAND
   ${CLTIDY_EXEC}
-    --config-file "${CMAKE_SOURCE_DIR}/misc/.clang-tidy"
-    -p "${CMAKE_BINARY_DIR}"
+    --config-file "${PROJECT_SOURCE_DIR}/misc/.clang-tidy"
+    -p "${PROJECT_BINARY_DIR}"
     --extra-arg=-Wno-unused-command-line-argument
     ${implicitSysIncludes}
 )

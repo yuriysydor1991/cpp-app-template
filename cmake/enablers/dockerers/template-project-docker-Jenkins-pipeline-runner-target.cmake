@@ -35,7 +35,7 @@ set(
 
 set(
   JENKINS_PIPELINE_DOCKERFILE_SRC
-  "${CMAKE_SOURCE_DIR}/misc/Dockerfiles/Dockerfile.Jenkins.pipeline.in"
+  "${PROJECT_SOURCE_DIR}/misc/Dockerfiles/Dockerfile.Jenkins.pipeline.in"
   CACHE STRING
   "The Jenkins pipeline Dockerfile full path"
 )
@@ -98,7 +98,7 @@ if (JENKINS_PIPELINE_DOCKER_IMAGE_NAME_PRESENT STREQUAL "")
     JENKINS_PIPELINE_DOCKER_BUILD_CMD
       DOCKER_BUILDKIT=1 ${DOCKER_EXEC} build ${JENKINS_PIPELINE_DOCKER_BUILD_FLAGS}
         -f "${JENKINS_PIPELINE_DOCKERFILE_DST}"
-        --build-context project=${CMAKE_SOURCE_DIR}
+        --build-context project=${PROJECT_SOURCE_DIR}
         --build-arg CACHEBUST="${PROJECT_CONFIGURE_DATE}"
         -t ${JENKINS_PIPELINE_DOCKER_IMAGE_NAME} .
   )

@@ -9,8 +9,8 @@ add_library(
 target_include_directories(
   TemplateProjectDBusServerObjectsObj
   PRIVATE
-    ${CMAKE_SOURCE_DIR}
-    ${CMAKE_BINARY_DIR}
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(
@@ -30,13 +30,13 @@ add_subdirectory(tests)
 set(TEMPLATE_PROJECT_DBUS_SERVICE_NAME "org.cppapptemplate.SimpleServer")
 
 configure_file(
-  ${CMAKE_SOURCE_DIR}/misc/packagers/dbus/dbus-session-service.in
-  ${CMAKE_BINARY_DIR}/${TEMPLATE_PROJECT_DBUS_SERVICE_NAME}.service
+  ${PROJECT_SOURCE_DIR}/misc/packagers/dbus/dbus-session-service.in
+  ${PROJECT_BINARY_DIR}/${TEMPLATE_PROJECT_DBUS_SERVICE_NAME}.service
   @ONLY
 )
 
 install(
-  FILES ${CMAKE_BINARY_DIR}/${TEMPLATE_PROJECT_DBUS_SERVICE_NAME}.service
+  FILES ${PROJECT_BINARY_DIR}/${TEMPLATE_PROJECT_DBUS_SERVICE_NAME}.service
   DESTINATION ${CMAKE_INSTALL_DATADIR}/dbus-1/services
 )
 

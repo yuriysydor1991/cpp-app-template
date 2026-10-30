@@ -3,15 +3,15 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   CTEST_CurrentDateServerObject
   CTEST_CurrentDateServerObject.cpp
-  ${CMAKE_SOURCE_DIR}/src/sdbuscxx/server-objects/CurrentDateServerObject.cpp
-  ${CMAKE_SOURCE_DIR}/src/sdbuscxx/server-objects/DBusServerObjectFactory.cpp
+  ${PROJECT_SOURCE_DIR}/src/sdbuscxx/server-objects/CurrentDateServerObject.cpp
+  ${PROJECT_SOURCE_DIR}/src/sdbuscxx/server-objects/DBusServerObjectFactory.cpp
 )
 
 target_include_directories(
   CTEST_CurrentDateServerObject
   PRIVATE ${GENERAL_MOCKS_ROOT}/log
-  PRIVATE ${CMAKE_SOURCE_DIR}
-  PRIVATE ${CMAKE_BINARY_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
+  PRIVATE ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(

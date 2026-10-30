@@ -9,8 +9,8 @@ add_library(
 target_include_directories(
   ${WXWIDGETS_OBJECT_NAME}MainWindow
   PUBLIC
-    ${CMAKE_SOURCE_DIR}
-    ${CMAKE_BINARY_DIR}
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(

@@ -7,15 +7,15 @@ endif()
 add_executable(
   CTEST_WxWidgets
   CTEST_WxWidgets.cpp
-  ${CMAKE_SOURCE_DIR}/src/wxwidgets/WxWidgetsController.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/ApplicationContext.cpp
+  ${PROJECT_SOURCE_DIR}/src/wxwidgets/WxWidgetsController.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/ApplicationContext.cpp
 )
 
 target_include_directories(
   CTEST_WxWidgets
   PRIVATE ${APP_MOCKS_ROOT}/log
-  PRIVATE ${CMAKE_SOURCE_DIR}
-  PRIVATE ${CMAKE_BINARY_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
+  PRIVATE ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(
@@ -38,15 +38,15 @@ set_tests_properties(${noArgsTests} PROPERTIES TIMEOUT 600)
 add_executable(
   CTEST_WxStopFlagWatcher
   CTEST_WxStopFlagWatcher.cpp
-  ${CMAKE_SOURCE_DIR}/src/wxwidgets/app/StopFlagWatcher.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/ApplicationContext.cpp
+  ${PROJECT_SOURCE_DIR}/src/wxwidgets/app/StopFlagWatcher.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/ApplicationContext.cpp
 )
 
 target_include_directories(
   CTEST_WxStopFlagWatcher
   PRIVATE ${APP_MOCKS_ROOT}/log
-  PRIVATE ${CMAKE_SOURCE_DIR}
-  PRIVATE ${CMAKE_BINARY_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
+  PRIVATE ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(

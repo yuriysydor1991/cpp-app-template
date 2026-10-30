@@ -5,17 +5,17 @@ cmake_minimum_required(VERSION 3.13)
 add_executable(
   CTEST_StopFlagWatcher
   CTEST_StopFlagWatcher.cpp
-  ${CMAKE_SOURCE_DIR}/src/gtkmm4/StopFlagWatcher.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/ApplicationContext.cpp
+  ${PROJECT_SOURCE_DIR}/src/gtkmm4/StopFlagWatcher.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/ApplicationContext.cpp
 )
 
 target_include_directories(
   CTEST_StopFlagWatcher
   PRIVATE
-    ${CMAKE_SOURCE_DIR}/src/app/tests/mocks/log
+    ${PROJECT_SOURCE_DIR}/src/app/tests/mocks/log
     ${GTKMM_INCLUDE_DIRS}
-    ${CMAKE_SOURCE_DIR}
-    ${CMAKE_BINARY_DIR}
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_BINARY_DIR}
 )
 
 target_link_directories(

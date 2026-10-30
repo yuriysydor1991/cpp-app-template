@@ -6,16 +6,16 @@ find_package(OpenGL REQUIRED)
 add_executable(
   CTEST_controller
   CTEST_controller.cpp
-  ${CMAKE_SOURCE_DIR}/src/freeglut/FreeGlutController.cpp
-  ${CMAKE_SOURCE_DIR}/src/app/ApplicationContext.cpp
+  ${PROJECT_SOURCE_DIR}/src/freeglut/FreeGlutController.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/ApplicationContext.cpp
 )
 
 target_include_directories(
   CTEST_controller
   PRIVATE ${APP_MOCKS_ROOT}/log
   PRIVATE ${GLUT_INCLUDE_DIRS}
-  PRIVATE ${CMAKE_SOURCE_DIR}
-  PRIVATE ${CMAKE_BINARY_DIR}
+  PRIVATE ${PROJECT_SOURCE_DIR}
+  PRIVATE ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(

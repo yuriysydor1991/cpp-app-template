@@ -21,7 +21,7 @@ apps:
 parts:
   ${PROJECT_BINARY_NAME}:
     plugin: cmake
-    source: '${CMAKE_SOURCE_DIR}'
+    source: '${PROJECT_SOURCE_DIR}'
     cmake-generator: '${CMAKE_GENERATOR}'
     cmake-parameters:
       - -DCMAKE_BUILD_TYPE=Release

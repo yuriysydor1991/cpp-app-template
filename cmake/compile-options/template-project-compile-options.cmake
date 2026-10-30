@@ -12,8 +12,8 @@ option(
   OFF
 )
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/compile-options")
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/compile-options/hardening")
+list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/compile-options")
+list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/compile-options/hardening")
 
 # The position independent code is the compile time counterpart of the -pie
 # linker hardening option. CMake gives the -fPIE flavour to the executables and

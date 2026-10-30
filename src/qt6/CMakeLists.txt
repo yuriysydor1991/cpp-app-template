@@ -9,8 +9,8 @@ qt6_add_library(
 target_include_directories(
   ${QT6_OBJECT_NAME}
   PRIVATE
-    ${CMAKE_SOURCE_DIR}
-    ${CMAKE_BINARY_DIR}
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_BINARY_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
 

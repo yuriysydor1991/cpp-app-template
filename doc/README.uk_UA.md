@@ -96,6 +96,8 @@
 
 - гілка `appCURL` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appCURL), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appCURL)] котра містить інфраструктуру для швидкого старту розробки застосунку з використанням бібліотеки-клієнта [CURL](https://en.wikipedia.org/wiki/CURL) для завантажень даних з мережі і яка підтримує багато протоколів (включаючи HTTP).
 
+- гілка `appWebAssembly` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appWebAssembly), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appWebAssembly)] яка містить загальні інфраструктурні класи програми для генерації одинарного бінарного виконуваного файлу, який набір інструментів [Emscripten](https://emscripten.org/) будує у сторінку [WebAssembly](https://webassembly.org/), яку виконують веб-браузери, а URL-запит сторінки стає аргументами командного рядка програми.
+
 ## Системи керування базами даних (СУБД) / SQL / NoSQL
 
 - гілка `appPgSQLxx` розміщена на [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appPgSQLxx), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appPgSQLxx)] котра містить інфраструктуру для швидкого старту розробки застосунку з використанням СУБД [PostgreSQL](https://en.wikipedia.org/wiki/PostgreSQL)

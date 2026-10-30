@@ -96,6 +96,8 @@ Examine available branches to find your most applicable variant of the template 
 
 - `appCURL` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appCURL), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appCURL)] the template infrastructure to fast start the application development with the [CURL](https://en.wikipedia.org/wiki/CURL) multi protocol client library (including the [HTTP](https://uk.wikipedia.org/wiki/HTTP)) to download data from the network.
 
+- `appWebAssembly` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appWebAssembly), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appWebAssembly)] with general application related classes to generate a single binary executable, which the [Emscripten](https://emscripten.org/) toolchain builds into the [WebAssembly](https://webassembly.org/) page the web browsers run, while the page URL query becomes the command line arguments of the application.
+
 ## Database Management systems (DBMS) / SQL / NoSQL
 
 - `appPgSQLxx` branch at [[GitHub](https://github.com/yuriysydor1991/cpp-app-template/tree/appPgSQLxx), [GitLab](https://gitlab.com/yuriysydor1991/cpp-app-template/tree/appPgSQLxx)] the template infrastructure to fast start application development with the [PostgreSQL DBMS](https://en.wikipedia.org/wiki/PostgreSQL) usage.

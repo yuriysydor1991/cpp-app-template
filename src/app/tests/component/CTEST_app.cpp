@@ -9,16 +9,32 @@
 #include <vector>
 
 #include "project-global-decls.h"
+#include "src/STT/SpeechListener.h"
 #include "src/app/ApplicationFactory.h"
 #include "src/log/log.h"
 
 using namespace app;
+using namespace stt;
 using namespace testing;
 
 class CTEST_app : public Test
 {
  public:
   CTEST_app() { std::filesystem::remove(default_log_file()); }
+
+  ~CTEST_app() override { SpeechListener::onMockCreate = nullptr; }
+
+  /// @brief The Application listens till the stop signal arrives, so the very
+  /// first listening raises one the way the Ctrl+C keys do.
+  static void stop_on_the_first_listen()
+  {
+    SpeechListener::onMockCreate = [](SpeechListener& listener) {
+      EXPECT_CALL(listener, listen()).WillOnce(Invoke([] {
+        std::raise(SIGINT);
+        return SpeechListener::result{""};
+      }));
+    };
+  }
 
   /// @brief The default log file of the factory, which the current working
   /// directory of the test case keeps.
@@ -225,6 +241,8 @@ TEST_F(CTEST_app, signals_handler_ignores_the_broken_pipe)
 
 TEST_F(CTEST_app, execute_success)
 {
+  stop_on_the_first_listen();
+
   int status = ApplicationFactory::execute(argc, argv);
 
   EXPECT_EQ(status, 0);
@@ -295,6 +313,8 @@ TEST_F(CTEST_app, unopenable_log_file_fails_before_the_run)
 
 TEST_F(CTEST_app, custom_log_file_is_used)
 {
+  stop_on_the_first_listen();
+
   static const std::filesystem::path customLog{"CTEST_app.custom.log"};
 
   std::filesystem::remove(customLog);

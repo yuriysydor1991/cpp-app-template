@@ -66,6 +66,14 @@ class ApplicationContext
   /// @brief Pushes a new error description into the merrors field.
   void push_error(const std::string& errorDescription);
 
+  /// @brief Provides the path of the speech recognition model the
+  /// Application loads. Empty while the command line carries none.
+  const std::string& get_model_path() const;
+
+  /// @brief Sets the speech recognition model for the Application to load.
+  /// The CommandLineParser fills it out of the command line.
+  void set_model_path(const std::string& newValue);
+
   /// @brief Tells if the application was asked to stop. Atomic, so it is safe
   /// to poll it from any thread.
   bool get_stop() const;
@@ -129,6 +137,10 @@ class ApplicationContext
 
   /// @brief Errors description.
   std::vector<std::string> merrors;
+
+  /// @brief The speech recognition model to load. See the
+  /// ApplicationContext::set_model_path setter.
+  std::string mmodel_path;
 
   /// @brief The thread safe application stop flag. See the
   /// ApplicationContext::set_stop setter.

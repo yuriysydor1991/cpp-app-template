@@ -14,6 +14,12 @@ const std::string PROJECT_BUILD_VERSION = "${PROJECT_VERSION}" ;
 const std::string PROJECT_BUILD_COMMIT = "${PROJECT_GIT_COMMIT}" ;
 /// @brief Global project' configure date
 const std::string PROJECT_CONFIGURE_DATE = "${PROJECT_CONFIGURE_DATE}" ;
+/// @brief The speech recognition model the application loads while no --model parameter is given
+const std::string PROJECT_STT_MODEL = "${PROJECT_STT_MODEL}" ;
+/// @brief The installed data directory of the project relative to the installed binary one
+const std::string PROJECT_DATA_INSTALLED_RELATIVE_DIR = "${PROJECT_DATA_INSTALLED_RELATIVE_DIR}" ;
+/// @brief The installed data directory of the project under the configured installation prefix
+const std::string PROJECT_DATA_INSTALLED_DIR = "${PROJECT_DATA_INSTALLED_DIR}" ;
 
 } // namespace project_decls
 

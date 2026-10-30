@@ -4,6 +4,7 @@ add_executable(
   UTEST_ApplicationHelpPrinter  
   UTEST_ApplicationHelpPrinter.cpp
   ${PROJECT_SOURCE_DIR}/src/app/applications/ApplicationHelpPrinter.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/DataLocator.cpp
   ${APP_MOCKS_ROOT}/ApplicationContext/src/app/ApplicationContext.cpp
 )
 

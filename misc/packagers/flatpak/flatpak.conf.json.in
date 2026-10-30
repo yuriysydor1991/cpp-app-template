@@ -10,14 +10,22 @@
       "buildsystem": "cmake",
       "config-opts": [
         "-DCMAKE_BUILD_TYPE=Release",
-        "-DENABLE_FLATPAK_METAINFO=ON"
+        "-DENABLE_FLATPAK_METAINFO=ON",
+        "-DENABLE_SHERPA_ONNX_MODEL_DOWNLOAD=OFF"
       ],
       "sources": [
         {
           "type": "dir",
           "path": "${PROJECT_SOURCE_DIR}"
         }
-      ]
+      ],
+      "build-options": {
+        "build-args": [ "--share=network" ]
+      }
     }
+  ],
+  "finish-args": [
+    "--socket=pulseaudio",
+    "--filesystem=home:ro"
   ]
 }

@@ -4,6 +4,7 @@ add_executable(
   UTEST_Application  
   UTEST_Application.cpp
   ${PROJECT_SOURCE_DIR}/src/app/applications/Application.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/DataLocator.cpp
   ${APP_MOCKS_ROOT}/ApplicationContext/src/app/ApplicationContext.cpp
 )
 
@@ -12,6 +13,7 @@ target_include_directories(
   PRIVATE ${APP_MOCKS_ROOT}/ApplicationContext
   PRIVATE ${APP_MOCKS_ROOT}/project-global-decls
   PRIVATE ${APP_MOCKS_ROOT}/log
+  PRIVATE ${APP_MOCKS_ROOT}/SpeechListener
   PRIVATE ${PROJECT_SOURCE_DIR}
 )
 

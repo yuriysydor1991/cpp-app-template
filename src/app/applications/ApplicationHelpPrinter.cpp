@@ -7,6 +7,7 @@
 
 #include "project-global-decls.h"
 #include "src/app/CMDParamNames.h"
+#include "src/app/DataLocator.h"
 #include "src/log/log.h"
 
 namespace app
@@ -29,28 +30,31 @@ int ApplicationHelpPrinter::run(std::shared_ptr<ApplicationContext> ctx)
 
   // Register and implement here command line parameters from the
   // CommandLineParser class.
-  std::cout << "Usage:" << std::endl
-            << std::endl
-            << "\t" << project_decls::PROJECT_NAME << " [OPTIONS]" << std::endl
-            << std::endl
-            << "Introduce a new command line flags by registering them in"
-            << std::endl
-            << "the ApplicationHelpPrinter and the CommandLineParser classes."
-            << std::endl
-            << std::endl
-            << "Where OPTIONS may be next:" << std::endl
-            << "\t" << CMDParamNames::HELPW << " or " << CMDParamNames::HELP
-            << " - print current help message" << std::endl
-            << "\t" << CMDParamNames::VERSIONW << " or "
-            << CMDParamNames::VERSION
-            << " - print application version, build git "
-               "commit and configure date"
-            << std::endl
-            << "\t" << CMDParamNames::LOGPATHW << " or "
-            << CMDParamNames::LOGPATH
-            << " <path> - append the log messages to the given file instead of "
-               "the default one"
-            << std::endl;
+  std::cout
+      << "Usage:" << std::endl
+      << std::endl
+      << "\t" << project_decls::PROJECT_NAME << " [OPTIONS]" << std::endl
+      << std::endl
+      << "Introduce a new command line flags by registering them in"
+      << std::endl
+      << "the ApplicationHelpPrinter and the CommandLineParser classes."
+      << std::endl
+      << std::endl
+      << "Where OPTIONS may be next:" << std::endl
+      << "\t" << CMDParamNames::HELPW << " or " << CMDParamNames::HELP
+      << " - print current help message" << std::endl
+      << "\t" << CMDParamNames::VERSIONW << " or " << CMDParamNames::VERSION
+      << " - print application version, build git "
+         "commit and configure date"
+      << std::endl
+      << "\t" << CMDParamNames::LOGPATHW << " or " << CMDParamNames::LOGPATH
+      << " <path> - append the log messages to the given file instead of "
+         "the default one"
+      << std::endl
+      << "\t" << CMDParamNames::MODELW << " or " << CMDParamNames::MODEL
+      << " <path> - load the given speech recognition model instead of the "
+      << DataLocator::locate(project_decls::PROJECT_STT_MODEL) << " one"
+      << std::endl;
 
   // A help message printed because of a bad usage is a failure.
   return ctx->get_errors().empty() ? 0 : INVALID;

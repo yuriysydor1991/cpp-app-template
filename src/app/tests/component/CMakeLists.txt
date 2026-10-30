@@ -12,6 +12,7 @@ add_executable(
   ${PROJECT_SOURCE_DIR}/src/app/ApplicationFactory.cpp
   ${PROJECT_SOURCE_DIR}/src/app/applications/ApplicationHelpPrinter.cpp
   ${PROJECT_SOURCE_DIR}/src/app/CommandLineParser.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/DataLocator.cpp
   ${PROJECT_SOURCE_DIR}/src/app/applications/ApplicationVersionPrinter.cpp
   ${PROJECT_SOURCE_DIR}/src/app/signals-handlers/SignalsHandler.cpp
   ${PROJECT_SOURCE_DIR}/src/app/signals-handlers/handlers/ASignalsHandler.cpp
@@ -30,6 +31,7 @@ add_executable(
 target_include_directories(
   CTEST_app
   PRIVATE
+    ${APP_MOCKS_ROOT}/SpeechListener
     ${PROJECT_SOURCE_DIR}
     ${PROJECT_BINARY_DIR}
 )

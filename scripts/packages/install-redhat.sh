@@ -18,12 +18,19 @@ PACKAGES=(
     gtest-devel
     make
     openssl-devel
+    SDL2-devel
 )
 
 DNF_SUDO=""
 
 if [[ ${EUID} -ne 0 ]] ; then
     DNF_SUDO="sudo"
+fi
+
+# The Fedora alone packages the onnxruntime, while the sherpa-onnx build
+# downloads it's prebuilt one on the RHEL and it's rebuilds.
+if [[ ${ID} == fedora ]] ; then
+    PACKAGES+=(onnxruntime-devel)
 fi
 
 # The RHEL and it's rebuilds carry a part of the packages in the EPEL and the

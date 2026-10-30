@@ -11,6 +11,9 @@ const std::string PROJECT_BUILD_VERSION = "0.2.0";
 const std::string PROJECT_BUILD_COMMIT =
     "848bea167db708811563e941cefb6b7787879599";
 const std::string PROJECT_CONFIGURE_DATE = "2025-03-05 12:39:11 EET";
+const std::string PROJECT_STT_MODEL = "models/a-speech-recognition-model";
+const std::string PROJECT_DATA_INSTALLED_RELATIVE_DIR = "mock-installed-data";
+const std::string PROJECT_DATA_INSTALLED_DIR = "mock-prefix-data";
 
 }  // namespace project_decls
 

@@ -45,6 +45,16 @@ void ApplicationContext::push_error(const std::string& errorDescription)
   merrors.emplace_back(errorDescription);
 }
 
+const std::string& ApplicationContext::get_model_path() const
+{
+  return mmodel_path;
+}
+
+void ApplicationContext::set_model_path(const std::string& newValue)
+{
+  mmodel_path = newValue;
+}
+
 bool ApplicationContext::get_stop() const { return mstop.load(); }
 
 void ApplicationContext::set_stop(const bool newValue)

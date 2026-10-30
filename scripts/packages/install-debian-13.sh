@@ -19,6 +19,8 @@ PACKAGES=(
     googletest
     libgmock-dev
     libgtest-dev
+    libonnxruntime-dev
+    libsdl2-dev
     libssl-dev
     libstdc++6
 )

@@ -31,3 +31,4 @@
 1. [Project maintainer options](/doc/sections/en_US/5-28-project-maintainer-options.md)
 1. [Customizing the installable library name segments](/doc/sections/en_US/5-29-customizing-library-name-segments.md)
 1. [Installing the library development files](/doc/sections/en_US/5-30-installing-the-library-development-files.md)
+1. [Choosing the library type](/doc/sections/en_US/5-34-choosing-the-library-type.md)

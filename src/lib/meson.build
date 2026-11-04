@@ -14,7 +14,8 @@ lib_public_includes = include_directories('facade/public')
 # library derived from this template carries the very same lib0impl,
 # default_logger and project_decls names, and an application which loads two of
 # them would otherwise let the dynamic linker bind the calls of one library
-# into the definitions of the other.
+# into the definitions of the other. A static library joins the binary which
+# links it and has no such boundary, see the 4-8 documentation section.
 #
 # TEMPLATE_LIB_BUILDING turns that macro into the export half of the __declspec
 # pair while the library itself is being compiled. Nothing outside of this
@@ -31,7 +32,8 @@ template_project_main_library = library(
   gnu_symbol_visibility: 'hidden',
   version: meson.project_version(),
   soversion: project_major_version,
-  install: true,
+  # a static library is a development file only
+  install: get_option('LIB_INSTALL_DEV_FILES') or not project_library_static,
 )
 
 # Everything below installs development files - the public headers, the
@@ -57,6 +59,7 @@ pkgconfig.generate(
   # short <LibraryFacade.h>. The prefixed form is the safe one: every library
   # derived from this template installs a LibraryFacade.h of its own.
   subdirs: [PROJECT_LIBRARY_NAME, '.'],
+  extra_cflags: project_library_static ? ['-DTEMPLATE_LIB_STATIC=1'] : [],
   url: 'http://www.kytok.org.ua/',
 )
 
@@ -74,6 +77,7 @@ cmake_conf = configuration_data()
 cmake_conf.set('PROJECT_LIBRARY_NAME', PROJECT_LIBRARY_NAME)
 cmake_conf.set('PROJECT_VERSION', meson.project_version())
 cmake_conf.set('PROJECT_VERSION_MAJOR', project_major_version)
+cmake_conf.set('LIB_IMPORTED_TYPE', project_library_static ? 'STATIC' : 'SHARED')
 # Meson appends the soversion to a Windows DLL name and prefixes the MinGW
 # outputs with lib: <name>-<soversion>.dll with the <name>.lib import library
 # for the MSVC toolchain, lib<name>-<soversion>.dll with lib<name>.dll.a for

@@ -31,7 +31,7 @@ Resulting library name examples for a `0.12.0` project:
 
 The same name is used consistently for every installed artefact:
 
-- `<libdir>/lib<NAME>.so.<version>` (the shared library binary),
+- `<libdir>/lib<NAME>.so.<version>` (the shared library binary) or `<libdir>/lib<NAME>.a` (the [static](/doc/sections/en_US/5-34-choosing-the-library-type.md) one),
 - `<prefix>/include/<NAME>/*.h` (the public headers install subdir),
 - `<libdir>/pkgconfig/<NAME>.pc` (the pkg-config file - downstream Meson uses `dependency('<NAME>')`),
 - `<libdir>/cmake/<NAME>/` + the `<NAME>::<NAME>` imported target (downstream CMake uses `find_package(<NAME> CONFIG)`).

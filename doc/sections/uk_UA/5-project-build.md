@@ -31,3 +31,4 @@
 1. [Опції супровідника проекту](/doc/sections/uk_UA/5-28-project-maintainer-options.md)
 1. [Налаштування складових імені встановлюваної бібліотеки](/doc/sections/uk_UA/5-29-customizing-library-name-segments.md)
 1. [Встановлення файлів розробки бібліотеки](/doc/sections/uk_UA/5-30-installing-the-library-development-files.md)
+1. [Вибір типу бібліотеки](/doc/sections/uk_UA/5-34-choosing-the-library-type.md)

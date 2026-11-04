@@ -1,6 +1,6 @@
 subdir('real-default-logger')
 
-# The objects end up inside the project shared library, so they must be
+# The objects end up inside the project library, so they must be
 # relocatable and they must follow its hidden visibility: the logger is an
 # implementation detail and its symbols would otherwise clash with the
 # identically named ones of any other library derived from this template.

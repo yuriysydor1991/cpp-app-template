@@ -55,7 +55,7 @@ grep -rl -e CppAppTemplate012 -e CPP_APP_TEMPLATE_012_ -e lib0impl src \
 
 The version segment is a part of the public namespace on purpose: the installable library name carries the very same major and minor pair, so two minor versions of one library install completely side by side and an application may depend on both of them at once. Rename the namespace along with a minor version bump to keep that pair in step.
 
-The logging subsystem namespace is deliberately **not** on that list - see the next section.
+The logging subsystem namespace is deliberately **not** on that list - see the next section. A [static library](/doc/sections/en_US/5-34-choosing-the-library-type.md) is the exception: its objects join the binary which links it, where no symbol visibility keeps two copies apart, so a derived static library renames the `default_logger` namespace too - add `-e default_logger` to the `grep` and `-e 's/\bdefault_logger\b/yourlib_default_logger/g'` to the `sed` of the command above.
 
 ### Why only these headers are visible
 

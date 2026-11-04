@@ -46,7 +46,7 @@ cmake --install build --prefix /usr/local
 
 Однакове імʼя послідовно використовується для кожного встановлюваного артефакту бібліотеки:
 
-- `<libdir>/lib<NAME>.so.<version>` (бінарник спільної бібліотеки),
+- `<libdir>/lib<NAME>.so.<version>` (бінарник спільної бібліотеки) або `<libdir>/lib<NAME>.a` ([статичної](/doc/sections/uk_UA/5-project-build/5-76-choosing-the-library-type.md)),
 - `<prefix>/include/<NAME>/*.h` (субдиректорія публічних заголовків, оголошена через `INSTALL_INTERFACE` цілі бібліотеки),
 - `<libdir>/cmake/<NAME>/` + імпортована ціль `<NAME>::<NAME>` згенерована через `install(EXPORT ...)` - проекти-споживачі на CMake використовують `find_package(<NAME> CONFIG)`.
 

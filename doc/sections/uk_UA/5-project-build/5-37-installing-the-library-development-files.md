@@ -58,7 +58,7 @@ target_link_libraries(consumer PRIVATE CppAppTemplate-0.12::CppAppTemplate-0.12)
 префікс встановлення не системний, його необхідно передати через змінну
 `CMAKE_PREFIX_PATH`.
 
-Виконуваний файл проекту знаходить встановлену бібліотеку через RUNPATH
+Виконуваний файл проекту знаходить встановлену спільну бібліотеку через RUNPATH
 `$ORIGIN/<шлях від bin до libdir>` (`$ORIGIN/../lib`, `$ORIGIN/../lib/x86_64-linux-gnu`
 тощо), тож він запускається з будь-якого префікса встановлення без
 `LD_LIBRARY_PATH` чи кешу `ldconfig`. Дивись файл [src/CMakeLists.txt](/src/CMakeLists.txt).
@@ -71,6 +71,8 @@ target_link_libraries(consumer PRIVATE CppAppTemplate-0.12::CppAppTemplate-0.12)
 Вимкнення опції жодним чином не змінює те, що саме *будується* - прибираються
 лише правила встановлення. Тому одне і те саме дерево побудови може бути
 встановленим обома способами без переконфігурації.
+
+[Статична бібліотека](/doc/sections/uk_UA/5-project-build/5-76-choosing-the-library-type.md) не має половини часу виконання: її `<libdir>/libCppAppTemplate-0.12.a` встановлюється лише зі значенням `ON`.
 
 Опція оголошена у [cmake/template-project-misc-variables-declare.cmake](/cmake/template-project-misc-variables-declare.cmake) і використовується у [src/lib/CMakeLists.txt](/src/lib/CMakeLists.txt) і [src/lib/facade/CMakeLists.txt](/src/lib/facade/CMakeLists.txt).
 

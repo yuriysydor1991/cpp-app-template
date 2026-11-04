@@ -21,10 +21,10 @@ install(
   RUNTIME DESTINATION ${PROJECT_BINARY_INSTALLATION_DIR}
 )
 
-# The installed executable finds the project library through a RUNPATH relative
-# to its own location, whatever the prefix and the library directory (lib,
-# lib64 or lib/<multiarch>) of the installation are.
-if(UNIX)
+# The installed executable finds the project shared library through a RUNPATH
+# relative to its own location, whatever the prefix and the library directory
+# (lib, lib64 or lib/<multiarch>) of the installation are.
+if(UNIX AND LIB_TYPE STREQUAL "SHARED")
   get_filename_component(
     binInstallDir ${PROJECT_BINARY_INSTALLATION_DIR}
     ABSOLUTE BASE_DIR ${CMAKE_INSTALL_PREFIX}

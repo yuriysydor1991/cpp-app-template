@@ -47,6 +47,22 @@ option(
   ON
 )
 
+# SHARED by default, STATIC for the BUILD_SHARED_LIBS=OFF of the package managers
+set(_lib_type SHARED)
+if(DEFINED BUILD_SHARED_LIBS AND NOT BUILD_SHARED_LIBS)
+  set(_lib_type STATIC)
+endif()
+
+set(LIB_TYPE "${_lib_type}" CACHE STRING "The project library type: SHARED or STATIC")
+set_property(CACHE LIB_TYPE PROPERTY STRINGS SHARED STATIC)
+unset(_lib_type)
+
+if(NOT LIB_TYPE MATCHES "^(SHARED|STATIC)$")
+  message(FATAL_ERROR "LIB_TYPE must be SHARED or STATIC, not '${LIB_TYPE}'")
+endif()
+
+message(STATUS "LIB_TYPE: ${LIB_TYPE}")
+
 set(_lib_name "${PROJECT_NAME}-${CMAKE_PROJECT_VERSION_MAJOR}")
 
 if(LIB_INCLUDE_MICRO_IN_NAME AND NOT LIB_INCLUDE_MINOR_IN_NAME)

@@ -4,7 +4,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 add_library(
   ${PROJECT_LIBRARY_NAME}
-  SHARED
+  ${LIB_TYPE}
 )
 
 # The public LibraryFacade.h header declares the logger instance adoption, so
@@ -53,7 +53,9 @@ set_target_properties(
   # which loads two of them would otherwise let the dynamic linker bind the
   # calls of one library into the definitions of the other. The application of
   # this very project carries an own copy of the logging subsystem too, and
-  # reaches the library one through LibraryFacade::init_logger alone.
+  # reaches the library one through LibraryFacade::init_logger alone. A STATIC
+  # library joins the binary which links it and has no such boundary, see the
+  # 4-9 documentation section.
   CXX_VISIBILITY_PRESET hidden
 )
 
@@ -66,6 +68,15 @@ target_compile_definitions(
   PRIVATE TEMPLATE_LIB_BUILDING=1
 )
 
+# drops the __declspec pair for the static library and its users
+if(LIB_TYPE STREQUAL "STATIC")
+  target_compile_definitions(
+    ${PROJECT_LIBRARY_NAME}
+    PUBLIC TEMPLATE_LIB_STATIC=1
+  )
+endif()
+
+# A STATIC library is a development file only - the executable carries its code.
 if(LIB_INSTALL_DEV_FILES)
   # the export set feeds the CMake package the lib-cmake-module-gen installs
   install(
@@ -75,8 +86,11 @@ if(LIB_INSTALL_DEV_FILES)
       DESTINATION ${CMAKE_INSTALL_LIBDIR}
       COMPONENT Runtime
       NAMELINK_COMPONENT Development
+    ARCHIVE
+      DESTINATION ${CMAKE_INSTALL_LIBDIR}
+      COMPONENT Development
   )
-else()
+elseif(LIB_TYPE STREQUAL "SHARED")
   # NAMELINK_SKIP drops the unversioned lib<name>.so symlink, which only a
   # linker looking for -l<name> needs. The versioned SONAME file the loader
   # resolves at run time is still installed.

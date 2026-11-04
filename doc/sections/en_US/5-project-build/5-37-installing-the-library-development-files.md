@@ -57,7 +57,7 @@ the library (`CppAppTemplate012`) changes with every minor version. Pass the
 installation prefix through the `CMAKE_PREFIX_PATH` variable when it is not a
 system one.
 
-The executable of the project finds the installed library through the
+The executable of the project finds the installed shared library through the
 `$ORIGIN/<bin to libdir>` RUNPATH (`$ORIGIN/../lib`, `$ORIGIN/../lib/x86_64-linux-gnu`
 etc.), so it starts from any installation prefix without the `LD_LIBRARY_PATH`
 or the `ldconfig` cache. See the [src/CMakeLists.txt](/src/CMakeLists.txt) file.
@@ -69,6 +69,8 @@ the place to gate such an install rule should a derived project add one.
 Turning the option off changes nothing about what is *built* - only the install
 rules are dropped. The same build tree can therefore be installed both ways
 without reconfiguring anything else.
+
+A [static library](/doc/sections/en_US/5-project-build/5-76-choosing-the-library-type.md) has no runtime half: its `<libdir>/libCppAppTemplate-0.12.a` is installed with the `ON` only.
 
 The option is declared in [cmake/template-project-misc-variables-declare.cmake](/cmake/template-project-misc-variables-declare.cmake) and consumed by [src/lib/CMakeLists.txt](/src/lib/CMakeLists.txt) and [src/lib/facade/CMakeLists.txt](/src/lib/facade/CMakeLists.txt).
 

@@ -31,7 +31,7 @@ Meson-опцій. Вони дозволяють паралельним вста�
 
 Однакове імʼя послідовно використовується для кожного встановлюваного артефакту:
 
-- `<libdir>/lib<NAME>.so.<version>` (бінарник спільної бібліотеки),
+- `<libdir>/lib<NAME>.so.<version>` (бінарник спільної бібліотеки) або `<libdir>/lib<NAME>.a` ([статичної](/doc/sections/uk_UA/5-34-choosing-the-library-type.md)),
 - `<prefix>/include/<NAME>/*.h` (субдиректорія публічних заголовків),
 - `<libdir>/pkgconfig/<NAME>.pc` (файл pkg-config - проекти-споживачі на Meson використовують `dependency('<NAME>')`),
 - `<libdir>/cmake/<NAME>/` + імпортована ціль `<NAME>::<NAME>` (проекти-споживачі на CMake використовують `find_package(<NAME> CONFIG)`).

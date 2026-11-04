@@ -58,6 +58,8 @@ based branches of this template drop it through `NAMELINK_SKIP`.
 Turning the option off changes nothing about what is *built* - only the install
 rules are dropped. The same build tree can therefore be installed both ways.
 
+A [static library](/doc/sections/en_US/5-34-choosing-the-library-type.md) has no runtime half: its `<libdir>/libCppAppTemplate-0.11.a` is installed with the `true` only.
+
 The option is declared in [meson_options.txt](/meson_options.txt) and consumed by [src/lib/meson.build](/src/lib/meson.build).
 
 See also the [Customizing the installable library name segments](/doc/sections/en_US/5-29-customizing-library-name-segments.md) section, which decides the name used by every artefact listed above.

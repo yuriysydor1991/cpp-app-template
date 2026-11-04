@@ -55,6 +55,8 @@ grep -rl -e CppAppTemplate011 -e CPP_APP_TEMPLATE_011_ -e lib0impl src \
 
 The application of this very project is the first consumer of those names - it reaches the library through `CppAppTemplate011::LibraryFacade` - so the command above covers it as well.
 
+A [static library](/doc/sections/en_US/5-34-choosing-the-library-type.md) joins the binary which links it, where no symbol visibility keeps two copies apart, so a derived static library linked beside another one renames the `default_logger` namespace too - add `-e default_logger` to the `grep` and `-e 's/\bdefault_logger\b/yourlib_default_logger/g'` to the `sed` of the command above.
+
 The version segment is a part of the public namespace on purpose: the installable library name carries the very same major and minor pair, so two minor versions of one library install completely side by side and an application may depend on both of them at once. Rename the namespace along with a minor version bump to keep that pair in step.
 
 ### Why only these headers are visible

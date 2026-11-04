@@ -63,6 +63,8 @@ meson install -C build
 лише правила встановлення. Тому одне і те саме дерево побудови може бути
 встановленим обома способами.
 
+[Статична бібліотека](/doc/sections/uk_UA/5-34-choosing-the-library-type.md) не має половини часу виконання: її `<libdir>/libCppAppTemplate-0.11.a` встановлюється лише зі значенням `true`.
+
 Опція оголошена у [meson_options.txt](/meson_options.txt) і використовується у [src/lib/meson.build](/src/lib/meson.build).
 
 Дивись також розділ [Налаштування складових імені встановлюваної бібліотеки](/doc/sections/uk_UA/5-29-customizing-library-name-segments.md), який визначає ім'я для кожного з перелічених вище артефактів.

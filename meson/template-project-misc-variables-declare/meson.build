@@ -30,6 +30,14 @@ endif
 
 message('PROJECT_LIBRARY_NAME: ' + PROJECT_LIBRARY_NAME)
 
+# the built-in default_library option picks the library type
+project_library_static = get_option('default_library') == 'static'
+
+# drops the __declspec pair for the static library and its users
+if project_library_static
+  add_project_arguments('-DTEMPLATE_LIB_STATIC=1', language: 'cpp')
+endif
+
 if host_machine.system() == 'windows'
   timestamp = run_command('powershell', '-Command', 'Get-Date -Format "yyyy-MM-dd HH:mm:ss"', check: true).stdout().strip()
 else

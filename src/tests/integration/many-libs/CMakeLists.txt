@@ -15,6 +15,19 @@ add_test(
       --count ${MANY_LIBS_COUNT}
 )
 
+add_test(
+  NAME ITEST_many_libs.static
+  COMMAND
+    ${CMAKE_CURRENT_SOURCE_DIR}/ITEST_many_libs.sh
+      --source-dir ${PROJECT_SOURCE_DIR}
+      --work-dir ${CMAKE_CURRENT_BINARY_DIR}/work-static
+      --count ${MANY_LIBS_COUNT}
+      --lib-type STATIC
+)
+
 # The test generates, configures, builds and installs MANY_LIBS_COUNT whole
 # derived projects and then builds an application against all of them.
-set_tests_properties(ITEST_many_libs.noArgs PROPERTIES TIMEOUT 3600)
+set_tests_properties(
+  ITEST_many_libs.noArgs ITEST_many_libs.static
+  PROPERTIES TIMEOUT 3600
+)

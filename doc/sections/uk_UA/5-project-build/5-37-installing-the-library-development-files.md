@@ -67,6 +67,8 @@ target_link_libraries(consumer PRIVATE CppAppTemplate-0.12::CppAppTemplate-0.12)
 лише правила встановлення перелічених вище артефактів. Тому одне і те саме
 дерево побудови може бути встановленим обома способами без переконфігурації.
 
+[Статична бібліотека](/doc/sections/uk_UA/5-project-build/5-76-choosing-the-library-type.md) не має половини часу виконання: її `<libdir>/libCppAppTemplate-0.12.a` встановлюється лише зі значенням `ON`.
+
 Опція оголошена у [cmake/template-project-misc-variables-declare.cmake](/cmake/template-project-misc-variables-declare.cmake) і використовується у [src/lib/CMakeLists.txt](/src/lib/CMakeLists.txt) і [src/lib/facade/CMakeLists.txt](/src/lib/facade/CMakeLists.txt).
 
 Дивись також розділ [Налаштування складових імені встановлюваної бібліотеки](/doc/sections/uk_UA/5-project-build/5-41-customizing-library-name-segments.md), який визначає `<NAME>` для кожного з перелічених вище артефактів.

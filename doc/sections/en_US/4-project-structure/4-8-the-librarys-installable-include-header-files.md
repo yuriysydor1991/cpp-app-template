@@ -47,7 +47,7 @@ grep -rl -e CppAppTemplate012 -e CPP_APP_TEMPLATE_012_ -e lib0impl src \
 
 The version segment is a part of the public namespace on purpose: the installable library name carries the very same major and minor pair, so two minor versions of one library install completely side by side and an application may depend on both of them at once. That holds for the `cmake --install` installs: the deb, the RPM and the FreeBSD packages are all named after the project (`CppAppTemplate`) with no version in the package name, so a package manager replaces one minor version with another - give every minor version an own `CPACK_PACKAGE_NAME` in the packager enablers whenever the distribution packages have to coexist too. Rename the namespace along with a minor version bump to keep that pair in step.
 
-The logging subsystem namespace is deliberately **not** on that list - see the next section.
+The logging subsystem namespace is deliberately **not** on that list - see the next section. A [static library](/doc/sections/en_US/5-project-build/5-76-choosing-the-library-type.md) is the exception: its objects join the binary which links it, where no symbol visibility keeps two copies apart, so a derived static library renames the `default_logger` namespace too - add `-e default_logger` to the `grep` and `-e 's/\bdefault_logger\b/yourlib_default_logger/g'` to the `sed` of the command above.
 
 ### Why only these headers are visible
 
@@ -78,7 +78,7 @@ Everything else then names the library through the alias only, so following it t
 
 ### Coverage
 
-The `ITEST_many_libs` integration test (see [Project tests](/doc/sections/en_US/4-project-structure/4-4-project-tests.md)) generates a hundred whole derived library projects, renames the three names of each of them the way the section above describes, installs all of them and builds a single application against the lot. It hands a single application logger over to every library through the installed `init_logger` and asserts that all of them answer into it, and then hands every library a logger of its own and asserts that none of them receives the messages of another. The logging subsystem namespace stays untouched in every generated project, so the second half of the test is what the hidden symbol visibility alone is holding up.
+The `ITEST_many_libs` integration test (see [Project tests](/doc/sections/en_US/4-project-structure/4-4-project-tests.md)) generates a hundred whole derived library projects, renames the three names of each of them the way the section above describes, installs all of them and builds a single application against the lot. It hands a single application logger over to every library through the installed `init_logger` and asserts that all of them answer into it, and then hands every library a logger of its own and asserts that none of them receives the messages of another. The logging subsystem namespace stays untouched in every generated project, so the second half of the test is what the hidden symbol visibility alone is holding up. The `ITEST_many_libs.static` run repeats it with static libraries, which rename the logging subsystem namespace too.
 
 ### The installed CMake package
 

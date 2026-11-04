@@ -40,6 +40,9 @@
 # logger instance holder, one logger would collect everything while the rest
 # stay silent, and the logger one library adopted would silently serve the
 # others too.
+#
+# A static library has no boundary of its own, so the --lib-type STATIC run
+# renames the logging subsystem namespace of every generated project too.
 
 set -euo pipefail
 
@@ -52,16 +55,18 @@ readonly BASE_NUMBER=1000
 SOURCE_DIR=""
 WORK_DIR=""
 LIBS_COUNT=100
+LIB_TYPE="SHARED"
 BUILD_JOBS="$(nproc 2>/dev/null || echo 4)"
 
 usage()
 {
   cat <<USAGE
-Usage: ${SCRIPT_NAME} --source-dir DIR --work-dir DIR [--count N] [--jobs N]
+Usage: ${SCRIPT_NAME} --source-dir DIR --work-dir DIR [--count N] [--lib-type TYPE] [--jobs N]
 
   --source-dir DIR  the template project checkout to derive the libraries from
   --work-dir DIR    the scratch directory for the generated projects
   --count N         count of the libraries to generate (default ${LIBS_COUNT})
+  --lib-type TYPE   SHARED or STATIC libraries to generate (default ${LIB_TYPE})
   --jobs N          parallel build jobs (default ${BUILD_JOBS})
 USAGE
 }
@@ -84,6 +89,7 @@ parse_args()
       --source-dir) SOURCE_DIR="${2:-}"; shift 2 ;;
       --work-dir)   WORK_DIR="${2:-}";   shift 2 ;;
       --count)      LIBS_COUNT="${2:-}"; shift 2 ;;
+      --lib-type)   LIB_TYPE="${2:-}";   shift 2 ;;
       --jobs)       BUILD_JOBS="${2:-}"; shift 2 ;;
       -h|--help)    usage; exit 0 ;;
       *)            usage >&2; fail "unknown argument: $1" ;;
@@ -95,6 +101,11 @@ parse_args()
   [ -f "${SOURCE_DIR}/CMakeLists.txt" ] || \
     fail "no CMakeLists.txt inside the --source-dir ${SOURCE_DIR}"
   [ "${LIBS_COUNT}" -ge 1 ] || fail "the --count must be a positive number"
+  case "${LIB_TYPE}" in
+    SHARED) LIB_FILE_SUFFIX="so" ;;
+    STATIC) LIB_FILE_SUFFIX="a" ;;
+    *)      fail "the --lib-type must be SHARED or STATIC" ;;
+  esac
 }
 
 # The top level CMake project name of the generated library with the given
@@ -116,6 +127,9 @@ lib_guard() { echo "CPP_APP_TEMPLATE_LIB$1_${TEMPLATE_GUARD#CPP_APP_TEMPLATE_}";
 # The library implementation C++ namespace, renamed along with them: it never
 # leaves the shared object, but its weak template instantiations may.
 lib_impl_namespace() { echo "lib$1impl"; }
+
+# The logging subsystem namespace, renamed for the static libraries only.
+lib_log_namespace() { echo "lib$1_default_logger"; }
 
 # Reads the version and the identifiers the generation renames out of the
 # template sources, since a version bump renames them by hand (see the 4-8
@@ -168,7 +182,7 @@ prepare_work_dir()
 generate_library_project()
 {
   local index="$1"
-  local name dst
+  local name dst log_namespace="default_logger"
 
   name="$(lib_project_name "${index}")"
   dst="${GEN_DIR}/${name}"
@@ -196,14 +210,20 @@ generate_library_project()
   # an application naming two derived libraries at once has to tell apart, and
   # the implementation namespace, whose weak template instantiations may leave
   # the shared object even though the classes themselves do not. The logging
-  # subsystem namespace is deliberately left alone - the hidden symbol
-  # visibility of the library is what keeps those copies apart.
+  # subsystem namespace is left alone for the shared libraries - the hidden
+  # symbol visibility of the library is what keeps those copies apart.
+  if [ "${LIB_TYPE}" = "STATIC" ]; then
+    log_namespace="$(lib_log_namespace "${index}")"
+  fi
+
   grep -rl -e "${TEMPLATE_NAMESPACE}" -e "${TEMPLATE_GUARD}" \
-    -e "${TEMPLATE_IMPL_NAMESPACE}" "${dst}/src" | while IFS= read -r file; do
+    -e "${TEMPLATE_IMPL_NAMESPACE}" -e "default_logger" "${dst}/src" | \
+    while IFS= read -r file; do
     sed_in_place "${file}" \
       -e "s/${TEMPLATE_NAMESPACE}/$(lib_namespace "${index}")/g" \
       -e "s/${TEMPLATE_GUARD}/$(lib_guard "${index}")/g" \
-      -e "s/${TEMPLATE_IMPL_NAMESPACE}/$(lib_impl_namespace "${index}")/g"
+      -e "s/${TEMPLATE_IMPL_NAMESPACE}/$(lib_impl_namespace "${index}")/g" \
+      -e "s/default_logger/${log_namespace}/g"
   done
 
   grep -q "namespace $(lib_namespace "${index}")$" \
@@ -240,6 +260,7 @@ build_library_project()
   {
     cmake -S "${GEN_DIR}/${name}" -B "${build_dir}" \
       -DCMAKE_BUILD_TYPE=Release \
+      -DLIB_TYPE="${LIB_TYPE}" \
       -DCMAKE_INSTALL_PREFIX="${INSTALL_DIR}" &&
     cmake --build "${build_dir}" -j1 &&
     cmake --install "${build_dir}"
@@ -280,7 +301,7 @@ build_all_libraries()
     local name
     name="$(lib_project_name "${index}")"
 
-    if [ ! -f "${INSTALL_DIR}/lib/lib$(lib_target_name "${index}").so" ]; then
+    if [ ! -f "${INSTALL_DIR}/lib/lib$(lib_target_name "${index}").${LIB_FILE_SUFFIX}" ]; then
       echo "----- ${name} build log -----" >&2
       tail -40 "${WORK_DIR}/${name}.build.log" >&2 || true
       fail "the ${name} library was not built and installed"
@@ -582,7 +603,7 @@ main()
   run_application
   check_no_library_log_files
 
-  info "PASS: ${LIBS_COUNT} derived libraries coexist in a single application"
+  info "PASS: ${LIBS_COUNT} derived ${LIB_TYPE} libraries coexist in a single application"
 }
 
 main "$@"

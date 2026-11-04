@@ -4,7 +4,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 add_library(
   ${PROJECT_LIBRARY_NAME}
-  SHARED
+  ${LIB_TYPE}
 )
 
 # The public headers are written by hand and used as they are. The logging
@@ -50,7 +50,9 @@ set_target_properties(
   # optimisation: every library derived from this template carries the very
   # same lib0impl, default_logger and project_decls names, and an application
   # which loads two of them would otherwise let the dynamic linker bind the
-  # calls of one library into the definitions of the other.
+  # calls of one library into the definitions of the other. A STATIC library
+  # joins the binary which links it and has no such boundary, see the 4-8
+  # documentation section.
   CXX_VISIBILITY_PRESET hidden
 )
 
@@ -63,6 +65,14 @@ target_compile_definitions(
   PRIVATE TEMPLATE_LIB_BUILDING=1
 )
 
+# drops the __declspec pair for the static library and its users
+if(LIB_TYPE STREQUAL "STATIC")
+  target_compile_definitions(
+    ${PROJECT_LIBRARY_NAME}
+    PUBLIC TEMPLATE_LIB_STATIC=1
+  )
+endif()
+
 if(LIB_INSTALL_DEV_FILES)
   # the export set feeds the CMake package the lib-cmake-module-gen installs
   install(
@@ -72,8 +82,11 @@ if(LIB_INSTALL_DEV_FILES)
       DESTINATION ${CMAKE_INSTALL_LIBDIR}
       COMPONENT Runtime
       NAMELINK_COMPONENT Development
+    ARCHIVE
+      DESTINATION ${CMAKE_INSTALL_LIBDIR}
+      COMPONENT Development
   )
-else()
+elseif(LIB_TYPE STREQUAL "SHARED")
   # NAMELINK_SKIP drops the unversioned lib<name>.so symlink, which only a
   # linker looking for -l<name> needs. The versioned SONAME file the loader
   # resolves at run time is still installed.
@@ -84,6 +97,8 @@ else()
       COMPONENT Runtime
       NAMELINK_SKIP
   )
+else()
+  message(WARNING "A STATIC library is a development file only, so LIB_INSTALL_DEV_FILES=OFF installs nothing")
 endif()
 
 add_subdirectory(facade)

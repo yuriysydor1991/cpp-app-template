@@ -76,9 +76,17 @@ set(TEMPLATE_APP_SHERPA_ONNX_MODEL "kokoro-int8-multi-lang-v1_0" CACHE STRING "T
 
 option(
     ENABLE_SHERPA_ONNX_MODEL_DOWNLOAD
-    "Downloads the TEMPLATE_APP_SHERPA_ONNX_MODEL model into the build directory while configuring and installs it with the binary"
+    "Downloads the TEMPLATE_APP_SHERPA_ONNX_MODEL model into the TEMPLATE_APP_SHERPA_ONNX_MODELS_DIR directory while configuring and installs it with the binary"
     ON
 )
+
+# The models of hundreds of megabytes are downloaded into the misc/models
+# directory of the source tree, out of the build directories (whatever their
+# names are), which the scripts/build scripts erase on every configure, so all
+# the build directories share a single download. The .gitignore and the
+# .dockerignore files keep the downloaded models out of the commits and the
+# docker builds.
+set(TEMPLATE_APP_SHERPA_ONNX_MODELS_DIR "${PROJECT_SOURCE_DIR}/misc/models" CACHE PATH "The directory the models are downloaded into")
 
 # The SHA256 checksums of the sherpa-onnx tts-models release archives. The
 # TEMPLATE_APP_SHERPA_ONNX_MODEL_SHA256 one checks any other model.
@@ -107,7 +115,7 @@ set(PROJECT_TTS_VOICE "" CACHE STRING "The sherpa-onnx model directory, optional
 # The install step copies the downloaded model directory into the data
 # directory of the project, where the installed binary looks for it relative
 # to it's own location first (see the src/app/DataLocator.h file), so the
-# installation needs no build tree.
+# installation needs no source tree.
 set(PROJECT_DATA_INSTALL_DIR "${CMAKE_INSTALL_DATADIR}/${PROJECT_BINARY_NAME}")
 set(PROJECT_DATA_INSTALLED_DIR "${CMAKE_INSTALL_FULL_DATADIR}/${PROJECT_BINARY_NAME}")
 
@@ -117,11 +125,16 @@ file(
 )
 
 if (NOT PROJECT_TTS_VOICE)
-    set(modelDir "${PROJECT_BINARY_DIR}/models")
-    set(PROJECT_TTS_VOICE "${modelDir}/${TEMPLATE_APP_SHERPA_ONNX_MODEL}")
+    set(PROJECT_TTS_VOICE "${TEMPLATE_APP_SHERPA_ONNX_MODELS_DIR}/${TEMPLATE_APP_SHERPA_ONNX_MODEL}")
 
     if (ENABLE_SHERPA_ONNX_MODEL_DOWNLOAD AND NOT EXISTS "${PROJECT_TTS_VOICE}/tokens.txt")
-        set(modelArchive "${modelDir}/${TEMPLATE_APP_SHERPA_ONNX_MODEL}.tar.bz2")
+        # The archive is downloaded and unpacked in a separate directory beside
+        # the models first, so an interrupted download or unpacking is never
+        # taken for the model, which outlives the build directories.
+        set(modelPartDir "${PROJECT_TTS_VOICE}.part")
+        set(modelArchive "${modelPartDir}/${TEMPLATE_APP_SHERPA_ONNX_MODEL}.tar.bz2")
+
+        file(REMOVE_RECURSE "${modelPartDir}")
 
         message(STATUS "Downloading the ${TEMPLATE_APP_SHERPA_ONNX_MODEL} sherpa-onnx model, which takes a while")
 
@@ -151,14 +164,18 @@ if (NOT PROJECT_TTS_VOICE)
         if (modelDownloadCode EQUAL 0)
             execute_process(
                 COMMAND ${CMAKE_COMMAND} -E tar xf "${modelArchive}"
-                WORKING_DIRECTORY "${modelDir}"
+                WORKING_DIRECTORY "${modelPartDir}"
                 RESULT_VARIABLE modelDownloadCode
             )
         endif()
 
-        file(REMOVE "${modelArchive}")
+        if (modelDownloadCode EQUAL 0 AND EXISTS "${modelPartDir}/${TEMPLATE_APP_SHERPA_ONNX_MODEL}/tokens.txt")
+            file(RENAME "${modelPartDir}/${TEMPLATE_APP_SHERPA_ONNX_MODEL}" "${PROJECT_TTS_VOICE}")
+        endif()
 
-        if (NOT modelDownloadCode EQUAL 0 OR NOT EXISTS "${PROJECT_TTS_VOICE}/tokens.txt")
+        file(REMOVE_RECURSE "${modelPartDir}")
+
+        if (NOT EXISTS "${PROJECT_TTS_VOICE}/tokens.txt")
             message(WARNING "Fail to download the ${TEMPLATE_APP_SHERPA_ONNX_MODEL} sherpa-onnx model, so the application needs the --voice parameter")
         endif()
     endif()

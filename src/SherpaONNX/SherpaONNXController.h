@@ -32,7 +32,7 @@ class SherpaONNXController : public tts::ISpeechSynthesizer
    *
    * @param text The UTF-8 text to speak.
    * @param voice The directory of the model files, optionally followed by
-   * the :<id> speaker id of a multi-speaker model (models/kokoro:3 etc.),
+   * the :<id> speaker id of a multi-speaker model (misc/models/kokoro:3 etc.),
    * the first speaker otherwise.
    *
    * @return Returns the synthesized speech, or nothing if the directory keeps

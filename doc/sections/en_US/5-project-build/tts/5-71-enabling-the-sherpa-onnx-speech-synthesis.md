@@ -32,7 +32,8 @@ The installation puts the shared sherpa-onnx libraries (and the downloaded onnxr
 | `PROJECT_TTS_TEXT` | the text the application speaks while the `--text` (or `-t`) command line parameter gives none, the `Hello, sherpa-onnx! Insert your text here!` one by default |
 | `PROJECT_TTS_VOICE` | the voice the application speaks with while the `--voice` (or `-s`) command line parameter gives none, the downloaded `TEMPLATE_APP_SHERPA_ONNX_MODEL` one by default |
 | `TEMPLATE_APP_SHERPA_ONNX_MODEL` | the model of the sherpa-onnx [tts-models](https://github.com/k2-fsa/sherpa-onnx/releases/tag/tts-models) release the configure downloads, the `kokoro-int8-multi-lang-v1_0` one by default |
-| `ENABLE_SHERPA_ONNX_MODEL_DOWNLOAD` | downloads the model into the `models` directory of the build tree while configuring and installs it with the binary, `ON` by default |
+| `ENABLE_SHERPA_ONNX_MODEL_DOWNLOAD` | downloads the model into the `TEMPLATE_APP_SHERPA_ONNX_MODELS_DIR` directory while configuring and installs it with the binary, `ON` by default |
+| `TEMPLATE_APP_SHERPA_ONNX_MODELS_DIR` | the directory the model is downloaded into, the `misc/models` one of the source tree by default |
 | `TEMPLATE_APP_SHERPA_ONNX_MODEL_SHA256` | the SHA256 checksum of the model archive, the known one of the `kokoro-int8-multi-lang-v1_0`, the `kokoro-multi-lang-v1_0`, the `kokoro-int8-en-v0_19`, the `kokoro-en-v0_19`, the `vits-melo-tts-zh_en` and the `vits-piper-en_US-amy-low-int8` models by default |
 
 ### The voices
@@ -44,7 +45,7 @@ The `--voice` (or `-s`) parameter takes the directory of a model the sherpa-onnx
 | Kokoro | the `model.onnx` (or the `model.int8.onnx`), the `voices.bin`, the `tokens.txt`, the `espeak-ng-data` directory and, for the multilingual models, the `lexicon-us-en.txt` and the `lexicon-zh.txt` |
 | VITS (Piper, MeloTTS, MMS etc.) | the `model.onnx` (or the `<voice>.onnx` of a Piper one), the `tokens.txt` and either the `espeak-ng-data` directory of the Piper voices or the `lexicon.txt` of the MeloTTS ones |
 
-The default `kokoro-int8-multi-lang-v1_0` model (the 126 MB archive of the int8 quantized [Kokoro-82M](https://huggingface.co/hexgrad/Kokoro-82M) v1.0, 183 MB unpacked) speaks the English and the Chinese text of it's lexicons with it's 54 speakers (the `:0` to `:53` ids of the English, the Chinese, the Spanish, the French, the Hindi, the Italian, the Japanese and the Portuguese voices of the model) at the 24 kHz rate, while the configure downloads and checks it once per build tree. Turn the download off with the `-DENABLE_SHERPA_ONNX_MODEL_DOWNLOAD=OFF` parameter, download another model with the `-DTEMPLATE_APP_SHERPA_ONNX_MODEL=<model>` one, or point the `PROJECT_TTS_VOICE` variable at a model of your own.
+The default `kokoro-int8-multi-lang-v1_0` model (the 126 MB archive of the int8 quantized [Kokoro-82M](https://huggingface.co/hexgrad/Kokoro-82M) v1.0, 183 MB unpacked) speaks the English and the Chinese text of it's lexicons with it's 54 speakers (the `:0` to `:53` ids of the English, the Chinese, the Spanish, the French, the Hindi, the Italian, the Japanese and the Portuguese voices of the model) at the 24 kHz rate, while the configure downloads it into the `misc/models` directory of the source tree, out of the build directories, which the `scripts/build` scripts erase on every configure, so all the build directories of the source tree, whatever their names are, share a single download, while the `.gitignore` and the `.dockerignore` files keep it out of the commits and the docker builds. The archive is checked against it's checksum and unpacked in a `.part` directory beside the models first, so an interrupted download or unpacking is never taken for the model. Turn the download off with the `-DENABLE_SHERPA_ONNX_MODEL_DOWNLOAD=OFF` parameter, download another model with the `-DTEMPLATE_APP_SHERPA_ONNX_MODEL=<model>` one, or point the `PROJECT_TTS_VOICE` variable at a model of your own.
 
 The Chinese and English [MeloTTS](https://github.com/myshell-ai/MeloTTS) model and the [Piper](https://github.com/rhasspy/piper) voices speak through the very same parameter:
 
@@ -61,11 +62,11 @@ for archive in *.tar.bz2 ; do tar xf "${archive}" ; done
 ./src/CppAppTemplate -t "Привіт, світе!" -s ~/models/vits-piper-uk_UA-lada-x_low-int8
 ```
 
-The MeloTTS model speaks at the 44.1 kHz rate, the Piper voices at the rate of their model cards (16 kHz for the `x_low` and the `low` ones, 22.05 kHz for the `medium` and the `high` ones). The configure downloads any of them into the build tree as well, e.g. with the `-DTEMPLATE_APP_SHERPA_ONNX_MODEL=vits-melo-tts-zh_en` parameter.
+The MeloTTS model speaks at the 44.1 kHz rate, the Piper voices at the rate of their model cards (16 kHz for the `x_low` and the `low` ones, 22.05 kHz for the `medium` and the `high` ones). The configure downloads any of them into the models directory as well, e.g. with the `-DTEMPLATE_APP_SHERPA_ONNX_MODEL=vits-melo-tts-zh_en` parameter.
 
 ### Installing the model
 
-The downloaded model directory is a part of the build tree, so the install step (and every package built out of it: deb, rpm, AppImage, FreeBSD pkg, the MS Windows installer) copies it into the `share/CppAppTemplate` directory of the installation prefix, the `/usr/share/CppAppTemplate/kokoro-int8-multi-lang-v1_0` one for example, and the installed application speaks with no build tree around. The `app::DataLocator` class of the [src/app/DataLocator.h](/src/app/DataLocator.h) file picks the model the running binary speaks with while no `--voice` parameter is given: the installed one relative to the binary location first (so a relocated package, an AppImage for example, keeps working), then the downloaded one of the build tree (a binary run out of it), then the installed one under the configured prefix. The download turned off or failed installs no model, and the model of the `PROJECT_TTS_VOICE` variable gets loaded from where it is.
+The downloaded model directory lives in the models directory of the source tree, so the install step (and every package built out of it: deb, rpm, AppImage, FreeBSD pkg, the MS Windows installer) copies it into the `share/CppAppTemplate` directory of the installation prefix, the `/usr/share/CppAppTemplate/kokoro-int8-multi-lang-v1_0` one for example, and the installed application speaks with no source tree around. The `app::DataLocator` class of the [src/app/DataLocator.h](/src/app/DataLocator.h) file picks the model the running binary speaks with while no `--voice` parameter is given: the installed one relative to the binary location first (so a relocated package, an AppImage for example, keeps working), then the downloaded one of the models directory (a binary run out of the build tree), then the installed one under the configured prefix. The download turned off or failed installs no model, and the model of the `PROJECT_TTS_VOICE` variable gets loaded from where it is.
 
 ### The licenses
 
@@ -90,7 +91,7 @@ The `synthesize` call of the controller loads the model of the voice directory (
 ```
 auto synthesizer = tts::ISpeechSynthesizer::create();
 
-if (const auto speech = synthesizer->synthesize("Hello, world!", "models/kokoro-int8-multi-lang-v1_0:3")) {
+if (const auto speech = synthesizer->synthesize("Hello, world!", "misc/models/kokoro-int8-multi-lang-v1_0:3")) {
   tts::WavWriter::create()->write(*speech, "speech.wav");
 }
 ```

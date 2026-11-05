@@ -32,7 +32,8 @@ target_link_libraries(${PROJECT_BINARY_NAME} SherpaONNX::cxx-api)
 | `PROJECT_TTS_TEXT` | текст, який промовляє програма, поки параметр командного рядка `--text` (або `-t`) не задає іншого, за замовчуванням `Hello, sherpa-onnx! Insert your text here!` |
 | `PROJECT_TTS_VOICE` | голос, яким промовляє програма, поки параметр командного рядка `--voice` (або `-s`) не задає іншого, за замовчуванням завантажена модель `TEMPLATE_APP_SHERPA_ONNX_MODEL` |
 | `TEMPLATE_APP_SHERPA_ONNX_MODEL` | модель випуску [tts-models](https://github.com/k2-fsa/sherpa-onnx/releases/tag/tts-models) sherpa-onnx, яку завантажує конфігурування, за замовчуванням `kokoro-int8-multi-lang-v1_0` |
-| `ENABLE_SHERPA_ONNX_MODEL_DOWNLOAD` | завантажує модель у директорію `models` дерева побудови під час конфігурування і встановлює її разом з виконуваним файлом, за замовчуванням `ON` |
+| `ENABLE_SHERPA_ONNX_MODEL_DOWNLOAD` | завантажує модель у директорію `TEMPLATE_APP_SHERPA_ONNX_MODELS_DIR` під час конфігурування і встановлює її разом з виконуваним файлом, за замовчуванням `ON` |
+| `TEMPLATE_APP_SHERPA_ONNX_MODELS_DIR` | директорія, у яку завантажується модель, за замовчуванням `misc/models` дерева вихідних кодів |
 | `TEMPLATE_APP_SHERPA_ONNX_MODEL_SHA256` | контрольна сума SHA256 архіву моделі, за замовчуванням відома сума моделей `kokoro-int8-multi-lang-v1_0`, `kokoro-multi-lang-v1_0`, `kokoro-int8-en-v0_19`, `kokoro-en-v0_19`, `vits-melo-tts-zh_en` і `vits-piper-en_US-amy-low-int8` |
 
 ### Голоси
@@ -44,7 +45,7 @@ target_link_libraries(${PROJECT_BINARY_NAME} SherpaONNX::cxx-api)
 | Kokoro | `model.onnx` (або `model.int8.onnx`), `voices.bin`, `tokens.txt`, директорія `espeak-ng-data` і, для багатомовних моделей, `lexicon-us-en.txt` та `lexicon-zh.txt` |
 | VITS (Piper, MeloTTS, MMS тощо) | `model.onnx` (або `<голос>.onnx` голосу Piper), `tokens.txt` і або директорія `espeak-ng-data` голосів Piper, або `lexicon.txt` моделей MeloTTS |
 
-Типова модель `kokoro-int8-multi-lang-v1_0` (архів розміром 126 МБ квантованої int8 моделі [Kokoro-82M](https://huggingface.co/hexgrad/Kokoro-82M) v1.0, 183 МБ у розпакованому вигляді) промовляє англійський і китайський текст своїх лексиконів 54 мовцями (ідентифікатори від `:0` до `:53` англійських, китайських, іспанських, французьких, гінді, італійських, японських і португальських голосів моделі) з частотою 24 кГц, а конфігурування завантажує й перевіряє її один раз для кожного дерева побудови. Вимкніть завантаження параметром `-DENABLE_SHERPA_ONNX_MODEL_DOWNLOAD=OFF`, завантажте іншу модель параметром `-DTEMPLATE_APP_SHERPA_ONNX_MODEL=<модель>` або вкажіть змінною `PROJECT_TTS_VOICE` на власну модель.
+Типова модель `kokoro-int8-multi-lang-v1_0` (архів розміром 126 МБ квантованої int8 моделі [Kokoro-82M](https://huggingface.co/hexgrad/Kokoro-82M) v1.0, 183 МБ у розпакованому вигляді) промовляє англійський і китайський текст своїх лексиконів 54 мовцями (ідентифікатори від `:0` до `:53` англійських, китайських, іспанських, французьких, гінді, італійських, японських і португальських голосів моделі) з частотою 24 кГц, а конфігурування завантажує її у директорію `misc/models` дерева вихідних кодів, поза директоріями побудови, які скрипти `scripts/build` стирають під час кожного конфігурування, тож усі директорії побудови дерева вихідних кодів, незалежно від їхніх назв, спільно використовують одне завантаження, а файли `.gitignore` і `.dockerignore` залишають його поза комітами та збірками docker. Архів спершу перевіряється за контрольною сумою і розпаковується в директорії `.part` поруч з моделями, тож перерване завантаження чи розпакування ніколи не вважається моделлю. Вимкніть завантаження параметром `-DENABLE_SHERPA_ONNX_MODEL_DOWNLOAD=OFF`, завантажте іншу модель параметром `-DTEMPLATE_APP_SHERPA_ONNX_MODEL=<модель>` або вкажіть змінною `PROJECT_TTS_VOICE` на власну модель.
 
 Китайсько-англійська модель [MeloTTS](https://github.com/myshell-ai/MeloTTS) і голоси [Piper](https://github.com/rhasspy/piper) говорять через той самий параметр:
 
@@ -61,11 +62,11 @@ for archive in *.tar.bz2 ; do tar xf "${archive}" ; done
 ./src/CppAppTemplate -t "Привіт, світе!" -s ~/models/vits-piper-uk_UA-lada-x_low-int8
 ```
 
-Модель MeloTTS говорить з частотою 44,1 кГц, а голоси Piper - з частотою своїх карток моделей (16 кГц для `x_low` і `low`, 22,05 кГц для `medium` і `high`). Конфігурування так само завантажує будь-яку з них у дерево побудови, наприклад параметром `-DTEMPLATE_APP_SHERPA_ONNX_MODEL=vits-melo-tts-zh_en`.
+Модель MeloTTS говорить з частотою 44,1 кГц, а голоси Piper - з частотою своїх карток моделей (16 кГц для `x_low` і `low`, 22,05 кГц для `medium` і `high`). Конфігурування так само завантажує будь-яку з них у директорію моделей, наприклад параметром `-DTEMPLATE_APP_SHERPA_ONNX_MODEL=vits-melo-tts-zh_en`.
 
 ### Встановлення моделі
 
-Завантажена директорія моделі є частиною дерева побудови, тож крок встановлення (а також кожен пакет, зібраний на його основі: deb, rpm, AppImage, пакет FreeBSD, інсталятор MS Windows) копіює її до директорії `share/CppAppTemplate` префікса встановлення, наприклад у директорію `/usr/share/CppAppTemplate/kokoro-int8-multi-lang-v1_0`, і встановлена програма говорить без дерева побудови. Клас `app::DataLocator` з файлу [src/app/DataLocator.h](/src/app/DataLocator.h) обирає модель, якою говорить запущений виконуваний файл, поки параметр `--voice` не задає іншої: спершу встановлену відносно розташування виконуваного файлу (тож перенесений пакет, наприклад AppImage, і далі працює), потім завантажену в дерево побудови (виконуваний файл, запущений з нього), а потім встановлену за налаштованим префіксом. Вимкнене або невдале завантаження не встановлює жодної моделі, а модель змінної `PROJECT_TTS_VOICE` завантажується з того місця, де вона є.
+Завантажена директорія моделі лежить у директорії моделей дерева вихідних кодів, тож крок встановлення (а також кожен пакет, зібраний на його основі: deb, rpm, AppImage, пакет FreeBSD, інсталятор MS Windows) копіює її до директорії `share/CppAppTemplate` префікса встановлення, наприклад у директорію `/usr/share/CppAppTemplate/kokoro-int8-multi-lang-v1_0`, і встановлена програма говорить без дерева вихідних кодів. Клас `app::DataLocator` з файлу [src/app/DataLocator.h](/src/app/DataLocator.h) обирає модель, якою говорить запущений виконуваний файл, поки параметр `--voice` не задає іншої: спершу встановлену відносно розташування виконуваного файлу (тож перенесений пакет, наприклад AppImage, і далі працює), потім завантажену в директорію моделей (виконуваний файл, запущений з дерева побудови), а потім встановлену за налаштованим префіксом. Вимкнене або невдале завантаження не встановлює жодної моделі, а модель змінної `PROJECT_TTS_VOICE` завантажується з того місця, де вона є.
 
 ### Ліцензії
 
@@ -90,7 +91,7 @@ sherpa-onnx поширюється за ліцензією [Apache-2.0](https://
 ```
 auto synthesizer = tts::ISpeechSynthesizer::create();
 
-if (const auto speech = synthesizer->synthesize("Hello, world!", "models/kokoro-int8-multi-lang-v1_0:3")) {
+if (const auto speech = synthesizer->synthesize("Hello, world!", "misc/models/kokoro-int8-multi-lang-v1_0:3")) {
   tts::WavWriter::create()->write(*speech, "speech.wav");
 }
 ```

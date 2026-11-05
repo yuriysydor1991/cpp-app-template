@@ -27,9 +27,9 @@ The fetched sources build the [ggml](https://github.com/ggml-org/ggml) tensor li
 
 ### The model
 
-The whisper.cpp transcribes the speech with a [ggml model](https://huggingface.co/ggerganov/whisper.cpp) of the Whisper, which is no part of the build, so the configure downloads the `TEMPLATE_APP_WHISPERCPP_MODEL` one into the `models` directory of the build tree. By default it is the multilingual `small` model of 466 MiB, which transcribes the English, the Ukrainian and the other languages of the Whisper.
+The whisper.cpp transcribes the speech with a [ggml model](https://huggingface.co/ggerganov/whisper.cpp) of the Whisper, which is no part of the build, so the configure downloads the `TEMPLATE_APP_WHISPERCPP_MODEL` one into the `misc/models` directory of the source tree. By default it is the multilingual `small` model of 466 MiB, which transcribes the English, the Ukrainian and the other languages of the Whisper.
 
-The download goes through the [download-ggml-model.sh](https://github.com/ggml-org/whisper.cpp/blob/master/models/download-ggml-model.sh) script of the whisper.cpp (the `download-ggml-model.cmd` one on the MS Windows), which needs the `curl` or the `wget` tool. No system package ships the script, so the configure fetches the one of the `v1.9.4` release first and checks it's SHA256 checksum before running it. The downloaded model is checked against the SHA1 checksum the whisper.cpp models list gives for it (or the `TEMPLATE_APP_WHISPERCPP_MODEL_SHA1` one), and a model of a wrong checksum is removed. Every build tree downloads a model of it's own once, while a failed download only warns, leaving the `--model` parameter the way to give one. Pick another model with the `TEMPLATE_APP_WHISPERCPP_MODEL` variable:
+The download goes through the [download-ggml-model.sh](https://github.com/ggml-org/whisper.cpp/blob/master/models/download-ggml-model.sh) script of the whisper.cpp (the `download-ggml-model.cmd` one on the MS Windows), which needs the `curl` or the `wget` tool. No system package ships the script, so the configure fetches the one of the `v1.9.4` release first and checks it's SHA256 checksum before running it. The downloaded model is checked against the SHA1 checksum the whisper.cpp models list gives for it (or the `TEMPLATE_APP_WHISPERCPP_MODEL_SHA1` one), and a model of a wrong checksum is removed. The models directory stays out of the build directories, which the `scripts/build` scripts erase on every configure, so all the build directories of the source tree, whatever their names are, share a single download, while the `.gitignore` and the `.dockerignore` files keep it out of the commits and the docker builds. The script downloads into a `.part` directory beside the models first, so an interrupted download is never taken for the model, while a failed one only warns, leaving the `--model` parameter the way to give one. Pick another model with the `TEMPLATE_APP_WHISPERCPP_MODEL` variable:
 
 ```
 cmake -S . -B build -DTEMPLATE_APP_WHISPERCPP_MODEL=large-v3-turbo
@@ -39,6 +39,7 @@ cmake -S . -B build -DTEMPLATE_APP_WHISPERCPP_MODEL=large-v3-turbo
 | --- | --- |
 | `TEMPLATE_APP_WHISPERCPP_MODEL` | the model to download, e.g. the multilingual `tiny`, `base`, `small`, `medium`, `large-v3-turbo` one, the quantized `small-q5_1` like one or the English only `.en` variant of them |
 | `ENABLE_WHISPERCPP_MODEL_DOWNLOAD` | downloads the model while configuring and installs it with the binary, `ON` by default |
+| `TEMPLATE_APP_WHISPERCPP_MODELS_DIR` | the directory the model is downloaded into, the `misc/models` one of the source tree by default |
 | `TEMPLATE_APP_WHISPERCPP_MODEL_SHA1` | the SHA1 checksum to check a model of no listed one against, empty by default |
 | `PROJECT_WHISPER_MODEL_PATH` | the model the application loads while the `--model` (or `-m`) command line parameter gives none, the downloaded one if empty, so nothing gets downloaded once it is given |
 | `PROJECT_WHISPER_LANGUAGE` | the spoken language code (`en`, `uk`, `de` etc.) the multilingual models transcribe, `auto` to detect it |
@@ -51,7 +52,7 @@ The bigger models recognize more precisely and take longer to transcribe an utte
 
 ### Installing the model
 
-The downloaded model is a file of the build tree, so the install step (and every package built out of it: deb, rpm, AppImage, FreeBSD pkg, the MS Windows installer) copies it into the `share/<binary>` directory of the installation prefix, the `/usr/share/CppAppTemplate/ggml-small.bin` file for example, and the installed binary runs with no build tree around. The `app::DataLocator` class of the [src/app/DataLocator.h](/src/app/DataLocator.h) file picks the model the running binary loads while no `--model` parameter is given: the installed one relative to the binary location first (so a relocated package, an AppImage for example, keeps working), then the downloaded one of the build tree (a binary run out of it), then the installed one under the configured prefix. The download turned off or failed installs no model, and the model of the `PROJECT_WHISPER_MODEL_PATH` variable gets loaded from where it is.
+The downloaded model lives in the models directory of the source tree, so the install step (and every package built out of it: deb, rpm, AppImage, FreeBSD pkg, the MS Windows installer) copies it into the `share/<binary>` directory of the installation prefix, the `/usr/share/CppAppTemplate/ggml-small.bin` file for example, and the installed binary runs with no source tree around. The `app::DataLocator` class of the [src/app/DataLocator.h](/src/app/DataLocator.h) file picks the model the running binary loads while no `--model` parameter is given: the installed one relative to the binary location first (so a relocated package, an AppImage for example, keeps working), then the downloaded one of the models directory (a binary run out of the build tree), then the installed one under the configured prefix. The download turned off or failed installs no model, and the model of the `PROJECT_WHISPER_MODEL_PATH` variable gets loaded from where it is.
 
 ### The components
 
@@ -68,7 +69,7 @@ The `init` call of the `whisperi::WhisperController` class of the [src/WhisperCP
 ```
 auto whisper = whisperi::WhisperController::create();
 
-if (whisper->init("models/ggml-base.en.bin", "auto")) {
+if (whisper->init("misc/models/ggml-base.en.bin", "auto")) {
   while (keepListening) {
     if (const auto text = whisper->listen(); text && !text->empty()) {
       LOGI(*text);

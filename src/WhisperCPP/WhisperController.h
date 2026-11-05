@@ -44,7 +44,7 @@ class WhisperController
    * @brief Loads the whisper model in place of the previously loaded one.
    *
    * @param modelPath The ggml model file path, e.g. the
-   * models/ggml-base.en.bin one.
+   * misc/models/ggml-base.en.bin one.
    * @param language The spoken language code (en, uk, de etc.) a multilingual
    * model transcribes, the auto one to detect it. The English only models
    * transcribe the English whatever it is.

@@ -11,6 +11,7 @@ doc/html/*
 doc/latex/*
 doc/*-html/*
 out/*
+misc/models/*
 CMakeSettings.json
 *.log
 gmon.out

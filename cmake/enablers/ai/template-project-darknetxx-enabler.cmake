@@ -164,25 +164,33 @@ endif()
 # The application detects the objects with the YOLOv4-tiny network trained on
 # the COCO data set by default: the network cfg file, the class names and a
 # sample image come with the darknetxx sources, while the weights file gets
-# downloaded into the build directory.
+# downloaded into the TEMPLATE_APP_DARKNETXX_MODELS_DIR directory.
 set(TEMPLATE_APP_DARKNETXX_WEIGHTS_URL "https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v4_pre/yolov4-tiny.weights" CACHE STRING "The network weights file to download for the PROJECT_DARKNETXX_CFG_PATH network")
 set(TEMPLATE_APP_DARKNETXX_WEIGHTS_SHA256 "cf9fbfd0f6d4869b35762f56100f50ed05268084078805f0e7989efe5bb8ca87" CACHE STRING "The SHA256 hash of the TEMPLATE_APP_DARKNETXX_WEIGHTS_URL file, empty to skip the check")
 
 option(
   ENABLE_DARKNETXX_WEIGHTS_DOWNLOAD
-  "Downloads the TEMPLATE_APP_DARKNETXX_WEIGHTS_URL weights file into the build directory while configuring and installs it with the binary"
+  "Downloads the TEMPLATE_APP_DARKNETXX_WEIGHTS_URL weights file into the TEMPLATE_APP_DARKNETXX_MODELS_DIR directory while configuring and installs it with the binary"
   ON
 )
+
+# The weights are downloaded into the misc/models directory of the source tree,
+# out of the build directories (whatever their names are), which the
+# scripts/build scripts erase on every configure, so all the build directories
+# share a single download. The .gitignore and the .dockerignore files keep the
+# downloaded weights out of the commits and the docker builds.
+set(TEMPLATE_APP_DARKNETXX_MODELS_DIR "${PROJECT_SOURCE_DIR}/misc/models" CACHE PATH "The directory the weights file is downloaded into")
 
 set(PROJECT_DARKNETXX_CFG_PATH "" CACHE STRING "The network cfg file the application loads while neither the --cfg nor the --dxxwjz2 parameter is given, the darknetxx yolov4-tiny.cfg one if empty")
 set(PROJECT_DARKNETXX_WEIGHTS_PATH "" CACHE STRING "The network weights file the application loads while no --weights, --dxxwjz1 or --dxxwjz2 parameter is given, the downloaded TEMPLATE_APP_DARKNETXX_WEIGHTS_URL one if empty")
 set(PROJECT_DARKNETXX_NAMES_PATH "" CACHE STRING "The class names file the application labels the objects with while neither the --names nor the --dxxwjz2 parameter is given, the darknetxx coco.names one if empty")
 set(PROJECT_DARKNETXX_IMAGE_PATH "" CACHE STRING "The image the application detects the objects of while no --image parameter is given, the darknetxx dog.jpg one if empty")
 
-# The install step copies the default files of the build tree into the data
-# directory of the project, where the installed binary looks for them relative
-# to it's own location first (see the src/app/DataLocator.h file), so the
-# installation needs no build tree.
+# The install step copies the default files of the build tree and the
+# downloaded weights into the data directory of the project, where the
+# installed binary looks for them relative to it's own location first (see the
+# src/app/DataLocator.h file), so the installation needs neither the build nor
+# the source tree.
 set(PROJECT_DATA_INSTALL_DIR "${CMAKE_INSTALL_DATADIR}/${PROJECT_BINARY_NAME}")
 set(PROJECT_DATA_INSTALLED_DIR "${CMAKE_INSTALL_FULL_DATADIR}/${PROJECT_BINARY_NAME}")
 
@@ -208,7 +216,7 @@ endif()
 
 if (NOT PROJECT_DARKNETXX_WEIGHTS_PATH)
   get_filename_component(weightsName "${TEMPLATE_APP_DARKNETXX_WEIGHTS_URL}" NAME)
-  set(PROJECT_DARKNETXX_WEIGHTS_PATH "${PROJECT_BINARY_DIR}/models/${weightsName}")
+  set(PROJECT_DARKNETXX_WEIGHTS_PATH "${TEMPLATE_APP_DARKNETXX_MODELS_DIR}/${weightsName}")
 
   if (ENABLE_DARKNETXX_WEIGHTS_DOWNLOAD AND NOT EXISTS "${PROJECT_DARKNETXX_WEIGHTS_PATH}")
     message(STATUS "Downloading the ${TEMPLATE_APP_DARKNETXX_WEIGHTS_URL} weights file")
@@ -217,8 +225,11 @@ if (NOT PROJECT_DARKNETXX_WEIGHTS_PATH)
       set(weightsHash EXPECTED_HASH SHA256=${TEMPLATE_APP_DARKNETXX_WEIGHTS_SHA256})
     endif()
 
+    # The download goes into a separate file first, so an interrupted or a
+    # broken one is never taken for the downloaded weights, which outlive the
+    # build directories.
     file(
-      DOWNLOAD "${TEMPLATE_APP_DARKNETXX_WEIGHTS_URL}" "${PROJECT_DARKNETXX_WEIGHTS_PATH}"
+      DOWNLOAD "${TEMPLATE_APP_DARKNETXX_WEIGHTS_URL}" "${PROJECT_DARKNETXX_WEIGHTS_PATH}.part"
       ${weightsHash}
       TLS_VERIFY ON
       STATUS weightsStatus
@@ -226,10 +237,10 @@ if (NOT PROJECT_DARKNETXX_WEIGHTS_PATH)
 
     list(GET weightsStatus 0 weightsCode)
 
-    # A failed download leaves a broken file behind, which would be taken for
-    # the downloaded one next time.
-    if (NOT weightsCode EQUAL 0)
-      file(REMOVE "${PROJECT_DARKNETXX_WEIGHTS_PATH}")
+    if (weightsCode EQUAL 0)
+      file(RENAME "${PROJECT_DARKNETXX_WEIGHTS_PATH}.part" "${PROJECT_DARKNETXX_WEIGHTS_PATH}")
+    else()
+      file(REMOVE "${PROJECT_DARKNETXX_WEIGHTS_PATH}.part")
       message(WARNING "Fail to download the ${TEMPLATE_APP_DARKNETXX_WEIGHTS_URL} weights file (${weightsStatus}), so the application needs the --weights, the --dxxwjz1 or the --dxxwjz2 parameter")
     endif()
   endif()

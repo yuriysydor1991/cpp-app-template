@@ -44,13 +44,14 @@ The `darknetxx` library leaves the darknetxx logger out: the [src/DarknetXX/log]
 
 ### The network
 
-By default the application detects the objects with the [YOLOv4-tiny](https://github.com/AlexeyAB/darknet#pre-trained-models) network of the 80 classes of the [COCO](https://cocodataset.org/) data set: the network cfg file, the class names and the sample image come with the darknetxx sources, while the configure downloads the weights file of 23 MiB into the `models` directory of the build tree. Every build tree downloads the weights once, while a failed download only warns, leaving the `--weights` (the `--dxxwjz1`, the `--dxxwjz2`) parameter the way to give them.
+By default the application detects the objects with the [YOLOv4-tiny](https://github.com/AlexeyAB/darknet#pre-trained-models) network of the 80 classes of the [COCO](https://cocodataset.org/) data set: the network cfg file, the class names and the sample image come with the darknetxx sources, while the configure downloads the weights file of 23 MiB into the `misc/models` directory of the source tree. The directory stays out of the build directories, which the `scripts/build` scripts erase on every configure, so all the build directories of the source tree, whatever their names are, share a single download, while the `.gitignore` and the `.dockerignore` files keep it out of the commits and the docker builds. The download goes into a `.part` file first, so an interrupted one is never taken for the weights, while a failed one only warns, leaving the `--weights` (the `--dxxwjz1`, the `--dxxwjz2`) parameter the way to give them.
 
 | Variable | What it holds |
 | --- | --- |
 | `TEMPLATE_APP_DARKNETXX_WEIGHTS_URL` | the weights file to download, the YOLOv4-tiny one by default |
 | `TEMPLATE_APP_DARKNETXX_WEIGHTS_SHA256` | the SHA256 hash of the downloaded file, empty to skip the check |
 | `ENABLE_DARKNETXX_WEIGHTS_DOWNLOAD` | downloads the weights file while configuring and installs it with the binary, `ON` by default |
+| `TEMPLATE_APP_DARKNETXX_MODELS_DIR` | the directory the weights file is downloaded into, the `misc/models` one of the source tree by default |
 | `PROJECT_DARKNETXX_CFG_PATH` | the network cfg file the application loads while neither the `--cfg` (or `-c`) nor the `--dxxwjz2` parameter gives one, the darknetxx `yolov4-tiny.cfg` one if empty |
 | `PROJECT_DARKNETXX_WEIGHTS_PATH` | the original weights file the application loads while none of the `--weights` (or `-w`), the `--dxxwjz1` and the `--dxxwjz2` parameters gives one, the downloaded one if empty, so nothing gets downloaded once it is given |
 | `PROJECT_DARKNETXX_NAMES_PATH` | the class names file the application labels the objects with while neither the `--names` (or `-n`) nor the `--dxxwjz2` parameter gives one, the darknetxx `coco.names` one if empty |
@@ -64,7 +65,7 @@ Any network of the Darknet does, the ones trained by the darknetxx included, so 
 
 ### Installing the network
 
-The default network files and the sample image are files of the build tree, so the install step (and every package built out of it: deb, rpm, AppImage, FreeBSD pkg, the MS Windows installer) copies them into the `share/<binary>` directory of the installation prefix, the `/usr/share/CppAppTemplate/yolov4-tiny.weights` file for example, and the installed binary runs with no build tree around. The `app::DataLocator` class of the [src/app/DataLocator.h](/src/app/DataLocator.h) file picks every default file the running binary loads: the installed one relative to the binary location first (so a relocated package, an AppImage for example, keeps working), then the one of the build tree (a binary run out of it), then the installed one under the configured prefix. The weights download turned off or failed installs no weights, and the files of the `PROJECT_DARKNETXX_*_PATH` variables get loaded from where they are.
+The default network files and the sample image are files of the build tree, while the downloaded weights live in the models directory of the source tree, so the install step (and every package built out of it: deb, rpm, AppImage, FreeBSD pkg, the MS Windows installer) copies them into the `share/<binary>` directory of the installation prefix, the `/usr/share/CppAppTemplate/yolov4-tiny.weights` file for example, and the installed binary runs with neither of the trees around. The `app::DataLocator` class of the [src/app/DataLocator.h](/src/app/DataLocator.h) file picks every default file the running binary loads: the installed one relative to the binary location first (so a relocated package, an AppImage for example, keeps working), then the configured one of the build or the source tree (a binary run out of the build tree), then the installed one under the configured prefix. The weights download turned off or failed installs no weights, and the files of the `PROJECT_DARKNETXX_*_PATH` variables get loaded from where they are.
 
 ### The network weights files
 

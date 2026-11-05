@@ -26,9 +26,10 @@ target_link_libraries(${PROJECT_BINARY_NAME} Piper::piper)
 | Variable | What it holds |
 | --- | --- |
 | `PROJECT_TTS_TEXT` | the text the application speaks while the `--text` (or `-t`) command line parameter gives none, the `Hello, Piper! Insert your text here!` one by default |
-| `PROJECT_TTS_VOICE` | the voice model the application speaks with while the `--voice` (or `-s`) command line parameter gives none, the downloaded `<build>/voices/<TEMPLATE_APP_PIPER_VOICE>.onnx` one if empty |
+| `PROJECT_TTS_VOICE` | the voice model the application speaks with while the `--voice` (or `-s`) command line parameter gives none, the downloaded `<TEMPLATE_APP_PIPER_MODELS_DIR>/<TEMPLATE_APP_PIPER_VOICE>.onnx` one if empty |
 | `TEMPLATE_APP_PIPER_VOICE` | the voice the configure downloads, the `en_US-lessac-medium` one by default |
-| `ENABLE_PIPER_VOICE_DOWNLOAD` | downloads the `TEMPLATE_APP_PIPER_VOICE` voice into the `<build>/voices` directory while configuring and installs it with the binary, `ON` by default |
+| `ENABLE_PIPER_VOICE_DOWNLOAD` | downloads the `TEMPLATE_APP_PIPER_VOICE` voice into the `TEMPLATE_APP_PIPER_MODELS_DIR` directory while configuring and installs it with the binary, `ON` by default |
+| `TEMPLATE_APP_PIPER_MODELS_DIR` | the directory the voice is downloaded into, the `misc/models` one of the source tree by default |
 | `TEMPLATE_APP_PIPER_VOICES_URL` | the pinned revision of the [rhasspy/piper-voices](https://huggingface.co/rhasspy/piper-voices) repository the voice is downloaded from |
 
 ### The license
@@ -39,12 +40,12 @@ Every voice has a license of it's own, the one of the dataset it is trained on, 
 
 ### The voices
 
-The Piper voice is the `.onnx` model with the `.onnx.json` config of the same name beside it, named by the language, the region, the name and the quality (`en_US-lessac-medium`). The configure downloads the `TEMPLATE_APP_PIPER_VOICE` voice into the `<build>/voices` directory, checking the SHA256 checksums of the known voices, so the application of the build directory speaks with it. The `--voice` (or `-s`) parameter takes the path of any other voice, e.g. the Ukrainian `uk_UA-ukrainian_tts-medium` one:
+The Piper voice is the `.onnx` model with the `.onnx.json` config of the same name beside it, named by the language, the region, the name and the quality (`en_US-lessac-medium`). The configure downloads the `TEMPLATE_APP_PIPER_VOICE` voice into the `misc/models` directory of the source tree, checking the SHA256 checksums of the known voices, so the application of every build directory speaks with it. The directory stays out of the build directories, which the `scripts/build` scripts erase on every configure, so all the build directories of the source tree, whatever their names are, share a single download, while the `.gitignore` and the `.dockerignore` files keep it out of the commits and the docker builds. Every file of the voice goes into a `.part` file first, so an interrupted download is never taken for the voice. The `--voice` (or `-s`) parameter takes the path of any other voice, e.g. the Ukrainian `uk_UA-ukrainian_tts-medium` one:
 
 ```
 cmake -S . -B build -DTEMPLATE_APP_PIPER_VOICE=uk_UA-ukrainian_tts-medium
 cmake --build build
-./build/src/CppAppTemplate --voice build/voices/uk_UA-ukrainian_tts-medium.onnx --text "Привіт, світе!"
+./build/src/CppAppTemplate --voice misc/models/uk_UA-ukrainian_tts-medium.onnx --text "Привіт, світе!"
 ```
 
 The [VOICES.md](https://github.com/OHF-Voice/piper1-gpl/blob/main/docs/VOICES.md) file lists the voices and their samples. The medium quality voices speak at the 22.05 kHz rate, while the speech takes the rate of the voice config.
@@ -53,7 +54,7 @@ The controller hands the `espeak-ng-data` directory beside the loaded `libpiper`
 
 ### Installing the voice
 
-The downloaded voice is a file of the build tree, so the install step (and every package built out of it: deb, rpm, AppImage, FreeBSD pkg, the MS Windows installer) copies it with it's config into the `<prefix>/share/<project>` directory, the `/usr/share/CppAppTemplate/en_US-lessac-medium.onnx` file for example, and the installed application speaks with no build tree around. The `app::DataLocator` class of the [src/app/DataLocator.h](/src/app/DataLocator.h) file picks the voice the running binary speaks with while no `--voice` parameter is given: the installed one relative to the binary location first (so a relocated package, an AppImage for example, keeps working), then the downloaded one of the build tree (a binary run out of it), then the installed one under the configured prefix. The download turned off or failed installs no voice, so the installed application needs the `--voice` parameter then, while the voice of the `PROJECT_TTS_VOICE` variable gets loaded from where it is.
+The downloaded voice lives in the models directory of the source tree, so the install step (and every package built out of it: deb, rpm, AppImage, FreeBSD pkg, the MS Windows installer) copies it with it's config into the `<prefix>/share/<project>` directory, the `/usr/share/CppAppTemplate/en_US-lessac-medium.onnx` file for example, and the installed application speaks with no source tree around. The `app::DataLocator` class of the [src/app/DataLocator.h](/src/app/DataLocator.h) file picks the voice the running binary speaks with while no `--voice` parameter is given: the installed one relative to the binary location first (so a relocated package, an AppImage for example, keeps working), then the downloaded one of the models directory (a binary run out of the build tree), then the installed one under the configured prefix. The download turned off or failed installs no voice, so the installed application needs the `--voice` parameter then, while the voice of the `PROJECT_TTS_VOICE` variable gets loaded from where it is.
 
 ### The components
 
@@ -72,7 +73,7 @@ The `synthesize` call of the controller loads the voice on the very first call w
 ```
 auto synthesizer = tts::ISpeechSynthesizer::create();
 
-if (const auto speech = synthesizer->synthesize("Hello!", "voices/en_US-lessac-medium.onnx")) {
+if (const auto speech = synthesizer->synthesize("Hello!", "misc/models/en_US-lessac-medium.onnx")) {
   tts::WavWriter::create()->write(*speech, "speech.wav");
 }
 ```

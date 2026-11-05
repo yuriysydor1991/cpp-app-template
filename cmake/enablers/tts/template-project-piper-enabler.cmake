@@ -84,9 +84,16 @@ set(TEMPLATE_APP_PIPER_VOICES_URL "https://huggingface.co/rhasspy/piper-voices/r
 
 option(
     ENABLE_PIPER_VOICE_DOWNLOAD
-    "Downloads the TEMPLATE_APP_PIPER_VOICE voice into the build directory while configuring and installs it with the binary"
+    "Downloads the TEMPLATE_APP_PIPER_VOICE voice into the TEMPLATE_APP_PIPER_MODELS_DIR directory while configuring and installs it with the binary"
     ON
 )
+
+# The voices are downloaded into the misc/models directory of the source tree,
+# out of the build directories (whatever their names are), which the
+# scripts/build scripts erase on every configure, so all the build directories
+# share a single download. The .gitignore and the .dockerignore files keep the
+# downloaded voices out of the commits and the docker builds.
+set(TEMPLATE_APP_PIPER_MODELS_DIR "${PROJECT_SOURCE_DIR}/misc/models" CACHE PATH "The directory the voices are downloaded into")
 
 # The SHA256 checksums of the voices of the pinned revision. The other voices
 # are downloaded unchecked.
@@ -103,7 +110,7 @@ set(PROJECT_TTS_VOICE "" CACHE STRING "The Piper voice model (an .onnx file with
 # The install step copies the downloaded voice into the data directory of the
 # project, where the installed binary looks for it relative to it's own
 # location first (see the src/app/DataLocator.h file), so the installation
-# needs no build tree.
+# needs no source tree.
 set(PROJECT_DATA_INSTALL_DIR "${CMAKE_INSTALL_DATADIR}/${PROJECT_BINARY_NAME}")
 set(PROJECT_DATA_INSTALLED_DIR "${CMAKE_INSTALL_FULL_DATADIR}/${PROJECT_BINARY_NAME}")
 
@@ -113,7 +120,7 @@ file(
 )
 
 if (NOT PROJECT_TTS_VOICE)
-    set(voiceDir "${PROJECT_BINARY_DIR}/voices")
+    set(voiceDir "${TEMPLATE_APP_PIPER_MODELS_DIR}")
     set(PROJECT_TTS_VOICE "${voiceDir}/${TEMPLATE_APP_PIPER_VOICE}.onnx")
 
     # The voices are kept by the language, the region, the name and the
@@ -128,9 +135,11 @@ if (NOT PROJECT_TTS_VOICE)
 
         message(STATUS "Downloading the ${voiceFile} Piper voice file")
 
+        # The download goes into a separate file first, so an interrupted one
+        # is never taken for the voice, which outlives the build directories.
         file(
             DOWNLOAD "${TEMPLATE_APP_PIPER_VOICES_URL}/${voicePath}/${voiceFile}"
-            "${voiceDir}/${voiceFile}"
+            "${voiceDir}/${voiceFile}.part"
             TLS_VERIFY ON
             STATUS voiceStatus
         )
@@ -141,7 +150,7 @@ if (NOT PROJECT_TTS_VOICE)
         foreach(knownVoice IN LISTS piperKnownVoicesSha256)
             if (voiceCode EQUAL 0 AND knownVoice MATCHES "^${voiceFile}=([0-9a-f]+)$")
                 set(knownHash "${CMAKE_MATCH_1}")
-                file(SHA256 "${voiceDir}/${voiceFile}" voiceHash)
+                file(SHA256 "${voiceDir}/${voiceFile}.part" voiceHash)
 
                 if (NOT voiceHash STREQUAL knownHash)
                     set(voiceCode 1)
@@ -150,10 +159,10 @@ if (NOT PROJECT_TTS_VOICE)
             endif()
         endforeach()
 
-        # A failed download leaves a broken file behind, which would be taken
-        # for a downloaded voice next time.
-        if (NOT voiceCode EQUAL 0)
-            file(REMOVE "${voiceDir}/${voiceFile}")
+        if (voiceCode EQUAL 0)
+            file(RENAME "${voiceDir}/${voiceFile}.part" "${voiceDir}/${voiceFile}")
+        else()
+            file(REMOVE "${voiceDir}/${voiceFile}.part")
             message(WARNING "Fail to download the ${voiceFile} Piper voice file (${voiceStatus}), so the application needs the --voice parameter")
         endif()
     endforeach()

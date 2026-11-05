@@ -11,13 +11,13 @@ The `appPiperTTS` branch executable speaks the `Hello, Piper! Insert your text h
 
 ```
 # from the build dir
-./src/CppAppTemplate -t "Hello, world!" -s voices/en_US-lessac-medium.onnx
-./src/CppAppTemplate -t "Привіт, світе!" -s voices/uk_UA-ukrainian_tts-medium.onnx -o hello.wav
+./src/CppAppTemplate -t "Hello, world!" -s /path/to/the/project/misc/models/en_US-lessac-medium.onnx
+./src/CppAppTemplate -t "Привіт, світе!" -s /path/to/the/project/misc/models/uk_UA-ukrainian_tts-medium.onnx -o hello.wav
 ```
 
 ```
-2026-10-18 12:59:11 DBG 140558553168896 PiperController.cpp:80 : The voices/en_US-lessac-medium.onnx Piper voice is loaded
-2026-10-18 12:59:12 DBG 140558553168896 PiperController.cpp:120 : Synthesized 22272 samples with the voices/en_US-lessac-medium.onnx Piper voice
+2026-10-18 12:59:11 DBG 140558553168896 PiperController.cpp:80 : The /path/to/the/project/misc/models/en_US-lessac-medium.onnx Piper voice is loaded
+2026-10-18 12:59:12 DBG 140558553168896 PiperController.cpp:120 : Synthesized 22272 samples with the /path/to/the/project/misc/models/en_US-lessac-medium.onnx Piper voice
 ```
 
 Once again, the `CppAppTemplate` is the **default** name of the project. Replace it with our own custom one if it was changed in the project's root `CMakeLists.txt` file (the `CMAKE_PROJECT_NAME` and/or `PROJECT_BINARY_NAME` variable).

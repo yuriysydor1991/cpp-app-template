@@ -13,7 +13,7 @@
 ```
 # з директорії побудови
 ./src/CppAppTemplate -q "Яка столиця України? Відповідай одним словом."
-./src/CppAppTemplate --model models/gemma-4-12b-it-qat-q4_0.gguf
+./src/CppAppTemplate --model /шлях/до/проекту/misc/models/gemma-4-12b-it-qat-q4_0.gguf
 ```
 
 ```

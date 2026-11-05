@@ -44,10 +44,10 @@ cmake -S . -B build -DTEMPLATE_APP_LLAMACPP_MODEL=gemma-4-12B
 | --- | --- |
 | `TEMPLATE_APP_LLAMACPP_MODEL` | the model to download, the `gemma-4-E4B` or the `gemma-4-12B` one |
 | `ENABLE_LLAMACPP_MODEL_DOWNLOAD` | downloads the model while configuring and installs it with the binary, `ON` by default |
-| `TEMPLATE_APP_LLAMACPP_MODELS_DIR` | the directory the model is downloaded into, the `build/models` one of the source tree by default |
+| `TEMPLATE_APP_LLAMACPP_MODELS_DIR` | the directory the model is downloaded into, the `misc/models` one of the source tree by default |
 | `PROJECT_LLAMACPP_MODEL_PATH` | the model the application loads while the `--model` (or `-m`) command line parameter gives none, the downloaded one if empty, so nothing gets downloaded once it is given |
 
-The download of gigabytes takes a while, so the models directory stays out of the build directories, which the `scripts/build` scripts erase on every configure: all the build directories of the source tree share a single download, while the other source trees share it with the `TEMPLATE_APP_LLAMACPP_MODELS_DIR` variable pointing at the same directory. The download goes into a `.part` file first, so an interrupted one is never taken for the model, while a failed one only warns, leaving the `--model` parameter the way to give the model. Any other GGUF model of a chat template the controller knows runs as well (the Qwen, the Llama, the Mistral, the Phi and the rest of the [llama.cpp built in templates](https://github.com/ggml-org/llama.cpp/wiki/Templates-supported-by-llama_chat_apply_template)), so download one by hand and point at it:
+The download of gigabytes takes a while, so the models directory stays out of the build directories, which the `scripts/build` scripts erase on every configure: all the build directories of the source tree, whatever their names are, share a single download, while the other source trees share it with the `TEMPLATE_APP_LLAMACPP_MODELS_DIR` variable pointing at the same directory. The `.gitignore` and the `.dockerignore` files keep the downloaded models out of the commits and the docker builds. The download goes into a `.part` file first, so an interrupted one is never taken for the model, while a failed one only warns, leaving the `--model` parameter the way to give the model. Any other GGUF model of a chat template the controller knows runs as well (the Qwen, the Llama, the Mistral, the Phi and the rest of the [llama.cpp built in templates](https://github.com/ggml-org/llama.cpp/wiki/Templates-supported-by-llama_chat_apply_template)), so download one by hand and point at it:
 
 ```
 ./src/CppAppTemplate --model /path/to/Qwen3-8B-Q4_K_M.gguf
@@ -79,7 +79,7 @@ bool print(const std::string& piece)
 
 auto llama = llamacppi::LlamaCPPController::create();
 
-if (llama->init("build/models/gemma-4-E4B_q4_0-it.gguf")) {
+if (llama->init("misc/models/gemma-4-E4B_q4_0-it.gguf")) {
   llama->ask("What is the capital of Ukraine?", print);
 }
 ```

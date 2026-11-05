@@ -76,10 +76,12 @@ option(
     ON
 )
 
-# The models of several gigabytes are kept out of the build directories, which
-# the scripts/build scripts erase on every configure, so the build directories
-# of the source tree share a single download.
-set(TEMPLATE_APP_LLAMACPP_MODELS_DIR "${PROJECT_SOURCE_DIR}/build/models" CACHE PATH "The directory the models are downloaded into")
+# The models of several gigabytes are downloaded into the misc/models directory
+# of the source tree, out of the build directories (whatever their names are),
+# which the scripts/build scripts erase on every configure, so all the build
+# directories share a single download. The .gitignore and the .dockerignore
+# files keep the downloaded models out of the commits and the docker builds.
+set(TEMPLATE_APP_LLAMACPP_MODELS_DIR "${PROJECT_SOURCE_DIR}/misc/models" CACHE PATH "The directory the models are downloaded into")
 
 # The quantization aware trained Q4_0 Gemma 4 models of the Google with their
 # SHA256 checksums, downloaded from the pinned revisions of their repositories.

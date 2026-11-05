@@ -12,7 +12,7 @@ The `appLlamaCPP` branch executable loads the language model the configure has d
 ```
 # from the build dir
 ./src/CppAppTemplate -q "What is the capital of Ukraine? Answer with a single word."
-./src/CppAppTemplate --model models/gemma-4-12b-it-qat-q4_0.gguf
+./src/CppAppTemplate --model /path/to/the/project/misc/models/gemma-4-12b-it-qat-q4_0.gguf
 ```
 
 ```

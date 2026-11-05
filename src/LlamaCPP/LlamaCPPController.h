@@ -49,7 +49,7 @@ class LlamaCPPController
    * new conversation.
    *
    * @param modelPath The GGUF model file path, e.g. the
-   * models/gemma-4-E4B_q4_0-it.gguf one.
+   * misc/models/gemma-4-E4B_q4_0-it.gguf one.
    *
    * @return Returns true on success and false if the model fails to load or
    * it's chat template is no known one.

@@ -16,7 +16,7 @@ The flatpak package and the Jenkins pipeline Docker image build the SQLiteCpp fr
 
 ### The database file location
 
-The SQLite needs no database server: the executable opens (and creates, if absent) the `<project name><version>.db` database file (for example `CppAppTemplate0.11.0.db`) inside the `$XDG_DATA_HOME/<project name>` directory, or inside the `~/.local/share/<project name>` directory when the `XDG_DATA_HOME` environment variable is not set. The missing directories get created too.
+The SQLite needs no database server: the executable opens (and creates, if absent) the `<project name><version>.db` database file (for example `CppAppTemplate0.12.0.db`) inside the `$XDG_DATA_HOME/<project name>` directory, or inside the `~/.local/share/<project name>` directory when the `XDG_DATA_HOME` environment variable is not set. The missing directories get created too.
 
 Set the `SQLITE_DB_PATH` environment variable to use another database file:
 

@@ -5,6 +5,142 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appKenneyAudio0.12.0] - 2026-11-08
+
+- 1be7fef Removing the destination OS from the AppImage package name
+- 20d4d26 Introducing the STT branches info into the READMEs
+- 245a3ba Replacing the CMAKE_SOURCE_DIR/CMAKE_BINARY_DIR by the PROJECT_SOURCE_DIR/PROJECT_BINARY_DIR
+- 66acb49 Introducing the appWebAssembly branch info into the READMEs
+- 4f4b2bf Introducing the appLlamaCPP branch info into the READMEs
+- eec3595 Introducing the TTS branches info into the READMEs
+- ffab0e0 Introducing the destination OS into the package names
+- a0ca212 Fixing the branch name of the cloning commands in the docs
+- 3e2db17 Synchronizing the template flavors list of the READMEs
+- f2051ce Refreshing the shared library cache after the from-source installs
+- 4538354 Failing the flavor CI test stages which match no tests
+- 11e8a34 Converting the flavor link calls of the project binary to the keyword signature
+- 707eeff Fixing the cppcheck findings of the new signals handler, tests and log mock
+- 19a6ab5 Updating the app component diagram to the signals handlers design
+- 91d443b Renumbering the custom command line parameters section numbered 4-6 twice
+- 1353e54 Documenting the built in command line options and the usage errors
+- 6ca8db4 Testing the application with the real command line arguments
+- 01efc09 Parsing the command line before the log file initialization
+- d75c6b6 Exiting with a failure status on the command line usage errors
+- 9487d81 Fixing the missing option value raising the version flag instead of the help one
+- e8df007 Fixing the CommandLineParser test assertions which could not fail
+- 0318d8d Fixing the log mock LOG_INIT forwarding into the LOG_INIT_DEFAULTS mock
+- 0a50d6e Restoring the previous signal dispositions on the signals handler uninstall
+- 5496f5c Leaving the SIGTTIN and SIGTTOU signals to the shell job control
+- 8a6d3aa Removing the nonexistent module path directories and cppcheck suppression
+- 1b4062f Fixing the zlib gzip file example ignoring the read and close errors
+- 03c7f96 Fixing the flatpak requirements section naming an outdated SDK version
+- 23955f4 Documenting the ENABLE_COMPONENT_TESTS option of the test builds
+- 8668a01 Listing every linked doc section in the requirements and build index pages
+- dc09bde Fixing the documentation links pointing into the other language
+- 45f2669 Fixing the stale file paths named in the documentation
+- cf7a4e9 Fixing the flatpak target failing on its repeated build
+- 39094bb Fixing the snap command path ignoring the install prefix
+- 1af7f82 Fixing the documentation install which needed a manual Doxygen-doc build
+- d5ea97c Skipping the Doxygen and callgrind targets when their tools are missing
+- e3ce1ea Installing the packager tools into the Jenkins pipeline image
+- 9ba27fb Replacing the libjpeg-turbo download fallback with a clear configure error
+- 3650155 Fixing the libavif download fallback stopping without the system libyuv
+- 08aa8a4 Pinning the third-party download fallbacks to their release tags
+- f0cfd12 Failing the CI test stages which match no tests
+- 189c01f Fixing the Jenkins doc sections linked check skipping the section directories
+- c072fed Replacing the broken OpenSSL download fallback with a clear configure error
+- da3e835 Fixing the mixed target_link_libraries signatures on the project binary
+- b78f6ad Fixing the MAX_LOG_LEVEL option help text error level value
+- d55f79d Fixing the logger level filter tests which could not fail
+- 6129618 Fixing the log macros to expand into single statements
+- bfdf313 Fixing the logger data races on the log file reopening and the level
+- 4822743 Fixing the log file open failure aborting the process
+- c967a85 Splitting the CTEST_DefaultLogger helper classes into own files
+- 2ab50aa Splitting the packages install scripts per OS release
+- 3a570f6 Documenting the integration option working OFF only with the subsystem removed
+- f7b0d26 Fixing the cppcheck findings in the branch code
+- 1ccb4b0 Escaping the sound file names in the generated index and manifests
+- 170a5a9 Removing the unused sounds count export
+- bde8daa Removing the duplicate subsystem source lists
+- 8276a01 Removing the duplicate generated sounds index mock of the app tests
+- e3f497d Documenting the flatpak handling of the downloaded sounds
+- ba16409 Fixing the fetch script writing the downloads into the source tree
+- 24e02c3 Introducing the tests of the generated manifests, the unique aliases and the licenses
+- bfc13c4 Installing the sound packs and their licenses with the binary
+- 58f4ec2 Replacing the scraped Kenney pack addresses with the pinned and checked ones
+- 2ca383d Synchronizing the Jenkinsfile URL check with the | separated fields fix
+- 7b187f1 Fixing the Jenkinsfile Checkout stage to clone the own branch
+- 517ab06 Introducing the SDL2 and SDL_mixer packages into the install scripts
+- 34467c6 Installing the fetched SDL2 and SDL_mixer libraries with the binary
+- 6f550d4 Replacing the unreachable GNU gettext site link with its Savannah page
+- fe0aa66 Introducing the destination CPU architecture into the package names
+- 626e2bd Introducing the appGettext branch info into the READMEs
+- 4d3a4fd Introducing the appDarknetXX branch info into the READMEs
+- da7fb2c Introducing the RedHat packages install script
+- 150e2cd Introducing the appWhisperCPP branch info into the READMEs
+- ad05104 Introducing the FreeBSD packages install script
+- 2d1a57a Introducing the appV8 branch info into the READMEs
+- d2393fc Erasing the build sources and trees of the docker images
+- d13572b Introducing the debug clang-format script
+- 49d1106 Resetting the inherited signals dispositions in the signals handlers tests
+- e90e037 Introducing the binary hardening options section into the READMEs
+- c86c9a6 Introducing the binary hardening compile and link options
+- a971ee8 Introducing the GitLab CI/CD pipeline section into the READMEs
+- 4b65801 Introducing the GitLab CI/CD pipeline mirroring the Jenkinsfile
+- fc6fa5f Installing the SDL2 build dependencies in the GitHub Actions pipeline
+- b3235c1 Introducing the GitHub Actions CI pipeline section into the READMEs
+- 06842cd Moving the GitHub Actions CI pipeline to the Ubuntu 26.04 runner with the branch dependencies
+- ab0d54f Correcting the appQt6QtDBusClient branch description in the READMEs
+- 47694a9 Introducing the desktop application packaging switch
+- cf11f42 Limiting the documentation checks to the repository own markdown files
+- f67841e Marking the FetchContent built SDL2 and SDL_mixer as the system libraries
+- ed0b083 Excluding the GCC own include directories from the clang-tidy search path
+- b250163 Accepting the 405 documentation URLs
+- cfc0d45 Spacing out the branch entries in the READMEs
+- b8237c7 Rewording the DOCKER_HOST environment requirement in the docker docs
+- 01b5f9d Removing the DOCKER_HOST variables from the docker enablers
+- a717480 Excluding the build trees from the Docker build context
+- 616c6b2 Handing the Kenney sound packs over to the sandboxed flatpak build
+- ae23c29 Unpacking the Kenney sound packs with the default permissions
+- bafc6de Replacing the bare SDL2 sound player with the SDL_mixer decoding one
+- 9d80ab2 Reading the Kenney pack archive address out of the pack's own page
+- 33afb04 Retrying the unreachable documentation URLs and accepting the 403 ones
+- 7bb942d Introducing the --rebuild flag into the Jenkins docker scripts
+- 1cbb07c Rebuilding the image from its base on the Jenkins pipeline force rebuild
+- 612c487 Moving the backend choice out of the demo into the sounds controller
+- 784ba72 Introducing the SDL2 sound player and the random sound demo
+- 000bd07 Introducing the audio assets branches info into the READMEs
+- d284725 Introducing the Kenney CC0 sound effect packs subsystem
+- 0fb7fc4 Splitting the signals handlers per category and covering the pause, reload, user defined and ignored signals
+- ff519d1 Introducing the app signals handlers subcomponent
+- 59027ee Declaring the main function argv parameter as an array
+- 0c0bacd Moving the packagers templates into the per-packager directories
+- 28aafc5 Dropping the packagers and the development tools from the packages install list
+- c73a754 The destination CPU architecture of the AppImage package name
+- 3cdeff2 Picking the CPack AppImage enabler since the CMake 4.2 and dropping the debug banners
+- 169a0e7 Extracting the AppImage enabler pick into its own general enabler
+- cecb839 Selecting the AppImage packager enabler by the CMake version
+- 74da676 Introducing the CPack based AppImage packager enabler
+- 500c919 Introducing the AppImage packager
+- 3eade9e Introducing the --install flag into the packager build scripts
+- 7e2310d Renaming the packages install script and adding the Ubuntu one
+- bc98378 Introducing the target architecture into the flatpak package name
+- cc762b3 Introducing the AppStream metainfo file into the flatpak package
+- d74681e Consuming the install directory variables the flatpak-builder passes
+- 7725c7e Introducing the required packages install script
+- 04676db Installing the flatpak build dependencies from the flathub remote
+- e0bbd67 Dropping the redundant build step from the packager scripts
+- 4968367 Introducing the per packager build scripts
+- a370b3f Introducing the appCFITSIO branch info into the READMEs
+- e6d15d4 Make the compile time log level gate really gate
+- 9358ec8 Introducing the appGtkmm4Libadwaita branch info into the READMEs
+- be7a69a Pinning the log message stream to the classic locale
+- af3e082 Decomposing the IApplication descendants into the applications subcomponent
+- 8b65bdb Introducing the appFontAwesome branch info into the READMEs
+- 8b4efbf Introducing the debug test script and its --test parameter
+- 8343d12 Incrementing version to app0.12.0
+- ea9ed82 Release app0.11.0 at 2026-08-17
+
 ## [app0.11.0] - 2026-08-17
 
 - c5fdd5a Introducing the InsertNewlineAtEOF clang-format option
@@ -355,6 +491,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[appKenneyAudio0.12.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appKenneyAudio0.12.0)
+[app0.11.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.11.0)
 [app0.10.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.10.0)
 [app0.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.9.0)
 [app0.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.8.0)

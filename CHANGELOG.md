@@ -5,6 +5,92 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [libMeson0.12.0] - 2026-11-08
+
+- 037464c Introducing the static library support of the default_library option
+- ba5165f Introducing the STT branches info into the READMEs
+- 383e8a7 Introducing the appWebAssembly branch info into the READMEs
+- 5ef996f Introducing the docker starter scripts and the Jenkins container targets
+- a37663b Grouping the meson directory modules as the cmake ones
+- 9351c8f Introducing the appLlamaCPP branch info into the READMEs
+- 4e4ea3c Introducing the TTS branches info into the READMEs
+- 705e6e2 Introducing the destination OS into the package names
+- abc3034 Synchronizing the template flavors list of the READMEs
+- d219696 Refreshing the shared library cache after the from-source installs
+- 7900b82 Grouping the CI pipeline sections of the libMeson build index pages
+- 0fd09de Failing the CI test stages which match no tests
+- b9990e9 Listing every linked doc section in the requirements and build index pages
+- 4fa8ed7 Fixing the documentation links pointing into the other language
+- 9161a97 Adapting the test loggers of libMeson to the bool returning ILogger
+- e513503 Fixing the log mock LOG_INIT forwarding into the LOG_INIT_DEFAULTS mock
+- 73cd010 Fixing the logger level filter tests which could not fail
+- ddbbd3a Fixing the log macros to expand into single statements
+- e0fcd8d Fixing the logger data races on the log file reopening and the level
+- bd882e3 Fixing the log file open failure aborting the process
+- 49f1622 Splitting the CTEST_DefaultLogger helper classes into own files
+- ba39a35 Splitting the packages install scripts per OS release
+- 8ec7526 Fixing the Meson option values and the stale names of the docs
+- 3f61da1 Introducing the template checks and the packager stages into the libMeson pipeline
+- 99e0561 Fixing the app branch descriptions left in the libMeson docs
+- 67dcf2a Removing the unreferenced app packaging templates of the libMeson branch
+- bdd95d5 Fixing the MAX_LOG_LEVEL option help text error level value
+- 33be3e7 Fixing the Windows library file names of the installed CMake targets
+- dc3df9c Fixing the cppcheck unusedFunction finding of the public init_logger
+- cf3c4da Fixing the custom installation path docs of the Meson install
+- 074e4ff Removing the docs of the nonexistent GTEST_TRY_SYSTEM_PROBE Meson option
+- 43ab03f Installing the GTest development packages the Meson tests probe for
+- 9908855 Passing the Meson sanitizers flags through a dependency object
+- 071bfcc Adding the check kwarg to the Meson run_command calls
+- 5234256 Fixing the Doxygen documentation build of the Meson projects
+- 20fa563 Fixing the deb package ownership and install prefix of the Meson packager
+- d30dd94 Fixing the RPM package target of the Meson packager
+- ca3d20c Applying the Meson sanitizers flags to every target
+- ee568ec Enabling the inline suppressions in the Meson cppcheck target
+- dbd5698 Replacing the unreachable GNU gettext site link with its Savannah page
+- a08f549 Fixing the WIX installer architecture of the Meson packager
+- 5939dbb Fixing the FreeBSD pkg manifest and file list of the Meson packager
+- 908d2a5 Introducing the destination CPU architecture into the package names
+- 221b123 Introducing the appGettext branch info into the READMEs
+- 981a5ad Introducing the appDarknetXX branch info into the READMEs
+- fbcdc97 Introducing the RedHat packages install script
+- 8cd9919 Registering the CTEST_LibraryRealLogger tests in the pipeline
+- ffe9a2b Introducing the appWhisperCPP branch info into the READMEs
+- 9a50b89 Introducing the FreeBSD packages install script
+- dc70926 Fixing the absent common.sh of the packages install scripts
+- 34613f3 Introducing the appV8 branch info into the READMEs
+- 37718a9 Erasing the build sources and trees of the docker images
+- 08a1737 Introducing the binary hardening options section into the READMEs
+- b7b45ba Introducing the binary hardening compile and link options
+- 212dfa8 Introducing the GitLab CI/CD pipeline section into the READMEs
+- ef40568 Introducing the GitLab CI/CD pipeline mirroring the Jenkinsfile
+- 518f837 Introducing the GitHub Actions CI pipeline section into the READMEs
+- d6ad08d Introducing the GitHub Actions CI pipeline mirroring the Jenkinsfile
+- 9223387 Correcting the appQt6QtDBusClient branch description in the READMEs
+- d084b3b Limiting the documentation checks to the repository own markdown files
+- c420bf8 Excluding the GCC own include directories from the clang-tidy search path
+- dcc9e85 Adding the build-* directories to the .gitignore
+- c89d2b5 Accepting the 405 documentation URLs
+- d1744fd Spacing out the branch entries in the READMEs
+- d041165 Excluding the build trees from the Docker build context
+- 61fb937 Retrying the unreachable documentation URLs and accepting the 403 ones
+- 6f9332a Introducing the audio assets branches info into the READMEs
+- 8a6235a Dropping the packagers and the development tools from the packages install list
+- c67509e Introducing the --install flag into the packager build scripts
+- 23cb894 Renaming the packages install script and adding the Ubuntu one
+- 0e358c6 Introducing the required packages install script
+- 0a48a38 Dropping the redundant build step from the packager scripts
+- 49aa87a Introducing the per packager build scripts
+- 6adc331 Moving the logger interface into the installable public headers
+- e8dbf48 Hiding the library implementation symbols and versioning the public namespace
+- f1ba30b Introducing the appCFITSIO branch info into the READMEs
+- 4f4c4ec Make the compile time log level gate really gate
+- ee5431a Introducing the appGtkmm4Libadwaita branch info into the READMEs
+- 71cf093 Pinning the log message stream to the classic locale
+- 6996dd4 Introducing the LIB_INSTALL_DEV_FILES install option
+- ba16277 Introducing the appFontAwesome branch info into the READMEs
+- 2760122 Incrementing version to libMeson0.12.0
+- 7aee300 Release libMeson0.11.0 at 2026-08-17
+
 ## [libMeson0.11.0] - 2026-08-17
 
 - 1e967be Introducing the InsertNewlineAtEOF clang-format option
@@ -304,6 +390,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[libMeson0.12.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/libMeson0.12.0)
+[libMeson0.11.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/libMeson0.11.0)
 [appMeson0.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appMeson0.9.0)
 [app0.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.8.0)
 [app0.7.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.7.0)

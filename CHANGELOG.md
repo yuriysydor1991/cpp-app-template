@@ -5,6 +5,134 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appSQLiteCpp30.11.0] - 2026-11-08
+
+- b837fb8 Removing the destination OS from the AppImage package name
+- c37993d Introducing the STT branches info into the READMEs
+- 50c5955 Replacing the CMAKE_SOURCE_DIR/CMAKE_BINARY_DIR by the PROJECT_SOURCE_DIR/PROJECT_BINARY_DIR
+- 4c95799 Introducing the appWebAssembly branch info into the READMEs
+- d070d71 Introducing the appLlamaCPP branch info into the READMEs
+- a372e01 Introducing the TTS branches info into the READMEs
+- aab7829 Introducing the destination OS into the package names
+- 9e8853e Synchronizing the template flavors list of the READMEs
+- 3bef505 Refreshing the shared library cache after the from-source installs
+- 087b25f Restoring the CTEST_app build file emptied by the real command line arguments port
+- 0c492da Failing the flavor CI test stages which match no tests
+- 4625a3a Converting the flavor link calls of the project binary to the keyword signature
+- c01a2d3 Fixing the cppcheck findings of the new signals handler, tests and log mock
+- 9b88feb Updating the app component diagram to the signals handlers design
+- 0d59a06 Renumbering the custom command line parameters section numbered 4-6 twice
+- d7cce01 Documenting the built in command line options and the usage errors
+- e2d327e Testing the application with the real command line arguments
+- f3da81b Parsing the command line before the log file initialization
+- 7450cf3 Exiting with a failure status on the command line usage errors
+- e41eaf8 Fixing the missing option value raising the version flag instead of the help one
+- 31ed501 Fixing the CommandLineParser test assertions which could not fail
+- 3f1aece Fixing the log mock LOG_INIT forwarding into the LOG_INIT_DEFAULTS mock
+- 659ecc2 Restoring the previous signal dispositions on the signals handler uninstall
+- 8032db6 Leaving the SIGTTIN and SIGTTOU signals to the shell job control
+- bbf2471 Removing the nonexistent module path directories and cppcheck suppression
+- e41042f Fixing the zlib gzip file example ignoring the read and close errors
+- 99f09f7 Fixing the flatpak requirements section naming an outdated SDK version
+- 04ad26e Documenting the ENABLE_COMPONENT_TESTS option of the test builds
+- 595617a Listing every linked doc section in the requirements and build index pages
+- 34f914b Fixing the documentation links pointing into the other language
+- 0eae2c3 Fixing the stale file paths named in the documentation
+- 080dc1e Fixing the flatpak target failing on its repeated build
+- 55fec2b Fixing the snap command path ignoring the install prefix
+- 681e130 Fixing the documentation install which needed a manual Doxygen-doc build
+- 510c8bf Skipping the Doxygen and callgrind targets when their tools are missing
+- 1693290 Installing the packager tools into the Jenkins pipeline image
+- f0b8fec Replacing the libjpeg-turbo download fallback with a clear configure error
+- 66d4205 Fixing the libavif download fallback stopping without the system libyuv
+- f4979d3 Pinning the third-party download fallbacks to their release tags
+- c7b7a91 Failing the CI test stages which match no tests
+- afb4ea4 Fixing the Jenkins doc sections linked check skipping the section directories
+- 6a66286 Replacing the broken OpenSSL download fallback with a clear configure error
+- d605bc8 Fixing the mixed target_link_libraries signatures on the project binary
+- bc66cfc Fixing the MAX_LOG_LEVEL option help text error level value
+- c03e129 Fixing the logger level filter tests which could not fail
+- 66686b1 Fixing the log macros to expand into single statements
+- 2abcffa Fixing the logger data races on the log file reopening and the level
+- 7ae195a Fixing the log file open failure aborting the process
+- 4520d43 Splitting the CTEST_DefaultLogger helper classes into own files
+- 9bfa83b Splitting the packages install scripts per OS release
+- 5ac3898 Renaming the short error code variable of the SQLite directory creation
+- 22fa8af Replacing the hard-coded deb dependency with the dpkg-shlibdeps detection
+- 1481dd1 Documenting the SQLiteCpp requirements and the database file location
+- c3e4155 Pinning the Jenkins pipeline image SQLiteCpp to the project tag
+- 23596da Fixing the cppcheck findings in the branch code
+- f2af2dd Introducing the unit and component tests for the SQLiteCpp code
+- 1a9fee9 Moving the SQLite database file out of the current directory
+- 39c67d0 Fixing the SQLite doc comments and the controller factory seam
+- f5998a6 Fixing the SQLite query failure path in the SQLiteController
+- f6ceadb Breaking the shared_ptr cycle between the context and the DB connection
+- 26878dd Fixing the malformed GCC diagnostic pragma in the includes header
+- a951c77 Synchronizing the get_stop assertions and the CommandLineParser doc comment with app
+- 942d11f Supressing the cppcheck's missingIncludeSystem and unusedStructMember warnings.
+- 23bf23b Replacing the unreachable GNU gettext site link with its Savannah page
+- 47266ce Introducing the destination CPU architecture into the package names
+- b403a43 Introducing the appGettext branch info into the READMEs
+- e23bf6a Introducing the appDarknetXX branch info into the READMEs
+- eb3a818 Introducing the RedHat packages install script
+- 44f8268 Introducing the appWhisperCPP branch info into the READMEs
+- fc30483 Introducing the FreeBSD packages install script
+- 1a1de2b Introducing the appV8 branch info into the READMEs
+- c363896 Erasing the build sources and trees of the docker images
+- 39aa56e Introducing the debug clang-format script
+- a0b7b6a Resetting the inherited signals dispositions in the signals handlers tests
+- 475fea2 Introducing the binary hardening options section into the READMEs
+- aebc673 Introducing the binary hardening compile and link options
+- 279dcd8 Introducing the GitLab CI/CD pipeline section into the READMEs
+- 750d350 Introducing the GitLab CI/CD pipeline mirroring the Jenkinsfile
+- fdb5bdd Introducing the GitHub Actions CI pipeline section into the READMEs
+- 2a75d7b Introducing the GitHub Actions CI pipeline mirroring the Jenkinsfile
+- 496e261 Correcting the appQt6QtDBusClient branch description in the READMEs
+- aa15ce9 Introducing the desktop application packaging switch
+- 14b9b97 Limiting the documentation checks to the repository own markdown files
+- ab704a7 Excluding the GCC own include directories from the clang-tidy search path
+- 27a753a Accepting the 405 documentation URLs
+- c5c724e Applying the clang-format to the test sources
+- aafe4ca Spacing out the branch entries in the READMEs
+- 7218f45 Rewording the DOCKER_HOST environment requirement in the docker docs
+- e3fdaa7 Removing the DOCKER_HOST variables from the docker enablers
+- 8d56836 Excluding the build trees from the Docker build context
+- 67cde39 Retrying the unreachable documentation URLs and accepting the 403 ones
+- beb94ce Introducing the --rebuild flag into the Jenkins docker scripts
+- 44ee510 Rebuilding the image from its base on the Jenkins pipeline force rebuild
+- 824f4d5 Introducing the audio assets branches info into the READMEs
+- cf4b79a Splitting the signals handlers per category and covering the pause, reload, user defined and ignored signals
+- c0f75a6 Introducing the app signals handlers subcomponent
+- ccc0408 Declaring the main function argv parameter as an array
+- c3fad86 Moving the packagers templates into the per-packager directories
+- 6152511 Dropping the packagers and the development tools from the packages install list
+- c34e0dd The destination CPU architecture of the AppImage package name
+- 9ec8342 Picking the CPack AppImage enabler since the CMake 4.2 and dropping the debug banners
+- a8b220d Extracting the AppImage enabler pick into its own general enabler
+- 17e3923 Selecting the AppImage packager enabler by the CMake version
+- 77197dc Introducing the CPack based AppImage packager enabler
+- e1b1bf3 Introducing the AppImage packager
+- 8783e95 Introducing the --install flag into the packager build scripts
+- 45acab0 Renaming the packages install script and adding the Ubuntu one
+- 9a14d63 Introducing the target architecture into the flatpak package name
+- f94e1c9 Declaring the SQLiteCpp source variables before the packagers consume them
+- afd4917 Introducing the AppStream metainfo file into the flatpak package
+- 9b21d1a Consuming the install directory variables the flatpak-builder passes
+- 0fa3130 Introducing the required packages install script
+- 2668fba Installing the flatpak build dependencies from the flathub remote
+- 39c8f5d Dropping the redundant build step from the packager scripts
+- 17f6f1b Introducing the per packager build scripts
+- 295322c Introducing the appCFITSIO branch info into the READMEs
+- 7f2c9b7 Make the compile time log level gate really gate
+- 5a7ff56 Introducing the appGtkmm4Libadwaita branch info into the READMEs
+- b2961e5 Pinning the log message stream to the classic locale
+- 508b627 Decomposing the IApplication descendants into the applications subcomponent
+- 64664fe Introducing the appFontAwesome branch info into the READMEs
+- 3ea30d9 Introducing the SQLiteCpp includes wrapper to silence its headers warnings
+- 120408c Introducing the debug test script and its --test parameter
+- 9c33553 Incrementing version to appSQLiteCpp30.11.0
+- ff4fe07 Release appSQLiteCpp30.10.0 at 2026-08-17
+
 ## [appSQLiteCpp30.10.0] - 2026-08-17
 
 - 5be104d Introducing the InsertNewlineAtEOF clang-format option
@@ -347,6 +475,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[appSQLiteCpp30.11.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appSQLiteCpp30.11.0)
+[appSQLiteCpp30.10.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appSQLiteCpp30.10.0)
 [appSQLiteCpp30.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appSQLiteCpp30.9.0)
 [app0.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.8.0)
 [app0.7.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.7.0)

@@ -5,6 +5,151 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appGtkmm4Libadwaita0.12.0] - 2026-11-08
+
+- 2ae27e7 Removing the destination OS from the AppImage package name
+- fd0dd8f Introducing the STT branches info into the READMEs
+- 95b427f Replacing the CMAKE_SOURCE_DIR/CMAKE_BINARY_DIR by the PROJECT_SOURCE_DIR/PROJECT_BINARY_DIR
+- 698bbe7 Introducing the appWebAssembly branch info into the READMEs
+- a98aa5c Introducing the appLlamaCPP branch info into the READMEs
+- de998de Introducing the TTS branches info into the READMEs
+- 3a4f241 Introducing the destination OS into the package names
+- b9a289c Fixing the branch name of the cloning commands in the docs
+- e3aeb26 Synchronizing the template flavors list of the READMEs
+- 5e4d315 Refreshing the shared library cache after the from-source installs
+- 4b40aff Failing the flavor CI test stages which match no tests
+- bc37b7a Converting the flavor link calls of the project binary to the keyword signature
+- ac9dd57 Fixing the cppcheck findings of the new signals handler, tests and log mock
+- 635c12c Updating the app component diagram to the signals handlers design
+- 9e20b3a Renumbering the custom command line parameters section numbered 4-6 twice
+- ca25b3f Documenting the built in command line options and the usage errors
+- 0ef3778 Testing the application with the real command line arguments
+- c490fe6 Parsing the command line before the log file initialization
+- be064b8 Exiting with a failure status on the command line usage errors
+- 94d9f33 Fixing the missing option value raising the version flag instead of the help one
+- fbc99d9 Fixing the CommandLineParser test assertions which could not fail
+- 963256a Fixing the log mock LOG_INIT forwarding into the LOG_INIT_DEFAULTS mock
+- 1218744 Restoring the previous signal dispositions on the signals handler uninstall
+- ced3e90 Leaving the SIGTTIN and SIGTTOU signals to the shell job control
+- 869e19a Removing the nonexistent module path directories and cppcheck suppression
+- 63a21cf Fixing the zlib gzip file example ignoring the read and close errors
+- eab30c2 Fixing the flatpak requirements section naming an outdated SDK version
+- fa6f03f Documenting the ENABLE_COMPONENT_TESTS option of the test builds
+- 7fca92a Listing every linked doc section in the requirements and build index pages
+- a81f16d Fixing the documentation links pointing into the other language
+- 911a9eb Fixing the stale file paths named in the documentation
+- 86ac09f Fixing the flatpak target failing on its repeated build
+- 41eebd9 Fixing the snap command path ignoring the install prefix
+- 663eb7d Fixing the documentation install which needed a manual Doxygen-doc build
+- 3e0f325 Skipping the Doxygen and callgrind targets when their tools are missing
+- f0313d4 Installing the packager tools into the Jenkins pipeline image
+- af60447 Replacing the libjpeg-turbo download fallback with a clear configure error
+- 8d5cc45 Fixing the libavif download fallback stopping without the system libyuv
+- 6d97ec8 Pinning the third-party download fallbacks to their release tags
+- 1fbb98f Failing the CI test stages which match no tests
+- e9811ac Fixing the Jenkins doc sections linked check skipping the section directories
+- 2219b6d Replacing the broken OpenSSL download fallback with a clear configure error
+- 886a9f7 Fixing the mixed target_link_libraries signatures on the project binary
+- a0112b5 Fixing the MAX_LOG_LEVEL option help text error level value
+- f33a0b6 Fixing the logger level filter tests which could not fail
+- b0e949f Fixing the log macros to expand into single statements
+- 2b89c1f Fixing the logger data races on the log file reopening and the level
+- 675247f Fixing the log file open failure aborting the process
+- fb8d056 Splitting the CTEST_DefaultLogger helper classes into own files
+- f1da675 Splitting the packages install scripts per OS release
+- ea4afe5 Replacing the constant restating AdwaitaWindow tests with a GResource bundle check
+- 1b08fe3 Removing the redundant libadwaita main window stylesheet
+- f4c3ecc Fixing the libadwaita application lifetime and the failed window exit status
+- 7fb2d6b Pointing the implementation docs at the AdwaitaWindow class of the branch
+- 168a97a Checking out the own branch in the Jenkins pipeline
+- b23791a Declaring the libadwaita dependency of the deb and snap packages
+- de11344 Installing the libadwaita development package into the Jenkins pipeline image
+- 31911c5 Indexing the libadwaita main window section in the project structure page
+- 244d156 Fixing the cppcheck findings of the GTK branch sources
+- fcb6a09 Restoring the stop flag assertions of the Application unit test
+- 58d8f99 Dropping the executable bit of the logo image
+- 22f9842 Naming the existing GResource template in the resource embedding docs
+- bf6a654 Revoking the X server access on every exit of the docker single run
+- 29580b7 Removing the dead code of the GTK main window and controller
+- 7790a04 Indexing the toolkit messages section in the project structure page
+- b65ac75 Guarding the clang-tidy build stage with the RUN_CLANGTIDY parameter
+- f15525b Declaring the snap build and stage packages of the toolkit
+- 1d57a1b Dropping the Glade from the GTK4 branch requirements
+- 73ec62c Regenerating the GResource source on the listed resource files change
+- 382b728 Quitting the GTK application main loop on the raised stop flag
+- 50209fc Handing the program name alone to the GTK application
+- c56622e Synchronizing the drifted docker and cppcheck enablers with the app branch
+- 75fc584 Hiding the ApplicationContext fields and adding the atomic stop flag
+- d52cd17 Replacing int flag with a bool for the CommandLineParser
+- 023fecf Supressing the cppcheck's missingIncludeSystem and unusedStructMember warnings.
+- cc24a5f Renaming the GtkmmIniter component into the Gtkmm4Controller
+- c5f5fb6 Replacing the unreachable GNU gettext site link with its Savannah page
+- cf4ca2c Introducing the destination CPU architecture into the package names
+- bc6e695 Introducing the appGettext branch info into the READMEs
+- f135fd6 Introducing the appDarknetXX branch info into the READMEs
+- ccfaa91 Introducing the RedHat packages install script
+- 644d78d Introducing the appWhisperCPP branch info into the READMEs
+- 9fc47e6 Introducing the FreeBSD packages install script
+- 5032eb3 Introducing the appV8 branch info into the READMEs
+- ad52957 Erasing the build sources and trees of the docker images
+- f38a1f7 Introducing the debug clang-format script
+- b82cf01 Resetting the inherited signals dispositions in the signals handlers tests
+- 7ed4ccf Introducing the binary hardening options section into the READMEs
+- dbe3a47 Introducing the binary hardening compile and link options
+- 4aaf440 Introducing the GitLab CI/CD pipeline section into the READMEs
+- ccbd088 Introducing the GitLab CI/CD pipeline mirroring the Jenkinsfile
+- f8e89b0 Introducing the GitHub Actions CI pipeline section into the READMEs
+- 50a0147 Introducing the GitHub Actions CI pipeline mirroring the Jenkinsfile
+- a9d9f0f Correcting the appQt6QtDBusClient branch description in the READMEs
+- 3e86ff8 Introducing the desktop application packaging switch
+- bf2bc41 Limiting the documentation checks to the repository own markdown files
+- 3cc62ce Excluding the GCC own include directories from the clang-tidy search path
+- 90ab73f Accepting the 405 documentation URLs
+- 215e650 Spacing out the branch entries in the READMEs
+- e83500c Rewording the DOCKER_HOST environment requirement in the docker docs
+- e0ecdaf Removing the DOCKER_HOST variables from the docker enablers
+- c7ec834 Escaping the shell environment variables of the docker run command
+- 386d6de Installing the libadwaita development package in the Docker image
+- edaec0f Excluding the build trees from the Docker build context
+- 35e5e47 Retrying the unreachable documentation URLs and accepting the 403 ones
+- 54c395c Introducing the --rebuild flag into the Jenkins docker scripts
+- 31e7f07 Rebuilding the image from its base on the Jenkins pipeline force rebuild
+- 99890c3 Introducing the audio assets branches info into the READMEs
+- 865c96d Splitting the signals handlers per category and covering the pause, reload, user defined and ignored signals
+- 5fa9e26 Introducing the app signals handlers subcomponent
+- b3e45b1 Declaring the main function argv parameter as an array
+- a3c35cb Moving the packagers templates into the per-packager directories
+- fce6e99 Dropping the packagers and the development tools from the packages install list
+- 1480fc0 The destination CPU architecture of the AppImage package name
+- c29ff12 Picking the CPack AppImage enabler since the CMake 4.2 and dropping the debug banners
+- 2660fa4 Extracting the AppImage enabler pick into its own general enabler
+- 0641b2c Selecting the AppImage packager enabler by the CMake version
+- dbdfe0b Introducing the CPack based AppImage packager enabler
+- 548e4b6 Introducing the AppImage packager
+- 47fa707 Introducing the --install flag into the packager build scripts
+- ee7b90b Renaming the packages install script and adding the Ubuntu one
+- 08cceaa Introducing the target architecture into the flatpak package name
+- 86172cf Introducing the AppStream metainfo file into the flatpak package
+- 18f20a0 Consuming the install directory variables the flatpak-builder passes
+- 33397ab Introducing the required packages install script
+- 05cba6a Configuring the flatpak packager script with the toolkit enablers off
+- 0f7aaa2 Installing the flatpak build dependencies from the flathub remote
+- 1ea4d3d Pointing the flatpak packager requirements to the GNOME 49 runtime
+- 34d83d8 Building the flatpak gtkmm4 stack from the release tarballs on the GNOME 49 runtime
+- e4ed2f3 Dropping the redundant build step from the packager scripts
+- c151ac5 Introducing the per packager build scripts
+- aa43622 Introducing the appCFITSIO branch info into the READMEs
+- 3f1c29d Log every toolkit message through the application log
+- c9a73d0 Make the compile time log level gate really gate
+- 866cca2 Placing the libadwaita window texts above the height filling logo
+- 0105da9 Introducing the libadwaita based main window
+- 1ba274f Pinning the log message stream to the classic locale
+- 575b755 Decomposing the IApplication descendants into the applications subcomponent
+- 3ef986f Introducing the appFontAwesome branch info into the READMEs
+- 556d390 Introducing the debug test script and its --test parameter
+- c59873c Incrementing version to appGtkmm40.12.0
+- 9364250 Release appGtkmm40.11.0 at 2026-08-17
+
 ## [appGtkmm40.11.0] - 2026-08-17
 
 - d2550fb Introducing the InsertNewlineAtEOF clang-format option
@@ -367,6 +512,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[appGtkmm4Libadwaita0.12.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appGtkmm4Libadwaita0.12.0)
+[appGtkmm40.11.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appGtkmm40.11.0)
 [appGtkmm30.10.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appGtkmm30.10.0)
 [appGtkmm30.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appGtkmm30.9.0)
 [appGtkmm30.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appGtkmm30.8.0)

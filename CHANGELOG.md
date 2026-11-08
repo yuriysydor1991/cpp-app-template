@@ -5,6 +5,144 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appGtkmm4GDBusClient0.12.0] - 2026-11-08
+
+- 00e4b28 Removing the destination OS from the AppImage package name
+- 8de734c Introducing the STT branches info into the READMEs
+- 3ce8721 Replacing the CMAKE_SOURCE_DIR/CMAKE_BINARY_DIR by the PROJECT_SOURCE_DIR/PROJECT_BINARY_DIR
+- 95080a3 Introducing the appWebAssembly branch info into the READMEs
+- 2743383 Introducing the appLlamaCPP branch info into the READMEs
+- 4bf7766 Introducing the TTS branches info into the READMEs
+- 7a4872b Introducing the destination OS into the package names
+- 5ad3021 Fixing the branch name of the cloning commands in the docs
+- 3acf953 Synchronizing the template flavors list of the READMEs
+- 33eacee Refreshing the shared library cache after the from-source installs
+- 6f3d020 Failing the flavor CI test stages which match no tests
+- da19a87 Converting the flavor link calls of the project binary to the keyword signature
+- a76825a Fixing the cppcheck findings of the new signals handler, tests and log mock
+- 9ce6ad4 Updating the app component diagram to the signals handlers design
+- 089ea9a Renumbering the custom command line parameters section numbered 4-6 twice
+- 63103f4 Documenting the built in command line options and the usage errors
+- 0ee4ce6 Testing the application with the real command line arguments
+- 5e5c46b Parsing the command line before the log file initialization
+- 967f57b Exiting with a failure status on the command line usage errors
+- 9093aab Fixing the missing option value raising the version flag instead of the help one
+- 8c5d846 Fixing the CommandLineParser test assertions which could not fail
+- fa32252 Fixing the log mock LOG_INIT forwarding into the LOG_INIT_DEFAULTS mock
+- 79138df Restoring the previous signal dispositions on the signals handler uninstall
+- ed5c439 Leaving the SIGTTIN and SIGTTOU signals to the shell job control
+- 0aece38 Removing the nonexistent module path directories and cppcheck suppression
+- 68cf63d Fixing the zlib gzip file example ignoring the read and close errors
+- c41288a Fixing the flatpak requirements section naming an outdated SDK version
+- 17e9bac Documenting the ENABLE_COMPONENT_TESTS option of the test builds
+- 51090db Listing every linked doc section in the requirements and build index pages
+- caef5c5 Fixing the documentation links pointing into the other language
+- 65142c7 Fixing the stale file paths named in the documentation
+- b831aef Fixing the flatpak target failing on its repeated build
+- 06e22c2 Fixing the snap command path ignoring the install prefix
+- 2e22c60 Fixing the documentation install which needed a manual Doxygen-doc build
+- 58d0975 Skipping the Doxygen and callgrind targets when their tools are missing
+- fa2f963 Installing the packager tools into the Jenkins pipeline image
+- f2a477b Replacing the libjpeg-turbo download fallback with a clear configure error
+- 670e7fa Fixing the libavif download fallback stopping without the system libyuv
+- a1d96f8 Pinning the third-party download fallbacks to their release tags
+- 3593c71 Failing the CI test stages which match no tests
+- 8ffae7a Fixing the Jenkins doc sections linked check skipping the section directories
+- 07f33e4 Replacing the broken OpenSSL download fallback with a clear configure error
+- 5359dfe Fixing the mixed target_link_libraries signatures on the project binary
+- 83c850c Fixing the MAX_LOG_LEVEL option help text error level value
+- 2230075 Fixing the logger level filter tests which could not fail
+- 0a9722e Fixing the log macros to expand into single statements
+- 12b0b19 Fixing the logger data races on the log file reopening and the level
+- 32e8910 Fixing the log file open failure aborting the process
+- 3e04460 Splitting the CTEST_DefaultLogger helper classes into own files
+- fc7d3b4 Splitting the packages install scripts per OS release
+- e8382b9 Fixing the cppcheck finding of the hostname1 query handler
+- 3739c92 Removing the toolkit command line parameters claim from the docs
+- 5df0553 Pointing the implementation docs at the D-Bus classes of the branch
+- cb1c1cb Granting the flatpak and snap packages the hostname1 system bus access
+- 6094889 Lowering the gdbus CMake minimum version to the project one
+- 868d2c7 Removing the unused GResource prefix definition of the D-Bus client
+- 24ce915 Skipping the live D-Bus component tests without the hostname1 service
+- 624cd42 Moving the hostname1 properties structure into its own class file
+- 4d880aa Fixing the cppcheck findings of the GTK branch sources
+- 82c45f7 Restoring the stop flag assertions of the Application unit test
+- 101652b Naming the existing GResource template in the resource embedding docs
+- 6496447 Revoking the X server access on every exit of the docker single run
+- 564f5b8 Removing the dead code of the GTK main window and controller
+- 99883df Indexing the toolkit messages section in the project structure page
+- 5c952d9 Guarding the clang-tidy build stage with the RUN_CLANGTIDY parameter
+- 5252e59 Declaring the snap build and stage packages of the toolkit
+- e42651a Dropping the Glade from the GTK4 branch requirements
+- f9d3282 Synchronizing the drifted docker and cppcheck enablers with the app branch
+- b55ee25 Hiding the ApplicationContext fields and adding the atomic stop flag
+- a636971 Replacing int flag with a bool for the CommandLineParser
+- e58062e Supressing the cppcheck's missingIncludeSystem and unusedStructMember warnings.
+- 51e9c53 Renaming the GtkmmIniter component into the Gtkmm4Controller
+- 387a4e0 Replacing the unreachable GNU gettext site link with its Savannah page
+- 727708e Introducing the destination CPU architecture into the package names
+- 5f0bb20 Introducing the appGettext branch info into the READMEs
+- 01b2f4e Introducing the appDarknetXX branch info into the READMEs
+- 6b968f0 Introducing the RedHat packages install script
+- cb9c413 Introducing the appWhisperCPP branch info into the READMEs
+- d0688b8 Introducing the FreeBSD packages install script
+- 94dc253 Introducing the appV8 branch info into the READMEs
+- cd2d960 Erasing the build sources and trees of the docker images
+- d737c46 Introducing the debug clang-format script
+- f29b20f Resetting the inherited signals dispositions in the signals handlers tests
+- 23cc310 Introducing the binary hardening options section into the READMEs
+- c8c64e8 Introducing the binary hardening compile and link options
+- ae90489 Introducing the GitLab CI/CD pipeline section into the READMEs
+- 20f299c Introducing the GitLab CI/CD pipeline mirroring the Jenkinsfile
+- 7d0e64c Introducing the GitHub Actions CI pipeline section into the READMEs
+- e0f5210 Introducing the GitHub Actions CI pipeline mirroring the Jenkinsfile
+- aebcf99 Correcting the appQt6QtDBusClient branch description in the READMEs
+- e2ee4ac Introducing the desktop application packaging switch
+- 9f3386e Limiting the documentation checks to the repository own markdown files
+- ef311c0 Excluding the GCC own include directories from the clang-tidy search path
+- e160e20 Accepting the 405 documentation URLs
+- b377c1e Spacing out the branch entries in the READMEs
+- fe48442 Rewording the DOCKER_HOST environment requirement in the docker docs
+- 26870e4 Removing the DOCKER_HOST variables from the docker enablers
+- d071d6c Escaping the shell environment variables of the docker run command
+- 1875429 Excluding the build trees from the Docker build context
+- fc399a0 Retrying the unreachable documentation URLs and accepting the 403 ones
+- ca0a369 Introducing the --rebuild flag into the Jenkins docker scripts
+- d351b23 Rebuilding the image from its base on the Jenkins pipeline force rebuild
+- 8172777 Introducing the audio assets branches info into the READMEs
+- f016dce Splitting the signals handlers per category and covering the pause, reload, user defined and ignored signals
+- ebcb7e7 Introducing the app signals handlers subcomponent
+- e6b44f4 Declaring the main function argv parameter as an array
+- 0058ae7 Moving the packagers templates into the per-packager directories
+- 2f82d08 Dropping the packagers and the development tools from the packages install list
+- 9e04597 The destination CPU architecture of the AppImage package name
+- cc1f6f9 Picking the CPack AppImage enabler since the CMake 4.2 and dropping the debug banners
+- 33e82d7 Extracting the AppImage enabler pick into its own general enabler
+- 0424f68 Selecting the AppImage packager enabler by the CMake version
+- d2b10fa Introducing the CPack based AppImage packager enabler
+- 71583d1 Introducing the AppImage packager
+- 6868139 Introducing the --install flag into the packager build scripts
+- f5e1d6d Renaming the packages install script and adding the Ubuntu one
+- a45341e Introducing the target architecture into the flatpak package name
+- b9ba6c9 Introducing the AppStream metainfo file into the flatpak package
+- 4e56ebb Consuming the install directory variables the flatpak-builder passes
+- 5cccaa9 Introducing the required packages install script
+- d9dac75 Installing the flatpak build dependencies from the flathub remote
+- 6ca7a8d Pointing the flatpak packager requirements to the GNOME 49 runtime
+- 7073e00 Building the flatpak gtkmm4 stack from the release tarballs on the GNOME 49 runtime
+- e200af2 Dropping the redundant build step from the packager scripts
+- fbfee98 Introducing the per packager build scripts
+- af2939f Introducing the appCFITSIO branch info into the READMEs
+- c587155 Log every toolkit message through the application log
+- 659b286 Make the compile time log level gate really gate
+- e493710 Introducing the appGtkmm4Libadwaita branch info into the READMEs
+- 46fba65 Pinning the log message stream to the classic locale
+- 3c1b332 Decomposing the IApplication descendants into the applications subcomponent
+- 68390cd Introducing the appFontAwesome branch info into the READMEs
+- 49f35c8 Introducing the debug test script and its --test parameter
+- 56c13ed Incrementing version to appGtkmm4GDBusClient0.12.0
+- 9c315ab Release appGtkmm4GDBusClient0.11.0 at 2026-08-17
+
 ## [appGtkmm4GDBusClient0.11.0] - 2026-08-17
 
 - f242205 Introducing the InsertNewlineAtEOF clang-format option
@@ -369,6 +507,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[appGtkmm4GDBusClient0.12.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appGtkmm4GDBusClient0.12.0)
+[appGtkmm4GDBusClient0.11.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appGtkmm4GDBusClient0.11.0)
 [appGtkmm30.10.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appGtkmm30.10.0)
 [appGtkmm30.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appGtkmm30.9.0)
 [appGtkmm30.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appGtkmm30.8.0)

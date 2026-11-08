@@ -49,7 +49,7 @@
 | `-DENABLE_DEB=true` | `<проект>-<версія>-<арх>-<ОС>.deb` | [Вмикання підтримки генерації DEB-пакету](/doc/sections/uk_UA/5-23-enabling-deb-package-generation.md) |
 | `-DENABLE_RPM=true` | `<проект>-<версія>-<арх>-<ОС>.rpm` | [Вмикання підтримки генерації RPM-пакету](/doc/sections/uk_UA/5-24-enabling-rpm-package-generation.md) |
 | `-DENABLE_FREEBSD_PKG=true` | `<проект>-<версія>-<арх>-<ОС>.pkg` | [Вмикання підтримки генерації FreeBSD pkg-пакету](/doc/sections/uk_UA/5-25-enabling-freebsd-pkg-package-generation.md) |
-| `-DENABLE_APPIMAGE=true` | `<проект>-<версія>-<арх>-<ОС>.AppImage` | [Вмикання підтримки генерації AppImage-збірки](/doc/sections/uk_UA/5-26-enabling-the-AppImage-bundle-generation.md) |
+| `-DENABLE_APPIMAGE=true` | `<проект>-<версія>-<арх>.AppImage` | [Вмикання підтримки генерації AppImage-збірки](/doc/sections/uk_UA/5-26-enabling-the-AppImage-bundle-generation.md) |
 | `-DENABLE_WIX=true` | `<проект>-<версія>-<арх>-<ОС>.msi` | [Вмикання підтримки генерації WIX MSI-інсталятора](/doc/sections/uk_UA/5-27-enabling-the-WIX-MSI-installer-generation.md) |
 | `-DENABLE_DOCKER=true` | побудова і запуск контейнера | [Вмикання підтримки запуску Docker-контейнера](/doc/sections/uk_UA/5-12-enabling-the-docker-container-build-and-run.md) |
 | `-DENABLE_JENKINS_DOCKER_PIPELINE=true` | побудова і запуск контейнера конвеєра Jenkins | [Вмикання конвеєра Jenkins всередині Docker контейнера](/doc/sections/uk_UA/5-17-enabling-Jenkins-pipeline-inside-Docker-container.md) |

@@ -5,6 +5,106 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [lib0.12.0] - 2026-11-08
+
+- 1cf6e2b Introducing the LIB_TYPE option for the shared or the static library
+- 6597326 Introducing the STT branches info into the READMEs
+- 07f3ac7 Replacing the CMAKE_SOURCE_DIR/CMAKE_BINARY_DIR by the PROJECT_SOURCE_DIR/PROJECT_BINARY_DIR
+- 02819f5 Introducing the appWebAssembly branch info into the READMEs
+- 0e56a40 Introducing the appLlamaCPP branch info into the READMEs
+- 9099a77 Introducing the TTS branches info into the READMEs
+- 35832c9 Introducing the destination OS into the package names
+- e1594bc Synchronizing the template flavors list of the READMEs
+- 9f022be Refreshing the shared library cache after the from-source installs
+- ecf2062 Adapting the test loggers of lib to the bool returning ILogger
+- 0a94f9f Fixing the log mock LOG_INIT forwarding into the LOG_INIT_DEFAULTS mock
+- f8977d8 Removing the nonexistent module path directories and cppcheck suppression
+- 7d83e1d Fixing the zlib gzip file example ignoring the read and close errors
+- 45a7495 Documenting the ENABLE_COMPONENT_TESTS option of the test builds
+- 1863f00 Listing every linked doc section in the requirements and build index pages
+- bd2cc11 Fixing the documentation links pointing into the other language
+- c66d353 Fixing the configure header path of the lib version tracking section
+- 4a342ee Fixing the stale file paths named in the documentation
+- 03c2439 Fixing the documentation install which needed a manual Doxygen-doc build
+- 7fd7504 Skipping the Doxygen and callgrind targets when their tools are missing
+- 1eecb14 Installing the packager tools into the Jenkins pipeline image
+- 2e6db0a Replacing the libjpeg-turbo download fallback with a clear configure error
+- 96a110e Fixing the libavif download fallback stopping without the system libyuv
+- df6805f Pinning the third-party download fallbacks to their release tags
+- 30e6ca6 Failing the CI test stages which match no tests
+- 59674c6 Fixing the Jenkins doc sections linked check skipping the section directories
+- 48c98f7 Replacing the broken OpenSSL download fallback with a clear configure error
+- 6f85b88 Fixing the mixed target_link_libraries signatures on the project binary
+- 4012d0b Fixing the MAX_LOG_LEVEL option help text error level value
+- 97eb606 Fixing the logger level filter tests which could not fail
+- f2781be Fixing the log macros to expand into single statements
+- d145de4 Fixing the logger data races on the log file reopening and the level
+- 643fce1 Fixing the log file open failure aborting the process
+- da1ef56 Splitting the CTEST_DefaultLogger helper classes into own files
+- e2d5176 Splitting the packages install scripts per OS release
+- ce57325 Linking the Jenkins pipeline section of the library and adding its uk_UA twin
+- 241cb8e Removing the executable run docs of the library without an executable
+- a28b29f Removing the flatpak leftovers of the library without the flatpak support
+- 9fbb5fd Fixing the side by side install claim of the unversioned library packages
+- c99419b Fixing the many libraries integration test hard-coding the version
+- 9f8de6f Introducing the sanitizers section of the library
+- 8b02b2e Fixing the library install section describing an executable and the PATH
+- bb7dc70 Fixing the FreeBSD pkg origin of the library missing its package name
+- f6e3ec9 Fixing the colliding 5-23 library name segments doc number
+- 51d2f8c Removing the snap packager stage of a library without the snap support
+- 0cec3b8 Fixing the cppcheck unusedFunction finding of the public init_logger
+- 4e78b9d Fixing the UTEST_LibraryFacade test names and returned value checks
+- e73a4b8 Fixing the enablers to link the dependencies to the library target
+- 75b5103 Fixing the library install directory to follow the CMAKE_INSTALL_LIBDIR
+- 2215aae Fixing the installed CMake package of the library
+- 4d166cb Replacing the unreachable GNU gettext site link with its Savannah page
+- fb3b796 Introducing the destination CPU architecture into the package names
+- fa74ed0 Introducing the appGettext branch info into the READMEs
+- 561f130 Introducing the appDarknetXX branch info into the READMEs
+- 583f59a Introducing the RedHat packages install script
+- 0572e35 Introducing the appWhisperCPP branch info into the READMEs
+- c73bdc5 Introducing the FreeBSD packages install script
+- 19bf8e8 Introducing the appV8 branch info into the READMEs
+- 624c8d1 Introducing the debug clang-format script
+- 6c4d3a9 Introducing the binary hardening options section into the READMEs
+- bbc5932 Introducing the binary hardening compile and link options
+- c55f2b2 Introducing the GitLab CI/CD pipeline section into the READMEs
+- bffc806 Introducing the GitLab CI/CD pipeline mirroring the Jenkinsfile
+- 4adf6cf Introducing the GitHub Actions CI pipeline section into the READMEs
+- 6f9863f Introducing the GitHub Actions CI pipeline mirroring the Jenkinsfile
+- 2b17b34 Correcting the appQt6QtDBusClient branch description in the READMEs
+- c7984db Limiting the documentation checks to the repository own markdown files
+- b2fa60d Excluding the GCC own include directories from the clang-tidy search path
+- da2cfe9 Adding the build-* directories to the .gitignore
+- 9c9a548 Accepting the 405 documentation URLs
+- a8a224e Null separating the grep file list in the many libs integration test
+- cc3857d Spacing out the branch entries in the READMEs
+- aac272b Removing the DOCKER_HOST variables from the docker enablers
+- bd5d7da Excluding the build trees from the Docker build context
+- d1f9310 Retrying the unreachable documentation URLs and accepting the 403 ones
+- ba7617c Introducing the --rebuild flag into the Jenkins docker scripts
+- 1af6108 Rebuilding the image from its base on the Jenkins pipeline force rebuild
+- 2fd275e Introducing the audio assets branches info into the READMEs
+- 2bfd8fd Moving the packagers templates into the per-packager directories
+- 2087e16 Dropping the packagers and the development tools from the packages install list
+- c5f218f Introducing the --install flag into the packager build scripts
+- d9f2847 Renaming the packages install script and adding the Ubuntu one
+- 6537236 Introducing the required packages install script
+- e4ad380 Dropping the redundant build step from the packager scripts
+- 1cbbe42 Introducing the per packager build scripts
+- 6033eb2 Moving the logger interface into the installable public headers
+- b79e2c2 Correcting what the hidden visibility leaves exported
+- ac2b876 Hand writing the public headers and hiding the library implementation symbols
+- c0db724 Introducing the appCFITSIO branch info into the READMEs
+- aa93c64 Make the compile time log level gate really gate
+- f6e58bb Introducing the appGtkmm4Libadwaita branch info into the READMEs
+- 566a9ec Pinning the log message stream to the classic locale
+- d61afa3 Introducing the LIB_INSTALL_DEV_FILES install option
+- 4c25d73 Introducing the appFontAwesome branch info into the READMEs
+- 7a2a2fb Introducing the debug test script and its --test parameter
+- 2c044ea Incrementing version to lib0.12.0
+- 8dff150 Release lib0.11.0 at 2026-08-17
+
 ## [lib0.11.0] - 2026-08-17
 
 - 35325cf Introducing the project unique TEMPLATE_DEFAULT_LOG_NAMESPACE for the default logger
@@ -343,6 +443,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[lib0.12.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/lib0.12.0)
+[lib0.11.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/lib0.11.0)
 [lib0.10.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/lib0.10.0)
 [lib0.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/lib0.9.0)
 [lib0.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/lib0.8.0)

@@ -5,6 +5,135 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appSDBusCxxServer0.12.0] - 2026-11-08
+
+- 38ed87b Removing the destination OS from the AppImage package name
+- 4ccb4a1 Introducing the STT branches info into the READMEs
+- 01d3730 Replacing the CMAKE_SOURCE_DIR/CMAKE_BINARY_DIR by the PROJECT_SOURCE_DIR/PROJECT_BINARY_DIR
+- c5d84ca Introducing the appWebAssembly branch info into the READMEs
+- 57d3041 Introducing the appLlamaCPP branch info into the READMEs
+- aa86002 Introducing the TTS branches info into the READMEs
+- 38f5773 Introducing the destination OS into the package names
+- 65b53b6 Fixing the branch name of the cloning commands in the docs
+- c48a0f1 Synchronizing the template flavors list of the READMEs
+- 58b637e Documenting the sdbus-c++ source build of the Ubuntu 24.04 packages script
+- 278e2e4 Failing the flavor CI test stages which match no tests
+- 9530e7a Converting the flavor link calls of the project binary to the keyword signature
+- a20a8b4 Refreshing the shared library cache after the from-source installs
+- 700a8a9 Fixing the cppcheck findings of the new signals handler, tests and log mock
+- 7842861 Updating the app component diagram to the signals handlers design
+- c60bb32 Renumbering the custom command line parameters section numbered 4-6 twice
+- d7d26bb Documenting the built in command line options and the usage errors
+- 57f7f1d Testing the application with the real command line arguments
+- 747a432 Parsing the command line before the log file initialization
+- cb5ba21 Exiting with a failure status on the command line usage errors
+- 175846d Fixing the missing option value raising the version flag instead of the help one
+- 8634852 Fixing the CommandLineParser test assertions which could not fail
+- 5bb9766 Fixing the log mock LOG_INIT forwarding into the LOG_INIT_DEFAULTS mock
+- 9782c70 Restoring the previous signal dispositions on the signals handler uninstall
+- 1337841 Leaving the SIGTTIN and SIGTTOU signals to the shell job control
+- c1fe594 Removing the nonexistent module path directories and cppcheck suppression
+- bbc71c9 Fixing the zlib gzip file example ignoring the read and close errors
+- dbd47c6 Fixing the flatpak requirements section naming an outdated SDK version
+- ba60845 Documenting the ENABLE_COMPONENT_TESTS option of the test builds
+- c9fba7c Listing every linked doc section in the requirements and build index pages
+- 029f0d1 Fixing the documentation links pointing into the other language
+- a4b21a3 Fixing the stale file paths named in the documentation
+- 23e8ad3 Fixing the flatpak target failing on its repeated build
+- c791b98 Fixing the snap command path ignoring the install prefix
+- 5aea73b Fixing the documentation install which needed a manual Doxygen-doc build
+- 43d2eaf Skipping the Doxygen and callgrind targets when their tools are missing
+- 14a9243 Installing the packager tools into the Jenkins pipeline image
+- c1bf8eb Replacing the libjpeg-turbo download fallback with a clear configure error
+- f93ba88 Fixing the libavif download fallback stopping without the system libyuv
+- 96df72b Pinning the third-party download fallbacks to their release tags
+- 884ecfe Failing the CI test stages which match no tests
+- 009d68a Fixing the Jenkins doc sections linked check skipping the section directories
+- 7b72441 Replacing the broken OpenSSL download fallback with a clear configure error
+- 4c2fcab Fixing the mixed target_link_libraries signatures on the project binary
+- 6088b4a Fixing the MAX_LOG_LEVEL option help text error level value
+- 765ce7c Fixing the logger level filter tests which could not fail
+- 8e190f8 Fixing the log macros to expand into single statements
+- 51a0a1b Fixing the logger data races on the log file reopening and the level
+- b946b62 Fixing the log file open failure aborting the process
+- 7758a7c Splitting the CTEST_DefaultLogger helper classes into own files
+- 2e824fa Splitting the packages install scripts per OS release
+- 64eee81 Documenting the sdbus-c++ requirements, option and the served D-Bus name
+- d994a4c Granting the flatpak and the snap the D-Bus server name
+- ff07962 Installing the D-Bus session service file of the server
+- 5d13f18 Fixing the cppcheck findings in the branch code
+- 6e35689 Fixing the stale sdbus-c++ link comments of the component tests CMake
+- c4dfc91 Skipping the D-Bus round trip test while the server name is owned
+- af335bc Leaving the D-Bus server event loop on the application stop flag
+- 6302558 Stopping the configure with a clear error when the flavor library is OFF
+- 9afcb0c Keeping the fetched sdbus-c++ files out of the project installation
+- 39952ff Requiring the sdbus-c++ 2 API the code is written for
+- 134bdd8 Returning the invalid status instead of asserting on an unreachable D-Bus
+- e988760 Fixing the malformed GCC diagnostic pragma in the includes header
+- bb4e112 Synchronizing the CommandLineParser parse doc comment with app
+- e6af890 Synchronizing the get_stop assertions of the application tests with app
+- 7c0daa4 Replacing the unreachable GNU gettext site link with its Savannah page
+- c5acd12 Introducing the destination CPU architecture into the package names
+- e11d086 Introducing the appGettext branch info into the READMEs
+- aea81c4 Introducing the appDarknetXX branch info into the READMEs
+- cee4dd0 Introducing the RedHat packages install script
+- 9be655a Introducing the appWhisperCPP branch info into the READMEs
+- 71dd5a5 Introducing the FreeBSD packages install script
+- fe8d64c Introducing the appV8 branch info into the READMEs
+- f3b7448 Erasing the build sources and trees of the docker images
+- be0bc07 Introducing the debug clang-format script
+- 82a658c Resetting the inherited signals dispositions in the signals handlers tests
+- ab77469 Introducing the binary hardening options section into the READMEs
+- 8a033d9 Introducing the binary hardening compile and link options
+- ec6b180 Introducing the GitLab CI/CD pipeline section into the READMEs
+- fbe73f3 Introducing the GitLab CI/CD pipeline mirroring the Jenkinsfile
+- 22b0583 Introducing the GitHub Actions CI pipeline section into the READMEs
+- 25b6761 Moving the GitHub Actions CI pipeline to the Ubuntu 26.04 runner with the branch dependencies
+- a25e1c7 Correcting the appQt6QtDBusClient branch description in the READMEs
+- 7f5ccc3 Introducing the desktop application packaging switch
+- 867cc4d Limiting the documentation checks to the repository own markdown files
+- 91f1452 Excluding the GCC own include directories from the clang-tidy search path
+- 4c4f372 Accepting the 405 documentation URLs
+- 0d36ea0 Applying the clang-format to the test sources
+- 6c2af4e Spacing out the branch entries in the READMEs
+- d27ce87 Rewording the DOCKER_HOST environment requirement in the docker docs
+- a1e8552 Removing the DOCKER_HOST variables from the docker enablers
+- 1c90a68 Excluding the build trees from the Docker build context
+- 4ec8473 Retrying the unreachable documentation URLs and accepting the 403 ones
+- 26cf1e3 Introducing the --rebuild flag into the Jenkins docker scripts
+- b2d960a Rebuilding the image from its base on the Jenkins pipeline force rebuild
+- efc67ee Introducing the audio assets branches info into the READMEs
+- ab2251c Splitting the signals handlers per category and covering the pause, reload, user defined and ignored signals
+- 6617c8d Introducing the app signals handlers subcomponent
+- 5d6246e Declaring the main function argv parameter as an array
+- 960d070 Moving the packagers templates into the per-packager directories
+- 0e77e76 Dropping the packagers and the development tools from the packages install list
+- bced554 The destination CPU architecture of the AppImage package name
+- 8709a6e Picking the CPack AppImage enabler since the CMake 4.2 and dropping the debug banners
+- e52611c Extracting the AppImage enabler pick into its own general enabler
+- c76fab8 Selecting the AppImage packager enabler by the CMake version
+- 64a4afe Introducing the CPack based AppImage packager enabler
+- 7a9869c Introducing the AppImage packager
+- 3361b43 Introducing the --install flag into the packager build scripts
+- 132b4ed Renaming the packages install script and adding the Ubuntu one
+- 5cb2185 Introducing the target architecture into the flatpak package name
+- 337f41f Introducing the AppStream metainfo file into the flatpak package
+- 6a31512 Consuming the install directory variables the flatpak-builder passes
+- 50515c9 Introducing the required packages install script
+- 6fccfe9 Installing the flatpak build dependencies from the flathub remote
+- 3299f82 Dropping the redundant build step from the packager scripts
+- 17d0cc2 Introducing the per packager build scripts
+- 9f3b2c0 Introducing the appCFITSIO branch info into the READMEs
+- ae6aab7 Make the compile time log level gate really gate
+- 3a02f63 Introducing the appGtkmm4Libadwaita branch info into the READMEs
+- eacaf41 Pinning the log message stream to the classic locale
+- d8df0f3 Decomposing the IApplication descendants into the applications subcomponent
+- 89a232e Introducing the appFontAwesome branch info into the READMEs
+- 707acdd Introducing the sdbus-c++ includes wrapper to silence its headers warnings
+- 5238417 Introducing the debug test script and its --test parameter
+- d33760a Incrementing version to appSDBusCxxServer0.12.0
+- c88d52d Release appSDBusCxxServer0.11.0 at 2026-08-17
+
 ## [appSDBusCxxServer0.11.0] - 2026-08-17
 
 - 5f89ccc Introducing the InsertNewlineAtEOF clang-format option
@@ -364,6 +493,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[appSDBusCxxServer0.12.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appSDBusCxxServer0.12.0)
+[appSDBusCxxServer0.11.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appSDBusCxxServer0.11.0)
 [app0.10.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.10.0)
 [app0.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.9.0)
 [app0.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.8.0)

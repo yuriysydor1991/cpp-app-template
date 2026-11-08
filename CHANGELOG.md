@@ -5,6 +5,140 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appWt40.11.0] - 2026-11-08
+
+- bc8b866 Removing the destination OS from the AppImage package name
+- 4039e2d Introducing the STT branches info into the READMEs
+- 0d99f80 Replacing the CMAKE_SOURCE_DIR/CMAKE_BINARY_DIR by the PROJECT_SOURCE_DIR/PROJECT_BINARY_DIR
+- cd2e073 Introducing the appWebAssembly branch info into the READMEs
+- a41061e Introducing the appLlamaCPP branch info into the READMEs
+- 82f8462 Introducing the TTS branches info into the READMEs
+- d6a3f5a Introducing the destination OS into the package names
+- 2ba9f02 Synchronizing the template flavors list of the READMEs
+- 9d3f753 Refreshing the shared library cache after the from-source installs
+- c779af9 Documenting the Wt build of the per-release install scripts
+- 2d98c6a Adapting the real command line tests and docs to the parameters passed to the Wt
+- 36ebc23 Fixing the unknown flag test of the parameters passed to the Wt
+- 0099f20 Failing the flavor CI test stages which match no tests
+- e7b1510 Converting the flavor link calls of the project binary to the keyword signature
+- 14cac98 Fixing the cppcheck findings of the new signals handler, tests and log mock
+- 7953594 Updating the app component diagram to the signals handlers design
+- ce72c70 Renumbering the custom command line parameters section numbered 4-6 twice
+- d6e6be9 Documenting the built in command line options and the usage errors
+- e6de8b4 Testing the application with the real command line arguments
+- e0dd011 Parsing the command line before the log file initialization
+- 298821a Exiting with a failure status on the command line usage errors
+- ddd7263 Fixing the missing option value raising the version flag instead of the help one
+- 5aaa79f Fixing the CommandLineParser test assertions which could not fail
+- 8d45b35 Fixing the log mock LOG_INIT forwarding into the LOG_INIT_DEFAULTS mock
+- 396ed47 Restoring the previous signal dispositions on the signals handler uninstall
+- 74af25a Leaving the SIGTTIN and SIGTTOU signals to the shell job control
+- 6c71337 Removing the nonexistent module path directories and cppcheck suppression
+- 96df16d Fixing the zlib gzip file example ignoring the read and close errors
+- 80af1a8 Fixing the flatpak requirements section naming an outdated SDK version
+- 0083907 Documenting the ENABLE_COMPONENT_TESTS option of the test builds
+- 7b11602 Listing every linked doc section in the requirements and build index pages
+- 5e20715 Fixing the documentation links pointing into the other language
+- 5088425 Fixing the stale file paths named in the documentation
+- c43255d Fixing the flatpak target failing on its repeated build
+- a59c2b6 Fixing the snap command path ignoring the install prefix
+- c10e1d9 Fixing the documentation install which needed a manual Doxygen-doc build
+- cab6dda Skipping the Doxygen and callgrind targets when their tools are missing
+- 8ed6f6b Installing the packager tools into the Jenkins pipeline image
+- a695001 Replacing the libjpeg-turbo download fallback with a clear configure error
+- 5824e65 Fixing the libavif download fallback stopping without the system libyuv
+- 2ce9a7a Pinning the third-party download fallbacks to their release tags
+- 488c89b Failing the CI test stages which match no tests
+- 38120db Fixing the Jenkins doc sections linked check skipping the section directories
+- 817e43f Replacing the broken OpenSSL download fallback with a clear configure error
+- bf5ed60 Fixing the mixed target_link_libraries signatures on the project binary
+- d629b08 Fixing the MAX_LOG_LEVEL option help text error level value
+- 68d7b5b Fixing the logger level filter tests which could not fail
+- 9a3dfe4 Fixing the log macros to expand into single statements
+- 5fced52 Fixing the logger data races on the log file reopening and the level
+- ae5c363 Fixing the log file open failure aborting the process
+- 72a890c Splitting the CTEST_DefaultLogger helper classes into own files
+- 5000d12 Splitting the packages install scripts per OS release
+- b17cf52 Fixing the includes of the WidgetsFactory and the ApplicationContext mock
+- 43a177a Fixing the Wt4Server constructor the 4-1 doc cites
+- 47a4422 Documenting the build tree Wt docroot and the executable own options
+- c1d7706 Documenting the fetched Wt build and its configure options
+- 7223d38 Replacing the nonexistent witty packages with the Wt build dependencies
+- 1668147 Removing the unknown extra-args key from the flatpak manifest
+- 2b2bcb3 Fixing the Wt resources docroot of the docker image and the flatpak run
+- 7f36d7a Restoring the PROJECT_BINARY_PATH docker variable next to the Wt4 port one
+- 9a87869 Applying the clang-format to the Wt4 component test client
+- ead97f2 Fixing the cppcheck findings in the branch code
+- e23be6d Resetting the Wt4Server run mock hook after every test case
+- 4018433 Stopping the Wt server on the application stop flag
+- 746a8ec Keeping the app own command line parameters away from the Wt server
+- d57db09 Fixing the malformed GCC diagnostic pragma in the includes header
+- e7955a5 Renumbering the branch requirements doc into the free 3-13 section
+- ec7f42c Synchronizing the get_stop assertions and the CommandLineParser doc comment with app
+- 4773391 Supressing the cppcheck's missingIncludeSystem and unusedStructMember warnings.
+- 7cbcb61 Erasing redundant suppression that causes cppcheck to fail
+- 6b0ebef Replacing the unreachable GNU gettext site link with its Savannah page
+- 299079f Introducing the destination CPU architecture into the package names
+- 20d6db5 Introducing the appGettext branch info into the READMEs
+- 8f3ba7b Introducing the appDarknetXX branch info into the READMEs
+- 5065fff Introducing the RedHat packages install script
+- 0c4579b Introducing the appWhisperCPP branch info into the READMEs
+- 6bb72dd Introducing the FreeBSD packages install script
+- 445c5e0 Introducing the appV8 branch info into the READMEs
+- b2ceb45 Erasing the build sources and trees of the docker images
+- 5de010d Introducing the debug clang-format script
+- 08fbdb9 Resetting the inherited signals dispositions in the signals handlers tests
+- 60895e0 Introducing the binary hardening options section into the READMEs
+- f9e3e52 Introducing the binary hardening compile and link options
+- 2719053 Introducing the GitLab CI/CD pipeline section into the READMEs
+- fdcf162 Introducing the GitLab CI/CD pipeline mirroring the Jenkinsfile
+- 76c43e5 Introducing the GitHub Actions CI pipeline section into the READMEs
+- 157c8ca Introducing the GitHub Actions CI pipeline mirroring the Jenkinsfile
+- 6f041fc Keeping the fetched Wt installation inside the install prefix
+- e8d2a9d Correcting the appQt6QtDBusClient branch description in the READMEs
+- fb22ba3 Introducing the desktop application packaging switch
+- 98ef531 Limiting the documentation checks to the repository own markdown files
+- 7b9aebe Excluding the GCC own include directories from the clang-tidy search path
+- c13165a Accepting the 405 documentation URLs
+- b7b08db Spacing out the branch entries in the READMEs
+- 50c48a0 Rewording the DOCKER_HOST environment requirement in the docker docs
+- 05b7fd2 Removing the DOCKER_HOST variables from the docker enablers
+- 829601c Excluding the build trees from the Docker build context
+- 049ae57 Retrying the unreachable documentation URLs and accepting the 403 ones
+- a802dea Introducing the --rebuild flag into the Jenkins docker scripts
+- 915d927 Rebuilding the image from its base on the Jenkins pipeline force rebuild
+- f168eac Introducing the audio assets branches info into the READMEs
+- a115f15 Splitting the signals handlers per category and covering the pause, reload, user defined and ignored signals
+- 1f27b9d Introducing the app signals handlers subcomponent
+- 9f7b2d9 Declaring the main function argv parameter as an array
+- d01dd2d Moving the packagers templates into the per-packager directories
+- f8f1dba Dropping the packagers and the development tools from the packages install list
+- dffed60 The destination CPU architecture of the AppImage package name
+- bb21940 Picking the CPack AppImage enabler since the CMake 4.2 and dropping the debug banners
+- 564db9c Extracting the AppImage enabler pick into its own general enabler
+- 3b416c2 Selecting the AppImage packager enabler by the CMake version
+- fa31087 Introducing the CPack based AppImage packager enabler
+- bc213f1 Introducing the AppImage packager
+- 0f1554d Introducing the --install flag into the packager build scripts
+- 72e4a1c Renaming the packages install script and adding the Ubuntu one
+- 200cb3b Introducing the target architecture into the flatpak package name
+- 64f9e29 Introducing the AppStream metainfo file into the flatpak package
+- c388d93 Consuming the install directory variables the flatpak-builder passes
+- f0e2b51 Introducing the required packages install script
+- f1aabc0 Installing the flatpak build dependencies from the flathub remote
+- fa08f62 Dropping the redundant build step from the packager scripts
+- cce9264 Introducing the per packager build scripts
+- 94c7f2c Introducing the appCFITSIO branch info into the READMEs
+- 95fdacc Make the compile time log level gate really gate
+- 8bb7342 Introducing the appGtkmm4Libadwaita branch info into the READMEs
+- c4a11f3 Pinning the log message stream to the classic locale
+- da47af2 Decomposing the IApplication descendants into the applications subcomponent
+- d67ca7d Introducing the appFontAwesome branch info into the READMEs
+- 19dfb66 Introducing the Wt4 includes wrapper to silence its headers warnings
+- 51b6bd6 Introducing the debug test script and its --test parameter
+- bfbe9f7 Incrementing version to appWt40.11.0
+- 92eb320 Release appWt40.10.0 at 2026-08-17
+
 ## [appWt40.10.0] - 2026-08-17
 
 - a1c1614 Introducing the InsertNewlineAtEOF clang-format option
@@ -353,6 +487,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[appWt40.11.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appWt40.11.0)
+[appWt40.10.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appWt40.10.0)
 [appWt40.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appWt40.9.0)
 [app0.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.8.0)
 [app0.7.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.7.0)

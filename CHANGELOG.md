@@ -5,6 +5,145 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appCURLClaude0.11.0] - 2026-11-08
+
+- 11c5564 Removing the destination OS from the AppImage package name
+- b05d34e Introducing the STT branches info into the READMEs
+- 2a79735 Replacing the CMAKE_SOURCE_DIR/CMAKE_BINARY_DIR by the PROJECT_SOURCE_DIR/PROJECT_BINARY_DIR
+- 3beabc7 Introducing the appWebAssembly branch info into the READMEs
+- 50c6714 Introducing the appLlamaCPP branch info into the READMEs
+- 3bb4788 Introducing the TTS branches info into the READMEs
+- d0f0d50 Introducing the destination OS into the package names
+- 0210e9a Synchronizing the template flavors list of the READMEs
+- 9ed3019 Failing the flavor CI test stages which match no tests
+- 08992d4 Converting the flavor link calls of the project binary to the keyword signature
+- a6fb325 Refreshing the shared library cache after the from-source installs
+- b20b878 Fixing the cppcheck findings of the new signals handler, tests and log mock
+- 431b1ed Updating the app component diagram to the signals handlers design
+- 48dcef0 Renumbering the custom command line parameters section numbered 4-6 twice
+- 3417560 Documenting the built in command line options and the usage errors
+- 2cf7625 Testing the application with the real command line arguments
+- 9fc917c Parsing the command line before the log file initialization
+- a94c738 Exiting with a failure status on the command line usage errors
+- fa7d349 Fixing the missing option value raising the version flag instead of the help one
+- a4eb6f1 Fixing the CommandLineParser test assertions which could not fail
+- f42ce26 Fixing the log mock LOG_INIT forwarding into the LOG_INIT_DEFAULTS mock
+- e6fe325 Restoring the previous signal dispositions on the signals handler uninstall
+- 9886931 Leaving the SIGTTIN and SIGTTOU signals to the shell job control
+- 25ce63b Removing the nonexistent module path directories and cppcheck suppression
+- 5b303d7 Fixing the zlib gzip file example ignoring the read and close errors
+- 78e0908 Fixing the flatpak requirements section naming an outdated SDK version
+- 6df62c4 Documenting the ENABLE_COMPONENT_TESTS option of the test builds
+- 4e34b40 Listing every linked doc section in the requirements and build index pages
+- 41c4485 Fixing the documentation links pointing into the other language
+- 62bb771 Fixing the stale file paths named in the documentation
+- 502c275 Fixing the flatpak target failing on its repeated build
+- f9bd611 Fixing the snap command path ignoring the install prefix
+- e733049 Fixing the documentation install which needed a manual Doxygen-doc build
+- 1edd15f Skipping the Doxygen and callgrind targets when their tools are missing
+- aaadc45 Installing the packager tools into the Jenkins pipeline image
+- 7007205 Replacing the libjpeg-turbo download fallback with a clear configure error
+- 5cb1e85 Fixing the libavif download fallback stopping without the system libyuv
+- c8531dd Pinning the third-party download fallbacks to their release tags
+- 84744a6 Failing the CI test stages which match no tests
+- d1898b2 Fixing the Jenkins doc sections linked check skipping the section directories
+- 119815d Replacing the broken OpenSSL download fallback with a clear configure error
+- 3b09ffb Fixing the mixed target_link_libraries signatures on the project binary
+- daafae3 Fixing the MAX_LOG_LEVEL option help text error level value
+- abbae2f Fixing the logger level filter tests which could not fail
+- dffa077 Fixing the log macros to expand into single statements
+- 35d178e Fixing the logger data races on the log file reopening and the level
+- 3af9a04 Fixing the log file open failure aborting the process
+- a508a1c Splitting the CTEST_DefaultLogger helper classes into own files
+- 593fca2 Splitting the packages install scripts per OS release
+- bbb6760 Removing the leftover CURL references of the AI client
+- 61bdb92 Linking the Claude client docs from the READMEs doc index
+- 9a0253f Waiting 600 seconds for the long Claude answers
+- b41e34e Retrying the overloaded, rate limited and failed Claude calls
+- 2006166 Asking the claude-opus-5-5 model by default
+- 90ad376 Fixing the cppcheck target findings of the AI client
+- 28d4bf1 Covering the AI client accessors of the ApplicationContext by its unit test
+- 9d3267e Pinning the nlohmann JSON fallback and flatpak sources to the v3.12.0 release
+- ccef963 Fixing the ApplicationContext doc comment typos
+- 98fd023 Fixing the libcurl docs timeouts text and linking the HTTP client section
+- 9725d8a Stopping the configure with a clear error when the flavor library is OFF
+- e8e73e8 Pinning the libcurl fallback sources to the curl-8_23_0 release
+- 33b6964 Fixing the misspelled last_response_successfull CURLController call name
+- a2c874a Moving the HeadersList into its own files and fixing its append leak
+- bfeec79 Synchronizing the CommandLineParser parse doc comment with app
+- 3499c8b Synchronizing the get_stop assertions of the application tests with app
+- 055da70 Supressing the cppcheck's missingIncludeSystem and unusedStructMember warnings.
+- 6d76943 Replacing the unreachable GNU gettext site link with its Savannah page
+- 9e6530f Introducing the destination CPU architecture into the package names
+- 04d09c6 Introducing the appGettext branch info into the READMEs
+- b32899c Introducing the appDarknetXX branch info into the READMEs
+- 746f0e9 Introducing the RedHat packages install script
+- bf943ee Introducing the appWhisperCPP branch info into the READMEs
+- d58f346 Introducing the FreeBSD packages install script
+- eeec63b Introducing the appV8 branch info into the READMEs
+- 14f7d59 Erasing the build sources and trees of the docker images
+- bcf9356 Introducing the debug clang-format script
+- 2da6f8e Resetting the inherited signals dispositions in the signals handlers tests
+- c0ec562 Introducing the HTTP client hardening constraints section into the READMEs
+- 9e15a05 Introducing the HTTP client hardening constraints
+- a8d5a6f Introducing the binary hardening options section into the READMEs
+- 58ffcf2 Introducing the binary hardening compile and link options
+- c245e6c Introducing the GitLab CI/CD pipeline section into the READMEs
+- 2ce378a Introducing the GitLab CI/CD pipeline mirroring the Jenkinsfile
+- a8bf74f Introducing the GitHub Actions CI pipeline section into the READMEs
+- 7374b46 Introducing the GitHub Actions CI pipeline mirroring the Jenkinsfile
+- 985d00b Correcting the appQt6QtDBusClient branch description in the READMEs
+- fd4d00a Introducing the desktop application packaging switch
+- 1271445 Limiting the documentation checks to the repository own markdown files
+- 41e2e7d Excluding the GCC own include directories from the clang-tidy search path
+- ce4acdb Accepting the 405 documentation URLs
+- 3a4deee Applying the clang-format to the test sources
+- e0b0afe Spacing out the branch entries in the READMEs
+- 738303f Rewording the DOCKER_HOST environment requirement in the docker docs
+- f466ba9 Removing the DOCKER_HOST variables from the docker enablers
+- ebddb6d Excluding the build trees from the Docker build context
+- 2151870 Retrying the unreachable documentation URLs and accepting the 403 ones
+- 52735f0 Introducing the --rebuild flag into the Jenkins docker scripts
+- 2de8783 Rebuilding the image from its base on the Jenkins pipeline force rebuild
+- 19ce1b9 Introducing the audio assets branches info into the READMEs
+- b3162cb Splitting the signals handlers per category and covering the pause, reload, user defined and ignored signals
+- ecd69ab Introducing the app signals handlers subcomponent
+- 4e3f679 Declaring the main function argv parameter as an array
+- 9d1478d Registering the DefaultLogger tests directory in the CMake build
+- 844000f Moving the packagers templates into the per-packager directories
+- 448b4cf Dropping the packagers and the development tools from the packages install list
+- 5618066 The destination CPU architecture of the AppImage package name
+- 2059935 Picking the CPack AppImage enabler since the CMake 4.2 and dropping the debug banners
+- 0259b9c Extracting the AppImage enabler pick into its own general enabler
+- 7c64e81 Selecting the AppImage packager enabler by the CMake version
+- 4cd9146 Introducing the CPack based AppImage packager enabler
+- 960d115 Introducing the AppImage packager
+- 6579360 Introducing the --install flag into the packager build scripts
+- e4364cd Renaming the packages install script and adding the Ubuntu one
+- 9573e73 Introducing the target architecture into the flatpak package name
+- 6fe4b7d Introducing the AppStream metainfo file into the flatpak package
+- 16cf160 Consuming the install directory variables the flatpak-builder passes
+- 2e69436 Introducing the required packages install script
+- be1cc4f Installing the flatpak build dependencies from the flathub remote
+- 0d6104d Dropping the redundant build step from the packager scripts
+- 4adaf4a Introducing the per packager build scripts
+- f1007c0 Documenting the last_response_successfull call of the CURLController
+- e7e50bf Introducing the last_response_successfull cases into the CURLController tests
+- 67f4a74 Failing the pipeline test stages when they match no tests
+- 5d19536 Percent encoding the file protocol URLs of the CURLController test
+- c39d7de Making the CURLController timeouts the constant long values
+- 112ce7f Linking the libcurl into the CURLController object library
+- 3ea4070 Introducing the post, the headers and the aliveness calls into the CURLController
+- cb3a25a Introducing the appCFITSIO branch info into the READMEs
+- 13b01a0 Make the compile time log level gate really gate
+- 9947814 Introducing the appGtkmm4Libadwaita branch info into the READMEs
+- 9ef02a6 Pinning the log message stream to the classic locale
+- 256e02b Decomposing the IApplication descendants into the applications subcomponent
+- 6741a97 Introducing the appFontAwesome branch info into the READMEs
+- e122c6e Introducing the debug test script and its --test parameter
+- 2b3cf50 Incrementing version to appCURLClaude0.11.0
+- b257b0e Release appCURLClaude0.10.0 at 2026-08-17
+
 ## [appCURLClaude0.10.0] - 2026-08-17
 
 - 5c100c8 Introducing the InsertNewlineAtEOF clang-format option
@@ -345,6 +484,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[appCURLClaude0.11.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appCURLClaude0.11.0)
+[appCURLClaude0.10.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appCURLClaude0.10.0)
 [app0.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.9.0)
 [app0.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.8.0)
 [app0.7.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.7.0)

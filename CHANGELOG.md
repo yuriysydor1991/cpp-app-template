@@ -5,6 +5,132 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appLog4Cpp50.10.0] - 2026-11-08
+
+- d89bec2 Removing the destination OS from the AppImage package name
+- 34d0a51 Introducing the STT branches info into the READMEs
+- 7c09336 Replacing the CMAKE_SOURCE_DIR/CMAKE_BINARY_DIR by the PROJECT_SOURCE_DIR/PROJECT_BINARY_DIR
+- b01c667 Introducing the appWebAssembly branch info into the READMEs
+- 9b87a05 Introducing the appLlamaCPP branch info into the READMEs
+- a8a8abf Introducing the TTS branches info into the READMEs
+- 09a4c33 Introducing the destination OS into the package names
+- 7f64259 Synchronizing the template flavors list of the READMEs
+- b77d0e5 Documenting the log4cpp init result of an unopenable log file
+- b332ead Fixing the AppImage and log4cpp entries of the build index pages
+- 5ab2621 Refreshing the shared library cache after the from-source installs
+- 0de859a Fixing the cppcheck findings of the new signals handler, tests and log mock
+- a020369 Updating the app component diagram to the signals handlers design
+- b1dd0dd Renumbering the custom command line parameters section numbered 4-6 twice
+- 1f42ad5 Documenting the built in command line options and the usage errors
+- 908363a Testing the application with the real command line arguments
+- ee9ab84 Parsing the command line before the log file initialization
+- 045b16c Exiting with a failure status on the command line usage errors
+- dd7d169 Fixing the missing option value raising the version flag instead of the help one
+- 5e8655e Fixing the CommandLineParser test assertions which could not fail
+- 0b01ba1 Fixing the log mock LOG_INIT forwarding into the LOG_INIT_DEFAULTS mock
+- f9eb981 Restoring the previous signal dispositions on the signals handler uninstall
+- 7ff5d68 Leaving the SIGTTIN and SIGTTOU signals to the shell job control
+- 7f23848 Removing the nonexistent module path directories and cppcheck suppression
+- 5cbe79a Fixing the zlib gzip file example ignoring the read and close errors
+- 21ea836 Fixing the flatpak requirements section naming an outdated SDK version
+- f7fd104 Documenting the ENABLE_COMPONENT_TESTS option of the test builds
+- 33146ed Listing every linked doc section in the requirements and build index pages
+- 054fe1e Fixing the documentation links pointing into the other language
+- c992f5a Fixing the stale file paths named in the documentation
+- c12f9ae Fixing the flatpak target failing on its repeated build
+- c538bd4 Fixing the snap command path ignoring the install prefix
+- 54a61d5 Fixing the documentation install which needed a manual Doxygen-doc build
+- 2a4a56c Skipping the Doxygen and callgrind targets when their tools are missing
+- 1cb2d7e Installing the packager tools into the Jenkins pipeline image
+- a82bb64 Replacing the libjpeg-turbo download fallback with a clear configure error
+- b4c793f Fixing the libavif download fallback stopping without the system libyuv
+- e425e01 Pinning the third-party download fallbacks to their release tags
+- 7b73c8d Failing the CI test stages which match no tests
+- 3c0a07e Fixing the Jenkins doc sections linked check skipping the section directories
+- b719366 Replacing the broken OpenSSL download fallback with a clear configure error
+- b608ca2 Fixing the mixed target_link_libraries signatures on the project binary
+- 28e3689 Fixing the MAX_LOG_LEVEL option help text error level value
+- fd4f9ac Fixing the logger level filter tests which could not fail
+- 886d1f7 Fixing the log macros to expand into single statements
+- bfed0af Fixing the log file open failure aborting the process
+- 213885a Splitting the packages install scripts per OS release
+- be4faf4 Introducing the flatpak cleanup of the log4cpp development files
+- 9e2aefe Fixing the logger branch name in the CTEST_log comment
+- fc361a7 Fixing the log4cpp link snippets to the keyword target_link_libraries signature
+- 0c25aef Removing the redundant ENABLE_LOGS_MICROSECONDS_TIME option
+- d9cc25e Fixing the log4cpp requirements doc numbering and wording
+- 3a50e8b Introducing the log4cpp runtime dependency into the deb and snap packages
+- 1099426 Introducing the Log4Cpp5Init component test
+- ac33e5c Fixing the shifted log4cpp priorities of the log macros
+- fca36fc Warning about the unopenable log4cpp log file instead of dropping the logs
+- 58493b9 Fixing the ignored and duplicated log4cpp appenders of the repeated log inits
+- 8304eef Pinning the log4cpp 1.1.6 release instead of its release candidate
+- 8c1df44 Excluding the fetched log4cpp files from the project installation
+- 4b326c3 Fixing the include directory of the fetched log4cpp sources
+- 9858db0 Synchronizing the log mock with app
+- 0220bc1 Synchronizing the CommandLineParser parse doc comment with app
+- 80723a9 Synchronizing the get_stop assertions of the application tests with app
+- a5534fc Replacing the unreachable GNU gettext site link with its Savannah page
+- e1b9354 Introducing the destination CPU architecture into the package names
+- c9b3d5b Introducing the appGettext branch info into the READMEs
+- 70760f6 Introducing the appDarknetXX branch info into the READMEs
+- 95d98e0 Introducing the RedHat packages install script
+- 29c390e Registering the CTEST_app component tests in the build and the pipeline
+- 5e38b3c Introducing the appWhisperCPP branch info into the READMEs
+- d19bdab Introducing the FreeBSD packages install script
+- dd8a71f Introducing the appV8 branch info into the READMEs
+- 23e27f7 Erasing the build sources and trees of the docker images
+- f9e7cf4 Introducing the debug clang-format script
+- 4c9809d Resetting the inherited signals dispositions in the signals handlers tests
+- 3463017 Introducing the binary hardening options section into the READMEs
+- 9d1156c Introducing the binary hardening compile and link options
+- 1c76820 Introducing the GitLab CI/CD pipeline section into the READMEs
+- d6a049d Introducing the GitLab CI/CD pipeline mirroring the Jenkinsfile
+- e45f4a8 Introducing the GitHub Actions CI pipeline section into the READMEs
+- 013a5fc Introducing the GitHub Actions CI pipeline mirroring the Jenkinsfile
+- 3fc309e Correcting the appQt6QtDBusClient branch description in the READMEs
+- 63fdd4d Introducing the desktop application packaging switch
+- 803e99d Limiting the documentation checks to the repository own markdown files
+- 214375d Excluding the GCC own include directories from the clang-tidy search path
+- a82a1c5 Accepting the 405 documentation URLs
+- 63cbedd Spacing out the branch entries in the READMEs
+- fadb3e2 Rewording the DOCKER_HOST environment requirement in the docker docs
+- 35f2a84 Removing the DOCKER_HOST variables from the docker enablers
+- db6decb Excluding the build trees from the Docker build context
+- dfafaf6 Retrying the unreachable documentation URLs and accepting the 403 ones
+- 72f346d Introducing the --rebuild flag into the Jenkins docker scripts
+- 1751d9a Rebuilding the image from its base on the Jenkins pipeline force rebuild
+- e29acd7 Introducing the audio assets branches info into the READMEs
+- 2a3f0c3 Splitting the signals handlers per category and covering the pause, reload, user defined and ignored signals
+- 15164aa Introducing the app signals handlers subcomponent
+- 4fd2334 Declaring the main function argv parameter as an array
+- 3284343 Moving the packagers templates into the per-packager directories
+- 8f0ba2d Dropping the packagers and the development tools from the packages install list
+- 768c23a The destination CPU architecture of the AppImage package name
+- a0b926d Picking the CPack AppImage enabler since the CMake 4.2 and dropping the debug banners
+- a5da894 Extracting the AppImage enabler pick into its own general enabler
+- a241988 Selecting the AppImage packager enabler by the CMake version
+- fbc7c31 Introducing the CPack based AppImage packager enabler
+- 4a296c9 Introducing the AppImage packager
+- c0dfbbb Introducing the --install flag into the packager build scripts
+- cd6935f Renaming the packages install script and adding the Ubuntu one
+- 99153f3 Introducing the target architecture into the flatpak package name
+- b15038a Introducing the AppStream metainfo file into the flatpak package
+- ecfe31b Consuming the install directory variables the flatpak-builder passes
+- e8eb414 Introducing the required packages install script
+- 19d0c30 Introducing the log4cpp enabler with the Internet fallback
+- baf3f7a Installing the flatpak build dependencies from the flathub remote
+- 5088121 Dropping the redundant build step from the packager scripts
+- 01dcfc5 Introducing the per packager build scripts
+- a58d207 Introducing the appCFITSIO branch info into the READMEs
+- f3eb58f Make the compile time log level gate really gate
+- cb3e2ce Introducing the appGtkmm4Libadwaita branch info into the READMEs
+- 0fa7cfb Decomposing the IApplication descendants into the applications subcomponent
+- 723a030 Introducing the appFontAwesome branch info into the READMEs
+- 3920c1d Introducing the debug test script and its --test parameter
+- 6f8f2e0 Incrementing version to appLog4Cpp50.10.0
+- e0048f8 Release appLog4Cpp50.9.0 at 2026-08-17
+
 ## [appLog4Cpp50.9.0] - 2026-08-17
 
 - 29a9bf3 Introducing the InsertNewlineAtEOF clang-format option
@@ -326,6 +452,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[appLog4Cpp50.10.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appLog4Cpp50.10.0)
+[appLog4Cpp50.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appLog4Cpp50.9.0)
 [app0.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.8.0)
 [app0.7.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.7.0)
 [app0.6.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.6.0)

@@ -9,7 +9,7 @@ In order to install the built library together with its development files into t
 
 ```
 # installs the library under the /usr/local/lib/ for example
-# and the header include files under the /usr/local/include/CppAppTemplate-0.12
+# and the header include files under the /usr/local/include/CppAppTemplate-0.13
 
 sudo cmake --install .
 ```

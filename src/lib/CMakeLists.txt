@@ -18,7 +18,7 @@ target_include_directories(
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/facade/public>
     # Both the plain include root and the versioned sub-directory are exported,
     # so a consumer may write either
-    #   #include <CppAppTemplate-0.12/LibraryFacade.h>  (recommended)
+    #   #include <CppAppTemplate-0.13/LibraryFacade.h>  (recommended)
     # or the short
     #   #include <LibraryFacade.h>
     # The prefixed form is the safe one: every library derived from this

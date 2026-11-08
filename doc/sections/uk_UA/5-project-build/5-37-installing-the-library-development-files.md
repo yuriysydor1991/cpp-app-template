@@ -27,15 +27,15 @@ cmake --build build
 cmake --install build --prefix /usr/local
 ```
 
-Що саме встановлює кожен з режимів для проекту `CppAppTemplate` версії `0.12.0`:
+Що саме встановлює кожен з режимів для проекту `CppAppTemplate` версії `0.13.0`:
 
 | Встановлюваний артефакт | `ON` | `OFF` |
 |---|---|---|
-| `<libdir>/libCppAppTemplate-0.12.so.0.12.0` - бінарний файл бібліотеки | так | так |
-| `<libdir>/libCppAppTemplate-0.12.so.0` - символьне посилання SONAME для завантажувача | так | так |
-| `<libdir>/libCppAppTemplate-0.12.so` - символьне посилання для лінкера | так | ні |
-| `<prefix>/include/CppAppTemplate-0.12/*.h` - публічні заголовкові файли | так | ні |
-| `<libdir>/cmake/CppAppTemplate-0.12/*.cmake` - інтеграція з `find_package` | так | ні |
+| `<libdir>/libCppAppTemplate-0.13.so.0.13.0` - бінарний файл бібліотеки | так | так |
+| `<libdir>/libCppAppTemplate-0.13.so.0` - символьне посилання SONAME для завантажувача | так | так |
+| `<libdir>/libCppAppTemplate-0.13.so` - символьне посилання для лінкера | так | ні |
+| `<prefix>/include/CppAppTemplate-0.13/*.h` - публічні заголовкові файли | так | ні |
+| `<libdir>/cmake/CppAppTemplate-0.13/*.cmake` - інтеграція з `find_package` | так | ні |
 | символи зневадження, якщо проект їх встановлює | так | ні |
 
 `<libdir>` - це директорія `<prefix>/${CMAKE_INSTALL_LIBDIR}` модуля CMake
@@ -44,13 +44,13 @@ cmake --install build --prefix /usr/local
 і `/usr/lib/<multiarch>` (наприклад, `/usr/lib/x86_64-linux-gnu`) для префікса
 `/usr` у Debian та Ubuntu.
 
-Встановлені файли `CppAppTemplate-0.12Config.cmake` і
-`CppAppTemplate-0.12ConfigVersion.cmake` дозволяють проекту-споживачу на CMake
+Встановлені файли `CppAppTemplate-0.13Config.cmake` і
+`CppAppTemplate-0.13ConfigVersion.cmake` дозволяють проекту-споживачу на CMake
 запитати бібліотеку за її іменем і версією:
 
 ```
-find_package(CppAppTemplate-0.12 0.12 CONFIG REQUIRED)
-target_link_libraries(consumer PRIVATE CppAppTemplate-0.12::CppAppTemplate-0.12)
+find_package(CppAppTemplate-0.13 0.13 CONFIG REQUIRED)
+target_link_libraries(consumer PRIVATE CppAppTemplate-0.13::CppAppTemplate-0.13)
 ```
 
 Приймається лише та сама другорядна (minor) версія, бо публічний простір імен
@@ -67,7 +67,7 @@ target_link_libraries(consumer PRIVATE CppAppTemplate-0.12::CppAppTemplate-0.12)
 лише правила встановлення перелічених вище артефактів. Тому одне і те саме
 дерево побудови може бути встановленим обома способами без переконфігурації.
 
-[Статична бібліотека](/doc/sections/uk_UA/5-project-build/5-76-choosing-the-library-type.md) не має половини часу виконання: її `<libdir>/libCppAppTemplate-0.12.a` встановлюється лише зі значенням `ON`.
+[Статична бібліотека](/doc/sections/uk_UA/5-project-build/5-76-choosing-the-library-type.md) не має половини часу виконання: її `<libdir>/libCppAppTemplate-0.13.a` встановлюється лише зі значенням `ON`.
 
 Опція оголошена у [cmake/template-project-misc-variables-declare.cmake](/cmake/template-project-misc-variables-declare.cmake) і використовується у [src/lib/CMakeLists.txt](/src/lib/CMakeLists.txt) і [src/lib/facade/CMakeLists.txt](/src/lib/facade/CMakeLists.txt).
 

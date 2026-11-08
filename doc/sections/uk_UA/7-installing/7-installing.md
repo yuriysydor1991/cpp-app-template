@@ -8,7 +8,7 @@
 
 ```
 # встановлює бібліотеку, наприклад, у /usr/local/lib/,
-# а файли заголовків - у /usr/local/include/CppAppTemplate-0.12
+# а файли заголовків - у /usr/local/include/CppAppTemplate-0.13
 # виконати з директорії побудови проекту
 
 sudo cmake --install .

@@ -5,7 +5,7 @@
 імен імпортованої цілі що експортується через `install(EXPORT ...)`) виводиться
 з трьох опціональних CMake-опцій. Вони дозволяють паралельним встановленням
 різних версій бібліотеки співіснувати у системі - наприклад
-`include/CppAppTemplate-0.12.0-dev/` поруч з `include/CppAppTemplate-0.12/`.
+`include/CppAppTemplate-0.13.0-dev/` поруч з `include/CppAppTemplate-0.13/`.
 
 | Опція | За замовчуванням | Ефект |
 |---|---|---|
@@ -19,15 +19,15 @@
 Дві другорядні версії бібліотеки тоді встановлюються цілком поруч, а застосунок
 може залежати від обох одразу. Це справедливо для встановлення командою `cmake --install`: пакети deb, RPM та FreeBSD названо за назвою проекту (`CppAppTemplate`) без версії у назві пакета, тож менеджер пакетів замінює одну другорядну версію іншою - задай кожній другорядній версії власне значення `CPACK_PACKAGE_NAME` у модулях пакувальників, якщо пакети дистрибутива також мають співіснувати.
 
-Приклади імен бібліотеки для проекту `0.12.0`:
+Приклади імен бібліотеки для проекту `0.13.0`:
 
 | Прапорці конфігурації | Імʼя бібліотеки |
 |---|---|
-| (немає) | `CppAppTemplate-0.12` |
+| (немає) | `CppAppTemplate-0.13` |
 | `-DLIB_INCLUDE_MINOR_IN_NAME=OFF` | `CppAppTemplate-0` |
-| `-DLIB_INCLUDE_MICRO_IN_NAME=ON` | `CppAppTemplate-0.12.0` |
-| `-DLIB_NAME_SUFFIX=-dev` | `CppAppTemplate-0.12-dev` |
-| `-DLIB_INCLUDE_MICRO_IN_NAME=ON -DLIB_NAME_SUFFIX=-dev` | `CppAppTemplate-0.12.0-dev` |
+| `-DLIB_INCLUDE_MICRO_IN_NAME=ON` | `CppAppTemplate-0.13.0` |
+| `-DLIB_NAME_SUFFIX=-dev` | `CppAppTemplate-0.13-dev` |
+| `-DLIB_INCLUDE_MICRO_IN_NAME=ON -DLIB_NAME_SUFFIX=-dev` | `CppAppTemplate-0.13.0-dev` |
 
 Приклад поєднаної конфігурації:
 

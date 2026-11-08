@@ -26,15 +26,15 @@ cmake --build build
 cmake --install build --prefix /usr/local
 ```
 
-What each mode installs for a `0.12.0` project named `CppAppTemplate`:
+What each mode installs for a `0.13.0` project named `CppAppTemplate`:
 
 | Installed artefact | `ON` | `OFF` |
 |---|---|---|
-| `<libdir>/libCppAppTemplate-0.12.so.0.12.0` - the library binary | yes | yes |
-| `<libdir>/libCppAppTemplate-0.12.so.0` - the SONAME symlink the loader resolves | yes | yes |
-| `<libdir>/libCppAppTemplate-0.12.so` - the namelink the linker resolves | yes | no |
-| `<prefix>/include/CppAppTemplate-0.12/*.h` - the public headers | yes | no |
-| `<libdir>/cmake/CppAppTemplate-0.12/*.cmake` - the `find_package` integration | yes | no |
+| `<libdir>/libCppAppTemplate-0.13.so.0.13.0` - the library binary | yes | yes |
+| `<libdir>/libCppAppTemplate-0.13.so.0` - the SONAME symlink the loader resolves | yes | yes |
+| `<libdir>/libCppAppTemplate-0.13.so` - the namelink the linker resolves | yes | no |
+| `<prefix>/include/CppAppTemplate-0.13/*.h` - the public headers | yes | no |
+| `<libdir>/cmake/CppAppTemplate-0.13/*.cmake` - the `find_package` integration | yes | no |
 | the debug symbols, if the project installs any | yes | no |
 
 The `<libdir>` is the `<prefix>/${CMAKE_INSTALL_LIBDIR}` directory of the
@@ -43,13 +43,13 @@ CMake module: `<prefix>/lib` by default, `<prefix>/lib64` on the 64-bit RPM base
 distributions and `/usr/lib/<multiarch>` (e.g. `/usr/lib/x86_64-linux-gnu`) for
 the `/usr` prefix on Debian and Ubuntu.
 
-The installed `CppAppTemplate-0.12Config.cmake` and
-`CppAppTemplate-0.12ConfigVersion.cmake` files let a downstream CMake project
+The installed `CppAppTemplate-0.13Config.cmake` and
+`CppAppTemplate-0.13ConfigVersion.cmake` files let a downstream CMake project
 request the library by its name and version:
 
 ```
-find_package(CppAppTemplate-0.12 0.12 CONFIG REQUIRED)
-target_link_libraries(consumer PRIVATE CppAppTemplate-0.12::CppAppTemplate-0.12)
+find_package(CppAppTemplate-0.13 0.13 CONFIG REQUIRED)
+target_link_libraries(consumer PRIVATE CppAppTemplate-0.13::CppAppTemplate-0.13)
 ```
 
 Only the very same minor version is accepted, because the public namespace of
@@ -65,7 +65,7 @@ Turning the option off changes nothing about what is *built*: only the install
 rules of the artefacts above are dropped. The same build tree can therefore be
 installed both ways without reconfiguring anything else.
 
-A [static library](/doc/sections/en_US/5-project-build/5-76-choosing-the-library-type.md) has no runtime half: its `<libdir>/libCppAppTemplate-0.12.a` is installed with the `ON` only.
+A [static library](/doc/sections/en_US/5-project-build/5-76-choosing-the-library-type.md) has no runtime half: its `<libdir>/libCppAppTemplate-0.13.a` is installed with the `ON` only.
 
 The option is declared in [cmake/template-project-misc-variables-declare.cmake](/cmake/template-project-misc-variables-declare.cmake) and consumed by [src/lib/CMakeLists.txt](/src/lib/CMakeLists.txt) and [src/lib/facade/CMakeLists.txt](/src/lib/facade/CMakeLists.txt).
 

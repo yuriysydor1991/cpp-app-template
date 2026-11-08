@@ -5,6 +5,111 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appMeson0.11.0] - 2026-11-08
+
+- 49bcf4e Removing the destination OS from the AppImage package name
+- 002b345 Introducing the STT branches info into the READMEs
+- 74164be Introducing the appWebAssembly branch info into the READMEs
+- aeaa19f Introducing the docker starter scripts and the Jenkins container targets
+- 87f047a Grouping the meson directory modules as the cmake ones
+- 226b55c Introducing the appLlamaCPP branch info into the READMEs
+- fc60c88 Introducing the TTS branches info into the READMEs
+- 3c4f0c9 Introducing the destination OS into the package names
+- 7e1287a Synchronizing the template flavors list of the READMEs
+- 62660ac Refreshing the shared library cache after the from-source installs
+- f94afae Failing the CI test stages which match no tests
+- 1f9d025 Fixing the nesting of the binary hardening entry of the build index pages
+- 1982e79 Fixing the flatpak requirements section naming an outdated SDK version
+- da921f4 Listing every linked doc section in the requirements and build index pages
+- 162a717 Fixing the documentation links pointing into the other language
+- 7ad10b0 Fixing the flatpak target failing on its repeated build
+- b687d97 Fixing the cppcheck findings of the new signals handler, tests and log mock
+- ec6256d Updating the app component diagram to the signals handlers design
+- a818b65 Renumbering the custom command line parameters section numbered 4-6 twice
+- 7c91b1d Documenting the built in command line options and the usage errors
+- 57e548c Testing the application with the real command line arguments
+- 73c190a Parsing the command line before the log file initialization
+- fff8a23 Exiting with a failure status on the command line usage errors
+- f4b15e0 Fixing the missing option value raising the version flag instead of the help one
+- eba0d66 Fixing the CommandLineParser test assertions which could not fail
+- c281374 Fixing the log mock LOG_INIT forwarding into the LOG_INIT_DEFAULTS mock
+- f8fe43e Restoring the previous signal dispositions on the signals handler uninstall
+- 41c227c Leaving the SIGTTIN and SIGTTOU signals to the shell job control
+- 619200c Adding the missing semicolon of the Application log macro call
+- fc4c6bb Fixing the logger level filter tests which could not fail
+- 5db9e62 Fixing the log macros to expand into single statements
+- 014553a Fixing the logger data races on the log file reopening and the level
+- ff1566b Fixing the log file open failure aborting the process
+- 5db0795 Splitting the CTEST_DefaultLogger helper classes into own files
+- ed3c3dd Splitting the packages install scripts per OS release
+- c479ed8 Removing the CMake leftovers of the Meson flavor
+- 9445258 Introducing the markdown links and the AppImage stages into the Meson pipeline
+- 90bac66 Replacing the placeholder Jenkins container docs of the Meson flavor
+- 08353f9 Fixing the Meson option values and the stale names of the docs
+- 27626ce Synchronizing the CommandLineParser parse doc comment with app
+- 3561202 Synchronizing the ApplicationContext unit tests with app
+- 1b501f4 Synchronizing the get_stop assertions of the application tests with app
+- 3ef6790 Synchronizing the logger subsystem with the app branch
+- 14e9715 Fixing the custom installation path docs of the Meson install
+- fbeb9b2 Removing the docs of the nonexistent GTEST_TRY_SYSTEM_PROBE Meson option
+- 60b4b53 Installing the GTest development packages the Meson tests probe for
+- 64a3dd5 Fixing the snap command path of the Meson packager
+- a91b980 Producing a real AppImage with the appimagetool in the Meson packager
+- 15cce91 Fixing the gmon.out path of the Meson gprof-analyze target
+- 0d148d7 Passing the Meson sanitizers flags through a dependency object
+- e9d01f2 Adding the check kwarg to the Meson run_command calls
+- d6c42a6 Fixing the Doxygen documentation build of the Meson projects
+- 010a72e Fixing the deb package ownership and install prefix of the Meson packager
+- 2468b3a Fixing the RPM package target of the Meson packager
+- 5e086af Applying the Meson sanitizers flags to every target
+- 59f0fac Enabling the inline suppressions in the Meson cppcheck target
+- 69cf340 Replacing the unreachable GNU gettext site link with its Savannah page
+- 504966b Fixing the WIX installer architecture of the Meson packager
+- 5e3a019 Fixing the FreeBSD pkg manifest and file list of the Meson packager
+- c07b7fd Introducing the destination CPU architecture into the package names
+- e270506 Introducing the appGettext branch info into the READMEs
+- 913961a Introducing the appDarknetXX branch info into the READMEs
+- 19c5da7 Introducing the RedHat packages install script
+- 819b2f0 Introducing the appWhisperCPP branch info into the READMEs
+- 393b36e Introducing the FreeBSD packages install script
+- 8d5982a Fixing the absent common.sh of the packages install scripts
+- 3c89420 Introducing the appV8 branch info into the READMEs
+- eb7d431 Erasing the build sources and trees of the docker images
+- e5676c3 Resetting the inherited signals dispositions in the signals handlers tests
+- 144f3fa Introducing the binary hardening options section into the READMEs
+- b83272f Introducing the binary hardening compile and link options
+- 4a32bcc Introducing the GitLab CI/CD pipeline section into the READMEs
+- 221a53a Introducing the GitLab CI/CD pipeline mirroring the Jenkinsfile
+- ae38a54 Introducing the GitHub Actions CI pipeline section into the READMEs
+- 27cf776 Introducing the GitHub Actions CI pipeline mirroring the Jenkinsfile
+- 8a98bfc Correcting the appQt6QtDBusClient branch description in the READMEs
+- 5dce722 Limiting the documentation checks to the repository own markdown files
+- 72fc8c4 Excluding the GCC own include directories from the clang-tidy search path
+- cb070b5 Accepting the 405 documentation URLs
+- d478ea2 Spacing out the branch entries in the READMEs
+- ff58f89 Rewording the DOCKER_HOST environment requirement in the docker docs
+- eb74316 Removing the DOCKER_HOST variables from the docker enablers
+- ed5096b Excluding the build trees from the Docker build context
+- 3d608e3 Retrying the unreachable documentation URLs and accepting the 403 ones
+- 62d748a Introducing the audio assets branches info into the READMEs
+- 59707c8 Introducing the app signals handlers subcomponent
+- a745415 Adding the build artifacts directory into the ignore list
+- f461e7b Declaring the main function argv parameter as an array
+- 95a2e75 Dropping the packagers and the development tools from the packages install list
+- b12afba Introducing the --install flag into the packager build scripts
+- 1d47e04 Renaming the packages install script and adding the Ubuntu one
+- 4fdfd71 Introducing the required packages install script
+- 3142f41 Installing the flatpak build dependencies from the flathub remote
+- 169bbf8 Dropping the redundant build step from the packager scripts
+- cb47d09 Introducing the per packager build scripts
+- c97e6c2 Introducing the appCFITSIO branch info into the READMEs
+- 6ffc536 Introducing the appGtkmm4Libadwaita branch info into the READMEs
+- f2e923f Pinning the log message stream to the classic locale
+- 4e573c5 Decomposing the IApplication descendants into the applications subcomponent
+- ce09ee7 Introducing the appFontAwesome branch info into the READMEs
+- 71e81ab Incrementing version to appMeson0.11.0
+- 47fc928 Release appMeson0.10.0 at 2026-08-17
+
 ## [appMeson0.10.0] - 2026-08-17
 
 - 91198d9 Introducing the InsertNewlineAtEOF clang-format option
@@ -304,6 +409,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[appMeson0.11.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appMeson0.11.0)
+[appMeson0.10.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appMeson0.10.0)
 [appMeson0.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appMeson0.9.0)
 [app0.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.8.0)
 [app0.7.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.7.0)

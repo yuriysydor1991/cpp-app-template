@@ -12,8 +12,6 @@ endif()
 
 find_program(APPIMAGETOOL_EXEC appimagetool REQUIRED)
 
-include(template-project-package-os)
-
 set(
   TEMPLATE_PROJECT_APPIMAGE_ARCHITECTURE
   ${CMAKE_SYSTEM_PROCESSOR}
@@ -22,9 +20,12 @@ set(
 )
 
 set(APPIMAGE_APPDIR ${PROJECT_BINARY_DIR}/AppDir)
+
+# unlike the distribution packages, the AppImage is not bound to a single OS
+# release, so its name carries no destination OS
 set(
   APPIMAGE_DST_NAME
-  ${PROJECT_BINARY_NAME}-${CMAKE_PROJECT_VERSION}-${TEMPLATE_PROJECT_APPIMAGE_ARCHITECTURE}-${TEMPLATE_PROJECT_PACKAGE_OS}.AppImage
+  ${PROJECT_BINARY_NAME}-${CMAKE_PROJECT_VERSION}-${TEMPLATE_PROJECT_APPIMAGE_ARCHITECTURE}.AppImage
 )
 
 # the AppImage format demands the desktop entry and the icon it names on the

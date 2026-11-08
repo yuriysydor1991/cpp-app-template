@@ -5,6 +5,139 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appCURLChatGPT0.11.0] - 2026-11-08
+
+- 2c30da1 Removing the destination OS from the AppImage package name
+- c5b1086 Introducing the STT branches info into the READMEs
+- 7c7eb14 Replacing the CMAKE_SOURCE_DIR/CMAKE_BINARY_DIR by the PROJECT_SOURCE_DIR/PROJECT_BINARY_DIR
+- dd31eb7 Introducing the appWebAssembly branch info into the READMEs
+- 955150b Introducing the appLlamaCPP branch info into the READMEs
+- a39ecfe Introducing the TTS branches info into the READMEs
+- 66eab27 Introducing the destination OS into the package names
+- 2ba0b0d Synchronizing the template flavors list of the READMEs
+- 0f34093 Failing the flavor CI test stages which match no tests
+- dfc5804 Converting the flavor link calls of the project binary to the keyword signature
+- d897153 Refreshing the shared library cache after the from-source installs
+- 3e1f772 Fixing the cppcheck findings of the new signals handler, tests and log mock
+- a288cca Updating the app component diagram to the signals handlers design
+- bdc127a Renumbering the custom command line parameters section numbered 4-6 twice
+- c5ec0cc Documenting the built in command line options and the usage errors
+- e9af4ca Testing the application with the real command line arguments
+- 8af56b5 Parsing the command line before the log file initialization
+- 07eee1c Exiting with a failure status on the command line usage errors
+- 7dfef4b Fixing the missing option value raising the version flag instead of the help one
+- 5c9602d Fixing the CommandLineParser test assertions which could not fail
+- b644384 Fixing the log mock LOG_INIT forwarding into the LOG_INIT_DEFAULTS mock
+- 6e19844 Restoring the previous signal dispositions on the signals handler uninstall
+- 8ff8ed7 Leaving the SIGTTIN and SIGTTOU signals to the shell job control
+- a753541 Removing the nonexistent module path directories and cppcheck suppression
+- 0c87a79 Fixing the zlib gzip file example ignoring the read and close errors
+- d7181fa Fixing the flatpak requirements section naming an outdated SDK version
+- c01fc0f Documenting the ENABLE_COMPONENT_TESTS option of the test builds
+- 113fad3 Listing every linked doc section in the requirements and build index pages
+- 3bf4d32 Fixing the documentation links pointing into the other language
+- b46344f Fixing the stale file paths named in the documentation
+- f0d0ddd Fixing the flatpak target failing on its repeated build
+- d431979 Fixing the snap command path ignoring the install prefix
+- 4a19956 Fixing the documentation install which needed a manual Doxygen-doc build
+- 60eab9f Skipping the Doxygen and callgrind targets when their tools are missing
+- 0590e21 Installing the packager tools into the Jenkins pipeline image
+- a33fe23 Replacing the libjpeg-turbo download fallback with a clear configure error
+- dbda6ae Fixing the libavif download fallback stopping without the system libyuv
+- 2e3d8a7 Pinning the third-party download fallbacks to their release tags
+- 5f12f3e Failing the CI test stages which match no tests
+- 7976599 Fixing the Jenkins doc sections linked check skipping the section directories
+- 1b4b286 Replacing the broken OpenSSL download fallback with a clear configure error
+- 735423d Fixing the mixed target_link_libraries signatures on the project binary
+- 5e20ac2 Fixing the MAX_LOG_LEVEL option help text error level value
+- ebe2a14 Fixing the logger level filter tests which could not fail
+- af0848d Fixing the log macros to expand into single statements
+- 863594a Fixing the logger data races on the log file reopening and the level
+- e9a907f Fixing the log file open failure aborting the process
+- 9ce4d06 Splitting the CTEST_DefaultLogger helper classes into own files
+- 2333539 Splitting the packages install scripts per OS release
+- 8d4da46 Removing the leftover CURL references of the AI client
+- f15a06b Pinning the nlohmann JSON fallback and flatpak sources to the v3.12.0 release
+- 6eaae83 Covering the AI client accessors of the ApplicationContext by its unit test
+- 43826b4 Fixing the ApplicationContext doc comment typos
+- 6740ff3 Fixing the cppcheck target findings of the AI client
+- 92ce074 Fixing the clang-format of the renamed last_response_successful calls
+- 02047f3 Fixing the libcurl docs timeouts text and linking the HTTP client section
+- fd86416 Stopping the configure with a clear error when the flavor library is OFF
+- 7eb63a0 Pinning the libcurl fallback sources to the curl-8_23_0 release
+- b392515 Fixing the misspelled last_response_successfull CURLController call name
+- 0ac8212 Moving the HeadersList into its own files and fixing its append leak
+- 1bbcf16 Synchronizing the CommandLineParser parse doc comment with app
+- b381538 Synchronizing the get_stop assertions of the application tests with app
+- 6e6c516 Supressing the cppcheck's missingIncludeSystem and unusedStructMember warnings.
+- 6a949f1 Replacing the unreachable GNU gettext site link with its Savannah page
+- 20db2aa Introducing the destination CPU architecture into the package names
+- a82dc2e Introducing the appGettext branch info into the READMEs
+- c58a6e6 Introducing the appDarknetXX branch info into the READMEs
+- 6ace9bc Introducing the RedHat packages install script
+- 5b9765f Introducing the appWhisperCPP branch info into the READMEs
+- d71ea42 Introducing the FreeBSD packages install script
+- ff69e84 Introducing the appV8 branch info into the READMEs
+- cd68b31 Erasing the build sources and trees of the docker images
+- d6b309e Introducing the debug clang-format script
+- e6a8854 Resetting the inherited signals dispositions in the signals handlers tests
+- 6a12115 Introducing the HTTP client hardening constraints section into the READMEs
+- b567490 Introducing the HTTP client hardening constraints
+- 7b4d726 Introducing the binary hardening options section into the READMEs
+- ccf61f3 Introducing the binary hardening compile and link options
+- fcfab29 Introducing the GitLab CI/CD pipeline section into the READMEs
+- 9a5c73b Introducing the GitLab CI/CD pipeline mirroring the Jenkinsfile
+- e47d4ec Introducing the GitHub Actions CI pipeline section into the READMEs
+- 578e6b3 Introducing the GitHub Actions CI pipeline mirroring the Jenkinsfile
+- 49008cc Correcting the appQt6QtDBusClient branch description in the READMEs
+- ffbda81 Introducing the desktop application packaging switch
+- 1d58d97 Limiting the documentation checks to the repository own markdown files
+- a34e5c0 Excluding the GCC own include directories from the clang-tidy search path
+- dc4dc60 Accepting the 405 documentation URLs
+- dd83941 Applying the clang-format to the test sources
+- 1d55c66 Spacing out the branch entries in the READMEs
+- 210e237 Rewording the DOCKER_HOST environment requirement in the docker docs
+- a793607 Removing the DOCKER_HOST variables from the docker enablers
+- cf8a427 Excluding the build trees from the Docker build context
+- 5791bfc Retrying the unreachable documentation URLs and accepting the 403 ones
+- 929bbae Introducing the --rebuild flag into the Jenkins docker scripts
+- e4e4e67 Rebuilding the image from its base on the Jenkins pipeline force rebuild
+- 9a88ca4 Introducing the audio assets branches info into the READMEs
+- f4d91e5 Splitting the signals handlers per category and covering the pause, reload, user defined and ignored signals
+- 66b1c06 Introducing the app signals handlers subcomponent
+- 54526e1 Declaring the main function argv parameter as an array
+- 20a3ecd Registering the DefaultLogger tests directory in the CMake build
+- 7a8dee8 Moving the packagers templates into the per-packager directories
+- 6870630 Dropping the packagers and the development tools from the packages install list
+- e603601 The destination CPU architecture of the AppImage package name
+- bf1a05b Picking the CPack AppImage enabler since the CMake 4.2 and dropping the debug banners
+- 6cc6e6e Extracting the AppImage enabler pick into its own general enabler
+- 35276b8 Selecting the AppImage packager enabler by the CMake version
+- efa586a Introducing the CPack based AppImage packager enabler
+- 0d34110 Introducing the AppImage packager
+- e9bad4c Introducing the --install flag into the packager build scripts
+- 38a9c5e Renaming the packages install script and adding the Ubuntu one
+- 4b3bf45 Introducing the target architecture into the flatpak package name
+- 5c5b55b Introducing the AppStream metainfo file into the flatpak package
+- 9a737cf Consuming the install directory variables the flatpak-builder passes
+- 9a9bf18 Introducing the required packages install script
+- 8d6c7ba Installing the flatpak build dependencies from the flathub remote
+- bc30dc1 Dropping the redundant build step from the packager scripts
+- bc20259 Introducing the per packager build scripts
+- 1952771 Failing the pipeline test stages when they match no tests
+- 55962f5 Percent encoding the file protocol URLs of the CURLController test
+- f24fb90 Making the CURLController timeouts the constant long values
+- 1aa21fe Linking the libcurl into the CURLController object library
+- b4c0e7e Introducing the appCFITSIO branch info into the READMEs
+- a2d46dc Make the compile time log level gate really gate
+- 7b04926 Introducing the appGtkmm4Libadwaita branch info into the READMEs
+- 4f6e4db Pinning the log message stream to the classic locale
+- 37cd2a5 Decomposing the IApplication descendants into the applications subcomponent
+- 116b9f8 Introducing the appFontAwesome branch info into the READMEs
+- cd5dbbc Introducing the debug test script and its --test parameter
+- bffc37a Incrementing version to appCURLChatGPT0.11.0
+- 194b439 Release appCURLChatGPT0.10.0 at 2026-08-17
+
 ## [appCURLChatGPT0.10.0] - 2026-08-17
 
 - c541e27 Introducing the InsertNewlineAtEOF clang-format option
@@ -346,6 +479,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[appCURLChatGPT0.11.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appCURLChatGPT0.11.0)
+[appCURLChatGPT0.10.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appCURLChatGPT0.10.0)
 [app0.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.9.0)
 [app0.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.8.0)
 [app0.7.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.7.0)

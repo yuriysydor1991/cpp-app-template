@@ -13,14 +13,14 @@ The [src/lib/facade/public](/src/lib/facade/public) directory holds the whole in
 
 The first four are in the `CppAppTemplate012` namespace; the logging interface deliberately is not - see below.
 
-Introduce new classes and/or methods there to share more functionality with any project of interest. The contents of the directory are installed under the `include/CppAppTemplate-0.12` sub-directory - the installable library name, see [Customizing the installable library name segments](/doc/sections/en_US/5-29-customizing-library-name-segments.md) - with respect to the configured Meson `--prefix`.
+Introduce new classes and/or methods there to share more functionality with any project of interest. The contents of the directory are installed under the `include/CppAppTemplate-0.13` sub-directory - the installable library name, see [Customizing the installable library name segments](/doc/sections/en_US/5-29-customizing-library-name-segments.md) - with respect to the configured Meson `--prefix`.
 
 ### The logging interface
 
 The library carries its own copy of the logging subsystem, so `LibraryFacade::init_logger` accepts the logger instance owned by the library user and every library message lands in the very same destination as the messages of the code which uses the library. A user which can not include that interface can not implement it either, so [ILogger.h](/src/lib/facade/public/ILogger.h) lives among the public headers rather than under the private [src/log](/src/log) subsystem it is used by: a change to it is a change to the ABI of every library already installed, and the directory it sits in is what says so. The rest of the subsystem - the `default_logger` proxy and the real logger behind it - stays private, and the library keeps its own default logger until a user hands one over.
 
 ```cpp
-#include <CppAppTemplate-0.12/LibraryFacade.h>
+#include <CppAppTemplate-0.13/LibraryFacade.h>
 
 class MyLogger : public logger::ILogger { /* the eight methods */ };
 
@@ -67,17 +67,17 @@ So a new public class belongs in [src/lib/facade/public](/src/lib/facade/public)
 
 ### Including the installed headers
 
-Both the installed `include/CppAppTemplate-0.12` sub-directory and the plain include root above it are exported - through the `Cflags` of the pkg-config file and through the `INTERFACE_INCLUDE_DIRECTORIES` of the imported CMake target - so a consumer may write either form:
+Both the installed `include/CppAppTemplate-0.13` sub-directory and the plain include root above it are exported - through the `Cflags` of the pkg-config file and through the `INTERFACE_INCLUDE_DIRECTORIES` of the imported CMake target - so a consumer may write either form:
 
 ```cpp
-#include <CppAppTemplate-0.12/LibraryFacade.h>  // recommended
+#include <CppAppTemplate-0.13/LibraryFacade.h>  // recommended
 #include <LibraryFacade.h>                      // also works
 ```
 
 The prefixed form is the safe one: every library derived from this template installs a `LibraryFacade.h` of its own, and names such as `ILib.h` are generic enough to collide in a busy include path. A project which reaches more than one derived library is best served by one alias header per library, holding that single prefixed include and a short namespace alias:
 
 ```cpp
-#include <CppAppTemplate-0.12/LibraryFacade.h>
+#include <CppAppTemplate-0.13/LibraryFacade.h>
 
 namespace cat = CppAppTemplate012;
 ```
@@ -88,17 +88,17 @@ Everything else then names the library through the alias only, so following it t
 
 Alongside the successful installation of the library binary and header files, Meson will install:
 
-- a **pkg-config file** at `<prefix>/<libdir>/pkgconfig/CppAppTemplate-0.12.pc`, so downstream Meson projects can probe the library with `dependency('CppAppTemplate-0.12')` (which uses pkg-config under the hood) and downstream Autotools or generic build systems can use it directly via `pkg-config --cflags --libs CppAppTemplate-0.12`.
-- a set of **CMake package-config files** at `<prefix>/<libdir>/cmake/CppAppTemplate-0.12/`:
-    - `CppAppTemplate-0.12Config.cmake`
-    - `CppAppTemplate-0.12ConfigVersion.cmake` (SameMajorVersion policy)
-    - `CppAppTemplate-0.12Targets.cmake` (exporting the imported target `CppAppTemplate-0.12::CppAppTemplate-0.12`)
+- a **pkg-config file** at `<prefix>/<libdir>/pkgconfig/CppAppTemplate-0.13.pc`, so downstream Meson projects can probe the library with `dependency('CppAppTemplate-0.13')` (which uses pkg-config under the hood) and downstream Autotools or generic build systems can use it directly via `pkg-config --cflags --libs CppAppTemplate-0.13`.
+- a set of **CMake package-config files** at `<prefix>/<libdir>/cmake/CppAppTemplate-0.13/`:
+    - `CppAppTemplate-0.13Config.cmake`
+    - `CppAppTemplate-0.13ConfigVersion.cmake` (SameMajorVersion policy)
+    - `CppAppTemplate-0.13Targets.cmake` (exporting the imported target `CppAppTemplate-0.13::CppAppTemplate-0.13`)
 
 Downstream CMake projects can then use the library with:
 
 ```
-find_package(CppAppTemplate-0.12 CONFIG REQUIRED)
-target_link_libraries(my_app PRIVATE CppAppTemplate-0.12::CppAppTemplate-0.12)
+find_package(CppAppTemplate-0.13 CONFIG REQUIRED)
+target_link_libraries(my_app PRIVATE CppAppTemplate-0.13::CppAppTemplate-0.13)
 ```
 
 Both artefacts are generated by Meson `configure_file` calls in [src/lib/meson.build](/src/lib/meson.build) from templates that live in [src/lib/cmake/](/src/lib/cmake/). Adjust the templates and the `pkgconfig.generate()` invocation if the library needs additional metadata (extra `Requires:` for pkg-config, extra `find_dependency()` for CMake, etc.).

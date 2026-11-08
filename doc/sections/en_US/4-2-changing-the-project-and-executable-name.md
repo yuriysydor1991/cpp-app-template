@@ -1,6 +1,6 @@
 ## Changing the project and library name
 
-Change the project name in the root [meson.build](/meson.build) by editing the first positional argument to `project(...)`. The library name derives automatically from this value and the project's major and minor versions: it is computed by `meson/template-project-misc-variables-declare/meson.build` as `<project_name>-<major_version>.<minor_version>` and exposed as `PROJECT_LIBRARY_NAME` (for example, `CppAppTemplate-0.12` when the project name is `CppAppTemplate` and the version is `0.12.0`).
+Change the project name in the root [meson.build](/meson.build) by editing the first positional argument to `project(...)`. The library name derives automatically from this value and the project's major and minor versions: it is computed by `meson/template-project-misc-variables-declare/meson.build` as `<project_name>-<major_version>.<minor_version>` and exposed as `PROJECT_LIBRARY_NAME` (for example, `CppAppTemplate-0.13` when the project name is `CppAppTemplate` and the version is `0.13.0`).
 
 Because the library name is derived, all downstream-facing artefacts will follow your new name automatically:
 

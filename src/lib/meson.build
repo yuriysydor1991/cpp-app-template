@@ -55,7 +55,7 @@ pkgconfig.generate(
   filebase: PROJECT_LIBRARY_NAME,
   description: project_description,
   # Both the versioned sub-directory and the plain include root, so a consumer
-  # may write either <CppAppTemplate-0.12/LibraryFacade.h> (recommended) or the
+  # may write either <CppAppTemplate-0.13/LibraryFacade.h> (recommended) or the
   # short <LibraryFacade.h>. The prefixed form is the safe one: every library
   # derived from this template installs a LibraryFacade.h of its own.
   subdirs: [PROJECT_LIBRARY_NAME, '.'],

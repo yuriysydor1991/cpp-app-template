@@ -4,8 +4,8 @@
 `include/<name>/` для публічних заголовків, файл pkg-config і директорія CMake
 package з простором імен імпортованої цілі) виводиться з трьох опціональних
 Meson-опцій. Вони дозволяють паралельним встановленням різних версій бібліотеки
-співіснувати у системі - наприклад `include/CppAppTemplate-0.12.0-dev/` поруч з
-`include/CppAppTemplate-0.12/`.
+співіснувати у системі - наприклад `include/CppAppTemplate-0.13.0-dev/` поруч з
+`include/CppAppTemplate-0.13/`.
 
 | Опція | За замовчуванням | Ефект |
 |---|---|---|
@@ -19,15 +19,15 @@ Meson-опцій. Вони дозволяють паралельним вста�
 Дві другорядні версії бібліотеки тоді встановлюються цілком поруч, а застосунок
 може залежати від обох одразу.
 
-Приклади імен бібліотеки для проекту `0.12.0`:
+Приклади імен бібліотеки для проекту `0.13.0`:
 
 | Прапорці конфігурації | Імʼя бібліотеки |
 |---|---|
-| (немає) | `CppAppTemplate-0.12` |
+| (немає) | `CppAppTemplate-0.13` |
 | `-DLIB_INCLUDE_MINOR_IN_NAME=false` | `CppAppTemplate-0` |
-| `-DLIB_INCLUDE_MICRO_IN_NAME=true` | `CppAppTemplate-0.12.0` |
-| `-DLIB_NAME_SUFFIX='-dev'` | `CppAppTemplate-0.12-dev` |
-| `-DLIB_INCLUDE_MICRO_IN_NAME=true -DLIB_NAME_SUFFIX='-dev'` | `CppAppTemplate-0.12.0-dev` |
+| `-DLIB_INCLUDE_MICRO_IN_NAME=true` | `CppAppTemplate-0.13.0` |
+| `-DLIB_NAME_SUFFIX='-dev'` | `CppAppTemplate-0.13-dev` |
+| `-DLIB_INCLUDE_MICRO_IN_NAME=true -DLIB_NAME_SUFFIX='-dev'` | `CppAppTemplate-0.13.0-dev` |
 
 Однакове імʼя послідовно використовується для кожного встановлюваного артефакту:
 

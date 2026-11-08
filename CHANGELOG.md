@@ -5,6 +5,144 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appFreeGlut0.10.0] - 2026-11-08
+
+- e032e4d Removing the destination OS from the AppImage package name
+- 7c60bc0 Introducing the STT branches info into the READMEs
+- 36f1673 Replacing the CMAKE_SOURCE_DIR/CMAKE_BINARY_DIR by the PROJECT_SOURCE_DIR/PROJECT_BINARY_DIR
+- 11ad66f Introducing the appWebAssembly branch info into the READMEs
+- 272f3a1 Introducing the appLlamaCPP branch info into the READMEs
+- fe0d6c7 Introducing the TTS branches info into the READMEs
+- 0ea117e Introducing the destination OS into the package names
+- c108861 Synchronizing the template flavors list of the READMEs
+- bee98ed Refreshing the shared library cache after the from-source installs
+- 6271604 Failing the flavor CI test stages which match no tests
+- faa482c Converting the flavor link calls of the project binary to the keyword signature
+- a3b4374 Fixing the cppcheck findings of the new signals handler, tests and log mock
+- b9f1023 Updating the app component diagram to the signals handlers design
+- c289265 Renumbering the custom command line parameters section numbered 4-6 twice
+- d65cdff Documenting the built in command line options and the usage errors
+- 6bf1cef Testing the application with the real command line arguments
+- 250bcd7 Parsing the command line before the log file initialization
+- dfb3593 Exiting with a failure status on the command line usage errors
+- ad74978 Fixing the missing option value raising the version flag instead of the help one
+- 3e318df Fixing the CommandLineParser test assertions which could not fail
+- 04e54b7 Fixing the log mock LOG_INIT forwarding into the LOG_INIT_DEFAULTS mock
+- d92ac71 Restoring the previous signal dispositions on the signals handler uninstall
+- fb59fd9 Leaving the SIGTTIN and SIGTTOU signals to the shell job control
+- 0b91414 Removing the nonexistent module path directories and cppcheck suppression
+- d1d1075 Fixing the zlib gzip file example ignoring the read and close errors
+- c366155 Fixing the flatpak requirements section naming an outdated SDK version
+- e89ebb7 Documenting the ENABLE_COMPONENT_TESTS option of the test builds
+- 4d9f7ba Listing every linked doc section in the requirements and build index pages
+- d58cb42 Fixing the documentation links pointing into the other language
+- 52151cd Fixing the stale file paths named in the documentation
+- 14cc1d7 Fixing the flatpak target failing on its repeated build
+- f467dcf Fixing the snap command path ignoring the install prefix
+- d061e4e Fixing the documentation install which needed a manual Doxygen-doc build
+- 9b5e996 Skipping the Doxygen and callgrind targets when their tools are missing
+- b89b734 Installing the packager tools into the Jenkins pipeline image
+- 510db34 Replacing the libjpeg-turbo download fallback with a clear configure error
+- 8389cef Fixing the libavif download fallback stopping without the system libyuv
+- caedb7a Pinning the third-party download fallbacks to their release tags
+- 893528c Failing the CI test stages which match no tests
+- ba6aff5 Fixing the Jenkins doc sections linked check skipping the section directories
+- 84f47ae Replacing the broken OpenSSL download fallback with a clear configure error
+- 89abf41 Fixing the mixed target_link_libraries signatures on the project binary
+- 08e6aad Fixing the MAX_LOG_LEVEL option help text error level value
+- db6205f Fixing the logger level filter tests which could not fail
+- 79544dd Fixing the log macros to expand into single statements
+- 4d65238 Fixing the logger data races on the log file reopening and the level
+- de36885 Fixing the log file open failure aborting the process
+- f5227bc Splitting the CTEST_DefaultLogger helper classes into own files
+- 951b607 Splitting the packages install scripts per OS release
+- 1163801 Hiding the ApplicationContext fields and adding the atomic stop flag
+- 03cd8aa Replacing int flag with a bool for the CommandLineParser
+- 9ed0c59 Forwarding the host X display into the docker single run
+- 39e519b Synchronizing the drifted cppcheck enabler and suppressions with the app branch
+- 4e11032 Declaring the snap build and stage packages of the toolkit
+- c1a2e15 Fixing the DEB package dependencies to the linked runtime libraries
+- cf36306 Fixing the FreeGlut application id and the docs naming the app one
+- da51be7 Removing the unused GLEW and GLM packages
+- 6bdb667 Removing the freeglut3 package missing from the newer Debian and Ubuntu releases
+- 27aa432 Naming the FreeGlut window after the project instead of the binary path
+- 224c844 Removing the unused GLU and GLUT compatibility headers
+- 33fcd32 Fixing the FreeGlut scene lacking its depth buffer and scaling by zero
+- 1cebcce Fixing the FreeGlut main loop ignoring the stop signals
+- d6e3be0 Fixing the installed binary not finding the Steamworks library on GNU/Linux
+- d95e268 Pinning the stb_truetype fetch to a fixed stb commit
+- 817e51c Fixing the HarfBuzz FreeType glue missing with a system FreeType
+- f7606c3 Fixing the Jolt static MSVC runtime clashing with the project's DLL one
+- 50e4f96 Fixing the Box2D system probe taking the incompatible 2.x releases
+- c855e10 Introducing the VERSION argument into the 3rd party enabler function
+- 48cd1fa Renaming the FreeGlutIniter component into the FreeGlutController
+- 7b7dafe Replacing the unreachable GNU gettext site link with its Savannah page
+- e9cb708 Introducing the destination CPU architecture into the package names
+- 76e1a2c Introducing the appGettext branch info into the READMEs
+- b3ce610 Introducing the appDarknetXX branch info into the READMEs
+- 1876f6d Introducing the RedHat packages install script
+- 13d80f4 Introducing the appWhisperCPP branch info into the READMEs
+- 5b19bd8 Introducing the FreeBSD packages install script
+- e112415 Introducing the appV8 branch info into the READMEs
+- b2a5a93 Erasing the build sources and trees of the docker images
+- d287262 Introducing the debug clang-format script
+- 41ba8ba Introducing the 3D assets sections into the READMEs
+- 8652652 Introducing the Poly Haven, Kenney, Quaternius and Khronos glTF Sample Assets CMake enablers
+- 86c92f8 Resetting the inherited signals dispositions in the signals handlers tests
+- ca2dac3 Introducing the binary hardening options section into the READMEs
+- 3347594 Introducing the binary hardening compile and link options
+- b680cfd Introducing the GitLab CI/CD pipeline section into the READMEs
+- 88a612b Introducing the GitLab CI/CD pipeline mirroring the Jenkinsfile
+- ebf71ce Introducing the GitHub Actions CI pipeline section into the READMEs
+- 9872cb2 Introducing the GitHub Actions CI pipeline mirroring the Jenkinsfile
+- 30ddc33 Correcting the appQt6QtDBusClient branch description in the READMEs
+- 5683887 Introducing the desktop application packaging switch
+- f8384c2 Introducing the font type usage examples into the font enabler docs
+- a894155 Introducing the FreeType, HarfBuzz, Fontconfig, msdfgen and stb_truetype CMake enablers
+- cd8dc33 Limiting the documentation checks to the repository own markdown files
+- bd7e5e6 Excluding the GCC own include directories from the clang-tidy search path
+- 01b5492 Accepting the 405 documentation URLs
+- 4d7bef1 Spacing out the branch entries in the READMEs
+- b37d381 Rewording the DOCKER_HOST environment requirement in the docker docs
+- 5b97227 Removing the DOCKER_HOST variables from the docker enablers
+- 89fe232 Dropping the absent freeglut3 package from the Docker image
+- 4b36bca Excluding the build trees from the Docker build context
+- 1d09cbf Retrying the unreachable documentation URLs and accepting the 403 ones
+- d85271d Introducing the --rebuild flag into the Jenkins docker scripts
+- 7b2286c Rebuilding the image from its base on the Jenkins pipeline force rebuild
+- 14dfdc6 Introducing the audio assets branches info into the READMEs
+- e8af571 Splitting the signals handlers per category and covering the pause, reload, user defined and ignored signals
+- d3ca6b6 Introducing the app signals handlers subcomponent
+- 80a6e8c Introducing the Steamworks SDK CMake enabler
+- a4165f5 Introducing the Box2D and the Jolt Physics CMake enablers
+- 5d1827f Declaring the main function argv parameter as an array
+- 3479d66 Moving the packagers templates into the per-packager directories
+- 436778d Dropping the packagers and the development tools from the packages install list
+- db17ec3 The destination CPU architecture of the AppImage package name
+- b5fb444 Picking the CPack AppImage enabler since the CMake 4.2 and dropping the debug banners
+- 214bb91 Extracting the AppImage enabler pick into its own general enabler
+- 1301d38 Selecting the AppImage packager enabler by the CMake version
+- 43cf92d Introducing the CPack based AppImage packager enabler
+- d108507 Introducing the AppImage packager
+- d7e4444 Introducing the --install flag into the packager build scripts
+- ad17a20 Renaming the packages install script and adding the Ubuntu one
+- a4eab81 Introducing the target architecture into the flatpak package name
+- fe3fa2f Introducing the AppStream metainfo file into the flatpak package
+- ce07fc8 Consuming the install directory variables the flatpak-builder passes
+- d87e943 Introducing the required packages install script
+- 53b3d4a Installing the flatpak build dependencies from the flathub remote
+- 283c774 Dropping the redundant build step from the packager scripts
+- a5bae3f Introducing the per packager build scripts
+- 9d0251e Introducing the appCFITSIO branch info into the READMEs
+- bd36ee2 Make the compile time log level gate really gate
+- 6ccf484 Introducing the appGtkmm4Libadwaita branch info into the READMEs
+- ca46a52 Pinning the log message stream to the classic locale
+- e871907 Decomposing the IApplication descendants into the applications subcomponent
+- 1610080 Introducing the appFontAwesome branch info into the READMEs
+- 0a6f660 Introducing the debug test script and its --test parameter
+- 5f1ac11 Incrementing version to appFreeGlut0.10.0
+- b1eecc6 Release appFreeGlut0.9.0 at 2026-08-17
+
 ## [appFreeGlut0.9.0] - 2026-08-17
 
 - 323d5ca Introducing the InsertNewlineAtEOF clang-format option
@@ -332,6 +470,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[appFreeGlut0.10.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appFreeGlut0.10.0)
+[appFreeGlut0.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appFreeGlut0.9.0)
 [appFreeGlut0.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appFreeGlut0.8.0)
 [appFreeGlut0.7.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appFreeGlut0.7.0)
 [app0.6.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.6.0)

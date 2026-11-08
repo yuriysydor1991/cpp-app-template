@@ -5,6 +5,136 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appMongoDBCpp40.10.0] - 2026-11-08
+
+- 67616ad Removing the destination OS from the AppImage package name
+- 4ec71f3 Introducing the STT branches info into the READMEs
+- 13ad632 Replacing the CMAKE_SOURCE_DIR/CMAKE_BINARY_DIR by the PROJECT_SOURCE_DIR/PROJECT_BINARY_DIR
+- e0cb2ea Introducing the appWebAssembly branch info into the READMEs
+- 072fa91 Introducing the appLlamaCPP branch info into the READMEs
+- ece351c Introducing the TTS branches info into the READMEs
+- a465387 Introducing the destination OS into the package names
+- 28bd766 Synchronizing the template flavors list of the READMEs
+- 763e475 Refreshing the shared library cache after the from-source installs
+- 0baa141 Documenting the MongoDB driver builds of the per-release install scripts
+- 230de0b Failing the flavor CI test stages which match no tests
+- ded4289 Converting the flavor link calls of the project binary to the keyword signature
+- e9a665f Fixing the cppcheck findings of the new signals handler, tests and log mock
+- 743dcdc Updating the app component diagram to the signals handlers design
+- 9232e71 Renumbering the custom command line parameters section numbered 4-6 twice
+- 261d94a Documenting the built in command line options and the usage errors
+- 58fa0c4 Testing the application with the real command line arguments
+- 85ae1e1 Parsing the command line before the log file initialization
+- feadbbb Exiting with a failure status on the command line usage errors
+- 28a708e Fixing the missing option value raising the version flag instead of the help one
+- dd06270 Fixing the CommandLineParser test assertions which could not fail
+- 20d68cf Fixing the log mock LOG_INIT forwarding into the LOG_INIT_DEFAULTS mock
+- af239ee Restoring the previous signal dispositions on the signals handler uninstall
+- 0d50f88 Leaving the SIGTTIN and SIGTTOU signals to the shell job control
+- 7196d84 Removing the nonexistent module path directories and cppcheck suppression
+- 1097aee Fixing the zlib gzip file example ignoring the read and close errors
+- a22aadf Fixing the flatpak requirements section naming an outdated SDK version
+- e854965 Documenting the ENABLE_COMPONENT_TESTS option of the test builds
+- bac9fc7 Listing every linked doc section in the requirements and build index pages
+- ba7e24e Fixing the documentation links pointing into the other language
+- 2d88184 Fixing the stale file paths named in the documentation
+- 7ceb2f4 Fixing the flatpak target failing on its repeated build
+- ffa111e Fixing the snap command path ignoring the install prefix
+- 32a36ab Fixing the documentation install which needed a manual Doxygen-doc build
+- a8a7a24 Skipping the Doxygen and callgrind targets when their tools are missing
+- c54bd4f Installing the packager tools into the Jenkins pipeline image
+- 27c6095 Replacing the libjpeg-turbo download fallback with a clear configure error
+- 5326f5b Fixing the libavif download fallback stopping without the system libyuv
+- 7ecf936 Pinning the third-party download fallbacks to their release tags
+- b9ce38b Failing the CI test stages which match no tests
+- d30d3ec Fixing the Jenkins doc sections linked check skipping the section directories
+- 6091521 Replacing the broken OpenSSL download fallback with a clear configure error
+- b442ee9 Fixing the mixed target_link_libraries signatures on the project binary
+- 72ea291 Fixing the MAX_LOG_LEVEL option help text error level value
+- 6bd3ece Fixing the logger level filter tests which could not fail
+- bab8a76 Fixing the log macros to expand into single statements
+- b548ec8 Fixing the logger data races on the log file reopening and the level
+- 0b6bcf9 Fixing the log file open failure aborting the process
+- a895cae Splitting the CTEST_DefaultLogger helper classes into own files
+- 884e751 Splitting the packages install scripts per OS release
+- ac12116 Pinning the MongoDB driver sources in the Dockerfiles and the flatpak manifest
+- 9e9b899 Fixing the cppcheck findings in the branch code
+- e70b67f Introducing the unit and component tests for the MongoDB code
+- adee51f Formatting the MongoDB connection string maker with the clang-format
+- 996a545 Fixing the malformed GCC diagnostic pragma in the includes header
+- 020e605 Introducing the MongoDB TLS and connection timeout options
+- 042ad3c Introducing the MongoDB connection settings environment variables
+- b39943d Fixing the MongoDB connection string encoding and the duplicate username check
+- 202c340 Breaking the shared_ptr cycle between the context and the DB connection
+- 46e7406 Restoring the app's 5-37 AppImage doc section number
+- 13fa4db Renumbering the branch requirements doc into the free 3-13 section
+- efd79c8 Synchronizing the get_stop assertions and the CommandLineParser doc comment with app
+- 05577d7 Supressing the cppcheck's missingIncludeSystem and unusedStructMember warnings.
+- 0d8642f Erasing redundant suppression that causes cppcheck to fail
+- 360a079 Replacing the unreachable GNU gettext site link with its Savannah page
+- 22b5f1a Introducing the destination CPU architecture into the package names
+- ff39587 Introducing the appGettext branch info into the READMEs
+- f950a35 Introducing the appDarknetXX branch info into the READMEs
+- 3da5c3c Introducing the RedHat packages install script
+- e41360e Introducing the appWhisperCPP branch info into the READMEs
+- 8d2d090 Introducing the FreeBSD packages install script
+- 08d4b95 Introducing the appV8 branch info into the READMEs
+- 5f1742e Erasing the build sources and trees of the docker images
+- be3d7d3 Introducing the debug clang-format script
+- 9ac8e12 Resetting the inherited signals dispositions in the signals handlers tests
+- 93630c0 Introducing the binary hardening options section into the READMEs
+- b12f7ba Introducing the binary hardening compile and link options
+- 2f9b335 Introducing the GitLab CI/CD pipeline section into the READMEs
+- 6d01475 Introducing the GitLab CI/CD pipeline mirroring the Jenkinsfile
+- e508b5e Introducing the GitHub Actions CI pipeline section into the READMEs
+- bd5abc5 Introducing the GitHub Actions CI pipeline mirroring the Jenkinsfile
+- 2333ef6 Skipping the uninstall script generation of the fetched MongoDB C++ driver
+- 0457209 Correcting the appQt6QtDBusClient branch description in the READMEs
+- 7d11e52 Introducing the desktop application packaging switch
+- 91cbda8 Limiting the documentation checks to the repository own markdown files
+- 1353aa5 Excluding the GCC own include directories from the clang-tidy search path
+- b98c88c Accepting the 405 documentation URLs
+- 692a701 Applying the clang-format to the test sources
+- e931060 Spacing out the branch entries in the READMEs
+- 97f66d7 Rewording the DOCKER_HOST environment requirement in the docker docs
+- 02328b5 Removing the DOCKER_HOST variables from the docker enablers
+- 828615c Excluding the build trees from the Docker build context
+- 3ec84ca Retrying the unreachable documentation URLs and accepting the 403 ones
+- 4340a48 Introducing the --rebuild flag into the Jenkins docker scripts
+- a215cdd Rebuilding the image from its base on the Jenkins pipeline force rebuild
+- 64b1d9d Introducing the audio assets branches info into the READMEs
+- 902cea2 Splitting the signals handlers per category and covering the pause, reload, user defined and ignored signals
+- 04ce8d6 Introducing the app signals handlers subcomponent
+- 72d891b Declaring the main function argv parameter as an array
+- 1294d3e Moving the packagers templates into the per-packager directories
+- 2868694 Dropping the packagers and the development tools from the packages install list
+- e132f37 The destination CPU architecture of the AppImage package name
+- 67265a6 Picking the CPack AppImage enabler since the CMake 4.2 and dropping the debug banners
+- 81443ed Extracting the AppImage enabler pick into its own general enabler
+- dba5004 Selecting the AppImage packager enabler by the CMake version
+- 41ccf13 Introducing the CPack based AppImage packager enabler
+- e49a257 Introducing the AppImage packager
+- 4cb741b Introducing the --install flag into the packager build scripts
+- 9b14500 Renaming the packages install script and adding the Ubuntu one
+- df53700 Introducing the target architecture into the flatpak package name
+- 94a3f12 Introducing the AppStream metainfo file into the flatpak package
+- f11eb76 Consuming the install directory variables the flatpak-builder passes
+- ae169a4 Introducing the required packages install script
+- c802b90 Fixing the mongo-c-driver git URL of the flatpak manifest
+- 0836e34 Introducing the mongocxx enabler with the Internet fallback
+- c1258ff Installing the flatpak build dependencies from the flathub remote
+- 980ce42 Dropping the redundant build step from the packager scripts
+- 5b26954 Introducing the per packager build scripts
+- 1276895 Introducing the appCFITSIO branch info into the READMEs
+- cd27831 Make the compile time log level gate really gate
+- 903541f Introducing the appGtkmm4Libadwaita branch info into the READMEs
+- 4d500d1 Pinning the log message stream to the classic locale
+- fc34abd Decomposing the IApplication descendants into the applications subcomponent
+- 20a8d46 Introducing the appFontAwesome branch info into the READMEs
+- dadf173 Introducing the debug test script and its --test parameter
+- f22dbfa Incrementing version to appMongoDBCpp40.10.0
+- 41502ba Release appMongoDBCpp40.9.0 at 2026-08-17
+
 ## [appMongoDBCpp40.9.0] - 2026-08-17
 
 - ce00526 Introducing the InsertNewlineAtEOF clang-format option
@@ -340,6 +470,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[appMongoDBCpp40.10.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appMongoDBCpp40.10.0)
+[appMongoDBCpp40.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appMongoDBCpp40.9.0)
 [app0.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.8.0)
 [app0.7.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.7.0)
 [app0.6.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.6.0)

@@ -24,7 +24,7 @@ Finally, execute the `cpack` command inside the template project build directory
 cpack -C Release
 ```
 
-The package file should be generated inside the project build root directory. For example, if the project name wasn't changed and its version is `0.12.0` the package name may look like `CppAppTemplate-0.12.0-x64-windows-10.0.msi` (the architecture and OS suffixes are the `TEMPLATE_PROJECT_WIX_ARCHITECTURE` and `TEMPLATE_PROJECT_PACKAGE_OS` variables below).
+The package file should be generated inside the project build root directory. For example, if the project name wasn't changed and its version is `0.13.0` the package name may look like `CppAppTemplate-0.13.0-x64-windows-10.0.msi` (the architecture and OS suffixes are the `TEMPLATE_PROJECT_WIX_ARCHITECTURE` and `TEMPLATE_PROJECT_PACKAGE_OS` variables below).
 
 In order to examine details of the WIX MSI package configuration visit the [cmake/enablers/packagers/template-project-wix-enabler.cmake](/cmake/enablers/packagers/template-project-wix-enabler.cmake) file.
 

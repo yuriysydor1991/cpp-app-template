@@ -5,6 +5,134 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appOpenCV0.12.0] - 2026-11-08
+
+- 5c04d46 Removing the destination OS from the AppImage package name
+- a3e46b3 Introducing the STT branches info into the READMEs
+- 1601870 Replacing the CMAKE_SOURCE_DIR/CMAKE_BINARY_DIR by the PROJECT_SOURCE_DIR/PROJECT_BINARY_DIR
+- 69562d3 Introducing the appWebAssembly branch info into the READMEs
+- 26fe225 Introducing the appLlamaCPP branch info into the READMEs
+- 51bde0b Introducing the TTS branches info into the READMEs
+- 863dc2b Introducing the destination OS into the package names
+- 27d9237 Fixing the branch name of the cloning commands in the docs
+- 36443a3 Synchronizing the template flavors list of the READMEs
+- cbf7a64 Failing the flavor CI test stages which match no tests
+- e4950ca Converting the flavor link calls of the project binary to the keyword signature
+- 03fe99e Refreshing the shared library cache after the from-source installs
+- 4e29e17 Fixing the cppcheck findings of the new signals handler, tests and log mock
+- f46c0b7 Updating the app component diagram to the signals handlers design
+- 8f40952 Renumbering the custom command line parameters section numbered 4-6 twice
+- 09486cc Documenting the built in command line options and the usage errors
+- c180063 Testing the application with the real command line arguments
+- c71e17e Parsing the command line before the log file initialization
+- 3f49dfc Exiting with a failure status on the command line usage errors
+- dd834f8 Fixing the missing option value raising the version flag instead of the help one
+- c6b9bb6 Fixing the CommandLineParser test assertions which could not fail
+- 764cbfc Fixing the log mock LOG_INIT forwarding into the LOG_INIT_DEFAULTS mock
+- b1b0342 Restoring the previous signal dispositions on the signals handler uninstall
+- 0fcae93 Leaving the SIGTTIN and SIGTTOU signals to the shell job control
+- ccede61 Removing the nonexistent module path directories and cppcheck suppression
+- af5cf92 Fixing the zlib gzip file example ignoring the read and close errors
+- 4e84f4e Fixing the flatpak requirements section naming an outdated SDK version
+- 8be819c Documenting the ENABLE_COMPONENT_TESTS option of the test builds
+- 1e54942 Listing every linked doc section in the requirements and build index pages
+- 4a1e5e7 Fixing the documentation links pointing into the other language
+- cfaa602 Fixing the stale file paths named in the documentation
+- 00218d0 Fixing the flatpak target failing on its repeated build
+- 7a10f81 Fixing the snap command path ignoring the install prefix
+- 3cd1e93 Fixing the documentation install which needed a manual Doxygen-doc build
+- a87138a Skipping the Doxygen and callgrind targets when their tools are missing
+- f5aa6ab Installing the packager tools into the Jenkins pipeline image
+- f5329cc Replacing the libjpeg-turbo download fallback with a clear configure error
+- 7daf297 Fixing the libavif download fallback stopping without the system libyuv
+- 4c47f07 Pinning the third-party download fallbacks to their release tags
+- 2f13e49 Failing the CI test stages which match no tests
+- 1db4754 Fixing the Jenkins doc sections linked check skipping the section directories
+- b843a75 Replacing the broken OpenSSL download fallback with a clear configure error
+- 32e2214 Fixing the mixed target_link_libraries signatures on the project binary
+- cc44d62 Fixing the MAX_LOG_LEVEL option help text error level value
+- cd7472a Fixing the logger level filter tests which could not fail
+- dadecd9 Fixing the log macros to expand into single statements
+- 45eec77 Fixing the logger data races on the log file reopening and the level
+- 9288086 Fixing the log file open failure aborting the process
+- 83d6880 Splitting the CTEST_DefaultLogger helper classes into own files
+- 0fae77f Splitting the packages install scripts per OS release
+- 2459b02 Declaring the runtime dependencies of the DEB package
+- c27d617 Fixing the nonexistent FreeBSD opencv-data package of the requirements doc
+- e9fb93a Documenting the OpenCV cascade search locations and failure cases
+- 52975d1 Failing the configuration clearly when the branch library is turned off
+- de7a8ea Moving the OpenCV doc out of the compression section into its own 5-65 one
+- 90ebe84 Searching the snap and flatpak locations for the default OpenCV cascade
+- 1b8bbc3 Failing the face detection example on a missing or unreadable image
+- 1d01123 Catching the OpenCV exception of a cascade file that is no cascade XML
+- a2b9f14 Finding the OpenCV once by the branch sources
+- a89ad9f Fixing the cppcheck findings in the branch code
+- 87b87a1 Moving the fake OpenCV types of the controller mock into their own headers
+- 3bd6159 Moving the log mock back to its app location
+- 5403f04 Synchronizing the stop flag test assertions and the CommandLineParser doc comment with app
+- 6b9014b Replacing the unreachable GNU gettext site link with its Savannah page
+- a0dda76 Introducing the destination CPU architecture into the package names
+- ecbc1c7 Introducing the appGettext branch info into the READMEs
+- c6aed8a Introducing the appDarknetXX branch info into the READMEs
+- afbf009 Introducing the RedHat packages install script
+- 9e02cc8 Introducing the appWhisperCPP branch info into the READMEs
+- ca26bae Introducing the FreeBSD packages install script
+- abd5ebf Introducing the appV8 branch info into the READMEs
+- 17b8988 Erasing the build sources and trees of the docker images
+- fcb94ee Introducing the debug clang-format script
+- 57e535a Resetting the inherited signals dispositions in the signals handlers tests
+- f3535c2 Introducing the binary hardening options section into the READMEs
+- a4a87be Introducing the binary hardening compile and link options
+- d6bfc96 Introducing the GitLab CI/CD pipeline section into the READMEs
+- b74e21b Introducing the GitLab CI/CD pipeline mirroring the Jenkinsfile
+- 88ad42f Introducing the GitHub Actions CI pipeline section into the READMEs
+- 6867412 Introducing the GitHub Actions CI pipeline mirroring the Jenkinsfile
+- 2c65072 Correcting the appQt6QtDBusClient branch description in the READMEs
+- 4a4d849 Introducing the desktop application packaging switch
+- e898e73 Limiting the documentation checks to the repository own markdown files
+- 13fc220 Excluding the GCC own include directories from the clang-tidy search path
+- 1ff0b11 Accepting the 405 documentation URLs
+- 57bd2bd Applying the clang-format to the test sources
+- cf120b9 Spacing out the branch entries in the READMEs
+- 4826bd2 Rewording the DOCKER_HOST environment requirement in the docker docs
+- e4685f6 Removing the DOCKER_HOST variables from the docker enablers
+- dca64a8 Excluding the build trees from the Docker build context
+- 3b30e4b Retrying the unreachable documentation URLs and accepting the 403 ones
+- cd85e4a Introducing the --rebuild flag into the Jenkins docker scripts
+- 1e7309a Rebuilding the image from its base on the Jenkins pipeline force rebuild
+- 62fb916 Introducing the audio assets branches info into the READMEs
+- 0a25e68 Splitting the signals handlers per category and covering the pause, reload, user defined and ignored signals
+- 9b9a631 Introducing the app signals handlers subcomponent
+- adc8d0b Declaring the main function argv parameter as an array
+- ed02606 Moving the packagers templates into the per-packager directories
+- 73330ee Dropping the packagers and the development tools from the packages install list
+- 999f58a The destination CPU architecture of the AppImage package name
+- 6651438 Picking the CPack AppImage enabler since the CMake 4.2 and dropping the debug banners
+- cd415cf Extracting the AppImage enabler pick into its own general enabler
+- ccdeb3e Selecting the AppImage packager enabler by the CMake version
+- 0080c5c Introducing the CPack based AppImage packager enabler
+- 2dda86c Introducing the AppImage packager
+- 7602658 Introducing the --install flag into the packager build scripts
+- 9419096 Renaming the packages install script and adding the Ubuntu one
+- 59916ee Introducing the target architecture into the flatpak package name
+- 0f8ae11 Introducing the AppStream metainfo file into the flatpak package
+- a70153d Consuming the install directory variables the flatpak-builder passes
+- 03d1e37 Building the flatpak OpenCV module out of source
+- 35bf123 Correcting the OpenCV 4.10.0 tarball sha256 in the flatpak manifest
+- a4fad5d Introducing the required packages install script
+- ba25ed9 Installing the flatpak build dependencies from the flathub remote
+- efcf0a0 Dropping the redundant build step from the packager scripts
+- 92b2ff7 Introducing the per packager build scripts
+- 6048520 Introducing the appCFITSIO branch info into the READMEs
+- fa6c281 Make the compile time log level gate really gate
+- b12e551 Introducing the appGtkmm4Libadwaita branch info into the READMEs
+- e73b336 Pinning the log message stream to the classic locale
+- 62c40b4 Decomposing the IApplication descendants into the applications subcomponent
+- 0f5abef Introducing the appFontAwesome branch info into the READMEs
+- 4d422dd Introducing the debug test script and its --test parameter
+- 01a3477 Incrementing version to appOpenCV0.12.0
+- 9b07635 Release appOpenCV0.11.0 at 2026-08-17
+
 ## [appOpenCV0.11.0] - 2026-08-17
 
 - 70e4f27 Introducing the InsertNewlineAtEOF clang-format option
@@ -356,6 +484,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[appOpenCV0.12.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appOpenCV0.12.0)
+[appOpenCV0.11.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appOpenCV0.11.0)
 [app0.10.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.10.0)
 [app0.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.9.0)
 [app0.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.8.0)

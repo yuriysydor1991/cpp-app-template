@@ -5,6 +5,126 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [applibMeson0.11.0] - 2026-11-08
+
+- 05d3774 Removing the destination OS from the AppImage package name
+- 3d307c1 Introducing the static library support of the default_library option
+- cd47489 Introducing the STT branches info into the READMEs
+- 8d73171 Introducing the appWebAssembly branch info into the READMEs
+- b96fe3a Introducing the docker starter scripts and the Jenkins container targets
+- 83aa887 Grouping the meson directory modules as the cmake ones
+- bc8a6f5 Introducing the appLlamaCPP branch info into the READMEs
+- b1b3a74 Introducing the TTS branches info into the READMEs
+- e51a813 Introducing the destination OS into the package names
+- 7ca1c69 Synchronizing the template flavors list of the READMEs
+- c40b139 Refreshing the shared library cache after the from-source installs
+- e71ba35 Removing the stale ODR cppcheck suppression of the merged log mocks
+- bda896e Sorting the includes of the applibMeson CTEST_log
+- 535e851 Failing the CI test stages which match no tests
+- c8f6748 Fixing the flatpak requirements section naming an outdated SDK version
+- 2f77131 Listing every linked doc section in the requirements and build index pages
+- 82143f3 Fixing the documentation links pointing into the other language
+- f7f8cbb Fixing the flatpak target failing on its repeated build
+- 56fa4d8 Fixing the duplicate 4-8 library doc number
+- ae03026 Fixing the cppcheck findings of the new signals handler, tests and log mock
+- 0b2bc7c Updating the app component diagram to the signals handlers design
+- 6d53d98 Renumbering the custom command line parameters section numbered 4-6 twice
+- 6bef7bc Documenting the built in command line options and the usage errors
+- cea0978 Fixing the applib application tests after the stored context errors
+- 918da56 Adapting the test loggers of applibMeson to the bool returning ILogger
+- ffdee9f Testing the application with the real command line arguments
+- c0fbfc9 Parsing the command line before the log file initialization
+- 5650c0d Exiting with a failure status on the command line usage errors
+- ce5561d Fixing the missing option value raising the version flag instead of the help one
+- 79acd54 Fixing the CommandLineParser test assertions which could not fail
+- 29995d2 Fixing the log mock LOG_INIT forwarding into the LOG_INIT_DEFAULTS mock
+- 95a48dd Restoring the previous signal dispositions on the signals handler uninstall
+- 835990e Leaving the SIGTTIN and SIGTTOU signals to the shell job control
+- e2a75a9 Fixing the logger level filter tests which could not fail
+- 9280b73 Fixing the log macros to expand into single statements
+- bc53340 Fixing the logger data races on the log file reopening and the level
+- b74327c Fixing the log file open failure aborting the process
+- 4d0737f Splitting the CTEST_DefaultLogger helper classes into own files
+- 65a7926 Splitting the packages install scripts per OS release
+- 634ef93 Fixing the Windows library file names of the installed CMake targets
+- c083e1f Documenting the logging and the library options of the applibMeson branch
+- 3952099 Packaging the applibMeson application without the library development files
+- dea2996 Merging the duplicate log and LibMain mocks into the general mocks
+- 237d6b8 Introducing the log.h component tests of the applibMeson branch
+- c8ceacf Introducing the RUNPATH of the executable to the installed library
+- 63fba69 Removing the CMake leftovers of the Meson flavor
+- 368f795 Introducing the markdown links and the AppImage stages into the Meson pipeline
+- eee4d52 Replacing the placeholder Jenkins container docs of the Meson flavor
+- b646adc Fixing the Meson option values and the stale names of the docs
+- 72160e4 Synchronizing the CommandLineParser parse doc comment with app
+- 37dcc41 Synchronizing the ApplicationContext unit tests with app
+- bd8fbf0 Synchronizing the get_stop assertions of the application tests with app
+- ada29dd Fixing the custom installation path docs of the Meson install
+- e219fc8 Removing the docs of the nonexistent GTEST_TRY_SYSTEM_PROBE Meson option
+- c9306cc Installing the GTest development packages the Meson tests probe for
+- 72a42b2 Fixing the snap command path of the Meson packager
+- bde4ab8 Producing a real AppImage with the appimagetool in the Meson packager
+- 64bfc23 Fixing the gmon.out path of the Meson gprof-analyze target
+- 3beeebd Passing the Meson sanitizers flags through a dependency object
+- 85951f0 Adding the check kwarg to the Meson run_command calls
+- 30f8dbb Fixing the Doxygen documentation build of the Meson projects
+- 7f01191 Fixing the deb package ownership and install prefix of the Meson packager
+- 187ff62 Fixing the RPM package target of the Meson packager
+- efd07be Applying the Meson sanitizers flags to every target
+- d8f656f Enabling the inline suppressions in the Meson cppcheck target
+- 7e9e48d Replacing the unreachable GNU gettext site link with its Savannah page
+- ac14627 Fixing the WIX installer architecture of the Meson packager
+- 0c48d31 Fixing the FreeBSD pkg manifest and file list of the Meson packager
+- aac32eb Introducing the destination CPU architecture into the package names
+- 07105c5 Introducing the appGettext branch info into the READMEs
+- 5e35f9e Introducing the appDarknetXX branch info into the READMEs
+- 2aa17ca Introducing the RedHat packages install script
+- affb769 Registering the CTEST_LibraryRealLogger tests in the pipeline
+- 652f0aa Introducing the appWhisperCPP branch info into the READMEs
+- 10b169e Introducing the FreeBSD packages install script
+- ab566f2 Fixing the absent common.sh of the packages install scripts
+- 6126284 Introducing the appV8 branch info into the READMEs
+- 720fce8 Erasing the build sources and trees of the docker images
+- bb927fa Resetting the inherited signals dispositions in the signals handlers tests
+- 199332f Introducing the binary hardening options section into the READMEs
+- 1e75f15 Introducing the binary hardening compile and link options
+- b75920a Introducing the GitLab CI/CD pipeline section into the READMEs
+- acc1abc Introducing the GitLab CI/CD pipeline mirroring the Jenkinsfile
+- c6f0d5c Introducing the GitHub Actions CI pipeline section into the READMEs
+- 758b7e9 Introducing the GitHub Actions CI pipeline mirroring the Jenkinsfile
+- ad8434a Correcting the appQt6QtDBusClient branch description in the READMEs
+- 5b69399 Limiting the documentation checks to the repository own markdown files
+- 929a0bb Excluding the GCC own include directories from the clang-tidy search path
+- 1336d37 Adding the build-* directories to the .gitignore
+- 2456f47 Accepting the 405 documentation URLs
+- 0b80cfb Spacing out the branch entries in the READMEs
+- c9de80e Rewording the DOCKER_HOST environment requirement in the docker docs
+- 915274d Removing the DOCKER_HOST variables from the docker enablers
+- 34c2372 Excluding the build trees from the Docker build context
+- 8b72cbf Retrying the unreachable documentation URLs and accepting the 403 ones
+- 073ecde Introducing the audio assets branches info into the READMEs
+- 8834678 Introducing the app signals handlers subcomponent
+- 3ed8b6e Declaring the main function argv parameter as an array
+- 5630d6a Handing the translation units only to the clang-tidy target
+- 84ab47d Dropping the packagers and the development tools from the packages install list
+- 23e078b Introducing the --install flag into the packager build scripts
+- 3a9f960 Renaming the packages install script and adding the Ubuntu one
+- 72488ba Introducing the required packages install script
+- 593fafd Installing the flatpak build dependencies from the flathub remote
+- 945bac1 Dropping the redundant build step from the packager scripts
+- 1bb5a89 Introducing the per packager build scripts
+- b737d64 Moving the logger interface into the installable public headers
+- dab86d5 Hiding the library implementation symbols and versioning the public namespace
+- 154fac5 Introducing the appCFITSIO branch info into the READMEs
+- c6cf187 Make the compile time log level gate really gate
+- b9e3be2 Introducing the appGtkmm4Libadwaita branch info into the READMEs
+- b5c6674 Pinning the log message stream to the classic locale
+- 975db61 Introducing the LIB_INSTALL_DEV_FILES install option
+- 28b54ba Decomposing the IApplication descendants into the applications subcomponent
+- 6e3047d Introducing the appFontAwesome branch info into the READMEs
+- db824ad Incrementing version to applibMeson0.11.0
+- 3f1cc52 Release applibMeson0.10.0 at 2026-08-17
+
 ## [applibMeson0.10.0] - 2026-08-17
 
 - c2cd5e5 Introducing the InsertNewlineAtEOF clang-format option
@@ -305,6 +425,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[applibMeson0.11.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/applibMeson0.11.0)
+[applibMeson0.10.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/applibMeson0.10.0)
 [appMeson0.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appMeson0.9.0)
 [app0.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.8.0)
 [app0.7.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.7.0)

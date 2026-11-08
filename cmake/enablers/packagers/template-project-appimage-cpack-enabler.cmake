@@ -3,7 +3,6 @@
 cmake_minimum_required(VERSION 4.2)
 
 include(InstallRequiredSystemLibraries)
-include(template-project-package-os)
 
 set(
   TEMPLATE_PROJECT_APPIMAGE_ARCHITECTURE
@@ -26,11 +25,10 @@ set(CPACK_PACKAGE_ICON ${FLATPAK_PROJECT_URL}.svg)
 set(CPACK_APPIMAGE_DESKTOP_FILE ${FLATPAK_PROJECT_URL}.desktop)
 
 # the CPACK_SYSTEM_NAME of the default file name names the system alone, so the
-# destination CPU and OS land into the package name the custom target enabler
-# gives
+# destination CPU lands into the package name the custom target enabler gives
 set(
   CPACK_PACKAGE_FILE_NAME
-  ${PROJECT_BINARY_NAME}-${CMAKE_PROJECT_VERSION}-${TEMPLATE_PROJECT_APPIMAGE_ARCHITECTURE}-${TEMPLATE_PROJECT_PACKAGE_OS}
+  ${PROJECT_BINARY_NAME}-${CMAKE_PROJECT_VERSION}-${TEMPLATE_PROJECT_APPIMAGE_ARCHITECTURE}
 )
 
 include(CPack)

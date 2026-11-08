@@ -24,7 +24,7 @@ cmake --build build
 cpack -C Release
 ```
 
-Згенерований пакет повинен з'явитись всередині кореня директорії побудови проекту. Наприклад, якщо ім'я проекту не змінювалось і його версія `0.12.0`, тоді назва пакету може виглядати наступним чином: `CppAppTemplate-0.12.0-x64-windows-10.0.msi` (суфікси архітектури та ОС задають наведені нижче змінні `TEMPLATE_PROJECT_WIX_ARCHITECTURE` і `TEMPLATE_PROJECT_PACKAGE_OS`).
+Згенерований пакет повинен з'явитись всередині кореня директорії побудови проекту. Наприклад, якщо ім'я проекту не змінювалось і його версія `0.13.0`, тоді назва пакету може виглядати наступним чином: `CppAppTemplate-0.13.0-x64-windows-10.0.msi` (суфікси архітектури та ОС задають наведені нижче змінні `TEMPLATE_PROJECT_WIX_ARCHITECTURE` і `TEMPLATE_PROJECT_PACKAGE_OS`).
 
 Для того щоб переглянути або змінити параметри створення WIX MSI-пакетів необхідно відвідати файл [cmake/enablers/packagers/template-project-wix-enabler.cmake](/cmake/enablers/packagers/template-project-wix-enabler.cmake).
 

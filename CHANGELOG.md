@@ -5,6 +5,131 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appFirebird0.10.0] - 2026-11-08
+
+- 3b7ee88 Removing the destination OS from the AppImage package name
+- 59eca43 Introducing the STT branches info into the READMEs
+- e415c77 Replacing the CMAKE_SOURCE_DIR/CMAKE_BINARY_DIR by the PROJECT_SOURCE_DIR/PROJECT_BINARY_DIR
+- 1c49dc7 Introducing the appWebAssembly branch info into the READMEs
+- 23ea7e6 Introducing the appLlamaCPP branch info into the READMEs
+- 613632f Introducing the TTS branches info into the READMEs
+- 03e593e Introducing the destination OS into the package names
+- c63277e Synchronizing the template flavors list of the READMEs
+- 19ef8f8 Refreshing the shared library cache after the from-source installs
+- 18cb5b0 Failing the flavor CI test stages which match no tests
+- 779cc89 Converting the flavor link calls of the project binary to the keyword signature
+- efd0c26 Fixing the cppcheck findings of the new signals handler, tests and log mock
+- 8e1cdeb Updating the app component diagram to the signals handlers design
+- e94b066 Renumbering the custom command line parameters section numbered 4-6 twice
+- 04c9272 Documenting the built in command line options and the usage errors
+- 0aef8cf Testing the application with the real command line arguments
+- 0a0ed3c Parsing the command line before the log file initialization
+- 347513e Exiting with a failure status on the command line usage errors
+- 723970c Fixing the missing option value raising the version flag instead of the help one
+- 4cccf6f Fixing the CommandLineParser test assertions which could not fail
+- 52ab40b Fixing the log mock LOG_INIT forwarding into the LOG_INIT_DEFAULTS mock
+- 20e3b35 Restoring the previous signal dispositions on the signals handler uninstall
+- 0335edc Leaving the SIGTTIN and SIGTTOU signals to the shell job control
+- d1f83b1 Removing the nonexistent module path directories and cppcheck suppression
+- 9b4acbd Fixing the zlib gzip file example ignoring the read and close errors
+- ca47272 Fixing the flatpak requirements section naming an outdated SDK version
+- 996ea25 Documenting the ENABLE_COMPONENT_TESTS option of the test builds
+- 31db878 Listing every linked doc section in the requirements and build index pages
+- 4455884 Fixing the documentation links pointing into the other language
+- b31e3cf Fixing the stale file paths named in the documentation
+- 7c4b579 Fixing the snap command path ignoring the install prefix
+- 6434d80 Fixing the documentation install which needed a manual Doxygen-doc build
+- 2ec1a8b Skipping the Doxygen and callgrind targets when their tools are missing
+- 94ae14f Installing the packager tools into the Jenkins pipeline image
+- 07c4cdf Replacing the libjpeg-turbo download fallback with a clear configure error
+- ad4c910 Fixing the libavif download fallback stopping without the system libyuv
+- 6cb7012 Pinning the third-party download fallbacks to their release tags
+- 2b3dea5 Failing the CI test stages which match no tests
+- e438b2b Replacing the broken OpenSSL download fallback with a clear configure error
+- acf5154 Fixing the mixed target_link_libraries signatures on the project binary
+- 5bfb48a Fixing the MAX_LOG_LEVEL option help text error level value
+- 26b481e Fixing the logger level filter tests which could not fail
+- 0c6ecda Fixing the log macros to expand into single statements
+- 4833140 Fixing the logger data races on the log file reopening and the level
+- 20c3ded Fixing the log file open failure aborting the process
+- 10e56bd Splitting the CTEST_DefaultLogger helper classes into own files
+- 40f08fe Splitting the packages install scripts per OS release
+- 9f2bd32 Adding the missing semicolon of the log macro call
+- 6e61400 Naming the Firebird server package that matches the client version
+- 9b1b929 Introducing the Firebird connection settings override through the environment
+- 79e3e7d Fixing the configure with the Firebird client disabled
+- 304eefc Rolling back the Firebird transaction after a failed query execution
+- f2dd246 Rejecting the Firebird DPB values longer than 255 bytes
+- db9b936 Moving the Firebird test helper classes into their own mock headers
+- 8cf7bcf Moving the Firebird native handles out of the nested FbClient struct
+- b5e06dc Breaking the shared_ptr cycle between the context and the DB connection
+- c967c94 Renumbering the branch requirements doc into the free 3-13 section
+- 8b35be4 Removing the duplicate using-directive from the CTEST_app
+- a979198 Synchronizing the get_stop assertions and the CommandLineParser doc comment with app
+- 8969e2b Replacing the unreachable GNU gettext site link with its Savannah page
+- 6ffe819 Introducing the destination CPU architecture into the package names
+- d184710 Introducing the appGettext branch info into the READMEs
+- 5386515 Introducing the appDarknetXX branch info into the READMEs
+- 4e4deb3 Introducing the RedHat packages install script
+- 4b84282 Introducing the appWhisperCPP branch info into the READMEs
+- 1ae7b52 Introducing the FreeBSD packages install script
+- 994144a Introducing the appV8 branch info into the READMEs
+- e3b349b Building the Firebird client from its sources when the system lacks it
+- 1135bd9 Repairing the appFirebird pipeline cppcheck stage
+- 4d71bec Erasing the build sources and trees of the docker images
+- d4c71f1 Introducing the debug clang-format script
+- 26a751a Resetting the inherited signals dispositions in the signals handlers tests
+- 6b36053 Introducing the binary hardening options section into the READMEs
+- 63dd4f6 Introducing the binary hardening compile and link options
+- 5ba4169 Introducing the GitLab CI/CD pipeline section into the READMEs
+- b0631ae Introducing the GitLab CI/CD pipeline mirroring the Jenkinsfile
+- d61fab4 Introducing the GitHub Actions CI pipeline section into the READMEs
+- cdb4ac5 Introducing the GitHub Actions CI pipeline mirroring the Jenkinsfile
+- 48e933d Correcting the appQt6QtDBusClient branch description in the READMEs
+- dbbc09c Introducing the desktop application packaging switch
+- 7314295 Limiting the documentation checks to the repository own markdown files
+- 9f1ba12 Excluding the GCC own include directories from the clang-tidy search path
+- 02e5b07 Accepting the 405 documentation URLs
+- 71a31f3 Applying the clang-format to the test sources
+- 3f2b75d Spacing out the branch entries in the READMEs
+- 7aea46b Rewording the DOCKER_HOST environment requirement in the docker docs
+- 1c6c34f Removing the DOCKER_HOST variables from the docker enablers
+- 9fcb535 Excluding the build trees from the Docker build context
+- f0d6733 Retrying the unreachable documentation URLs and accepting the 403 ones
+- d2ec8a1 Introducing the --rebuild flag into the Jenkins docker scripts
+- e9934a5 Rebuilding the image from its base on the Jenkins pipeline force rebuild
+- 92f01e6 Introducing the audio assets branches info into the READMEs
+- ce1f0ad Splitting the signals handlers per category and covering the pause, reload, user defined and ignored signals
+- c8adf5e Introducing the app signals handlers subcomponent
+- d873e77 Declaring the main function argv parameter as an array
+- 2f6df1f Moving the packagers templates into the per-packager directories
+- 3a74331 Dropping the packagers and the development tools from the packages install list
+- 70b7989 The destination CPU architecture of the AppImage package name
+- 451a7a1 Picking the CPack AppImage enabler since the CMake 4.2 and dropping the debug banners
+- c7ef869 Extracting the AppImage enabler pick into its own general enabler
+- bd80bd8 Selecting the AppImage packager enabler by the CMake version
+- 5a9119a Introducing the CPack based AppImage packager enabler
+- eed305f Introducing the AppImage packager
+- b2ad974 Introducing the --install flag into the packager build scripts
+- 140e805 Renaming the packages install script and adding the Ubuntu one
+- 8142efc Introducing the target architecture into the flatpak package name
+- 4fe9c1d Introducing the AppStream metainfo file into the flatpak package
+- b093f80 Consuming the install directory variables the flatpak-builder passes
+- d1fd48b Introducing the required packages install script
+- c400f8c Installing the flatpak build dependencies from the flathub remote
+- e2e6cf7 Repairing the flatpak package generation
+- 97c1c40 Dropping the redundant build step from the packager scripts
+- 360f923 Introducing the per packager build scripts
+- fe39e66 Introducing the appCFITSIO branch info into the READMEs
+- 4ad42a8 Make the compile time log level gate really gate
+- b0edd24 Introducing the appGtkmm4Libadwaita branch info into the READMEs
+- 89814a1 Pinning the log message stream to the classic locale
+- 5e478c7 Decomposing the IApplication descendants into the applications subcomponent
+- ffc2df6 Introducing the appFontAwesome branch info into the READMEs
+- 05b15d2 Introducing the debug test script and its --test parameter
+- cedac5e Incrementing version to appFirebird0.10.0
+- 571dd69 Release appFirebird0.9.0 at 2026-08-17
+
 ## [appFirebird0.9.0] - 2026-08-17
 
 - 672a1c4 Introducing the InsertNewlineAtEOF clang-format option
@@ -348,6 +473,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[appFirebird0.10.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appFirebird0.10.0)
+[appFirebird0.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appFirebird0.9.0)
 [app0.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.8.0)
 [app0.7.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.7.0)
 [app0.6.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.6.0)

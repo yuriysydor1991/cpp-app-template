@@ -16,16 +16,16 @@ Next, build the `appimage` target:
 cmake --build build --target appimage
 ```
 
-The target installs the project into the `AppDir` directory of the build root with the `DESTDIR` set, so it builds whatever the install step needs on its own, and then packs that `AppDir` with the `appimagetool` command. The package file is generated inside the project build root directory. For example, if the project name wasn't changed and its version is `0.14.0` the package name may look like `CppAppTemplate-0.14.0-x86_64.AppImage`.
+The target installs the project into the `AppDir` directory of the build root with the `DESTDIR` set, so it builds whatever the install step needs on its own, and then packs that `AppDir` with the `appimagetool` command. The package file is generated inside the project build root directory. For example, if the project name wasn't changed and its version is `0.15.0` the package name may look like `CppAppTemplate-0.15.0-x86_64.AppImage`.
 
 The produced package is a single executable file which needs no installation at all:
 
 ```
 # inside the project build root directory
 
-chmod +x CppAppTemplate-0.14.0-x86_64.AppImage
+chmod +x CppAppTemplate-0.15.0-x86_64.AppImage
 
-./CppAppTemplate-0.14.0-x86_64.AppImage
+./CppAppTemplate-0.15.0-x86_64.AppImage
 ```
 
 The `CMAKE_INSTALL_PREFIX` of the configure step above is the prefix the binary is placed under inside the `AppDir`, not a directory of the host, as the whole `AppDir` becomes the file system root of the running package.

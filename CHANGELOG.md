@@ -5,6 +5,133 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appwxWidgets0.12.0] - 2026-11-08
+
+- 23f1acf Removing the destination OS from the AppImage package name
+- 3eb7848 Introducing the STT branches info into the READMEs
+- 70460f0 Replacing the CMAKE_SOURCE_DIR/CMAKE_BINARY_DIR by the PROJECT_SOURCE_DIR/PROJECT_BINARY_DIR
+- ff95fe2 Introducing the appWebAssembly branch info into the READMEs
+- cc5a485 Introducing the appLlamaCPP branch info into the READMEs
+- 275b562 Introducing the TTS branches info into the READMEs
+- 83e28d5 Introducing the destination OS into the package names
+- d841461 Synchronizing the template flavors list of the READMEs
+- c9dcd0d Refreshing the shared library cache after the from-source installs
+- dc1b4db Failing the flavor CI test stages which match no tests
+- 9a15638 Converting the flavor link calls of the project binary to the keyword signature
+- 2c5dacb Fixing the cppcheck findings of the new signals handler, tests and log mock
+- 83343c4 Updating the app component diagram to the signals handlers design
+- 32b17c5 Renumbering the custom command line parameters section numbered 4-6 twice
+- 4cbd28f Documenting the built in command line options and the usage errors
+- 396e0c5 Testing the application with the real command line arguments
+- 819d8cd Parsing the command line before the log file initialization
+- 2f1be1b Exiting with a failure status on the command line usage errors
+- 5f64b24 Fixing the missing option value raising the version flag instead of the help one
+- c48d073 Fixing the CommandLineParser test assertions which could not fail
+- f3575dd Fixing the log mock LOG_INIT forwarding into the LOG_INIT_DEFAULTS mock
+- 172f839 Restoring the previous signal dispositions on the signals handler uninstall
+- f97ccb9 Leaving the SIGTTIN and SIGTTOU signals to the shell job control
+- a0ae489 Removing the nonexistent module path directories and cppcheck suppression
+- 6fa9129 Fixing the zlib gzip file example ignoring the read and close errors
+- f4bc118 Fixing the flatpak requirements section naming an outdated SDK version
+- 17dde1d Documenting the ENABLE_COMPONENT_TESTS option of the test builds
+- e229a03 Listing every linked doc section in the requirements and build index pages
+- 7ee72d7 Fixing the documentation links pointing into the other language
+- 21ac532 Fixing the stale file paths named in the documentation
+- aa0eb08 Fixing the flatpak target failing on its repeated build
+- f00aabf Fixing the snap command path ignoring the install prefix
+- ecfcbaf Fixing the documentation install which needed a manual Doxygen-doc build
+- 97d5527 Skipping the Doxygen and callgrind targets when their tools are missing
+- a4fe526 Installing the packager tools into the Jenkins pipeline image
+- 24be6ae Replacing the libjpeg-turbo download fallback with a clear configure error
+- 1259702 Fixing the libavif download fallback stopping without the system libyuv
+- 732379b Pinning the third-party download fallbacks to their release tags
+- eb93206 Failing the CI test stages which match no tests
+- 1e516be Fixing the Jenkins doc sections linked check skipping the section directories
+- a4bd122 Replacing the broken OpenSSL download fallback with a clear configure error
+- b0be09d Fixing the mixed target_link_libraries signatures on the project binary
+- 92357b0 Fixing the MAX_LOG_LEVEL option help text error level value
+- 77cd96c Fixing the logger level filter tests which could not fail
+- 766ce5a Fixing the log macros to expand into single statements
+- 2b27a6d Fixing the logger data races on the log file reopening and the level
+- 03a6d7f Fixing the log file open failure aborting the process
+- 4e30e50 Splitting the CTEST_DefaultLogger helper classes into own files
+- 1753ec8 Splitting the packages install scripts per OS release
+- 042e31b Fixing the cppcheck finding of the wxWidgets component test
+- e0694ba Stopping the configuration clearly when the wxWidgets option is off
+- 92c12fb Removing the unused controller include of the application component test
+- cd3a5bf Restoring the stop flag assertions of the Application unit test
+- 221950e Revoking the X server access on every exit of the docker single run
+- fd84204 Guarding the clang-tidy build stage with the RUN_CLANGTIDY parameter
+- 74e8a17 Accepting the t64 renamed GTK runtime in the deb package dependency
+- 7c11a1f Declaring the snap build and stage packages of the toolkit
+- 6116173 Leaving the wxWidgets main loop on the raised stop flag
+- e414e52 Synchronizing the drifted docker and cppcheck enablers with the app branch
+- 0a29dda Hiding the ApplicationContext fields and adding the atomic stop flag
+- 3b46125 Replacing int flag with a bool for the CommandLineParser
+- 19f9723 Supressing the cppcheck's missingIncludeSystem and unusedStructMember warnings.
+- 7b9da0a Renaming the WxWidgetsIniter component into the WxWidgetsController
+- 7c91711 Replacing the unreachable GNU gettext site link with its Savannah page
+- dff8a0f Introducing the destination CPU architecture into the package names
+- 4f8e681 Introducing the appGettext branch info into the READMEs
+- 1e951a5 Introducing the appDarknetXX branch info into the READMEs
+- f3f5d4a Introducing the RedHat packages install script
+- daa2c62 Introducing the appWhisperCPP branch info into the READMEs
+- 21f6732 Introducing the FreeBSD packages install script
+- 353464f Introducing the appV8 branch info into the READMEs
+- 00025e6 Erasing the build sources and trees of the docker images
+- 8fb9f6e Introducing the debug clang-format script
+- 8b0e3c3 Resetting the inherited signals dispositions in the signals handlers tests
+- c09cb07 Introducing the binary hardening options section into the READMEs
+- b5f0674 Introducing the binary hardening compile and link options
+- 0aaf1b4 Introducing the GitLab CI/CD pipeline section into the READMEs
+- 6018573 Introducing the GitLab CI/CD pipeline mirroring the Jenkinsfile
+- 0bf589b Introducing the GitHub Actions CI pipeline section into the READMEs
+- e9df340 Introducing the GitHub Actions CI pipeline mirroring the Jenkinsfile
+- 75019fc Correcting the appQt6QtDBusClient branch description in the READMEs
+- b5207f6 Introducing the desktop application packaging switch
+- 76e3727 Limiting the documentation checks to the repository own markdown files
+- 7c11903 Excluding the GCC own include directories from the clang-tidy search path
+- 87ec919 Accepting the 405 documentation URLs
+- a9def57 Spacing out the branch entries in the READMEs
+- 4dec183 Rewording the DOCKER_HOST environment requirement in the docker docs
+- 25f2f3c Removing the DOCKER_HOST variables from the docker enablers
+- fcdc3bc Escaping the shell environment variables of the docker run command
+- ea77c61 Excluding the build trees from the Docker build context
+- 744304e Bumping the flatpak GNOME runtime from the end-of-life 48 to the 49
+- 96ee4aa Retrying the unreachable documentation URLs and accepting the 403 ones
+- cf2d67a Introducing the --rebuild flag into the Jenkins docker scripts
+- 1a83790 Rebuilding the image from its base on the Jenkins pipeline force rebuild
+- 6f4ece8 Introducing the audio assets branches info into the READMEs
+- a96c4ac Splitting the signals handlers per category and covering the pause, reload, user defined and ignored signals
+- 2ad0059 Introducing the app signals handlers subcomponent
+- 6cd6ff7 Declaring the main function argv parameter as an array
+- bbcbaba Moving the packagers templates into the per-packager directories
+- 1872b79 Dropping the packagers and the development tools from the packages install list
+- e6aee0d The destination CPU architecture of the AppImage package name
+- 00925d5 Picking the CPack AppImage enabler since the CMake 4.2 and dropping the debug banners
+- da85ade Extracting the AppImage enabler pick into its own general enabler
+- dd91eca Selecting the AppImage packager enabler by the CMake version
+- b2deec3 Introducing the CPack based AppImage packager enabler
+- 6903d7c Introducing the AppImage packager
+- bb8c386 Introducing the --install flag into the packager build scripts
+- ca89b37 Renaming the packages install script and adding the Ubuntu one
+- 1f5fa86 Introducing the target architecture into the flatpak package name
+- 071aeec Introducing the AppStream metainfo file into the flatpak package
+- 6604e4a Consuming the install directory variables the flatpak-builder passes
+- 7a1a4b5 Introducing the required packages install script
+- 9cffca9 Installing the flatpak build dependencies from the flathub remote
+- 263abbf Dropping the redundant build step from the packager scripts
+- ecfbff4 Introducing the per packager build scripts
+- bb3143c Introducing the appCFITSIO branch info into the READMEs
+- 9437b9e Make the compile time log level gate really gate
+- 467c60a Introducing the appGtkmm4Libadwaita branch info into the READMEs
+- 318262e Pinning the log message stream to the classic locale
+- d944898 Decomposing the IApplication descendants into the applications subcomponent
+- 76b39a7 Introducing the appFontAwesome branch info into the READMEs
+- be87f41 Introducing the debug test script and its --test parameter
+- 1326690 Incrementing version to appwxWidgets0.12.0
+- 1863b17 Release appwxWidgets0.11.0 at 2026-08-17
+
 ## [appwxWidgets0.11.0] - 2026-08-17
 
 - 7df8ee5 Introducing the InsertNewlineAtEOF clang-format option
@@ -369,6 +496,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[appwxWidgets0.12.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appwxWidgets0.12.0)
+[appwxWidgets0.11.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appwxWidgets0.11.0)
 [appGtkmm30.10.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appGtkmm30.10.0)
 [appGtkmm30.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appGtkmm30.9.0)
 [appGtkmm30.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appGtkmm30.8.0)

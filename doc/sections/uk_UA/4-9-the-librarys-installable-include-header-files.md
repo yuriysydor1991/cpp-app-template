@@ -13,14 +13,14 @@
 
 Перші чотири належать простору імен `CppAppTemplate011`; інтерфейс журналювання навмисно не належить - дивись нижче.
 
-Додавай нові класи та/або методи сюди щоб поширювати функціонал на будь-який проект-споживач. Вміст директорії встановлюється у субдиректорію `include/CppAppTemplate-0.11` - назву встановлюваної бібліотеки, дивись [Налаштування складових імені встановлюваної бібліотеки](/doc/sections/uk_UA/5-29-customizing-library-name-segments.md) - відносно сконфігурованого Meson `--prefix`.
+Додавай нові класи та/або методи сюди щоб поширювати функціонал на будь-який проект-споживач. Вміст директорії встановлюється у субдиректорію `include/CppAppTemplate-0.12` - назву встановлюваної бібліотеки, дивись [Налаштування складових імені встановлюваної бібліотеки](/doc/sections/uk_UA/5-29-customizing-library-name-segments.md) - відносно сконфігурованого Meson `--prefix`.
 
 ### Інтерфейс журналювання
 
 Бібліотека містить власну копію підсистеми журналювання, тому `LibraryFacade::init_logger` приймає примірник журналювальника, яким володіє користувач бібліотеки, і кожне повідомлення бібліотеки потрапляє у те саме призначення, що й повідомлення коду, який ту бібліотеку використовує. Користувач, який не може підключити цей інтерфейс, не може і реалізувати його, тому [ILogger.h](/src/lib/facade/public/ILogger.h) живе серед публічних заголовкових файлів, а не під приватною підсистемою [src/log](/src/log), яка ним користується: зміна у ньому є зміною ABI кожної вже встановленої бібліотеки, і директорія, у якій він лежить, саме це і повідомляє. Решта підсистеми - проксі `default_logger` і справжній журналювальник за ним - лишається приватною, а бібліотека тримає власний журналювальник за замовчуванням, доки користувач не передасть свій.
 
 ```cpp
-#include <CppAppTemplate-0.11/LibraryFacade.h>
+#include <CppAppTemplate-0.12/LibraryFacade.h>
 
 class MyLogger : public logger::ILogger { /* вісім методів */ };
 
@@ -71,17 +71,17 @@ grep -rl -e CppAppTemplate011 -e CPP_APP_TEMPLATE_011_ -e lib0impl src \
 
 ### Підключення встановлених заголовкових файлів
 
-Експортовано і встановлену субдиректорію `include/CppAppTemplate-0.11`, і звичайний корінь підключення над нею - через `Cflags` файлу pkg-config і через `INTERFACE_INCLUDE_DIRECTORIES` імпортованої цілі CMake - тому споживач може писати будь-яку з двох форм:
+Експортовано і встановлену субдиректорію `include/CppAppTemplate-0.12`, і звичайний корінь підключення над нею - через `Cflags` файлу pkg-config і через `INTERFACE_INCLUDE_DIRECTORIES` імпортованої цілі CMake - тому споживач може писати будь-яку з двох форм:
 
 ```cpp
-#include <CppAppTemplate-0.11/LibraryFacade.h>  // рекомендовано
+#include <CppAppTemplate-0.12/LibraryFacade.h>  // рекомендовано
 #include <LibraryFacade.h>                      // теж працює
 ```
 
 Безпечною є форма з префіксом: кожна похідна від цього шаблону бібліотека встановлює власний `LibraryFacade.h`, а назви на кшталт `ILib.h` є достатньо загальними, щоб зіткнутися у насиченому шляху підключення. Проекту, який дістається більш ніж однієї похідної бібліотеки, найкраще підходить по одному заголовковому файлу-аліасу на бібліотеку, який містить те єдине підключення з префіксом і короткий аліас простору імен:
 
 ```cpp
-#include <CppAppTemplate-0.11/LibraryFacade.h>
+#include <CppAppTemplate-0.12/LibraryFacade.h>
 
 namespace cat = CppAppTemplate011;
 ```
@@ -92,17 +92,17 @@ namespace cat = CppAppTemplate011;
 
 Поруч з успішним встановленням бінарної бібліотеки і заголовкових файлів Meson встановлює:
 
-- файл **pkg-config** за шляхом `<prefix>/<libdir>/pkgconfig/CppAppTemplate-0.11.pc`, щоб проекти-споживачі на Meson могли знаходити бібліотеку через `dependency('CppAppTemplate-0.11')` (під капотом це pkg-config), а Autotools чи інші системи побудови - через `pkg-config --cflags --libs CppAppTemplate-0.11`.
-- набір **CMake package-config файлів** за шляхом `<prefix>/<libdir>/cmake/CppAppTemplate-0.11/`:
-    - `CppAppTemplate-0.11Config.cmake`
-    - `CppAppTemplate-0.11ConfigVersion.cmake` (політика сумісності SameMajorVersion)
-    - `CppAppTemplate-0.11Targets.cmake` (з імпортованою ціллю `CppAppTemplate-0.11::CppAppTemplate-0.11`)
+- файл **pkg-config** за шляхом `<prefix>/<libdir>/pkgconfig/CppAppTemplate-0.12.pc`, щоб проекти-споживачі на Meson могли знаходити бібліотеку через `dependency('CppAppTemplate-0.12')` (під капотом це pkg-config), а Autotools чи інші системи побудови - через `pkg-config --cflags --libs CppAppTemplate-0.12`.
+- набір **CMake package-config файлів** за шляхом `<prefix>/<libdir>/cmake/CppAppTemplate-0.12/`:
+    - `CppAppTemplate-0.12Config.cmake`
+    - `CppAppTemplate-0.12ConfigVersion.cmake` (політика сумісності SameMajorVersion)
+    - `CppAppTemplate-0.12Targets.cmake` (з імпортованою ціллю `CppAppTemplate-0.12::CppAppTemplate-0.12`)
 
 Проекти-споживачі на CMake можуть використати бібліотеку так:
 
 ```
-find_package(CppAppTemplate-0.11 CONFIG REQUIRED)
-target_link_libraries(my_app PRIVATE CppAppTemplate-0.11::CppAppTemplate-0.11)
+find_package(CppAppTemplate-0.12 CONFIG REQUIRED)
+target_link_libraries(my_app PRIVATE CppAppTemplate-0.12::CppAppTemplate-0.12)
 ```
 
 Обидва набори артефактів генеруються викликами Meson `configure_file` у [src/lib/meson.build](/src/lib/meson.build) із шаблонів, що лежать у [src/lib/cmake/](/src/lib/cmake/). Налаштовуй шаблони і виклик `pkgconfig.generate()` коли бібліотеці потрібні додаткові метадані (наприклад додаткові `Requires:` для pkg-config або `find_dependency()` для CMake).

@@ -5,6 +5,127 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appZlib0.12.0] - 2026-11-08
+
+- ec7cf98 Removing the destination OS from the AppImage package name
+- 5b19357 Introducing the STT branches info into the READMEs
+- 4932af4 Replacing the CMAKE_SOURCE_DIR/CMAKE_BINARY_DIR by the PROJECT_SOURCE_DIR/PROJECT_BINARY_DIR
+- 76d8f33 Introducing the appWebAssembly branch info into the READMEs
+- ba6e463 Introducing the appLlamaCPP branch info into the READMEs
+- f745bca Introducing the TTS branches info into the READMEs
+- 05fd88f Introducing the destination OS into the package names
+- 1a5f519 Fixing the branch name of the cloning commands in the docs
+- 5aee33e Synchronizing the template flavors list of the READMEs
+- 6d55d44 Refreshing the shared library cache after the from-source installs
+- 29b9892 Failing the branch CI test stages which match no tests
+- e777000 Converting the branch project binary links to the keyword target_link_libraries signature
+- c26e0de Fixing the cppcheck findings of the new signals handler, tests and log mock
+- e2e5c92 Updating the app component diagram to the signals handlers design
+- 5157c47 Renumbering the custom command line parameters section numbered 4-6 twice
+- c79bc16 Documenting the built in command line options and the usage errors
+- afc2ee6 Testing the application with the real command line arguments
+- 5c647df Parsing the command line before the log file initialization
+- 697e753 Exiting with a failure status on the command line usage errors
+- dd8f323 Fixing the missing option value raising the version flag instead of the help one
+- fc7c5fd Fixing the CommandLineParser test assertions which could not fail
+- 494b947 Fixing the log mock LOG_INIT forwarding into the LOG_INIT_DEFAULTS mock
+- 40fda4b Restoring the previous signal dispositions on the signals handler uninstall
+- 0fafa49 Leaving the SIGTTIN and SIGTTOU signals to the shell job control
+- 1c16eea Removing the nonexistent module path directories and cppcheck suppression
+- b13ad44 Fixing the zlib gzip file example ignoring the read and close errors
+- 2cc569b Fixing the flatpak requirements section naming an outdated SDK version
+- 49dfbad Documenting the ENABLE_COMPONENT_TESTS option of the test builds
+- f836e95 Listing every linked doc section in the requirements and build index pages
+- 0b0d7e2 Fixing the documentation links pointing into the other language
+- 8ea57fc Fixing the stale file paths named in the documentation
+- f9c4d0f Fixing the flatpak target failing on its repeated build
+- b44b6ed Fixing the snap command path ignoring the install prefix
+- c9e7acf Fixing the documentation install which needed a manual Doxygen-doc build
+- 7c685b0 Skipping the Doxygen and callgrind targets when their tools are missing
+- 3329454 Installing the packager tools into the Jenkins pipeline image
+- e052f85 Replacing the libjpeg-turbo download fallback with a clear configure error
+- 2a39969 Fixing the libavif download fallback stopping without the system libyuv
+- 86b6549 Pinning the third-party download fallbacks to their release tags
+- 402394e Failing the CI test stages which match no tests
+- a3f7896 Fixing the Jenkins doc sections linked check skipping the section directories
+- 2893392 Replacing the broken OpenSSL download fallback with a clear configure error
+- a781134 Fixing the mixed target_link_libraries signatures on the project binary
+- 1fb981b Fixing the MAX_LOG_LEVEL option help text error level value
+- 9f49195 Fixing the logger level filter tests which could not fail
+- ce6bb6e Fixing the log macros to expand into single statements
+- ac978d8 Fixing the logger data races on the log file reopening and the level
+- 3bea4ec Fixing the log file open failure aborting the process
+- 095f1fa Splitting the CTEST_DefaultLogger helper classes into own files
+- c1119a2 Splitting the packages install scripts per OS release
+- 972efaa Declaring the runtime dependencies of the DEB package
+- 99aaf0b Failing the configuration clearly when the branch library is turned off
+- 1df8931 Failing the run on a compression round-trip mismatch
+- beb8d47 Fixing the truncated gzip file detection of the ZlibController
+- 18e929e Installing the zlib development package by the scripts and the Docker images
+- 22aa5dc Providing the ZLIB::ZLIB target for the zlib FetchContent fallback
+- d16def8 Removing the duplicate zlib enabler probe
+- 3ccf808 Synchronizing the stop flag test assertions and the CommandLineParser doc comment with app
+- bb4a7b7 Moving the log mock back to its app location
+- 1520c7d Replacing the unreachable GNU gettext site link with its Savannah page
+- 7d22363 Introducing the destination CPU architecture into the package names
+- 94821a5 Introducing the appGettext branch info into the READMEs
+- b88a25f Introducing the appDarknetXX branch info into the READMEs
+- 1095bd3 Introducing the RedHat packages install script
+- 6eca7b1 Introducing the appWhisperCPP branch info into the READMEs
+- 9d8aaa3 Introducing the FreeBSD packages install script
+- bfd3683 Introducing the appV8 branch info into the READMEs
+- 52ee7e0 Erasing the build sources and trees of the docker images
+- 5dabf75 Introducing the debug clang-format script
+- 53e072b Resetting the inherited signals dispositions in the signals handlers tests
+- c735bdc Introducing the binary hardening options section into the READMEs
+- 8e1241a Introducing the binary hardening compile and link options
+- 34b5c61 Introducing the GitLab CI/CD pipeline section into the READMEs
+- 3e32999 Introducing the GitLab CI/CD pipeline mirroring the Jenkinsfile
+- 6fa586a Introducing the GitHub Actions CI pipeline section into the READMEs
+- 12cc311 Moving the GitHub Actions CI pipeline to the Ubuntu 26.04 runner with the branch dependencies
+- 8e9e6e0 Correcting the appQt6QtDBusClient branch description in the READMEs
+- c91a543 Introducing the desktop application packaging switch
+- e2a960e Limiting the documentation checks to the repository own markdown files
+- dde1241 Excluding the GCC own include directories from the clang-tidy search path
+- eb72b87 Accepting the 405 documentation URLs
+- 708367c Spacing out the branch entries in the READMEs
+- 8018b00 Rewording the DOCKER_HOST environment requirement in the docker docs
+- 8c24fd3 Removing the DOCKER_HOST variables from the docker enablers
+- 0930631 Excluding the build trees from the Docker build context
+- f0df2df Retrying the unreachable documentation URLs and accepting the 403 ones
+- 23a9209 Introducing the --rebuild flag into the Jenkins docker scripts
+- 71fcf1b Rebuilding the image from its base on the Jenkins pipeline force rebuild
+- 92617e1 Introducing the audio assets branches info into the READMEs
+- 98fc050 Splitting the signals handlers per category and covering the pause, reload, user defined and ignored signals
+- 8f74d30 Introducing the app signals handlers subcomponent
+- 70c84a2 Declaring the main function argv parameter as an array
+- 43046da Moving the packagers templates into the per-packager directories
+- f1e05f5 Dropping the packagers and the development tools from the packages install list
+- ee1d3ec The destination CPU architecture of the AppImage package name
+- b04fb83 Picking the CPack AppImage enabler since the CMake 4.2 and dropping the debug banners
+- fac8175 Extracting the AppImage enabler pick into its own general enabler
+- aa5839a Selecting the AppImage packager enabler by the CMake version
+- ffd4b6a Introducing the CPack based AppImage packager enabler
+- de3d750 Introducing the AppImage packager
+- 9f83eca Introducing the --install flag into the packager build scripts
+- ae1ff3e Renaming the packages install script and adding the Ubuntu one
+- 5b66849 Introducing the target architecture into the flatpak package name
+- 2090ce4 Introducing the AppStream metainfo file into the flatpak package
+- 28e762b Consuming the install directory variables the flatpak-builder passes
+- 4179ac4 Introducing the required packages install script
+- e805469 Installing the flatpak build dependencies from the flathub remote
+- 459ee3b Dropping the redundant build step from the packager scripts
+- f0d173f Introducing the per packager build scripts
+- 62db712 Introducing the appCFITSIO branch info into the READMEs
+- b071c8d Make the compile time log level gate really gate
+- a959fc7 Introducing the appGtkmm4Libadwaita branch info into the READMEs
+- 1ff96fb Pinning the log message stream to the classic locale
+- c87ed06 Decomposing the IApplication descendants into the applications subcomponent
+- d9c2ef6 Introducing the appFontAwesome branch info into the READMEs
+- d966f7b Introducing the debug test script and its --test parameter
+- 5067d12 Incrementing version to appZlib0.12.0
+- 8fcad14 Release appZlib0.11.0 at 2026-08-17
+
 ## [appZlib0.11.0] - 2026-08-17
 
 - de8fba6 Introducing the InsertNewlineAtEOF clang-format option
@@ -360,6 +481,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[appZlib0.12.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appZlib0.12.0)
+[appZlib0.11.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appZlib0.11.0)
 [app0.10.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.10.0)
 [app0.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.9.0)
 [app0.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.8.0)

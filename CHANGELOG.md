@@ -5,6 +5,250 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appPlotGenCpp0.11.0] - 2026-11-08
+
+- 85d0f0a Removing the destination OS from the AppImage package name
+- c55d430 Introducing the STT branches info into the READMEs
+- 74a953b Replacing the CMAKE_SOURCE_DIR/CMAKE_BINARY_DIR by the PROJECT_SOURCE_DIR/PROJECT_BINARY_DIR
+- 822c96f Introducing the appWebAssembly branch info into the READMEs
+- fefbc09 Introducing the appLlamaCPP branch info into the READMEs
+- a0f1694 Introducing the TTS branches info into the READMEs
+- 16abf6c Introducing the destination OS into the package names
+- a129298 Fixing the branch name of the cloning commands in the docs
+- 58768dd Synchronizing the template flavors list of the READMEs
+- 1a404c9 Converting the flavor link calls of the project binary to the keyword signature
+- e83d51b Documenting the SFML 2 source build of the Ubuntu 26.04 packages script
+- f1dddb6 Refreshing the shared library cache after the from-source installs
+- 268f9c6 Fixing the cppcheck findings of the new signals handler, tests and log mock
+- 77eee00 Updating the app component diagram to the signals handlers design
+- d7813c2 Renumbering the custom command line parameters section numbered 4-6 twice
+- 011882b Documenting the built in command line options and the usage errors
+- 71d4e27 Testing the application with the real command line arguments
+- c14a7e6 Parsing the command line before the log file initialization
+- 4a36d83 Exiting with a failure status on the command line usage errors
+- 41ad205 Fixing the missing option value raising the version flag instead of the help one
+- ca3e292 Fixing the CommandLineParser test assertions which could not fail
+- f11ea41 Fixing the log mock LOG_INIT forwarding into the LOG_INIT_DEFAULTS mock
+- ce5af96 Restoring the previous signal dispositions on the signals handler uninstall
+- 5d08aca Leaving the SIGTTIN and SIGTTOU signals to the shell job control
+- 5b8a648 Removing the nonexistent module path directories and cppcheck suppression
+- d7fb1c0 Fixing the zlib gzip file example ignoring the read and close errors
+- 0d942d3 Fixing the flatpak requirements section naming an outdated SDK version
+- f2c3599 Documenting the ENABLE_COMPONENT_TESTS option of the test builds
+- 0a3acf5 Listing every linked doc section in the requirements and build index pages
+- 29ce06b Fixing the documentation links pointing into the other language
+- 422317e Fixing the stale file paths named in the documentation
+- 94f152e Fixing the flatpak target failing on its repeated build
+- 9d3cba0 Fixing the snap command path ignoring the install prefix
+- 1ffd1f1 Fixing the documentation install which needed a manual Doxygen-doc build
+- edaff41 Skipping the Doxygen and callgrind targets when their tools are missing
+- 30c39f7 Installing the packager tools into the Jenkins pipeline image
+- 7b2d3c1 Replacing the libjpeg-turbo download fallback with a clear configure error
+- b6d3a6c Fixing the libavif download fallback stopping without the system libyuv
+- a2169db Pinning the third-party download fallbacks to their release tags
+- 9b70d7e Failing the CI test stages which match no tests
+- 5e41b5d Fixing the Jenkins doc sections linked check skipping the section directories
+- 1a05cea Replacing the broken OpenSSL download fallback with a clear configure error
+- ff86987 Fixing the mixed target_link_libraries signatures on the project binary
+- 9af7c07 Fixing the MAX_LOG_LEVEL option help text error level value
+- 35808b3 Fixing the logger level filter tests which could not fail
+- f18a3dd Fixing the log macros to expand into single statements
+- 5780e2a Fixing the logger data races on the log file reopening and the level
+- 9cede8c Fixing the log file open failure aborting the process
+- 18af5e7 Splitting the CTEST_DefaultLogger helper classes into own files
+- 01b5735 Splitting the packages install scripts per OS release
+- 2c4aac7 Fixing the cppcheck target findings of the PlotGenCpp controller and mock
+- ee02545 Synchronizing the get_stop assertions and the CommandLineParser doc comment with app
+- 5ecda63 Documenting the PlotGenCpp and SFML enablers
+- d9d4c29 Stopping the configure with a clear message when PlotGenCpp or SFML is disabled
+- 2c56260 Skipping the system SFML 3 that aborts the configure
+- 0b33508 Introducing the VERSION argument into the 3rd party enabler function
+- 785539d Removing the redundant log mock of the plotgencpp tests
+- a3b96e5 Fixing the PlotGenCppController header guard, size comment and includes
+- 740a7c8 Fixing the installed binary not finding the PlotGenCpp and SFML libraries
+- 10fbdc1 Renaming the MatPlotCpp enabler into the PlotGenCpp one
+- 9ca8813 Replacing the unreachable GNU gettext site link with its Savannah page
+- abd1290 Introducing the destination CPU architecture into the package names
+- 26d8346 Introducing the appGettext branch info into the READMEs
+- 667a918 Introducing the appDarknetXX branch info into the READMEs
+- a17174e Introducing the RedHat packages install script
+- 5d47e3a Introducing the appWhisperCPP branch info into the READMEs
+- be902ef Introducing the FreeBSD packages install script
+- 8349b4a Introducing the appV8 branch info into the READMEs
+- ab0e0d2 Erasing the build sources and trees of the docker images
+- 6a16dae Introducing the debug clang-format script
+- 1d7c43f Resetting the inherited signals dispositions in the signals handlers tests
+- 3a3f057 Introducing the binary hardening options section into the READMEs
+- a3259b4 Introducing the binary hardening compile and link options
+- 179f1ab Introducing the GitLab CI/CD pipeline section into the READMEs
+- e2b480c Introducing the GitLab CI/CD pipeline mirroring the Jenkinsfile
+- 66a2cbb Introducing the GitHub Actions CI pipeline section into the READMEs
+- 20636b2 Introducing the GitHub Actions CI pipeline mirroring the Jenkinsfile
+- 2fb1e1a Excluding the fetched SFML and PlotGenCpp code from the clang-tidy checks
+- 92e44d5 Skipping the pkg-config files install of the fetched SFML
+- 1d4135e Correcting the appQt6QtDBusClient branch description in the READMEs
+- 0161be8 Introducing the desktop application packaging switch
+- 2390243 Limiting the documentation checks to the repository own markdown files
+- e8a2ed4 Excluding the GCC own include directories from the clang-tidy search path
+- 25462b7 Accepting the 405 documentation URLs
+- c469ddf Spacing out the branch entries in the READMEs
+- 27cfb70 Rewording the DOCKER_HOST environment requirement in the docker docs
+- e0f67db Removing the DOCKER_HOST variables from the docker enablers
+- 0e8e5db Excluding the build trees from the Docker build context
+- d1d31ba Retrying the unreachable documentation URLs and accepting the 403 ones
+- 380b0b3 Introducing the --rebuild flag into the Jenkins docker scripts
+- 247f32f Rebuilding the image from its base on the Jenkins pipeline force rebuild
+- 1c48eaa Introducing the audio assets branches info into the READMEs
+- 282ee19 Splitting the signals handlers per category and covering the pause, reload, user defined and ignored signals
+- dfd7bf1 Introducing the app signals handlers subcomponent
+- f183526 Declaring the main function argv parameter as an array
+- d54c455 Moving the packagers templates into the per-packager directories
+- ec5dd7a Dropping the packagers and the development tools from the packages install list
+- d0b2aa8 The destination CPU architecture of the AppImage package name
+- 180f815 Picking the CPack AppImage enabler since the CMake 4.2 and dropping the debug banners
+- 91b1894 Extracting the AppImage enabler pick into its own general enabler
+- 6a14284 Selecting the AppImage packager enabler by the CMake version
+- d551339 Introducing the CPack based AppImage packager enabler
+- 44058f8 Introducing the AppImage packager
+- 53ebb97 Introducing the --install flag into the packager build scripts
+- aa2dcb7 Renaming the packages install script and adding the Ubuntu one
+- 1164220 Introducing the target architecture into the flatpak package name
+- bf199ac Introducing the AppStream metainfo file into the flatpak package
+- 5362686 Consuming the install directory variables the flatpak-builder passes
+- d6e7758 Fixing the flatpak PlotGenCpp module missing cstdint include
+- 75bd2b8 Fixing the SFML and PlotGenCpp FetchContent fallback build
+- 6a740f9 Introducing the required packages install script
+- d39c7f1 Installing the flatpak build dependencies from the flathub remote
+- 2345e12 Dropping the redundant build step from the packager scripts
+- 4bcb1b4 Introducing the per packager build scripts
+- 86980f3 Introducing the appCFITSIO branch info into the READMEs
+- 27a96f5 Make the compile time log level gate really gate
+- 98d5cd3 Introducing the appGtkmm4Libadwaita branch info into the READMEs
+- d9637ce Pinning the log message stream to the classic locale
+- b76eaad Decomposing the IApplication descendants into the applications subcomponent
+- d566cd0 Introducing the appFontAwesome branch info into the READMEs
+- 79a70ec Introducing the debug test script and its --test parameter
+- a3667f0 Introducing the InsertNewlineAtEOF clang-format option
+- 27c224d Removing the trailing empty lines at the end of the project files
+- 101028e Adding the missing newlines at the end of the project files
+- ef1885a Removing the trailing whitespaces from the project files
+- a3175ff Introducing the appCURLChatGPT branch info into the READMEs
+- a8490c4 Hiding the ApplicationContext fields and adding the atomic stop flag
+- 6948603 Moving the linker hardening options out of the compile options
+- de05afc Fixing the SFML fallback clone tag and the PlotGenCpp Dockerfile commands
+- 102103f Split the DefaultLogger into a static proxy and a real logger instance
+- a10935a Introducing the appCURLClaude branch info into the READMEs
+- 4395938 Introducing the external documentation URLs check into the Jenkins pipeline
+- 6567cfb Correcting the docker modules path of the documentation
+- 889e126 Introducing the quick build and the docker starter scripts
+- 75ee682 Introducing the quick build and the docker starter scripts
+- 49eca31 Making the docker containers run under unprivileged users
+- 23e0f8e Formatting the sources with the clang-format
+- 27058c2 Repairing the pipeline code check stages
+- 9c2a726 Introducing the appPGPLOT branch info into the READMEs
+- bbfb7e0 Fixing the Jenkinsfile
+- 3b708ce Fix broken cppcheck link in section 5 index
+- 6df5a5d Fix Groovy escape sequences in markdown link checker stage
+- f5dfe31 Rework markdown link checker stage to pure bash
+- 61ef108 Add Jenkinsfile stage to detect broken markdown links; fix pre-existing broken links
+- 47a4312 Reorganize doc/sections into section dirs with category grouping
+- f15988c Add an OpenSSL cmake enabler module with SHA-256, HMAC-SHA256 and HTTPS/TLS client code samples
+- f38f335 Group the enabler documentation under subsections in the READMEs
+- 4ce30c3 Group the compression branches under a dedicated README section
+- 2b0773b Fix the misc/Jenkinsfile checkout branch to the appPlotGenCpp branch name
+- 269b0df Introducing the appLZMA branch info into the READMEs
+- 126e616 Add a liblzma (XZ Utils) compression library enabler module
+- e0e7bef Introducing the appZlib branch info into the READMEs
+- f5fddea Add zlib compression usage examples to its enabler documentation
+- e4413bf Replace the redundant PROJECT_NAME CMake variable with CMAKE_PROJECT_NAME
+- 7b3df09 Introducing the appGtkmm4Vulkan branch info into the READMEs
+- 5df76b7 Removing the appGtkmm4Vulkan branch info from the READMEs
+- f39c6a0 Introducing the appQt6Vulkan and appGtkmm4Vulkan branches info into the READMEs
+- f61c7ce Simplifying root CMakeLists.txt
+- 2ad9dc9 Introducing the appFirebird branch info into the READMEs
+- 22988d1 Introducing the appGtkmm4GDBusClient branch info into the READMEs
+- da9e39f Introducing the appQt6GLArea branch info into the READMEs
+- eb46f43 Introducing the appGtkmm4GLArea branch info into the READMEs
+- 888d7ec Splitting the Data Visualization README category into Plots/Graphs and Maps
+- 3962190 Introducing the applibMeson branch info into the READMEs
+- a8e201d Introducing the zlib and image format cmake enablers with docs
+- 032b662 Introducing the appSFML branch info into the READMEs
+- 908c937 Introducing the appwxWidgets branch info into the READMEs
+- 85d71f6 Introducing the appQt6QtDBusClient branch info into the READMEs
+- 965cfba Introducing the appQt6QtLocation branch info into the READMEs
+- e2f5314 Introducing the appQt6ChartView branch into the READMEs
+- 2e82afa Introducing the appGtkmm4LeafLet and appQt6LeafLet branches info into the READMEs
+- a0c13a8 Fixing SFML repo link
+- 11a06ba Introducing the PlotGenCppController mock and the plotgencpp tests
+- c0a1d02 Introducing the components for the SFML library enabler
+- 0f08b5c Introducing the COMPONENTS arg for template_project_default_3rdparty_enabler
+- 9be6fa5 Migrating PlotGen and SFML to template_project_default_3rdparty_enabler
+- ca49be6 Migrating to template_project_default_3rdparty_enabler
+- f0cd33f Removing the SDL3 current marking
+- 196aa14 Introducing information about the SDL3 branch in the READMEs
+- a76e6a4 Replacing faulty SimpleLogger mention with the DefaultLogger
+- f01e4d3 Rename the simple logger to DefaultLogger and add top-level log.h tests
+- 3c115e1 Removing faulty simple_logger mention in the log.h
+- 4236fe6 Add template-specific packager, documentation and registration checks
+- 84181ea Introducing the appSDBusCxxClient and appSDBusCxxServer branches info into the READMEs
+- 07e2dfc Moving Dockerfiles and packagers files into separate subdirs in the misc
+- 32a8b29 Adding .claude dir to .gitignore
+- a328614 Introducing project structure section Будь ласка, зверніться до адміністратора subsection
+- bbb010f Introducing the libMeson branch info into the READMEs
+- 107bc32 Introducing info about newly created branch appOpenCV into READMEs with it's cmake enabler.
+- 1ccc614 Introducing the CPack's RPM package generator integration
+- b6611c6 Removing unmerged lines in the doc/README.uk_UA.md
+- 51b13ba Introducing the MS Windows WIX package generation through CPack integration
+- b5b4aad Introducing the project's FreeBSD pkg package generation support through CPack. Works only on FreeBSD.
+- 1f3f133 Deleting REQUIRED marking from the snapcraft's find_program
+- 3d6e669 By default disabling the snap package manager
+- 0ac33b9 Introducing the snap packager integration with documentation
+- d7a2ce8 Introducing and migrating to the template_project_default_3rdparty_enabler cmake function. Making enablers git sources variables modifiable.
+- d7ab3e2 Integrating and implementing the basic PlotGenCpp library example
+- f28c334 Moving all CMake variables declarations into their respectful enablers.
+- ace9351 Moving Doxygen related CMake variables into doc/CMakeLists.txt file
+- 0d38e5b Introducing the libxml2 enabler cmake module
+- 0d8c898 Enhancing the cmake files fs structure
+- 3ec8d38 Making docker base image configurable through CMake variables
+- 43763b8 Introducing the appPLplot branch info into the READMEs
+- 938e0a1 Introducing the MatPlot++ appMatPlotxx branch into the READMEs
+- a7bbedd Fixing clang-tidy conf misspell
+- 80d533c Switching off the clang-tydy's unrecognizable AnalyzeTemporaryDtors config param
+- 052cebf Making the cppcheck stage optional due to unstable results
+- f849981 Supressing the cppcheck's missingIncludeSystem and unusedStructMember warnings.
+- 9eb94c6 Loggging README's misspell refine
+- accda7f Missing newlines in the READMEs
+- ab6f8b1 Grouping and categorising available template flavors links in the READMEs
+- 9aa88c6 Renaming properly Nlohmann JSON library CMake enabler file
+- c6c323d Introducing the forgottent Nlohmann JSON library enabler info into the READMEs
+- c958ff8 Refining branch name in the READMEs project cloning commands.
+- d6bc1a8 Decomposing READMEs
+- 893a961 Introducing the ENABLE_LOGS_MICROSECONDS_TIME CMake option in order to be able to disable microseconds in the log messages.
+- 1cefe87 Introducing the --branch cmd line flag for git clone command in the READMEs
+- 2e81c79 Introducing explicit template altering notice in the READMEs headers
+- 07c06d3 Optimizing some CMake commands in the README.md
+- 83d424b Introducing the appGtkmm4 branch info into the READMEs
+- f819f25 Introducing the PlantUML app component diagram into the READMEs
+- ccac56a Enabling GTest during for CTs
+- 8d7481c Pointing Jenkins configurable port into standart in-container 8080
+- 385398a Making the Jenkins pipeline container and image names configurable
+- 7c1ee70 Including lost SimpleLogger CTs
+- e209c5b Introducing basic app CTs samples
+- 86d9278 Introducing basic SimpleLogger CTs with CMake and Jenkins integration
+- 7ab160b Refining the branches link in the READMEs, introducing gitlab links also
+- eb731ef Specifying the Jenkins container run target in the READMEs
+- e6e6e61 Erasing redundant project copy for Jenkins pipeline docker, renaming jenkins CMake file
+- 1b1ddc2 Refining clang-format stage
+- 3c652ba Introducing the release install try Jenkins pipeline stage
+- c4f0c77 Erasing redundant clang-tidy enable from tests pipeline stages
+- 9bf1c0d Splitting debug tests and cppcheck from clang-tidy build
+- 3b6a5f0 Introducing the Jenkins pipeline docker force rebuild option
+- 98ce4a0 Returning a Jenkins Docker file configure, erasing redundant Jenkinsfile configuration
+- 6ac3d4f Refining Jenkins pipeline target
+- 836d98d Introducing basic Jenkins pipeline CMake target and Jenkinsfile conf
+- 51fe32f Incrementing version to 0.11.0
+- bd88653 Release app0.10.0 at 2025-09-08
+
 ## [app0.10.0] - 2025-09-08
 
 - 5e10927 Fixing typo in the README.md
@@ -242,6 +486,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[appPlotGenCpp0.11.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appPlotGenCpp0.11.0)
 [app0.10.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.10.0)
 [app0.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.9.0)
 [app0.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.8.0)

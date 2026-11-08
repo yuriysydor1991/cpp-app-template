@@ -5,6 +5,259 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [maintenance0.12.0] - 2026-11-08
+
+- 945809a Removing the destination OS from the AppImage package name
+- c421088 Introducing the appSherpaONNXSTT Jenkins exported jobs
+- e172aa4 Introducing the STT branches info into the READMEs
+- cb7bee4 Replacing the CMAKE_SOURCE_DIR/CMAKE_BINARY_DIR by the PROJECT_SOURCE_DIR/PROJECT_BINARY_DIR
+- c1ed32e Introducing the appWebAssembly Jenkins exported jobs
+- 1a727ac Introducing the appWebAssembly branch info into the READMEs
+- 089e385 Introducing the appWebAssembly branch packages into the pipelines image
+- 173fa1f Introducing the appLlamaCPP Jenkins exported jobs
+- a2b963b Introducing the appLlamaCPP branch info into the READMEs
+- d11e183 Introducing the TTS branches packages into the pipelines image
+- 1bbfd96 Introducing the TTS branches Jenkins exported jobs
+- 6f188a6 Introducing the TTS branches info into the READMEs
+- 76bbb05 Introducing the destination OS into the package names
+- 7ae8a5c Synchronizing the template flavors list of the READMEs
+- 51faa56 Refreshing the shared library cache after the from-source installs
+- e4b44ff Removing the personal tools and the unused packages of the install scripts
+- 5bab608 Listing the QEMU and the local CI pipelines sections in the build index pages
+- fa10a01 Removing the nonexistent module path directories and cppcheck suppression
+- 1706f85 Removing the unused log mock of the main branch
+- 5ca5217 Fixing the zlib gzip file example ignoring the read and close errors
+- dcd2ff3 Fixing the flatpak requirements section naming an outdated SDK version
+- e5496b8 Documenting the ENABLE_COMPONENT_TESTS option of the test builds
+- 08f919a Listing every linked doc section in the requirements and build index pages
+- ad46b9f Fixing the documentation links pointing into the other language
+- 73bf62b Fixing the stale file paths named in the documentation
+- 0569d22 Fixing the flatpak target failing on its repeated build
+- 4a92548 Fixing the snap command path ignoring the install prefix
+- 17f3b27 Fixing the documentation install which needed a manual Doxygen-doc build
+- 32a73b5 Skipping the Doxygen and callgrind targets when their tools are missing
+- 7de10b5 Replacing the libjpeg-turbo download fallback with a clear configure error
+- 8e20403 Fixing the libavif download fallback stopping without the system libyuv
+- 30b8d21 Pinning the third-party download fallbacks to their release tags
+- 173fc5a Failing the CI test stages which match no tests
+- 01f4059 Fixing the Jenkins doc sections linked check skipping the section directories
+- e39d698 Replacing the broken OpenSSL download fallback with a clear configure error
+- 4a4f4cf Fixing the mixed target_link_libraries signatures on the project binary
+- eff05e8 Fixing the MAX_LOG_LEVEL option help text error level value
+- 02f1dc7 Fixing the logger level filter tests which could not fail
+- 6b12550 Fixing the log macros to expand into single statements
+- 5512d10 Fixing the logger data races on the log file reopening and the level
+- be34143 Fixing the log file open failure aborting the process
+- 3e0ea41 Splitting the CTEST_DefaultLogger helper classes into own files
+- 17e9e49 Splitting the packages install scripts per OS release
+- c849545 Fixing the local pipelines parallel jobs default described as every job
+- 3899b39 Listing every library the Jenkins pipeline image builds from the sources
+- ff89e05 Fixing the uk_UA requirements index linking the snap build section
+- 04c8cb1 Seeding the Qt WebEngine flatpak base app into the Jenkins pipeline image
+- 7e283e0 Removing the unused multimedia packages of the Jenkins pipeline image
+- d10027c Pinning the libraries the Jenkins pipeline image builds from the sources
+- 7985974 Synchronizing the version tracking section with main
+- 04ad041 Removing the Jenkins job of the separate darknetxx repository
+- 7be79c7 Fixing the Jenkins jobs import which imported nothing by default
+- 7b0ac73 Restoring the log.h component tests and the CTEST_log stage of main
+- 5c3a7c8 Introducing the local CI pipelines tools into the packages install scripts
+- aa9e0df Introducing the local CI pipelines run section into the READMEs
+- 635168a Introducing the local CI pipelines starter scripts
+- 4780eb6 Introducing the local GitHub Actions and GitLab CI/CD pipeline runner targets
+- 3584c3f Replacing the unreachable GNU gettext site link with its Savannah page
+- 45dbdf4 Introducing the destination CPU architecture into the package names
+- 39a6c65 Introducing the appGettext packages into the pipelines image
+- b905ca4 Introducing the appGettext Jenkins exported jobs
+- 59aefc8 Introducing the appGettext branch info into the READMEs
+- fa67247 Moving gitlab Jenkins exportees files into separate dir
+- 0714170 Introducing the appDarknetXX Jenkins exported jobs
+- 617f84c Introducing the appDarknetXX branch info into the READMEs
+- 6ab0823 Introducing the RedHat packages install script
+- 1674bb4 Introducing the FreeBSD and MS Windows QEMU virtual machine scripts
+- 34abddc Introducing the appWhisperCPP Jenkins exported jobs
+- 65e6974 Collecting the new branches packages and libraries into the pipelines image
+- 4c1cd47 Raising the Jenkins durable task heartbeat interval of the pipelines image
+- 15ff5e5 Introducing the appWhisperCPP branch info into the READMEs
+- 00a9513 Introducing the FreeBSD packages install script
+- 252bf2f Introducing the appV8 Jenkins exported jobs
+- a6f34fb Introducing the appV8 branch info into the READMEs
+- 1e919ac Erasing the apt archives and lists of the Jenkins pipeline image
+- a69f673 Erasing the build sources and trees of the docker images
+- 1cc4154 Erasing faulty flatpak package
+- f113d8e Fixing the absent packages of the Jenkins pipeline container
+- 566cf11 Disabling the GitLab sourced Jenkins pipeline jobs
+- 689947d Introducing the debug clang-format script
+- f869d24 Introducing the binary hardening options section into the READMEs
+- 69ad511 Introducing the binary hardening compile and link options
+- cf66ae8 Introducing the GitLab CI/CD pipeline section into the READMEs
+- 990297e Introducing the GitLab CI/CD pipeline mirroring the Jenkinsfile
+- 6228ad4 Introducing the GitHub Actions CI pipeline section into the READMEs
+- 8fec83f Introducing the GitHub Actions CI pipeline mirroring the Jenkinsfile
+- b119b77 Correcting the appQt6QtDBusClient branch description in the READMEs
+- 1831638 Introducing the desktop application packaging switch
+- 100eb8a Limiting the documentation checks to the repository own markdown files
+- 209ad1c Excluding the GCC own include directories from the clang-tidy search path
+- 1080edb Accepting the 405 documentation URLs
+- 57eb68a Spacing out the branch entries in the READMEs
+- c34b633 Rewording the DOCKER_HOST environment requirement in the docker docs
+- b0aae2f Removing the DOCKER_HOST variables from the docker enablers
+- c6a91af Excluding the build trees from the Docker build context
+- 9847e73 Seeding the flatpak runtimes the branches use
+- 2dd3cf5 Unconfining the container system paths for the flatpak-builder procfs mount
+- 5fdc2d4 Retrying the unreachable documentation URLs and accepting the 403 ones
+- d7e5f0d Dropping the darknetxx at GitLab exported Jenkins job
+- 1c2b4ca Introducing the --renew-container flag into the Jenkins docker run script
+- 3078b79 Keeping two executors on the Jenkins pipeline built-in node
+- b740742 Introducing the --rebuild flag into the Jenkins docker scripts
+- f07e136 Rebuilding the image from its base on the Jenkins pipeline force rebuild
+- 7fa0229 Introducing the audio assets branches exported Jenkins jobs
+- b470a0d Refining the Jenkins pipeline container for the packagers of every branch
+- 515fd61 Introducing the audio assets branches info into the READMEs
+- 2c667f2 Declaring the main function argv parameter as an array
+- 3cb88f4 Moving the packagers templates into the per-packager directories
+- 1d677a5 Dropping the packagers and the development tools from the packages install list
+- 1b98f24 The destination CPU architecture of the AppImage package name
+- 74f00eb Picking the CPack AppImage enabler since the CMake 4.2 and dropping the debug banners
+- 6225190 Extracting the AppImage enabler pick into its own general enabler
+- 324a25a Selecting the AppImage packager enabler by the CMake version
+- 9846d14 Introducing the CPack based AppImage packager enabler
+- 160ca90 Introducing the AppImage packager
+- 6b48098 Introducing the --install flag into the packager build scripts
+- 1aaa26b Renaming the packages install script and adding the Ubuntu one
+- 17734a2 Introducing the target architecture into the flatpak package name
+- 34a7cc2 Introducing the AppStream metainfo file into the flatpak package
+- a174fde Consuming the install directory variables the flatpak-builder passes
+- fa34f50 Introducing the required packages install script
+- d6169a1 Installing the flatpak build dependencies from the flathub remote
+- c7ca43a Dropping the redundant build step from the packager scripts
+- 94824e5 Introducing the per packager build scripts
+- 9e28712 Introducing the appCFITSIO and appGtkmm4Libadwaita exported Jenkins jobs
+- c14369d Introducing the appCFITSIO branch info into the READMEs
+- c9afd18 Make the compile time log level gate really gate
+- c4ede30 Introducing the appGtkmm4Libadwaita branch info into the READMEs
+- ccfaac6 Pinning the log message stream to the classic locale
+- 3e52d07 Introducing the appFontAwesome exported Jenkins jobs
+- 2540954 Introducing the appFontAwesome branch info into the READMEs
+- 561629b Enabling the appMeson exported Jenkins jobs by default
+- 73f25bd Erasing the exported Jenkins jobs of the gone experimental branches
+- d398d9d Introducing the debug test script and its --test parameter
+- 011034c Introducing the InsertNewlineAtEOF clang-format option
+- 28d159d Adding additional cores for the jenkins all in one pipeline container
+- 5d75332 Introducing the appCURLChatGPT branch info into the READMEs
+- d2bb5db Introducing the missing Jenkins exported jobs of the GNU/Linux capable branches
+- 3a11606 Moving the linker hardening options out of the compile options
+- 6cb5941 Split the DefaultLogger into a static proxy and a real logger instance
+- c6818f6 Introducing the appCURLClaude branch info into the READMEs
+- 47d30d1 Introducing the GitLab Jenkins exported jobs and the forge suffixed names
+- fa85686 Introducing the external documentation URLs check into the Jenkins pipeline
+- 478a70b Introducing the quick build and the docker starter scripts
+- 7173c37 Making the docker containers run under unprivileged users
+- 0b6b53d Renaming the SimpleLogger component into the DefaultLogger
+- 77c9880 Making jenkins the default user
+- 967123d Erased redundant backslashes
+- 37ae150 Limiting the pipeline containers cpus and flatpak refinements
+- 8502459 Repairing the pipeline code check stages
+- a8f6f6f Introducing the appPGPLOT branch info into the READMEs
+- 8a4833c Fixing the Jenkinsfile
+- e5771e6 Enhancing the general pipeline Dockerfile
+- 93fc927 Fix broken cppcheck link in section 5 index on maintenance
+- f7b39fd Fix Groovy escape sequences in markdown link checker stage
+- a8f4928 Rework markdown link checker stage to pure bash
+- 0d3a367 Add Jenkinsfile stage to detect broken markdown links; fix pre-existing broken links
+- 2c075b8 Reorganize doc/sections into section dirs with category grouping
+- e51a6ad Add an OpenSSL cmake enabler module with SHA-256, HMAC-SHA256 and HTTPS/TLS client code samples
+- 418461c Some additional Jenkins jobs backups
+- b99abb9 Group the enabler documentation under subsections in the READMEs
+- 23b430a Group the compression branches under a dedicated README section
+- 0147919 Fix the misc/Jenkinsfile checkout branch to the maintenance branch name
+- aa4e5d7 Introducing the appLZMA branch info into the READMEs
+- db1ebca Add a liblzma (XZ Utils) compression library enabler module
+- 6e703bf Drop dead cmake/dockerers module-path append
+- 360e1bd Fix stale cmake/dockerers doc paths to cmake/enablers/dockerers
+- f433bc4 Add a CMake target to import Jenkins job XMLs into a configurable server
+- 6428931 Introducing the appZlib branch info into the READMEs
+- d78e64e Add zlib compression usage examples to its enabler documentation
+- eae10ae Replace the redundant PROJECT_NAME CMake variable with CMAKE_PROJECT_NAME
+- 2e1e82f Introducing the appGtkmm4Vulkan branch info into the READMEs
+- af32cbf Removing the appGtkmm4Vulkan branch info from the READMEs
+- 9add2d8 Introducing the appQt6Vulkan and appGtkmm4Vulkan branches info into the READMEs
+- 314d243 Simplifying root CMakeLists.txt
+- 2bb88b7 Introducing the appFirebird branch info into the READMEs
+- d8afec4 Introducing the appGtkmm4GDBusClient branch info into the READMEs
+- fc7c0f0 Introducing the appQt6GLArea branch info into the READMEs
+- 0f5ab5b Introducing the appGtkmm4GLArea branch info into the READMEs
+- 6620ce4 Splitting the Data Visualization README category into Plots/Graphs and Maps
+- 08ff466 Introducing the applibMeson branch info into the READMEs
+- 2317a61 Introducing the zlib and image format cmake enablers with docs
+- 9858e9d Introducing the appSFML branch info into the READMEs
+- fad0ead Introducing the appwxWidgets branch info into the READMEs
+- 2d03b1c Introducing the appQt6QtDBusClient branch info into the READMEs
+- a75aea8 Introducing the appQt6QtLocation branch info into the READMEs
+- 2df9a0c Introducing the appQt6ChartView branch into the READMEs
+- 3136e18 Introducing the appGtkmm4LeafLet and appQt6LeafLet branches info into the READMEs
+- 4d9d4d4 Exposing the fuse FS for Jenkins pipelines
+- e7b9a64 Introducing additional webview alike packages for jenkins pipeline
+- 2aa8a98 Introducing the webview widgets for jenkins container
+- 1046853 Introducing the COMPONENTS arg for template_project_default_3rdparty_enabler
+- 2db5848 Introducing the dbus-c++ lib into jenkins docker container
+- 2ebfbba Updating jenkins jobs exportees
+- 6a64011 Updating the jeneral pipeline container
+- 97fdafc Introducing the appSDBusCxxClient and appSDBusCxxServer branches info into the READMEs
+- 4613b37 Moving Dockerfiles and packagers files into separate subdirs in the misc
+- 06c3592 Adding .claude dir to .gitignore
+- 1001ee0 Introducing project structure section Будь ласка, зверніться до адміністратора subsection
+- caab664 Introducing the libMeson branch info into the READMEs
+- 26577f5 Introducing info about newly created branch appOpenCV into READMEs with it's cmake enabler.
+- 1ab8f6d Introducing the CPack's RPM package generator integration
+- eef08a6 Introducing the MS Windows WIX package generation through CPack integration
+- f4d0349 Introducing the project's FreeBSD pkg package generation support through CPack. Works only on FreeBSD.
+- b53c136 Deleting REQUIRED marking from the snapcraft's find_program
+- 026145b By default disabling the snap package manager
+- 98983d9 Introducing the snap packager integration with documentation
+- 842b4a7 Introducing and migrating to the template_project_default_3rdparty_enabler cmake function. Making enablers git sources variables modifiable.
+- 064ca1c Moving all CMake variables declarations into their respectful enablers.
+- 939b5c0 Moving Doxygen related CMake variables into doc/CMakeLists.txt file
+- b81fb01 Introducing the libxml2 enabler cmake module
+- 23f4b3c Screening Jenkins jar connector manipulation targets
+- 65d0438 Enhancing the cmake files fs structure
+- 1b3abc4 Making docker base image configurable through CMake variables
+- 6d03627 Introducing the appPLplot branch info into the READMEs
+- bafe202 Introducing Jenkins pipelines jobs CMake export script
+- 9142da3 Introducing the MatPlot++ appMatPlotxx branch into the READMEs
+- 6eb2009 Introducing the all in one jenkins pipeline docker builder script
+- d63ca6c Making the cppcheck stage optional due to unstable results
+- 2cda7cf Fixing clang-tidy conf misspell
+- 286cd82 Switching off the clang-tydy's unrecognizable AnalyzeTemporaryDtors config param
+- bfdb643 Supressing the cppcheck's missingIncludeSystem and unusedStructMember warnings.
+- 5c318cd Fixing the main Jenkinsfile pipeline script.
+- 9eb25b9 Loggging README's misspell refine
+- 399a644 Missing newlines in the READMEs
+- ae6b6b9 Grouping and categorising available template flavors links in the READMEs
+- 79920a1 Renaming properly Nlohmann JSON library CMake enabler file
+- 57ab382 Introducing the forgottent Nlohmann JSON library enabler info into the READMEs
+- 898f8cb Fixing 'command line build' links
+- cd7d51b Additional READMEs split refinements. Adding new sub sections for the "project structure".
+- b78814f Splitting main READMEs files into separate sub sections files under the /doc/sections/[locale] Since people are afraid of the large documents.
+- 47f4d94 Introducing the ENABLE_LOGS_MICROSECONDS_TIME CMake option in order to be able to disable microseconds in the log messages.
+- 70aeb0b Introducing explicit template altering notice in the READMEs headers
+- 289605e Optimizing some CMake commands in the README.md
+- 9bede14 Introducing the appGtkmm4 branch info into the READMEs
+- 2ce3c54 Enabling GTest during for CTs
+- f6b0242 Pointing Jenkins configurable port into standart in-container 8080
+- 6b76c98 Making the Jenkins pipeline container and image names configurable
+- 0590f02 Introducing basic SimpleLogger CTs with CMake and Jenkins integration
+- 2a3e69a Adding CTs CMake flag to a Jenkins pipeline debug build
+- d171624 Introducing basic SimpleLogger CTs with CMake and Jenkins integration
+- a12f160 Introducing the SimpleLogger CTs samples
+- 0c25987 Refining the branches link in the READMEs, introducing gitlab links also
+- 94cf40b Fixing another link type in the README.md
+- 1d90533 Fixing link typo inside READMEs
+- 7f7f230 Specifying the Jenkins container run target in the READMEs
+- ba50a1d Erasing UTs Jenkins stage due to absens of UTs
+- 9995775 Introducing basic Jenkins pipeline CMake target and Jenkinsfile conf
+- ac33438 Incrementing version to 0.12.0
+- 06edab4 Release main0.11.0 at 2025-09-08
+
 ## [main0.11.0] - 2025-09-08
 
 - ff7a28a Fixing typo in the README.md
@@ -251,6 +504,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[maintenance0.12.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/maintenance0.12.0)
 [main0.11.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/main0.11.0)
 [main0.10.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/main0.10.0)
 [main0.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/main0.9.0)

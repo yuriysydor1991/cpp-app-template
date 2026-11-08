@@ -13,7 +13,7 @@ The [src/lib/facade/public](/src/lib/facade/public) directory holds the whole in
 
 The first four are in the `CppAppTemplate012` namespace; the logging interface deliberately is not - see below.
 
-Introduce new classes and/or methods to share more functionality amongst any project of interest. The contents of the directory are installed under the `include/CppAppTemplate-0.12` sub-directory - the installable library name, see [Customizing the installable library name segments](/doc/sections/en_US/5-project-build/5-41-customizing-library-name-segments.md) - with respect of the specified prefixed root install directory.
+Introduce new classes and/or methods to share more functionality amongst any project of interest. The contents of the directory are installed under the `include/CppAppTemplate-0.13` sub-directory - the installable library name, see [Customizing the installable library name segments](/doc/sections/en_US/5-project-build/5-41-customizing-library-name-segments.md) - with respect of the specified prefixed root install directory.
 
 ### The logging interface
 
@@ -63,17 +63,17 @@ So a new public class belongs in [src/lib/facade/public](/src/lib/facade/public)
 
 ### Including the installed headers
 
-Both the installed `include/CppAppTemplate-0.12` sub-directory and the plain include root above it are exported by the library target, so a consumer may write either form:
+Both the installed `include/CppAppTemplate-0.13` sub-directory and the plain include root above it are exported by the library target, so a consumer may write either form:
 
 ```cpp
-#include <CppAppTemplate-0.12/LibraryFacade.h>  // recommended
+#include <CppAppTemplate-0.13/LibraryFacade.h>  // recommended
 #include <LibraryFacade.h>                      // also works
 ```
 
 The prefixed form is the safe one: every library derived from this template installs a `LibraryFacade.h` of its own, and names such as `ILib.h` are generic enough to collide in a busy include path. A project which reaches more than one derived library is best served by one alias header per library, holding that single prefixed include and a short namespace alias:
 
 ```cpp
-#include <CppAppTemplate-0.12/LibraryFacade.h>
+#include <CppAppTemplate-0.13/LibraryFacade.h>
 
 namespace cat = CppAppTemplate012;
 ```

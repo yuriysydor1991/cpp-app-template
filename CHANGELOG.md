@@ -5,6 +5,224 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appWinUI3GLArea0.11.0] - 2026-11-08
+
+- d60d32a Introducing the STT branches info into the READMEs
+- 583e027 Replacing the CMAKE_SOURCE_DIR/CMAKE_BINARY_DIR by the PROJECT_SOURCE_DIR/PROJECT_BINARY_DIR
+- d71fa77 Introducing the appWebAssembly branch info into the READMEs
+- 2c71528 Introducing the appLlamaCPP branch info into the READMEs
+- 04a79a6 Introducing the TTS branches info into the READMEs
+- 5a283f1 Introducing the destination OS into the package names
+- 4130c17 Fixing the branch name of the cloning commands in the docs
+- 86c570f Synchronizing the template flavors list of the READMEs
+- 58da5e9 Converting the flavor enabler usage comments to the keyword link signature
+- 986fc22 Converting the flavor link calls of the project binary to the keyword signature
+- f7c97ca Fixing the cppcheck findings of the new signals handler, tests and log mock
+- 87d411e Updating the app component diagram to the signals handlers design
+- b1b0f01 Renumbering the custom command line parameters section numbered 4-6 twice
+- b6a1d96 Documenting the built in command line options and the usage errors
+- 439b476 Testing the application with the real command line arguments
+- 67f2e19 Parsing the command line before the log file initialization
+- 87f84bb Exiting with a failure status on the command line usage errors
+- 2c410c0 Fixing the missing option value raising the version flag instead of the help one
+- 4338fa0 Fixing the CommandLineParser test assertions which could not fail
+- 787a140 Fixing the log mock LOG_INIT forwarding into the LOG_INIT_DEFAULTS mock
+- 962a008 Restoring the previous signal dispositions on the signals handler uninstall
+- 98ca190 Leaving the SIGTTIN and SIGTTOU signals to the shell job control
+- f0225db Removing the nonexistent module path directories and cppcheck suppression
+- fa29afa Fixing the zlib gzip file example ignoring the read and close errors
+- 127f3a6 Documenting the ENABLE_COMPONENT_TESTS option of the test builds
+- fccf9b0 Listing every linked doc section in the requirements and build index pages
+- cb78eb2 Fixing the documentation links pointing into the other language
+- 0b0aa2d Fixing the stale file paths named in the documentation
+- 2bb59bc Fixing the documentation install which needed a manual Doxygen-doc build
+- 92963a9 Skipping the Doxygen and callgrind targets when their tools are missing
+- 1acefc0 Replacing the libjpeg-turbo download fallback with a clear configure error
+- 57c3522 Fixing the libavif download fallback stopping without the system libyuv
+- ede32a4 Pinning the third-party download fallbacks to their release tags
+- 62bd329 Failing the CI test stages which match no tests
+- 9da5bd2 Fixing the Jenkins doc sections linked check skipping the section directories
+- 6f1af60 Replacing the broken OpenSSL download fallback with a clear configure error
+- 47b7c1e Fixing the mixed target_link_libraries signatures on the project binary
+- 31fdc47 Fixing the MAX_LOG_LEVEL option help text error level value
+- 16abdc4 Fixing the logger level filter tests which could not fail
+- f018665 Fixing the log macros to expand into single statements
+- b069d52 Fixing the logger data races on the log file reopening and the level
+- bbe6737 Fixing the log file open failure aborting the process
+- be6f120 Splitting the CTEST_DefaultLogger helper classes into own files
+- 2b44cef Documenting the WinUI 3 Direct3D GPU canvas
+- 8e2edbf Fixing the WinUI 3 entry glued to the previous line of the project structure index
+- 871e615 Fixing the GL area comment claiming a render every frame and its per-frame info log
+- 1ad6e30 Moving the WinUI 3 Direct3D render state into its own files
+- 537cdf1 Synchronizing the get_stop assertions and the CommandLineParser doc comment with app
+- f98aa1b Fixing the CI docs naming the packager checks the Windows only branch dropped
+- fe8a757 Restoring the app numbers of the CI pipeline doc sections
+- 8777469 Fixing the branch name the Jenkins template checks check out
+- b57ced7 Renumbering the WinUI 3 integration section numbered 4-8 twice
+- b29cedb Synchronizing the uk_UA MS Windows requirements with the en_US ones
+- 8ccb50c Fixing the cppcheck findings of the WinUI 3 launch seam test double and application
+- 01fc8aa Leaving the WinUI 3 event loop once the application stop flag is raised
+- 7b80d17 Fixing the bootstrapper DLL copy attached to the executable of another directory
+- 51ac194 Building the WinUI 3 executable for the Windows GUI subsystem
+- d3b3144 Applying the WindowConfig size to the WinUI 3 main window
+- ea476e7 Providing the XAML controls metadata by the WinUI 3 application object
+- 5ee0fc4 Bootstrapping the Windows App SDK runtime of the unpackaged WinUI 3 application
+- 732ae6b Renaming the winui3::app namespace shadowing the app namespace
+- bcb485d Generating the C++/WinRT projection headers in the WinUI 3 enabler
+- abf4c41 Replacing the hard-coded x64 Windows App SDK libraries directory by the target architecture
+- c9d41ba Removing the dead C++ standard override of the WinUI 3 enabler
+- 71abadc Fixing the unparsable Jenkins pipeline of the Windows only branch
+- c030cbb Fixing the Jenkins broken markdown links check failing on the directory links
+- 935f3d3 Removing the orphan GNU/Linux packagers of the Windows only branch
+- ff56c7c Renaming the WinUI3Initer component into the WinUI3Controller
+- 73406de Replacing the unreachable GNU gettext site link with its Savannah page
+- f959cda Introducing the destination CPU architecture into the package names
+- 3e2b43a Introducing the appGettext branch info into the READMEs
+- 16c0df9 Introducing the appDarknetXX branch info into the READMEs
+- 0440f69 Introducing the appWhisperCPP branch info into the READMEs
+- f44dbc3 Erasing the Debian packages install scripts
+- 797d97f Introducing the appV8 branch info into the READMEs
+- 50a00c1 Resetting the inherited signals dispositions in the signals handlers tests
+- b5f47ac Introducing the binary hardening options section into the READMEs
+- ea08119 Introducing the binary hardening compile and link options
+- 4deae03 Introducing the GitLab CI/CD pipeline section into the READMEs
+- 528f9cc Introducing the GitLab CI/CD pipeline mirroring the Jenkinsfile
+- 98de8e8 Introducing the GitHub Actions CI pipeline section into the READMEs
+- 454083a Introducing the GitHub Actions CI pipeline mirroring the Jenkinsfile
+- e7403c3 Correcting the appQt6QtDBusClient branch description in the READMEs
+- fb4be3d Limiting the documentation checks to the repository own markdown files
+- 9d42bcc Excluding the GCC own include directories from the clang-tidy search path
+- d26ee01 Accepting the 405 documentation URLs
+- d31f32f Spacing out the branch entries in the READMEs
+- 68e6ef5 Retrying the unreachable documentation URLs and accepting the 403 ones
+- f409261 Introducing the audio assets branches info into the READMEs
+- 80cadf8 Splitting the signals handlers per category and covering the pause, reload, user defined and ignored signals
+- 9e31ddc Introducing the app signals handlers subcomponent
+- e58aca7 Introducing the Steamworks SDK CMake enabler
+- b76aee9 Introducing the Box2D and the Jolt Physics CMake enablers
+- 2b33a8c Declaring the main function argv parameter as an array
+- 6132ae3 Moving the packagers templates into the per-packager directories
+- 953105d Dropping the packagers and the development tools from the packages install list
+- 7195e91 Introducing the --install flag into the packager build scripts
+- a0a6a34 Renaming the packages install script and adding the Ubuntu one
+- d86be56 Introducing the required packages install script
+- 64e0048 Dropping the redundant build step from the packager scripts
+- 52fa597 Introducing the per packager build scripts
+- f5f96b0 Introducing the appCFITSIO branch info into the READMEs
+- 7256f97 Make the compile time log level gate really gate
+- 652ea84 Introducing the appGtkmm4Libadwaita branch info into the READMEs
+- 2e8d447 Pinning the log message stream to the classic locale
+- 6ed92de Decomposing the IApplication descendants into the applications subcomponent
+- 01cc113 Introducing the appFontAwesome branch info into the READMEs
+- 4ba4c90 Introducing the InsertNewlineAtEOF clang-format option
+- 821f2d3 Introducing the appCURLChatGPT branch info into the READMEs
+- 07a5f91 Hiding the ApplicationContext fields and adding the atomic stop flag
+- 3b3f125 Moving the linker hardening options out of the compile options
+- 41ad26a Split the DefaultLogger into a static proxy and a real logger instance
+- a1f636f Introducing the appCURLClaude branch info into the READMEs
+- 0f29afc Introducing the external documentation URLs check into the Jenkins pipeline
+- 2c6b5f4 Formatting the sources with the clang-format
+- 0ee9347 Repairing the pipeline code check stages
+- 47d5f70 Drop the orphaned Jenkins inside Docker section
+- 6e75c98 Introducing the appPGPLOT branch info into the READMEs
+- 08a235d Fixing the Jenkinsfile
+- e4ecea8 Fix broken cppcheck link in section 5 index
+- 26e5b20 Fix Groovy escape sequences in markdown link checker stage
+- 9432bdc Rework markdown link checker stage to pure bash
+- c5bd35e Add Jenkinsfile stage to detect broken markdown links; fix pre-existing broken links
+- 3be8f7e Reorganize doc/sections into section dirs with category grouping
+- 49b97f4 Add an OpenSSL cmake enabler module with SHA-256, HMAC-SHA256 and HTTPS/TLS client code samples
+- 5545fcf Group the enabler documentation under subsections in the READMEs
+- 0bb8542 Group the compression branches under a dedicated README section
+- 750bdeb Fix the misc/Jenkinsfile checkout branch to the appWinUI3GLArea branch name
+- 95ae6eb Introducing the appLZMA branch info into the READMEs
+- 29ea85a Add a liblzma (XZ Utils) compression library enabler module
+- f22cf27 Introducing the appZlib branch info into the READMEs
+- db22ef8 Add zlib compression usage examples to its enabler documentation
+- aff4a8b Replace the redundant PROJECT_NAME CMake variable with CMAKE_PROJECT_NAME
+- 2d6a987 Introducing the appGtkmm4Vulkan branch info into the READMEs
+- 1a96eaf Removing the appGtkmm4Vulkan branch info from the READMEs
+- 672099d Introducing the appQt6Vulkan and appGtkmm4Vulkan branches info into the READMEs
+- a37687e Simplifying root CMakeLists.txt
+- 3231819 Introducing the appFirebird branch info into the READMEs
+- d6de38b Introducing the appGtkmm4GDBusClient branch info into the READMEs
+- 0c607fa Introducing the GLArea widget workflow
+- c3cabd6 Introducing the appQt6GLArea branch info into the READMEs
+- 91ca3c9 Introducing the appGtkmm4GLArea branch info into the READMEs
+- 65cbca8 Splitting the Data Visualization README category into Plots/Graphs and Maps
+- dde91f8 Introducing the applibMeson branch info into the READMEs
+- cb09035 Introducing the zlib and image format cmake enablers with docs
+- 8a6d28f Introducing the appSFML branch info into the READMEs
+- 46eb164 Introducing the appwxWidgets branch info into the READMEs
+- c7d581e Introducing the appQt6QtDBusClient branch info into the READMEs
+- c51e6f7 Introducing the appQt6QtLocation branch info into the READMEs
+- 611cd8f Introducing the appQt6ChartView branch into the READMEs
+- c4dc89d Introducing the appGtkmm4LeafLet and appQt6LeafLet branches info into the READMEs
+- 10539b0 Introducing the COMPONENTS arg for template_project_default_3rdparty_enabler
+- 69840a2 Removing the SDL3 current marking
+- df57c10 Introducing information about the SDL3 branch in the READMEs
+- d9e24c7 Replacing faulty SimpleLogger mention with the DefaultLogger
+- 16e99a9 Rename the simple logger to DefaultLogger and add top-level log.h tests
+- 948023b Removing faulty simple_logger mention in the log.h
+- 5bc0f43 Add template-specific packager, documentation and registration checks
+- 03f940d Introducing the appSDBusCxxClient and appSDBusCxxServer branches info into the READMEs
+- 6f25eb3 Adding .claude dir to .gitignore
+- a894d8c Implementing the appWinUI3 branch for Microsoft WinUI 3 + C++/WinRT usage
+- 1505bb3 Introducing project structure section Будь ласка, зверніться до адміністратора subsection
+- bd89e4d Introducing the libMeson branch info into the READMEs
+- 6e8584a Introducing info about newly created branch appOpenCV into READMEs with it's cmake enabler.
+- cfa55af Introducing the CPack's RPM package generator integration
+- 860c012 Removing unmerged lines in the doc/README.uk_UA.md
+- 0cb37b3 Introducing the MS Windows WIX package generation through CPack integration
+- 16bff16 Introducing the project's FreeBSD pkg package generation support through CPack. Works only on FreeBSD.
+- cdad20f Deleting REQUIRED marking from the snapcraft's find_program
+- e42f7a3 By default disabling the snap package manager
+- cede1e2 Introducing the snap packager integration with documentation
+- 5c2fa86 Introducing and migrating to the template_project_default_3rdparty_enabler cmake function. Making enablers git sources variables modifiable.
+- f28c334 Moving all CMake variables declarations into their respectful enablers.
+- ace9351 Moving Doxygen related CMake variables into doc/CMakeLists.txt file
+- 0d38e5b Introducing the libxml2 enabler cmake module
+- 0d8c898 Enhancing the cmake files fs structure
+- 3ec8d38 Making docker base image configurable through CMake variables
+- 43763b8 Introducing the appPLplot branch info into the READMEs
+- 938e0a1 Introducing the MatPlot++ appMatPlotxx branch into the READMEs
+- a7bbedd Fixing clang-tidy conf misspell
+- 80d533c Switching off the clang-tydy's unrecognizable AnalyzeTemporaryDtors config param
+- 052cebf Making the cppcheck stage optional due to unstable results
+- f849981 Supressing the cppcheck's missingIncludeSystem and unusedStructMember warnings.
+- 9eb94c6 Loggging README's misspell refine
+- accda7f Missing newlines in the READMEs
+- ab6f8b1 Grouping and categorising available template flavors links in the READMEs
+- 9aa88c6 Renaming properly Nlohmann JSON library CMake enabler file
+- c6c323d Introducing the forgottent Nlohmann JSON library enabler info into the READMEs
+- c958ff8 Refining branch name in the READMEs project cloning commands.
+- d6bc1a8 Decomposing READMEs
+- 893a961 Introducing the ENABLE_LOGS_MICROSECONDS_TIME CMake option in order to be able to disable microseconds in the log messages.
+- 1cefe87 Introducing the --branch cmd line flag for git clone command in the READMEs
+- 2e81c79 Introducing explicit template altering notice in the READMEs headers
+- 07c06d3 Optimizing some CMake commands in the README.md
+- 83d424b Introducing the appGtkmm4 branch info into the READMEs
+- f819f25 Introducing the PlantUML app component diagram into the READMEs
+- ccac56a Enabling GTest during for CTs
+- 8d7481c Pointing Jenkins configurable port into standart in-container 8080
+- 385398a Making the Jenkins pipeline container and image names configurable
+- 7c1ee70 Including lost SimpleLogger CTs
+- e209c5b Introducing basic app CTs samples
+- 86d9278 Introducing basic SimpleLogger CTs with CMake and Jenkins integration
+- 7ab160b Refining the branches link in the READMEs, introducing gitlab links also
+- eb731ef Specifying the Jenkins container run target in the READMEs
+- e6e6e61 Erasing redundant project copy for Jenkins pipeline docker, renaming jenkins CMake file
+- 1b1ddc2 Refining clang-format stage
+- 3c652ba Introducing the release install try Jenkins pipeline stage
+- c4f0c77 Erasing redundant clang-tidy enable from tests pipeline stages
+- 9bf1c0d Splitting debug tests and cppcheck from clang-tidy build
+- 3b6a5f0 Introducing the Jenkins pipeline docker force rebuild option
+- 98ce4a0 Returning a Jenkins Docker file configure, erasing redundant Jenkinsfile configuration
+- 6ac3d4f Refining Jenkins pipeline target
+- 836d98d Introducing basic Jenkins pipeline CMake target and Jenkinsfile conf
+- 51fe32f Incrementing version to 0.11.0
+- bd88653 Release app0.10.0 at 2025-09-08
+
 ## [app0.10.0] - 2025-09-08
 
 - 5e10927 Fixing typo in the README.md
@@ -242,6 +460,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[appWinUI3GLArea0.11.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appWinUI3GLArea0.11.0)
 [app0.10.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.10.0)
 [app0.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.9.0)
 [app0.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/app0.8.0)

@@ -5,6 +5,148 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [appQt6QtLocation0.11.0] - 2026-11-08
+
+- 91d731a Removing the destination OS from the AppImage package name
+- 025c072 Introducing the STT branches info into the READMEs
+- 9172dee Replacing the CMAKE_SOURCE_DIR/CMAKE_BINARY_DIR by the PROJECT_SOURCE_DIR/PROJECT_BINARY_DIR
+- 826935a Introducing the appWebAssembly branch info into the READMEs
+- 240a666 Introducing the appLlamaCPP branch info into the READMEs
+- bb8fabb Introducing the TTS branches info into the READMEs
+- 9f8341a Introducing the destination OS into the package names
+- dec4f8f Fixing the branch name of the cloning commands in the docs
+- 1d02c0b Synchronizing the template flavors list of the READMEs
+- fe3c58d Refreshing the shared library cache after the from-source installs
+- d5748d8 Failing the flavor CI test stages which match no tests
+- a23650d Making the found package targets global for the Qt AUTOMOC dependency check
+- 62c355e Fixing the cppcheck findings of the new signals handler, tests and log mock
+- 33f0f55 Updating the app component diagram to the signals handlers design
+- 973850b Renumbering the custom command line parameters section numbered 4-6 twice
+- c042b35 Documenting the built in command line options and the usage errors
+- 24df6c8 Testing the application with the real command line arguments
+- e49a685 Parsing the command line before the log file initialization
+- c303241 Exiting with a failure status on the command line usage errors
+- ba467b0 Fixing the missing option value raising the version flag instead of the help one
+- cb9035f Fixing the CommandLineParser test assertions which could not fail
+- 0db0816 Fixing the log mock LOG_INIT forwarding into the LOG_INIT_DEFAULTS mock
+- 337a306 Restoring the previous signal dispositions on the signals handler uninstall
+- 98bd0c6 Leaving the SIGTTIN and SIGTTOU signals to the shell job control
+- 5e4f9b5 Removing the nonexistent module path directories and cppcheck suppression
+- 2df41c9 Fixing the zlib gzip file example ignoring the read and close errors
+- 3f7bbcd Fixing the flatpak requirements section naming an outdated SDK version
+- 2c610c8 Documenting the ENABLE_COMPONENT_TESTS option of the test builds
+- 7fb3052 Listing every linked doc section in the requirements and build index pages
+- 661c98a Fixing the documentation links pointing into the other language
+- 1b601ef Fixing the stale file paths named in the documentation
+- 652ae55 Fixing the flatpak target failing on its repeated build
+- d0561b2 Fixing the snap command path ignoring the install prefix
+- 84892bf Fixing the documentation install which needed a manual Doxygen-doc build
+- a522367 Skipping the Doxygen and callgrind targets when their tools are missing
+- 8253bea Installing the packager tools into the Jenkins pipeline image
+- a26f010 Replacing the libjpeg-turbo download fallback with a clear configure error
+- 295eb54 Fixing the libavif download fallback stopping without the system libyuv
+- 2a28b17 Pinning the third-party download fallbacks to their release tags
+- 023fd63 Failing the CI test stages which match no tests
+- 6961a80 Fixing the Jenkins doc sections linked check skipping the section directories
+- b9e9ada Replacing the broken OpenSSL download fallback with a clear configure error
+- fc0fd15 Fixing the mixed target_link_libraries signatures on the project binary
+- d6101ea Fixing the MAX_LOG_LEVEL option help text error level value
+- bb82a51 Fixing the logger level filter tests which could not fail
+- 617554d Fixing the log macros to expand into single statements
+- ec731aa Fixing the logger data races on the log file reopening and the level
+- 4cd42e6 Fixing the log file open failure aborting the process
+- 2f52179 Splitting the CTEST_DefaultLogger helper classes into own files
+- d2e4ca4 Splitting the packages install scripts per OS release
+- 5caad5d Installing the Qt Location plugins package the map tiles need
+- bbb8a29 Declaring the Qt Location dependencies of the DEB package
+- f385b9f Naming the WebEngine of the Leaflet branch in the map component comment
+- 52e77a4 Granting the flatpak sandbox the network access the map tiles need
+- 3f2087f Installing the Qt Location packages into the Docker images
+- b31bc4b Accepting the t64 renamed Qt6 base libraries in the DEB package dependencies
+- 6415020 Introducing the Qt6 build and stage packages into the snap
+- d622779 Revoking the X server access after a failed docker single run
+- fe64cfc Fixing the CI docs claiming the dependencies line is the only branch difference
+- d1f410e Making the repeated QtLogBridge install test able to fail
+- 6548b1a Fixing the DEB package dependencies of the Qt6 application
+- b57749b Stopping the configure with a clear message when the Qt6 is disabled
+- 81d43f9 Removing the unavailable nativestyle and the redundant Qt5 QML packages
+- 5e3f040 Renumbering the Qt6 packages and toolkit messages doc sections
+- 347bba9 Removing the redundant AUTOUIC and AUTORCC Qt6 options
+- 9d71a28 Fixing the output directory of the main QML module
+- 99873fb Linking the Qt6Controller component test with the QML modules of the branch
+- 1f1b6ab Leaving the Qt event loop once the application stop flag is raised
+- 0888546 Synchronizing the clang-tidy header filter with the app branch
+- e924fff Guarding the clang-tidy Jenkins build stage with the RUN_CLANGTIDY parameter
+- a0eb123 Synchronizing the get_stop assertions of the application tests with app
+- fdac57b Synchronizing the parse_args doc comment with the app branch
+- b3f34c6 Replacing int flag with a bool for the CommandLineParser
+- 04e1b57 Supressing the cppcheck's missingIncludeSystem and unusedStructMember warnings.
+- 23b5d73 Erasing redundant suppression that causes cppcheck to fail
+- 54f2627 Renaming the Qt6Initer component into the Qt6Controller
+- 495ed04 Replacing the unreachable GNU gettext site link with its Savannah page
+- b844987 Introducing the destination CPU architecture into the package names
+- 987ffa3 Introducing the appGettext branch info into the READMEs
+- 56ebf9c Introducing the appDarknetXX branch info into the READMEs
+- 072d6b4 Introducing the RedHat packages install script
+- 5d7cb14 Introducing the appWhisperCPP branch info into the READMEs
+- d3bc3d0 Introducing the FreeBSD packages install script
+- 0dda112 Introducing the appV8 branch info into the READMEs
+- 43aa1ad Erasing the build sources and trees of the docker images
+- 83ce8cb Introducing the debug clang-format script
+- c60f3f4 Resetting the inherited signals dispositions in the signals handlers tests
+- 2a22e9d Introducing the binary hardening options section into the READMEs
+- 3bfbe6c Introducing the binary hardening compile and link options
+- 46b7ca1 Introducing the GitLab CI/CD pipeline section into the READMEs
+- 2f79650 Introducing the GitLab CI/CD pipeline mirroring the Jenkinsfile
+- 0849b7c Introducing the GitHub Actions CI pipeline section into the READMEs
+- dbc852e Introducing the GitHub Actions CI pipeline mirroring the Jenkinsfile
+- 0a4b959 Correcting the appQt6QtDBusClient branch description in the READMEs
+- ba85953 Introducing the desktop application packaging switch
+- ce7cf9d Limiting the documentation checks to the repository own markdown files
+- 28627c4 Excluding the GCC own include directories from the clang-tidy search path
+- f82af9f Accepting the 405 documentation URLs
+- 6d84107 Spacing out the branch entries in the READMEs
+- 80e0a1e Rewording the DOCKER_HOST environment requirement in the docker docs
+- cc462a9 Removing the DOCKER_HOST variables from the docker enablers
+- 78e25ba Escaping the shell environment variables of the docker run command
+- cb47187 Dropping the Qt5 QML packages from the Docker image
+- 9934bfb Excluding the build trees from the Docker build context
+- cd89692 Bumping the flatpak KDE runtime from the end-of-life 6.8 to the 6.10
+- 77439ac Retrying the unreachable documentation URLs and accepting the 403 ones
+- c843ea6 Introducing the --rebuild flag into the Jenkins docker scripts
+- 930b8c0 Rebuilding the image from its base on the Jenkins pipeline force rebuild
+- a5366a3 Introducing the audio assets branches info into the READMEs
+- 4b8daf5 Splitting the signals handlers per category and covering the pause, reload, user defined and ignored signals
+- c53df48 Introducing the app signals handlers subcomponent
+- eb5a634 Declaring the main function argv parameter as an array
+- 6dcbc0c Moving the packagers templates into the per-packager directories
+- db64524 Dropping the packagers and the development tools from the packages install list
+- 745add0 The destination CPU architecture of the AppImage package name
+- e15b576 Picking the CPack AppImage enabler since the CMake 4.2 and dropping the debug banners
+- a844db3 Extracting the AppImage enabler pick into its own general enabler
+- 5213549 Selecting the AppImage packager enabler by the CMake version
+- 1242da3 Introducing the CPack based AppImage packager enabler
+- d19e948 Introducing the AppImage packager
+- 59e6275 Introducing the --install flag into the packager build scripts
+- b8c8d83 Renaming the packages install script and adding the Ubuntu one
+- e1f5a6b Introducing the target architecture into the flatpak package name
+- eac9b67 Introducing the AppStream metainfo file into the flatpak package
+- 335c2f2 Consuming the install directory variables the flatpak-builder passes
+- 4a4cae6 Introducing the required packages install script
+- 60c1e42 Installing the flatpak build dependencies from the flathub remote
+- ad496de Dropping the redundant build step from the packager scripts
+- 5b09748 Introducing the per packager build scripts
+- 98b126d Introducing the appCFITSIO branch info into the READMEs
+- fc09985 Log every toolkit message through the application log
+- b21c6d9 Make the compile time log level gate really gate
+- 880315f Introducing the appGtkmm4Libadwaita branch info into the READMEs
+- 700954a Pinning the log message stream to the classic locale
+- 6e6405b Decomposing the IApplication descendants into the applications subcomponent
+- e98da30 Introducing the appFontAwesome branch info into the READMEs
+- 499b1f7 Introducing the debug test script and its --test parameter
+- ca39945 Incrementing version to appQt6QtLocation0.11.0
+- 9372a09 Release appQt6QtLocation0.10.0 at 2026-08-17
+
 ## [appQt6QtLocation0.10.0] - 2026-08-17
 
 - 4510c9f Introducing the InsertNewlineAtEOF clang-format option
@@ -357,6 +499,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased](https://github.com/yuriysydor1991/cpp-app-template)
 
+[appQt6QtLocation0.11.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appQt6QtLocation0.11.0)
+[appQt6QtLocation0.10.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appQt6QtLocation0.10.0)
 [appQt60.9.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appQt60.9.0)
 [appQt60.8.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appQt60.8.0)
 [appQt60.7.0](https://github.com/yuriysydor1991/cpp-app-template/releases/tag/appQt60.7.0)

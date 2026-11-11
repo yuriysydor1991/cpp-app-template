@@ -55,7 +55,7 @@ set(
 
 set(
   JENKINS_PIPELINE_DOCKER_MAX_CORES
-  10
+  4
   CACHE STRING 
   "The Jenkins pipeline docker containers max allowed CPU cores"
 )
@@ -67,7 +67,7 @@ set(
 # ones.
 set(
   JENKINS_PIPELINE_FLATPAK_RUNTIMES
-  "org.freedesktop.Platform//24.08 org.freedesktop.Sdk//24.08 org.freedesktop.Platform//25.08 org.freedesktop.Sdk//25.08 org.gnome.Platform//49 org.gnome.Sdk//49 org.kde.Platform//6.10 org.kde.Sdk//6.10 io.qt.qtwebengine.BaseApp//6.10 org.kde.Platform//5.15-25.08 org.kde.Sdk//5.15-25.08"
+  "org.freedesktop.Platform//24.08 org.freedesktop.Sdk//24.08 org.freedesktop.Platform//25.08 org.freedesktop.Sdk//25.08 org.gnome.Platform//49 org.gnome.Sdk//49 org.kde.Platform//6.10 org.kde.Sdk//6.10 org.kde.Platform//5.15-25.08 org.kde.Sdk//5.15-25.08"
   CACHE STRING
   "Space separated flatpak refs the Jenkins pipeline image installs for the flatpak packager checks"
 )

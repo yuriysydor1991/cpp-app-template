@@ -1,6 +1,6 @@
 ## Enabling the snap package generation support
 
-In order to enable the [snap](https://snapcraft.io/) package creation target on the template project configure it with the `ENABLE_SNAP` option set to `true`:
+In order to enable the [snap](https://ubuntu.com/docs/snapcraft/) package creation target on the template project configure it with the `ENABLE_SNAP` option set to `true`:
 
 ```
 # inside the project root directory

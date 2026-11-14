@@ -1,6 +1,6 @@
 # Необов'язкові пакети для snap пакувальника
 
-Для встановлення `snapd` (якщо ще не присутній в ОС) і інструмент для створення [snap](https://snapcraft.io/docs/) пакунків `snapcraft`:
+Для встановлення `snapd` (якщо ще не присутній в ОС) і інструмент для створення [snap](https://ubuntu.com/docs/snapcraft/) пакунків `snapcraft`:
 
 ```
 sudo apt install -y snapd

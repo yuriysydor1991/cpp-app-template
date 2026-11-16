@@ -138,6 +138,11 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "UTEST_FontAwesomeIcon\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_FontAwesomeIcon.junit.xml'
           }
         }
+        stage('UTEST_FontAwesomeSvgsDirectory') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_FontAwesomeSvgsDirectory\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_FontAwesomeSvgsDirectory.junit.xml'
+          }
+        }
         stage('UTEST_FontAwesomeIcons') {
           steps {
             sh 'cd $BUILDDIR && ctest -R "UTEST_FontAwesomeIcons\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_FontAwesomeIcons.junit.xml'

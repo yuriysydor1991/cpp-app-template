@@ -129,6 +129,11 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "UTEST_CommandLineParser\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_CommandLineParser.junit.xml'
           }
         }
+        stage('UTEST_DataLocator') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_DataLocator\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_DataLocator.junit.xml'
+          }
+        }
         stage('UTEST_AudioPlayer') {
           steps {
             sh 'cd $BUILDDIR && ctest -R "UTEST_AudioPlayer\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_AudioPlayer.junit.xml'

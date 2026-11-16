@@ -16,6 +16,12 @@ See more at the [kytok.org.ua](http://www.kytok.org.ua/)
 
 💵 Donate at [http://kytok.org.ua/page/pozertvy](http://kytok.org.ua/page/pozertvy)
 
+# The current branch
+
+The `maintenance` branch is for the CI infrastructure of the template branches: the Jenkins pipeline Docker image with the packages of the branches and their exported Jenkins jobs, the local runs of the GitHub Actions and the GitLab CI/CD pipelines and the FreeBSD and MS Windows QEMU virtual machines.
+
+Every flavor branch is marked as (**current**) in its own flavors list, while the `maintenance` branch is no flavor and so is missing in the list below.
+
 # The template project flavors
 
 Examine available branches to find your most applicable variant of the template or combine multiple branches by merging them to assemble the best suited template structure for your needs:

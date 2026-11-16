@@ -133,6 +133,11 @@ pipeline {
             sh 'cd $BUILDDIR && ctest -R "UTEST_KenneySound\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_KenneySound.junit.xml'
           }
         }
+        stage('UTEST_KenneyRootDirectory') {
+          steps {
+            sh 'cd $BUILDDIR && ctest -R "UTEST_KenneyRootDirectory\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_KenneyRootDirectory.junit.xml'
+          }
+        }
         stage('UTEST_KenneyPacks') { 
           steps { 
             sh 'cd $BUILDDIR && ctest -R "UTEST_KenneyPacks\\." --no-tests=error --output-on-failure --output-junit $BDJUNITOUT/UTEST_KenneyPacks.junit.xml'

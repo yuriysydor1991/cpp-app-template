@@ -16,6 +16,12 @@ See more at the [kytok.org.ua](http://www.kytok.org.ua/)
 
 💵 Donate at [http://kytok.org.ua/page/pozertvy](http://kytok.org.ua/page/pozertvy)
 
+# The current branch
+
+The `appQt6ChartView` branch is for the data visualization and plotting inside a Qt6 QML window with the native ChartView element from the QtCharts module.
+
+The current branch is marked as (**current**) in the flavors lists of all the branches.
+
 # The template project flavors
 
 Examine available branches to find your most applicable variant of the template or combine multiple branches by merging them to assemble the best suited template structure for your needs:

@@ -82,8 +82,8 @@ RUN curl -fsSL -o /opt/plantuml.jar \
     > /usr/local/bin/plantuml && \
   chmod +x /usr/local/bin/plantuml
 
-# Every library the distribution ships no usable package of is cloned, built and
-# erased inside a single layer, so the sources never reach the image.
+# Every library the distribution ships no usable package of is fetched, built
+# and erased inside a single layer, so the sources never reach the image.
 
 # wxWidgets
 RUN git clone --branch v3.3.2 --depth 1 --single-branch --recurse-submodules \
@@ -181,6 +181,24 @@ RUN git clone --branch v1.9.4 --depth 1 --single-branch \
   cmake --build $srcD/whisper.cpp-build -j$(nproc) && \
   cmake --install $srcD/whisper.cpp-build --strip && \
   rm -fr $srcD/whisper.cpp $srcD/whisper.cpp-build
+
+# llama.cpp, at the release the appLlamaCPP branch fetches, since the
+# distribution ships no libllama-dev. The static libraries stay in a prefix of
+# their own, apart from the ggml of the whisper.cpp above, and the llama_ROOT
+# points the find_package of the branch at them.
+RUN curl -fsSL -o $srcD/llama.cpp.tar.gz \
+    https://github.com/ggml-org/llama.cpp/archive/refs/tags/v0.7.0.tar.gz && \
+  echo "55d67acf3ad2ad747a9bbeb75f9f0e173dbcc0d1753a471038a90c819421c5e1  $srcD/llama.cpp.tar.gz" | \
+    sha256sum -c - && \
+  tar -xzf $srcD/llama.cpp.tar.gz -C $srcD && \
+  cmake -S $srcD/llama.cpp-0.7.0 -B $srcD/llama.cpp-build \
+    -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/llama.cpp \
+    -DBUILD_SHARED_LIBS=OFF -DLLAMA_BUILD_COMMON=OFF -DLLAMA_BUILD_APP=OFF && \
+  cmake --build $srcD/llama.cpp-build -j$(nproc) && \
+  cmake --install $srcD/llama.cpp-build --strip && \
+  rm -fr $srcD/llama.cpp.tar.gz $srcD/llama.cpp-0.7.0 $srcD/llama.cpp-build
+
+ENV llama_ROOT=/opt/llama.cpp
 
 # liboai of the appLibOAI branch, pinned to a commit, since the branch uses
 # the API of the main line which no release tag carries yet

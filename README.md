@@ -16,6 +16,12 @@ See more at the [kytok.org.ua](http://www.kytok.org.ua/)
 
 💵 Donate at [http://kytok.org.ua/page/pozertvy](http://kytok.org.ua/page/pozertvy)
 
+# The current branch
+
+The `appOpenGameArtAudio` branch is for reaching the curated OpenGameArt sound packs from the C++ code and embedding the selected sounds into the application binary through the Qt and the Gtkmm resource manifests.
+
+The current branch is marked as (**current**) in the flavors lists of all the branches.
+
 # The template project flavors
 
 Examine available branches to find your most applicable variant of the template or combine multiple branches by merging them to assemble the best suited template structure for your needs:

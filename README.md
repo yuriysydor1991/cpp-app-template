@@ -16,6 +16,12 @@ See more at the [kytok.org.ua](http://www.kytok.org.ua/)
 
 💵 Donate at [http://kytok.org.ua/page/pozertvy](http://kytok.org.ua/page/pozertvy)
 
+# The current branch
+
+The `appSDBusCxxClient` branch is for a client of the DBus services with the Kistler-Group's sdbus-c++ library.
+
+The current branch is marked as (**current**) in the flavors lists of all the branches.
+
 # The template project flavors
 
 Examine available branches to find your most applicable variant of the template or combine multiple branches by merging them to assemble the best suited template structure for your needs:

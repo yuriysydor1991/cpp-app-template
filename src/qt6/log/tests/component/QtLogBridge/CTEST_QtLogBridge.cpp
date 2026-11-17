@@ -38,8 +38,11 @@ Q_LOGGING_CATEGORY(bridgeTestCategory, "the.bridge.test")
 class CTEST_QtLogBridge : public Test
 {
  public:
-  inline static const std::string test_log_file =
-      CTEST_QtLogBridge_DATA_DIR "/CTEST_QtLogBridge.log";
+  /// @brief Every test case gets a log file of its own, so the parallel ctest
+  /// runs keep their logs apart.
+  const std::string test_log_file{
+      std::string{CTEST_QtLogBridge_DATA_DIR "/"} +
+      UnitTest::GetInstance()->current_test_info()->name() + ".log"};
 
   CTEST_QtLogBridge() { clear_log_file(); }
   ~CTEST_QtLogBridge() override { clear_log_file(); }
@@ -240,7 +243,8 @@ int main(int argc, char* argv[])
   // the Qt logging is taken over right after that, exactly the way the
   // Qt6Controller does it. Both happen once for the whole binary, because the
   // bridge takes the single message handler slot of the process once.
-  LOG_INIT(CTEST_QtLogBridge::test_log_file, MACRO_LVL_TRACE, false);
+  LOG_INIT(CTEST_QtLogBridge_DATA_DIR "/CTEST_QtLogBridge.log", MACRO_LVL_TRACE,
+           false);
 
   QtLogBridge::install();
 

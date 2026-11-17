@@ -27,8 +27,11 @@ using namespace Gtkmm3i::gtklog;
 class CTEST_GtkLogBridge : public Test
 {
  public:
-  inline static const std::string test_log_file =
-      CTEST_GtkLogBridge_DATA_DIR "/CTEST_GtkLogBridge.log";
+  /// @brief Every test case gets a log file of its own, so the parallel ctest
+  /// runs keep their logs apart.
+  const std::string test_log_file{
+      std::string{CTEST_GtkLogBridge_DATA_DIR "/"} +
+      UnitTest::GetInstance()->current_test_info()->name() + ".log"};
 
   CTEST_GtkLogBridge() { clear_log_file(); }
   ~CTEST_GtkLogBridge() override { clear_log_file(); }
@@ -220,7 +223,8 @@ int main(int argc, char* argv[])
   // the GLib logging is taken over right after that, exactly the way the
   // Gtkmm3Controller does it. Both happen once for the whole binary, because
   // the GLib accepts a writer only once in the life of a process.
-  LOG_INIT(CTEST_GtkLogBridge::test_log_file, MACRO_LVL_TRACE, false);
+  LOG_INIT(CTEST_GtkLogBridge_DATA_DIR "/CTEST_GtkLogBridge.log",
+           MACRO_LVL_TRACE, false);
 
   GtkLogBridge::install();
 

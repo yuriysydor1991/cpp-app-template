@@ -103,8 +103,11 @@ class RecordingLogger : public logger::ILogger
 class CTEST_LibraryRealLogger : public Test
 {
  public:
-  inline static const std::string app_log_file =
-      CTEST_LibraryRealLogger_DATA_DIR "/CTEST_LibraryRealLogger.log";
+  /// @brief Every test case gets a log file of its own, so the parallel ctest
+  /// runs keep their logs apart.
+  const std::string app_log_file{
+      std::string{CTEST_LibraryRealLogger_DATA_DIR "/"} +
+      UnitTest::GetInstance()->current_test_info()->name() + ".log"};
 
   CTEST_LibraryRealLogger() { clear_log_file(); }
 

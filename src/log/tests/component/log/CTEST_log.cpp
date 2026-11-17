@@ -30,8 +30,11 @@ using namespace testing;
 class CTEST_log : public Test
 {
  public:
-  inline static const std::string test_log_file =
-      CTEST_log_DATA_DIR "/CTEST_log.log";
+  /// @brief Every test case gets a log file of its own, so the parallel ctest
+  /// runs keep their logs apart.
+  const std::string test_log_file{
+      std::string{CTEST_log_DATA_DIR "/"} +
+      UnitTest::GetInstance()->current_test_info()->name() + ".log"};
 
   CTEST_log() { clear_log_file(); }
   ~CTEST_log() { clear_log_file(); }

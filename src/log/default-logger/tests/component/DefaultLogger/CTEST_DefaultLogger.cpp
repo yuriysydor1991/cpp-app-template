@@ -24,8 +24,11 @@ using namespace default_logger;
 class CTEST_DefaultLogger : public Test
 {
  public:
-  inline static const std::string test_default_log_file =
-      CTEST_DefaultLogger_DATA_DIR "/CTEST_DefaultLogger.log";
+  /// @brief Every test case gets a log file of its own, so the parallel ctest
+  /// runs keep their logs apart.
+  const std::string test_default_log_file{
+      std::string{CTEST_DefaultLogger_DATA_DIR "/"} +
+      UnitTest::GetInstance()->current_test_info()->name() + ".log"};
   inline static const unsigned short& default_log_level =
       DefaultLogger::LVL_TRACE;
 

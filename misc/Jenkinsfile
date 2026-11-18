@@ -9,9 +9,10 @@ pipeline {
   parameters {
     booleanParam(name: 'RUN_CPPCHECK', defaultValue: false, description: 'Run the cppcheck static code check?')
     booleanParam(name: 'RUN_CLANGTIDY', defaultValue: false, description: 'Run the clang-tidy static code check?')
-    // Template project specific: optional packager checks, all disabled by
+    // Template project specific: optional checks, all disabled by
     // default and opt-in (e.g. WIX is MS Windows only, FreeBSD pkg is FreeBSD
     // only). Safe to drop together with the template stages below.
+    booleanParam(name: 'RUN_DOC_URLS_CHECK', defaultValue: false, description: 'Template: check the external documentation URLs?')
     booleanParam(name: 'RUN_FLATPAK_PACKAGER', defaultValue: false, description: 'Template: build and check the flatpak package?')
     booleanParam(name: 'RUN_DEB_PACKAGER', defaultValue: false, description: 'Template: build and check the deb package?')
     booleanParam(name: 'RUN_RPM_PACKAGER', defaultValue: false, description: 'Template: build and check the RPM package?')
@@ -375,6 +376,7 @@ pipeline {
     }
 
     stage('Template: no broken external documentation URLs') {
+      when { expression { params.RUN_DOC_URLS_CHECK } }
       steps {
         sh '''
           set +x

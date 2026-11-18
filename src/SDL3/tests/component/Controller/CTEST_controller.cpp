@@ -55,6 +55,10 @@ TEST_F(CTEST_controller, run_returns_on_the_raised_stop_flag)
   SDL_SetHintWithPriority(SDL_HINT_VIDEO_DRIVER, "offscreen",
                           SDL_HINT_OVERRIDE);
 
+  // Mesa 25.0 never frees its EGL displays, so the EGL library
+  // outlives the SDL_Quit to keep them reachable for the leak sanitizer.
+  SDL_LoadObject("libEGL.so.1");
+
   appCtx->set_stop(true);
 
   if (controller.run(appCtx) != 0) {

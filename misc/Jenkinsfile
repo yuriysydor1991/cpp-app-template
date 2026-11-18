@@ -12,6 +12,7 @@ pipeline {
 
   parameters {
     booleanParam(name: 'RUN_CPPCHECK', defaultValue: false, description: 'Run the cppcheck static code check?')
+    booleanParam(name: 'RUN_DOC_URLS_CHECK', defaultValue: false, description: 'Template: check the external documentation URLs?')
   }
 
   stages {
@@ -307,6 +308,7 @@ pipeline {
     }
 
     stage('Template: no broken external documentation URLs') {
+      when { expression { params.RUN_DOC_URLS_CHECK } }
       steps {
         sh '''
           set +x

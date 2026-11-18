@@ -119,6 +119,10 @@ TEST_F(CTEST_eventer, resize_event_updates_the_opengl_viewport)
 {
   SDL_SetHintWithPriority(SDL_HINT_VIDEODRIVER, "offscreen", SDL_HINT_OVERRIDE);
 
+  // Mesa 25.0 never frees its EGL displays, so the EGL library
+  // outlives the SDL_Quit to keep them reachable for the leak sanitizer.
+  SDL_LoadObject("libEGL.so.1");
+
   ASSERT_EQ(SDL_Init(SDL_INIT_VIDEO), 0);
 
   OpenGLIniter initer;

@@ -42,6 +42,16 @@ This may also be found at: /var/jenkins_home/secrets/initialAdminPassword
 
 Усі Meson скрипти побудови контейнера для конвеєрів перевірки [Jenkins](https://www.jenkins.io/) розміщуються у файлі [meson/enablers/dockerers/template-project-docker-Jenkins-pipeline-runner-target/meson.build](/meson/enablers/dockerers/template-project-docker-Jenkins-pipeline-runner-target/meson.build). Порт для Web доступу контейнера Docker до конфігурації конвеєрів перевірки [Jenkins](https://www.jenkins.io/) може бути змінено за допомогою встановлення нового значення для Meson-параметра `JENKINS_PIPELINES_PANEL_HTTP_PORT`.
 
+Стадії побудови, тестування та перевірки конвеєра запускають скрипти каталогу [scripts/pipelines](/scripts/pipelines), які запускають також конвеєри [.github/workflows/ci.yml](/.github/workflows/ci.yml) та [.gitlab-ci.yml](/.gitlab-ci.yml), отож команда змінюється для всіх них одночасно. Скрипти самі переходять до кореневого каталогу проекту та будують у каталозі змінної середовища `BUILDDIR`, за замовчуванням `build/pipeline`, отож стадію можна повторити й поза CI:
+
+```
+# всередині кореневого каталогу проекту
+
+scripts/pipelines/debug-configure.sh
+scripts/pipelines/build.sh
+scripts/pipelines/test.sh
+```
+
 Цілі шукають образ і контейнер при кожному своєму запуску, отож повторна побудова цілі `jenkins-pipeline-docker-run` використовує вже побудований образ і перезапускає попередньо створений контейнер.
 
 ### Скрипти запуску

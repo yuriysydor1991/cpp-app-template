@@ -42,6 +42,16 @@ After the successful installation and configuration of the [Jenkins](https://www
 
 All the [Jenkins](https://www.jenkins.io/) pipeline Meson build scripts are located at the [meson/enablers/dockerers/template-project-docker-Jenkins-pipeline-runner-target/meson.build](/meson/enablers/dockerers/template-project-docker-Jenkins-pipeline-runner-target/meson.build) file. The [Jenkins](https://www.jenkins.io/) Web GUI port of the container may be changed by specifying a new value for the `JENKINS_PIPELINES_PANEL_HTTP_PORT` Meson option.
 
+The build, the test and the check stages of the pipeline run the scripts of the [scripts/pipelines](/scripts/pipelines) directory, which the [.github/workflows/ci.yml](/.github/workflows/ci.yml) and the [.gitlab-ci.yml](/.gitlab-ci.yml) pipelines run as well, so a command changes for all of them at once. The scripts move to the project root by themselves and build inside the directory of the `BUILDDIR` environment variable, the `build/pipeline` one by default, so a stage repeats out of the CI as well:
+
+```
+# inside the project root directory
+
+scripts/pipelines/debug-configure.sh
+scripts/pipelines/build.sh
+scripts/pipelines/test.sh
+```
+
 The targets look the image and the container up each time they run, so a repeated build of the `jenkins-pipeline-docker-run` target reuses the already built image and restarts the previously created container.
 
 ### Starter scripts

@@ -34,11 +34,9 @@ jobs:
       - name: Install tools
         run: sudo apt-get update && sudo apt-get install -y build-essential meson ninja-build g++ clang-format $DEPENDENCIES
       - name: Code format configure
-        run: meson setup "$BUILDDIR" -DENABLE_CLANGFORMAT=true
+        run: scripts/pipelines/code-format-configure.sh
       - name: Code format build (clang-format)
-        run: meson compile -C "$BUILDDIR" clang-format
-      - name: Verify the sources are clang-format clean
-        run: git diff --exit-code
+        run: scripts/pipelines/code-format-build.sh
 
   build-and-test:
     name: Debug build & tests
@@ -48,19 +46,16 @@ jobs:
       - name: Install tools
         run: sudo apt-get update && sudo apt-get install -y build-essential meson ninja-build g++ cppcheck libgtest-dev libgmock-dev $DEPENDENCIES
       - name: Debug configure
-        run: |
-          meson setup "$BUILDDIR" --buildtype=debug -DENABLE_UNIT_TESTS=true \
-            -DENABLE_SANITIZERS=true -DENABLE_CPPCHECK=true \
-            -DMAX_LOG_LEVEL=5 -DENABLE_COMPONENT_TESTS=true
+        run: scripts/pipelines/debug-configure.sh
       - name: Debug build
-        run: meson compile -C "$BUILDDIR"
+        run: scripts/pipelines/build.sh
       - name: cppcheck
         if: ${{ inputs.run_cppcheck }}
-        run: meson compile -C "$BUILDDIR" cppcheck
+        run: scripts/pipelines/build.sh cppcheck
       # Every test is a suite of its own, so a single run covers the unit and
       # the component ones.
       - name: Unit & Component Tests
-        run: meson test -C "$BUILDDIR" --no-rebuild --print-errorlogs
+        run: scripts/pipelines/test.sh
       - name: Upload JUnit test results
         if: always()
         uses: actions/upload-artifact@v7
@@ -77,12 +72,9 @@ jobs:
       - name: Install tools
         run: sudo apt-get update && sudo apt-get install -y build-essential meson ninja-build g++ clang-tidy libgtest-dev libgmock-dev $DEPENDENCIES
       - name: Debug configure (clang-tidy)
-        run: |
-          meson setup "$BUILDDIR" --buildtype=debug -DENABLE_CLANG_TIDY=true \
-            -DENABLE_UNIT_TESTS=true -DENABLE_COMPONENT_TESTS=true \
-            -DMAX_LOG_LEVEL=5
+        run: scripts/pipelines/clang-tidy-configure.sh
       - name: Debug build (clang-tidy)
-        run: meson compile -C "$BUILDDIR" clang-tidy
+        run: scripts/pipelines/build.sh clang-tidy
 
   release:
     name: Release build & install
@@ -92,8 +84,8 @@ jobs:
       - name: Install tools
         run: sudo apt-get update && sudo apt-get install -y build-essential meson ninja-build g++ $DEPENDENCIES
       - name: Release configure
-        run: meson setup "$BUILDDIR" --buildtype=release
+        run: scripts/pipelines/release-configure.sh
       - name: Release build
-        run: meson compile -C "$BUILDDIR"
+        run: scripts/pipelines/build.sh
       - name: Release install
-        run: meson install -C "$BUILDDIR" --destdir "$(pwd)/$BUILDDIR/install-try"
+        run: scripts/pipelines/install.sh

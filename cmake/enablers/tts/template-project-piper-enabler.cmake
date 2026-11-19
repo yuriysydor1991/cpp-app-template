@@ -38,6 +38,25 @@ endif()
 set(piperPrefix "${PROJECT_BINARY_DIR}/piper")
 set(piperLibrary "${piperPrefix}/lib/${CMAKE_SHARED_LIBRARY_PREFIX}piper${CMAKE_SHARED_LIBRARY_SUFFIX}")
 
+# The libpiper passes the espeak-ng build the ucd-tools include directory
+# unquoted inside the compiler flags, which a path with spaces breaks apart, so
+# the patch step quotes it.
+set(piperPatch "${piperPrefix}/quote-espeak-ng-include.cmake")
+
+file(
+  WRITE "${piperPatch}"
+  [=[
+file(READ libpiper/CMakeLists.txt content)
+string(
+  REPLACE
+  [[-I${ESPEAKNG_BUILD_DIR}/src/espeak_ng_external/src/ucd-tools/src/include"]]
+  [[-I\"${ESPEAKNG_BUILD_DIR}/src/espeak_ng_external/src/ucd-tools/src/include\""]]
+  content "${content}"
+)
+file(WRITE libpiper/CMakeLists.txt "${content}")
+]=]
+)
+
 ExternalProject_Add(
   piper_external
   GIT_REPOSITORY ${TEMPLATE_APP_PIPER_GIT}
@@ -48,6 +67,7 @@ ExternalProject_Add(
   SOURCE_DIR ${piperPrefix}/source
   BINARY_DIR ${piperPrefix}/build
   SOURCE_SUBDIR libpiper
+  PATCH_COMMAND ${CMAKE_COMMAND} -P ${piperPatch}
   CMAKE_CACHE_ARGS
     -DCMAKE_BUILD_TYPE:STRING=Release
     -DCMAKE_INSTALL_PREFIX:PATH=${piperPrefix}

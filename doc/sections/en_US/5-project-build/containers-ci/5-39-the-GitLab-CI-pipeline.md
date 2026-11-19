@@ -13,6 +13,8 @@ Its jobs share the single `check` stage, so they all run in parallel, each one i
 
 Every `ctest` run writes a JUnit XML report, which the job hands to GitLab as its test report, so a failed test case is readable at the *Tests* tab of the pipeline page with no digging through the logs. The jobs are `interruptible`, so a new push to a branch cancels the still running pipeline of its previous commit as long as the *Auto-cancel redundant pipelines* setting of the project stays on.
 
+The jobs run the scripts of the [scripts/pipelines](/scripts/pipelines) directory past their tools install, which the stages of the [misc/Jenkinsfile](/misc/Jenkinsfile) and the steps of the [.github/workflows/ci.yml](/.github/workflows/ci.yml) pipelines run as well, so a command changes for all the pipelines at once.
+
 ### The image and the branch dependencies
 
 The jobs run inside the [ubuntu:26.04](https://hub.docker.com/_/ubuntu) image - the release the [GitHub Actions workflow](/doc/sections/en_US/5-project-build/containers-ci/5-38-the-GitHub-Actions-CI-pipeline.md) pins its runner to, so both pipelines take the very same packages. The image carries a bare system, so a job installs its whole tool chain itself with the single `apt-get install` line of the `before_script`: the `TOOLS` every job needs, the `JOB_TOOLS` of the job itself and the `DEPENDENCIES` of the branch:

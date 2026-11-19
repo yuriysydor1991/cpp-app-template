@@ -38,6 +38,8 @@ gtest_add_tests(
   TEST_LIST noArgsTests
 )
 
+# The quotes keep a suppressions path with spaces in one sanitizer option.
 set_tests_properties(
-  ${noArgsTests} PROPERTIES TIMEOUT 120 ENVIRONMENT "QT_QPA_PLATFORM=offscreen"
+  ${noArgsTests} PROPERTIES TIMEOUT 120 ENVIRONMENT
+  "QT_QPA_PLATFORM=offscreen;LSAN_OPTIONS=suppressions='${CMAKE_CURRENT_SOURCE_DIR}/lsan.supp'"
 )

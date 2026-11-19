@@ -1,0 +1,4 @@
+# The Qt Location tile fetcher never frees the map tile replies still in
+# flight when the application quits.
+leak:libqtgeoservices_osm.so
+leak:libQt6Location.so

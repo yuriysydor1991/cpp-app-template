@@ -29,8 +29,9 @@ gtest_add_tests(
 
 # The giza fonts come from the fontconfig, the process wide caches of which
 # the leak sanitizer of the ENABLE_SANITIZERS builds would report otherwise.
+# The quotes keep a suppressions path with spaces in one sanitizer option.
 set_tests_properties(
   ${noArgsTests} PROPERTIES
   TIMEOUT 600
-  ENVIRONMENT "LSAN_OPTIONS=suppressions=${CMAKE_CURRENT_SOURCE_DIR}/lsan.supp"
+  ENVIRONMENT "LSAN_OPTIONS=suppressions='${CMAKE_CURRENT_SOURCE_DIR}/lsan.supp'"
 )

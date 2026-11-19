@@ -43,6 +43,16 @@ After successfull installation and configuration of the [Jenkins](https://www.je
 
 All the [Jenkins](https://www.jenkins.io/) pipeline CMake build scripts are located at [cmake/enablers/dockerers/template-project-docker-Jenkins-pipeline-runner-target.cmake](/cmake/enablers/dockerers/template-project-docker-Jenkins-pipeline-runner-target.cmake) file. The pipeline script located at [misc/Jenkinsfile](/misc/Jenkinsfile) which should be specified in the pipeline source script at the [Jenkins](https://www.jenkins.io/) Web GUI pipelines configuration page. The [Jenkins](https://www.jenkins.io/) Web GUI Docker container port may be changed by specifying a new value for the `JENKINS_PIPELINES_PANEL_HTTP_PORT` CMake variable.
 
+The build, the test and the check stages of the pipeline run the scripts of the [scripts/pipelines](/scripts/pipelines) directory, which the [.github/workflows/ci.yml](/.github/workflows/ci.yml) and the [.gitlab-ci.yml](/.gitlab-ci.yml) pipelines run as well, so a command changes for all of them at once. The scripts move to the project root by themselves and build inside the directory of the `BUILDDIR` environment variable, the `build/pipeline` one by default, so a stage repeats out of the CI as well:
+
+```
+# inside the project root directory
+
+scripts/pipelines/debug-configure.sh
+scripts/pipelines/build.sh
+scripts/pipelines/test.sh CTEST CTEST_
+```
+
 The [cmake/enablers/dockerers/template-project-docker-Jenkins-pipeline-runner-target.cmake](/cmake/enablers/dockerers/template-project-docker-Jenkins-pipeline-runner-target.cmake) CMake script for the template project [Jenkins](https://www.jenkins.io/) pipeline Docker container builder by default will restart previously built contianer if target build launched repeatedly.
 
 ### Starter scripts

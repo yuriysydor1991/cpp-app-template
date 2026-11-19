@@ -61,6 +61,16 @@ template_project_sherpa_onnx_fetch()
 # the project warnings and the clang-tidy checks.
 set_target_properties(sherpa-onnx-c-api sherpa-onnx-cxx-api PROPERTIES SYSTEM ON)
 
+# The sherpa-onnx gives the linker the symbols version script through the raw
+# LINK_FLAGS, which a path with spaces breaks apart, unlike the LINK_OPTIONS
+# quoting every single option.
+get_target_property(sherpaOnnxLinkFlags sherpa-onnx-c-api LINK_FLAGS)
+
+if (sherpaOnnxLinkFlags)
+  set_target_properties(sherpa-onnx-c-api PROPERTIES LINK_FLAGS "")
+  target_link_options(sherpa-onnx-c-api PRIVATE "${sherpaOnnxLinkFlags}")
+endif()
+
 add_library(SherpaONNX::cxx-api ALIAS sherpa-onnx-cxx-api)
 
 # The install rules of the sherpa-onnx dependencies stay out of the

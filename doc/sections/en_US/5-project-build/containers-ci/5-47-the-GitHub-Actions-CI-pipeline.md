@@ -13,6 +13,8 @@ Its jobs run in parallel, each one on a runner of its own:
 
 Every `ctest` run writes a JUnit XML report, which the job uploads as the `junit-results` artifact of the run, so a failed test case is readable at the run page with no digging through the logs. A new push to a branch cancels the still running pipeline of its previous commit - the `concurrency` group of the workflow takes care of that.
 
+The build, the test and the check steps of the jobs run the scripts of the [scripts/pipelines](/scripts/pipelines) directory, which the stages of the [misc/Jenkinsfile](/misc/Jenkinsfile) and the jobs of the [.gitlab-ci.yml](/.gitlab-ci.yml) pipelines run as well, so a command changes for all the pipelines at once.
+
 The runner is a GNU/Linux one, so the jobs cover the platform independent core of the branch: its macOS specific part stays out of the build, the way it does on any non-Apple host, and the macOS agent of the [misc/Jenkinsfile](/misc/Jenkinsfile) pipeline is the one building it.
 
 ### The runner and the branch dependencies

@@ -215,6 +215,10 @@ TEST_F(CTEST_app, signals_handler_pauses_and_resumes_the_context)
 TEST_F(CTEST_app, signals_handler_reloads_the_context)
 {
 #ifdef SIGHUP
+  // A process inherits the ignored signals of its parent (the nohup tool
+  // leaves the SIGHUP ignored), which the handler keeps ignored.
+  std::signal(SIGHUP, SIG_DFL);
+
   auto actx = facade.create_default_context(argc, argv);
   auto shandler = facade.create_default_signals_handler();
 

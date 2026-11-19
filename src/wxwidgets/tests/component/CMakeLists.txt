@@ -60,10 +60,11 @@ gtest_add_tests(
   TEST_LIST watcherTests
 )
 
+# The quotes keep a suppressions path with spaces in one sanitizer option.
 set_tests_properties(
   ${watcherTests}
   PROPERTIES
     TIMEOUT 600
     ENVIRONMENT
-      "LSAN_OPTIONS=suppressions=${CMAKE_CURRENT_SOURCE_DIR}/CTEST_WxStopFlagWatcher.lsan.supp"
+      "LSAN_OPTIONS=suppressions='${CMAKE_CURRENT_SOURCE_DIR}/CTEST_WxStopFlagWatcher.lsan.supp'"
 )

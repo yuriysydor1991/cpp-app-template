@@ -13,6 +13,8 @@ Its jobs run in parallel, each one on a runner of its own:
 
 Every `ctest` run writes a JUnit XML report, which the job uploads as the `junit-results` artifact of the run, so a failed test case is readable at the run page with no digging through the logs. A new push to a branch cancels the still running pipeline of its previous commit - the `concurrency` group of the workflow takes care of that.
 
+The build, the test and the check steps of the jobs run the scripts of the [scripts/pipelines](/scripts/pipelines) directory, which the stages of the [misc/Jenkinsfile](/misc/Jenkinsfile) and the jobs of the [.gitlab-ci.yml](/.gitlab-ci.yml) pipelines run as well, so a command changes for all the pipelines at once.
+
 ### The runner and the branch dependencies
 
 The jobs run on the pinned `ubuntu-26.04` runner instead of the moving `ubuntu-latest` one, which switches to the next LTS release on its own while the packages a branch asks for differ between the releases. The [runner image](https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2604-Readme.md) preinstalls the compilers and the clang tools, so a job adds the rest with a single `apt-get install` line, the `DEPENDENCIES` variable of the workflow among them:

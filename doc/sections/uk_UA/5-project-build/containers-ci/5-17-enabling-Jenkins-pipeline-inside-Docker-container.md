@@ -42,6 +42,16 @@ This may also be found at: /var/jenkins_home/secrets/initialAdminPassword
 
 Усі CMake скрипти побудови контейнера для конвеєрів перевірки [Jenkins](https://www.jenkins.io/) розміщуються у файлі з відносним шляхом cmake/enablers/dockerers/template-project-docker-Jenkins-pipeline-runner-target.cmake. Відповідний базовий примірник скрипта конвеєра перевірки шаблонного проекту розміщений за відносним шляхом misc/Jenkinsfile котрий повинен бути вказаним для конфігурації конвеєра побудови у Web-панелі [Jenkins](https://www.jenkins.io/). Порт для Web доступу контейнера Docker до конфігурації конвеєрів перевірки [Jenkins](https://www.jenkins.io/) може бути змінено за допомогою встановлення нового значення для CMake-змінної `JENKINS_PIPELINES_PANEL_HTTP_PORT`.
 
+Стадії побудови, тестування та перевірки конвеєра запускають скрипти каталогу [scripts/pipelines](/scripts/pipelines), які запускають також конвеєри [.github/workflows/ci.yml](/.github/workflows/ci.yml) та [.gitlab-ci.yml](/.gitlab-ci.yml), отож команда змінюється для всіх них одночасно. Скрипти самі переходять до кореневого каталогу проекту та будують у каталозі змінної середовища `BUILDDIR`, за замовчуванням `build/pipeline`, отож стадію можна повторити й поза CI:
+
+```
+# всередині кореневого каталогу проекту
+
+scripts/pipelines/debug-configure.sh
+scripts/pipelines/build.sh
+scripts/pipelines/test.sh CTEST CTEST_
+```
+
 Файл за відносним шляхом cmake/enablers/dockerers/template-project-docker-Jenkins-pipeline-runner-target.cmake містить рецепти побудови Docker контейнера для конвеєрів перевірки [Jenkins](https://www.jenkins.io/) що за замовчуванням перезапустить попередньо побудований контейнер для конвеєрів перевірки.
 
 ### Вміст образу

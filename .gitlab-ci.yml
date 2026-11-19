@@ -44,26 +44,20 @@ code-format:
   variables:
     JOB_TOOLS: clang-format
   script:
-    - cmake -S . -B "$BUILDDIR" -DCMAKE_BUILD_TYPE=Debug -DENABLE_CLANGFORMAT=ON -DENABLE_WHISPERCPP_MODEL_DOWNLOAD=OFF
-    - cmake --build "$BUILDDIR" --target clang-format
+    - scripts/pipelines/code-format-configure.sh
     # Fails when the formatter has changed a tracked file.
-    - git diff --exit-code
+    - scripts/pipelines/code-format-build.sh
 
 build-and-test:
   stage: check
   variables:
     JOB_TOOLS: cppcheck libgtest-dev libgmock-dev
   script:
-    - |
-      cmake -S . -B "$BUILDDIR" -DCMAKE_BUILD_TYPE=Debug -DENABLE_UNIT_TESTS=ON \
-        -DENABLE_SANITIZERS=ON -DENABLE_CPPCHECK=ON \
-        -DMAX_LOG_LEVEL=5 -DENABLE_COMPONENT_TESTS=ON
-    - cmake --build "$BUILDDIR" -j"$(nproc)"
-    - if [ "$RUN_CPPCHECK" = "true" ]; then cmake --build "$BUILDDIR" -j"$(nproc)" --target cppcheck; fi
-    - mkdir -p "$BUILDDIR/$BDJUNITOUT"
-    - cd "$BUILDDIR"
-    - ctest -R "UTEST_" --no-tests=error --output-on-failure --output-junit "$BDJUNITOUT/UTEST.junit.xml"
-    - ctest -R "CTEST_" --no-tests=error --output-on-failure --output-junit "$BDJUNITOUT/CTEST.junit.xml"
+    - scripts/pipelines/debug-configure.sh
+    - scripts/pipelines/build.sh
+    - if [ "$RUN_CPPCHECK" = "true" ]; then scripts/pipelines/build.sh cppcheck; fi
+    - scripts/pipelines/test.sh UTEST UTEST_
+    - scripts/pipelines/test.sh CTEST CTEST_
   artifacts:
     when: always
     reports:
@@ -74,13 +68,13 @@ clang-tidy:
   variables:
     JOB_TOOLS: clang-tidy
   script:
-    - cmake -S . -B "$BUILDDIR" -DCMAKE_BUILD_TYPE=Debug -DENABLE_CLANG_TIDY=ON -DMAX_LOG_LEVEL=5 -DENABLE_WHISPERCPP_MODEL_DOWNLOAD=OFF
+    - scripts/pipelines/clang-tidy-configure.sh
     # clang-tidy runs during the compilation.
-    - cmake --build "$BUILDDIR" -j"$(nproc)"
+    - scripts/pipelines/build.sh
 
 release:
   stage: check
   script:
-    - cmake -S . -B "$BUILDDIR" -DCMAKE_BUILD_TYPE=Release -DENABLE_WHISPERCPP_MODEL_DOWNLOAD=OFF
-    - cmake --build "$BUILDDIR" -j"$(nproc)"
-    - cmake --install "$BUILDDIR" --prefix "$BUILDDIR/install-try"
+    - scripts/pipelines/release-configure.sh
+    - scripts/pipelines/build.sh
+    - scripts/pipelines/install.sh

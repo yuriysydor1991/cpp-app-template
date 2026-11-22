@@ -52,3 +52,6 @@
     1. [Вмикання інтеграції OpenJPEG (JPEG 2000)](/doc/sections/uk_UA/5-project-build/image-libraries/5-31-enabling-the-openjpeg-library.md)
     1. [Вмикання інтеграції libavif (AVIF)](/doc/sections/uk_UA/5-project-build/image-libraries/5-32-enabling-the-libavif-library.md)
     1. [Вмикання інтеграції libheif (HEIF/HEIC)](/doc/sections/uk_UA/5-project-build/image-libraries/5-33-enabling-the-libheif-library.md)
+1. Захоплення рухів тіла
+    1. [Вмикання оцінювання пози RTMPose](/doc/sections/uk_UA/5-project-build/ai/5-78-enabling-the-RTMPose-pose-estimation.md)
+    1. [Вмикання ONNX Runtime](/doc/sections/uk_UA/5-project-build/ai/5-83-enabling-the-ONNX-Runtime.md)

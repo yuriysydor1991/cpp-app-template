@@ -7,7 +7,7 @@
 
 BD="$BUILDDIR-pkg-deb"
 rm -fr "$BD"
-cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_DEB=ON
+cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_DEB=ON -DENABLE_RTMPOSE_MODEL_DOWNLOAD=OFF
 cmake --build "$BD" -j$(nproc)
 ( cd "$BD" && cpack -G DEB )
 if [ -z "$(find "$BD" -maxdepth 2 -name '*.deb' -print -quit)" ]; then

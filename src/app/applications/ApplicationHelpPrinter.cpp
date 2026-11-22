@@ -7,6 +7,7 @@
 
 #include "project-global-decls.h"
 #include "src/app/CMDParamNames.h"
+#include "src/app/DataLocator.h"
 #include "src/log/log.h"
 
 namespace app
@@ -51,11 +52,13 @@ int ApplicationHelpPrinter::run(std::shared_ptr<ApplicationContext> ctx)
             << " <path> - append the log messages to the given file instead of "
                "the default one"
             << std::endl
-            << "\t" << CMDParamNames::IMAGEW << " or " << CMDParamNames::IMAGE
-            << " <path> - run OpenCV face detection on the given image"
-            << std::endl
-            << "\t" << CMDParamNames::CASCADEW
-            << " <path> - override the default OpenCV Haar face cascade XML"
+            << "\t" << CMDParamNames::INPUTW << " or " << CMDParamNames::INPUT
+            << " <input> - capture the body motion of the given camera index, "
+               "image, image sequence, video file or stream instead of the "
+            << CMDParamNames::DEFAULT_INPUT << " camera" << std::endl
+            << "\t" << CMDParamNames::MODELW << " or " << CMDParamNames::MODEL
+            << " <path> - load the given pose estimation model instead of the "
+            << DataLocator::locate(project_decls::PROJECT_POSE_MODEL) << " one"
             << std::endl;
 
   // A help message printed because of a bad usage is a failure.

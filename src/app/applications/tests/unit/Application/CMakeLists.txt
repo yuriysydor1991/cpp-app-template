@@ -1,9 +1,13 @@
 cmake_minimum_required(VERSION 3.13)
 
+# The poses of the mocked MotionCapture are made of the OpenCV points.
+find_package(OpenCV REQUIRED COMPONENTS core)
+
 add_executable(
   UTEST_Application  
   UTEST_Application.cpp
   ${PROJECT_SOURCE_DIR}/src/app/applications/Application.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/DataLocator.cpp
   ${APP_MOCKS_ROOT}/ApplicationContext/src/app/ApplicationContext.cpp
 )
 
@@ -12,13 +16,14 @@ target_include_directories(
   PRIVATE ${APP_MOCKS_ROOT}/ApplicationContext
   PRIVATE ${APP_MOCKS_ROOT}/project-global-decls
   PRIVATE ${APP_MOCKS_ROOT}/log
-  PRIVATE ${APP_MOCKS_ROOT}/OpenCVController
+  PRIVATE ${APP_MOCKS_ROOT}/MotionCapture
   PRIVATE ${PROJECT_SOURCE_DIR}
 )
 
 target_link_libraries(
   UTEST_Application
   GTest::gtest_main GTest::gmock
+  ${OpenCV_LIBS}
 )
 
 include(GoogleTest)

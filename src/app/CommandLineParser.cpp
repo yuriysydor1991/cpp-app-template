@@ -87,12 +87,12 @@ bool CommandLineParser::parse_arg(std::shared_ptr<ApplicationContext> ctx,
     // skipping already parsed cmd params
     paramIndex++;
     return true;
-  } else if (param == CMDParamNames::IMAGEW || param == CMDParamNames::IMAGE) {
-    ctx->set_image_path(nextParam);
+  } else if (param == CMDParamNames::INPUTW || param == CMDParamNames::INPUT) {
+    ctx->set_input(nextParam);
     paramIndex++;
     return true;
-  } else if (param == CMDParamNames::CASCADEW) {
-    ctx->set_cascade_path(nextParam);
+  } else if (param == CMDParamNames::MODELW || param == CMDParamNames::MODEL) {
+    ctx->set_model_path(nextParam);
     paramIndex++;
     return true;
   } else {
@@ -114,8 +114,8 @@ const std::set<std::string>& CommandLineParser::get_params_requiring_data()
   // Place here command line parameters that are requiring
   // some data after it.
   static const std::set<std::string> requireNext{
-      CMDParamNames::LOGPATHW, CMDParamNames::LOGPATH, CMDParamNames::IMAGEW,
-      CMDParamNames::IMAGE, CMDParamNames::CASCADEW};
+      CMDParamNames::LOGPATHW, CMDParamNames::LOGPATH, CMDParamNames::INPUTW,
+      CMDParamNames::INPUT,    CMDParamNames::MODELW,  CMDParamNames::MODEL};
 
   return requireNext;
 }

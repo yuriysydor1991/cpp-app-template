@@ -86,24 +86,21 @@ void ApplicationContext::set_second_user_request(const bool newValue)
   msecond_user_request.store(newValue);
 }
 
-const std::string& ApplicationContext::get_image_path() const
+const std::string& ApplicationContext::get_input() const { return minput; }
+
+void ApplicationContext::set_input(const std::string& newValue)
 {
-  return mimage_path;
+  minput = newValue;
 }
 
-void ApplicationContext::set_image_path(const std::string& newValue)
+const std::string& ApplicationContext::get_model_path() const
 {
-  mimage_path = newValue;
+  return mmodel_path;
 }
 
-const std::string& ApplicationContext::get_cascade_path() const
+void ApplicationContext::set_model_path(const std::string& newValue)
 {
-  return mcascade_path;
-}
-
-void ApplicationContext::set_cascade_path(const std::string& newValue)
-{
-  mcascade_path = newValue;
+  mmodel_path = newValue;
 }
 
 }  // namespace app

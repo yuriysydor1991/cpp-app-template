@@ -155,56 +155,80 @@ TEST_F(UTEST_CommandLineParser, version_long)
   EXPECT_TRUE(appctx->get_errors().empty());
 }
 
-TEST_F(UTEST_CommandLineParser, image_short_stores_path)
+TEST_F(UTEST_CommandLineParser, input_short_stores_the_input)
 {
-  static constexpr const char* const expectedPath = "/tmp/fixture.png";
+  static constexpr const char* const expectedInput = "/tmp/fixture.mp4";
 
-  three_args("-i", expectedPath);
+  three_args("-i", expectedInput);
 
   EXPECT_CALL(*appctx, push_error(_)).Times(0);
 
   EXPECT_TRUE(parser->parse_args(appctx));
 
-  EXPECT_EQ(appctx->get_image_path(), std::string{expectedPath});
+  EXPECT_EQ(appctx->get_input(), std::string{expectedInput});
   EXPECT_FALSE(appctx->get_print_help_and_exit());
   EXPECT_FALSE(appctx->get_print_version_and_exit());
 }
 
-TEST_F(UTEST_CommandLineParser, image_long_stores_path)
+TEST_F(UTEST_CommandLineParser, input_long_stores_the_input)
 {
-  static constexpr const char* const expectedPath = "/tmp/fixture.jpg";
+  static constexpr const char* const expectedInput = "1";
 
-  three_args("--image", expectedPath);
+  three_args("--input", expectedInput);
 
   EXPECT_CALL(*appctx, push_error(_)).Times(0);
 
   EXPECT_TRUE(parser->parse_args(appctx));
 
-  EXPECT_EQ(appctx->get_image_path(), std::string{expectedPath});
+  EXPECT_EQ(appctx->get_input(), std::string{expectedInput});
 }
 
-TEST_F(UTEST_CommandLineParser, image_without_value_pushes_error)
+TEST_F(UTEST_CommandLineParser, input_without_value_pushes_error)
 {
-  two_args("--image");
+  two_args("--input");
 
   EXPECT_CALL(*appctx, push_error(_)).Times(1);
 
   EXPECT_FALSE(parser->parse_args(appctx));
 
-  EXPECT_TRUE(appctx->get_image_path().empty());
+  EXPECT_TRUE(appctx->get_input().empty());
 }
 
-TEST_F(UTEST_CommandLineParser, face_cascade_stores_path)
+TEST_F(UTEST_CommandLineParser, model_short_stores_the_path)
 {
-  static constexpr const char* const expectedPath = "/etc/cascades/face.xml";
+  static constexpr const char* const expectedPath = "/tmp/a-model.onnx";
 
-  three_args("--face-cascade", expectedPath);
+  three_args("-m", expectedPath);
 
   EXPECT_CALL(*appctx, push_error(_)).Times(0);
 
   EXPECT_TRUE(parser->parse_args(appctx));
 
-  EXPECT_EQ(appctx->get_cascade_path(), std::string{expectedPath});
+  EXPECT_EQ(appctx->get_model_path(), std::string{expectedPath});
+}
+
+TEST_F(UTEST_CommandLineParser, model_long_stores_the_path)
+{
+  static constexpr const char* const expectedPath = "/tmp/models";
+
+  three_args("--model", expectedPath);
+
+  EXPECT_CALL(*appctx, push_error(_)).Times(0);
+
+  EXPECT_TRUE(parser->parse_args(appctx));
+
+  EXPECT_EQ(appctx->get_model_path(), std::string{expectedPath});
+}
+
+TEST_F(UTEST_CommandLineParser, model_without_value_pushes_error)
+{
+  two_args("--model");
+
+  EXPECT_CALL(*appctx, push_error(_)).Times(1);
+
+  EXPECT_FALSE(parser->parse_args(appctx));
+
+  EXPECT_TRUE(appctx->get_model_path().empty());
 }
 
 TEST_F(UTEST_CommandLineParser, unknown_flag)

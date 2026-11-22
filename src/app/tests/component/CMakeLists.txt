@@ -4,6 +4,9 @@ if (NOT ENABLE_COMPONENT_TESTS)
   return()
 endif()
 
+# The poses of the mocked MotionCapture are made of the OpenCV points.
+find_package(OpenCV REQUIRED COMPONENTS core)
+
 add_executable(
   CTEST_app  
   CTEST_app.cpp
@@ -12,6 +15,7 @@ add_executable(
   ${PROJECT_SOURCE_DIR}/src/app/ApplicationFactory.cpp
   ${PROJECT_SOURCE_DIR}/src/app/applications/ApplicationHelpPrinter.cpp
   ${PROJECT_SOURCE_DIR}/src/app/CommandLineParser.cpp
+  ${PROJECT_SOURCE_DIR}/src/app/DataLocator.cpp
   ${PROJECT_SOURCE_DIR}/src/app/applications/ApplicationVersionPrinter.cpp
   ${PROJECT_SOURCE_DIR}/src/app/signals-handlers/SignalsHandler.cpp
   ${PROJECT_SOURCE_DIR}/src/app/signals-handlers/handlers/ASignalsHandler.cpp
@@ -30,7 +34,7 @@ add_executable(
 target_include_directories(
   CTEST_app
   PRIVATE
-    ${APP_MOCKS_ROOT}/OpenCVController
+    ${APP_MOCKS_ROOT}/MotionCapture
     ${PROJECT_SOURCE_DIR}
     ${PROJECT_BINARY_DIR}
 )
@@ -38,6 +42,7 @@ target_include_directories(
 target_link_libraries(
   CTEST_app
   GTest::gtest_main GTest::gmock
+  ${OpenCV_LIBS}
 )
 
 include(GoogleTest)

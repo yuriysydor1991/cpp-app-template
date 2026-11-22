@@ -1,6 +1,6 @@
 ## Вмикання інтеграції OpenCV
 
-Гілка `appOpenCV` шаблонного проекту інтегрує бібліотеку компʼютерного зору [OpenCV](https://opencv.org/) через окремий CMake-модуль [cmake/enablers/template-project-OpenCV-enabler.cmake](/cmake/enablers/template-project-OpenCV-enabler.cmake).
+Гілка `appRTMW` шаблонного проекту інтегрує бібліотеку компʼютерного зору [OpenCV](https://opencv.org/) через окремий CMake-модуль [cmake/enablers/template-project-OpenCV-enabler.cmake](/cmake/enablers/template-project-OpenCV-enabler.cmake).
 
 Інтеграція увімкнена за замовчуванням через CMake-змінну `ENABLE_OPENCV`:
 
@@ -11,25 +11,8 @@ cmake -B build -S . -DENABLE_OPENCV=ON
 cmake --build build --target all
 ```
 
-Файл `src/opencv/CMakeLists.txt` шукає системну установку OpenCV через `find_package(OpenCV REQUIRED COMPONENTS core objdetect imgcodecs imgproc)`, оскільки бібліотеку використовують і його тести. Перелік компонентів можна змінити через кеш-змінну `TEMPLATE_APP_OPENCV_COMPONENTS` (значення розділяються крапкою з комою).
+Файл [src/MoCap/CMakeLists.txt](/src/MoCap/CMakeLists.txt) шукає системну установку OpenCV викликом `find_package(OpenCV REQUIRED COMPONENTS core videoio)`, оскільки його тести також компонуються з бібліотекою, а файл [src/RTMPose/CMakeLists.txt](/src/RTMPose/CMakeLists.txt) рушія так само шукає компоненти `core imgproc`, які він використовує.
 
-Оскільки приклад `src/opencv` потребує бібліотеки, значення `OFF` параметра `ENABLE_OPENCV` зупиняє конфігурацію з поясненням, доки з файлу `src/CMakeLists.txt` не буде вилучено виклик `add_subdirectory(opencv)` разом з підкаталогом `src/opencv` і прикладом OpenCV у файлі `src/app/applications/Application.cpp`.
+Оскільки захоплення рухів тіла потребує бібліотеки, вимкнення опції `ENABLE_OPENCV` значенням `OFF` зупиняє конфігурування з поясненням, доки виклик `add_subdirectory(MoCap)` файлу `src/CMakeLists.txt` не прибрано разом з піддиректорією `src/MoCap`, вихідними кодами рушія та їхнім використанням у файлі `src/app/applications/Application.cpp`.
 
-Після збирання застосунок підтримує два нових параметри командного рядка:
-
-- `--image <шлях>` / `-i <шлях>` - виконати виявлення обличь OpenCV на вказаному зображенні.
-- `--face-cascade <шлях>` - перевизначити XML-файл каскаду Хаара, який використовує детектор.
-
-Якщо жоден з параметрів не передано, застосунок лише перевіряє, що попередньо встановлений каскад можна завантажити, і коректно завершує роботу. Каскад, який не вдається завантажити (відсутній файл або файл, що взагалі не є XML-файлом каскаду), а також відсутнє чи нерозпізнане OpenCV зображення `--image` завершують роботу застосунку зі статусом помилки.
-
-XML-файл каскаду Хаара, який постачається разом з установкою OpenCV (`haarcascade_frontalface_default.xml`), автоматично шукається у директорії `share/opencv4/haarcascades` (або старішій `share/opencv/haarcascades`) наступних префіксів у такому порядку:
-
-- `$SNAP/usr` - пакунок snap (доданий пакунок `opencv-data`)
-- `/app` - пакунок flatpak (OpenCV, яку збирає маніфест)
-- `/usr` - системна установка (пакунок Debian/Ubuntu `opencv-data`)
-- `/usr/local` - локально зібрана OpenCV, пакунок FreeBSD `opencv` та пакунок Homebrew для macOS на Intel
-- `/opt/homebrew` - пакунок Homebrew для macOS на Apple Silicon
-
-Метод `app::Application::run` лише делегує виклик до `opencvi::OpenCVController::run` для того щоб можна було швидко перемикатися між наявними прикладами OpenCV без редагування компоненту `app`. Поточний диспетчер викликає `opencvi::OpenCVController::face_recognition_example`, в якому розміщено код завантаження каскаду Хаара і сканування зображення. Щоб додати новий приклад - оголоси новий метод у класі `opencvi::OpenCVController` і переадресуй на нього виклик з `opencvi::OpenCVController::run`.
-
-Деталі публічного інтерфейсу інтеграції шукай у файлі [src/opencv/OpenCVController.h](/src/opencv/OpenCVController.h) (клас `opencvi::OpenCVController`).
+Клас `mocap::FrameSource` файлу [src/MoCap/FrameSource.h](/src/MoCap/FrameSource.h) читає кадри модулем videoio бібліотеки OpenCV: камеру заданого індексу — бекендом камер платформи (V4L2 на GNU/Linux), зображення і послідовності зображень — своїм вбудованим бекендом зображень, а відеофайли і потоки — бекендами FFmpeg чи GStreamer збірки OpenCV. Маніфест flatpak збирає OpenCV без FFmpeg, GStreamer і V4L2, тож пакунок flatpak читає лише зображення і послідовності зображень.

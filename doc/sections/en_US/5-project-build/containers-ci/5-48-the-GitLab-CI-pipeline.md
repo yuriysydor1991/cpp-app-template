@@ -26,7 +26,7 @@ variables:
   # The tools every job needs on top of the bare image.
   TOOLS: build-essential cmake g++ git ca-certificates pkg-config
   # The development packages of the branch specific libraries.
-  DEPENDENCIES: libopencv-dev opencv-data
+  DEPENDENCIES: libopencv-dev
 ```
 
 That last variable is the single line the branches of the template differ by, so a project which links a library of its own appends the development package of the library there.

@@ -22,12 +22,12 @@ parts:
     cmake-parameters:
       - -DCMAKE_BUILD_TYPE=Release
       - -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
+      - -DENABLE_OPENPOSE_MODEL_DOWNLOAD=OFF
     build-packages:
       - libopencv-dev
-      - opencv-data
     stage-packages:
       - libopencv-core406t64
       - libopencv-imgproc406t64
       - libopencv-imgcodecs406t64
-      - libopencv-objdetect406t64
-      - opencv-data
+      - libopencv-videoio406t64
+      - libopencv-dnn406t64

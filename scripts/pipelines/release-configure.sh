@@ -6,4 +6,4 @@
 
 rm -fr "$BUILDDIR"
 
-cmake -S . -B "$BUILDDIR" -DCMAKE_BUILD_TYPE=Release "$@"
+cmake -S . -B "$BUILDDIR" -DCMAKE_BUILD_TYPE=Release -DENABLE_OPENPOSE_MODEL_DOWNLOAD=OFF "$@"

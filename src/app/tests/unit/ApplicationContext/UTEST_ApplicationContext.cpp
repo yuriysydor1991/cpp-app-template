@@ -35,20 +35,20 @@ TEST_F(UTEST_ApplicationContext, empty_context)
   EXPECT_TRUE(appCtx->get_errors().empty());
   EXPECT_FALSE(appCtx->get_print_help_and_exit());
   EXPECT_FALSE(appCtx->get_print_version_and_exit());
-  EXPECT_TRUE(appCtx->get_image_path().empty());
-  EXPECT_TRUE(appCtx->get_cascade_path().empty());
+  EXPECT_TRUE(appCtx->get_input().empty());
+  EXPECT_TRUE(appCtx->get_model_path().empty());
 }
 
-TEST_F(UTEST_ApplicationContext, image_and_cascade_paths_round_trip)
+TEST_F(UTEST_ApplicationContext, input_and_model_paths_round_trip)
 {
-  static const std::string expectedImage{"/tmp/face.png"};
-  static const std::string expectedCascade{"/usr/share/cascade.xml"};
+  static const std::string expectedInput{"/tmp/dance.mp4"};
+  static const std::string expectedModel{"/tmp/a-model.onnx"};
 
-  appCtx->set_image_path(expectedImage);
-  appCtx->set_cascade_path(expectedCascade);
+  appCtx->set_input(expectedInput);
+  appCtx->set_model_path(expectedModel);
 
-  EXPECT_EQ(appCtx->get_image_path(), expectedImage);
-  EXPECT_EQ(appCtx->get_cascade_path(), expectedCascade);
+  EXPECT_EQ(appCtx->get_input(), expectedInput);
+  EXPECT_EQ(appCtx->get_model_path(), expectedModel);
   EXPECT_FALSE(appCtx->get_stop());
   EXPECT_FALSE(appCtx->get_pause());
   EXPECT_FALSE(appCtx->get_reload());

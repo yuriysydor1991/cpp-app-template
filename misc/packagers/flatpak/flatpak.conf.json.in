@@ -11,14 +11,13 @@
       "builddir": true,
       "config-opts": [
         "-DCMAKE_BUILD_TYPE=Release",
-        "-DBUILD_LIST=core,imgproc,imgcodecs,objdetect",
+        "-DBUILD_LIST=core,imgproc,imgcodecs,videoio,dnn",
         "-DBUILD_TESTS=OFF",
         "-DBUILD_PERF_TESTS=OFF",
         "-DBUILD_EXAMPLES=OFF",
         "-DBUILD_opencv_apps=OFF",
         "-DBUILD_DOCS=OFF",
         "-DOPENCV_GENERATE_PKGCONFIG=ON",
-        "-DWITH_PROTOBUF=OFF",
         "-DWITH_FFMPEG=OFF",
         "-DWITH_GTK=OFF",
         "-DWITH_V4L=OFF",
@@ -40,7 +39,8 @@
       "buildsystem": "cmake",
       "config-opts": [
         "-DCMAKE_BUILD_TYPE=Release",
-        "-DENABLE_FLATPAK_METAINFO=ON"
+        "-DENABLE_FLATPAK_METAINFO=ON",
+        "-DENABLE_OPENPOSE_MODEL_DOWNLOAD=OFF"
       ],
       "sources": [
         {

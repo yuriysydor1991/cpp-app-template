@@ -7,7 +7,7 @@
 
 BD="$BUILDDIR-pkg-flatpak"
 rm -fr "$BD"
-cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_FLATPAK=ON
+cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_FLATPAK=ON -DENABLE_OPENPOSE_MODEL_DOWNLOAD=OFF
 cmake --build "$BD" -j$(nproc)
 cmake --build "$BD" --target flatpak
 if [ -z "$(find "$BD" -maxdepth 2 -name '*.flatpak' -print -quit)" ]; then

@@ -22,7 +22,6 @@ PACKAGES=(
     libopencv-dev
     libssl-dev
     libstdc++6
-    opencv-data
 )
 
 apt_install "${PACKAGES[@]}"

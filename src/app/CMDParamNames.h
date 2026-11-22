@@ -24,9 +24,13 @@ class CMDParamNames
   inline static const std::string VERSION{"-v"};
   inline static const std::string LOGPATHW{"--log-file"};
   inline static const std::string LOGPATH{"-l"};
-  inline static const std::string IMAGEW{"--image"};
-  inline static const std::string IMAGE{"-i"};
-  inline static const std::string CASCADEW{"--face-cascade"};
+  inline static const std::string INPUTW{"--input"};
+  inline static const std::string INPUT{"-i"};
+  inline static const std::string MODELW{"--model"};
+  inline static const std::string MODEL{"-m"};
+  /// @brief The input captured while the command line gives none: the
+  /// default camera.
+  inline static const std::string DEFAULT_INPUT{"0"};
 };
 
 }  // namespace app

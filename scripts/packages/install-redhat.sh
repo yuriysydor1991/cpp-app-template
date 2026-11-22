@@ -17,7 +17,6 @@ PACKAGES=(
     gmock-devel
     gtest-devel
     make
-    opencv-data
     opencv-devel
     openssl-devel
 )

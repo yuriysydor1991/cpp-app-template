@@ -110,25 +110,22 @@ class ApplicationContext
   /// ApplicationContext::set_first_user_request setter.
   void set_second_user_request(const bool newValue);
 
-  /// @brief Optional path to the input image to scan with the OpenCV Haar
-  /// cascade. When empty the Application::run only verifies that the cascade
-  /// can be loaded.
-  const std::string& get_image_path() const;
+  /// @brief Provides the input the Application captures the body motion of: a
+  /// camera index, an image, a video file etc. Empty while the command line
+  /// carries none.
+  const std::string& get_input() const;
 
-  /// @brief Sets the optional path to the input image to scan with the OpenCV
-  /// Haar cascade. When empty the Application::run only verifies that the
-  /// cascade can be loaded.
-  void set_image_path(const std::string& newValue);
+  /// @brief Sets the input for the Application to capture the body motion of.
+  /// The CommandLineParser fills it out of the command line.
+  void set_input(const std::string& newValue);
 
-  /// @brief Optional override for the Haar cascade XML file path. When empty
-  /// the OpenCVController falls back to its built-in list of system-wide
-  /// candidates.
-  const std::string& get_cascade_path() const;
+  /// @brief Provides the path of the pose estimation model the Application
+  /// loads. Empty while the command line carries none.
+  const std::string& get_model_path() const;
 
-  /// @brief Sets the optional override for the Haar cascade XML file path. When
-  /// empty the OpenCVController falls back to its built-in list of system-wide
-  /// candidates.
-  void set_cascade_path(const std::string& newValue);
+  /// @brief Sets the pose estimation model for the Application to load. The
+  /// CommandLineParser fills it out of the command line.
+  void set_model_path(const std::string& newValue);
 
  private:
   /// @brief Command line arguments count passed by the OS through the main
@@ -170,19 +167,13 @@ class ApplicationContext
   /// ApplicationContext::set_second_user_request setter.
   std::atomic_bool msecond_user_request{false};
 
-  /**
-   * @brief Optional path to the input image to scan with the OpenCV
-   * Haar cascade. When empty the Application::run only verifies that
-   * the cascade can be loaded.
-   */
-  std::string mimage_path;
+  /// @brief The input to capture the body motion of. See the
+  /// ApplicationContext::set_input setter.
+  std::string minput;
 
-  /**
-   * @brief Optional override for the Haar cascade XML file path. When
-   * empty the OpenCVController falls back to its built-in list of
-   * system-wide candidates.
-   */
-  std::string mcascade_path;
+  /// @brief The pose estimation model to load. See the
+  /// ApplicationContext::set_model_path setter.
+  std::string mmodel_path;
 };
 
 }  // namespace app

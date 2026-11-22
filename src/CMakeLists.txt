@@ -28,4 +28,6 @@ configure_file(
 
 add_subdirectory(app)
 add_subdirectory(log)
-add_subdirectory(opencv)
+add_subdirectory(MoCap)
+add_subdirectory(ONNX)
+add_subdirectory(MoveNet)

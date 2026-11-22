@@ -11,7 +11,7 @@
       "builddir": true,
       "config-opts": [
         "-DCMAKE_BUILD_TYPE=Release",
-        "-DBUILD_LIST=core,imgproc,imgcodecs,objdetect",
+        "-DBUILD_LIST=core,imgproc,imgcodecs,videoio",
         "-DBUILD_TESTS=OFF",
         "-DBUILD_PERF_TESTS=OFF",
         "-DBUILD_EXAMPLES=OFF",
@@ -40,7 +40,8 @@
       "buildsystem": "cmake",
       "config-opts": [
         "-DCMAKE_BUILD_TYPE=Release",
-        "-DENABLE_FLATPAK_METAINFO=ON"
+        "-DENABLE_FLATPAK_METAINFO=ON",
+        "-DENABLE_MOVENET_MODEL_DOWNLOAD=OFF"
       ],
       "sources": [
         {

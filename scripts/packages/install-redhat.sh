@@ -17,10 +17,14 @@ PACKAGES=(
     gmock-devel
     gtest-devel
     make
-    opencv-data
     opencv-devel
     openssl-devel
 )
+
+# The Fedora alone packages the ONNX Runtime.
+if [[ ${ID} == fedora ]] ; then
+    PACKAGES+=(onnxruntime-devel)
+fi
 
 DNF_SUDO=""
 

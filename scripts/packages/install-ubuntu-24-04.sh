@@ -18,11 +18,12 @@ PACKAGES=(
     git
     googletest
     libgmock-dev
+    libegl1
+    libgles2
     libgtest-dev
     libopencv-dev
     libssl-dev
     libstdc++6
-    opencv-data
 )
 
 apt_install "${PACKAGES[@]}"

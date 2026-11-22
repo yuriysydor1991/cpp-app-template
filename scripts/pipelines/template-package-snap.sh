@@ -7,7 +7,7 @@
 
 BD="$BUILDDIR-pkg-snap"
 rm -fr "$BD"
-cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_SNAP=ON
+cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_SNAP=ON -DENABLE_MEDIAPIPE_MODEL_DOWNLOAD=OFF
 cmake --build "$BD" -j$(nproc)
 cmake --build "$BD" --target snap
 if [ -z "$(find "$BD" -maxdepth 3 -name '*.snap' -print -quit)" ]; then

@@ -19,10 +19,11 @@ PACKAGES=(
     googletest
     libgmock-dev
     libgtest-dev
+    libegl1
+    libgles2
     libopencv-dev
     libssl-dev
     libstdc++6
-    opencv-data
 )
 
 apt_install "${PACKAGES[@]}"

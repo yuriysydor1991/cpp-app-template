@@ -1,23 +1,30 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include <memory>
+#include <opencv2/core.hpp>
+
+#include "project-global-decls.h"
+#include "src/MoCap/MotionCapture.h"
+#include "src/app/CMDParamNames.h"
 #include "src/app/applications/Application.h"
-#include "src/opencv/OpenCVController.h"
 
 using namespace app;
-using namespace opencvi;
+using namespace mocap;
 using namespace testing;
 
 class UTEST_Application : public Test
 {
  public:
+  using poses = IPoseEstimator::poses;
+
   UTEST_Application()
       : app{std::make_shared<Application>()},
         appCtx{std::make_shared<ApplicationContext>(argc, argv)}
   {
   }
 
-  ~UTEST_Application() override { OpenCVController::onMockCreate = nullptr; }
+  ~UTEST_Application() override { MotionCapture::onMockCreate = nullptr; }
 
   int argc{0};
   char** argv{nullptr};
@@ -28,44 +35,76 @@ class UTEST_Application : public Test
 
 TEST_F(UTEST_Application, no_context_error) { EXPECT_NE(app->run({}), 0); }
 
-TEST_F(UTEST_Application, delegates_to_opencv_controller_run)
+TEST_F(UTEST_Application, captures_the_default_camera_with_the_default_model)
 {
-  MockFunction<void(OpenCVController&)> onMockCreateEnsurer;
+  MotionCapture::onMockCreate = [](MotionCapture& capture) {
+    InSequence order;
 
-  EXPECT_CALL(onMockCreateEnsurer, Call(_))
-      .Times(1)
-      .WillOnce(Invoke([&](OpenCVController& instance) {
-        EXPECT_CALL(instance, run(_))
-            .Times(1)
-            .WillOnce(Invoke([&](OpenCVController::appctx ctx) {
-              EXPECT_EQ(ctx, appCtx);
-              return true;
-            }));
-        EXPECT_CALL(instance, face_recognition_example(_)).Times(0);
-        EXPECT_CALL(instance, load_cascade(_)).Times(0);
-        EXPECT_CALL(instance, detect(An<const std::string&>())).Times(0);
-      }));
-
-  OpenCVController::onMockCreate = onMockCreateEnsurer.AsStdFunction();
-
-  EXPECT_CALL(*appCtx, push_error(_)).Times(0);
+    EXPECT_CALL(capture, init(project_decls::PROJECT_POSE_MODEL))
+        .WillOnce(Return(true));
+    EXPECT_CALL(capture, open(CMDParamNames::DEFAULT_INPUT))
+        .WillOnce(Return(true));
+    EXPECT_CALL(capture, capture()).WillOnce(Return(MotionCapture::result{}));
+  };
 
   EXPECT_EQ(app->run(appCtx), 0);
-  EXPECT_TRUE(appCtx->get_errors().empty());
-  EXPECT_FALSE(appCtx->get_stop());
 }
 
-TEST_F(UTEST_Application, opencv_controller_run_failure_returns_invalid)
+TEST_F(UTEST_Application, captures_the_given_input_with_the_given_model)
 {
-  MockFunction<void(OpenCVController&)> onMockCreateEnsurer;
+  appCtx->set_input("dance.mp4");
+  appCtx->set_model_path("a-model.onnx");
 
-  EXPECT_CALL(onMockCreateEnsurer, Call(_))
-      .Times(1)
-      .WillOnce(Invoke([&](OpenCVController& instance) {
-        EXPECT_CALL(instance, run(_)).Times(1).WillOnce(Return(false));
-      }));
+  MotionCapture::onMockCreate = [](MotionCapture& capture) {
+    EXPECT_CALL(capture, init("a-model.onnx")).WillOnce(Return(true));
+    EXPECT_CALL(capture, open("dance.mp4")).WillOnce(Return(true));
+  };
 
-  OpenCVController::onMockCreate = onMockCreateEnsurer.AsStdFunction();
+  EXPECT_EQ(app->run(appCtx), 0);
+}
+
+TEST_F(UTEST_Application, captures_every_frame_till_the_end_of_the_input)
+{
+  const poses captured{{{cv::Point3f{1.0F, 2.0F, 0.0F}, 0.5F}}, {}};
+
+  MotionCapture::onMockCreate = [&](MotionCapture& capture) {
+    EXPECT_CALL(capture, capture())
+        .WillOnce(Return(captured))
+        .WillOnce(Return(poses{}))
+        .WillOnce(Return(MotionCapture::result{}));
+  };
+
+  EXPECT_EQ(app->run(appCtx), 0);
+}
+
+TEST_F(UTEST_Application, stop_request_ends_the_capture)
+{
+  appCtx->set_stop(true);
+
+  MotionCapture::onMockCreate = [](MotionCapture& capture) {
+    EXPECT_CALL(capture, capture()).Times(0);
+  };
+
+  EXPECT_EQ(app->run(appCtx), 0);
+}
+
+TEST_F(UTEST_Application, model_load_failure_returns_invalid)
+{
+  MotionCapture::onMockCreate = [](MotionCapture& capture) {
+    EXPECT_CALL(capture, init(_)).WillOnce(Return(false));
+    EXPECT_CALL(capture, open(_)).Times(0);
+    EXPECT_CALL(capture, capture()).Times(0);
+  };
+
+  EXPECT_NE(app->run(appCtx), 0);
+}
+
+TEST_F(UTEST_Application, input_open_failure_returns_invalid)
+{
+  MotionCapture::onMockCreate = [](MotionCapture& capture) {
+    EXPECT_CALL(capture, open(_)).WillOnce(Return(false));
+    EXPECT_CALL(capture, capture()).Times(0);
+  };
 
   EXPECT_NE(app->run(appCtx), 0);
 }

@@ -7,7 +7,7 @@
 
 BD="$BUILDDIR-pkg-wix"
 rm -fr "$BD"
-cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_WIX=ON
+cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DENABLE_WIX=ON -DENABLE_MEDIAPIPE_MODEL_DOWNLOAD=OFF
 cmake --build "$BD" -j$(nproc)
 ( cd "$BD" && cpack -G WIX )
 if [ -z "$(find "$BD" -maxdepth 2 -name '*.msi' -print -quit)" ]; then

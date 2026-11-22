@@ -17,7 +17,8 @@ PACKAGES=(
     gmock-devel
     gtest-devel
     make
-    opencv-data
+    mesa-libEGL
+    mesa-libGLES
     opencv-devel
     openssl-devel
 )

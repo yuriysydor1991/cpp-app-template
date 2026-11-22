@@ -7,7 +7,7 @@
 
 BD="$BUILDDIR-pkg-appimage"
 rm -fr "$BD"
-cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_APPIMAGE=ON
+cmake -S . -B "$BD" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_APPIMAGE=ON -DENABLE_MEDIAPIPE_MODEL_DOWNLOAD=OFF
 cmake --build "$BD" --target appimage
 if [ -z "$(find "$BD" -maxdepth 2 -name '*.AppImage' -print -quit)" ]; then
   echo "FAIL: CMake did not produce an .AppImage package"

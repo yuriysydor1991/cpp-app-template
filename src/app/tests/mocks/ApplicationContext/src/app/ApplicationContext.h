@@ -53,14 +53,11 @@ class ApplicationContext
     msecond_user_request.store(newValue);
   }
 
-  const std::string& get_image_path() const { return mimage_path; }
-  void set_image_path(const std::string& newValue) { mimage_path = newValue; }
+  const std::string& get_input() const { return minput; }
+  void set_input(const std::string& newValue) { minput = newValue; }
 
-  const std::string& get_cascade_path() const { return mcascade_path; }
-  void set_cascade_path(const std::string& newValue)
-  {
-    mcascade_path = newValue;
-  }
+  const std::string& get_model_path() const { return mmodel_path; }
+  void set_model_path(const std::string& newValue) { mmodel_path = newValue; }
 
   MOCK_METHOD(void, push_error, (const std::string& errorDescription));
 
@@ -75,8 +72,8 @@ class ApplicationContext
   std::atomic_bool mreload{false};
   std::atomic_bool mfirst_user_request{false};
   std::atomic_bool msecond_user_request{false};
-  std::string mimage_path;
-  std::string mcascade_path;
+  std::string minput;
+  std::string mmodel_path;
 };
 
 }  // namespace app

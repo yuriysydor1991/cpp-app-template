@@ -32,7 +32,7 @@ pipeline {
       }
       
       steps {
-        git branch: 'appOpenCV',
+        git branch: 'appRTMPose',
             url: 'https://github.com/yuriysydor1991/cpp-app-template.git'
       }
     }
@@ -111,9 +111,39 @@ pipeline {
             sh 'scripts/pipelines/test.sh UTEST_CommandLineParser'
           }
         }
-        stage('UTEST_OpenCVController') {
+        stage('UTEST_DataLocator') {
           steps {
-            sh 'scripts/pipelines/test.sh UTEST_OpenCVController'
+            sh 'scripts/pipelines/test.sh UTEST_DataLocator'
+          }
+        }
+        stage('UTEST_FrameSource') {
+          steps {
+            sh 'scripts/pipelines/test.sh UTEST_FrameSource'
+          }
+        }
+        stage('UTEST_MotionCapture') {
+          steps {
+            sh 'scripts/pipelines/test.sh UTEST_MotionCapture'
+          }
+        }
+        stage('UTEST_ONNXModel') {
+          steps {
+            sh 'scripts/pipelines/test.sh UTEST_ONNXModel'
+          }
+        }
+        stage('UTEST_PersonDetector') {
+          steps {
+            sh 'scripts/pipelines/test.sh UTEST_PersonDetector'
+          }
+        }
+        stage('UTEST_PoseCrop') {
+          steps {
+            sh 'scripts/pipelines/test.sh UTEST_PoseCrop'
+          }
+        }
+        stage('UTEST_SimCCDecoder') {
+          steps {
+            sh 'scripts/pipelines/test.sh UTEST_SimCCDecoder'
           }
         }
         stage('UTEST_SignalsHandler') { 
@@ -177,9 +207,9 @@ pipeline {
             sh 'scripts/pipelines/test.sh CTEST_app'
           }
         }
-        stage('CTEST_opencv') {
+        stage('CTEST_RTMPoseController') {
           steps {
-            sh 'scripts/pipelines/test.sh CTEST_opencv'
+            sh 'scripts/pipelines/test.sh CTEST_RTMPoseController'
           }
         }
       }

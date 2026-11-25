@@ -27,7 +27,7 @@ constexpr int GLAREA_VERSION_MINOR = 0;
 
 }  // namespace
 
-int Qt6Controller::run(std::shared_ptr<app::ApplicationContext> actx)
+int Qt6Controller::run(app::ApplicationContextPtr actx)
 {
   using QMLRes = qmlpaths::QMLRes;
 

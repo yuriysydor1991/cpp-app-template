@@ -17,7 +17,7 @@ class SDBusCxxController
   virtual ~SDBusCxxController() = default;
   SDBusCxxController() = default;
 
-  virtual bool run(std::shared_ptr<app::ApplicationContext> ctx);
+  virtual bool run(app::ApplicationContextPtr ctx);
 
   static SDBusCxxControllerPtr create();
 
@@ -25,7 +25,7 @@ class SDBusCxxController
   virtual bool init();
   virtual bool inited();
 
-  std::shared_ptr<app::ApplicationContext> appctx;
+  app::ApplicationContextPtr appctx;
 
  private:
   bool make_example_demo_call();

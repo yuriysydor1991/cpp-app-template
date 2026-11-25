@@ -31,7 +31,7 @@ class UTEST_Application : public Test
   char** argv{nullptr};
 
   std::shared_ptr<Application> app;
-  std::shared_ptr<ApplicationContext> appCtx;
+  ApplicationContextPtr appCtx;
   std::shared_ptr<NiceMock<SDBusCxxController>> controller;
 };
 

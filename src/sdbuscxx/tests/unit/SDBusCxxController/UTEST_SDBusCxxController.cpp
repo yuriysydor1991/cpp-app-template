@@ -36,7 +36,7 @@ class UTEST_SDBusCxxController : public Test
   int argc{0};
   char** argv{nullptr};
 
-  std::shared_ptr<app::ApplicationContext> appCtx;
+  app::ApplicationContextPtr appCtx;
   std::shared_ptr<NiceMock<IDBusQueryHandler>> handler;
 };
 

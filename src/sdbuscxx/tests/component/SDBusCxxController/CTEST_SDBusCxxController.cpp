@@ -53,7 +53,7 @@ class CTEST_SDBusCxxController : public Test
   int argc{0};
   char** argv{nullptr};
 
-  std::shared_ptr<app::ApplicationContext> appCtx;
+  app::ApplicationContextPtr appCtx;
 };
 
 TEST_F(CTEST_SDBusCxxController, create_reflects_system_bus_availability)

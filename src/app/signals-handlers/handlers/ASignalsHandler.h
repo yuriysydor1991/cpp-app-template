@@ -58,7 +58,7 @@ class ASignalsHandler : public ISignalsHandler
    * any error, as well as on the platforms which are declaring none of the
    * category signals.
    */
-  virtual bool install(std::shared_ptr<ApplicationContext> ctx) override;
+  virtual bool install(ApplicationContextPtr ctx) override;
 
   /// @brief Gives the covered signals back to the dispositions they had before
   /// the ASignalsHandler::install call and releases the remembered context.

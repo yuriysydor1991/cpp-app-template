@@ -16,12 +16,12 @@ class ApplicationContext2LibraryContextSynthParent
 {
  public:
   using LibraryContext = CppAppTemplate011::LibraryContext;
-  using ApplicationContext = app::ApplicationContext;
+  using ApplicationContextPtr = app::ApplicationContextPtr;
 
   virtual ~ApplicationContext2LibraryContextSynthParent() = default;
   ApplicationContext2LibraryContextSynthParent() = default;
 
-  virtual bool convert(std::shared_ptr<ApplicationContext> appctx,
+  virtual bool convert(ApplicationContextPtr appctx,
                        std::shared_ptr<LibraryContext> libctx) = 0;
 };
 
@@ -30,7 +30,7 @@ class ApplicationContext2LibraryContext
  public:
   using DefaultCtxConPtr = std::shared_ptr<ApplicationContext2LibraryContext>;
   using LibraryContext = CppAppTemplate011::LibraryContext;
-  using ApplicationContext = app::ApplicationContext;
+  using ApplicationContextPtr = app::ApplicationContextPtr;
 
   virtual ~ApplicationContext2LibraryContext() = default;
   ApplicationContext2LibraryContext()
@@ -44,7 +44,7 @@ class ApplicationContext2LibraryContext
       onMockCreate;
 
   MOCK_METHOD(bool, convert,
-              (std::shared_ptr<ApplicationContext> appctx,
+              (ApplicationContextPtr appctx,
                std::shared_ptr<LibraryContext> libctx));
 };
 

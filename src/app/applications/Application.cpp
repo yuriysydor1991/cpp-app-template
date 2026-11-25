@@ -12,7 +12,7 @@
 namespace app
 {
 
-int Application::run(std::shared_ptr<ApplicationContext> ctx)
+int Application::run(ApplicationContextPtr ctx)
 {
   assert(ctx != nullptr);
 
@@ -42,7 +42,7 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
 }
 
 Application::LibraryContextPtr Application::create_and_convert_libctx(
-    std::shared_ptr<ApplicationContext> ctx)
+    ApplicationContextPtr ctx)
 {
   LibraryContextPtr libctx =
       CppAppTemplate011::LibraryFacade::create_library_context();

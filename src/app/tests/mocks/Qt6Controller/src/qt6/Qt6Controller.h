@@ -23,7 +23,7 @@ class Qt6Controller
 
   inline static std::function<void(Qt6Controller& instance)> onMockCreate;
 
-  MOCK_METHOD(int, run, (std::shared_ptr<app::ApplicationContext>));
+  MOCK_METHOD(int, run, (app::ApplicationContextPtr));
 };
 
 }  // namespace Qt6i

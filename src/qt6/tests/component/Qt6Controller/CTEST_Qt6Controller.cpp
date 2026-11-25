@@ -50,7 +50,7 @@ class CTEST_Qt6Controller : public Test
   int argc{1};
   char** argv{args};
 
-  std::shared_ptr<app::ApplicationContext> ctx{
+  app::ApplicationContextPtr ctx{
       std::make_shared<app::ApplicationContext>(argc, argv)};
 
   Qt6Controller controller;

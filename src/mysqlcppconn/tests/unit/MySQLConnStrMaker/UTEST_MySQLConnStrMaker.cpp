@@ -16,8 +16,7 @@ class UTEST_MySQLConnStrMaker : public Test
   int argc{0};
   char** argv{nullptr};
 
-  std::shared_ptr<ApplicationContext> ctx{
-      std::make_shared<ApplicationContext>(argc, argv)};
+  ApplicationContextPtr ctx{std::make_shared<ApplicationContext>(argc, argv)};
 
   MySQLConnStrMaker maker;
 };

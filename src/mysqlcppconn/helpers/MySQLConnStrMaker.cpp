@@ -9,8 +9,7 @@
 namespace mysqli::helpers
 {
 
-std::string MySQLConnStrMaker::make_conn_string(
-    std::shared_ptr<app::ApplicationContext> actx)
+std::string MySQLConnStrMaker::make_conn_string(app::ApplicationContextPtr actx)
 {
   assert(actx != nullptr);
 

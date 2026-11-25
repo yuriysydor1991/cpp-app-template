@@ -25,7 +25,7 @@ class ApplicationHelpPrinter : public IApplication
 
   inline static std::function<void(ApplicationHelpPrinter&)> onMockCreate;
 
-  MOCK_METHOD(int, run, (std::shared_ptr<ApplicationContext> ctx), (override));
+  MOCK_METHOD(int, run, (ApplicationContextPtr ctx), (override));
 };
 
 }  // namespace app

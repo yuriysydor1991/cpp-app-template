@@ -30,8 +30,7 @@ class MySQLConnStrMaker
    *
    * @returns Returns the host URL or an empty string for no context.
    */
-  virtual std::string make_conn_string(
-      std::shared_ptr<app::ApplicationContext> actx);
+  virtual std::string make_conn_string(app::ApplicationContextPtr actx);
 };
 
 }  // namespace mysqli::helpers

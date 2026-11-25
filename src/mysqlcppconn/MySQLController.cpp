@@ -18,7 +18,7 @@ MySQLController::MySQLController()
 {
 }
 
-bool MySQLController::connect(std::shared_ptr<app::ApplicationContext> nctx)
+bool MySQLController::connect(app::ApplicationContextPtr nctx)
 {
   assert(nctx);
 

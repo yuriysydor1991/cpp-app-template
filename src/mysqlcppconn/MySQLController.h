@@ -36,7 +36,7 @@ class MySQLController : public app::IDBConnection
    *
    * @returns Returns a true boolean value on the success or false otherwise.
    */
-  virtual bool connect(std::shared_ptr<app::ApplicationContext> nctx) override;
+  virtual bool connect(app::ApplicationContextPtr nctx) override;
 
   /**
    * @brief Returns a true boolean value in case of a present

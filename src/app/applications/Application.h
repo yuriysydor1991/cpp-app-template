@@ -28,14 +28,14 @@ class Application : public IApplication
    * @return Returns the application return status. A zero value on the success
    * and other value otherwise.
    */
-  virtual int run(std::shared_ptr<ApplicationContext> ctx) override;
+  virtual int run(ApplicationContextPtr ctx) override;
 
  protected:
   virtual bool connect();
 
   virtual std::shared_ptr<mysqli::MySQLController> create_db_controller();
 
-  std::shared_ptr<ApplicationContext> actx;
+  ApplicationContextPtr actx;
 };
 
 }  // namespace app

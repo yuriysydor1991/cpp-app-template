@@ -26,7 +26,7 @@ class UTEST_FbConnStringMaker : public Test
   char** argv{nullptr};
 
   std::shared_ptr<FbConnStringMaker> maker;
-  std::shared_ptr<ApplicationContext> ctx;
+  ApplicationContextPtr ctx;
 };
 
 TEST_F(UTEST_FbConnStringMaker, null_context_returns_empty)

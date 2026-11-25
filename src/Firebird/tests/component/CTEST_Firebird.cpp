@@ -42,7 +42,7 @@ class CTEST_Firebird : public Test
 
   std::shared_ptr<FakeFbClient> fake;
   std::shared_ptr<InjectedFirebird> fb;
-  std::shared_ptr<ApplicationContext> ctx;
+  ApplicationContextPtr ctx;
 };
 
 TEST_F(CTEST_Firebird, connect_builds_conn_string_and_passes_credentials)

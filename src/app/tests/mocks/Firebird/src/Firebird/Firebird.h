@@ -25,8 +25,7 @@ class Firebird : public app::IDBConnection
 
   inline static std::function<void(Firebird&)> onMockCreate;
 
-  MOCK_METHOD(bool, connect, (std::shared_ptr<app::ApplicationContext> nctx),
-              (override));
+  MOCK_METHOD(bool, connect, (app::ApplicationContextPtr nctx), (override));
   MOCK_METHOD(bool, connected, (), (override));
   MOCK_METHOD(std::string, get_current_date, (), (override));
 };

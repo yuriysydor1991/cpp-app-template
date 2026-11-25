@@ -12,7 +12,7 @@
 namespace firebirdi
 {
 
-bool Firebird::connect(std::shared_ptr<app::ApplicationContext> nctx)
+bool Firebird::connect(app::ApplicationContextPtr nctx)
 {
   assert(nctx != nullptr);
 
@@ -45,8 +45,7 @@ std::shared_ptr<sql::QueryMaker> Firebird::create_query_maker()
   return std::make_shared<sql::QueryMaker>();
 }
 
-std::string Firebird::make_conn_string(
-    std::shared_ptr<app::ApplicationContext> nctx)
+std::string Firebird::make_conn_string(app::ApplicationContextPtr nctx)
 {
   auto csmaker = std::make_shared<helpers::FbConnStringMaker>();
 

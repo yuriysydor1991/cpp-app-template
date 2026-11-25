@@ -23,8 +23,7 @@ class FbConnStringMaker
   virtual ~FbConnStringMaker() = default;
   FbConnStringMaker() = default;
 
-  virtual std::string make_conn_string(
-      std::shared_ptr<app::ApplicationContext> actx);
+  virtual std::string make_conn_string(app::ApplicationContextPtr actx);
 };
 
 }  // namespace firebirdi::helpers

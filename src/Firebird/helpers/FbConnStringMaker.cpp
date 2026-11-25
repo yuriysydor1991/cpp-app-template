@@ -9,8 +9,7 @@
 namespace firebirdi::helpers
 {
 
-std::string FbConnStringMaker::make_conn_string(
-    std::shared_ptr<app::ApplicationContext> actx)
+std::string FbConnStringMaker::make_conn_string(app::ApplicationContextPtr actx)
 {
   assert(actx != nullptr);
 

@@ -33,7 +33,7 @@ class Firebird : public app::IDBConnection
    *
    * @returns Returns a true boolean value on the success or false otherwise.
    */
-  virtual bool connect(std::shared_ptr<app::ApplicationContext> nctx) override;
+  virtual bool connect(app::ApplicationContextPtr nctx) override;
 
   /**
    * @brief Returns a true boolean value in case of a present Firebird
@@ -54,8 +54,7 @@ class Firebird : public app::IDBConnection
   virtual std::string get_current_date() override;
 
  protected:
-  virtual std::string make_conn_string(
-      std::shared_ptr<app::ApplicationContext> nctx);
+  virtual std::string make_conn_string(app::ApplicationContextPtr nctx);
 
   /**
    * @brief Creates the IFbClient implementation used to talk to Firebird.

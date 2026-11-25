@@ -36,7 +36,7 @@ class UTEST_Firebird : public Test
 
   std::shared_ptr<IFbClientMock> client;
   std::shared_ptr<InjectedFirebird> fb;
-  std::shared_ptr<ApplicationContext> ctx;
+  ApplicationContextPtr ctx;
 };
 
 TEST_F(UTEST_Firebird, connect_no_context_fails)

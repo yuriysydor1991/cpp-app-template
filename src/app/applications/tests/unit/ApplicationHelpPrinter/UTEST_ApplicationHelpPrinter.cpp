@@ -21,7 +21,7 @@ class UTEST_ApplicationHelpPrinter : public Test
   char** argv{nullptr};
 
   std::shared_ptr<ApplicationHelpPrinter> app;
-  std::shared_ptr<ApplicationContext> appCtx;
+  ApplicationContextPtr appCtx;
 };
 
 TEST_F(UTEST_ApplicationHelpPrinter, no_context_error)

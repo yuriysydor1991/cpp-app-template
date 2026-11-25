@@ -2,6 +2,7 @@
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATIONCONTEXT_CLASS_H
 
 #include <atomic>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -29,6 +30,9 @@ class IDBConnection;
 class ApplicationContext
 {
  public:
+  /// @brief The application context instance holder type.
+  using ApplicationContextPtr = std::shared_ptr<ApplicationContext>;
+
   /**
    * @brief An ApplicationContext constructor.
    *
@@ -180,6 +184,8 @@ class ApplicationContext
   /// Application class implementation.
   std::shared_ptr<IDBConnection> mdbconn;
 };
+
+using ApplicationContextPtr = ApplicationContext::ApplicationContextPtr;
 
 }  // namespace app
 

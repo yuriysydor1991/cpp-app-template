@@ -4,6 +4,7 @@
 #include <gmock/gmock.h>
 
 #include <atomic>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -15,6 +16,8 @@ namespace app
 class ApplicationContext
 {
  public:
+  using ApplicationContextPtr = std::shared_ptr<ApplicationContext>;
+
   ApplicationContext(int& gargc, char**& gargv);
 
   int& get_argc() const { return margc; }
@@ -82,6 +85,8 @@ class ApplicationContext
   std::string mdb_dbname;
   std::shared_ptr<IDBConnection> mdbconn;
 };
+
+using ApplicationContextPtr = ApplicationContext::ApplicationContextPtr;
 
 }  // namespace app
 

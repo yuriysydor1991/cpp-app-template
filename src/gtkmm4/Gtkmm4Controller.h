@@ -30,10 +30,10 @@ class Gtkmm4Controller
    * @return Returns the application return status: zero on success and a
    * non-zero value otherwise.
    */
-  virtual int run(std::shared_ptr<app::ApplicationContext> nactx);
+  virtual int run(app::ApplicationContextPtr nactx);
 
  private:
-  std::shared_ptr<app::ApplicationContext> actx;
+  app::ApplicationContextPtr actx;
 };
 
 }  // namespace Gtkmm4i

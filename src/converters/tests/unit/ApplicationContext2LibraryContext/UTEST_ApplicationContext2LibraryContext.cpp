@@ -18,13 +18,12 @@ class UTEST_ApplicationContext2LibraryContext : public Test
   {
   }
 
-  std::shared_ptr<ApplicationContext> create_app_context(int& gargc,
-                                                         char**& gargv)
+  ApplicationContextPtr create_app_context(int& gargc, char**& gargv)
   {
     return std::make_shared<ApplicationContext>(gargc, gargv);
   }
 
-  std::shared_ptr<ApplicationContext> default_app_context()
+  ApplicationContextPtr default_app_context()
   {
     return create_app_context(argc, argv);
   }

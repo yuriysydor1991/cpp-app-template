@@ -30,15 +30,14 @@ class Application : public IApplication
    * @return Returns the application return status. A zero value on the success
    * and other value otherwise.
    */
-  virtual int run(std::shared_ptr<ApplicationContext> ctx) override;
+  virtual int run(ApplicationContextPtr ctx) override;
 
  protected:
   using LibraryContextPtr = CppAppTemplate012::LibraryContextPtr;
   using DefaultCtxConPtr = converters::DefaultCtxConPtr;
 
   DefaultCtxConPtr create_ctx_converter();
-  LibraryContextPtr create_and_convert_libctx(
-      std::shared_ptr<ApplicationContext> ctx);
+  LibraryContextPtr create_and_convert_libctx(ApplicationContextPtr ctx);
 };
 
 }  // namespace app

@@ -115,8 +115,7 @@ class UTEST_ApplicationFactory : public Test
         onMockCreateSignalsHandlerEnsurer.AsStdFunction();
   }
 
-  inline std::shared_ptr<ApplicationContext> create_context(int& gargc,
-                                                            char**& gargv)
+  inline ApplicationContextPtr create_context(int& gargc, char**& gargv)
   {
     return std::make_shared<ApplicationContext>(gargc, gargv);
   }
@@ -136,8 +135,7 @@ TEST_F(UTEST_ApplicationFactory, create_default_context)
   int argc{0};
   char** argv{nullptr};
 
-  std::shared_ptr<ApplicationContext> ctx =
-      factory->create_default_context(argc, argv);
+  ApplicationContextPtr ctx = factory->create_default_context(argc, argv);
 
   EXPECT_NE(ctx, nullptr);
 }
@@ -192,7 +190,7 @@ TEST_F(UTEST_ApplicationFactory, create_context)
       .WillOnce(Invoke([&](CommandLineParser& instance) {
         EXPECT_CALL(instance, parse_args(_))
             .Times(1)
-            .WillOnce(Invoke([&](std::shared_ptr<ApplicationContext> ctx) {
+            .WillOnce(Invoke([&](ApplicationContextPtr ctx) {
               EXPECT_EQ(&ctx->get_argc(), &customArgc);
               EXPECT_EQ(&ctx->get_argv(), &customArgv);
               return true;
@@ -201,8 +199,7 @@ TEST_F(UTEST_ApplicationFactory, create_context)
 
   CommandLineParser::onMockCreate = onMockCreateEnsurer.AsStdFunction();
 
-  std::shared_ptr<ApplicationContext> ctx =
-      factory->create_context(customArgc, customArgv);
+  ApplicationContextPtr ctx = factory->create_context(customArgc, customArgv);
 
   EXPECT_NE(ctx, nullptr);
 }
@@ -216,8 +213,7 @@ TEST_F(UTEST_ApplicationFactory, create_application_invalid_context_error)
 
 TEST_F(UTEST_ApplicationFactory, create_application_default)
 {
-  std::shared_ptr<ApplicationContext> ctx =
-      create_context(customArgc, customArgv);
+  ApplicationContextPtr ctx = create_context(customArgc, customArgv);
 
   std::shared_ptr<IApplication> app = factory->create_application(ctx);
 
@@ -227,8 +223,7 @@ TEST_F(UTEST_ApplicationFactory, create_application_default)
 
 TEST_F(UTEST_ApplicationFactory, create_application_help_printer)
 {
-  std::shared_ptr<ApplicationContext> ctx =
-      create_context(customArgc, customArgv);
+  ApplicationContextPtr ctx = create_context(customArgc, customArgv);
 
   ctx->set_print_help_and_exit(true);
 
@@ -240,8 +235,7 @@ TEST_F(UTEST_ApplicationFactory, create_application_help_printer)
 
 TEST_F(UTEST_ApplicationFactory, create_application_version_printer)
 {
-  std::shared_ptr<ApplicationContext> ctx =
-      create_context(customArgc, customArgv);
+  ApplicationContextPtr ctx = create_context(customArgc, customArgv);
 
   ctx->set_print_version_and_exit(true);
 
@@ -261,7 +255,7 @@ TEST_F(UTEST_ApplicationFactory, factory_run_default_app)
       .WillOnce(Invoke([&](CommandLineParser& instance) {
         EXPECT_CALL(instance, parse_args(_))
             .Times(1)
-            .WillOnce(Invoke([&](std::shared_ptr<ApplicationContext> ctx) {
+            .WillOnce(Invoke([&](ApplicationContextPtr ctx) {
               EXPECT_EQ(&ctx->get_argc(), &customArgc);
               EXPECT_EQ(&ctx->get_argv(), &customArgv);
               return true;
@@ -292,7 +286,7 @@ TEST_F(UTEST_ApplicationFactory, factory_run_help_app)
       .WillOnce(Invoke([&](CommandLineParser& instance) {
         EXPECT_CALL(instance, parse_args(_))
             .Times(1)
-            .WillOnce(Invoke([&](std::shared_ptr<ApplicationContext> ctx) {
+            .WillOnce(Invoke([&](ApplicationContextPtr ctx) {
               EXPECT_EQ(&ctx->get_argc(), &customArgc);
               EXPECT_EQ(&ctx->get_argv(), &customArgv);
               ctx->set_print_help_and_exit(true);
@@ -325,7 +319,7 @@ TEST_F(UTEST_ApplicationFactory, factory_run_version_app)
       .WillOnce(Invoke([&](CommandLineParser& instance) {
         EXPECT_CALL(instance, parse_args(_))
             .Times(1)
-            .WillOnce(Invoke([&](std::shared_ptr<ApplicationContext> ctx) {
+            .WillOnce(Invoke([&](ApplicationContextPtr ctx) {
               EXPECT_EQ(&ctx->get_argc(), &customArgc);
               EXPECT_EQ(&ctx->get_argv(), &customArgv);
               ctx->set_print_version_and_exit(true);
@@ -394,7 +388,7 @@ TEST_F(UTEST_ApplicationFactory, factory_execute_default_app)
       .WillOnce(Invoke([&](CommandLineParser& instance) {
         EXPECT_CALL(instance, parse_args(_))
             .Times(1)
-            .WillOnce(Invoke([&](std::shared_ptr<ApplicationContext> ctx) {
+            .WillOnce(Invoke([&](ApplicationContextPtr ctx) {
               EXPECT_EQ(&ctx->get_argc(), &customArgc);
               EXPECT_EQ(&ctx->get_argv(), &customArgv);
               return true;
@@ -422,8 +416,7 @@ TEST_F(UTEST_ApplicationFactory, init_logging_invalid_context_error)
 
 TEST_F(UTEST_ApplicationFactory, init_logging_default_log_file)
 {
-  std::shared_ptr<ApplicationContext> ctx =
-      create_context(customArgc, customArgv);
+  ApplicationContextPtr ctx = create_context(customArgc, customArgv);
 
   EXPECT_TRUE(factory->init_logging(ctx));
 }
@@ -432,8 +425,7 @@ TEST_F(UTEST_ApplicationFactory, init_logging_custom_log_file)
 {
   use_the_custom_log_file("custom.log");
 
-  std::shared_ptr<ApplicationContext> ctx =
-      create_context(customArgc, customArgv);
+  ApplicationContextPtr ctx = create_context(customArgc, customArgv);
 
   EXPECT_TRUE(factory->init_logging(ctx));
 }
@@ -443,8 +435,7 @@ TEST_F(UTEST_ApplicationFactory, init_logging_unopenable_log_file_error)
   use_the_custom_log_file("/nonexistent-directory/custom.log");
   logMock::log_init_path_result = false;
 
-  std::shared_ptr<ApplicationContext> ctx =
-      create_context(customArgc, customArgv);
+  ApplicationContextPtr ctx = create_context(customArgc, customArgv);
 
   testing::internal::CaptureStderr();
 
@@ -463,10 +454,8 @@ TEST_F(UTEST_ApplicationFactory, init_logging_skips_the_help_and_the_version)
     return std::string{"custom.log"};
   };
 
-  std::shared_ptr<ApplicationContext> helpCtx =
-      create_context(customArgc, customArgv);
-  std::shared_ptr<ApplicationContext> versionCtx =
-      create_context(customArgc, customArgv);
+  ApplicationContextPtr helpCtx = create_context(customArgc, customArgv);
+  ApplicationContextPtr versionCtx = create_context(customArgc, customArgv);
 
   helpCtx->set_print_help_and_exit(true);
   versionCtx->set_print_version_and_exit(true);

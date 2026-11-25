@@ -23,7 +23,7 @@ class ApplicationContext2LibraryContext
   using DefaultCtxConPtr = std::shared_ptr<ApplicationContext2LibraryContext>;
 
   using LibraryContextPtr = CppAppTemplate012::LibraryContextPtr;
-  using ApplicationContext = app::ApplicationContext;
+  using ApplicationContextPtr = app::ApplicationContextPtr;
 
   virtual ~ApplicationContext2LibraryContext() = default;
   ApplicationContext2LibraryContext() = default;
@@ -42,8 +42,7 @@ class ApplicationContext2LibraryContext
    * @return Returns a true value in case of successful data transfer and
    * a false boolean value in case of any error.
    */
-  virtual bool convert(std::shared_ptr<ApplicationContext> appctx,
-                       LibraryContextPtr libctx);
+  virtual bool convert(ApplicationContextPtr appctx, LibraryContextPtr libctx);
 };
 
 using DefaultCtxConPtr = ApplicationContext2LibraryContext::DefaultCtxConPtr;

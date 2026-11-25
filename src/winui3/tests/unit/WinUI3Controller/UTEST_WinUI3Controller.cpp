@@ -55,8 +55,7 @@ class UTEST_WinUI3Controller : public Test
 
   TestController controller;
 
-  std::shared_ptr<ApplicationContext> ctx{
-      std::make_shared<ApplicationContext>(argc, argv)};
+  ApplicationContextPtr ctx{std::make_shared<ApplicationContext>(argc, argv)};
 };
 
 TEST_F(UTEST_WinUI3Controller, null_context_is_rejected_without_launching)

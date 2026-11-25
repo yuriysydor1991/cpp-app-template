@@ -24,7 +24,7 @@ class CommandLineParser
 
   inline static std::function<void(CommandLineParser& instance)> onMockCreate;
 
-  MOCK_METHOD(bool, parse_args, (std::shared_ptr<ApplicationContext> ctx));
+  MOCK_METHOD(bool, parse_args, (ApplicationContextPtr ctx));
 
   inline static std::function<std::string(const int&, char** const&)>
       mock_get_custom_logfile;

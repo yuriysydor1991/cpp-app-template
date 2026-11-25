@@ -24,7 +24,7 @@ class WinUI3Controller
 
   inline static std::function<void(WinUI3Controller&)> onMockCreate;
 
-  MOCK_METHOD(int, run, (std::shared_ptr<app::ApplicationContext>));
+  MOCK_METHOD(int, run, (app::ApplicationContextPtr));
 };
 
 }  // namespace winui3

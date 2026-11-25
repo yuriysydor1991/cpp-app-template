@@ -29,7 +29,7 @@ class WinUI3Controller
    * @return Returns the application return status. Zero at success and a
    * non-zero value otherwise.
    */
-  virtual int run(std::shared_ptr<app::ApplicationContext> nactx);
+  virtual int run(app::ApplicationContextPtr nactx);
 
  protected:
   /**
@@ -38,7 +38,7 @@ class WinUI3Controller
   virtual int launch(int& argc, char**& argv);
 
  private:
-  std::shared_ptr<app::ApplicationContext> actx;
+  app::ApplicationContextPtr actx;
 };
 
 }  // namespace winui3

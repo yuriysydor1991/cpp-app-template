@@ -19,7 +19,7 @@ class UTEST_ApplicationVersionPrinter : public Test
   char** argv{nullptr};
 
   std::shared_ptr<ApplicationVersionPrinter> app;
-  std::shared_ptr<ApplicationContext> appCtx;
+  ApplicationContextPtr appCtx;
 };
 
 TEST_F(UTEST_ApplicationVersionPrinter, no_context_error)

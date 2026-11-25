@@ -32,7 +32,7 @@ class PgSQL : public app::IDBConnection
    *
    * @returns Returns a true boolean value on the success or false otherwise.
    */
-  virtual bool connect(std::shared_ptr<app::ApplicationContext> nctx) override;
+  virtual bool connect(app::ApplicationContextPtr nctx) override;
 
   /**
    * @brief Returns a true boolean value in case of a present PostgreSQL
@@ -58,8 +58,7 @@ class PgSQL : public app::IDBConnection
    * The context is not stored, so the context may own this connection
    * object without a shared pointers cycle.
    */
-  virtual std::string make_conn_string(
-      const std::shared_ptr<app::ApplicationContext>& nctx);
+  virtual std::string make_conn_string(const app::ApplicationContextPtr& nctx);
 
   virtual pqxx::result execute_query(const std::string& query);
 

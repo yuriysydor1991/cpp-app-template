@@ -21,8 +21,7 @@ class CTEST_PgSQL : public Test
   int argc{0};
   char** argv{nullptr};
 
-  std::shared_ptr<ApplicationContext> ctx{
-      std::make_shared<ApplicationContext>(argc, argv)};
+  ApplicationContextPtr ctx{std::make_shared<ApplicationContext>(argc, argv)};
   std::shared_ptr<PgSQL> pgsql{std::make_shared<PgSQL>()};
 };
 

@@ -10,7 +10,7 @@
 namespace pgsqli
 {
 
-bool PgSQL::connect(std::shared_ptr<app::ApplicationContext> nctx)
+bool PgSQL::connect(app::ApplicationContextPtr nctx)
 {
   assert(nctx != nullptr);
 
@@ -43,8 +43,7 @@ std::shared_ptr<sql::QueryMaker> PgSQL::create_query_maker()
   return std::make_shared<sql::QueryMaker>();
 }
 
-std::string PgSQL::make_conn_string(
-    const std::shared_ptr<app::ApplicationContext>& nctx)
+std::string PgSQL::make_conn_string(const app::ApplicationContextPtr& nctx)
 {
   auto csmaker = std::make_shared<helpers::PgConnStringMaker>();
 

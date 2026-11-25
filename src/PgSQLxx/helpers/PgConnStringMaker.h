@@ -24,8 +24,7 @@ class PgConnStringMaker
    * escaped, so values with spaces or quotes stay intact and can't inject
    * other connection keywords.
    */
-  virtual std::string make_conn_string(
-      const std::shared_ptr<app::ApplicationContext>& actx);
+  virtual std::string make_conn_string(const app::ApplicationContextPtr& actx);
 
  private:
   static void append(const std::string& field, const std::string& value,

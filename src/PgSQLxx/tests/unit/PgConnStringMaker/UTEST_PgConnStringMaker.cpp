@@ -28,8 +28,7 @@ class UTEST_PgConnStringMaker : public Test
 
   std::shared_ptr<PgConnStringMaker> maker{
       std::make_shared<PgConnStringMaker>()};
-  std::shared_ptr<ApplicationContext> ctx{
-      std::make_shared<ApplicationContext>(argc, argv)};
+  ApplicationContextPtr ctx{std::make_shared<ApplicationContext>(argc, argv)};
 };
 
 TEST_F(UTEST_PgConnStringMaker, null_context_returns_empty)

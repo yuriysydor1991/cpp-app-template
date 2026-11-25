@@ -10,7 +10,7 @@ namespace pgsqli::helpers
 {
 
 std::string PgConnStringMaker::make_conn_string(
-    const std::shared_ptr<app::ApplicationContext>& actx)
+    const app::ApplicationContextPtr& actx)
 {
   assert(actx != nullptr);
 

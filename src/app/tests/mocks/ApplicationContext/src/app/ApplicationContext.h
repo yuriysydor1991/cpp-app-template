@@ -16,6 +16,8 @@ namespace app
 class ApplicationContext
 {
  public:
+  using ApplicationContextPtr = std::shared_ptr<ApplicationContext>;
+
   ApplicationContext(int& gargc, char**& gargv);
 
   int& get_argc() const { return margc; }
@@ -111,6 +113,8 @@ class ApplicationContext
   std::string mdb_timeout_ms;
   std::shared_ptr<IDBConnection> mdb_connection;
 };
+
+using ApplicationContextPtr = ApplicationContext::ApplicationContextPtr;
 
 }  // namespace app
 

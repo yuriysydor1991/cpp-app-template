@@ -50,7 +50,7 @@ matplot::figure_handle make_example_figure()
 
 }  // namespace
 
-bool MatPlotxxController::run(std::shared_ptr<app::ApplicationContext> ctx)
+bool MatPlotxxController::run(app::ApplicationContextPtr ctx)
 {
   assert(ctx != nullptr);
 
@@ -73,7 +73,7 @@ bool MatPlotxxController::run(std::shared_ptr<app::ApplicationContext> ctx)
 }
 
 void MatPlotxxController::wait_for_enter_or_stop(
-    const std::shared_ptr<app::ApplicationContext>& ctx)
+    const app::ApplicationContextPtr& ctx)
 {
 #if defined(_WIN32)
   // No poll call there, so the stop flag is checked after the ENTER key alone.

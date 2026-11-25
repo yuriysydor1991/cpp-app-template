@@ -30,7 +30,7 @@ class MatPlotxxController
    *
    * @return Returns true when the plot got shown.
    */
-  virtual bool run(std::shared_ptr<app::ApplicationContext> ctx);
+  virtual bool run(app::ApplicationContextPtr ctx);
 
   /**
    * @brief Draws the example plot into the given image file, the format of
@@ -50,8 +50,7 @@ class MatPlotxxController
    *
    * @param ctx The application context to watch the stop flag of.
    */
-  static void wait_for_enter_or_stop(
-      const std::shared_ptr<app::ApplicationContext>& ctx);
+  static void wait_for_enter_or_stop(const app::ApplicationContextPtr& ctx);
 
   /// @brief How often the shown plot checks the application stop flag.
   inline static constexpr const std::chrono::milliseconds STOP_CHECK_PERIOD{

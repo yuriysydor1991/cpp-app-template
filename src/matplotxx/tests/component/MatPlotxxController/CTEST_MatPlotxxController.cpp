@@ -38,7 +38,7 @@ class CTEST_MatPlotxxController : public Test
   char** argv{nullptr};
 
   MatPlotxxControllerPtr controller;
-  std::shared_ptr<app::ApplicationContext> ctx;
+  app::ApplicationContextPtr ctx;
   const std::string path;
 };
 

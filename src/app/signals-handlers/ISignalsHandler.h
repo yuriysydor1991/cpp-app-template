@@ -36,7 +36,7 @@ class ISignalsHandler
    * @return Implementors should return a true value if at least one signal is
    * covered from now on and a false one in case of any error.
    */
-  virtual bool install(std::shared_ptr<ApplicationContext> ctx) = 0;
+  virtual bool install(ApplicationContextPtr ctx) = 0;
 
   /**
    * @brief Restores the default OS reaction on the covered signals and forgets

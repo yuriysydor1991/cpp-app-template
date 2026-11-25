@@ -20,7 +20,7 @@ class MatPlotxxController
   virtual ~MatPlotxxController() = default;
   MatPlotxxController() = default;
 
-  MOCK_METHOD(bool, run, (std::shared_ptr<app::ApplicationContext> ctx));
+  MOCK_METHOD(bool, run, (app::ApplicationContextPtr ctx));
   MOCK_METHOD(bool, save, (const std::string& path));
 
   using createMockType = testing::MockFunction<MatPlotxxControllerPtr()>;

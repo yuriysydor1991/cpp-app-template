@@ -131,7 +131,7 @@ void report_coordinates(const cfitsioi::CFITSIOContextPtr& fctx)
 
 }  // namespace
 
-int Application::run(std::shared_ptr<ApplicationContext> ctx)
+int Application::run(ApplicationContextPtr ctx)
 {
   assert(ctx != nullptr);
 

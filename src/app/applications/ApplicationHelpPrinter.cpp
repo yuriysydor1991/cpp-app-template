@@ -15,7 +15,7 @@ namespace app
 
 using gettexti::tr;
 
-int ApplicationHelpPrinter::run(std::shared_ptr<ApplicationContext> ctx)
+int ApplicationHelpPrinter::run(ApplicationContextPtr ctx)
 {
   assert(ctx != nullptr);
 

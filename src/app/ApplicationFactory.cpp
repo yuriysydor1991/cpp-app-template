@@ -20,8 +20,8 @@
 namespace app
 {
 
-std::shared_ptr<ApplicationContext> ApplicationFactory::create_default_context(
-    int& gargc, char**& gargv)
+ApplicationContextPtr ApplicationFactory::create_default_context(int& gargc,
+                                                                 char**& gargv)
 {
   return std::make_shared<ApplicationContext>(gargc, gargv);
 }
@@ -57,11 +57,10 @@ void ApplicationFactory::bind_message_catalogs(int& gargc, char**& gargv)
   }
 }
 
-std::shared_ptr<ApplicationContext> ApplicationFactory::create_context(
-    int& gargc, char**& gargv)
+ApplicationContextPtr ApplicationFactory::create_context(int& gargc,
+                                                         char**& gargv)
 {
-  std::shared_ptr<ApplicationContext> ctx =
-      create_default_context(gargc, gargv);
+  ApplicationContextPtr ctx = create_default_context(gargc, gargv);
   std::shared_ptr<CommandLineParser> argParser = create_default_arg_parser();
 
   assert(ctx != nullptr);
@@ -98,7 +97,7 @@ std::shared_ptr<IApplication> ApplicationFactory::create_version_printer()
 }
 
 std::shared_ptr<IApplication> ApplicationFactory::create_application(
-    std::shared_ptr<ApplicationContext> ctx)
+    ApplicationContextPtr ctx)
 {
   assert(ctx != nullptr);
 
@@ -122,7 +121,7 @@ std::shared_ptr<IApplication> ApplicationFactory::create_application(
   return create_default_application();
 }
 
-bool ApplicationFactory::init_logging(std::shared_ptr<ApplicationContext> ctx)
+bool ApplicationFactory::init_logging(ApplicationContextPtr ctx)
 {
   assert(ctx != nullptr);
 
@@ -155,7 +154,7 @@ int ApplicationFactory::run(int& gargc, char**& gargv)
 {
   // The arguments are parsed first, so the help and the version printers, as
   // well as a bad usage, open no log file at all.
-  std::shared_ptr<ApplicationContext> ctx = create_context(gargc, gargv);
+  ApplicationContextPtr ctx = create_context(gargc, gargv);
 
   assert(ctx != nullptr);
 

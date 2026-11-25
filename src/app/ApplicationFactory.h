@@ -31,8 +31,8 @@ class ApplicationFactory
    *
    * @return Returns filled application context instance.
    */
-  virtual std::shared_ptr<ApplicationContext> create_default_context(
-      int& gargc, char**& gargv);
+  virtual ApplicationContextPtr create_default_context(int& gargc,
+                                                       char**& gargv);
 
   /**
    * @brief Creates a command line parser instance to parse application context
@@ -94,8 +94,7 @@ class ApplicationFactory
    *
    * @return Returns filled and parsed application context
    */
-  virtual std::shared_ptr<ApplicationContext> create_context(int& gargc,
-                                                             char**& gargv);
+  virtual ApplicationContextPtr create_context(int& gargc, char**& gargv);
 
   /**
    * @brief Inits the logging subsystem in accordance with the parsed context:
@@ -108,7 +107,7 @@ class ApplicationFactory
    * opened and true otherwise. A default log file which can not be opened is
    * not an error: the logging goes into the console only then.
    */
-  virtual bool init_logging(std::shared_ptr<ApplicationContext> ctx);
+  virtual bool init_logging(ApplicationContextPtr ctx);
 
   /**
    * @brief Creates application in accordance with a given context data.
@@ -119,7 +118,7 @@ class ApplicationFactory
    * @return Returns created application.
    */
   virtual std::shared_ptr<IApplication> create_application(
-      std::shared_ptr<ApplicationContext> ctx);
+      ApplicationContextPtr ctx);
 
   /**
    * @brief Creates all necessary instances and calls the appropriate

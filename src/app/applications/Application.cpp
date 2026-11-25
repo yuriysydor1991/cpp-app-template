@@ -40,7 +40,7 @@ bool answer(llamacppi::LlamaCPPController& llama, const std::string& question,
 
 }  // namespace
 
-int Application::run(std::shared_ptr<ApplicationContext> ctx)
+int Application::run(ApplicationContextPtr ctx)
 {
   assert(ctx != nullptr);
 

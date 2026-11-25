@@ -13,7 +13,7 @@
 namespace app
 {
 
-bool CommandLineParser::parse_args(std::shared_ptr<ApplicationContext> ctx)
+bool CommandLineParser::parse_args(ApplicationContextPtr ctx)
 {
   assert(ctx != nullptr);
 
@@ -40,8 +40,8 @@ bool CommandLineParser::parse_args(std::shared_ptr<ApplicationContext> ctx)
 }
 
 bool CommandLineParser::check_4_data(
-    std::shared_ptr<ApplicationContext> ctx, const std::string& param,
-    const bool hasNext, [[maybe_unused]] const std::string& nextParam)
+    ApplicationContextPtr ctx, const std::string& param, const bool hasNext,
+    [[maybe_unused]] const std::string& nextParam)
 {
   assert(ctx != nullptr);
 
@@ -62,7 +62,7 @@ bool CommandLineParser::check_4_data(
   return true;
 }
 
-bool CommandLineParser::parse_arg(std::shared_ptr<ApplicationContext> ctx,
+bool CommandLineParser::parse_arg(ApplicationContextPtr ctx,
                                   const std::string& param, const bool hasNext,
                                   const std::string& nextParam, int& paramIndex)
 {

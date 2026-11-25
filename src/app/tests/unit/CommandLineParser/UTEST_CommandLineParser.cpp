@@ -20,7 +20,7 @@ class UTEST_CommandLineParser : public Test
   {
   }
 
-  std::shared_ptr<ApplicationContext> create_context(int& gargc, char**& gargv)
+  ApplicationContextPtr create_context(int& gargc, char**& gargv)
   {
     return std::make_shared<ApplicationContext>(gargc, gargv);
   }
@@ -69,7 +69,7 @@ class UTEST_CommandLineParser : public Test
   char** argv{nullptr};
 
   std::shared_ptr<CommandLineParser> parser;
-  std::shared_ptr<ApplicationContext> appctx;
+  ApplicationContextPtr appctx;
 };
 
 TEST_F(UTEST_CommandLineParser, no_context_error)

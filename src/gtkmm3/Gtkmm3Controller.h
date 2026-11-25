@@ -20,7 +20,7 @@ class Gtkmm3Controller
   virtual ~Gtkmm3Controller() = default;
   Gtkmm3Controller() = default;
 
-  virtual int run(std::shared_ptr<app::ApplicationContext> nactx);
+  virtual int run(app::ApplicationContextPtr nactx);
 
  protected:
   virtual bool create_main_window_loader();
@@ -28,7 +28,7 @@ class Gtkmm3Controller
   virtual bool create_events_handler();
   virtual bool init_main_window();
 
-  std::shared_ptr<app::ApplicationContext> actx;
+  app::ApplicationContextPtr actx;
 
   main_window::LoaderPtr loader;
   main_window::EventsHandlerPtr handler;

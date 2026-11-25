@@ -8,7 +8,7 @@
 namespace Gtkmm3i
 {
 
-StopFlagWatcher::StopFlagWatcher(std::shared_ptr<app::ApplicationContext> nactx,
+StopFlagWatcher::StopFlagWatcher(app::ApplicationContextPtr nactx,
                                  Gio::Application& napp)
     : actx{std::move(nactx)}, gapp{napp}
 {

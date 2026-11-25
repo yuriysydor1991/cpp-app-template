@@ -20,15 +20,14 @@ class StopFlagWatcher : public sigc::trackable
 {
  public:
   virtual ~StopFlagWatcher() = default;
-  StopFlagWatcher(std::shared_ptr<app::ApplicationContext> nactx,
-                  Gio::Application& napp);
+  StopFlagWatcher(app::ApplicationContextPtr nactx, Gio::Application& napp);
 
  private:
   bool quit_on_stop();
 
   inline static constexpr unsigned int poll_period_ms = 100;
 
-  std::shared_ptr<app::ApplicationContext> actx;
+  app::ApplicationContextPtr actx;
   Gio::Application& gapp;
 };
 

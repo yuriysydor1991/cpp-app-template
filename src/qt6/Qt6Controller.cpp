@@ -23,7 +23,7 @@ constexpr const int W_DEFAULT_WIDTH = 650;
 constexpr const int W_DEFAULT_HEIGHT = 400;
 }  // namespace
 
-int Qt6Controller::run(std::shared_ptr<app::ApplicationContext> actx)
+int Qt6Controller::run(app::ApplicationContextPtr actx)
 {
   // Every message the toolkit reports lands in the application log from here
   // on. It is taken over before anything of the toolkit is touched, so the

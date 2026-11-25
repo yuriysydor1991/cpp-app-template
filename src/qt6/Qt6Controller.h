@@ -35,7 +35,7 @@ class Qt6Controller
    * @return Should return the application return status.
    * Zero at success and non-zero value otherwise.
    */
-  virtual int run(std::shared_ptr<app::ApplicationContext> actx);
+  virtual int run(app::ApplicationContextPtr actx);
 
  private:
   /// @brief How often the event loop checks the context stop flag.

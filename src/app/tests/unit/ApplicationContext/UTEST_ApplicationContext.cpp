@@ -19,7 +19,7 @@ class UTEST_ApplicationContext : public Test
 
   UTEST_ApplicationContext() : appCtx{create_context(argc, argv)} {}
 
-  std::shared_ptr<ApplicationContext> create_context(int& gargc, char**& gargv)
+  ApplicationContextPtr create_context(int& gargc, char**& gargv)
   {
     return std::make_shared<ApplicationContext>(gargc, gargv);
   }
@@ -27,7 +27,7 @@ class UTEST_ApplicationContext : public Test
   int argc{0};
   char** argv{nullptr};
 
-  std::shared_ptr<ApplicationContext> appCtx;
+  ApplicationContextPtr appCtx;
 };
 
 TEST_F(UTEST_ApplicationContext, empty_context)

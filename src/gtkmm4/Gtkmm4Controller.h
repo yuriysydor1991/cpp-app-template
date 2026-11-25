@@ -20,7 +20,7 @@ class Gtkmm4Controller
   virtual ~Gtkmm4Controller() = default;
   Gtkmm4Controller() = default;
 
-  virtual int run(std::shared_ptr<app::ApplicationContext> nactx);
+  virtual int run(app::ApplicationContextPtr nactx);
 
   /**
    * @brief Instantiates the libadwaita main window.
@@ -30,7 +30,7 @@ class Gtkmm4Controller
   static main_window::AdwaitaWindowPtr create_main_window();
 
  private:
-  std::shared_ptr<app::ApplicationContext> actx;
+  app::ApplicationContextPtr actx;
 };
 
 }  // namespace Gtkmm4i

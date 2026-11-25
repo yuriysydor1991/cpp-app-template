@@ -9,7 +9,7 @@
 namespace app
 {
 
-int Application::run(std::shared_ptr<ApplicationContext> ctx)
+int Application::run(ApplicationContextPtr ctx)
 {
   assert(ctx != nullptr);
 
@@ -31,7 +31,7 @@ int Application::run(std::shared_ptr<ApplicationContext> ctx)
 }
 
 std::shared_ptr<sqlite3i::SQLiteController> Application::create_db_controller(
-    [[maybe_unused]] std::shared_ptr<ApplicationContext> ctx)
+    [[maybe_unused]] ApplicationContextPtr ctx)
 {
   assert(ctx != nullptr);
 

@@ -28,7 +28,7 @@ class Application : public IApplication
    * @return Returns the application return status. A zero value on the success
    * and other value otherwise.
    */
-  virtual int run(std::shared_ptr<ApplicationContext> ctx) override;
+  virtual int run(ApplicationContextPtr ctx) override;
 
  protected:
   /**
@@ -40,7 +40,7 @@ class Application : public IApplication
    * @return Returns the new SQLite controller instance.
    */
   virtual std::shared_ptr<sqlite3i::SQLiteController> create_db_controller(
-      std::shared_ptr<ApplicationContext> ctx);
+      ApplicationContextPtr ctx);
 };
 
 }  // namespace app

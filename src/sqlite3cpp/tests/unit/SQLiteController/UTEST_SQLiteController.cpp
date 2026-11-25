@@ -37,8 +37,7 @@ class UTEST_SQLiteController : public Test
   int argc{0};
   char** argv{nullptr};
 
-  std::shared_ptr<ApplicationContext> actx{
-      std::make_shared<ApplicationContext>(argc, argv)};
+  ApplicationContextPtr actx{std::make_shared<ApplicationContext>(argc, argv)};
   std::shared_ptr<SQLiteController> controller{
       std::make_shared<SQLiteController>()};
 };

@@ -14,7 +14,7 @@
 namespace sqlite3i
 {
 
-bool SQLiteController::connect(std::shared_ptr<app::ApplicationContext> nctx)
+bool SQLiteController::connect(app::ApplicationContextPtr nctx)
 {
   assert(nctx != nullptr);
 

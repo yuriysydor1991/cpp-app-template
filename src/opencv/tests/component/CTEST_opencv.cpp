@@ -69,7 +69,7 @@ class CTEST_opencv : public Test
   char** argv{nullptr};
 
   OpenCVController::OpenCVControllerPtr controller;
-  std::shared_ptr<app::ApplicationContext> ctx;
+  app::ApplicationContextPtr ctx;
   std::vector<std::string> fixturePaths;
 };
 

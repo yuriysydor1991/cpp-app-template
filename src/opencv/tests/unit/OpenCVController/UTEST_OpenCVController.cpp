@@ -25,7 +25,7 @@ class UTEST_OpenCVController : public Test
   char** argv{nullptr};
 
   OpenCVController::OpenCVControllerPtr controller;
-  std::shared_ptr<app::ApplicationContext> ctx;
+  app::ApplicationContextPtr ctx;
 };
 
 TEST_F(UTEST_OpenCVController, create_success)

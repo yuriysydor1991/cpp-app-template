@@ -29,7 +29,7 @@ class OpenCVController
  public:
   using faces_buffer = std::vector<cv::Rect>;
   using OpenCVControllerPtr = std::shared_ptr<OpenCVController>;
-  using appctx = std::shared_ptr<app::ApplicationContext>;
+  using appctx = app::ApplicationContextPtr;
 
   virtual ~OpenCVController() = default;
   OpenCVController();

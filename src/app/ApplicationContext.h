@@ -2,6 +2,7 @@
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATIONCONTEXT_CLASS_H
 
 #include <atomic>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -25,6 +26,9 @@ namespace app
 class ApplicationContext
 {
  public:
+  /// @brief The application context instance holder type.
+  using ApplicationContextPtr = std::shared_ptr<ApplicationContext>;
+
   /**
    * @brief An ApplicationContext constructor.
    *
@@ -195,6 +199,8 @@ class ApplicationContext
    */
   std::string mchatgpt_model;
 };
+
+using ApplicationContextPtr = ApplicationContext::ApplicationContextPtr;
 
 }  // namespace app
 

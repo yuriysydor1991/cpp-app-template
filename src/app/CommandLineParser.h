@@ -31,7 +31,7 @@ class CommandLineParser
    *
    * @return Returns true on success and false in case of any error.
    */
-  virtual bool parse_args(std::shared_ptr<ApplicationContext> ctx);
+  virtual bool parse_args(ApplicationContextPtr ctx);
 
   /**
    * @brief Method that searches through the cmd params for
@@ -62,9 +62,9 @@ class CommandLineParser
    *
    * @return Returns true on the success and false in case of any error.
    */
-  virtual bool parse_arg(std::shared_ptr<ApplicationContext> ctx,
-                         const std::string& param, const bool hasNext,
-                         const std::string& nextParam, int& paramIndex);
+  virtual bool parse_arg(ApplicationContextPtr ctx, const std::string& param,
+                         const bool hasNext, const std::string& nextParam,
+                         int& paramIndex);
 
   /**
    * @brief Check if given parameter param must have some data value placed
@@ -80,9 +80,8 @@ class CommandLineParser
    * nextParam contains it or command line flag param does not require any data
    * next to it. And a false values otherwise.
    */
-  virtual bool check_4_data(std::shared_ptr<ApplicationContext> ctx,
-                            const std::string& param, const bool hasNext,
-                            const std::string& nextParam);
+  virtual bool check_4_data(ApplicationContextPtr ctx, const std::string& param,
+                            const bool hasNext, const std::string& nextParam);
 
   /**
    * @brief Method should return the set of command line parameters that are

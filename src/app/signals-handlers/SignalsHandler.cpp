@@ -19,7 +19,7 @@ namespace app
 
 SignalsHandler::~SignalsHandler() { SignalsHandler::uninstall(); }
 
-bool SignalsHandler::install(std::shared_ptr<ApplicationContext> ctx)
+bool SignalsHandler::install(ApplicationContextPtr ctx)
 {
   assert(ctx != nullptr);
 

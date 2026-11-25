@@ -31,7 +31,7 @@ class IApplication
    * @return Implementors should return a zero value in case of success and
    * non-zero value in case of any error.
    */
-  virtual int run(std::shared_ptr<ApplicationContext> ctx) = 0;
+  virtual int run(ApplicationContextPtr ctx) = 0;
 
   /// @brief Commonly used return status in case of any app error.
   inline static constexpr const int INVALID = 1;

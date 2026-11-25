@@ -44,7 +44,7 @@ class SignalsHandler : public ISignalsHandler
    * signals on the current platform is not an error on its own, so the whole
    * facade still reports a success as long as any other one succeeds.
    */
-  virtual bool install(std::shared_ptr<ApplicationContext> ctx) override;
+  virtual bool install(ApplicationContextPtr ctx) override;
 
   /// @brief Calls the ISignalsHandler::uninstall method of every created
   /// subhandler and releases them. See the ISignalsHandler interface.

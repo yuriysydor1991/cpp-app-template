@@ -26,8 +26,7 @@ class PauseSignalsHandler : public ISignalsHandler
 
   inline static std::function<void(PauseSignalsHandler&)> onMockCreate;
 
-  MOCK_METHOD(bool, install, (std::shared_ptr<ApplicationContext> ctx),
-              (override));
+  MOCK_METHOD(bool, install, (ApplicationContextPtr ctx), (override));
   MOCK_METHOD(void, uninstall, (), (override));
 };
 

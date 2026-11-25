@@ -11,8 +11,8 @@
 namespace wxwi
 {
 
-int run_wx_application(std::shared_ptr<::app::ApplicationContext> ctx,
-                       int& argc, char**& argv)
+int run_wx_application(::app::ApplicationContextPtr ctx, int& argc,
+                       char**& argv)
 {
   // The application object is created here and not by the wxIMPLEMENT_APP
   // family, so it gets the application context. The template keeps its own
@@ -28,8 +28,7 @@ int run_wx_application(std::shared_ptr<::app::ApplicationContext> ctx,
 namespace wxwi::app
 {
 
-WxApp::WxApp(std::shared_ptr<::app::ApplicationContext> nactx)
-    : actx{std::move(nactx)}
+WxApp::WxApp(::app::ApplicationContextPtr nactx) : actx{std::move(nactx)}
 {
   assert(actx != nullptr);
 }

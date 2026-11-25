@@ -24,7 +24,7 @@ class WxWidgetsController
 
   inline static std::function<void(WxWidgetsController&)> onMockCreate;
 
-  MOCK_METHOD(int, run, (std::shared_ptr<app::ApplicationContext>));
+  MOCK_METHOD(int, run, (app::ApplicationContextPtr));
 };
 
 }  // namespace wxwi

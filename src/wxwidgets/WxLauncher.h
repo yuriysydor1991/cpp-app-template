@@ -23,8 +23,8 @@ namespace wxwi
  *
  * @return Returns the wxWidgets application exit status (0 on success).
  */
-int run_wx_application(std::shared_ptr<::app::ApplicationContext> ctx,
-                       int& argc, char**& argv);
+int run_wx_application(::app::ApplicationContextPtr ctx, int& argc,
+                       char**& argv);
 
 }  // namespace wxwi
 

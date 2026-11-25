@@ -15,8 +15,8 @@ using namespace testing;
 // launch(), so the real wxWidgets backed run_wx_application() is never needed.
 namespace wxwi
 {
-int run_wx_application(std::shared_ptr<::app::ApplicationContext> /*ctx*/,
-                       int& /*argc*/, char**& /*argv*/)
+int run_wx_application(::app::ApplicationContextPtr /*ctx*/, int& /*argc*/,
+                       char**& /*argv*/)
 {
   return 0;
 }
@@ -53,8 +53,7 @@ class UTEST_WxWidgetsController : public Test
 
   TestController controller;
 
-  std::shared_ptr<ApplicationContext> ctx{
-      std::make_shared<ApplicationContext>(argc, argv)};
+  ApplicationContextPtr ctx{std::make_shared<ApplicationContext>(argc, argv)};
 };
 
 TEST_F(UTEST_WxWidgetsController, null_context_is_rejected_without_launching)

@@ -8,8 +8,7 @@
 namespace wxwi::app
 {
 
-StopFlagWatcher::StopFlagWatcher(
-    std::shared_ptr<::app::ApplicationContext> nactx)
+StopFlagWatcher::StopFlagWatcher(::app::ApplicationContextPtr nactx)
     : actx{std::move(nactx)}
 {
   assert(actx != nullptr);

@@ -21,8 +21,7 @@ namespace
 class WatchedApp : public wxAppConsole
 {
  public:
-  WatchedApp(std::shared_ptr<app::ApplicationContext> nctx, bool nraise,
-             bool& ntimedOut)
+  WatchedApp(app::ApplicationContextPtr nctx, bool nraise, bool& ntimedOut)
       : ctx{std::move(nctx)}, raise{nraise}, timedOut{ntimedOut}
   {
   }
@@ -70,7 +69,7 @@ class WatchedApp : public wxAppConsole
 
   void on_raise(wxTimerEvent& /*event*/) { ctx->set_stop(true); }
 
-  std::shared_ptr<app::ApplicationContext> ctx;
+  app::ApplicationContextPtr ctx;
   bool raise;
   bool& timedOut;
 
@@ -106,7 +105,7 @@ class CTEST_WxStopFlagWatcher : public Test
   int argc{0};
   char** argv{nullptr};
 
-  std::shared_ptr<app::ApplicationContext> ctx{
+  app::ApplicationContextPtr ctx{
       std::make_shared<app::ApplicationContext>(argc, argv)};
 };
 

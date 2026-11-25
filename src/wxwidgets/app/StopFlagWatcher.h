@@ -21,7 +21,7 @@ class StopFlagWatcher : public wxTimer
 {
  public:
   ~StopFlagWatcher() override = default;
-  explicit StopFlagWatcher(std::shared_ptr<::app::ApplicationContext> nactx);
+  explicit StopFlagWatcher(::app::ApplicationContextPtr nactx);
 
   void Notify() override;
 
@@ -29,7 +29,7 @@ class StopFlagWatcher : public wxTimer
   inline static constexpr int poll_period_ms = 100;
 
  private:
-  std::shared_ptr<::app::ApplicationContext> actx;
+  ::app::ApplicationContextPtr actx;
 };
 
 }  // namespace wxwi::app

@@ -20,13 +20,13 @@ class WxApp : public wxApp
 {
  public:
   ~WxApp() override = default;
-  explicit WxApp(std::shared_ptr<::app::ApplicationContext> nactx);
+  explicit WxApp(::app::ApplicationContextPtr nactx);
 
   bool OnInit() override;
   int OnExit() override;
 
  private:
-  std::shared_ptr<::app::ApplicationContext> actx;
+  ::app::ApplicationContextPtr actx;
 
   /// @brief Leaves the main loop once the OS signals raise the stop flag.
   std::unique_ptr<StopFlagWatcher> stopWatcher;

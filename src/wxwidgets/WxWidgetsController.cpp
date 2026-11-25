@@ -10,7 +10,7 @@
 namespace wxwi
 {
 
-int WxWidgetsController::run(std::shared_ptr<app::ApplicationContext> nactx)
+int WxWidgetsController::run(app::ApplicationContextPtr nactx)
 {
   assert(nactx != nullptr);
 

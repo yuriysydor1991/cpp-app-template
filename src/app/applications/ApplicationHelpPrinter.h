@@ -30,7 +30,7 @@ class ApplicationHelpPrinter : public IApplication
    * and other value otherwise, the help message printed because of the
    * command line errors of the context included.
    */
-  virtual int run(std::shared_ptr<ApplicationContext> ctx) override;
+  virtual int run(ApplicationContextPtr ctx) override;
 };
 
 }  // namespace app

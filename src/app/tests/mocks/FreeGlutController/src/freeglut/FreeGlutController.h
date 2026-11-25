@@ -24,7 +24,7 @@ class FreeGlutController
 
   inline static std::function<void(FreeGlutController&)> onMockCreate;
 
-  MOCK_METHOD(int, run, (std::shared_ptr<app::ApplicationContext> ctx));
+  MOCK_METHOD(int, run, (app::ApplicationContextPtr ctx));
 };
 
 }  // namespace templateFreeGlut

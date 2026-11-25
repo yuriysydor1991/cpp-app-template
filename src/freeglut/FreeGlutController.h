@@ -28,7 +28,7 @@ class FreeGlutController
    * @return Returns the zero value on the success and the
    * IApplication::INVALID value without a valid context.
    */
-  virtual int run(std::shared_ptr<app::ApplicationContext> ctx);
+  virtual int run(app::ApplicationContextPtr ctx);
 
  protected:
   static void reshape(int w, int h);

@@ -24,7 +24,7 @@ constexpr const unsigned int STOP_CHECK_PERIOD_MS = 100;
 int current_width{0};
 int current_height{0};
 
-std::shared_ptr<app::ApplicationContext> runCtx;
+app::ApplicationContextPtr runCtx;
 }  // namespace
 
 void FreeGlutController::display()
@@ -52,7 +52,7 @@ void FreeGlutController::init()
   glEnable(GL_DEPTH_TEST);
 }
 
-int FreeGlutController::run(std::shared_ptr<app::ApplicationContext> ctx)
+int FreeGlutController::run(app::ApplicationContextPtr ctx)
 {
   assert(ctx != nullptr);
 

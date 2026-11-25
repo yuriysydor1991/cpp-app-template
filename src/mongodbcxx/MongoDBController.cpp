@@ -21,7 +21,7 @@ MongoDBController::MongoDBController()
   static mongocxx::instance inst{};
 }
 
-bool MongoDBController::connect(std::shared_ptr<app::ApplicationContext> nctx)
+bool MongoDBController::connect(app::ApplicationContextPtr nctx)
 {
   assert(nctx != nullptr);
 

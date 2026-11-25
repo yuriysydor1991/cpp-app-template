@@ -34,8 +34,7 @@ class MongoDBConnStringMaker
    * @return Returns valid MongoDB server connection string or an empty one
    * for no context given.
    */
-  static std::string make_conn_string(
-      std::shared_ptr<app::ApplicationContext> actx);
+  static std::string make_conn_string(app::ApplicationContextPtr actx);
 
  protected:
   /**

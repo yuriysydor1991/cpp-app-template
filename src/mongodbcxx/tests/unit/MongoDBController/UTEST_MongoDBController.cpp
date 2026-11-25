@@ -55,7 +55,7 @@ class UTEST_MongoDBController : public Test
   int argc{0};
   char** argv{nullptr};
 
-  std::shared_ptr<ApplicationContext> ctx;
+  ApplicationContextPtr ctx;
   std::shared_ptr<NiceMock<MongoDBControllerSpy>> spy;
 };
 

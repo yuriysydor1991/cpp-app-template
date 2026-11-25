@@ -51,7 +51,7 @@ class UTEST_MongoDBConnStringMaker : public Test
   int argc{0};
   char** argv{nullptr};
 
-  std::shared_ptr<ApplicationContext> ctx;
+  ApplicationContextPtr ctx;
 };
 
 TEST_F(UTEST_MongoDBConnStringMaker, null_context_returns_empty)

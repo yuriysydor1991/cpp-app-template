@@ -10,7 +10,7 @@ namespace mongodbcxxi::helpers
 {
 
 std::string MongoDBConnStringMaker::make_conn_string(
-    std::shared_ptr<app::ApplicationContext> actx)
+    app::ApplicationContextPtr actx)
 {
   assert(actx != nullptr);
 

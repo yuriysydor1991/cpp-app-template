@@ -92,7 +92,7 @@ class UTEST_ASignalsHandler : public Test
     TestSignalsHandler::reset_the_state();
   }
 
-  std::shared_ptr<ApplicationContext> create_context()
+  ApplicationContextPtr create_context()
   {
     return std::make_shared<ApplicationContext>(argc, argv);
   }
@@ -118,7 +118,7 @@ class UTEST_ASignalsHandler : public Test
   char** argv{nullptr};
 
   std::shared_ptr<TestSignalsHandler> handler;
-  std::shared_ptr<ApplicationContext> appCtx;
+  ApplicationContextPtr appCtx;
 };
 
 TEST_F(UTEST_ASignalsHandler, no_context_error)
@@ -175,7 +175,7 @@ TEST_F(UTEST_ASignalsHandler, install_replaces_the_previous_context)
 {
   EXPECT_TRUE(handler->install(appCtx));
 
-  std::shared_ptr<ApplicationContext> anotherCtx = create_context();
+  ApplicationContextPtr anotherCtx = create_context();
 
   EXPECT_TRUE(handler->install(anotherCtx));
 

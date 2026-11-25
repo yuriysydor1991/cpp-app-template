@@ -10,7 +10,7 @@
 namespace app
 {
 
-bool ASignalsHandler::install(std::shared_ptr<ApplicationContext> ctx)
+bool ASignalsHandler::install(ApplicationContextPtr ctx)
 {
   assert(ctx != nullptr);
 

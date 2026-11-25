@@ -18,11 +18,11 @@ class SDL2ContextBuilder
   virtual ~SDL2ContextBuilder() = default;
 
   virtual std::shared_ptr<SDL2Context> build_context(
-      std::shared_ptr<app::ApplicationContext> ctx);
+      app::ApplicationContextPtr ctx);
 
  protected:
   virtual std::shared_ptr<SDL2Context> default_context(
-      std::shared_ptr<app::ApplicationContext> ctx);
+      app::ApplicationContextPtr ctx);
   virtual SDL_GLContext create_context(std::shared_ptr<SDL2Context> sdl2ctx);
   virtual SDL_Window* create_window(std::shared_ptr<SDL2Context> sdl2ctx);
   virtual SDL_WindowFlags get_create_window_flags();

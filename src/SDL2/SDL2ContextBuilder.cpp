@@ -15,7 +15,7 @@ namespace templateSDL2
 {
 
 std::shared_ptr<SDL2Context> SDL2ContextBuilder::build_context(
-    std::shared_ptr<app::ApplicationContext> ctx)
+    app::ApplicationContextPtr ctx)
 {
   std::shared_ptr<SDL2Context> sdl2ctx = default_context(ctx);
 
@@ -37,7 +37,7 @@ std::shared_ptr<SDL2Context> SDL2ContextBuilder::build_context(
 }
 
 std::shared_ptr<SDL2Context> SDL2ContextBuilder::default_context(
-    std::shared_ptr<app::ApplicationContext> ctx)
+    app::ApplicationContextPtr ctx)
 {
   return std::make_shared<SDL2Context>(ctx);
 }

@@ -24,7 +24,7 @@ class SDL2Controller
 
   inline static std::function<void(SDL2Controller& instance)> onMockCreate;
 
-  MOCK_METHOD(int, run, (std::shared_ptr<app::ApplicationContext> ctx));
+  MOCK_METHOD(int, run, (app::ApplicationContextPtr ctx));
 };
 
 }  // namespace templateSDL2

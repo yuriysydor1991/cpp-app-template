@@ -27,7 +27,7 @@ SDL2Controller::~SDL2Controller()
   SDL_Quit();
 }
 
-int SDL2Controller::run(std::shared_ptr<app::ApplicationContext> ctx)
+int SDL2Controller::run(app::ApplicationContextPtr ctx)
 {
   assert(ctx != nullptr);
 

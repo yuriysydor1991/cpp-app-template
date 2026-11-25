@@ -2,6 +2,7 @@
 #define YOUR_CPP_APP_TEMPLATE_PROJECT_APPLICATIONCONTEXT_CLASS_H
 
 #include <atomic>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -25,6 +26,9 @@ namespace app
 class ApplicationContext
 {
  public:
+  /// @brief The application context instance holder type.
+  using ApplicationContextPtr = std::shared_ptr<ApplicationContext>;
+
   /**
    * @brief An ApplicationContext constructor.
    *
@@ -228,6 +232,8 @@ class ApplicationContext
   /// ApplicationContext::set_second_user_request setter.
   std::atomic_bool msecond_user_request{false};
 };
+
+using ApplicationContextPtr = ApplicationContext::ApplicationContextPtr;
 
 }  // namespace app
 

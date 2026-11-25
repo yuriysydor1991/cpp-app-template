@@ -28,7 +28,7 @@ class Application : public IApplication
    * @return Returns the application return status. A zero value on the success
    * and other value otherwise.
    */
-  virtual int run(std::shared_ptr<ApplicationContext> ctx) override;
+  virtual int run(ApplicationContextPtr ctx) override;
 
  protected:
   virtual std::shared_ptr<Gtkmm4i::Gtkmm4Controller> create_gtkmm_controller();

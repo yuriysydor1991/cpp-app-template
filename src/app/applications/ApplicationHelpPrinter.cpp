@@ -13,7 +13,7 @@
 namespace app
 {
 
-int ApplicationHelpPrinter::run(std::shared_ptr<ApplicationContext> ctx)
+int ApplicationHelpPrinter::run(ApplicationContextPtr ctx)
 {
   assert(ctx != nullptr);
 

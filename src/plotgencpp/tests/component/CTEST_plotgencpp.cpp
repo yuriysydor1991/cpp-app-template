@@ -33,7 +33,7 @@ class CTEST_plotgencpp : public Test
   char** argv{nullptr};
 
   PlotGenCppControllerPtr controller;
-  std::shared_ptr<app::ApplicationContext> ctx;
+  app::ApplicationContextPtr ctx;
 };
 
 TEST_F(CTEST_plotgencpp, create_default_controller_success)

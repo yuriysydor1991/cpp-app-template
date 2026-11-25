@@ -13,7 +13,7 @@
 namespace plotgencppi
 {
 
-bool PlotGenCppController::run(std::shared_ptr<app::ApplicationContext> ctx)
+bool PlotGenCppController::run(app::ApplicationContextPtr ctx)
 {
   assert(ctx != nullptr);
 

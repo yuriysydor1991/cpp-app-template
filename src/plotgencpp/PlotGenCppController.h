@@ -19,7 +19,7 @@ class PlotGenCppController
   virtual ~PlotGenCppController() = default;
   PlotGenCppController() = default;
 
-  virtual bool run(std::shared_ptr<app::ApplicationContext> ctx);
+  virtual bool run(app::ApplicationContextPtr ctx);
 
   static PlotGenCppControllerPtr create();
 

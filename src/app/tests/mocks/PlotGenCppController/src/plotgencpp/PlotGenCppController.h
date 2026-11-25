@@ -28,7 +28,7 @@ class PlotGenCppController
   virtual ~PlotGenCppController() = default;
   PlotGenCppController() = default;
 
-  MOCK_METHOD(bool, run, (std::shared_ptr<app::ApplicationContext> ctx));
+  MOCK_METHOD(bool, run, (app::ApplicationContextPtr ctx));
 
   using createMockType = testing::MockFunction<PlotGenCppControllerPtr()>;
   inline static std::shared_ptr<createMockType> mock_create;

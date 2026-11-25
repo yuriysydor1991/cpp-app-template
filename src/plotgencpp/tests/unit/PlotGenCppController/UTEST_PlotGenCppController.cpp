@@ -26,7 +26,7 @@ class UTEST_PlotGenCppController : public Test
   char** argv{nullptr};
 
   PlotGenCppControllerPtr controller;
-  std::shared_ptr<app::ApplicationContext> ctx;
+  app::ApplicationContextPtr ctx;
 };
 
 TEST_F(UTEST_PlotGenCppController, create_returns_valid_instance)

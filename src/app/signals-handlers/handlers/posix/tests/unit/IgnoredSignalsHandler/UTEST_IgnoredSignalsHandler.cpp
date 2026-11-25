@@ -28,7 +28,7 @@ class UTEST_IgnoredSignalsHandler : public Test
     restore_the_default_dispositions();
   }
 
-  std::shared_ptr<ApplicationContext> create_context()
+  ApplicationContextPtr create_context()
   {
     return std::make_shared<ApplicationContext>(argc, argv);
   }
@@ -54,7 +54,7 @@ class UTEST_IgnoredSignalsHandler : public Test
   char** argv{nullptr};
 
   std::shared_ptr<TestIgnoredSignalsHandler> handler;
-  std::shared_ptr<ApplicationContext> appCtx;
+  ApplicationContextPtr appCtx;
 };
 
 TEST_F(UTEST_IgnoredSignalsHandler, the_handler_belongs_to_the_posix_family)

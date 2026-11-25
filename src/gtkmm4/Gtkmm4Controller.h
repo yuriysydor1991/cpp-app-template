@@ -18,10 +18,10 @@ class Gtkmm4Controller
   virtual ~Gtkmm4Controller() = default;
   Gtkmm4Controller() = default;
 
-  virtual int run(std::shared_ptr<app::ApplicationContext> nactx);
+  virtual int run(app::ApplicationContextPtr nactx);
 
  private:
-  std::shared_ptr<app::ApplicationContext> actx;
+  app::ApplicationContextPtr actx;
 };
 
 }  // namespace Gtkmm4i

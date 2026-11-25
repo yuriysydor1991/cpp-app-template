@@ -19,7 +19,7 @@ SFMLController::SFMLController()
 
 SFMLController::~SFMLController() { sfmlContext.reset(); }
 
-int SFMLController::run(std::shared_ptr<app::ApplicationContext> ctx)
+int SFMLController::run(app::ApplicationContextPtr ctx)
 {
   assert(ctx != nullptr);
 

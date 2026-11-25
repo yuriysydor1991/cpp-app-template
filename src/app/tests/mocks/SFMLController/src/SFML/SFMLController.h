@@ -24,7 +24,7 @@ class SFMLController
 
   inline static std::function<void(SFMLController& instance)> onMockCreate;
 
-  MOCK_METHOD(int, run, (std::shared_ptr<app::ApplicationContext> ctx));
+  MOCK_METHOD(int, run, (app::ApplicationContextPtr ctx));
 };
 
 }  // namespace templateSFML

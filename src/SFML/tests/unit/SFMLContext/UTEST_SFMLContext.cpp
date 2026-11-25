@@ -20,7 +20,7 @@ class UTEST_SFMLContext : public Test
   int argc{0};
   char** argv{nullptr};
 
-  std::shared_ptr<ApplicationContext> appCtx;
+  ApplicationContextPtr appCtx;
 };
 
 TEST_F(UTEST_SFMLContext, default_construction_stores_app_ctx)

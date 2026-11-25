@@ -17,9 +17,9 @@ namespace templateSFML
 struct SFMLContext
 {
   virtual ~SFMLContext();
-  explicit SFMLContext(std::shared_ptr<app::ApplicationContext> ctx);
+  explicit SFMLContext(app::ApplicationContextPtr ctx);
 
-  std::shared_ptr<app::ApplicationContext> appCtx;
+  app::ApplicationContextPtr appCtx;
 
   /// @brief The SFML render window. Stays nullptr until the context builder
   /// opens it, which keeps the headless test builds away from a real display.

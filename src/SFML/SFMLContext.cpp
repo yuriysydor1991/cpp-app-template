@@ -15,8 +15,7 @@ SFMLContext::~SFMLContext()
   }
 }
 
-SFMLContext::SFMLContext(std::shared_ptr<app::ApplicationContext> ctx)
-    : appCtx{ctx}
+SFMLContext::SFMLContext(app::ApplicationContextPtr ctx) : appCtx{ctx}
 {
   assert(appCtx != nullptr);
 }

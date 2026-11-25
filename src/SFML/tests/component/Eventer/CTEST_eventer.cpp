@@ -35,7 +35,7 @@ class CTEST_eventer : public Test
   int argc{0};
   char** argv{nullptr};
 
-  std::shared_ptr<ApplicationContext> appCtx;
+  ApplicationContextPtr appCtx;
   std::shared_ptr<SFMLContext> sfmlCtx;
   std::shared_ptr<EventsHandlersFactory> factory;
 };

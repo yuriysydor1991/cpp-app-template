@@ -29,7 +29,7 @@ class SFMLController
    * @return Returns the init and run return status. A zero value on the success
    * and other value otherwise.
    */
-  virtual int run(std::shared_ptr<app::ApplicationContext> ctx);
+  virtual int run(app::ApplicationContextPtr ctx);
 
  protected:
   virtual void event_loop();

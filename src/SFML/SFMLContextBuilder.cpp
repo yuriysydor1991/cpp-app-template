@@ -13,7 +13,7 @@ namespace templateSFML
 {
 
 std::shared_ptr<SFMLContext> SFMLContextBuilder::build_context(
-    std::shared_ptr<app::ApplicationContext> ctx)
+    app::ApplicationContextPtr ctx)
 {
   std::shared_ptr<SFMLContext> sfmlctx = default_context(ctx);
 
@@ -28,7 +28,7 @@ std::shared_ptr<SFMLContext> SFMLContextBuilder::build_context(
 }
 
 std::shared_ptr<SFMLContext> SFMLContextBuilder::default_context(
-    std::shared_ptr<app::ApplicationContext> ctx)
+    app::ApplicationContextPtr ctx)
 {
   return std::make_shared<SFMLContext>(ctx);
 }

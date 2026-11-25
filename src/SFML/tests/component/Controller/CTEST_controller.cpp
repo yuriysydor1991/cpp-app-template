@@ -35,7 +35,7 @@ class CTEST_controller : public Test
   int argc{1};
   char** argv{args};
 
-  std::shared_ptr<ApplicationContext> appCtx;
+  ApplicationContextPtr appCtx;
   SFMLController controller;
 };
 

@@ -42,7 +42,7 @@ class UTEST_SignalsHandler : public Test
     forget_the_hooks();
   }
 
-  std::shared_ptr<ApplicationContext> create_context()
+  ApplicationContextPtr create_context()
   {
     return std::make_shared<ApplicationContext>(argc, argv);
   }
@@ -139,7 +139,7 @@ class UTEST_SignalsHandler : public Test
   int createdSubhandlers{0};
 
   std::shared_ptr<TestSignalsHandler> handler;
-  std::shared_ptr<ApplicationContext> appCtx;
+  ApplicationContextPtr appCtx;
 };
 
 TEST_F(UTEST_SignalsHandler, no_context_error)

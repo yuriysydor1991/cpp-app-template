@@ -21,11 +21,11 @@ class SFMLContextBuilder
   virtual ~SFMLContextBuilder() = default;
 
   virtual std::shared_ptr<SFMLContext> build_context(
-      std::shared_ptr<app::ApplicationContext> ctx);
+      app::ApplicationContextPtr ctx);
 
  protected:
   virtual std::shared_ptr<SFMLContext> default_context(
-      std::shared_ptr<app::ApplicationContext> ctx);
+      app::ApplicationContextPtr ctx);
   virtual std::unique_ptr<sf::RenderWindow> create_window(
       std::shared_ptr<SFMLContext> sfmlctx);
   virtual const std::string& get_window_title();

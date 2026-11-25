@@ -29,7 +29,7 @@ class UTEST_EventClosedHandler : public Test
 
   sf::Event closedEvent{};
 
-  std::shared_ptr<ApplicationContext> appCtx;
+  ApplicationContextPtr appCtx;
   std::shared_ptr<SFMLContext> sfmlCtx;
   std::shared_ptr<EventClosedHandler> handler;
 };

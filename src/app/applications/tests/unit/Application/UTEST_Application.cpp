@@ -63,7 +63,7 @@ class UTEST_Application : public Test
   char** argv{nullptr};
 
   std::shared_ptr<Application> app;
-  std::shared_ptr<ApplicationContext> appCtx;
+  ApplicationContextPtr appCtx;
 };
 
 TEST_F(UTEST_Application, no_context_error) { EXPECT_NE(app->run({}), 0); }

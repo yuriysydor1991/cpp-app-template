@@ -21,7 +21,7 @@ class PLplotController
   virtual ~PLplotController() = default;
   PLplotController() = default;
 
-  virtual bool run(std::shared_ptr<app::ApplicationContext> ctx);
+  virtual bool run(app::ApplicationContextPtr ctx);
 
   static PLplotControllerPtr create();
 

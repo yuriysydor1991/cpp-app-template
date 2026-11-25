@@ -17,7 +17,7 @@
 namespace plploti
 {
 
-bool PLplotController::run(std::shared_ptr<app::ApplicationContext> ctx)
+bool PLplotController::run(app::ApplicationContextPtr ctx)
 {
   assert(ctx != nullptr);
 

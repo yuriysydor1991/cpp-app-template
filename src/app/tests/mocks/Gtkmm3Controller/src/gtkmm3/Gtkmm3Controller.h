@@ -24,7 +24,7 @@ class Gtkmm3Controller
 
   inline static std::function<void(Gtkmm3Controller&)> onMockCreate;
 
-  MOCK_METHOD(int, run, (std::shared_ptr<app::ApplicationContext>));
+  MOCK_METHOD(int, run, (app::ApplicationContextPtr));
 };
 
 }  // namespace Gtkmm3i

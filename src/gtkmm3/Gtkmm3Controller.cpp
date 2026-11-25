@@ -14,7 +14,7 @@
 namespace Gtkmm3i
 {
 
-int Gtkmm3Controller::run(std::shared_ptr<app::ApplicationContext> nactx)
+int Gtkmm3Controller::run(app::ApplicationContextPtr nactx)
 {
   // Every message the toolkit reports lands in the application log from here
   // on. It is taken over before anything of the toolkit is touched, so the

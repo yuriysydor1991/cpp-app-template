@@ -10,7 +10,7 @@
 namespace winui3
 {
 
-int WinUI3Controller::run(std::shared_ptr<app::ApplicationContext> nactx)
+int WinUI3Controller::run(app::ApplicationContextPtr nactx)
 {
   assert(nactx != nullptr);
 

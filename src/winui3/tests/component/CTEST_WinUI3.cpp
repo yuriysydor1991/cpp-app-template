@@ -59,8 +59,7 @@ class CTEST_WinUI3 : public Test
 
   WinUI3Controller controller;
 
-  std::shared_ptr<ApplicationContext> ctx{
-      std::make_shared<ApplicationContext>(argc, argv)};
+  ApplicationContextPtr ctx{std::make_shared<ApplicationContext>(argc, argv)};
 };
 
 TEST_F(CTEST_WinUI3, run_launches_app_and_forwards_arguments)

@@ -58,8 +58,7 @@ class CTEST_Cocoa : public Test
 
   CocoaController controller;
 
-  std::shared_ptr<ApplicationContext> ctx{
-      std::make_shared<ApplicationContext>(argc, argv)};
+  ApplicationContextPtr ctx{std::make_shared<ApplicationContext>(argc, argv)};
 };
 
 TEST_F(CTEST_Cocoa, run_launches_app_and_forwards_arguments)

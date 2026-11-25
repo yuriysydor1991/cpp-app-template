@@ -10,7 +10,7 @@
 namespace cocoa
 {
 
-int CocoaController::run(std::shared_ptr<app::ApplicationContext> nactx)
+int CocoaController::run(app::ApplicationContextPtr nactx)
 {
   assert(nactx != nullptr);
 

@@ -24,7 +24,7 @@ class CocoaController
 
   inline static std::function<void(CocoaController&)> onMockCreate;
 
-  MOCK_METHOD(int, run, (std::shared_ptr<app::ApplicationContext>));
+  MOCK_METHOD(int, run, (app::ApplicationContextPtr));
 };
 
 }  // namespace cocoa

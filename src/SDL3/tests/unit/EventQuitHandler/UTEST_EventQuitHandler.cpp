@@ -29,7 +29,7 @@ class UTEST_EventQuitHandler : public Test
 
   SDL_Event quitEvent{};
 
-  std::shared_ptr<ApplicationContext> appCtx;
+  ApplicationContextPtr appCtx;
   std::shared_ptr<SDL3Context> sdlCtx;
   std::shared_ptr<EventQuitHandler> handler;
 };

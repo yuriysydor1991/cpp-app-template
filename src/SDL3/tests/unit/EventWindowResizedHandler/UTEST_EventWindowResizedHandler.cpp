@@ -31,7 +31,7 @@ class UTEST_EventWindowResizedHandler : public Test
 
   SDL_Event resizeEvent{};
 
-  std::shared_ptr<ApplicationContext> appCtx;
+  ApplicationContextPtr appCtx;
   std::shared_ptr<SDL3Context> sdlCtx;
   std::shared_ptr<EventWindowResizedHandler> handler;
 };

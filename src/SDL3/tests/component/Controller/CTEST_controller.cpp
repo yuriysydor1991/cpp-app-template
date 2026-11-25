@@ -23,7 +23,7 @@ class CTEST_controller : public Test
   int argc{0};
   char** argv{nullptr};
 
-  std::shared_ptr<ApplicationContext> appCtx;
+  ApplicationContextPtr appCtx;
   SDL3Controller controller;
 };
 

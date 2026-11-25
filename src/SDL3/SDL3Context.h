@@ -14,9 +14,9 @@ namespace templateSDL3
 struct SDL3Context
 {
   virtual ~SDL3Context();
-  explicit SDL3Context(std::shared_ptr<app::ApplicationContext> ctx);
+  explicit SDL3Context(app::ApplicationContextPtr ctx);
 
-  std::shared_ptr<app::ApplicationContext> appCtx;
+  app::ApplicationContextPtr appCtx;
 
   SDL_Window* window{nullptr};
   SDL_GLContext glContext{nullptr};

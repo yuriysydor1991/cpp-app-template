@@ -21,8 +21,7 @@ SDL3Context::~SDL3Context()
   }
 }
 
-SDL3Context::SDL3Context(std::shared_ptr<app::ApplicationContext> ctx)
-    : appCtx{ctx}
+SDL3Context::SDL3Context(app::ApplicationContextPtr ctx) : appCtx{ctx}
 {
   assert(appCtx != nullptr);
 }

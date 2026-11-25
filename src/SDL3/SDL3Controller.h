@@ -32,7 +32,7 @@ class SDL3Controller
    * and the IApplication::INVALID value if the SDL3 video subsystem, the window
    * or the OpenGL context can't be created (e.g. no display available).
    */
-  virtual int run(std::shared_ptr<app::ApplicationContext> ctx);
+  virtual int run(app::ApplicationContextPtr ctx);
 
  protected:
   virtual void event_loop();

@@ -24,7 +24,7 @@ class SDL3Controller
 
   inline static std::function<void(SDL3Controller& instance)> onMockCreate;
 
-  MOCK_METHOD(int, run, (std::shared_ptr<app::ApplicationContext> ctx));
+  MOCK_METHOD(int, run, (app::ApplicationContextPtr ctx));
 };
 
 }  // namespace templateSDL3

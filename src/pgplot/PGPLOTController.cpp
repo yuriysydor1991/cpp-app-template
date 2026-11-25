@@ -20,7 +20,7 @@ PGPLOTController::PGPLOTController(std::string device)
 {
 }
 
-bool PGPLOTController::run(std::shared_ptr<app::ApplicationContext> ctx)
+bool PGPLOTController::run(app::ApplicationContextPtr ctx)
 {
   assert(ctx != nullptr);
 

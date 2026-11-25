@@ -31,7 +31,7 @@ class PGPLOTController
    */
   explicit PGPLOTController(std::string device = DEFAULT_DEVICE);
 
-  virtual bool run(std::shared_ptr<app::ApplicationContext> ctx);
+  virtual bool run(app::ApplicationContextPtr ctx);
 
   static PGPLOTControllerPtr create();
 

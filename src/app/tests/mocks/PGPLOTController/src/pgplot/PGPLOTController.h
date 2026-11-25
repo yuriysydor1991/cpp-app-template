@@ -18,7 +18,7 @@ class PGPLOTController
   virtual ~PGPLOTController() = default;
   PGPLOTController() = default;
 
-  MOCK_METHOD(bool, run, (std::shared_ptr<app::ApplicationContext> ctx));
+  MOCK_METHOD(bool, run, (app::ApplicationContextPtr ctx));
 
   using createMockType = testing::MockFunction<PGPLOTControllerPtr()>;
   inline static std::shared_ptr<createMockType> createMock;

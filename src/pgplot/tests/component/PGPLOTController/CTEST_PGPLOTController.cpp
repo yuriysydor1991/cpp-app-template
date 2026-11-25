@@ -32,7 +32,7 @@ class CTEST_PGPLOTController : public Test
   int argc{0};
   char** argv{nullptr};
 
-  std::shared_ptr<app::ApplicationContext> ctx;
+  app::ApplicationContextPtr ctx;
   const std::string path;
 };
 

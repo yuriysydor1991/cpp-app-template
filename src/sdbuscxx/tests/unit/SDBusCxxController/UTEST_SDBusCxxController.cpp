@@ -48,7 +48,7 @@ class UTEST_SDBusCxxController : public Test
   sdbus::ServiceName serviceName{"org.cppapptemplate.SimpleServer"};
   sdbus::ObjectPath objectPath{"/org/cppapptemplate/SimpleServer"};
 
-  std::shared_ptr<app::ApplicationContext> appCtx;
+  app::ApplicationContextPtr appCtx;
   std::shared_ptr<NiceMock<IDBusServerObject>> serverObject;
 };
 

@@ -31,7 +31,7 @@ class SDBusCxxController
   virtual ~SDBusCxxController() = default;
   SDBusCxxController() = default;
 
-  MOCK_METHOD(bool, run, (std::shared_ptr<app::ApplicationContext> ctx));
+  MOCK_METHOD(bool, run, (app::ApplicationContextPtr ctx));
 
   /// @brief Test seam consulted by create(); see the class description.
   inline static std::function<SDBusCxxControllerPtr()> onMockCreate;

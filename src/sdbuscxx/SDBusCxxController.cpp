@@ -13,7 +13,7 @@
 namespace sdbuscxxi
 {
 
-bool SDBusCxxController::run(std::shared_ptr<app::ApplicationContext> ctx)
+bool SDBusCxxController::run(app::ApplicationContextPtr ctx)
 {
   assert(ctx != nullptr);
 

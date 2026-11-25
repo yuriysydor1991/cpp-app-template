@@ -28,7 +28,7 @@ class UTEST_PauseSignalsHandler : public Test
     restore_the_default_dispositions();
   }
 
-  std::shared_ptr<ApplicationContext> create_context()
+  ApplicationContextPtr create_context()
   {
     return std::make_shared<ApplicationContext>(argc, argv);
   }
@@ -54,7 +54,7 @@ class UTEST_PauseSignalsHandler : public Test
   char** argv{nullptr};
 
   std::shared_ptr<TestPauseSignalsHandler> handler;
-  std::shared_ptr<ApplicationContext> appCtx;
+  ApplicationContextPtr appCtx;
 };
 
 TEST_F(UTEST_PauseSignalsHandler, the_handler_belongs_to_the_posix_family)
@@ -119,7 +119,7 @@ TEST_F(UTEST_PauseSignalsHandler, install_success)
 TEST_F(UTEST_PauseSignalsHandler, every_covered_signal_pauses_the_context)
 {
   for (const int signalNumber : handler->get_handled_signals()) {
-    std::shared_ptr<ApplicationContext> signalCtx = create_context();
+    ApplicationContextPtr signalCtx = create_context();
 
     EXPECT_TRUE(handler->install(signalCtx));
     EXPECT_FALSE(signalCtx->get_pause());

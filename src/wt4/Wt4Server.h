@@ -38,19 +38,18 @@ class Wt4Server : public Wt::WApplication
    * @return Returns the application return status. A zero value on the success
    * and other value otherwise.
    */
-  static int run(std::shared_ptr<app::ApplicationContext> ctx);
+  static int run(app::ApplicationContextPtr ctx);
 
  protected:
   /// @brief The period of the application stop flag checks.
   inline static constexpr const std::chrono::milliseconds stopCheckPeriod{100};
 
-  static int serve(std::shared_ptr<app::ApplicationContext> ctx);
-  static void wait_for_stop(std::shared_ptr<app::ApplicationContext> ctx);
+  static int serve(app::ApplicationContextPtr ctx);
+  static void wait_for_stop(app::ApplicationContextPtr ctx);
   static std::unique_ptr<Wt4Server> build_server(
-      const Wt::WEnvironment& env,
-      std::shared_ptr<app::ApplicationContext> ctx);
+      const Wt::WEnvironment& env, app::ApplicationContextPtr ctx);
   static std::shared_ptr<Wt4Context> create_context(
-      std::shared_ptr<app::ApplicationContext> ctx);
+      app::ApplicationContextPtr ctx);
 
   std::shared_ptr<Wt4Context> wt4ctx;
   std::unique_ptr<widgets::WidgetsFactory> wfactory;

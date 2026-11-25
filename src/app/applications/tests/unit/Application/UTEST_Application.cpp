@@ -24,12 +24,12 @@ class UTEST_Application : public Test
   char** argv{nullptr};
 
   std::shared_ptr<Application> app;
-  std::shared_ptr<ApplicationContext> appCtx;
+  ApplicationContextPtr appCtx;
 };
 
 TEST_F(UTEST_Application, no_context_error)
 {
-  MockFunction<int(std::shared_ptr<app::ApplicationContext>)> staticEnsurer;
+  MockFunction<int(app::ApplicationContextPtr)> staticEnsurer;
 
   EXPECT_CALL(staticEnsurer, Call(appCtx)).Times(0);
 
@@ -40,7 +40,7 @@ TEST_F(UTEST_Application, no_context_error)
 
 TEST_F(UTEST_Application, normal_exit)
 {
-  MockFunction<int(std::shared_ptr<app::ApplicationContext>)> staticEnsurer;
+  MockFunction<int(app::ApplicationContextPtr)> staticEnsurer;
 
   EXPECT_CALL(staticEnsurer, Call(appCtx)).Times(1).WillOnce(Return(0));
 
@@ -59,7 +59,7 @@ TEST_F(UTEST_Application, normal_exit)
 
 TEST_F(UTEST_Application, error_exit)
 {
-  MockFunction<int(std::shared_ptr<app::ApplicationContext>)> staticEnsurer;
+  MockFunction<int(app::ApplicationContextPtr)> staticEnsurer;
 
   EXPECT_CALL(staticEnsurer, Call(appCtx)).Times(1).WillOnce(Return(1));
 

@@ -24,7 +24,7 @@ class ApplicationVersionPrinter : public IApplication
 
   inline static std::function<void(ApplicationVersionPrinter&)> onMockCreate;
 
-  MOCK_METHOD(int, run, (std::shared_ptr<ApplicationContext> ctx), (override));
+  MOCK_METHOD(int, run, (ApplicationContextPtr ctx), (override));
 };
 
 }  // namespace app

@@ -71,7 +71,7 @@ class CTEST_app : public Test
   int realArgc{0};
   char** realArgv{nullptr};
 
-  MockFunction<int(std::shared_ptr<app::ApplicationContext>)> staticEnsurer;
+  MockFunction<int(app::ApplicationContextPtr)> staticEnsurer;
 
   ApplicationFactory facade;
 };
@@ -285,7 +285,7 @@ TEST_F(CTEST_app, unknown_option_is_forwarded_to_the_Wt)
   // The flavor parser hands the unknown parameters over to the Wt framework,
   // so the factory reaches the Wt run, whose failure status it returns.
   EXPECT_CALL(staticEnsurer, Call(_))
-      .WillOnce(Invoke([](const std::shared_ptr<app::ApplicationContext>& ctx) {
+      .WillOnce(Invoke([](const app::ApplicationContextPtr& ctx) {
         EXPECT_TRUE(ctx->get_errors().empty());
         return 1;
       }));

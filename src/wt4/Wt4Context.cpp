@@ -6,8 +6,7 @@
 namespace wt4server
 {
 
-Wt4Context::Wt4Context(std::shared_ptr<app::ApplicationContext> nAppCtx)
-    : appctx{nAppCtx}
+Wt4Context::Wt4Context(app::ApplicationContextPtr nAppCtx) : appctx{nAppCtx}
 {
   assert(appctx != nullptr);
 }

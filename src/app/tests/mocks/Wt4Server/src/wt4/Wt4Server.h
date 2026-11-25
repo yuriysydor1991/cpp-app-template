@@ -17,12 +17,11 @@ class Wt4Server
  public:
   virtual ~Wt4Server() = default;
   Wt4Server() = default;
-  using runMockType =
-      std::function<int(std::shared_ptr<app::ApplicationContext>)>;
+  using runMockType = std::function<int(app::ApplicationContextPtr)>;
 
   inline static runMockType run_mock;
 
-  inline static int run(std::shared_ptr<app::ApplicationContext> ctx)
+  inline static int run(app::ApplicationContextPtr ctx)
   {
     if (run_mock != nullptr) {
       return run_mock(ctx);

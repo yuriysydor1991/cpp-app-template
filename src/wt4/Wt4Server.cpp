@@ -24,7 +24,7 @@ Wt4Server::Wt4Server(const Wt::WEnvironment& env,
   root()->addWidget(wfactory->create_guest_root());
 }
 
-int Wt4Server::run(std::shared_ptr<app::ApplicationContext> ctx)
+int Wt4Server::run(app::ApplicationContextPtr ctx)
 {
   assert(ctx != nullptr);
 
@@ -43,7 +43,7 @@ int Wt4Server::run(std::shared_ptr<app::ApplicationContext> ctx)
   return app::IApplication::INVALID;
 }
 
-int Wt4Server::serve(std::shared_ptr<app::ApplicationContext> ctx)
+int Wt4Server::serve(app::ApplicationContextPtr ctx)
 {
   const std::string appPath{ctx->get_argv()[0]};
 
@@ -73,7 +73,7 @@ int Wt4Server::serve(std::shared_ptr<app::ApplicationContext> ctx)
   return 0;
 }
 
-void Wt4Server::wait_for_stop(std::shared_ptr<app::ApplicationContext> ctx)
+void Wt4Server::wait_for_stop(app::ApplicationContextPtr ctx)
 {
   while (!ctx->get_stop()) {
     std::this_thread::sleep_for(stopCheckPeriod);
@@ -81,7 +81,7 @@ void Wt4Server::wait_for_stop(std::shared_ptr<app::ApplicationContext> ctx)
 }
 
 std::unique_ptr<Wt4Server> Wt4Server::build_server(
-    const Wt::WEnvironment& env, std::shared_ptr<app::ApplicationContext> ctx)
+    const Wt::WEnvironment& env, app::ApplicationContextPtr ctx)
 {
   assert(ctx != nullptr);
 
@@ -95,7 +95,7 @@ std::unique_ptr<Wt4Server> Wt4Server::build_server(
 }
 
 std::shared_ptr<Wt4Context> Wt4Server::create_context(
-    std::shared_ptr<app::ApplicationContext> ctx)
+    app::ApplicationContextPtr ctx)
 {
   assert(ctx != nullptr);
 

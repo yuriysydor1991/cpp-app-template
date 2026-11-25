@@ -74,7 +74,7 @@ class CTEST_Wt4Server : public Test
   int argc{0};
   char** argvp{nullptr};
 
-  std::shared_ptr<app::ApplicationContext> appCtx{
+  app::ApplicationContextPtr appCtx{
       std::make_shared<app::ApplicationContext>(argc, argvp)};
 };
 

@@ -15,7 +15,7 @@ class UTEST_Wt4Context : public Test
   int argc{0};
   char** argv{nullptr};
 
-  std::shared_ptr<app::ApplicationContext> appCtx{
+  app::ApplicationContextPtr appCtx{
       std::make_shared<app::ApplicationContext>(argc, argv)};
 };
 

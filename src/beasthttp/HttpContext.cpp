@@ -8,8 +8,7 @@
 namespace beasthttp
 {
 
-HttpContext::HttpContext(std::shared_ptr<app::ApplicationContext> nactx)
-    : actx{nactx}
+HttpContext::HttpContext(app::ApplicationContextPtr nactx) : actx{nactx}
 {
   assert(actx != nullptr);
 }

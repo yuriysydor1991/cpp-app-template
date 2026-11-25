@@ -16,7 +16,7 @@ class HttpContext
 {
  public:
   virtual ~HttpContext() = default;
-  explicit HttpContext(std::shared_ptr<app::ApplicationContext> nactx);
+  explicit HttpContext(app::ApplicationContextPtr nactx);
 
   /**
    * @brief Returns the application context stop method return value.
@@ -58,7 +58,7 @@ class HttpContext
   int listen_backlog() const;
 
  protected:
-  std::shared_ptr<app::ApplicationContext> actx;
+  app::ApplicationContextPtr actx;
 
   /// @brief The number of the connections served at once. Lower it in the
   /// descendant constructor to harden the server further.

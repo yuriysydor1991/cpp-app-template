@@ -20,7 +20,7 @@ HttpControllerPtr HttpController::create()
   return std::make_shared<HttpController>();
 }
 
-bool HttpController::serve(std::shared_ptr<app::ApplicationContext> actx)
+bool HttpController::serve(app::ApplicationContextPtr actx)
 {
   assert(actx != nullptr);
 
@@ -152,7 +152,7 @@ void HttpController::wait_threads()
 }
 
 std::unique_ptr<HttpContext> HttpController::create_context(
-    std::shared_ptr<app::ApplicationContext> actx)
+    app::ApplicationContextPtr actx)
 {
   assert(actx != nullptr);
 

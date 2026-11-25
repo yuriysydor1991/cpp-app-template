@@ -39,7 +39,7 @@ class HttpController
    *
    * @return Returns a true boolean value on the success and false otherwise.
    */
-  virtual bool serve(std::shared_ptr<app::ApplicationContext> actx);
+  virtual bool serve(app::ApplicationContextPtr actx);
 
   /**
    * @brief Returns the port the server listens on, which is the one the OS
@@ -66,7 +66,7 @@ class HttpController
    * @return Returns filled HttpContext class instance in case of success.
    */
   virtual std::unique_ptr<HttpContext> create_context(
-      std::shared_ptr<app::ApplicationContext> actx);
+      app::ApplicationContextPtr actx);
 
   /**
    * @brief Creates the rhandlers::HTTPSessionContext class instance to

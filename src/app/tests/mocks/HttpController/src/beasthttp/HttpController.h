@@ -22,7 +22,7 @@ class HttpController
 
   inline static std::function<void(HttpController&)> onMockCreate;
 
-  MOCK_METHOD(bool, serve, (std::shared_ptr<app::ApplicationContext> actx));
+  MOCK_METHOD(bool, serve, (app::ApplicationContextPtr actx));
 };
 
 }  // namespace beasthttp

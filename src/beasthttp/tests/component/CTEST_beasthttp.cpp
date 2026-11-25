@@ -96,8 +96,7 @@ class CTEST_beasthttp : public Test, virtual public HTTPHelper
   int argc{0};
   char** argv{nullptr};
 
-  std::shared_ptr<ApplicationContext> actx{
-      std::make_shared<ApplicationContext>(argc, argv)};
+  ApplicationContextPtr actx{std::make_shared<ApplicationContext>(argc, argv)};
   std::shared_ptr<HttpController> http{HttpController::create()};
 
   std::thread server;

@@ -4,6 +4,7 @@
 #include <gmock/gmock.h>
 
 #include <atomic>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -13,6 +14,8 @@ namespace app
 class ApplicationContext
 {
  public:
+  using ApplicationContextPtr = std::shared_ptr<ApplicationContext>;
+
   ApplicationContext(int& gargc, char**& gargv);
 
   int& get_argc() const { return margc; }
@@ -67,6 +70,8 @@ class ApplicationContext
   std::atomic_bool mfirst_user_request{false};
   std::atomic_bool msecond_user_request{false};
 };
+
+using ApplicationContextPtr = ApplicationContext::ApplicationContextPtr;
 
 }  // namespace app
 
